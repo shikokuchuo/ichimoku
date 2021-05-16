@@ -1,0 +1,244 @@
+---
+title: "ichimoku: User Reference"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{ichimoku: User Reference}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 7, fig.height = 5
+)
+```
+
+## Ichimoku Kinko Hyo
+
+The system consists of the following chart lines added to a candlestick chart:
+
+1. **Tenkan-sen**: [conversion line] the mid-point of the highest high and lowest low for the past 9 periods.
+
+2. **Kijun-sen**: [base line] the mid-point of the highest high and lowest low for the past 26 periods.
+
+3. **Senkou span A**: [leading span A] the mid-point of Tenkan-sen and Kijun-sen plotted ahead 26 periods.
+
+4. **Senkou span B**: [leading span B] the mid-point of the highest high and lowest low for the past 52 periods, plotted ahead 26 periods.
+
+5. **Chikou span**: [lagging span] the current closing price plotted 26 periods behind.
+
+The **kumo** [cloud] is the area between Senkou span A and Senkou span B (usually shaded on a chart).
+
+### Interpretation
+
+Ichimoku Kinko Hyo translates roughly to 'one-glance equilibrium chart'. It is designed to allow the price action and market structure of financial securities to be determined 'at-a-glance' in a highly visual fashion.
+
+For example in a strongly upwards-trending market, the candlesticks will be above the Tenkan-sen, which will be above the Kijun-sen, which will be above the cloud, and the chikou span may not have anything above it.
+
+The lines and the cloud represent dynamic support and resistance zones relative to the price candles. Generally the thicker the cloud, the tougher the support/resistance. In our previous example, if the price now reverts downwards, it can expect support first at the Kijun-sen, then the Tenkan-sen and finally the cloud itself.
+
+More subtle interpretations involve the chikou span in particular and its action in relation to the cloud lines as well as the candles.
+
+It is outside the scope of this vignette to provide a full tutorial on the use of Ichimoku Kinko Hyo.
+
+### Context
+
+Ichimoku analysis is the latest evolution in refining candlestick charting techniques, which also originated from Japan in the 18th century. Actually developed during the mid-20th century, it gained popularity especially from the late 1990s onwards, and is now used on trading floors worldwide.
+
+The time periods have traditionally been calculated as 9, 26 and 52 based on manual data analysis performed in Japan in a pre-computer age where there was a 6-day working week resulting in 26 average trading days in a month. Although this bears little relevance to the current day, the use of these time periods has persisted as an 'industry norm' or 'accepted practice'. To use other periods would be meaningless in a sense as everyone uses these parameters and 'market psychology' can and often does create its own realities, independent of any fundamentals.
+
+However, there is no reason for the technique not to evolve, and to reflect changing trading realities, perhaps psychologically other parameters will become more relevant. This is why we allow the length of these periods to be set by the user. Please do so however with a strong note of caution: using other periods invalidates the traditional interpretations of Ichimoku Kinko Hyo.
+
+Also the use originated with daily candlesticks, and the most valid interpretation is still for daily data. However, it is equally used today for both shorter intra-day, e.g. 4-hour or hourly, and longer, e.g. weekly or monthly, charts.
+
+## A Typical Workflow
+```{r setup}
+library(ichimoku)
+```
+
+### data
+
+ichimoku works with dataframes and tabular data, and interfaces well with other R packages providing financial pricing data. The `ichimoku()` function is able to handle as input 'xts', 'data.frame', 'data.table', 'tibble', 'matrix' and possibly other 'data.frame' compatible objects. For further detail see the section [file formats](#file-formats).
+
+```{r loaddatanotrun, eval = FALSE}
+# ichimoku is designed to interface well with other packages, for example the following works:
+cloud <- ichimoku(quantmod::getSymbols("C"))
+```
+
+The requirement on the input data is minimal, but it should contain an unambiguous date-time index and also at least High/Low/Close (HLC) price values for each time period. This is as the calculations of the cloud lines use variously the closing price as well as the midpoint between the highs/lows. It is not possible to calculate the ichimoku cloud correctly using just a single price per time period.
+
+Full Open/High/Low/Close (OHLC) data should be used where available as this also allows accurate plotting of the candlesticks. If only HLC price data is available, ichimoku will assume the opening price is the closing price of the previous day, which may not typically be the case depending on type of security.
+
+```{r loaddata}
+# Sample synthetic data
+TKR <- data.frame(
+  Date = do.call(c, lapply(0:4, function (x) seq.POSIXt(
+    from = as.POSIXct(paste0("2020-01-", 7 * x + 1)), by = "1 day", l = 5))),
+  Open = c(10, seq(11.5, by = 1, l = 9), 20, 20, 18:16, 15:24),
+  TKR.high = c(12:21, 20.5, 20:18, 16, 16, 17:25),
+  lowprice = c(10:19, 18:14, 14, seq(15, by = 1, l = 9)),
+  px_Close = c(12, 12:20, 20, 18:15, seq(15.5, by = 1, l = 10))
+)
+```
+
+ichimoku is able to correctly recognise the data in the synthetic example above, even though the column headings are far from consistent. For further detail see the section [data validation](#data-validation).
+
+Note: always retrieve as much data as possible, or at least slightly further back than the window desired. Call `ichimoku()` on the full dataset and then susbset the data when plotting to ensure there is a full ichimoku cloud for all of the data period. This is better than first subsetting the data then calculating the ichimoku cloud as there will be NAs and hence no cloud at the start given some of the cloud lines are in effect rolling averages and need several values to be calculated.
+
+### ichimoku()
+
+`ichimoku()` is the main function of the ichimoku package. It takes the input data object and returns an ichimoku object, which inherits the classes 'ichimoku' and 'data.frame'.
+
+The returned object is consistently-formatted, with the following 12 columns:
+
+- date [unique date-time index]
+- open, high, low, close [candlestick values]
+- candle [candlestick direction]
+- tenkan, kijun, senkouA, senkouB, chikou [ichimoku cloud values]
+- id [integer sequence]
+
+The following attributes are also set:
+
+- ticker [identifier set by default to the input object name or overridden by specifying the 'ticker' argument to `ichimoku()`]
+- periodicity [calculated periodicity of the data in seconds]
+
+```{r ichimoku}
+cloud <- ichimoku(TKR, periods = c(2, 4, 8))
+print(cloud, plot = FALSE)
+```
+
+In the above example, print is called setting 'plot = FALSE' to return the dataframe without the plot.
+
+ichimoku objects employ a custom S3 print method which by default plots the cloud chart in the graphical device as well as returning the dataframe to the console. As ichimoku is primarily a visual charting technique, this is almost always the desired outcome.
+
+```{r ichimokunotrun, eval = FALSE}
+# to view data as well as chart, simply issue:
+cloud
+```
+
+Note: in assignment operations, where the output of `ichimoku()` is assigned to an object, the behaviour is quiet and nothing is printed (or plotted), as is the usual practice in R.
+
+`ichimoku()` may also be used on an ichimoku object to re-set its ticker to a new value, but will otherwise just invoke its `print()` method without re-calculating the cloud values.
+
+As an ichimoku object fully inherits the 'data.frame' class, all the existing methods for dataframes should work seamlessly.
+
+### plot()
+
+ichimoku offers the choice of 2 plotting systems: static (default) and interactive.
+
+##### 1. Static Plots
+
+The default which produces static plots has the advantage of being easily exportable to pdf or image formats in high resolution.
+
+ichimoku implements a custom S3 method for ggplot2's `autoplot()` function for objects of class 'ichimoku'. Although autoplot can be called directly on an ichimoku object, it is practically always better to call `plot()` instead as it is not only more convenient to type, but also able to mute most of ggplot2's verbose messaging.
+
+```{r plot}
+plot(cloud)
+```
+
+As the implementation is via ggplot2, the user is able to further amend or customise the resulting plot using any ggplot2 methods. The easiest way to do this would be to assign the output of `plot()` to an object, which will inherit the classes 'gg' and 'ggplot'. Further elements or layers can then easily be added or amended using ggplot2's `+` and `%+replace%` operators.
+
+```{r plotnotrun, eval = FALSE}
+# The following would work if you wanted to add/replace ggplot2 layers:
+plot <- plot(cloud)
+plot + ggplot2::theme_classic()
+```
+
+#### 2. Interactive Plots
+
+To use interactive charts, the 'plotly' package must first be installed. If 'plotly' is not available and you attempt to use interactive charting, ichimoku will issue a message but not automatically or forcefully install it for you. In this way, interactive charting is a fully  optional part of the package as we recognise that 'plotly' may not be available in all environments.
+
+To produce an interactive plot, it is possible simply to supply an argument `i = TRUE` to the `plot()` function. The interactive plot will be almost identical in format to the equivalent static plot.
+
+Alternatively, directly call ichimoku's `iplot()` function, which is (marginally) faster to type and possibly easier to remember. Calling `iplot()` will prove more reliable over time than having to remember to set a parameter for each plot.
+
+```{r iplotnotrun, eval = FALSE}
+# For interactive charting, take your pick of:
+iplot(cloud)
+# which is equivalent to:
+plot(cloud, i = TRUE)
+# which is also equivalent to, using argument position matching and abbreviation of TRUE:
+plot(cloud, T)
+```
+
+In a live analysis environment, as opposed to say extracting charts for reports, it is usually always preferable to work with interactive plots. This is simply due to the ease of use of being able to:
+
+- hover over the candles or cloud lines to read off the values at any given date-time
+- select an area of interest to zoom into
+- double click anywhere to quickly reset
+
+#### Plot customisation
+
+The default plot is shown above, but the plot functions allow for a good degree of built-in customisation for most envisioned use cases. The example below demonstrates the arguments that can be supplied to customise the plot.
+
+```{r plot2}
+plot(cloud, from = "2020-01-05", to = "2020-02-03", ticker = "TKR Co.", theme = "dark", gaps = TRUE)
+```
+
+The same arguments are used across `plot()` and `iplot()` functions:
+
+- '**from**' and '**to**': indispensible in a proper workflow. `ichimoku()` is run on a larger dataset than that of interest and then at the plotting stage, the data can be subset to the window of interest
+- '**ticker**': used to supply a different ticker to that stored in the ichimoku object, or alternatively a longer-form name or other text that will appear in the chart heading
+- '**theme**': [default 'default'] the following themes are currently also available: 'dark' and 'solarized'
+- '**gaps**': [default FALSE] Financial charts are conventionally shown without weekend or holiday gaps for non-trading days. Set to TRUE to use a true continuous time scale which does show these gaps
+
+## Troubleshooting
+
+#### File formats
+
+`ichimoku()` is a generic function that provides S3 methods for objects of class 'xts', 'data.frame' and 'matrix'. Other popular formats such as 'data.table' and 'tibble' also inherit the class 'data.frame' and hence also work with `ichimoku()`.
+
+ichimoku has been designed to be fully pipeable and interfaces well with popular packages that return financial data from the internet. For example, the `getSymbols()` function from the 'quantmod' package exhibits non-standard R behaviour which assigns the data into an object but returns a text string containing the name of the object. ichimoku handles such behaviour automatically such that the following works, allowing us to get from zero to a chart without the need to save intermediate objects:
+
+```{r pipe, eval = FALSE}
+# The following works:
+quantmod::getSymbols("C") %>% ichimoku() %>% plot()
+```
+
+For reading external raw data into R, if the file is not in a common format such as csv but some form of custom delimited text file, positive results have been obtained using the `fread()` function on default settings from the 'data.table' package. After importing data, please check that the date-time index is in an unambiguous format (ideally POSIXct), and that the pricing data is of type 'numeric' and not 'character'.
+
+#### Data validation
+
+ichimoku performs the following data validation steps before attempting to calculate the cloud values. Failure at any step causes `ichimoku()` to halt.
+
+1. Searches the rownames of the data object for a time index that is in, or can readily be convertible into, POSIXct format. Note: 'xts' objects are always indexed by a valid timestamp and ichimoku handles this without problem.
+
+  + [If not present] searches in column names containing 'Index', 'Date' or 'Time' (not case-dependent) for a time index that is in, or can readily be convertible into, POSIXct format
+
+2. Searches for HLC price data in columns with names containing 'High', 'Low' and 'Close' (not case-dependent) respectively.
+
+3. Searches for opening price data in a column with name containing 'Open' (not case-dependent).
+
+  + [If not found] calculates the opening prices as the closing price of the previous period
+
+There may be other issues with the input data that prevent the cloud values from being calculated, that is not handled explicitly by `ichimoku()`. For example:
+
+- Price data could be stored as type 'character' rather than 'numeric'. As this would be an unusual situation, it is safer for the function not to make assumptions
+- HLC price data could be in headerless columns or columns labelled "Op", Hi", "Lo", "Cl" for example. ichimoku errs on the side of caution and does not try to make guesses
+
+Please make sure the relevant data columns are adequately labelled before invoking `ichimoku()`.
+
+#### Dependencies
+
+The dependency on other packages is designed to be minimised to the extent possible. This package has the following package dependencies:
+
+- RcppRoll  - for fast rolling window calculations
+- timeDate - for calculating business days when calculating the future cloud
+- ggplot2 - the plotting system, fairly ubiquitous in R
+- rlang - for estoeric programming reasons arising from the use of ggplot2
+
+Optional dependency:
+
+- plotly - for interactive charting
+
+## Further resources
+
+Package website: https://shikokuchuo.net/ichimoku/
+
+The most recent version of the package may be found at https://github.com/shikokuchuo/ichimoku/
+
+---

@@ -1,0 +1,38 @@
+Package: ichimoku
+Type: Package
+Title: Ichimoku Kinko Hyo Cloud Charts
+Version: 0.1.0
+Description: An implementation of the Ichimoku Kinko Hyo charting technique,
+    also commonly known as 'cloud charts'. Originating from and popularised in
+    Japan, it is a refinement on candlestick charting that is in widespread use
+    on trading floors worldwide. Translating to 'one-glance equilibrium
+    chart', it allows the price action and market structure of financial
+    securities to be determined 'at-a-glance'. This package contains functions
+    to compute and plot both static and interactive ichimoku cloud charts.
+Authors@R: 
+    person(given = "Charlie",
+           family = "Gao",
+           role = c("aut", "cre"),
+           email = "charlie.gao@shikokuchuo.net")
+Author: Charlie Gao [aut, cre]
+Maintainer: Charlie Gao <charlie.gao@shikokuchuo.net>
+BugReports: https://github.com/shikokuchuo/ichimoku/issues
+License: GPL (>= 3)
+URL: https://shikokuchuo.net/ichimoku/, https://github.com/shikokuchuo/ichimoku/
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.1
+Imports:
+    ggplot2,
+    RcppRoll,
+    rlang,
+    timeDate
+Suggests: 
+    rmarkdown,
+    knitr,
+    plotly,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Depends: 
+    R (>= 2.10)
+VignetteBuilder: knitr

@@ -1,0 +1,53 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# ichimoku <img src='man/figures/logo.jpg' align="right" height="79" />
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+An implementation of the Ichimoku Kinko Hyo charting technique, also commonly known as 'cloud charts' in R. Translating to 'one-glance equilibrium chart', it allows the price action and market structure of financial securities to be determined 'at-a-glance'. This R package contains functions to compute and plot both static and interactive ichimoku cloud charts.
+
+## Installation
+
+You can install the released version of ichimoku from [CRAN](https://CRAN.R-project.org) with:
+
+``` r
+install.packages("ichimoku")
+```
+
+## Example
+
+Example based on synthetic data:
+
+```{r loaddata, echo = FALSE}
+# Sample synthetic data
+data <- data.frame(
+  Date = do.call(c, lapply(0:4, function (x) seq.POSIXt(
+    from = as.POSIXct(paste0("2020-01-", 7 * x + 1)), by = "1 day", l = 5))),
+  Open = c(10, seq(11.5, by = 1, l = 9), 20, 20, 18:16, 15:24),
+  TKR.high = c(12:21, 20.5, 20:18, 16, 16, 17:25),
+  lowprice = c(10:19, 18:14, 14, seq(15, by = 1, l = 9)),
+  px_Close = c(12, 12:20, 20, 18:15, seq(15.5, by = 1, l = 10))
+)
+```
+
+```{r example}
+library(ichimoku)
+
+cloud <- ichimoku(data, ticker = "TKR", periods = c(2, 4, 8))
+plot(cloud)
+```
+
