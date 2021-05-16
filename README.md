@@ -30,11 +30,11 @@ Example based on synthetic data:
 
 ``` r
 library(ichimoku)
-cloud <- ichimoku(data, ticker = "TKR", periods = c(2, 4, 8))
-plot(cloud)
+cloud <- ichimoku(data, ticker = "TKR")
+plot(cloud, from = "2020-05-01", to = "2020-12-03")
 ```
 
-<img src="man/figures/README-plot-1.png" width="672" height="480" />
+<img src="man/figures/README-plot-1.png" width="672" width="400" />
 
 ## Reference
 
