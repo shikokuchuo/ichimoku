@@ -23,7 +23,7 @@ An implementation of the Ichimoku Kinko Hyo charting technique, also commonly kn
 
 ## Installation
 
-You can install the released version of ichimoku from [Github](https://github.com) with:
+You can install the released version of ichimoku from [Github](https://github.com/shikokuchuo/ichimoku/) with:
 
 ``` r
 devtools::install_github("shikokuchuo/ichimoku")
@@ -50,3 +50,7 @@ library(ichimoku)
 cloud <- ichimoku(data, ticker = "TKR", periods = c(2, 4, 8))
 plot(cloud)
 ```
+
+## Reference
+
+R package site: https://shikokuchuo.net/ichimoku/

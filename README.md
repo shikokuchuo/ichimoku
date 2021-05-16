@@ -18,7 +18,7 @@ ichimoku cloud charts.
 ## Installation
 
 You can install the released version of ichimoku from
-[Github](https://github.com) with:
+[Github](https://github.com/shikokuchuo/ichimoku/) with:
 
 ``` r
 devtools::install_github("shikokuchuo/ichimoku")
@@ -35,3 +35,7 @@ plot(cloud)
 ```
 
 <img src="man/figures/README-plot-1.png" width="672" height="480" />
+
+## Reference
+
+R package site: <https://shikokuchuo.net/ichimoku/>
