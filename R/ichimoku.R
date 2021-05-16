@@ -86,6 +86,7 @@ ichimoku.matrix <- function(x, ticker, periods = c(9, 26, 52), ...) {
 #' @export
 #'
 ichimoku.data.frame <- function(x, ticker, periods = c(9, 26, 52), ...) {
+
   if(missing(ticker)) ticker <- deparse(substitute(x))
 
   tryPeriods <- tryCatch(stopifnot(is.vector(periods, mode = "numeric"), length(periods) == 3),
@@ -160,8 +161,7 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9, 26, 52), ...) {
     kijun = c(kijun, rep(NA, periods[2])),
     senkouA = c(rep(NA, periods[2]), senkouA),
     senkouB = c(rep(NA, periods[2]), senkouB),
-    chikou = c(chikou, rep(NA, periods[2])),
-    id = seq_along(c(date, extra))
+    chikou = c(chikou, rep(NA, periods[2]))
   )
   attr(cloud, "periodicity") <- as.numeric(periodicity, units = "secs")
   attr(cloud, "ticker") <- ticker
@@ -397,6 +397,7 @@ autoplot.ichimoku <- function(object, from, to, ticker, theme = "default", gaps 
 #' @export
 #'
 iplot <- function(x, from, to, ticker, theme = "default", gaps = FALSE, ...) {
+
   if(is.ichimoku(x)) {
     if (requireNamespace("plotly", quietly = TRUE)) {
       if (gaps == TRUE) {
@@ -466,6 +467,7 @@ iplot <- function(x, from, to, ticker, theme = "default", gaps = FALSE, ...) {
 #' @export
 #'
 plot.ichimoku <- function(x, i = FALSE, from, to, ticker, theme = "default", gaps = FALSE, ...) {
+
   if(i == TRUE) {
     iplot(x, from = from, to = to, ticker = ticker, theme = theme, gaps = gaps, ...)
   } else {

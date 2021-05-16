@@ -35,7 +35,7 @@ Example based on synthetic data:
 
 ```{r loaddata, echo = FALSE}
 # Sample synthetic data
-data <- data.frame(
+TKR <- data.frame(
         Date = c("2020-02-02","2020-02-03","2020-02-04",
                  "2020-02-05","2020-02-06","2020-02-07","2020-02-09",
                  "2020-02-10","2020-02-11","2020-02-12","2020-02-13","2020-02-14",
@@ -198,7 +198,7 @@ data <- data.frame(
 
 ```{r plot}
 library(ichimoku)
-cloud <- ichimoku(data, ticker = "TKR")
+cloud <- ichimoku(TKR)
 plot(cloud, from = "2020-05-01", to = "2020-12-03")
 ```
 
