@@ -4,6 +4,8 @@
 # ichimoku <img src='man/figures/logo.jpg' align="right" height="79" />
 
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/shikokuchuo/ichimoku/workflows/R-CMD-check/badge.svg)](https://github.com/shikokuchuo/ichimoku/actions)
 <!-- badges: end -->
 
 An implementation of the Ichimoku Kinko Hyo charting technique, also
@@ -16,10 +18,10 @@ ichimoku cloud charts.
 ## Installation
 
 You can install the released version of ichimoku from
-[CRAN](https://CRAN.R-project.org) with:
+[Github](https://github.com) with:
 
 ``` r
-install.packages("ichimoku")
+devtools::install_github("shikokuchuo/ichimoku")
 ```
 
 ## Example
@@ -28,9 +30,8 @@ Example based on synthetic data:
 
 ``` r
 library(ichimoku)
-
 cloud <- ichimoku(data, ticker = "TKR", periods = c(2, 4, 8))
 plot(cloud)
 ```
 
-<img src="man/figures/README-example-1.png" width="100%" />
+<img src="man/figures/README-plot-1.png" width="672" height="480" />
