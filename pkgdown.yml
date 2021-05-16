@@ -1,0 +1,10 @@
+pandoc: 2.7.3
+pkgdown: 1.6.1
+pkgdown_sha: ~
+articles:
+  reference: reference.html
+last_built: 2021-05-16T18:20Z
+urls:
+  reference: https://shikokuchuo.net/ichimoku/reference
+  article: https://shikokuchuo.net/ichimoku/articles
+
