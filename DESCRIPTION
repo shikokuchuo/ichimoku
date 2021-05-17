@@ -1,7 +1,7 @@
 Package: ichimoku
 Type: Package
 Title: Compute and Plot Ichimoku Kinko Hyo Cloud Charts
-Version: 0.1.0.9000
+Version: 0.1.0.9001
 Description: An implementation of the 'Ichimoku Kinko Hyo' charting system,
     also commonly known as 'cloud charts', providing both publication-ready
     and fully-interactive charts for analysis. Originating from and popularised
@@ -20,7 +20,6 @@ BugReports: https://github.com/shikokuchuo/ichimoku/issues
 License: GPL (>= 3)
 URL: https://shikokuchuo.net/ichimoku/, https://github.com/shikokuchuo/ichimoku/
 Encoding: UTF-8
-LazyData: true
 RoxygenNote: 7.1.1
 Imports:
     ggplot2,
