@@ -40,10 +40,10 @@
 
 
 <meta property="og:title" content="ichimoku — ichimoku" />
-<meta property="og:description" content="Create an ichimoku object containing the data values for all components of
-    the Ichimoku Kinko Hyo cloud chart, including the candlesticks as well as
-    the cloud lines themselves: Tenkan-sen, Kijun-sen, Senkou span A, Senkou
-    span B and Chikou span." />
+<meta property="og:description" content="Create an ichimoku object containing the computed values of all components of
+    the Ichimoku Kinko Hyo cloud chart, ready for plotting. The object
+    includes the candlesticks as well as the cloud lines themselves:
+    Tenkan-sen, Kijun-sen, Senkou span A, Senkou span B and Chikou span." />
 
 
 
@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.0001</span>
       </span>
     </div>
 
@@ -132,10 +132,10 @@
     </div>
 
     <div class="ref-description">
-    <p>Create an ichimoku object containing the data values for all components of
-    the Ichimoku Kinko Hyo cloud chart, including the candlesticks as well as
-    the cloud lines themselves: Tenkan-sen, Kijun-sen, Senkou span A, Senkou
-    span B and Chikou span.</p>
+    <p>Create an ichimoku object containing the computed values of all components of
+    the Ichimoku Kinko Hyo cloud chart, ready for plotting. The object
+    includes the candlesticks as well as the cloud lines themselves:
+    Tenkan-sen, Kijun-sen, Senkou span A, Senkou span B and Chikou span.</p>
     </div>
 
     <pre class="usage"><span class='fu'>ichimoku</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
@@ -185,9 +185,9 @@ traditional Ichimoku analysis.</p></td>
 
     <p>An ichimoku object is returned with S3 classes of 'ichimoku' and
     'data.frame'.</p>
-<p>This object contains a datetime index, OHLC pricing data, candlestick
-    direction, as well as the computed ichimoku cloud chart values, with
-    ticker and periodicity parameters set as attributes.</p>
+<p>This object contains a date-time index, OHLC pricing data, candlestick
+    direction, as well as the computed ichimoku cloud values, with ticker and
+    periodicity parameters set as attributes.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Calling an ichimoku object automatically invokes its print method,
