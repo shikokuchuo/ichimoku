@@ -6,27 +6,32 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/shikokuchuo/ichimoku/workflows/R-CMD-check/badge.svg)](https://github.com/shikokuchuo/ichimoku/actions)
+[![License: GPL
+v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 <!-- badges: end -->
 
-An implementation of the Ichimoku Kinko Hyo charting technique, also
-commonly known as ‘cloud charts’ in R. Translating to ‘one-glance
+An implementation of the ‘Ichimoku Kinko Hyo’ charting system, also
+commonly known as ‘cloud charts’, providing both publication-ready and
+fully-interactive charts for analysis. Originating from and popularised
+in Japan, the technique is a refinement on candlestick charting, in
+widespread use on trading floors worldwide. Translating to ‘one-glance
 equilibrium chart’, it allows the price action and market structure of
-financial securities to be determined ‘at-a-glance’. This R package
-contains functions to compute and plot both static and interactive
-ichimoku cloud charts.
+financial securities to be determined ‘at-a-glance’.
 
 ## Installation
 
-You can install the released version of ichimoku from
-[Github](https://github.com/shikokuchuo/ichimoku/) with:
+Install the development version of ichimoku from Github with:
 
 ``` r
+# install.packages("devtools")
 devtools::install_github("shikokuchuo/ichimoku")
 ```
 
 ## Example
 
-Example based on synthetic data:
+`TKR` is a data frame of OHLC pricing data.
+
+Simply `ichimoku()` and `plot()`.
 
 ``` r
 library(ichimoku)
@@ -34,7 +39,7 @@ cloud <- ichimoku(TKR)
 plot(cloud, from = "2020-05-01", to = "2020-12-03")
 ```
 
-<img src="man/figures/README-plot-1.png" width="672" width="480" />
+<img src="man/figures/README-plot-1.png" width="672" height="480" />
 
 ## Reference
 

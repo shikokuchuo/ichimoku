@@ -39,15 +39,15 @@ traditional Ichimoku analysis.}
 An ichimoku object is returned with S3 classes of 'ichimoku' and
     'data.frame'.
 
-    This object contains a datetime index, OHLC pricing data, candlestick
-    direction, as well as the computed ichimoku cloud chart values, with
-    ticker and periodicity parameters set as attributes.
+    This object contains a date-time index, OHLC pricing data, candlestick
+    direction, as well as the computed ichimoku cloud values, with ticker and
+    periodicity parameters set as attributes.
 }
 \description{
-Create an ichimoku object containing the data values for all components of
-    the Ichimoku Kinko Hyo cloud chart, including the candlesticks as well as
-    the cloud lines themselves: Tenkan-sen, Kijun-sen, Senkou span A, Senkou
-    span B and Chikou span.
+Create an ichimoku object containing the computed values of all components of
+    the Ichimoku Kinko Hyo cloud chart, ready for plotting. The object
+    includes the candlesticks as well as the cloud lines themselves:
+    Tenkan-sen, Kijun-sen, Senkou span A, Senkou span B and Chikou span.
 }
 \details{
 Calling an ichimoku object automatically invokes its print method,

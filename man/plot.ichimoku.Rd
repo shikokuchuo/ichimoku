@@ -38,8 +38,8 @@ Returns either a ggplot2 object with classes 'gg' and 'ggplot', or a
 Plot static or interactive Ichimoku Kinko Hyo cloud charts from ichimoku objects.
 }
 \details{
-This function is an S3 method for the generic function `plot()` for
-    class 'ichimoku'. It can be invoked by calling `plot(x)` on an object 'x'
+This function is an S3 method for the generic function plot() for
+    class 'ichimoku'. It can be invoked by calling plot(x) on an object 'x'
     of class 'ichimoku'.
 }
 \section{Further Details}{

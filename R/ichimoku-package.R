@@ -1,20 +1,20 @@
-#' ichimoku: Ichimoku Kinko Hyo Cloud Charts
+#' ichimoku: Compute and Plot Ichimoku Kinko Hyo Cloud Charts
 #'
-#' An implementation of the Ichimoku Kinko Hyo charting technique, also commonly
-#'     known as 'cloud charts'. Originating from and popularised in Japan, it is
-#'     a refinement on candlestick charting that is in widespread use on trading
-#'     floors worldwide. Translating to 'one-glance equilibrium chart', it
-#'     allows the price action and market structure of financial securities to
-#'     be determined 'at-a-glance'. This package contains functions to compute
-#'     and plot both static and interactive ichimoku cloud charts.
+#' An implementation of the 'Ichimoku Kinko Hyo' charting system, also commonly
+#' known as 'cloud charts', providing both publication-ready and fully-interactive
+#' charts for analysis. Originating from and popularised in Japan, the technique
+#' is a refinement on candlestick charting, in widespread use on trading floors
+#' worldwide. Translating to 'one-glance equilibrium chart', it allows the price
+#' action and market structure of financial securities to be determined
+#' 'at-a-glance'.
 #'
 #' @section Principal ichimoku functions:
 #' \itemize{
-#'     \item{\code{\link{ichimoku}}} {to create an ichimoku object}
+#'     \item{\code{\link{ichimoku}}} {to create an ichimoku object.}
 #'     \item{\code{\link{plot.ichimoku}}} {to plot an ichimoku cloud chart from
-#'     an ichimoku object}
+#'     an ichimoku object.}
 #'     \item{\code{\link{iplot}}} {to plot an interactive ichimoku cloud chart
-#'     from an ichimoku object}
+#'     from an ichimoku object.}
 #' }
 #' @author Charlie Gao <\email{charlie.gao@@shikokuchuo.net}>
 #' @references Package website:

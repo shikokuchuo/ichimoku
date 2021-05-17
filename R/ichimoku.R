@@ -2,10 +2,10 @@
 
 #' ichimoku
 #'
-#' Create an ichimoku object containing the data values for all components of
-#'     the Ichimoku Kinko Hyo cloud chart, including the candlesticks as well as
-#'     the cloud lines themselves: Tenkan-sen, Kijun-sen, Senkou span A, Senkou
-#'     span B and Chikou span.
+#' Create an ichimoku object containing the computed values of all components of
+#'     the Ichimoku Kinko Hyo cloud chart, ready for plotting. The object
+#'     includes the candlesticks as well as the cloud lines themselves:
+#'     Tenkan-sen, Kijun-sen, Senkou span A, Senkou span B and Chikou span.
 #'
 #' @param x a data.frame or other compatible object, which includes xts,
 #'     data.table, tibble, and matrix.
@@ -20,9 +20,9 @@
 #' @return An ichimoku object is returned with S3 classes of 'ichimoku' and
 #'     'data.frame'.
 #'
-#'     This object contains a datetime index, OHLC pricing data, candlestick
-#'     direction, as well as the computed ichimoku cloud chart values, with
-#'     ticker and periodicity parameters set as attributes.
+#'     This object contains a date-time index, OHLC pricing data, candlestick
+#'     direction, as well as the computed ichimoku cloud values, with ticker and
+#'     periodicity parameters set as attributes.
 #'
 #' @details Calling an ichimoku object automatically invokes its print method,
 #'     which in the absence of arguments, will produce a printout of the data to
@@ -186,7 +186,7 @@ ichimoku.default <- function(x = NULL, ticker, ...) {
 
 #' print.ichimoku
 #'
-#' Specialised print method for ichimoku objects.
+#' Custom print method for ichimoku objects.
 #'
 #' @param x an object of class 'ichimoku'.
 #' @param plot set to TRUE by default. Set to FALSE to prevent automatic
@@ -443,8 +443,8 @@ iplot <- function(x, from, to, ticker, theme = "default", gaps = FALSE, ...) {
 #'     plotly object with classes 'plotly' and 'htmlwidget' depending on the
 #'     parameters set.
 #'
-#' @details This function is an S3 method for the generic function `plot()` for
-#'     class 'ichimoku'. It can be invoked by calling `plot(x)` on an object 'x'
+#' @details This function is an S3 method for the generic function plot() for
+#'     class 'ichimoku'. It can be invoked by calling plot(x) on an object 'x'
 #'     of class 'ichimoku'.
 #'
 #' @section Further Details:

@@ -18,7 +18,7 @@ plotting of the ichimoku cloud chart.}
 The ichimoku object 'x' passed as parameter.
 }
 \description{
-Specialised print method for ichimoku objects.
+Custom print method for ichimoku objects.
 }
 \details{
 This function is an S3 method for the generic function print() for
