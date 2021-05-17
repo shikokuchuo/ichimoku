@@ -1,7 +1,7 @@
 Package: ichimoku
 Type: Package
 Title: Compute and Plot Ichimoku Kinko Hyo Cloud Charts
-Version: 0.1.0.0001
+Version: 0.1.0.9000
 Description: An implementation of the 'Ichimoku Kinko Hyo' charting system,
     also commonly known as 'cloud charts', providing both publication-ready
     and fully-interactive charts for analysis. Originating from and popularised

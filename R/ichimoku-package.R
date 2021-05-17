@@ -11,10 +11,10 @@
 #' @section Principal ichimoku functions:
 #' \itemize{
 #'     \item{\code{\link{ichimoku}}} {to create an ichimoku object.}
-#'     \item{\code{\link{plot.ichimoku}}} {to plot an ichimoku cloud chart from
-#'     an ichimoku object.}
-#'     \item{\code{\link{iplot}}} {to plot an interactive ichimoku cloud chart
-#'     from an ichimoku object.}
+#'     \item{\code{\link{plot.ichimoku}}} {to plot a cloud chart from an
+#'     ichimoku object.}
+#'     \item{\code{\link{iplot}}} {to plot an interactive cloud chart from an
+#'     ichimoku object.}
 #' }
 #' @author Charlie Gao <\email{charlie.gao@@shikokuchuo.net}>
 #' @references Package website:

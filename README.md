@@ -29,17 +29,17 @@ devtools::install_github("shikokuchuo/ichimoku")
 
 ## Example
 
-`TKR` is a data frame of OHLC pricing data.
-
 Simply `ichimoku()` and `plot()`.
 
 ``` r
 library(ichimoku)
+# TKR is a data frame of OHLC pricing data
 cloud <- ichimoku(TKR)
+# Plot ichimoku object
 plot(cloud, from = "2020-05-01", to = "2020-12-03")
 ```
 
-<img src="man/figures/README-plot-1.png" width="672" height="480" />
+<img src="man/figures/README-plot-1.png" width="672" width="480" />
 
 ## Reference
 

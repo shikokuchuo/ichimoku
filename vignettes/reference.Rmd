@@ -378,7 +378,7 @@ Please ensure the relevant data columns are appropriately labelled before invoki
 
 #### Dependencies
 
-The dependency on other packages is designed to be minimised to the extent possible. This package has the following package dependencies:
+The dependency on other packages is designed to be minimised to the extent possible. ichimoku has the following package dependencies:
 
 - RcppRoll  - for fast rolling window calculations
 - timeDate - for calculating business days when calculating the future cloud

@@ -2,10 +2,10 @@
 
 #' ichimoku
 #'
-#' Create an ichimoku object containing the computed values of all components of
-#'     the Ichimoku Kinko Hyo cloud chart, ready for plotting. The object
-#'     includes the candlesticks as well as the cloud lines themselves:
-#'     Tenkan-sen, Kijun-sen, Senkou span A, Senkou span B and Chikou span.
+#' Create an ichimoku object containing the values for all components of the
+#'     Ichimoku Kinko Hyo cloud chart, ready for plotting. The object includes
+#'     the candlesticks as well as the computed cloud lines: Tenkan-sen,
+#'     Kijun-sen, Senkou span A, Senkou span B and Chikou span.
 #'
 #' @param x a data.frame or other compatible object, which includes xts,
 #'     data.table, tibble, and matrix.
