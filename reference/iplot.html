@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9002</span>
       </span>
     </div>
 
@@ -183,13 +183,11 @@ days.</p></td>
     <code><a href='../articles/reference.html'>vignette("reference", package = "ichimoku")</a></code></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='co'># where 'cloud' is an ichimoku object created by the ichimoku() function:</span>
+    <pre class="examples"><div class='input'><span class='va'>cloud</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ichimoku.html'>ichimoku</a></span><span class='op'>(</span><span class='va'>sample_ohlc_data</span>, ticker <span class='op'>=</span> <span class='st'>"TKR"</span><span class='op'>)</span>
 
 <span class='fu'>iplot</span><span class='op'>(</span><span class='va'>cloud</span><span class='op'>)</span>
-<span class='fu'>iplot</span><span class='op'>(</span><span class='va'>cloud</span>, from <span class='op'>=</span> <span class='st'>"2020-01-15"</span>, to <span class='op'>=</span> <span class='st'>"2021-02-15"</span>, theme <span class='op'>=</span> <span class='st'>"dark"</span><span class='op'>)</span>
-<span class='fu'>iplot</span><span class='op'>(</span><span class='va'>cloud</span>, ticker <span class='op'>=</span> <span class='st'>"TKR"</span>, theme <span class='op'>=</span> <span class='st'>"solarized"</span>, gaps <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-<span class='op'>}</span>
+<span class='fu'>iplot</span><span class='op'>(</span><span class='va'>cloud</span>, from <span class='op'>=</span> <span class='st'>"2020-05-15"</span>, to <span class='op'>=</span> <span class='st'>"2020-10-30"</span>, theme <span class='op'>=</span> <span class='st'>"dark"</span><span class='op'>)</span>
+<span class='fu'>iplot</span><span class='op'>(</span><span class='va'>cloud</span>, ticker <span class='op'>=</span> <span class='st'>"TKR Co."</span>, theme <span class='op'>=</span> <span class='st'>"solarized"</span>, gaps <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
 </div></pre>
   </div>

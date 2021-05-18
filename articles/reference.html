@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9002</span>
       </span>
     </div>
 
@@ -137,16 +137,17 @@
 <p>The requirement on the input data is minimal, but it should contain an unambiguous date-time index and also at least High/Low/Close (HLC) price values for each time period. This is as the calculations of the cloud lines use variously the closing price as well as the midpoint between the highs/lows. It is not possible to calculate the ichimoku cloud correctly using just a single price per time period.</p>
 <p>Full Open/High/Low/Close (OHLC) data should be used where available as this also allows accurate plotting of the candlesticks. If only HLC price data is available, ichimoku will take the opening price to be the closing price of the previous period, which may or may not be a good assumption depending on type of security.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Some synthetic OHLC pricing data is loaded as a data frame 'TKR':</span>
+<code class="sourceCode R"><span class="co"># Synthetic OHLC pricing data is assigned to data frame 'TKR':</span>
+<span class="va">TKR</span> <span class="op">&lt;-</span> <span class="va">sample_ohlc_data</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">TKR</span><span class="op">)</span>
-<span class="co">#&gt;         Date  Open TKR.High lowprice px_close</span>
-<span class="co">#&gt; 1 2020-02-02 143.4    143.6    143.4    143.4</span>
-<span class="co">#&gt; 2 2020-02-03 143.4    143.5    142.5    142.7</span>
-<span class="co">#&gt; 3 2020-02-04 142.7    143.0    142.2    142.4</span>
-<span class="co">#&gt; 4 2020-02-05 142.4    142.7    141.8    141.8</span>
-<span class="co">#&gt; 5 2020-02-06 141.8    142.6    141.2    141.3</span>
-<span class="co">#&gt; 6 2020-02-07 141.3    143.0    141.1    142.7</span></code></pre></div>
-<p>ichimoku is able to correctly recognise the data in the example above, even though the column headings are far from consistent. For further detail see the section <a href="#data-validation">data validation</a>.</p>
+<span class="co">#&gt;         Date  Open  High   Low Close</span>
+<span class="co">#&gt; 1 2020-02-02 144.1 144.3 144.1 144.1</span>
+<span class="co">#&gt; 2 2020-02-03 144.1 144.2 143.2 143.4</span>
+<span class="co">#&gt; 3 2020-02-04 143.4 143.7 142.9 143.1</span>
+<span class="co">#&gt; 4 2020-02-05 143.1 143.4 142.5 142.5</span>
+<span class="co">#&gt; 5 2020-02-06 142.5 143.0 141.9 142.0</span>
+<span class="co">#&gt; 6 2020-02-07 142.0 143.7 141.8 143.4</span></code></pre></div>
+<p>ichimoku recognises data in columns containing “Open”, “High”, “Low” and “Close”, which do not have to be as nicely-formatted as in the example above and could also contain the ticker name etc. For further details see the section <a href="#data-validation">data validation</a>.</p>
 <p>Note: always retrieve as much data as possible, or at least slightly further back than the window desired. Call <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on the full dataset and then susbset the data when plotting to ensure there is a full ichimoku cloud for all of the desired period. This is better than first subsetting the data and then calculating the ichimoku cloud as there will be NAs and hence no cloud at the start given some of the cloud lines need several values to be calculated.</p>
 </div>
 <div id="ichimoku" class="section level3">
@@ -167,19 +168,20 @@
 </ul>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span><span class="op">)</span>
+
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">[</span><span class="fl">100</span><span class="op">:</span><span class="fl">110</span>,<span class="op">]</span>, plot <span class="op">=</span> <span class="cn">FALSE</span>, row.names <span class="op">=</span> <span class="cn">FALSE</span>, digits <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
 <span class="co">#&gt;        date  open  high   low close candle tenkan kijun senkouA senkouB chikou</span>
-<span class="co">#&gt;  2020-05-27 150.1 151.9 150.0 151.8     up  148.8 148.8   146.6   146.2  156.2</span>
-<span class="co">#&gt;  2020-05-28 151.8 152.3 151.1 151.3   down  149.0 149.0   146.6   146.2  156.4</span>
-<span class="co">#&gt;  2020-05-29 151.3 152.2 150.8 152.0     up  149.2 149.0   146.6   146.2  156.8</span>
-<span class="co">#&gt;  2020-05-31 152.0 152.3 151.9 152.3     up  149.6 149.0   147.6   146.6  157.2</span>
-<span class="co">#&gt;  2020-06-01 152.3 152.4 151.1 151.3   down  150.4 149.1   147.6   146.6  158.2</span>
-<span class="co">#&gt;  2020-06-02 151.3 152.1 151.3 151.5     up  150.7 149.1   147.6   146.6  159.4</span>
-<span class="co">#&gt;  2020-06-03 151.5 151.7 150.5 151.6     up  150.7 149.1   147.6   146.6  158.8</span>
-<span class="co">#&gt;  2020-06-04 151.6 151.9 151.3 151.7     up  150.7 149.1   147.6   146.6  158.9</span>
-<span class="co">#&gt;  2020-06-05 151.7 152.8 151.6 152.0     up  151.4 149.2   147.6   146.8  160.6</span>
-<span class="co">#&gt;  2020-06-07 152.0 152.2 151.9 152.1     up  151.7 149.2   147.7   146.8  160.7</span>
-<span class="co">#&gt;  2020-06-08 152.1 152.5 151.6 152.2     up  151.7 149.2   147.7   146.8  161.8</span></code></pre></div>
+<span class="co">#&gt;  2020-05-27 150.9 152.7 150.8 152.6     up  149.6 149.6   147.4   147.1  157.0</span>
+<span class="co">#&gt;  2020-05-28 152.6 153.1 151.9 152.1   down  149.8 149.8   147.4   147.1  157.2</span>
+<span class="co">#&gt;  2020-05-29 152.1 153.0 151.6 152.8     up  149.9 149.8   147.4   147.1  157.6</span>
+<span class="co">#&gt;  2020-05-31 152.8 153.1 152.7 153.1     up  150.3 149.8   148.3   147.4  158.0</span>
+<span class="co">#&gt;  2020-06-01 153.1 153.2 151.9 152.1   down  151.1 149.8   148.4   147.4  159.0</span>
+<span class="co">#&gt;  2020-06-02 152.1 152.9 152.1 152.3     up  151.4 149.8   148.4   147.4  160.2</span>
+<span class="co">#&gt;  2020-06-03 152.3 152.5 151.3 152.4     up  151.4 149.8   148.4   147.4  159.6</span>
+<span class="co">#&gt;  2020-06-04 152.4 152.7 152.1 152.5     up  151.4 149.8   148.4   147.4  159.7</span>
+<span class="co">#&gt;  2020-06-05 152.5 153.6 152.4 152.8     up  152.2 150.0   148.4   147.5  161.4</span>
+<span class="co">#&gt;  2020-06-07 152.8 153.0 152.7 152.9     up  152.4 150.0   148.4   147.5  161.5</span>
+<span class="co">#&gt;  2020-06-08 152.9 153.3 152.4 153.0     up  152.4 150.0   148.4   147.5  162.6</span></code></pre></div>
 <p>A section (rows 100 to 110) of the cloud object is shown above. Note that print is called setting ‘plot = FALSE’ to return the data frame without the plot.</p>
 <p>ichimoku objects employ a custom S3 print method which by default plots the cloud chart in the graphical device as well as returning the dataframe to the console. As ichimoku is primarily a visual charting technique, this is almost always the desired outcome.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -232,7 +234,7 @@
 <a href="#plot-customisation" class="anchor"></a>Plot customisation</h4>
 <p>A plot with default parameters is shown above, but the plot functions contain built-in customisations to allow for most envisioned use cases. The example below demonstrates the arguments that can be supplied to customise the plot.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">cloud</span>, from <span class="op">=</span> <span class="st">"2020-05-01"</span>, to <span class="op">=</span> <span class="st">"2020-10-03"</span>, ticker <span class="op">=</span> <span class="st">"TKR Co."</span>, theme <span class="op">=</span> <span class="st">"dark"</span>, gaps <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">cloud</span>, from <span class="op">=</span> <span class="st">"2020-05-01"</span>, to <span class="op">=</span> <span class="st">"2020-11-01"</span>, ticker <span class="op">=</span> <span class="st">"TKR Co."</span>, theme <span class="op">=</span> <span class="st">"dark"</span>, gaps <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p><img src="reference_files/figure-html/plot2-1.png" width="672"></p>
 <p>The same arguments are used across <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> and <code><a href="../reference/iplot.html">iplot()</a></code> functions:</p>
 <ul>
