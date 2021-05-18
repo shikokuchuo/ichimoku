@@ -6,12 +6,12 @@
 \title{ichimoku: Compute and Plot Ichimoku Kinko Hyo Cloud Charts}
 \description{
 An implementation of the 'Ichimoku Kinko Hyo' charting system, also commonly
-known as 'cloud charts', providing both publication-ready and fully-interactive
-charts for analysis. Originating from and popularised in Japan, the technique
-is a refinement on candlestick charting, in widespread use on trading floors
-worldwide. Translating to 'one-glance equilibrium chart', it allows the price
-action and market structure of financial securities to be determined
-'at-a-glance'.
+    known as 'cloud charts', providing both publication-ready and fully-interactive
+    charts for analysis. As described in Sasaki (1996, ISBN:4925152009), the
+    technique is a refinement on candlestick charting originating from Japan,
+    now in widespread use in technical analysis worldwide. Translating to
+    'one-glance equilibrium chart', it allows the market structure and price
+    action of financial securities to be determined at-a-glance'.
 }
 \section{Principal ichimoku functions}{
 

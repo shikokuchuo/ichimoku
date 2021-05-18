@@ -32,11 +32,9 @@ This function is an S3 method for the generic function print() for
 }
 
 \examples{
-\dontrun{
-# where 'cloud' is an ichimoku object created by the ichimoku() function:
+cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 
-print(cloud)
-print(cloud, plot = FALSE)
-}
+print(cloud, max = 110, row.names = FALSE, digits = 4)
+print(cloud[100:110,], plot = FALSE, row.names = FALSE, digits = 4)
 
 }

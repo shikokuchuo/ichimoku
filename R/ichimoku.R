@@ -42,10 +42,8 @@
 #'     \code{vignette("reference", package = "ichimoku")}
 #'
 #' @examples
-#' \dontrun{
-#' ichimoku(x)
-#' ichimoku(x, ticker = "TKR", periods = c(9, 26, 52))
-#' }
+#' cloud <- ichimoku(sample_ohlc_data)
+#' ichimoku(sample_ohlc_data, ticker = "TKR", periods = c(9, 26, 52))
 #'
 #' @rdname ichimoku
 #' @export
@@ -204,19 +202,17 @@ ichimoku.default <- function(x = NULL, ticker, ...) {
 #'     \code{vignette("reference", package = "ichimoku")}
 #'
 #' @examples
-#' \dontrun{
-#' # where 'cloud' is an ichimoku object created by the ichimoku() function:
+#' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 #'
-#' print(cloud)
-#' print(cloud, plot = FALSE)
-#' }
+#' print(cloud, max = 110, row.names = FALSE, digits = 4)
+#' print(cloud[100:110,], plot = FALSE, row.names = FALSE, digits = 4)
 #'
 #' @method print ichimoku
 #' @export
 #'
 print.ichimoku <- function(x, plot = TRUE, ...) {
-  NextMethod(print)
   if(plot == TRUE) plot.ichimoku(x, ...)
+  NextMethod(print)
   invisible(x)
 }
 
@@ -254,13 +250,11 @@ NULL
 #'     \code{vignette("reference", package = "ichimoku")}
 #'
 #' @examples
-#' \dontrun{
-#' # where 'cloud' is an ichimoku object created by the ichimoku() function:
+#' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 #'
 #' autoplot(cloud)
-#' autoplot(cloud, from = "2020-01-15", to = "2021-02-15", theme = "dark")
-#' autoplot(cloud, ticker = "TKR", theme = "solarized", gaps = TRUE)
-#' }
+#' autoplot(cloud, from = "2020-05-15", to = "2020-10-30", theme = "dark")
+#' autoplot(cloud, ticker = "TKR Co.", theme = "solarized", gaps = TRUE)
 #'
 #' @rdname autoplot.ichimoku
 #' @method autoplot ichimoku
@@ -321,7 +315,7 @@ autoplot.ichimoku <- function(object, from, to, ticker, theme = "default", gaps 
                     ymax = pmax(.data$open, .data$close),
                     colour = .data$candle, fill = .data$candle,
                     open = .data$open, close = .data$close,
-                    date = .data$date, na.rm = TRUE), size = 0.3) +
+                    date = .data$date), size = 0.3, na.rm = TRUE) +
       scale_x_datetime(breaks = function(x) pretty(x, n = 9),
                        labels = function(x) {
                          if(periodicity < 80000) {
@@ -386,13 +380,11 @@ autoplot.ichimoku <- function(object, from, to, ticker, theme = "default", gaps 
 #'     \code{vignette("reference", package = "ichimoku")}
 #'
 #' @examples
-#' \dontrun{
-#' # where 'cloud' is an ichimoku object created by the ichimoku() function:
+#' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 #'
 #' iplot(cloud)
-#' iplot(cloud, from = "2020-01-15", to = "2021-02-15", theme = "dark")
-#' iplot(cloud, ticker = "TKR", theme = "solarized", gaps = TRUE)
-#' }
+#' iplot(cloud, from = "2020-05-15", to = "2020-10-30", theme = "dark")
+#' iplot(cloud, ticker = "TKR Co.", theme = "solarized", gaps = TRUE)
 #'
 #' @export
 #'
@@ -452,16 +444,14 @@ iplot <- function(x, from, to, ticker, theme = "default", gaps = FALSE, ...) {
 #'     \code{vignette("reference", package = "ichimoku")}
 #'
 #' @examples
-#' \dontrun{
-#' # where 'cloud' is an ichimoku object created by the ichimoku() function:
+#' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 #'
 #' plot(cloud)
-#' plot(cloud, from = "2020-01-15", to = "2021-02-15", theme = "dark")
-#' plot(cloud, i = TRUE, ticker = "TKR", theme = "solarized", gaps = TRUE)
+#' plot(cloud, from = "2020-05-15", to = "2020-10-30", theme = "dark")
+#' plot(cloud, i = TRUE, ticker = "TKR Co.", theme = "solarized", gaps = TRUE)
 #'
 #' # quickest way to get to an interactive chart:
-#' plot(cloud, T)
-#' }
+#' # plot(cloud, T)
 #'
 #' @method plot ichimoku
 #' @export
@@ -486,12 +476,12 @@ plot.ichimoku <- function(x, i = FALSE, from, to, ticker, theme = "default", gap
 #' @return A logical value of TRUE if 'x' is of class 'ichimoku', otherwise FALSE.
 #'
 #' @examples
-#' \dontrun{
-#' # where 'cloud' is an ichimoku object created by the ichimoku() function:
+#' cloud <- ichimoku(sample_ohlc_data)
 #'
+#' # TRUE:
 #' is.ichimoku(cloud)
-#' # [1] TRUE
-#' }
+#' # FALSE:
+#' is.ichimoku(sample_ohlc_data)
 #'
 #' @export
 #'

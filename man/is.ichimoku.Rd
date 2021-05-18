@@ -16,11 +16,11 @@ A logical value of TRUE if 'x' is of class 'ichimoku', otherwise FALSE.
 A function for checking if an object is an ichimoku object.
 }
 \examples{
-\dontrun{
-# where 'cloud' is an ichimoku object created by the ichimoku() function:
+cloud <- ichimoku(sample_ohlc_data)
 
+# TRUE:
 is.ichimoku(cloud)
-# [1] TRUE
-}
+# FALSE:
+is.ichimoku(sample_ohlc_data)
 
 }

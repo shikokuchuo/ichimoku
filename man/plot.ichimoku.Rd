@@ -49,15 +49,13 @@ This function is an S3 method for the generic function plot() for
 }
 
 \examples{
-\dontrun{
-# where 'cloud' is an ichimoku object created by the ichimoku() function:
+cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 
 plot(cloud)
-plot(cloud, from = "2020-01-15", to = "2021-02-15", theme = "dark")
-plot(cloud, i = TRUE, ticker = "TKR", theme = "solarized", gaps = TRUE)
+plot(cloud, from = "2020-05-15", to = "2020-10-30", theme = "dark")
+plot(cloud, i = TRUE, ticker = "TKR Co.", theme = "solarized", gaps = TRUE)
 
 # quickest way to get to an interactive chart:
-plot(cloud, T)
-}
+# plot(cloud, T)
 
 }

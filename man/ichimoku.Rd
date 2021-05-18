@@ -70,9 +70,7 @@ Calling an ichimoku object automatically invokes its print method,
 }
 
 \examples{
-\dontrun{
-ichimoku(x)
-ichimoku(x, ticker = "TKR", periods = c(9, 26, 52))
-}
+cloud <- ichimoku(sample_ohlc_data)
+ichimoku(sample_ohlc_data, ticker = "TKR", periods = c(9, 26, 52))
 
 }

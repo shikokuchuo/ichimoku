@@ -45,12 +45,10 @@ This function is an S3 method for the generic function autoplot()
 }
 
 \examples{
-\dontrun{
-# where 'cloud' is an ichimoku object created by the ichimoku() function:
+cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 
 autoplot(cloud)
-autoplot(cloud, from = "2020-01-15", to = "2021-02-15", theme = "dark")
-autoplot(cloud, ticker = "TKR", theme = "solarized", gaps = TRUE)
-}
+autoplot(cloud, from = "2020-05-15", to = "2020-10-30", theme = "dark")
+autoplot(cloud, ticker = "TKR Co.", theme = "solarized", gaps = TRUE)
 
 }

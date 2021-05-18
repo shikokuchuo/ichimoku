@@ -39,12 +39,10 @@ Plot interactive Ichimoku Kinko Hyo cloud charts from ichimoku objects.
 }
 
 \examples{
-\dontrun{
-# where 'cloud' is an ichimoku object created by the ichimoku() function:
+cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 
 iplot(cloud)
-iplot(cloud, from = "2020-01-15", to = "2021-02-15", theme = "dark")
-iplot(cloud, ticker = "TKR", theme = "solarized", gaps = TRUE)
-}
+iplot(cloud, from = "2020-05-15", to = "2020-10-30", theme = "dark")
+iplot(cloud, ticker = "TKR Co.", theme = "solarized", gaps = TRUE)
 
 }
