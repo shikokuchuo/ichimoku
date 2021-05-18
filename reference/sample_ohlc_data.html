@@ -73,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9002</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9003</span>
       </span>
     </div>
 
@@ -152,79 +152,8 @@
     <p>Not applicable: synthetic data</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='ichimoku.html'>ichimoku</a></span><span class='op'>(</span><span class='va'>sample_ohlc_data</span>, ticker <span class='op'>=</span> <span class='st'>"TKR"</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>200</span><span class='op'>:</span><span class='fl'>234</span>,<span class='op'>]</span>
-</div><div class='img'><img src='sample_ohlc_data-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;           date  open  high   low close candle tenkan  kijun senkouA senkouB
-#&gt; 200 2020-09-21 164.1 165.1 163.2 164.7     up 164.75 162.65 165.325  162.60
-#&gt; 201 2020-09-22 164.7 165.4 164.0 164.3   down 164.75 162.65 165.325  162.60
-#&gt; 202 2020-09-23 164.3 166.1 164.0 165.6     up 164.75 162.65 165.300  162.60
-#&gt; 203 2020-09-24 165.6 166.0 164.2 164.9   down 164.75 162.65 165.300  162.60
-#&gt; 204 2020-09-25 164.9 165.3 163.8 164.7   down 164.90 162.65 165.200  162.90
-#&gt; 205 2020-09-27 164.5 165.6 164.5 165.3     up 164.90 162.65 164.900  162.95
-#&gt; 206 2020-09-28 165.3 165.6 162.7 163.4   down 164.70 162.65 164.700  163.00
-#&gt; 207 2020-09-29 163.4 164.4 163.3 164.3     up 164.40 162.65 164.925  163.40
-#&gt; 208 2020-09-30 164.3 164.6 162.8 163.5   down 164.40 162.65 163.225  163.75
-#&gt; 209 2020-10-01 163.5 164.0 163.0 163.9     up 164.40 162.80 163.175  163.70
-#&gt; 210 2020-10-02 163.9 164.1 163.4 164.1     up 164.40 163.30 163.175  163.70
-#&gt; 211 2020-10-04 164.0 164.2 164.0 164.0   flat 164.35 163.30 163.025  163.70
-#&gt; 212 2020-10-05 164.0 164.1 162.5 162.6   down 164.05 163.85 162.875  163.70
-#&gt; 213 2020-10-06 162.6 162.8 161.7 162.1   down 163.65 163.85 162.450  163.70
-#&gt; 214 2020-10-07 162.1 162.3 161.3 162.0   down 163.45 164.00 162.450  163.70
-#&gt; 215 2020-10-08 162.0 167.7 161.2 167.6     up 164.45 164.45 162.400  163.70
-#&gt; 216 2020-10-09 167.6 170.9 166.8 170.4     up 166.05 166.05 162.400  163.70
-#&gt; 217 2020-10-11 171.2 172.6 171.2 172.5     up 166.90 166.90 162.450  163.70
-#&gt; 218 2020-10-12 172.5 173.0 171.5 172.5   flat 167.10 167.10 162.975  163.70
-#&gt; 219 2020-10-13 172.5 173.3 171.5 172.5   flat 167.25 167.25 163.200  163.70
-#&gt; 220 2020-10-14 172.5 173.9 172.3 173.6     up 167.55 167.55 163.200  163.70
-#&gt; 221 2020-10-15 173.6 174.8 173.2 174.3     up 168.00 168.00 163.475  163.70
-#&gt; 222 2020-10-16 174.3 174.4 171.4 171.8   down 168.00 168.00 163.450  163.70
-#&gt; 223 2020-10-18 171.5 172.2 171.5 172.0     up 168.00 168.00 163.225  163.70
-#&gt; 224 2020-10-19 172.0 172.6 167.2 168.9   down 170.80 168.00 163.325  163.70
-#&gt; 225 2020-10-20 168.9 171.2 168.5 170.7     up 171.00 168.00 163.350  163.70
-#&gt; 226 2020-10-21 170.7 172.1 168.9 170.3   down 171.00 168.00 163.700  163.70
-#&gt; 227 2020-10-22 170.3 171.4 169.5 171.0     up 171.00 168.00 163.700  163.70
-#&gt; 228 2020-10-23 171.0 173.4 170.7 172.4     up 171.00 168.00 163.700  163.70
-#&gt; 229 2020-10-25 172.9 173.0 172.8 172.9   flat 171.00 168.00 163.700  163.70
-#&gt; 230 2020-10-26 172.9 173.1 171.8 172.6   down 170.80 168.00 163.775  163.70
-#&gt; 231 2020-10-27 172.6 172.9 170.9 172.6   flat 170.30 168.00 163.775  163.70
-#&gt; 232 2020-10-28 172.6 173.2 172.0 172.8     up 170.30 168.00 163.675  163.70
-#&gt; 233 2020-10-29 172.8 174.7 172.3 174.2     up 171.60 168.00 163.525  163.70
-#&gt; 234 2020-10-30 174.2 174.3 172.0 172.6   down 171.80 168.00 163.525  163.70
-#&gt;     chikou
-#&gt; 200  170.3
-#&gt; 201  171.0
-#&gt; 202  172.4
-#&gt; 203  172.9
-#&gt; 204  172.6
-#&gt; 205  172.6
-#&gt; 206  172.8
-#&gt; 207  174.2
-#&gt; 208  172.6
-#&gt; 209     NA
-#&gt; 210     NA
-#&gt; 211     NA
-#&gt; 212     NA
-#&gt; 213     NA
-#&gt; 214     NA
-#&gt; 215     NA
-#&gt; 216     NA
-#&gt; 217     NA
-#&gt; 218     NA
-#&gt; 219     NA
-#&gt; 220     NA
-#&gt; 221     NA
-#&gt; 222     NA
-#&gt; 223     NA
-#&gt; 224     NA
-#&gt; 225     NA
-#&gt; 226     NA
-#&gt; 227     NA
-#&gt; 228     NA
-#&gt; 229     NA
-#&gt; 230     NA
-#&gt; 231     NA
-#&gt; 232     NA
-#&gt; 233     NA
-#&gt; 234     NA</div><div class='input'>
+    <pre class="examples"><div class='input'><span class='va'>cloud</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ichimoku.html'>ichimoku</a></span><span class='op'>(</span><span class='va'>sample_ohlc_data</span>, ticker <span class='op'>=</span> <span class='st'>"TKR"</span><span class='op'>)</span>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
