@@ -53,9 +53,8 @@ cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 
 plot(cloud)
 plot(cloud, from = "2020-05-15", to = "2020-10-30", theme = "dark")
+\donttest{
 plot(cloud, i = TRUE, ticker = "TKR Co.", theme = "solarized", gaps = TRUE)
-
-# quickest way to get to an interactive chart:
-# plot(cloud, T)
+}
 
 }

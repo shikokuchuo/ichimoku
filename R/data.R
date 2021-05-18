@@ -15,6 +15,6 @@
 #' @usage sample_ohlc_data
 #' @source Not applicable: synthetic data
 #' @examples
-#' ichimoku(sample_ohlc_data, ticker = "TKR")[200:234,]
+#' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 #'
 "sample_ohlc_data"

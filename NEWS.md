@@ -1,5 +1,7 @@
-# ichimoku (development version)
+# ichimoku (development)
+2021-05-18
 
+* Added sample synthetic pricing dataset for examples and vignettes.
 * Documentation changes.
 
 # ichimoku 0.1.0

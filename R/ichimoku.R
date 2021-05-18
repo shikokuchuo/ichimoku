@@ -380,11 +380,13 @@ autoplot.ichimoku <- function(object, from, to, ticker, theme = "default", gaps 
 #'     \code{vignette("reference", package = "ichimoku")}
 #'
 #' @examples
+#' \donttest{
 #' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 #'
 #' iplot(cloud)
 #' iplot(cloud, from = "2020-05-15", to = "2020-10-30", theme = "dark")
 #' iplot(cloud, ticker = "TKR Co.", theme = "solarized", gaps = TRUE)
+#' }
 #'
 #' @export
 #'
@@ -448,10 +450,9 @@ iplot <- function(x, from, to, ticker, theme = "default", gaps = FALSE, ...) {
 #'
 #' plot(cloud)
 #' plot(cloud, from = "2020-05-15", to = "2020-10-30", theme = "dark")
+#' \donttest{
 #' plot(cloud, i = TRUE, ticker = "TKR Co.", theme = "solarized", gaps = TRUE)
-#'
-#' # quickest way to get to an interactive chart:
-#' # plot(cloud, T)
+#' }
 #'
 #' @method plot ichimoku
 #' @export

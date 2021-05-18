@@ -25,7 +25,7 @@ Synthetic prices for a hypothetical financial asset. Created for the purpose
     of demonstrating package functions in examples and vignettes only.
 }
 \examples{
-ichimoku(sample_ohlc_data, ticker = "TKR")[200:234,]
+cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 
 }
 \keyword{datasets}
