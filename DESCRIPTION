@@ -1,14 +1,14 @@
 Package: ichimoku
 Type: Package
 Title: Compute and Plot Ichimoku Kinko Hyo Cloud Charts
-Version: 0.1.0.9003
+Version: 0.1.2
 Description: An implementation of the 'Ichimoku Kinko Hyo' charting system, also
     commonly known as 'cloud charts', providing both publication-ready and
     fully-interactive charts for analysis. As described in Sasaki (1996,
     ISBN:4925152009), the technique is a refinement on candlestick charting
     originating from Japan, now in widespread use in technical analysis worldwide.
-    Translating to 'one-glance equilibrium chart', it allows the market structure
-    and price action of financial securities to be determined 'at-a-glance'. 
+    Translating to 'one-glance equilibrium chart', it allows the price action and
+    market structure of financial securities to be determined 'at-a-glance'. 
 Authors@R: 
     person(given = "Charlie",
            family = "Gao",

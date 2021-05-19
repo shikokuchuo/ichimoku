@@ -5,8 +5,8 @@
 #'     charts for analysis. As described in Sasaki (1996, ISBN:4925152009), the
 #'     technique is a refinement on candlestick charting originating from Japan,
 #'     now in widespread use in technical analysis worldwide. Translating to
-#'     'one-glance equilibrium chart', it allows the market structure and price
-#'     action of financial securities to be determined at-a-glance'.
+#'     'one-glance equilibrium chart', it allows the price action and market
+#'     structure of financial securities to be determined 'at-a-glance'.
 #'
 #' @section Principal ichimoku functions:
 #' \itemize{

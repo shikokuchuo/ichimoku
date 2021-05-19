@@ -13,10 +13,10 @@ v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/li
 An implementation of the ‘Ichimoku Kinko Hyo’ charting system, also
 commonly known as ‘cloud charts’, providing both publication-ready and
 fully-interactive charts for analysis. As described in Sasaki (1996,
-<ISBN:4925152009>), the technique is a refinement on candlestick
+ISBN:4925152009), the technique is a refinement on candlestick
 charting originating from Japan, now in widespread use in technical
 analysis worldwide. Translating to ‘one-glance equilibrium chart’, it
-allows the market structure and price action of financial securities to
+allows the price action and market structure of financial securities to
 be determined ‘at-a-glance’.
 
 ## Installation
