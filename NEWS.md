@@ -1,4 +1,8 @@
-# ichimoku 0.1.2
+# ichimoku (Development)
+
+* Updated with CRAN release status.
+
+# ichimoku 0.1.2 (CRAN)
 2021-05-18
 
 * Added sample synthetic pricing dataset for examples and vignettes.
