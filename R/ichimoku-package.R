@@ -24,7 +24,6 @@
 #'     \url{https://github.com/shikokuchuo/ichimoku/}
 #'
 #' @importFrom RcppRoll roll_maxr roll_minr
-#' @importFrom timeDate isBizday as.timeDate
 #' @importFrom ggplot2 ggplot aes geom_ribbon geom_line geom_linerange geom_rect
 #'     scale_color_manual scale_fill_manual guides scale_x_datetime
 #'     scale_x_continuous scale_y_continuous labs theme_light theme element_rect

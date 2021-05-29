@@ -13,11 +13,11 @@ ichimoku(x, ...)
 
 \method{ichimoku}{ichimoku}(x, ticker, ...)
 
-\method{ichimoku}{xts}(x, ticker, periods = c(9, 26, 52), ...)
+\method{ichimoku}{xts}(x, ticker, periods = c(9, 26, 52), holidays, ...)
 
-\method{ichimoku}{matrix}(x, ticker, periods = c(9, 26, 52), ...)
+\method{ichimoku}{matrix}(x, ticker, periods = c(9, 26, 52), holidays, ...)
 
-\method{ichimoku}{data.frame}(x, ticker, periods = c(9, 26, 52), ...)
+\method{ichimoku}{data.frame}(x, ticker, periods = c(9, 26, 52), holidays, ...)
 
 \method{ichimoku}{default}(x = NULL, ticker, ...)
 }
@@ -34,6 +34,10 @@ otherwise this will be set to the name of the input object 'x'.}
 with a default of c(9, 26, 52). This parameter shoud not normally be
 changed as using other values would be invalid in the context of
 traditional Ichimoku analysis.}
+
+\item{holidays}{(optional) a vector, or function which outputs a
+vector of dates to be excluded when calculating the future cloud. If not
+specified, New Year's and Christmas day are defined as holidays by default.}
 }
 \value{
 An ichimoku object is returned with S3 classes of 'ichimoku' and

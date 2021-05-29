@@ -1,6 +1,7 @@
 # ichimoku (development version)
 
 * Updated with CRAN release status.
+* Remove timeDate package dependency and allow customisation of holidays when calculating the future cloud.
 
 # ichimoku 0.1.2
 

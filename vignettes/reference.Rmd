@@ -87,6 +87,12 @@ Note: always retrieve as much data as possible, or at least slightly further bac
 
 `ichimoku()` is the main function of the ichimoku package. It takes the input data object and returns an ichimoku object, which inherits the classes 'ichimoku' and 'data.frame'.
 
+Arguments:
+
+- ticker - an identifier, which if set, will override the name of the object passed to ichimoku as the 'ticker'.
+- periods - defaults to c(9, 26, 52), which are the correct parameters for traditional Ichimoku analysis.
+- holidays - if not set, New Year's and Christmas day are defined as holidays by default. Functions such as 'holidayLONDON()' or 'holidayNYSE()' from the 'timeDate' package may be used to generate holidays for particular markets as appropriate. The only use of this parameter is to exclude the specified days when calculating the future cloud.
+
 The returned object is of a consistent format, with the following 11 columns:
 
 - date [unique date-time index]
@@ -201,13 +207,13 @@ ichimoku performs the following data validation steps before attempting to compu
 
 1. Searches the rownames of the data object for a time index that is in, or can readily be convertible into, POSIXct format. Note: 'xts' objects are always indexed by a valid timestamp and ichimoku handles this automatically.
 
-  + [If not found] searches in column names containing 'Index', 'Date' or 'Time' (not case-dependent) for a time index that is in, or can readily be convertible into, POSIXct format.
+  + *If not found:* searches in column names containing 'Index', 'Date' or 'Time' (not case-dependent) for a time index that is in, or can readily be convertible into, POSIXct format.
 
 2. Searches for HLC price data in columns with names containing 'High', 'Low' and 'Close' (not case-dependent) respectively.
 
 3. Searches for opening price data in a column with name containing 'Open' (not case-dependent).
 
-  + [If not found] sets the opening prices to be the closing prices of the previous period.
+  + *If not found:* sets the opening prices to be the closing prices of the previous period.
 
 There may be other issues with the input data that prevent the cloud values from being computed, not handled explicitly by `ichimoku()`. For example:
 
@@ -221,9 +227,8 @@ Please ensure the relevant data columns are appropriately labelled before invoki
 The dependency on other packages is designed to be minimised to the extent possible. ichimoku has the following package dependencies:
 
 - RcppRoll  - for fast rolling window calculations
-- timeDate - for calculating business days when calculating the future cloud
 - ggplot2 - the widely-used R graphics system
-- rlang - for estoeric programming reasons arising from the use of ggplot2
+- rlang - for programming reasons arising from the use of ggplot2
 
 Optional dependency:
 

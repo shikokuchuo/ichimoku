@@ -15,6 +15,9 @@
 #'     with a default of c(9, 26, 52). This parameter shoud not normally be
 #'     changed as using other values would be invalid in the context of
 #'     traditional Ichimoku analysis.
+#' @param holidays (optional) a vector, or function which outputs a
+#'     vector of dates to be excluded when calculating the future cloud. If not
+#'     specified, New Year's and Christmas day are defined as holidays by default.
 #' @param ... other arguments to be passed along.
 #'
 #' @return An ichimoku object is returned with S3 classes of 'ichimoku' and
@@ -63,27 +66,27 @@ ichimoku.ichimoku <- function(x, ticker, ...) {
 #' @method ichimoku xts
 #' @export
 #'
-ichimoku.xts <- function(x, ticker, periods = c(9, 26, 52), ...) {
+ichimoku.xts <- function(x, ticker, periods = c(9, 26, 52), holidays, ...) {
   if(missing(ticker)) ticker <- deparse(substitute(x))
   x <- as.data.frame(x)
-  ichimoku.data.frame(x, ticker = ticker, periods = periods, ...)
+  ichimoku.data.frame(x, ticker = ticker, periods = periods, holidays = holidays, ...)
 }
 
 #' @rdname ichimoku
 #' @method ichimoku matrix
 #' @export
 #'
-ichimoku.matrix <- function(x, ticker, periods = c(9, 26, 52), ...) {
+ichimoku.matrix <- function(x, ticker, periods = c(9, 26, 52), holidays, ...) {
   if(missing(ticker)) ticker <- deparse(substitute(x))
   x <- as.data.frame(x)
-  ichimoku.data.frame(x, ticker = ticker, periods = periods, ...)
+  ichimoku.data.frame(x, ticker = ticker, periods = periods, holidays = holidays, ...)
 }
 
 #' @rdname ichimoku
 #' @method ichimoku data.frame
 #' @export
 #'
-ichimoku.data.frame <- function(x, ticker, periods = c(9, 26, 52), ...) {
+ichimoku.data.frame <- function(x, ticker, periods = c(9, 26, 52), holidays, ...) {
 
   if(missing(ticker)) ticker <- deparse(substitute(x))
 
@@ -142,7 +145,20 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9, 26, 52), ...) {
   extra <- seq.POSIXt(from = date[nrow(x)], by = periodicity,
                       length.out = periods[2] * 2)[-1]
   if(attr(periodicity, "units") == "days") {
-    extra <- extra[isBizday(as.timeDate(extra))][1:periods[2]]
+    baseyear <- as.POSIXlt(date[nrow(x)])$year + 1900
+    if(missing(holidays)) holidays <- c(as.POSIXct(paste0(baseyear, "-12-25")),
+                                        as.POSIXct(paste0(baseyear + 1, "-01-01"))
+                                        )
+    holidays <- tryCatch(as.POSIXct(holidays),
+                         error = function(e) {
+                           warning("ichimoku: specified holidays are invalid - disregarding",
+                                   call. = FALSE)
+                           c(as.POSIXct(paste0(baseyear, "-12-25")),
+                             as.POSIXct(paste0(baseyear + 1, "-01-01"))
+                           )
+                         }
+    )
+    extra <- extra[as.POSIXlt(extra)$wday %in% 1:5 & !extra %in% holidays][1:periods[2]]
   } else {
     extra <- extra[1:periods[2]]
   }
