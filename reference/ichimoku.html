@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2.9001</span>
       </span>
     </div>
 
@@ -144,13 +144,13 @@
 <span class='fu'>ichimoku</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>ticker</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for xts</span>
-<span class='fu'>ichimoku</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>ticker</span>, periods <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>9</span>, <span class='fl'>26</span>, <span class='fl'>52</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>ichimoku</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>ticker</span>, periods <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>9</span>, <span class='fl'>26</span>, <span class='fl'>52</span><span class='op'>)</span>, <span class='va'>holidays</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for matrix</span>
-<span class='fu'>ichimoku</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>ticker</span>, periods <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>9</span>, <span class='fl'>26</span>, <span class='fl'>52</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>ichimoku</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>ticker</span>, periods <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>9</span>, <span class='fl'>26</span>, <span class='fl'>52</span><span class='op'>)</span>, <span class='va'>holidays</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for data.frame</span>
-<span class='fu'>ichimoku</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>ticker</span>, periods <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>9</span>, <span class='fl'>26</span>, <span class='fl'>52</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>ichimoku</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>ticker</span>, periods <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>9</span>, <span class='fl'>26</span>, <span class='fl'>52</span><span class='op'>)</span>, <span class='va'>holidays</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for default</span>
 <span class='fu'>ichimoku</span><span class='op'>(</span>x <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>ticker</span>, <span class='va'>...</span><span class='op'>)</span></pre>
@@ -178,6 +178,12 @@ otherwise this will be set to the name of the input object 'x'.</p></td>
 with a default of c(9, 26, 52). This parameter shoud not normally be
 changed as using other values would be invalid in the context of
 traditional Ichimoku analysis.</p></td>
+    </tr>
+    <tr>
+      <th>holidays</th>
+      <td><p>(optional) a vector, or function which outputs a
+vector of dates to be excluded when calculating the future cloud. If not
+specified, New Year's and Christmas day are defined as holidays by default.</p></td>
     </tr>
     </table>
 

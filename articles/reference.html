@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2.9001</span>
       </span>
     </div>
 
@@ -154,6 +154,12 @@
 <h3 class="hasAnchor">
 <a href="#ichimoku" class="anchor"></a>ichimoku()</h3>
 <p><code><a href="../reference/ichimoku.html">ichimoku()</a></code> is the main function of the ichimoku package. It takes the input data object and returns an ichimoku object, which inherits the classes ‘ichimoku’ and ‘data.frame’.</p>
+<p>Arguments:</p>
+<ul>
+<li>ticker - an identifier, which if set, will override the name of the object passed to ichimoku as the ‘ticker’.</li>
+<li>periods - defaults to c(9, 26, 52), which are the correct parameters for traditional Ichimoku analysis.</li>
+<li>holidays - if not set, New Year’s and Christmas day are defined as holidays by default. Functions such as ‘holidayLONDON()’ or ‘holidayNYSE()’ from the ‘timeDate’ package may be used to generate holidays for particular markets as appropriate. The only use of this parameter is to exclude the specified days when calculating the future cloud.</li>
+</ul>
 <p>The returned object is of a consistent format, with the following 11 columns:</p>
 <ul>
 <li>date [unique date-time index]</li>
@@ -267,14 +273,16 @@
 <li>Searches the rownames of the data object for a time index that is in, or can readily be convertible into, POSIXct format. Note: ‘xts’ objects are always indexed by a valid timestamp and ichimoku handles this automatically.</li>
 </ol>
 <ul>
-<li>[If not found] searches in column names containing ‘Index’, ‘Date’ or ‘Time’ (not case-dependent) for a time index that is in, or can readily be convertible into, POSIXct format.</li>
+<li>
+<em>If not found:</em> searches in column names containing ‘Index’, ‘Date’ or ‘Time’ (not case-dependent) for a time index that is in, or can readily be convertible into, POSIXct format.</li>
 </ul>
 <ol start="2" style="list-style-type: decimal">
 <li><p>Searches for HLC price data in columns with names containing ‘High’, ‘Low’ and ‘Close’ (not case-dependent) respectively.</p></li>
 <li><p>Searches for opening price data in a column with name containing ‘Open’ (not case-dependent).</p></li>
 </ol>
 <ul>
-<li>[If not found] sets the opening prices to be the closing prices of the previous period.</li>
+<li>
+<em>If not found:</em> sets the opening prices to be the closing prices of the previous period.</li>
 </ul>
 <p>There may be other issues with the input data that prevent the cloud values from being computed, not handled explicitly by <code><a href="../reference/ichimoku.html">ichimoku()</a></code>. For example:</p>
 <ul>
@@ -289,9 +297,8 @@
 <p>The dependency on other packages is designed to be minimised to the extent possible. ichimoku has the following package dependencies:</p>
 <ul>
 <li>RcppRoll - for fast rolling window calculations</li>
-<li>timeDate - for calculating business days when calculating the future cloud</li>
 <li>ggplot2 - the widely-used R graphics system</li>
-<li>rlang - for estoeric programming reasons arising from the use of ggplot2</li>
+<li>rlang - for programming reasons arising from the use of ggplot2</li>
 </ul>
 <p>Optional dependency:</p>
 <ul>
