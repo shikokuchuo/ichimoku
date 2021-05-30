@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Changelog • ichimoku</title>
+<title>Check if Dates are Trading Days — tradingDays • ichimoku</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,8 @@
 
 
 
-<meta property="og:title" content="Changelog" />
+<meta property="og:title" content="Check if Dates are Trading Days — tradingDays" />
+<meta property="og:description" content="A function for checking if specified dates are trading days." />
 
 
 
@@ -58,7 +59,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-news">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -122,44 +123,52 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1 data-toc-skip>Changelog <small></small></h1>
-      <small>Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
+    <h1>Check if Dates are Trading Days</h1>
+    <small class="dont-index">Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
+    <div class="hidden name"><code>tradingDays.Rd</code></div>
     </div>
 
-    <div id="ichimoku-development-version" class="section level1">
-<h1 class="page-header" data-toc-text="development version">
-<a href="#ichimoku-development-version" class="anchor"></a>ichimoku (development version)<small> Unreleased </small>
-</h1>
-<ul>
-<li>Updated with CRAN release status.</li>
-<li>Remove timeDate package dependency and allow customisation of holidays when calculating the future cloud.</li>
-</ul>
-</div>
-    <div id="ichimoku-012" class="section level1">
-<h1 class="page-header" data-toc-text="0.1.2">
-<a href="#ichimoku-012" class="anchor"></a>ichimoku 0.1.2<small> 2021-05-19 </small>
-</h1>
-<ul>
-<li>Added sample synthetic pricing dataset for examples and vignettes.</li>
-<li>Documentation changes for CRAN release.</li>
-</ul>
-</div>
-    <div id="ichimoku-010" class="section level1">
-<h1 class="page-header" data-toc-text="0.1.0">
-<a href="#ichimoku-010" class="anchor"></a>ichimoku 0.1.0<small> Unreleased </small>
-</h1>
-<ul>
-<li>This is the first pre-release of ichimoku.</li>
-</ul>
-</div>
-  </div>
+    <div class="ref-description">
+    <p>A function for checking if specified dates are trading days.</p>
+    </div>
 
+    <pre class="usage"><span class='fu'>tradingDays</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>holidays</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>a POSIXct date object, or vector of POSIXct date objects.</p></td>
+    </tr>
+    <tr>
+      <th>holidays</th>
+      <td><p>(optional) a vector, or function which outputs a
+vector, of dates defined as holidays. If not specified, New Year's and
+Christmas day are defined as holidays by default.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>other arguments to be passed along.</p></td>
+    </tr>
+    </table>
+
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A vector of logical values: TRUE if the corresponding element of 'x'
+    is a weekday and not a holiday, otherwise FALSE.</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>tradingDays</span><span class='op'>(</span><span class='va'>sample_ohlc_data</span><span class='op'>$</span><span class='va'>Date</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>7</span><span class='op'>]</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 2020-02-02 2020-02-03 2020-02-04 2020-02-05 2020-02-06 2020-02-07 2020-02-09 
+#&gt;      FALSE       TRUE       TRUE       TRUE       TRUE       TRUE      FALSE </div><div class='input'>
+</div></pre>
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
     </nav>
   </div>
-
 </div>
 
 
