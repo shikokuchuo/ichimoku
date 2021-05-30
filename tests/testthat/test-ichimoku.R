@@ -20,3 +20,9 @@ test_that("is.ichimoku passes", {
   expect_true(is.ichimoku(cloud))
   expect_false(is.ichimoku(sample_ohlc_data))
 })
+
+test_that("tradingDays passes", {
+  expect_true(tradingDays(sample_ohlc_data$Date[2], holidays = NULL))
+  expect_false(tradingDays(sample_ohlc_data$Date[1]))
+  expect_vector(tradingDays(sample_ohlc_data$Date[1:3]), ptype = logical(), size = 3)
+})

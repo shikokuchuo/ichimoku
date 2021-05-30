@@ -13,11 +13,11 @@ ichimoku(x, ...)
 
 \method{ichimoku}{ichimoku}(x, ticker, ...)
 
-\method{ichimoku}{xts}(x, ticker, periods = c(9, 26, 52), holidays, ...)
+\method{ichimoku}{xts}(x, ticker, periods = c(9, 26, 52), ...)
 
-\method{ichimoku}{matrix}(x, ticker, periods = c(9, 26, 52), holidays, ...)
+\method{ichimoku}{matrix}(x, ticker, periods = c(9, 26, 52), ...)
 
-\method{ichimoku}{data.frame}(x, ticker, periods = c(9, 26, 52), holidays, ...)
+\method{ichimoku}{data.frame}(x, ticker, periods = c(9, 26, 52), ...)
 
 \method{ichimoku}{default}(x = NULL, ticker, ...)
 }
@@ -25,19 +25,17 @@ ichimoku(x, ...)
 \item{x}{a data.frame or other compatible object, which includes xts,
 data.table, tibble, and matrix.}
 
-\item{...}{other arguments to be passed along.}
+\item{...}{other arguments to be passed along. For instance, 'holidays' may
+be passed to the \link{tradingDays} function, used by ichimoku when
+calculating the future cloud.}
 
 \item{ticker}{(optional) specify a ticker to identify the instrument,
-otherwise this will be set to the name of the input object 'x'.}
+otherwise this is set to the name of the input object 'x'.}
 
 \item{periods}{a vector defining the length of periods used for the cloud,
 with a default of c(9, 26, 52). This parameter shoud not normally be
 changed as using other values would be invalid in the context of
 traditional Ichimoku analysis.}
-
-\item{holidays}{(optional) a vector, or function which outputs a
-vector of dates to be excluded when calculating the future cloud. If not
-specified, New Year's and Christmas day are defined as holidays by default.}
 }
 \value{
 An ichimoku object is returned with S3 classes of 'ichimoku' and

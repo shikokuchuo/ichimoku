@@ -10,15 +10,14 @@
 #' @param x a data.frame or other compatible object, which includes xts,
 #'     data.table, tibble, and matrix.
 #' @param ticker (optional) specify a ticker to identify the instrument,
-#'     otherwise this will be set to the name of the input object 'x'.
+#'     otherwise this is set to the name of the input object 'x'.
 #' @param periods a vector defining the length of periods used for the cloud,
 #'     with a default of c(9, 26, 52). This parameter shoud not normally be
 #'     changed as using other values would be invalid in the context of
 #'     traditional Ichimoku analysis.
-#' @param holidays (optional) a vector, or function which outputs a
-#'     vector of dates to be excluded when calculating the future cloud. If not
-#'     specified, New Year's and Christmas day are defined as holidays by default.
-#' @param ... other arguments to be passed along.
+#' @param ... other arguments to be passed along. For instance, 'holidays' may
+#'     be passed to the \link{tradingDays} function, used by ichimoku when
+#'     calculating the future cloud.
 #'
 #' @return An ichimoku object is returned with S3 classes of 'ichimoku' and
 #'     'data.frame'.
@@ -66,27 +65,27 @@ ichimoku.ichimoku <- function(x, ticker, ...) {
 #' @method ichimoku xts
 #' @export
 #'
-ichimoku.xts <- function(x, ticker, periods = c(9, 26, 52), holidays, ...) {
+ichimoku.xts <- function(x, ticker, periods = c(9, 26, 52), ...) {
   if(missing(ticker)) ticker <- deparse(substitute(x))
   x <- as.data.frame(x)
-  ichimoku.data.frame(x, ticker = ticker, periods = periods, holidays = holidays, ...)
+  ichimoku.data.frame(x, ticker = ticker, periods = periods, ...)
 }
 
 #' @rdname ichimoku
 #' @method ichimoku matrix
 #' @export
 #'
-ichimoku.matrix <- function(x, ticker, periods = c(9, 26, 52), holidays, ...) {
+ichimoku.matrix <- function(x, ticker, periods = c(9, 26, 52), ...) {
   if(missing(ticker)) ticker <- deparse(substitute(x))
   x <- as.data.frame(x)
-  ichimoku.data.frame(x, ticker = ticker, periods = periods, holidays = holidays, ...)
+  ichimoku.data.frame(x, ticker = ticker, periods = periods, ...)
 }
 
 #' @rdname ichimoku
 #' @method ichimoku data.frame
 #' @export
 #'
-ichimoku.data.frame <- function(x, ticker, periods = c(9, 26, 52), holidays, ...) {
+ichimoku.data.frame <- function(x, ticker, periods = c(9, 26, 52), ...) {
 
   if(missing(ticker)) ticker <- deparse(substitute(x))
 
@@ -145,20 +144,7 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9, 26, 52), holidays, ...
   extra <- seq.POSIXt(from = date[nrow(x)], by = periodicity,
                       length.out = periods[2] * 2)[-1]
   if(attr(periodicity, "units") == "days") {
-    baseyear <- as.POSIXlt(date[nrow(x)])$year + 1900
-    if(missing(holidays)) holidays <- c(as.POSIXct(paste0(baseyear, "-12-25")),
-                                        as.POSIXct(paste0(baseyear + 1, "-01-01"))
-                                        )
-    holidays <- tryCatch(as.POSIXct(holidays),
-                         error = function(e) {
-                           warning("ichimoku: specified holidays are invalid - disregarding",
-                                   call. = FALSE)
-                           c(as.POSIXct(paste0(baseyear, "-12-25")),
-                             as.POSIXct(paste0(baseyear + 1, "-01-01"))
-                           )
-                         }
-    )
-    extra <- extra[as.POSIXlt(extra)$wday %in% 1:5 & !extra %in% holidays][1:periods[2]]
+    extra <- extra[tradingDays(extra, ...)][1:periods[2]]
   } else {
     extra <- extra[1:periods[2]]
   }
