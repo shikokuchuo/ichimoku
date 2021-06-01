@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2.9002</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2.9003</span>
       </span>
     </div>
 
@@ -161,7 +161,7 @@
 <li>
 <strong>periods</strong>: [default c(9, 26, 52)] a vector defining the length of periods used for the cloud. This parameter shoud not normally be changed as using other values would be invalid in the context of traditional Ichimoku analysis.</li>
 <li>
-<strong>…</strong> other arguments to be passed along. For instance, to the <code><a href="../reference/tradingDays.html">tradingDays()</a></code> function, which is used by ichimoku to exclude weekend and holiday dates when calculating the future cloud. By default, New Year’s and Christmas day are defined as holidays. Additional holidays may be set via a ‘holidays’ argument. For example <code>holidays = timeDate::holidayLONDON()</code> or <code>holidays = timeDate::holidayNYSE()</code>, utilising functions that return a vector of dates from the ‘timeDate’ package.</li>
+<strong>…</strong> other arguments to be passed along. For instance, to the <code><a href="../reference/tradingDays.html">tradingDays()</a></code> function, which is used by ichimoku to exclude weekend and holiday dates when calculating the future cloud. By default, New Year’s and Christmas day are defined as holidays. Additional holidays may be defined via a ‘holidays’ argument. For example <code>holidays = timeDate::holidayLONDON()</code> or <code>holidays = timeDate::holidayNYSE()</code>, utilising functions from the ‘timeDate’ package that return a vector of dates.</li>
 </ul>
 <p>The returned object is of a consistent format, with the following 11 columns:</p>
 <ul>
