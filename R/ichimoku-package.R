@@ -27,7 +27,7 @@
 #' @importFrom ggplot2 ggplot aes geom_ribbon geom_line geom_linerange geom_rect
 #'     scale_color_manual scale_fill_manual guides scale_x_datetime
 #'     scale_x_continuous scale_y_continuous labs theme_light theme element_rect
-#'     element_line element_text rel
+#'     element_line element_text
 #' @importFrom rlang .data
 #'
 #' @docType package

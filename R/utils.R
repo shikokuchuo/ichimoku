@@ -36,6 +36,5 @@ tradingDays <- function(x, holidays, ...) {
     if(!as.POSIXlt(y)$wday %in% 1:5) FALSE
     else if(y %in% i) FALSE
     else TRUE
-  }, logical(1))
+  }, logical(1), USE.NAMES = FALSE)
 }
-

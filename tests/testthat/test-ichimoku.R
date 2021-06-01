@@ -1,6 +1,6 @@
 cloud <- ichimoku(sample_ohlc_data, periods = c(9, 26, 52))
 plot <- plot(cloud, ticker = "TKR Co.", theme = "solarized")
-iplot <- iplot(cloud, from = "2020-01-05", to = "2020-02-03", theme = "dark", gaps = TRUE)
+iplot <- iplot(cloud, from = "2020-02-02", to = "2020-02-04", theme = "dark", gaps = TRUE)
 
 test_that("ichimoku passes", {
   expect_s3_class(cloud, "ichimoku")

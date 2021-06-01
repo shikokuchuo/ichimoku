@@ -91,7 +91,7 @@ Optional arguments:
 
 - **ticker**: a ticker to identify the instrument, otherwise this is set to the name of the input object.
 - **periods**: [default c(9, 26, 52)] a vector defining the length of periods used for the cloud. This parameter shoud not normally be changed as using other values would be invalid in the context of traditional Ichimoku analysis.
-- **...** other arguments to be passed along. For instance, to the `tradingDays()` function, which is used by ichimoku to exclude weekend and holiday dates when calculating the future cloud. By default, New Year's and Christmas day are defined as holidays. Additional holidays may be set via a 'holidays' argument. For example `holidays = timeDate::holidayLONDON()` or  `holidays = timeDate::holidayNYSE()`, utilising functions that return a vector of dates from the 'timeDate' package.
+- **...** other arguments to be passed along. For instance, to the `tradingDays()` function, which is used by ichimoku to exclude weekend and holiday dates when calculating the future cloud. By default, New Year's and Christmas day are defined as holidays. Additional holidays may be defined via a 'holidays' argument. For example `holidays = timeDate::holidayLONDON()` or  `holidays = timeDate::holidayNYSE()`, utilising functions from the 'timeDate' package that return a vector of dates.
 
 The returned object is of a consistent format, with the following 11 columns:
 

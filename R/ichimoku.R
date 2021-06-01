@@ -96,9 +96,12 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9, 26, 52), ...) {
              c(9, 26, 52)
            })
   if(!is.null(tryPeriods)) periods <- tryPeriods
-  tryCatch(stopifnot(periods[2] < nrow(x)), error = function(e) {
-    stop("ichimoku cannot construct a meaningful cloud as the medium period '",
-    periods[2], "' is not within the length of your dataset", call. = FALSE)})
+  p1 <- as.integer(periods[[1]])
+  p2 <- as.integer(periods[[2]])
+  p3 <- as.integer(periods[[3]])
+  tryCatch(stopifnot(p2 < dim(x)[1L]), error = function(e) {
+    stop("ichimoku requires the medium period '", p2,
+         "' to be within the length of your dataset", call. = FALSE)})
 
   if(!is.null(rownames(x)) &
      !inherits(try(as.POSIXct(rownames(x)), silent = TRUE), "try-error")) {
@@ -128,40 +131,42 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9, 26, 52), ...) {
   if(length(grep("Open", colnames(x), ignore.case = TRUE)) == 1) {
     open <- x[[grep("Open", colnames(x), ignore.case = TRUE)]]
   } else {
-    open <- c(NA, close[1:(nrow(x) - 1)])
+    open <- c(NA, close[1:(length(close) - 1)])
     warning("Note: ichimoku did not find opening price data, using previous closing prices ",
             "as substitute - this affects the candles but not the calculation of the cloud")
   }
+  candle <- rep("flat", length(close))
+  candle[open > close] <- "down"
+  candle[open < close] <- "up"
 
-  tenkan <- (roll_maxr(high, n = periods[1]) + roll_minr(low, n = periods[1])) / 2
-  kijun <- (roll_maxr(high, n = periods[2]) + roll_minr(low, n = periods[2])) / 2
+  tenkan <- (roll_maxr(high, n = p1) + roll_minr(low, n = p1)) / 2
+  kijun <- (roll_maxr(high, n = p2) + roll_minr(low, n = p2)) / 2
   senkouA <- (tenkan + kijun) / 2
-  senkouB <- (roll_maxr(high, n = periods[3]) + roll_minr(low, n = periods[3])) / 2
-  chikou <- c(close[(periods[2] + 1):nrow(x)], rep(NA, periods[2]))
+  senkouB <- (roll_maxr(high, n = p3) + roll_minr(low, n = p3)) / 2
+  chikou <- c(close[(p2 + 1):length(close)], rep(NA, p2))
 
   periodicity <- min(difftime(date[2], date[1]), difftime(date[3], date[2]),
                      difftime(date[4], date[3]))
-  extra <- seq.POSIXt(from = date[nrow(x)], by = periodicity,
-                      length.out = periods[2] * 2)[-1]
+  extra <- seq.POSIXt(from = date[length(date)], by = periodicity,
+                      length.out = p2 * 2)[-1]
   if(attr(periodicity, "units") == "days") {
-    extra <- extra[tradingDays(extra, ...)][1:periods[2]]
+    extra <- extra[tradingDays(extra, ...)][1:p2]
   } else {
-    extra <- extra[1:periods[2]]
+    extra <- extra[1:p2]
   }
 
   cloud <- data.frame(
     date = c(date, extra),
-    open = c(open, rep(NA, periods[2])),
-    high = c(high, rep(NA, periods[2])),
-    low = c(low, rep(NA, periods[2])),
-    close = c(close, rep(NA, periods[2])),
-    candle = factor(c(ifelse(close > open, "up", ifelse(close < open, "down", "flat")),
-               rep(NA, periods[2])), levels = c("down", "flat", "up")),
-    tenkan = c(tenkan, rep(NA, periods[2])),
-    kijun = c(kijun, rep(NA, periods[2])),
-    senkouA = c(rep(NA, periods[2]), senkouA),
-    senkouB = c(rep(NA, periods[2]), senkouB),
-    chikou = c(chikou, rep(NA, periods[2]))
+    open = c(open, rep(NA, p2)),
+    high = c(high, rep(NA, p2)),
+    low = c(low, rep(NA, p2)),
+    close = c(close, rep(NA, p2)),
+    candle = factor(c(candle, rep(NA, p2)), levels = c("down", "flat", "up")),
+    tenkan = c(tenkan, rep(NA, p2)),
+    kijun = c(kijun, rep(NA, p2)),
+    senkouA = c(rep(NA, p2), senkouA),
+    senkouB = c(rep(NA, p2), senkouB),
+    chikou = c(chikou, rep(NA, p2))
   )
   attr(cloud, "periodicity") <- as.numeric(periodicity, units = "secs")
   attr(cloud, "ticker") <- ticker
@@ -269,16 +274,17 @@ autoplot.ichimoku <- function(object, from, to, ticker, theme = "default", gaps 
   if(!missing(from)) object <- object[object$date >= from,]
   if(!missing(to)) object <- object[object$date <= to,]
   if(theme %in% colnames(ichimoku_themes)) {
-    pal <- ichimoku_themes[[grep(theme, colnames(ichimoku_themes))]]
+    pal <- ichimoku_themes[, grep(theme, colnames(ichimoku_themes))]
   } else {
-    pal <- ichimoku_themes[["default"]]
+    pal <- ichimoku_themes[, "default"]
     message("ichimoku: theme '", theme, "' was not found, using 'default' theme instead",
             "\n currently available themes are 'default', 'dark' and 'solarized'")
   }
 
   ichimoku_layers_base <- list(
-    geom_ribbon(aes(ymax = .data$senkouA, ymin = .data$senkouB), fill = pal[1],
-                alpha = 0.6, na.rm = TRUE),
+    if(!all(is.na(object$senkouB))) {
+    geom_ribbon(aes(ymax = .data$senkouA, ymin = .data$senkouB),
+                fill = pal[1], alpha = 0.6, na.rm = TRUE)},
     geom_line(aes(y = .data$senkouA), col = pal[2], alpha = 0.6, na.rm = TRUE),
     geom_line(aes(y = .data$senkouB), col = pal[3], alpha = 0.6, na.rm = TRUE),
     geom_line(aes(y = .data$tenkan), col = pal[4], na.rm = TRUE),
@@ -288,7 +294,7 @@ autoplot.ichimoku <- function(object, from, to, ticker, theme = "default", gaps 
                    size = 0.3, na.rm = TRUE)
   )
   ichimoku_layers_front <- list(
-    scale_y_continuous(breaks = function(x) pretty(x, n = 9)),
+    scale_y_continuous(breaks = function(x) pretty(x, n = 9L)),
     scale_color_manual(values = c("up" = pal[7], "down" = pal[8], "flat" = pal[9])),
     scale_fill_manual(values = c("up" = pal[10], "down" = pal[11], "flat" = pal[12])),
     labs(x = "Date | Time", y = "Price", title = paste("Ichimoku Kinko Hyo : :", ticker)),
@@ -303,12 +309,12 @@ autoplot.ichimoku <- function(object, from, to, ticker, theme = "default", gaps 
       panel.grid = element_line(colour = "#073642"),
       axis.title = element_text(colour = "#eee8d5"),
       axis.text = element_text(colour = "#eee8d5"),
-      axis.ticks = element_line(colour = "#eee8d5", size = rel(0.5))
+      axis.ticks = element_line(colour = "#eee8d5")
     )
   )
 
   if(gaps == TRUE) {
-    w <- periodicity / 2 * 0.8
+    w <- periodicity * 0.4
     chart <- ggplot(data = object, aes(x = .data$date)) +
       ichimoku_layers_base +
       geom_rect(aes(xmin = .data$date - w,
@@ -318,7 +324,7 @@ autoplot.ichimoku <- function(object, from, to, ticker, theme = "default", gaps 
                     colour = .data$candle, fill = .data$candle,
                     open = .data$open, close = .data$close,
                     date = .data$date), size = 0.3, na.rm = TRUE) +
-      scale_x_datetime(breaks = function(x) pretty(x, n = 9),
+      scale_x_datetime(breaks = function(x) pretty(x, n = 9L),
                        labels = function(x) {
                          if(periodicity < 80000) {
                            labs <- format(x, paste("%H:%M", "%d-%b", "%Y", sep = "\n"))
@@ -329,7 +335,7 @@ autoplot.ichimoku <- function(object, from, to, ticker, theme = "default", gaps 
       ichimoku_layers_front
 
   } else {
-    w <- 1 / 2 * 0.8
+    w <- 0.4
     chart <- ggplot(data = object, aes(x = seq_along(.data$date), date = .data$date)) +
       ichimoku_layers_base +
       geom_rect(aes(xmin = seq_along(.data$date) - w,
@@ -340,8 +346,8 @@ autoplot.ichimoku <- function(object, from, to, ticker, theme = "default", gaps 
                     open = .data$open, close = .data$close),
                 size = 0.3, na.rm = TRUE) +
       scale_x_continuous(breaks = function(x) {
-        x <- pretty(seq_along(object$date), n = 9) + 1
-        if(x[length(x)] > nrow(object)) x <- x[-length(x)]
+        x <- pretty(seq_along(object$date), n = 9L) + 1
+        if(x[length(x)] > dim(object)[1L]) x <- x[-length(x)]
         x
       }, labels = function(x) {
         if(periodicity < 80000) {
