@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2.9003</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.9</span>
       </span>
     </div>
 
@@ -131,9 +131,10 @@
 <a href="#ichimoku-development-version" class="anchor"></a>ichimoku (development version)<small> Unreleased </small>
 </h1>
 <ul>
-<li>Performance optimisations.</li>
-<li>Allow customisation of holidays when calculating the future cloud.</li>
-<li>Remove timeDate package dependency.</li>
+<li>Performance optimisations. Package now requires compilation as it contains Rcpp code.</li>
+<li>Optimized rolling window function brought in-package -&gt; remove ‘RcppRoll’ package dependency -&gt; add Rcpp dependency.</li>
+<li>Added feature to allow customisation of holidays when calculating the future cloud -&gt; remove ‘timeDate’ package dependency.</li>
+<li>Added ‘classic’ and ‘mono’ themes.</li>
 <li>Updated with CRAN release status.</li>
 </ul>
 </div>

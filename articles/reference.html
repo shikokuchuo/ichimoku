@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2.9003</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.9</span>
       </span>
     </div>
 
@@ -161,7 +161,7 @@
 <li>
 <strong>periods</strong>: [default c(9, 26, 52)] a vector defining the length of periods used for the cloud. This parameter shoud not normally be changed as using other values would be invalid in the context of traditional Ichimoku analysis.</li>
 <li>
-<strong>…</strong> other arguments to be passed along. For instance, to the <code><a href="../reference/tradingDays.html">tradingDays()</a></code> function, which is used by ichimoku to exclude weekend and holiday dates when calculating the future cloud. By default, New Year’s and Christmas day are defined as holidays. Additional holidays may be defined via a ‘holidays’ argument. For example <code>holidays = timeDate::holidayLONDON()</code> or <code>holidays = timeDate::holidayNYSE()</code>, utilising functions from the ‘timeDate’ package that return a vector of dates.</li>
+<strong>…</strong> other arguments to be passed along. For instance, to the <code><a href="../reference/tradingDays.html">tradingDays()</a></code> function, which is used by ichimoku to exclude weekend and holiday dates when calculating the future cloud.</li>
 </ul>
 <p>The returned object is of a consistent format, with the following 11 columns:</p>
 <ul>
@@ -199,6 +199,19 @@
 <p>Note: in assignment operations, where the output of <code><a href="../reference/ichimoku.html">ichimoku()</a></code> is assigned to an object, the behaviour is quiet and nothing is printed (or plotted), as is the usual practice in R.</p>
 <p><code><a href="../reference/ichimoku.html">ichimoku()</a></code> may also be used on an ichimoku object to re-set its ticker to a new value, but will otherwise just invoke its <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> method without re-calculating the cloud values.</p>
 <p>As an ichimoku object fully inherits the ‘data.frame’ class, all the existing methods for data frames should work seamlessly.</p>
+<div id="defining-custom-holidays" class="section level4">
+<h4 class="hasAnchor">
+<a href="#defining-custom-holidays" class="anchor"></a>Defining custom holidays</h4>
+<p>When calculating the future cloud, <code><a href="../reference/ichimoku.html">ichimoku()</a></code> makes a call to the <code><a href="../reference/tradingDays.html">tradingDays()</a></code> helper function to ensure that future dates fall on trading days (i.e. not weekends or holidays). By default, New Year’s and Christmas day are defined as holidays as these are pretty much universal across markets. For general use, this should be acceptable in almost all cases.</p>
+<p>However, if you are working with a strategy that focuses on the specific timing of the future cloud and other holidays are non-trading days in your particular market, custom holidays may be defined via a ‘holidays’ argument to <code>ichimoku</code> which is then passed on to the <code><a href="../reference/tradingDays.html">tradingDays()</a></code> function.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Holidays can be specified directly via a vector of dates:</span>
+<span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span>, holidays <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2021-12-25"</span>, <span class="st">"2022-01-01"</span><span class="op">)</span><span class="op">)</span>
+
+<span class="co"># Or via a functions that returns a vector of dates (e.g. from the 'timeDate' package):</span>
+<span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span>, holidays <span class="op">=</span> <span class="fu">timeDate</span><span class="fu">::</span><span class="fu">holidayLONDON</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span>, holidays <span class="op">=</span> <span class="fu">timeDate</span><span class="fu">::</span><span class="fu">holidayNYSE</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+</div>
 </div>
 <div id="plot" class="section level3">
 <h3 class="hasAnchor">
@@ -209,11 +222,11 @@
 <a href="#static-plots" class="anchor"></a>1. Static Plots</h5>
 <p>The default produces publication-ready static plots, which have the advantage of being easily exportable to pdf or image formats in high resolution.</p>
 <p>ichimoku implements a custom S3 method for ggplot2’s <code><a href="../reference/autoplot.html">autoplot()</a></code> function for objects of class ‘ichimoku’. Although autoplot can be called directly on an ichimoku object, it is practically always better to call <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> instead as it is not only more convenient to type, but also able to mute most of ggplot2’s verbose messaging.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span></code></pre></div>
 <p><img src="reference_files/figure-html/plot-1.png" width="672"></p>
 <p>As the implementation is via ggplot2, the user is able to further amend or customise the resulting plot using any ggplot2 methods. The easiest way to do this would be to assign the output of <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> to an object, which will inherit the classes ‘gg’ and ‘ggplot’. Further elements or layers can then easily be added or amended using ggplot2’s <code><a href="https://rdrr.io/r/base/Arithmetic.html">+</a></code> and <code>%+replace%</code> operators.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># The following would work if you wanted to add/replace ggplot2 layers:</span>
 <span class="va">plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span>
 <span class="va">plot</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
@@ -224,7 +237,7 @@
 <p>To use fully-interactive charts, the ‘plotly’ package must first be installed. If ‘plotly’ is not available, ichimoku will fall back to a static chart and issue a message, but not automatically install it for you. In this way, interactive charting is a fully optional part of the package as we recognise that ‘plotly’ may not be available in all environments.</p>
 <p>To produce an interactive plot, it is possible simply to supply an argument <code>i = TRUE</code> to the <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> function. The interactive plot will be almost identical in format to the equivalent static plot.</p>
 <p>Alternatively, directly call ichimoku’s <code><a href="../reference/iplot.html">iplot()</a></code> function, which is (marginally) faster to type and possibly easier to remember. Calling <code><a href="../reference/iplot.html">iplot()</a></code> will prove more reliable over time than having to remember to set a parameter for each plot.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># For interactive charting, take your pick of:</span>
 <span class="fu"><a href="../reference/iplot.html">iplot</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span>
 <span class="co"># which is equivalent to:</span>
@@ -242,7 +255,7 @@
 <h4 class="hasAnchor">
 <a href="#plot-customisation" class="anchor"></a>Plot customisation</h4>
 <p>A plot with default parameters is shown above, but the plot functions contain built-in customisations to allow for most envisioned use cases. The example below demonstrates the arguments that can be supplied to customise the plot.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">cloud</span>, from <span class="op">=</span> <span class="st">"2020-05-01"</span>, to <span class="op">=</span> <span class="st">"2020-11-01"</span>, ticker <span class="op">=</span> <span class="st">"TKR Co."</span>, theme <span class="op">=</span> <span class="st">"dark"</span>, gaps <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p><img src="reference_files/figure-html/plot2-1.png" width="672"></p>
 <p>The same arguments are used across <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> and <code><a href="../reference/iplot.html">iplot()</a></code> functions:</p>
@@ -252,9 +265,9 @@
 <li>
 <strong>ticker</strong>: used to supply a different ticker to that stored in the ichimoku object, or alternatively a longer-form name or other text that will appear in the chart heading</li>
 <li>
-<strong>theme</strong>: [default ‘default’] the following themes are currently also available: ‘dark’ and ‘solarized’</li>
+<strong>theme</strong>: [default ‘default’] the following themes are also available: ‘dark’, ‘solarized’, ‘classic’ and ‘mono’</li>
 <li>
-<strong>gaps</strong>: [default FALSE] Financial charts are conventionally shown without weekend or holiday gaps for non-trading days. Set to TRUE to use a true continuous time scale which does show these gaps</li>
+<strong>gaps</strong>: [default FALSE] financial charts are conventionally shown without weekend or holiday gaps for non-trading days. Set to TRUE to use a true continuous time scale which does show these gaps</li>
 </ul>
 </div>
 </div>
@@ -266,11 +279,15 @@
 <h3 class="hasAnchor">
 <a href="#file-formats" class="anchor"></a>File formats</h3>
 <p><code><a href="../reference/ichimoku.html">ichimoku()</a></code> is a generic function that provides S3 methods for objects of class ‘xts’, ‘data.frame’ and ‘matrix’. Other popular formats such as ‘data.table’ and ‘tibble’ also inherit the class ‘data.frame’ and hence also work with <code><a href="../reference/ichimoku.html">ichimoku()</a></code>.</p>
-<p>ichimoku has been designed to be fully pipeable and interfaces well with popular packages that return financial data from the internet. For example, the <code>getSymbols()</code> function from the ‘quantmod’ package exhibits non-standard R behaviour which assigns the data into an object but returns a text string containing the name of the object. ichimoku handles such behaviour automatically such that the following works, allowing us to get from zero to a chart without the need to save intermediate objects:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># The following works:</span>
+<p>ichimoku has been designed to be fully pipeable and interfaces well with popular packages that return financial data from the internet. For example, the <code>getSymbols()</code> function from the ‘quantmod’ package exhibits non-standard R behaviour which assigns the data into an object but returns a text string containing the name of the object. ichimoku handles such behaviour automatically such that the following works, allowing us to get straight to a chart without the need to save intermediate objects:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Using R 4.1's new pipe operator:</span>
+<span class="fu">quantmod</span><span class="fu">::</span><span class="fu">getSymbols</span><span class="op">(</span><span class="st">"C"</span><span class="op">)</span> |&gt; <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co"># Or equally using the 'magrittr' pipe:</span>
 <span class="fu">quantmod</span><span class="fu">::</span><span class="fu">getSymbols</span><span class="op">(</span><span class="st">"C"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p>For reading external raw data into R, if the file uses some form of custom delimited format, the <code>fread()</code> function on default settings from the ‘data.table’ package is often successful. Alternatively, the ‘datapasta’ package allows data copied from tables on webpages or in spreadsheets etc. to be pasted into R as a data frame. After importing data, please check that the date-time index is in an unambiguous format (ideally POSIXct), and that the pricing data is of type ‘numeric’ and not ‘character’.</p>
+<p>For reading external raw data into R, if the file uses some form of custom delimited format, the <code>fread()</code> function on default settings from the ‘data.table’ package is often successful.</p>
+<p>Alternatively, the ‘datapasta’ package allows data copied from tables on webpages or in spreadsheets etc. to be pasted into R as a data frame.</p>
+<p>After importing data, please check that the date-time index is in an unambiguous format (ideally POSIXct), and that the pricing data is of type ‘numeric’ and not ‘character’.</p>
 </div>
 <div id="data-validation" class="section level3">
 <h3 class="hasAnchor">
@@ -285,6 +302,7 @@
 </ul>
 <ol start="2" style="list-style-type: decimal">
 <li><p>Searches for HLC price data in columns with names containing ‘High’, ‘Low’ and ‘Close’ (not case-dependent) respectively.</p></li>
+<li><p>Checks that the length of the medium cloud period is less than that of the dataset. If this is not the case then none of the cloud lines can be calculated.</p></li>
 <li><p>Searches for opening price data in a column with name containing ‘Open’ (not case-dependent).</p></li>
 </ol>
 <ul>
@@ -303,8 +321,8 @@
 <a href="#dependencies" class="anchor"></a>Dependencies</h3>
 <p>The dependency on other packages is designed to be minimised to the extent possible. ichimoku has the following package dependencies:</p>
 <ul>
-<li>RcppRoll - for fast rolling window calculations</li>
 <li>ggplot2 - the widely-used R graphics system</li>
+<li>Rcpp - use C++ code for fast rolling window calculations</li>
 <li>rlang - requirement arising from the use of ggplot2</li>
 </ul>
 <p>Optional:</p>
