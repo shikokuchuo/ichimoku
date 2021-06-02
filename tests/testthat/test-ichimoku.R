@@ -26,3 +26,8 @@ test_that("tradingDays passes", {
   expect_false(tradingDays(sample_ohlc_data$Date[1]))
   expect_vector(tradingDays(sample_ohlc_data$Date[1:3]), ptype = logical(), size = 3)
 })
+
+test_that("window function passes", {
+  expect_vector(maxOver(sample_ohlc_data$Close[1:10], 3), ptype = numeric(), size = 10)
+  expect_vector(minOver(sample_ohlc_data$Close[1:10], 3), ptype = numeric(), size = 10)
+})

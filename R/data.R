@@ -1,4 +1,4 @@
-#' Sample OHLC Pricing Data
+#' Sample OHLC pricing data
 #'
 #' Synthetic prices for a hypothetical financial asset. Created for the purpose
 #'     of demonstrating package functions in examples and vignettes only.

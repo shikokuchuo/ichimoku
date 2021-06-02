@@ -17,8 +17,8 @@ iplot(x, from, to, ticker, theme = "default", gaps = FALSE, ...)
 chart heading. If not set, the ticker saved within the ichimoku object
 will be used.}
 
-\item{theme}{with a default of 'default'. This can also be set to 'dark' or
-'solarized' to select the desired colour scheme.}
+\item{theme}{with a default of 'default'. This can also be set to 'dark',
+'solarized', 'classic' or 'mono' to select the desired colour scheme.}
 
 \item{gaps}{set to FALSE by default to remove weekend and holiday gaps. Set
 to TRUE for a continuous timescale axis, but with gaps for non-trading

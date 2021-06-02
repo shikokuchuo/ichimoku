@@ -89,32 +89,17 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9, 26, 52), ...) {
 
   if(missing(ticker)) ticker <- deparse(substitute(x))
 
-  tryPeriods <- tryCatch(stopifnot(is.vector(periods, mode = "numeric"), length(periods) == 3),
-           error = function(e) {
-             warning("ichimoku: specified periods are invalid - ",
-             "using defaults c(9, 26, 52) instead", call. = FALSE)
-             c(9, 26, 52)
-           })
-  if(!is.null(tryPeriods)) periods <- tryPeriods
-  p1 <- as.integer(periods[[1]])
-  p2 <- as.integer(periods[[2]])
-  p3 <- as.integer(periods[[3]])
-  tryCatch(stopifnot(p2 < dim(x)[1L]), error = function(e) {
-    stop("ichimoku requires the medium period '", p2,
-         "' to be within the length of your dataset", call. = FALSE)})
-
   if(!is.null(rownames(x)) &
      !inherits(try(as.POSIXct(rownames(x)), silent = TRUE), "try-error")) {
     date <- as.POSIXct(rownames(x))
   } else if (length(grep("Index|Date|Time", colnames(x), ignore.case = TRUE)) == 1) {
-    tryCatch(date <- as.POSIXct(x[[grep("Index|Date|Time",
-                                         colnames(x), ignore.case = TRUE)]]),
+    tryCatch(date <- as.POSIXct(x[[grep("Index|Date|Time", colnames(x), ignore.case = TRUE)]]),
       error = function(e) {
-        stop("ichimoku is unable to convert the dataset index into a ",
-             "POSIXct date-time format", call. = FALSE)
+        stop("ichimoku: dataset index not convertible to a POSIXct date-time format",
+             call. = FALSE)
       })
   } else {
-    stop("ichimoku cannot find a unique date-time index within the dataset.", call. = FALSE)
+    stop("ichimoku: unique date-time index not found within the dataset", call. = FALSE)
   }
 
   tryCatch(
@@ -122,8 +107,25 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9, 26, 52), ...) {
             length(grep("Low", colnames(x), ignore.case = TRUE)) == 1,
             length(grep("Close", colnames(x), ignore.case = TRUE)) == 1),
   error = function (e) {
-  stop("ichimoku cannot find clearly-defined High/Low/Close columns in the dataset", call. = FALSE)
+  stop("ichimoku: clearly-defined High/Low/Close columns not found within the dataset",
+       call. = FALSE)
   })
+
+  tryPeriods <- tryCatch(
+    stopifnot(is.vector(periods, mode = "numeric"), length(periods) == 3, all(periods > 0)),
+    error = function(e) {
+      warning("ichimoku: specified cloud periods invalid - using defaults c(9, 26, 52) instead",
+              call. = FALSE)
+      c(9, 26, 52)
+      })
+  if(!is.null(tryPeriods)) periods <- tryPeriods
+  p1 <- as.integer(periods[1])
+  p2 <- as.integer(periods[2])
+  p3 <- as.integer(periods[3])
+  tryCatch(stopifnot(p2 < dim(x)[1L]), error = function(e) {
+    stop("ichimoku: medium cloud period '", p2, "' must be within the length of the dataset",
+         call. = FALSE)
+    })
 
   high <- x[[grep("High", colnames(x), ignore.case = TRUE)]]
   low <- x[[grep("Low", colnames(x), ignore.case = TRUE)]]
@@ -132,23 +134,22 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9, 26, 52), ...) {
     open <- x[[grep("Open", colnames(x), ignore.case = TRUE)]]
   } else {
     open <- c(NA, close[1:(length(close) - 1)])
-    warning("Note: ichimoku did not find opening price data, using previous closing prices ",
-            "as substitute - this affects the candles but not the calculation of the cloud")
+    warning("ichimoku: opening prices not found - using previous closing prices as substitute",
+            "\n this affects the candles but not the calculation of the cloud", call. = FALSE)
   }
   candle <- rep("flat", length(close))
   candle[open > close] <- "down"
   candle[open < close] <- "up"
 
-  tenkan <- (roll_maxr(high, n = p1) + roll_minr(low, n = p1)) / 2
-  kijun <- (roll_maxr(high, n = p2) + roll_minr(low, n = p2)) / 2
+  tenkan <- (maxOver(high, p1) + minOver(low, p1)) / 2
+  kijun <- (maxOver(high, p2) + minOver(low, p2)) / 2
   senkouA <- (tenkan + kijun) / 2
-  senkouB <- (roll_maxr(high, n = p3) + roll_minr(low, n = p3)) / 2
+  senkouB <- (maxOver(high, p3) + minOver(low, p3)) / 2
   chikou <- c(close[(p2 + 1):length(close)], rep(NA, p2))
 
   periodicity <- min(difftime(date[2], date[1]), difftime(date[3], date[2]),
                      difftime(date[4], date[3]))
-  extra <- seq.POSIXt(from = date[length(date)], by = periodicity,
-                      length.out = p2 * 2)[-1]
+  extra <- seq.POSIXt(from = date[length(date)], by = periodicity, length.out = p2 + p2)[-1]
   if(attr(periodicity, "units") == "days") {
     extra <- extra[tradingDays(extra, ...)][1:p2]
   } else {
@@ -239,8 +240,8 @@ NULL
 #' @param ticker (optional) specify a ticker (or other text) to include in the
 #'     chart heading. If not set, the ticker saved within the ichimoku object
 #'     will be used.
-#' @param theme with a default of 'default'. This can also be set to 'dark' or
-#'     'solarized' to select the desired colour scheme.
+#' @param theme with a default of 'default'. This can also be set to 'dark',
+#'     'solarized', 'classic' or 'mono' to select the desired colour scheme.
 #' @param gaps set to FALSE by default to remove weekend and holiday gaps. Set
 #'     to TRUE for a continuous timescale axis, but with gaps for non-trading
 #'     days.
@@ -277,8 +278,8 @@ autoplot.ichimoku <- function(object, from, to, ticker, theme = "default", gaps 
     pal <- ichimoku_themes[, grep(theme, colnames(ichimoku_themes))]
   } else {
     pal <- ichimoku_themes[, "default"]
-    message("ichimoku: theme '", theme, "' was not found, using 'default' theme instead",
-            "\n currently available themes are 'default', 'dark' and 'solarized'")
+    message("ichimoku: theme '", theme, "' not found - using 'default' theme instead",
+            "\n available themes are 'default', 'dark', 'solarized' and 'classic'")
   }
 
   ichimoku_layers_base <- list(
@@ -319,8 +320,8 @@ autoplot.ichimoku <- function(object, from, to, ticker, theme = "default", gaps 
       ichimoku_layers_base +
       geom_rect(aes(xmin = .data$date - w,
                     xmax = .data$date + w,
-                    ymin = pmin(.data$open, .data$close),
-                    ymax = pmax(.data$open, .data$close),
+                    ymin = pmin.int(.data$open, .data$close),
+                    ymax = pmax.int(.data$open, .data$close),
                     colour = .data$candle, fill = .data$candle,
                     open = .data$open, close = .data$close,
                     date = .data$date), size = 0.3, na.rm = TRUE) +
@@ -340,8 +341,8 @@ autoplot.ichimoku <- function(object, from, to, ticker, theme = "default", gaps 
       ichimoku_layers_base +
       geom_rect(aes(xmin = seq_along(.data$date) - w,
                     xmax = seq_along(.data$date) + w,
-                    ymin = pmin(.data$open, .data$close),
-                    ymax = pmax(.data$open, .data$close),
+                    ymin = pmin.int(.data$open, .data$close),
+                    ymax = pmax.int(.data$open, .data$close),
                     colour = .data$candle, fill = .data$candle,
                     open = .data$open, close = .data$close),
                 size = 0.3, na.rm = TRUE) +
@@ -374,8 +375,8 @@ autoplot.ichimoku <- function(object, from, to, ticker, theme = "default", gaps 
 #' @param ticker (optional) specify a ticker (or other text) to include in the
 #'     chart heading. If not set, the ticker saved within the ichimoku object
 #'     will be used.
-#' @param theme with a default of 'default'. This can also be set to 'dark' or
-#'     'solarized' to select the desired colour scheme.
+#' @param theme with a default of 'default'. This can also be set to 'dark',
+#'     'solarized', 'classic' or 'mono' to select the desired colour scheme.
 #' @param gaps set to FALSE by default to remove weekend and holiday gaps. Set
 #'     to TRUE for a continuous timescale axis, but with gaps for non-trading
 #'     days.
@@ -412,7 +413,7 @@ iplot <- function(x, from, to, ticker, theme = "default", gaps = FALSE, ...) {
             source = "select", tooltip = c("date", "y", "ymax", "ymin", "open", "close")))
           }
       } else {
-        message("The 'plotly' package needs to be installed for interactive plotting")
+        message("ichimoku: please install the 'plotly' package for interactive charting")
         suppressWarnings(print(autoplot(x, from = from, to = to, ticker = ticker, theme = theme, gaps = gaps, ...)
         ))
       }
@@ -434,8 +435,8 @@ iplot <- function(x, from, to, ticker, theme = "default", gaps = FALSE, ...) {
 #' @param ticker (optional) specify a ticker, or other text, to include
 #'     in the chart heading. If not set, the ticker saved within the ichimoku
 #'     object will be used.
-#' @param theme with a default of 'default'. This can also be set to 'dark' or
-#'     'solarized' to select the desired colour scheme.
+#' @param theme with a default of 'default'. This can also be set to 'dark',
+#'     'solarized', 'classic' or 'mono' to select the desired colour scheme.
 #' @param gaps set to FALSE by default to remove weekend and holiday gaps. Set
 #'     to TRUE for a continuous timescale axis, but with gaps for non-trading
 #'     days.

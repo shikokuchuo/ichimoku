@@ -1,6 +1,6 @@
 # Ichimoku ---------------------------------------------------------------------
 
-#' Check if Dates are Trading Days
+#' Check if dates are trading days
 #'
 #' A function for checking if specified dates are trading days.
 #'

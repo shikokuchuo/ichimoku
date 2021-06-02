@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{tradingDays}
 \alias{tradingDays}
-\title{Check if Dates are Trading Days}
+\title{Check if dates are trading days}
 \usage{
 tradingDays(x, holidays, ...)
 }

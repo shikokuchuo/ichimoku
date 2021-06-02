@@ -1,8 +1,9 @@
 # ichimoku (development version)
 
-* Performance optimisations.
-* Allow customisation of holidays when calculating the future cloud.
-* Remove timeDate package dependency.
+* Performance optimisations. Package now requires compilation as it contains Rcpp code.
+* Optimized rolling window function brought in-package -> remove 'RcppRoll' package dependency -> add Rcpp dependency.
+* Added feature to allow customisation of holidays when calculating the future cloud -> remove 'timeDate' package dependency.
+* Added 'classic' and 'mono' themes.
 * Updated with CRAN release status.
 
 # ichimoku 0.1.2

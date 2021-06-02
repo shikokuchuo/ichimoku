@@ -91,7 +91,7 @@ Optional arguments:
 
 - **ticker**: a ticker to identify the instrument, otherwise this is set to the name of the input object.
 - **periods**: [default c(9, 26, 52)] a vector defining the length of periods used for the cloud. This parameter shoud not normally be changed as using other values would be invalid in the context of traditional Ichimoku analysis.
-- **...** other arguments to be passed along. For instance, to the `tradingDays()` function, which is used by ichimoku to exclude weekend and holiday dates when calculating the future cloud. By default, New Year's and Christmas day are defined as holidays. Additional holidays may be defined via a 'holidays' argument. For example `holidays = timeDate::holidayLONDON()` or  `holidays = timeDate::holidayNYSE()`, utilising functions from the 'timeDate' package that return a vector of dates.
+- **...** other arguments to be passed along. For instance, to the `tradingDays()` function, which is used by ichimoku to exclude weekend and holiday dates when calculating the future cloud.
 
 The returned object is of a consistent format, with the following 11 columns:
 
@@ -125,6 +125,21 @@ Note: in assignment operations, where the output of `ichimoku()` is assigned to 
 `ichimoku()` may also be used on an ichimoku object to re-set its ticker to a new value, but will otherwise just invoke its `print()` method without re-calculating the cloud values.
 
 As an ichimoku object fully inherits the 'data.frame' class, all the existing methods for data frames should work seamlessly.
+
+#### Defining custom holidays
+
+When calculating the future cloud, `ichimoku()` makes a call to the `tradingDays()` helper function to ensure that future dates fall on trading days (i.e. not weekends or holidays). By default, New Year's and Christmas day are defined as holidays as these are pretty much universal across markets. For general use, this should be acceptable in almost all cases.
+
+However, if you are working with a strategy that focuses on the specific timing of the future cloud and other holidays are non-trading days in your particular market, custom holidays may be defined via a 'holidays' argument to `ichimoku` which is then passed on to the `tradingDays()` function.
+
+```{r holidays, eval = FALSE}
+# Holidays can be specified directly via a vector of dates:
+ichimoku(TKR, holidays = c("2021-12-25", "2022-01-01"))
+
+# Or via a functions that returns a vector of dates (e.g. from the 'timeDate' package):
+ichimoku(TKR, holidays = timeDate::holidayLONDON())
+ichimoku(TKR, holidays = timeDate::holidayNYSE())
+```
 
 ### plot()
 
@@ -183,8 +198,8 @@ The same arguments are used across `plot()` and `iplot()` functions:
 
 - **from** and **to**: indispensible in a proper workflow. `ichimoku()` is run on a larger dataset than that of interest and then at the plotting stage, the data can be subset to the window of interest
 - **ticker**: used to supply a different ticker to that stored in the ichimoku object, or alternatively a longer-form name or other text that will appear in the chart heading
-- **theme**: [default 'default'] the following themes are currently also available: 'dark' and 'solarized'
-- **gaps**: [default FALSE] Financial charts are conventionally shown without weekend or holiday gaps for non-trading days. Set to TRUE to use a true continuous time scale which does show these gaps
+- **theme**: [default 'default'] the following themes are also available: 'dark', 'solarized', 'classic' and 'mono'
+- **gaps**: [default FALSE] financial charts are conventionally shown without weekend or holiday gaps for non-trading days. Set to TRUE to use a true continuous time scale which does show these gaps
 
 ## Troubleshooting
 
@@ -192,14 +207,20 @@ The same arguments are used across `plot()` and `iplot()` functions:
 
 `ichimoku()` is a generic function that provides S3 methods for objects of class 'xts', 'data.frame' and 'matrix'. Other popular formats such as 'data.table' and 'tibble' also inherit the class 'data.frame' and hence also work with `ichimoku()`.
 
-ichimoku has been designed to be fully pipeable and interfaces well with popular packages that return financial data from the internet. For example, the `getSymbols()` function from the 'quantmod' package exhibits non-standard R behaviour which assigns the data into an object but returns a text string containing the name of the object. ichimoku handles such behaviour automatically such that the following works, allowing us to get from zero to a chart without the need to save intermediate objects:
+ichimoku has been designed to be fully pipeable and interfaces well with popular packages that return financial data from the internet. For example, the `getSymbols()` function from the 'quantmod' package exhibits non-standard R behaviour which assigns the data into an object but returns a text string containing the name of the object. ichimoku handles such behaviour automatically such that the following works, allowing us to get straight to a chart without the need to save intermediate objects:
 
 ```{r pipe, eval = FALSE}
-# The following works:
+# Using R 4.1's new pipe operator:
+quantmod::getSymbols("C") |> ichimoku() |> plot()
+# Or equally using the 'magrittr' pipe:
 quantmod::getSymbols("C") %>% ichimoku() %>% plot()
 ```
 
-For reading external raw data into R, if the file uses some form of custom delimited format, the `fread()` function on default settings from the 'data.table' package is often successful. Alternatively, the 'datapasta' package allows data copied from tables on webpages or in spreadsheets etc. to be pasted into R as a data frame. After importing data, please check that the date-time index is in an unambiguous format (ideally POSIXct), and that the pricing data is of type 'numeric' and not 'character'.
+For reading external raw data into R, if the file uses some form of custom delimited format, the `fread()` function on default settings from the 'data.table' package is often successful.
+
+Alternatively, the 'datapasta' package allows data copied from tables on webpages or in spreadsheets etc. to be pasted into R as a data frame.
+
+After importing data, please check that the date-time index is in an unambiguous format (ideally POSIXct), and that the pricing data is of type 'numeric' and not 'character'.
 
 ### Data validation
 
@@ -210,6 +231,8 @@ ichimoku performs the following data validation steps before attempting to compu
   + *If not found:* searches in column names containing 'Index', 'Date' or 'Time' (not case-dependent) for a time index that is in, or can readily be convertible into, POSIXct format.
 
 2. Searches for HLC price data in columns with names containing 'High', 'Low' and 'Close' (not case-dependent) respectively.
+
+4. Checks that the length of the medium cloud period is less than that of the dataset. If this is not the case then none of the cloud lines can be calculated.
 
 3. Searches for opening price data in a column with name containing 'Open' (not case-dependent).
 
@@ -226,8 +249,8 @@ Please ensure the relevant data columns are appropriately labelled before invoki
 
 The dependency on other packages is designed to be minimised to the extent possible. ichimoku has the following package dependencies:
 
-- RcppRoll  - for fast rolling window calculations
 - ggplot2 - the widely-used R graphics system
+- Rcpp  - use C++ code for fast rolling window calculations
 - rlang - requirement arising from the use of ggplot2
 
 Optional:

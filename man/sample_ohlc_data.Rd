@@ -3,7 +3,7 @@
 \docType{data}
 \name{sample_ohlc_data}
 \alias{sample_ohlc_data}
-\title{Sample OHLC Pricing Data}
+\title{Sample OHLC pricing data}
 \format{
 A data frame with 234 observations of 5 variables:
 \itemize{
