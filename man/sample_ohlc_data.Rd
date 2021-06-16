@@ -3,7 +3,7 @@
 \docType{data}
 \name{sample_ohlc_data}
 \alias{sample_ohlc_data}
-\title{Sample OHLC pricing data}
+\title{Sample OHLC Price Data}
 \format{
 A data frame with 234 observations of 5 variables:
 \itemize{
@@ -15,13 +15,13 @@ A data frame with 234 observations of 5 variables:
 }
 }
 \source{
-Not applicable: synthetic data
+Not applicable: simulated data
 }
 \usage{
 sample_ohlc_data
 }
 \description{
-Synthetic prices for a hypothetical financial asset. Created for the purpose
+Simulated prices for a hypothetical financial asset. Created for the purpose
     of demonstrating package functions in examples and vignettes only.
 }
 \examples{

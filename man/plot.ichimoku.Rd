@@ -2,40 +2,46 @@
 % Please edit documentation in R/ichimoku.R
 \name{plot.ichimoku}
 \alias{plot.ichimoku}
-\title{plot.ichimoku}
+\title{Plot Ichimoku Cloud Chart}
 \usage{
-\method{plot}{ichimoku}(x, i = FALSE, from, to, ticker, theme = "default", gaps = FALSE, ...)
+\method{plot}{ichimoku}(
+  x,
+  window,
+  ticker,
+  theme = c("original", "dark", "solarized", "mono"),
+  gaps = FALSE,
+  strat = TRUE,
+  ...
+)
 }
 \arguments{
 \item{x}{an object of class 'ichimoku'.}
 
-\item{i}{interactive parametmer set to FALSE by default. Set to TRUE to plot
-an interactive rather than a static chart.}
+\item{window}{(optional) a date-time window to subset the plot, in ISO-8601
+compatible range strings of the format used for 'xts' objects, for example
+"2020-02-15/2020-08-15" or "2020-02-15/", "/2020-08" or "2020-07".}
 
-\item{from}{(optional) a starting date/time to subset the plot.}
+\item{ticker}{(optional) specify a ticker (or other text) to include in the
+chart heading. If not set, the ticker saved within the ichimoku object
+will be used.}
 
-\item{to}{(optional) an ending date/time to subset the plot.}
+\item{theme}{defaults to 'original'. This can also be set to 'dark',
+'solarized' or 'mono'.}
 
-\item{ticker}{(optional) specify a ticker, or other text, to include
-in the chart heading. If not set, the ticker saved within the ichimoku
-object will be used.}
+\item{gaps}{defaults to FALSE to remove weekend and holiday gaps. Set to TRUE
+for a continuous timescale axis, but with gaps for non-trading days.}
 
-\item{theme}{with a default of 'default'. This can also be set to 'dark',
-'solarized', 'classic' or 'mono' to select the desired colour scheme.}
-
-\item{gaps}{set to FALSE by default to remove weekend and holiday gaps. Set
-to TRUE for a continuous timescale axis, but with gaps for non-trading
-days.}
+\item{strat}{set to TRUE by default. If the ichimoku object contains a
+strategy, the periods for which the strategy results in a position will
+be shaded. Set to FALSE to turn off this behaviour.}
 
 \item{...}{other arguments to be passed along.}
 }
 \value{
-Returns either a ggplot2 object with classes 'gg' and 'ggplot', or a
-    plotly object with classes 'plotly' and 'htmlwidget' depending on the
-    parameters set.
+Returns a ggplot2 object with classes 'gg' and 'ggplot'.
 }
 \description{
-Plot static or interactive Ichimoku Kinko Hyo cloud charts from ichimoku objects.
+Plot Ichimoku Kinko Hyo cloud charts from ichimoku objects.
 }
 \details{
 This function is an S3 method for the generic function plot() for
@@ -52,9 +58,6 @@ This function is an S3 method for the generic function plot() for
 cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 
 plot(cloud)
-plot(cloud, from = "2020-05-15", to = "2020-10-30", theme = "dark")
-\donttest{
-plot(cloud, i = TRUE, ticker = "TKR Co.", theme = "solarized", gaps = TRUE)
-}
+plot(cloud, window = "2020-05-15/2020-10-30", theme = "mono")
 
 }

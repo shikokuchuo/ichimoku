@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{minOver}
 \alias{minOver}
-\title{Minimum over a rolling window}
+\title{Minimum Over a Rolling Window}
 \usage{
 minOver(x, window)
 }
@@ -16,8 +16,12 @@ A vector of the same length as 'x' with elements 1 to
     (length(window) - 1) containing NAs.
 }
 \description{
-Calculate the minimum over a rolling window
+Used by \link{ichimoku} to calculate the minimum over a rolling window.
+}
+\details{
+Fast implementation with no error checking or NA handling.
 }
 \examples{
-min <- minOver(sample_ohlc_data$Close, 9L)
+minOver(sample_ohlc_data$close[1:10], 3L)
+
 }

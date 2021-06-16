@@ -26,12 +26,10 @@
 #include <Rcpp.h>
 using namespace Rcpp;
 
-// [[Rcpp::interfaces(r, cpp)]]
-
 // types of calculations
 enum CalcType {MIN, MAX};
 
-// stores function arguments for non-data
+// function arguments for non-data
 struct Args {
   int window;
   CalcType ctype;
@@ -67,16 +65,21 @@ NumericVector roll_minmax(const NumericVector& x, Args a) {
   return rollx;
 }
 
-//' Maximum over a rolling window
+//' Maximum Over a Rolling Window
 //'
-//' Calculate the maximum over a rolling window
+//' Used by \link{ichimoku} to calculate the maximum over a rolling window.
 //'
 //' @param x a vector.
 //' @param window size of the rolling window.
+//'
 //' @return A vector of the same length as 'x' with elements 1 to
 //'     (length(window) - 1) containing NAs.
+//'
+//' @details Fast implementation with no error checking or NA handling.
+//'
 //' @examples
-//' max <- maxOver(sample_ohlc_data$Close, 9L)
+//' maxOver(sample_ohlc_data$close[1:10], 3L)
+//'
 //' @export
 // [[Rcpp::export]]
 NumericVector maxOver(const SEXP& x, int window) {
@@ -84,16 +87,21 @@ NumericVector maxOver(const SEXP& x, int window) {
   return roll_minmax(x, a);
 }
 
-//' Minimum over a rolling window
+//' Minimum Over a Rolling Window
 //'
-//' Calculate the minimum over a rolling window
+//' Used by \link{ichimoku} to calculate the minimum over a rolling window.
 //'
 //' @param x a vector.
 //' @param window size of the rolling window.
+//'
 //' @return A vector of the same length as 'x' with elements 1 to
 //'     (length(window) - 1) containing NAs.
+//'
+//' @details Fast implementation with no error checking or NA handling.
+//'
 //' @examples
-//' min <- minOver(sample_ohlc_data$Close, 9L)
+//' minOver(sample_ohlc_data$close[1:10], 3L)
+//'
 //' @export
 // [[Rcpp::export]]
 NumericVector minOver(const SEXP& x, int window) {

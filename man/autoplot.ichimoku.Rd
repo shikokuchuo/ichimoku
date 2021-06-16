@@ -5,25 +5,36 @@
 \alias{autoplot.ichimoku}
 \title{autoplot.ichimoku}
 \usage{
-\method{autoplot}{ichimoku}(object, from, to, ticker, theme = "default", gaps = FALSE, ...)
+\method{autoplot}{ichimoku}(
+  object,
+  window,
+  ticker,
+  theme = c("original", "dark", "solarized", "mono"),
+  gaps = FALSE,
+  strat = TRUE,
+  ...
+)
 }
 \arguments{
 \item{object}{an object of class 'ichimoku'.}
 
-\item{from}{(optional) a starting date/time to subset the plot.}
-
-\item{to}{(optional) an ending date/time to subset the plot.}
+\item{window}{(optional) a date-time window to subset the plot, in ISO-8601
+compatible range strings of the format used for 'xts' objects, for example
+"2020-02-15/2020-08-15" or "2020-02-15/", "/2020-08" or "2020-07".}
 
 \item{ticker}{(optional) specify a ticker (or other text) to include in the
 chart heading. If not set, the ticker saved within the ichimoku object
 will be used.}
 
-\item{theme}{with a default of 'default'. This can also be set to 'dark',
-'solarized', 'classic' or 'mono' to select the desired colour scheme.}
+\item{theme}{defaults to 'original'. This can also be set to 'dark',
+'solarized' or 'mono'.}
 
-\item{gaps}{set to FALSE by default to remove weekend and holiday gaps. Set
-to TRUE for a continuous timescale axis, but with gaps for non-trading
-days.}
+\item{gaps}{defaults to FALSE to remove weekend and holiday gaps. Set to TRUE
+for a continuous timescale axis, but with gaps for non-trading days.}
+
+\item{strat}{set to TRUE by default. If the ichimoku object contains a
+strategy, the periods for which the strategy results in a position will
+be shaded. Set to FALSE to turn off this behaviour.}
 
 \item{...}{other arguments to be passed along.}
 }
@@ -48,7 +59,7 @@ This function is an S3 method for the generic function autoplot()
 cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 
 autoplot(cloud)
-autoplot(cloud, from = "2020-05-15", to = "2020-10-30", theme = "dark")
+autoplot(cloud, window = "2020-05-15/2020-10-30", theme = "dark")
 autoplot(cloud, ticker = "TKR Co.", theme = "solarized", gaps = TRUE)
 
 }

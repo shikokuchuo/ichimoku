@@ -1,21 +1,38 @@
-#' ichimoku: Compute and Plot Ichimoku Kinko Hyo Cloud Charts
+#' ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies
 #'
-#' An implementation of the 'Ichimoku Kinko Hyo' charting system, also commonly
-#'     known as 'cloud charts', providing both publication-ready and fully-interactive
-#'     charts for analysis. As described in Sasaki (1996, ISBN:4925152009), the
-#'     technique is a refinement on candlestick charting originating from Japan,
-#'     now in widespread use in technical analysis worldwide. Translating to
+#' An implementation of 'Ichimoku Kinko Hyo', also commonly known as 'cloud
+#'     charts'. Static and interactive visualizations with tools for creating,
+#'     backtesting and development of quantitative 'ichimoku' strategies. As
+#'     described in Sasaki (1996, ISBN:4925152009), the technique is a
+#'     refinement on candlestick charting originating from Japan, now in
+#'     widespread use in technical analysis worldwide. Translating as
 #'     'one-glance equilibrium chart', it allows the price action and market
 #'     structure of financial securities to be determined 'at-a-glance'.
 #'
 #' @section Principal ichimoku functions:
+#' Visualization layer
 #' \itemize{
-#'     \item{\code{\link{ichimoku}}} {to create an ichimoku object.}
+#'     \item{\code{\link{ichimoku}}} {to create an ichimoku object from price
+#'     data.}
 #'     \item{\code{\link{plot.ichimoku}}} {to plot a cloud chart from an
 #'     ichimoku object.}
 #'     \item{\code{\link{iplot}}} {to plot an interactive cloud chart from an
 #'     ichimoku object.}
 #' }
+#' Strategy layer
+#' \itemize{
+#'     \item{\code{\link{strat}}} {to augment an ichimoku object with a strategy.}
+#'     \item{\code{\link{stratcombine}}} {to combine and create more complex
+#'     strategies.}
+#'     \item{\code{\link{autostrat}}} {to automatically generate top-performing
+#'     strategies.}
+#' }
+#' ML layer
+#' \itemize{
+#'     \item{\code{\link{mlgrid}}} {to generate a numeric representation of the
+#'     relationship between ichimoku cloud chart elements.}
+#' }
+#'
 #' @author Charlie Gao <\email{charlie.gao@@shikokuchuo.net}>
 #' @references Package website:
 #'     \url{https://shikokuchuo.net/ichimoku/}
@@ -30,6 +47,8 @@
 #'     element_line element_text
 #' @importFrom Rcpp sourceCpp
 #' @importFrom rlang .data
+#' @importFrom xts xts
+#' @importFrom zoo index coredata
 #'
 #' @docType package
 #' @name ichimoku-package

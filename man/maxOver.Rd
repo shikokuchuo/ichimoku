@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{maxOver}
 \alias{maxOver}
-\title{Maximum over a rolling window}
+\title{Maximum Over a Rolling Window}
 \usage{
 maxOver(x, window)
 }
@@ -16,8 +16,12 @@ A vector of the same length as 'x' with elements 1 to
     (length(window) - 1) containing NAs.
 }
 \description{
-Calculate the maximum over a rolling window
+Used by \link{ichimoku} to calculate the maximum over a rolling window.
+}
+\details{
+Fast implementation with no error checking or NA handling.
 }
 \examples{
-max <- maxOver(sample_ohlc_data$Close, 9L)
+maxOver(sample_ohlc_data$close[1:10], 3L)
+
 }

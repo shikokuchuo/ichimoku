@@ -2,27 +2,33 @@
 % Please edit documentation in R/ichimoku.R
 \name{iplot}
 \alias{iplot}
-\title{iplot interactive ichimoku plot}
+\title{iplot Interactive Ichimoku Plot}
 \usage{
-iplot(x, from, to, ticker, theme = "default", gaps = FALSE, ...)
+iplot(
+  x,
+  window,
+  ticker,
+  theme = c("original", "dark", "solarized", "mono"),
+  gaps = FALSE,
+  ...
+)
 }
 \arguments{
 \item{x}{an object of class 'ichimoku'.}
 
-\item{from}{(optional) a starting date/time to subset the plot.}
-
-\item{to}{(optional) an ending date/time to subset the plot.}
+\item{window}{(optional) a date-time window to subset the plot, in ISO-8601
+compatible range strings of the format used for 'xts' objects, for example
+"2020-02-15/2020-08-15" or "2020-02-15/", "/2020-08" or "2020-07".}
 
 \item{ticker}{(optional) specify a ticker (or other text) to include in the
 chart heading. If not set, the ticker saved within the ichimoku object
 will be used.}
 
-\item{theme}{with a default of 'default'. This can also be set to 'dark',
-'solarized', 'classic' or 'mono' to select the desired colour scheme.}
+\item{theme}{defaults to 'original'. This can also be set to 'dark',
+'solarized' or 'mono'.}
 
-\item{gaps}{set to FALSE by default to remove weekend and holiday gaps. Set
-to TRUE for a continuous timescale axis, but with gaps for non-trading
-days.}
+\item{gaps}{defaults to FALSE to remove weekend and holiday gaps. Set to TRUE
+for a continuous timescale axis, but with gaps for non-trading days.}
 
 \item{...}{other arguments to be passed along.}
 }
@@ -43,7 +49,7 @@ Plot interactive Ichimoku Kinko Hyo cloud charts from ichimoku objects.
 cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 
 iplot(cloud)
-iplot(cloud, from = "2020-05-15", to = "2020-10-30", theme = "dark")
+iplot(cloud, window = "2020-05-15/2020-10-30", theme = "dark")
 iplot(cloud, ticker = "TKR Co.", theme = "solarized", gaps = TRUE)
 }
 

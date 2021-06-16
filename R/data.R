@@ -1,6 +1,6 @@
-#' Sample OHLC pricing data
+#' Sample OHLC Price Data
 #'
-#' Synthetic prices for a hypothetical financial asset. Created for the purpose
+#' Simulated prices for a hypothetical financial asset. Created for the purpose
 #'     of demonstrating package functions in examples and vignettes only.
 #'
 #' @format A data frame with 234 observations of 5 variables:
@@ -13,7 +13,7 @@
 #' }
 #'
 #' @usage sample_ohlc_data
-#' @source Not applicable: synthetic data
+#' @source Not applicable: simulated data
 #' @examples
 #' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 #'

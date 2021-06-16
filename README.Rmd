@@ -20,7 +20,9 @@ knitr::opts_chunk$set(
 [![CRAN Status](https://www.r-pkg.org/badges/version/ichimoku)](https://CRAN.R-project.org/package=ichimoku)
 <!-- badges: end -->
 
-An implementation of the 'Ichimoku Kinko Hyo' charting system, also commonly known as 'cloud charts', providing both publication-ready and fully-interactive charts for analysis. As described in Sasaki (1996, ISBN:4925152009), the technique is a refinement on candlestick charting originating from Japan, now in widespread use in technical analysis worldwide. Translating to 'one-glance equilibrium chart', it allows the price action and market structure of financial securities to be determined 'at-a-glance'.
+Visualization and Tools for Ichimoku Kinko Hyo Strategies
+
+An implementation of 'Ichimoku Kinko Hyo', also commonly known as 'cloud charts'. Static and interactive visualizations with tools for creating, backtesting and development of quantitative 'ichimoku' strategies. As described in Sasaki (1996, ISBN:4925152009), the technique is a refinement on candlestick charting originating from Japan, now in widespread use in technical analysis worldwide. Translating as 'one-glance equilibrium chart', it allows the price action and market structure of financial securities to be determined 'at-a-glance'.
 
 ## Installation
 
@@ -38,15 +40,28 @@ devtools::install_github("shikokuchuo/ichimoku")
 
 ## Example
 
-Simply `ichimoku()` and `plot()`.
+Load package and sample price data:
 
-```{r plot}
+```{r load}
 library(ichimoku)
 TKR <- sample_ohlc_data
-# Create ichimoku object:
+```
+
+#### Visualization
+
+Simply `ichimoku()` and `plot()`:
+
+```{r plot}
 cloud <- ichimoku(TKR)
-# Plot ichimoku object:
-plot(cloud, from = "2020-05-01", to = "2020-12-03")
+plot(cloud, window = "2020-04/")
+```
+
+#### Strategies
+
+`autostrat()` to automatically generate top-performing strategies:
+
+```{r auto}
+autostrat(cloud, n = 3)
 ```
 
 ## Reference
@@ -54,5 +69,3 @@ plot(cloud, from = "2020-05-01", to = "2020-12-03")
 R package site: https://shikokuchuo.net/ichimoku/
 
 CRAN page: https://CRAN.R-project.org/package=ichimoku
-
-

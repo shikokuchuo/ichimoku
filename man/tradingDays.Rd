@@ -2,12 +2,12 @@
 % Please edit documentation in R/utils.R
 \name{tradingDays}
 \alias{tradingDays}
-\title{Check if dates are trading days}
+\title{Select Trading Days}
 \usage{
 tradingDays(x, holidays, ...)
 }
 \arguments{
-\item{x}{a POSIXct date object, or vector of POSIXct date objects.}
+\item{x}{a vector of POSIXct date objects.}
 
 \item{holidays}{(optional) a vector, or function which outputs a
 vector, of dates defined as holidays. If not specified, New Year's and
@@ -17,12 +17,13 @@ Christmas day are defined as holidays by default.}
 }
 \value{
 A vector of logical values: TRUE if the corresponding element of 'x'
-    is a weekday and not a holiday, otherwise FALSE.
+    is a weekday and not a holiday, FALSE otherwise.
 }
 \description{
-A function for checking if specified dates are trading days.
+Used by \code{\link{ichimoku}} to subset a vector of dates to trading days.
 }
 \examples{
-tradingDays(sample_ohlc_data$Date[1:7])
+dates <- seq(from = as.POSIXct("2020-01-01"), by = "1 day", length.out = 7)
+tradingDays(dates)
 
 }

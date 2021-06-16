@@ -2,15 +2,15 @@
 % Please edit documentation in R/ichimoku.R
 \name{print.ichimoku}
 \alias{print.ichimoku}
-\title{print.ichimoku}
+\title{Print Ichimoku Objects}
 \usage{
 \method{print}{ichimoku}(x, plot = TRUE, ...)
 }
 \arguments{
 \item{x}{an object of class 'ichimoku'.}
 
-\item{plot}{set to TRUE by default. Set to FALSE to prevent automatic
-plotting of the ichimoku cloud chart.}
+\item{plot}{defaults to TRUE. Set to FALSE to prevent automatic plotting of
+the ichimoku cloud chart.}
 
 \item{...}{other arguments to be passed along.}
 }
@@ -34,7 +34,7 @@ This function is an S3 method for the generic function print() for
 \examples{
 cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 
-print(cloud, max = 110, row.names = FALSE, digits = 4)
-print(cloud[100:110,], plot = FALSE, row.names = FALSE, digits = 4)
+print(cloud, max = 110, digits = 4)
+print(cloud[100:110,], plot = FALSE, digits = 4)
 
 }

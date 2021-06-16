@@ -11,7 +11,7 @@
 \usage{
 ichimoku(x, ...)
 
-\method{ichimoku}{ichimoku}(x, ticker, ...)
+\method{ichimoku}{ichimoku}(x, ticker, periods = c(9, 26, 52), ...)
 
 \method{ichimoku}{xts}(x, ticker, periods = c(9, 26, 52), ...)
 
@@ -19,14 +19,14 @@ ichimoku(x, ...)
 
 \method{ichimoku}{data.frame}(x, ticker, periods = c(9, 26, 52), ...)
 
-\method{ichimoku}{default}(x = NULL, ticker, ...)
+\method{ichimoku}{default}(x = NULL, ticker, periods = c(9, 26, 52), ...)
 }
 \arguments{
 \item{x}{a data.frame or other compatible object, which includes xts,
 data.table, tibble, and matrix.}
 
 \item{...}{other arguments to be passed along. For instance, 'holidays' may
-be passed to the \link{tradingDays} function, used by ichimoku when
+be passed to the \code{\link{tradingDays}} function, used by ichimoku when
 calculating the future cloud.}
 
 \item{ticker}{(optional) specify a ticker to identify the instrument,
@@ -38,32 +38,32 @@ changed as using other values would be invalid in the context of
 traditional Ichimoku analysis.}
 }
 \value{
-An ichimoku object is returned with S3 classes of 'ichimoku' and
-    'data.frame'.
+An ichimoku object is returned with S3 classes of 'ichimoku', 'xts'
+    and 'zoo'.
 
-    This object contains a date-time index, OHLC pricing data, candlestick
-    direction, as well as the computed ichimoku cloud values, with ticker and
-    periodicity parameters set as attributes.
+    This object contains a date-time index, OHLC pricing data, candle
+    direction, the computed ichimoku cloud values, and cloud top and base
+    values, with ticker, periods, and periodicity parameters set as
+    attributes.
 }
 \description{
 Create an ichimoku object containing the values for all components of the
     Ichimoku Kinko Hyo cloud chart, ready for plotting. The object includes
-    the candlesticks as well as the computed cloud lines: Tenkan-sen,
-    Kijun-sen, Senkou span A, Senkou span B and Chikou span.
+    a date-time index, OHLC pricing data, candle direction, the cloud lines
+    Tenkan-sen, Kijun-sen, Senkou span A, Senkou span B and Chikou span, as
+    well as values for the cloud top and base.
 }
 \details{
 Calling an ichimoku object automatically invokes its print method,
-    which in the absence of arguments, will produce a printout of the data to
-    the console as well as a static plot of the cloud chart to the graphical
-    device.
+    which will by default produce a printout of the data to the console as
+    well as a static plot of the cloud chart to the graphical device.
 
     For further options, including interactive charting, use plot() on the
     returned ichimoku object to pass further arguments for customising
     the chart.
 
-    Where an ichimoku object is passed to ichimoku(), the original object
-    will be returned (with the ticker amended if the corresponding parameter
-    is set).
+    Where an ichimoku object is passed to ichimoku(), the ichimoku object is
+    re-calculated using the OHLC pricing data contained within.
 }
 \section{Further Details}{
 
