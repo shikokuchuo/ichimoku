@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>autoplot.ichimoku — autoplot • ichimoku</title>
+<title>Create Ichimoku Strategies — strat • ichimoku</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,9 @@
 
 
 
-<meta property="og:title" content="autoplot.ichimoku — autoplot" />
-<meta property="og:description" content="Plot static Ichimoku Kinko Hyo cloud charts from ichimoku objects." />
+<meta property="og:title" content="Create Ichimoku Strategies — strat" />
+<meta property="og:description" content="Create custom ichimoku cloud strategies using the rule 'long (or short)
+    while c1 &amp;gt; c2'." />
 
 
 
@@ -126,89 +127,100 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>autoplot.ichimoku</h1>
-    <small class="dont-index">Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/R/ichimoku.R'><code>R/ichimoku.R</code></a></small>
-    <div class="hidden name"><code>autoplot.ichimoku.Rd</code></div>
+    <h1>Create Ichimoku Strategies</h1>
+    <small class="dont-index">Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/R/strat.R'><code>R/strat.R</code></a></small>
+    <div class="hidden name"><code>strat.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Plot static Ichimoku Kinko Hyo cloud charts from ichimoku objects.</p>
+    <p>Create custom ichimoku cloud strategies using the rule 'long (or short)
+    while c1 &gt; c2'.</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for ichimoku</span>
-<span class='fu'>autoplot</span><span class='op'>(</span>
-  <span class='va'>object</span>,
-  <span class='va'>window</span>,
-  <span class='va'>ticker</span>,
-  theme <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"original"</span>, <span class='st'>"dark"</span>, <span class='st'>"solarized"</span>, <span class='st'>"mono"</span><span class='op'>)</span>,
-  gaps <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  strat <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  <span class='va'>...</span>
+    <pre class="usage"><span class='fu'>strat</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  c1 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"close"</span>, <span class='st'>"chikou"</span>, <span class='st'>"open"</span>, <span class='st'>"high"</span>, <span class='st'>"low"</span>, <span class='st'>"tenkan"</span>, <span class='st'>"kijun"</span>, <span class='st'>"senkouA"</span>,
+    <span class='st'>"senkouB"</span>, <span class='st'>"cloudTop"</span>, <span class='st'>"cloudBase"</span><span class='op'>)</span>,
+  c2 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"tenkan"</span>, <span class='st'>"kijun"</span>, <span class='st'>"senkouA"</span>, <span class='st'>"senkouB"</span>, <span class='st'>"cloudTop"</span>, <span class='st'>"cloudBase"</span>, <span class='st'>"chikou"</span>,
+    <span class='st'>"close"</span>, <span class='st'>"open"</span>, <span class='st'>"high"</span>, <span class='st'>"low"</span><span class='op'>)</span>,
+  dir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"long"</span>, <span class='st'>"short"</span><span class='op'>)</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>object</th>
-      <td><p>an object of class 'ichimoku'.</p></td>
+      <th>x</th>
+      <td><p>an ichimoku object.</p></td>
     </tr>
     <tr>
-      <th>window</th>
-      <td><p>(optional) a date-time window to subset the plot, in ISO-8601
-compatible range strings of the format used for 'xts' objects, for example
-"2020-02-15/2020-08-15" or "2020-02-15/", "/2020-08" or "2020-07".</p></td>
+      <th>c1</th>
+      <td><p>column name specified as a string, with a default of 'close'.</p></td>
     </tr>
     <tr>
-      <th>ticker</th>
-      <td><p>(optional) specify a ticker (or other text) to include in the
-chart heading. If not set, the ticker saved within the ichimoku object
-will be used.</p></td>
+      <th>c2</th>
+      <td><p>column name specified as a string, with a default of 'tenkan'.</p></td>
     </tr>
     <tr>
-      <th>theme</th>
-      <td><p>defaults to 'original'. This can also be set to 'dark',
-'solarized' or 'mono'.</p></td>
-    </tr>
-    <tr>
-      <th>gaps</th>
-      <td><p>defaults to FALSE to remove weekend and holiday gaps. Set to TRUE
-for a continuous timescale axis, but with gaps for non-trading days.</p></td>
-    </tr>
-    <tr>
-      <th>strat</th>
-      <td><p>set to TRUE by default. If the ichimoku object contains a
-strategy, the periods for which the strategy results in a position will
-be shaded. Set to FALSE to turn off this behaviour.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>other arguments to be passed along.</p></td>
+      <th>dir</th>
+      <td><p>trade direction either 'long' or 'short' with a default of 'long'.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns a ggplot2 object with S3 classes 'gg' and 'ggplot'.</p>
+    <p>An ichimoku object augmented with the strategy.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function is an S3 method for the generic function autoplot()
-    for class 'ichimoku'. It can be invoked by calling autoplot(x) on an
-    object 'x' of class 'ichimoku'.</p>
+    <p>The following assumption applies to all strategies: confirmation of
+    whether a condition is satisfied is received at the 'close' of a particular
+    period, and a transaction is initiated at the next 'open'. All transactions
+    happen at the 'open'.</p>
+<p>The original ichimoku object 'x' is augmented with the following
+    additional columns used to calculate the strategy:</p>
+<p>'cond', a boolean vector if the rule condition is met, 'posn', a boolean
+    vector indicating if a position is held, and 'txn', a vector representing
+    the transactions to implement the position.</p>
+<p>logret' is a column of log returns, 'slogret' is a column of log returns
+    for the strategy.</p>
+<p>ret' is a column of discrete returns, and 'sret' is a column of discrete
+    returns for the strategy.</p>
+<p>The stategy summary is saved as an object attribute and may be accessed
+    via the summary() function.</p>
+<p>The periods in which the strategy results in a position is shaded by
+    default on the ichimoku cloud chart. To turn off this behaviour, pass the
+    'strat = FALSE' argument to plot().</p>
     <h2 class="hasAnchor" id="further-details"><a class="anchor" href="#further-details"></a>Further Details</h2>
 
     
 
-<p>Please refer to the reference vignette by running:
-    <code><a href='../articles/reference.html'>vignette("reference", package = "ichimoku")</a></code></p>
+<p>Please refer to the strategies vignette by running:
+    <code><a href='../articles/strategies.html'>vignette("strategies", package = "ichimoku")</a></code></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>cloud</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ichimoku.html'>ichimoku</a></span><span class='op'>(</span><span class='va'>sample_ohlc_data</span>, ticker <span class='op'>=</span> <span class='st'>"TKR"</span><span class='op'>)</span>
-
-<span class='fu'>autoplot</span><span class='op'>(</span><span class='va'>cloud</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: Ignoring unknown aesthetics: open, close</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 26 rows containing missing values (geom_segment).</span></div><div class='img'><img src='autoplot.ichimoku-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>autoplot</span><span class='op'>(</span><span class='va'>cloud</span>, window <span class='op'>=</span> <span class='st'>"2020-05-15/2020-10-30"</span>, theme <span class='op'>=</span> <span class='st'>"dark"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: Ignoring unknown aesthetics: open, close</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 22 rows containing missing values (geom_segment).</span></div><div class='img'><img src='autoplot.ichimoku-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>autoplot</span><span class='op'>(</span><span class='va'>cloud</span>, ticker <span class='op'>=</span> <span class='st'>"TKR Co."</span>, theme <span class='op'>=</span> <span class='st'>"solarized"</span>, gaps <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: Ignoring unknown aesthetics: open, close, date</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 26 rows containing missing values (geom_segment).</span></div><div class='img'><img src='autoplot.ichimoku-3.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='va'>strat</span> <span class='op'>&lt;-</span> <span class='fu'>strat</span><span class='op'>(</span><span class='va'>cloud</span>, c1 <span class='op'>=</span> <span class='st'>"close"</span>, c2 <span class='op'>=</span> <span class='st'>"tenkan"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>strat</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;                        [,1]            
+#&gt; Strategy               "close &gt; tenkan"
+#&gt; ---------------------  "----------"    
+#&gt; Strategy cuml return % 5.01            
+#&gt; Per period mean ret %  0.0218          
+#&gt; Periods in market      119             
+#&gt; Total trades           18              
+#&gt; Average trade length   6.61            
+#&gt; Winning trades %       27.78           
+#&gt; Worst trade ret %      -2.54           
+#&gt; ---------------------  "----------"    
+#&gt; Benchmark cuml ret %   3.38            
+#&gt; Per period mean ret %  0.0148          
+#&gt; Periods in market      224             
+#&gt; ---------------------  "----------"    
+#&gt; Direction              "long"          
+#&gt; Start                  2020-01-13      
+#&gt; End                    2020-09-29      
+#&gt; Ticker                 "TKR"           </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>strat</span><span class='op'>)</span>
+</div><div class='img'><img src='strat-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

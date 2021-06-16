@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies — ichimoku-package • ichimoku</title>
+<title>Combine Ichimoku Strategies — stratcombine • ichimoku</title>
 
 
 <!-- jquery -->
@@ -39,15 +39,8 @@
 
 
 
-<meta property="og:title" content="ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies — ichimoku-package" />
-<meta property="og:description" content="An implementation of 'Ichimoku Kinko Hyo', also commonly known as 'cloud
-    charts'. Static and interactive visualizations with tools for creating,
-    backtesting and development of quantitative 'ichimoku' strategies. As
-    described in Sasaki (1996, ISBN:4925152009), the technique is a
-    refinement on candlestick charting originating from Japan, now in
-    widespread use in technical analysis worldwide. Translating as
-    'one-glance equilibrium chart', it allows the price action and market
-    structure of financial securities to be determined 'at-a-glance'." />
+<meta property="og:title" content="Combine Ichimoku Strategies — stratcombine" />
+<meta property="og:description" content="Create more complex strategies by combining strategy rules of the form 's1 &amp;amp; s2'." />
 
 
 
@@ -133,56 +126,72 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</h1>
-    <small class="dont-index">Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/R/ichimoku-package.R'><code>R/ichimoku-package.R</code></a></small>
-    <div class="hidden name"><code>ichimoku-package.Rd</code></div>
+    <h1>Combine Ichimoku Strategies</h1>
+    <small class="dont-index">Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/R/strat.R'><code>R/strat.R</code></a></small>
+    <div class="hidden name"><code>stratcombine.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>An implementation of 'Ichimoku Kinko Hyo', also commonly known as 'cloud
-    charts'. Static and interactive visualizations with tools for creating,
-    backtesting and development of quantitative 'ichimoku' strategies. As
-    described in Sasaki (1996, ISBN:4925152009), the technique is a
-    refinement on candlestick charting originating from Japan, now in
-    widespread use in technical analysis worldwide. Translating as
-    'one-glance equilibrium chart', it allows the price action and market
-    structure of financial securities to be determined 'at-a-glance'.</p>
+    <p>Create more complex strategies by combining strategy rules of the form 's1 &amp; s2'.</p>
     </div>
 
+    <pre class="usage"><span class='fu'>stratcombine</span><span class='op'>(</span><span class='va'>s1</span>, <span class='va'>s2</span><span class='op'>)</span></pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>s1</th>
+      <td><p>an ichimoku object containing a strategy.</p></td>
+    </tr>
+    <tr>
+      <th>s2</th>
+      <td><p>an ichimoku object containing a strategy.</p></td>
+    </tr>
+    </table>
 
-    <h2 class="hasAnchor" id="principal-ichimoku-functions"><a class="anchor" href="#principal-ichimoku-functions"></a>Principal ichimoku functions</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>An ichimoku object augmented with the combined strategy.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The combined strategy 's1 &amp; s2' means conditions in 's1' and 's2'
+    have to be simulateneously met for a trade position to be taken.</p>
+<p>The boolean values showing whether these conditions are met are stored in
+    the 'cond' column.</p>
+<p>The stategy summary may be accessed via the summary() function.</p>
+    <h2 class="hasAnchor" id="further-details"><a class="anchor" href="#further-details"></a>Further Details</h2>
 
     
 
-<p>Visualization layer</p><ul>
-<li><p><code><a href='ichimoku.html'>ichimoku</a></code> to create an ichimoku object from price
-    data.</p></li>
-<li><p><code><a href='plot.ichimoku.html'>plot.ichimoku</a></code> to plot a cloud chart from an
-    ichimoku object.</p></li>
-<li><p><code><a href='iplot.html'>iplot</a></code> to plot an interactive cloud chart from an
-    ichimoku object.</p></li>
-</ul><p>Strategy layer</p><ul>
-<li><p><code><a href='strat.html'>strat</a></code> to augment an ichimoku object with a strategy.</p></li>
-<li><p><code><a href='stratcombine.html'>stratcombine</a></code> to combine and create more complex
-    strategies.</p></li>
-<li><p><code><a href='autostrat.html'>autostrat</a></code> to automatically generate top-performing
-    strategies.</p></li>
-</ul><p>ML layer</p><ul>
-<li><p><code><a href='mlgrid.html'>mlgrid</a></code> to generate a numeric representation of the
-    relationship between ichimoku cloud chart elements.</p></li>
-</ul>
+<p>Please refer to the strategies vignette by running:
+    <code><a href='../articles/strategies.html'>vignette("strategies", package = "ichimoku")</a></code></p>
 
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
-
-    <p>Package website:
-    <a href='https://shikokuchuo.net/ichimoku/'>https://shikokuchuo.net/ichimoku/</a></p>
-<p>The most recent version of the package may be found at
-    <a href='https://github.com/shikokuchuo/ichimoku/'>https://github.com/shikokuchuo/ichimoku/</a></p>
-    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
-
-    <p>Charlie Gao &lt;<a href='mailto:charlie.gao@shikokuchuo.net'>charlie.gao@shikokuchuo.net</a>&gt;</p>
-
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='va'>cloud</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ichimoku.html'>ichimoku</a></span><span class='op'>(</span><span class='va'>sample_ohlc_data</span>, ticker <span class='op'>=</span> <span class='st'>"TKR"</span><span class='op'>)</span>
+<span class='va'>strat1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='strat.html'>strat</a></span><span class='op'>(</span><span class='va'>cloud</span>, c1 <span class='op'>=</span> <span class='st'>"close"</span>, c2 <span class='op'>=</span> <span class='st'>"kijun"</span><span class='op'>)</span>
+<span class='va'>strat2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='strat.html'>strat</a></span><span class='op'>(</span><span class='va'>cloud</span>, c1 <span class='op'>=</span> <span class='st'>"cloudBase"</span>, c2 <span class='op'>=</span> <span class='st'>"tenkan"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='fu'>stratcombine</span><span class='op'>(</span><span class='va'>strat1</span>, <span class='va'>strat2</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;                        [,1]                                
+#&gt; Strategy               "close &gt; kijun &amp; cloudBase &gt; tenkan"
+#&gt; ---------------------  "----------"                        
+#&gt; Strategy cuml return % 7.54                                
+#&gt; Per period mean ret %  0.0469                              
+#&gt; Periods in market      15                                  
+#&gt; Total trades           2                                   
+#&gt; Average trade length   7.5                                 
+#&gt; Winning trades %       100                                 
+#&gt; Worst trade ret %      2.08                                
+#&gt; ---------------------  "----------"                        
+#&gt; Benchmark cuml ret %   0.94                                
+#&gt; Per period mean ret %  0.006                               
+#&gt; Periods in market      155                                 
+#&gt; ---------------------  "----------"                        
+#&gt; Direction              "long"                              
+#&gt; Start                  2020-04-02                          
+#&gt; End                    2020-09-29                          
+#&gt; Ticker                 "TKR"                               </div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>iplot interactive ichimoku plot — iplot • ichimoku</title>
+<title>iplot Interactive Ichimoku Plot — iplot • ichimoku</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,7 @@
 
 
 
-<meta property="og:title" content="iplot interactive ichimoku plot — iplot" />
+<meta property="og:title" content="iplot Interactive Ichimoku Plot — iplot" />
 <meta property="og:description" content="Plot interactive Ichimoku Kinko Hyo cloud charts from ichimoku objects." />
 
 
@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.10</span>
       </span>
     </div>
 
@@ -95,7 +95,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/reference.html">ichimoku: User Reference</a>
+      <a href="../articles/reference.html">ichimoku: Reference</a>
+    </li>
+    <li>
+      <a href="../articles/strategies.html">ichimoku: Strategies</a>
     </li>
   </ul>
 </li>
@@ -123,7 +126,7 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>iplot interactive ichimoku plot</h1>
+    <h1>iplot Interactive Ichimoku Plot</h1>
     <small class="dont-index">Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/R/ichimoku.R'><code>R/ichimoku.R</code></a></small>
     <div class="hidden name"><code>iplot.Rd</code></div>
     </div>
@@ -132,7 +135,14 @@
     <p>Plot interactive Ichimoku Kinko Hyo cloud charts from ichimoku objects.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>iplot</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>from</span>, <span class='va'>to</span>, <span class='va'>ticker</span>, theme <span class='op'>=</span> <span class='st'>"default"</span>, gaps <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>iplot</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  <span class='va'>window</span>,
+  <span class='va'>ticker</span>,
+  theme <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"original"</span>, <span class='st'>"dark"</span>, <span class='st'>"solarized"</span>, <span class='st'>"mono"</span><span class='op'>)</span>,
+  gaps <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -142,12 +152,10 @@
       <td><p>an object of class 'ichimoku'.</p></td>
     </tr>
     <tr>
-      <th>from</th>
-      <td><p>(optional) a starting date/time to subset the plot.</p></td>
-    </tr>
-    <tr>
-      <th>to</th>
-      <td><p>(optional) an ending date/time to subset the plot.</p></td>
+      <th>window</th>
+      <td><p>(optional) a date-time window to subset the plot, in ISO-8601
+compatible range strings of the format used for 'xts' objects, for example
+"2020-02-15/2020-08-15" or "2020-02-15/", "/2020-08" or "2020-07".</p></td>
     </tr>
     <tr>
       <th>ticker</th>
@@ -157,14 +165,13 @@ will be used.</p></td>
     </tr>
     <tr>
       <th>theme</th>
-      <td><p>with a default of 'default'. This can also be set to 'dark',
-'solarized', 'classic' or 'mono' to select the desired colour scheme.</p></td>
+      <td><p>defaults to 'original'. This can also be set to 'dark',
+'solarized' or 'mono'.</p></td>
     </tr>
     <tr>
       <th>gaps</th>
-      <td><p>set to FALSE by default to remove weekend and holiday gaps. Set
-to TRUE for a continuous timescale axis, but with gaps for non-trading
-days.</p></td>
+      <td><p>defaults to FALSE to remove weekend and holiday gaps. Set to TRUE
+for a continuous timescale axis, but with gaps for non-trading days.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -187,7 +194,7 @@ days.</p></td>
 <span class='va'>cloud</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ichimoku.html'>ichimoku</a></span><span class='op'>(</span><span class='va'>sample_ohlc_data</span>, ticker <span class='op'>=</span> <span class='st'>"TKR"</span><span class='op'>)</span>
 
 <span class='fu'>iplot</span><span class='op'>(</span><span class='va'>cloud</span><span class='op'>)</span>
-<span class='fu'>iplot</span><span class='op'>(</span><span class='va'>cloud</span>, from <span class='op'>=</span> <span class='st'>"2020-05-15"</span>, to <span class='op'>=</span> <span class='st'>"2020-10-30"</span>, theme <span class='op'>=</span> <span class='st'>"dark"</span><span class='op'>)</span>
+<span class='fu'>iplot</span><span class='op'>(</span><span class='va'>cloud</span>, window <span class='op'>=</span> <span class='st'>"2020-05-15/2020-10-30"</span>, theme <span class='op'>=</span> <span class='st'>"dark"</span><span class='op'>)</span>
 <span class='fu'>iplot</span><span class='op'>(</span><span class='va'>cloud</span>, ticker <span class='op'>=</span> <span class='st'>"TKR Co."</span>, theme <span class='op'>=</span> <span class='st'>"solarized"</span>, gaps <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 <span class='co'># }</span>
 

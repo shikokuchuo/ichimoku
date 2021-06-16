@@ -3,7 +3,8 @@ pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   reference: reference.html
-last_built: 2021-06-02T16:42Z
+  strategies: strategies.html
+last_built: 2021-06-16T20:04Z
 urls:
   reference: https://shikokuchuo.net/ichimoku/reference
   article: https://shikokuchuo.net/ichimoku/articles

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Minimum over a rolling window — minOver • ichimoku</title>
+<title>Minimum Over a Rolling Window — minOver • ichimoku</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Minimum over a rolling window — minOver" />
-<meta property="og:description" content="Calculate the minimum over a rolling window" />
+<meta property="og:title" content="Minimum Over a Rolling Window — minOver" />
+<meta property="og:description" content="Used by ichimoku to calculate the minimum over a rolling window." />
 
 
 
@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.10</span>
       </span>
     </div>
 
@@ -95,7 +95,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/reference.html">ichimoku: User Reference</a>
+      <a href="../articles/reference.html">ichimoku: Reference</a>
+    </li>
+    <li>
+      <a href="../articles/strategies.html">ichimoku: Strategies</a>
     </li>
   </ul>
 </li>
@@ -123,13 +126,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Minimum over a rolling window</h1>
+    <h1>Minimum Over a Rolling Window</h1>
     <small class="dont-index">Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/R/RcppExports.R'><code>R/RcppExports.R</code></a></small>
     <div class="hidden name"><code>minOver.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Calculate the minimum over a rolling window</p>
+    <p>Used by <a href='ichimoku.html'>ichimoku</a> to calculate the minimum over a rolling window.</p>
     </div>
 
     <pre class="usage"><span class='fu'>minOver</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>window</span><span class='op'>)</span></pre>
@@ -151,9 +154,13 @@
 
     <p>A vector of the same length as 'x' with elements 1 to
     (length(window) - 1) containing NAs.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Fast implementation with no error checking or NA handling.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>min</span> <span class='op'>&lt;-</span> <span class='fu'>minOver</span><span class='op'>(</span><span class='va'>sample_ohlc_data</span><span class='op'>$</span><span class='va'>Close</span>, <span class='fl'>9L</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='fu'>minOver</span><span class='op'>(</span><span class='va'>sample_ohlc_data</span><span class='op'>$</span><span class='va'>close</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>]</span>, <span class='fl'>3L</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;  [1]    NA    NA 122.7 122.8 123.3 124.1 124.8 125.2 124.4 123.9</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

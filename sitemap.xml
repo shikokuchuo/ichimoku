@@ -7,6 +7,15 @@
     <loc>https://shikokuchuo.net/ichimoku/reference/autoplot.ichimoku.html</loc>
   </url>
   <url>
+    <loc>https://shikokuchuo.net/ichimoku/reference/autostrat.html</loc>
+  </url>
+  <url>
+    <loc>https://shikokuchuo.net/ichimoku/reference/duplicate.html</loc>
+  </url>
+  <url>
+    <loc>https://shikokuchuo.net/ichimoku/reference/hasStrat.html</loc>
+  </url>
+  <url>
     <loc>https://shikokuchuo.net/ichimoku/reference/ichimoku-package.html</loc>
   </url>
   <url>
@@ -25,6 +34,9 @@
     <loc>https://shikokuchuo.net/ichimoku/reference/minOver.html</loc>
   </url>
   <url>
+    <loc>https://shikokuchuo.net/ichimoku/reference/mlgrid.html</loc>
+  </url>
+  <url>
     <loc>https://shikokuchuo.net/ichimoku/reference/plot.ichimoku.html</loc>
   </url>
   <url>
@@ -34,9 +46,30 @@
     <loc>https://shikokuchuo.net/ichimoku/reference/sample_ohlc_data.html</loc>
   </url>
   <url>
+    <loc>https://shikokuchuo.net/ichimoku/reference/strat.html</loc>
+  </url>
+  <url>
+    <loc>https://shikokuchuo.net/ichimoku/reference/stratcombine.html</loc>
+  </url>
+  <url>
+    <loc>https://shikokuchuo.net/ichimoku/reference/summary.ichimoku.html</loc>
+  </url>
+  <url>
     <loc>https://shikokuchuo.net/ichimoku/reference/tradingDays.html</loc>
   </url>
   <url>
+    <loc>https://shikokuchuo.net/ichimoku/reference/trimdf.html</loc>
+  </url>
+  <url>
+    <loc>https://shikokuchuo.net/ichimoku/reference/writeMatrix.html</loc>
+  </url>
+  <url>
+    <loc>https://shikokuchuo.net/ichimoku/reference/writeStrat.html</loc>
+  </url>
+  <url>
     <loc>https://shikokuchuo.net/ichimoku/articles/reference.html</loc>
+  </url>
+  <url>
+    <loc>https://shikokuchuo.net/ichimoku/articles/strategies.html</loc>
   </url>
 </urlset>

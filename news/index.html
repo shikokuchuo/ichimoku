@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.10</span>
       </span>
     </div>
 
@@ -94,7 +94,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/reference.html">ichimoku: User Reference</a>
+      <a href="../articles/reference.html">ichimoku: Reference</a>
+    </li>
+    <li>
+      <a href="../articles/strategies.html">ichimoku: Strategies</a>
     </li>
   </ul>
 </li>
@@ -126,15 +129,32 @@
       <small>Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="ichimoku-development-version" class="section level1">
-<h1 class="page-header" data-toc-text="development version">
-<a href="#ichimoku-development-version" class="anchor"></a>ichimoku (development version)<small> Unreleased </small>
+    <div id="ichimoku-0110" class="section level1">
+<h1 class="page-header" data-toc-text="0.1.10">
+<a href="#ichimoku-0110" class="anchor"></a>ichimoku 0.1.10<small> Unreleased </small>
 </h1>
+<p>ichimoku now has the following capabilities:</p>
 <ul>
-<li>Performance optimisations. Package now requires compilation as it contains Rcpp code.</li>
-<li>Optimized rolling window function brought in-package -&gt; remove ‘RcppRoll’ package dependency -&gt; add Rcpp dependency.</li>
-<li>Added feature to allow customisation of holidays when calculating the future cloud -&gt; remove ‘timeDate’ package dependency.</li>
-<li>Added ‘classic’ and ‘mono’ themes.</li>
+<li>visualization layer: compute and plot ichimoku cloud charts.</li>
+<li>strategy layer: tools for creating and backtesting ichimoku strategies.</li>
+<li>ML layer: tools for further developing quantitative ichimoku solutions.</li>
+</ul>
+<p>New features:</p>
+<ul>
+<li>Create and backtest ichimoku strategies.</li>
+<li>New all-greyscale ‘mono’ theme.</li>
+<li>tradingDays() function to allow customisation of holidays when calculating the future cloud.</li>
+</ul>
+<p>Updates:</p>
+<ul>
+<li>Ichimoku object specification updated - this is breaking, but can be fixed by re-running ‘ichimoku()’ on previous ichimoku objects.</li>
+<li>Ichimoku objects now inherit ‘xts’ and ‘zoo’ classes for better integration with other econometrics and analytics packages.</li>
+<li>Package now depends on Rcpp and requires compilation - added more performant rolling window functions minOver() and maxOver() using customised C++ algorithm.</li>
+<li>‘RcppRoll’ and ‘timeDate’ package dependencies retired.</li>
+<li>‘sample_ohlc_data’ updated to better demonstrate new features.</li>
+</ul>
+<p>Other:</p>
+<ul>
 <li>Updated with CRAN release status.</li>
 </ul>
 </div>

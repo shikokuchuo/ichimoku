@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Articles • ichimoku</title>
+<title>Summary of Ichimoku Strategies — summary.ichimoku • ichimoku</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,8 @@
 
 
 
-<meta property="og:title" content="Articles" />
+<meta property="og:title" content="Summary of Ichimoku Strategies — summary.ichimoku" />
+<meta property="og:description" content="Custom summary method for ichimoku objects for viewing strategies." />
 
 
 
@@ -58,7 +59,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-article-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -125,20 +126,80 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Articles</h1>
+    <h1>Summary of Ichimoku Strategies</h1>
+    <small class="dont-index">Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/R/strat.R'><code>R/strat.R</code></a></small>
+    <div class="hidden name"><code>summary.ichimoku.Rd</code></div>
     </div>
 
-    <div class="section ">
-      <h3>All vignettes</h3>
-      <p class="section-desc"></p>
-
-      <dl>
-        <dt><a href="reference.html">ichimoku: Reference</a></dt>
-        <dd></dt>
-        <dt><a href="strategies.html">ichimoku: Strategies</a></dt>
-        <dd></dt>
-      </dl>
+    <div class="ref-description">
+    <p>Custom summary method for ichimoku objects for viewing strategies.</p>
     </div>
+
+    <pre class="usage"><span class='co'># S3 method for ichimoku</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>object</span>, strat <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>object</th>
+      <td><p>an object of class 'ichimoku'.</p></td>
+    </tr>
+    <tr>
+      <th>strat</th>
+      <td><p>defaults to TRUE to show the strategy summary if present. Set to
+FALSE to show the data summary instead.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>other arguments to be passed along.</p></td>
+    </tr>
+    </table>
+
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A matrix containing the strategy summary if present, otherwise a table
+    containing the data summary.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>This function is an S3 method for the generic function summary() for
+    class 'ichimoku'. It can be invoked by calling summary(x) on an object 'x'
+    of class 'ichimoku'.</p>
+    <h2 class="hasAnchor" id="further-details"><a class="anchor" href="#further-details"></a>Further Details</h2>
+
+    
+
+<p>Please refer to the strategies vignette by running:
+    <code><a href='../articles/strategies.html'>vignette("strategies", package = "ichimoku")</a></code></p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='va'>strat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='strat.html'>strat</a></span><span class='op'>(</span><span class='fu'><a href='ichimoku.html'>ichimoku</a></span><span class='op'>(</span><span class='va'>sample_ohlc_data</span>, ticker <span class='op'>=</span> <span class='st'>"TKR"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>strat</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;                        [,1]            
+#&gt; Strategy               "close &gt; tenkan"
+#&gt; ---------------------  "----------"    
+#&gt; Strategy cuml return % 5.01            
+#&gt; Per period mean ret %  0.0218          
+#&gt; Periods in market      119             
+#&gt; Total trades           18              
+#&gt; Average trade length   6.61            
+#&gt; Winning trades %       27.78           
+#&gt; Worst trade ret %      -2.54           
+#&gt; ---------------------  "----------"    
+#&gt; Benchmark cuml ret %   3.38            
+#&gt; Per period mean ret %  0.0148          
+#&gt; Periods in market      224             
+#&gt; ---------------------  "----------"    
+#&gt; Direction              "long"          
+#&gt; Start                  2020-01-13      
+#&gt; End                    2020-09-29      
+#&gt; Ticker                 "TKR"           </div><div class='input'>
+</div></pre>
+  </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 

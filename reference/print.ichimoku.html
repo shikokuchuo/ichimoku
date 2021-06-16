@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>print.ichimoku — print.ichimoku • ichimoku</title>
+<title>Print Ichimoku Objects — print.ichimoku • ichimoku</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,7 @@
 
 
 
-<meta property="og:title" content="print.ichimoku — print.ichimoku" />
+<meta property="og:title" content="Print Ichimoku Objects — print.ichimoku" />
 <meta property="og:description" content="Custom print method for ichimoku objects." />
 
 
@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.10</span>
       </span>
     </div>
 
@@ -95,7 +95,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/reference.html">ichimoku: User Reference</a>
+      <a href="../articles/reference.html">ichimoku: Reference</a>
+    </li>
+    <li>
+      <a href="../articles/strategies.html">ichimoku: Strategies</a>
     </li>
   </ul>
 </li>
@@ -123,7 +126,7 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>print.ichimoku</h1>
+    <h1>Print Ichimoku Objects</h1>
     <small class="dont-index">Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/R/ichimoku.R'><code>R/ichimoku.R</code></a></small>
     <div class="hidden name"><code>print.ichimoku.Rd</code></div>
     </div>
@@ -144,8 +147,8 @@
     </tr>
     <tr>
       <th>plot</th>
-      <td><p>set to TRUE by default. Set to FALSE to prevent automatic
-plotting of the ichimoku cloud chart.</p></td>
+      <td><p>defaults to TRUE. Set to FALSE to prevent automatic plotting of
+the ichimoku cloud chart.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -171,31 +174,52 @@ plotting of the ichimoku cloud chart.</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>cloud</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ichimoku.html'>ichimoku</a></span><span class='op'>(</span><span class='va'>sample_ohlc_data</span>, ticker <span class='op'>=</span> <span class='st'>"TKR"</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>cloud</span>, max <span class='op'>=</span> <span class='fl'>110</span>, row.names <span class='op'>=</span> <span class='cn'>FALSE</span>, digits <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
-</div><div class='img'><img src='print.ichimoku-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;        date  open  high   low close candle tenkan kijun senkouA senkouB chikou
-#&gt;  2020-02-02 144.1 144.3 144.1 144.1   flat     NA    NA      NA      NA  145.0
-#&gt;  2020-02-03 144.1 144.2 143.2 143.4   down     NA    NA      NA      NA  145.3
-#&gt;  2020-02-04 143.4 143.7 142.9 143.1   down     NA    NA      NA      NA  144.7
-#&gt;  2020-02-05 143.1 143.4 142.5 142.5   down     NA    NA      NA      NA  145.0
-#&gt;  2020-02-06 142.5 143.0 141.9 142.0   down     NA    NA      NA      NA  144.9
-#&gt;  2020-02-07 142.0 143.7 141.8 143.4     up     NA    NA      NA      NA  145.1
-#&gt;  2020-02-09 143.4 143.9 143.4 143.7     up     NA    NA      NA      NA  145.2
-#&gt;  2020-02-10 143.7 143.7 142.4 142.6   down     NA    NA      NA      NA  145.4
-#&gt;  2020-02-11 142.6 144.0 142.5 143.4     up  143.1    NA      NA      NA  146.4
-#&gt;  2020-02-12 143.4 143.7 142.6 143.5     up  143.0    NA      NA      NA  145.9
-#&gt;  [ reached 'max' / getOption("max.print") -- omitted 250 rows ]</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>cloud</span><span class='op'>[</span><span class='fl'>100</span><span class='op'>:</span><span class='fl'>110</span>,<span class='op'>]</span>, plot <span class='op'>=</span> <span class='cn'>FALSE</span>, row.names <span class='op'>=</span> <span class='cn'>FALSE</span>, digits <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;        date  open  high   low close candle tenkan kijun senkouA senkouB chikou
-#&gt;  2020-05-27 150.9 152.7 150.8 152.6     up  149.6 149.6   147.4   147.1  157.0
-#&gt;  2020-05-28 152.6 153.1 151.9 152.1   down  149.8 149.8   147.4   147.1  157.2
-#&gt;  2020-05-29 152.1 153.0 151.6 152.8     up  149.9 149.8   147.4   147.1  157.6
-#&gt;  2020-05-31 152.8 153.1 152.7 153.1     up  150.3 149.8   148.3   147.4  158.0
-#&gt;  2020-06-01 153.1 153.2 151.9 152.1   down  151.1 149.8   148.4   147.4  159.0
-#&gt;  2020-06-02 152.1 152.9 152.1 152.3     up  151.4 149.8   148.4   147.4  160.2
-#&gt;  2020-06-03 152.3 152.5 151.3 152.4     up  151.4 149.8   148.4   147.4  159.6
-#&gt;  2020-06-04 152.4 152.7 152.1 152.5     up  151.4 149.8   148.4   147.4  159.7
-#&gt;  2020-06-05 152.5 153.6 152.4 152.8     up  152.2 150.0   148.4   147.5  161.4
-#&gt;  2020-06-07 152.8 153.0 152.7 152.9     up  152.4 150.0   148.4   147.5  161.5
-#&gt;  2020-06-08 152.9 153.3 152.4 153.0     up  152.4 150.0   148.4   147.5  162.6</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>cloud</span>, max <span class='op'>=</span> <span class='fl'>110</span>, digits <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
+</div><div class='img'><img src='print.ichimoku-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;             open  high   low close cd tenkan kijun senkouA senkouB chikou
+#&gt; 2020-01-02 123.0 123.1 122.5 122.7 -1     NA    NA      NA      NA  122.9
+#&gt; 2020-01-03 122.7 122.8 122.6 122.8  1     NA    NA      NA      NA  123.0
+#&gt; 2020-01-05 122.8 123.4 122.4 123.3  1     NA    NA      NA      NA  123.9
+#&gt; 2020-01-06 123.3 124.3 123.3 124.1  1     NA    NA      NA      NA  123.6
+#&gt; 2020-01-07 124.1 124.8 124.0 124.8  1     NA    NA      NA      NA  122.5
+#&gt; 2020-01-08 124.8 125.4 124.5 125.3  1     NA    NA      NA      NA  122.6
+#&gt; 2020-01-09 125.3 125.3 124.8 125.2 -1     NA    NA      NA      NA  123.0
+#&gt; 2020-01-10 125.2 125.3 125.1 125.2  0     NA    NA      NA      NA  123.1
+#&gt; 2020-01-12 125.2 125.2 124.3 124.4 -1  123.9    NA      NA      NA  122.1
+#&gt;            cloudTop cloudBase
+#&gt; 2020-01-02       NA        NA
+#&gt; 2020-01-03       NA        NA
+#&gt; 2020-01-05       NA        NA
+#&gt; 2020-01-06       NA        NA
+#&gt; 2020-01-07       NA        NA
+#&gt; 2020-01-08       NA        NA
+#&gt; 2020-01-09       NA        NA
+#&gt; 2020-01-10       NA        NA
+#&gt; 2020-01-12       NA        NA
+#&gt;  [ reached getOption("max.print") -- omitted 251 rows ]</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>cloud</span><span class='op'>[</span><span class='fl'>100</span><span class='op'>:</span><span class='fl'>110</span>,<span class='op'>]</span>, plot <span class='op'>=</span> <span class='cn'>FALSE</span>, digits <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;             open  high   low close cd tenkan kijun senkouA senkouB chikou
+#&gt; 2020-04-27 122.7 122.7 121.8 122.4 -1  120.5 123.3   125.6   124.8  135.6
+#&gt; 2020-04-28 122.4 122.6 121.1 121.9 -1  120.5 123.3   125.7   124.8  134.5
+#&gt; 2020-04-29 121.9 123.7 121.7 123.3  1  120.8 123.2   125.7   124.8  134.3
+#&gt; 2020-04-30 123.3 124.0 123.0 124.0  1  121.0 123.2   125.7   124.8  135.9
+#&gt; 2020-05-01 124.2 124.3 124.0 124.1 -1  121.4 123.1   125.7   124.8  135.2
+#&gt; 2020-05-03 124.1 124.1 123.4 123.9 -1  122.2 123.1   126.0   124.8  135.7
+#&gt; 2020-05-04 123.9 124.7 123.7 124.5  1  122.9 123.1   126.5   124.8  135.4
+#&gt; 2020-05-05 124.5 124.7 123.9 124.2 -1  122.9 123.0   126.6   124.8  135.7
+#&gt; 2020-05-06 124.2 125.2 124.0 124.7  1  123.2 123.0   126.2   124.8  135.6
+#&gt; 2020-05-07 124.7 129.8 124.7 129.6  1  125.5 123.9   126.1   124.8  136.2
+#&gt; 2020-05-08 129.9 130.6 129.9 130.2  1  126.2 124.3   125.7   124.8  136.5
+#&gt;            cloudTop cloudBase
+#&gt; 2020-04-27    125.6     124.8
+#&gt; 2020-04-28    125.7     124.8
+#&gt; 2020-04-29    125.7     124.8
+#&gt; 2020-04-30    125.7     124.8
+#&gt; 2020-05-01    125.7     124.8
+#&gt; 2020-05-03    126.0     124.8
+#&gt; 2020-05-04    126.5     124.8
+#&gt; 2020-05-05    126.6     124.8
+#&gt; 2020-05-06    126.2     124.8
+#&gt; 2020-05-07    126.1     124.8
+#&gt; 2020-05-08    125.7     124.8</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
