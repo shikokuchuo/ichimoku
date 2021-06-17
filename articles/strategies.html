@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -102,24 +102,30 @@
 <a href="#introduction" class="anchor"></a>Introduction</h2>
 <p>There are multiple ways to work with Ichimoku Kinko Hyo strategies using the ‘ichimoku’ package in R.</p>
 <p>First and foremost is visually, and the functions for visualization are described in the <a href="reference.html">reference vignette</a>.</p>
-<p>However if a more methodical approach is required, for instance to test hypotheses about the price action of a particular security under certain scenarios, it is necessary to perform analysis on the data directly. Here, complications of the ichimoku system that may not be present with other indicators become apparent. The Chikou span in particular poses a challenge as the position of this indicator needs to be mapped in relation to the chart elements 26 periods previously, however this then affects trading decisions at the current point in time.</p>
-<p>The ‘strategy layer’ of the ichimoku package aims to prepare the data in a standardized format for easy analysis in best-in-class R packages such as ‘PerformanceAnalytics’. Strategy summaries are automatically generated, but are meant to serve as a quick reference and are not designed to replace a full backtest.</p>
-<p>The <code><a href="../reference/autostrat.html">autostrat()</a></code> function is used to further facilitate idea and strategy generation, and leverages the computational abilities of R to simultaneously test all valid indicator combinations. Whilst not all strategies returned may make intuitive sense, it does at least serve to provide another benchmark if nothing else. Again, the results generated are meant to be fed through a full backtest, with implications analysed. Past results do not imply future performance, and the results obtained should not be used on the basis of the results alone.</p>
+<p>However if a more methodical approach is required, for instance to test hypotheses about the price action of a particular security under certain scenarios, it is necessary to perform analysis on the data directly. Here, complications of the ichimoku system can become apparent. The Chikou span in particular poses a challenge as the position of this indicator needs to be mapped in relation to the chart elements 26 periods previously, however this then affects trading decisions at the present point in time.</p>
+<p>The ‘strategy layer’ of the ichimoku package aims to prepare the data in a standardized format for easy analysis in R packages such as ‘PerformanceAnalytics’. Short strategy summaries are generated automatically, but are designed to serve as a quick reference rather than a replacement for a full backtest.</p>
+<p>The <code><a href="../reference/autostrat.html">autostrat()</a></code> function is used to further facilitate idea and strategy generation, and leverages the computational abilities of R to simultaneously test all valid indicator combinations. Whilst not all strategies returned may make intuitive sense, it does at least serve to provide another benchmark if nothing else. Again, the results generated are meant to be fed through a full backtest, with all the implications analysed. Past results do not imply future performance, and the results obtained should not be used on the basis of the results alone.</p>
 </div>
 <div id="working-with-strategies" class="section level2">
 <h2 class="hasAnchor">
 <a href="#working-with-strategies" class="anchor"></a>Working with Strategies</h2>
-<ol style="list-style-type: decimal">
-<li>Create ichimoku object from the price data.</li>
-</ol>
+<div id="use-ichimoku" class="section level3">
+<h3 class="hasAnchor">
+<a href="#use-ichimoku" class="anchor"></a>1. Use <code>ichimoku()</code>
+</h3>
+<p>To create an ichimoku object from the price data.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Simulated OHLC pricing data is assigned to data frame 'TKR':</span>
 <span class="va">TKR</span> <span class="op">&lt;-</span> <span class="va">sample_ohlc_data</span>
 <span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span><span class="op">)</span></code></pre></div>
-<ol start="2" style="list-style-type: decimal">
-<li>Use <code><a href="../reference/strat.html">strat()</a></code> to test a simple strategy with a rule of the form ‘long (or short) while c1 &gt; c2’.</li>
-</ol>
+</div>
+<div id="use-strat" class="section level3">
+<h3 class="hasAnchor">
+<a href="#use-strat" class="anchor"></a>2. Use <code>strat()</code>
+</h3>
+<p>To test a simple strategy with a rule condition of the form ‘long (or short) while c1 &gt; c2’.</p>
 <p>Here the references c1 and c2 are columns of the ichimoku object representing either candlestick values e.g. ‘close’ or cloud values e.g. ‘tenkan’.</p>
+<p>Note: the rule condition is c1 &gt; c2 even for short trades. Hence please take care for example when inverting ‘long while close &gt; tenkan’ to ‘short while close &lt; tenkan’, this should be formulated as ‘short while tenkan &gt; close’.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">strat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/strat.html">strat</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">strat</span><span class="op">[</span><span class="fl">100</span><span class="op">:</span><span class="fl">105</span><span class="op">]</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
@@ -161,10 +167,12 @@
 <li>
 <strong>sret</strong>: the discrete returns for the strategy. It is simply ret * posn, i.e. the returns where a position is held</li>
 </ul>
-<p>Note that the assumption applies to all strategies that confirmation of whether a condition is satisfied is received at the ‘close’ of a particular period, and a transaction is initiated at the immediately following ‘open’. It is assumed that all transactions are conducted at opening prices. All events are aligned to their correct time periods, which are taken to be from the ‘open’ to the ‘close’ inclusive of that period. Hence ‘cond’ refers to if the condition is satisfied at the ‘close’ of the period, ‘posn’ also refers to whether a position is held at the ‘close’ of the period, and ‘txn’ refers to if there has been a transaction during that period (in this case occurring at the ‘open’).</p>
-<ol start="3" style="list-style-type: decimal">
-<li>View strategy summary</li>
-</ol>
+<p>Note: the assumption applies to all strategies that confirmation of whether a condition is satisfied is received at the ‘close’ of a particular period, and a transaction is initiated at the immediately following ‘open’. It is assumed that all transactions are conducted at opening prices. All events are aligned to their correct time periods, which are taken to be from the ‘open’ to the ‘close’ inclusive of that period. Hence ‘cond’ refers to if the condition is satisfied at the ‘close’ of the period, ‘posn’ also refers to whether a position is held at the ‘close’ of the period, and ‘txn’ refers to if there has been a transaction during that period (in this case occurring at the ‘open’).</p>
+</div>
+<div id="view-strategy-summary-with-summary" class="section level3">
+<h3 class="hasAnchor">
+<a href="#view-strategy-summary-with-summary" class="anchor"></a>3. View strategy summary with <code>summary()</code>
+</h3>
 <p>A summary of the strategy is saved as an attribute to the ichimoku object and can be accessed by the <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> function.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">strat</span><span class="op">)</span>
@@ -176,7 +184,7 @@
 <span class="co">#&gt; Periods in market      119             </span>
 <span class="co">#&gt; Total trades           18              </span>
 <span class="co">#&gt; Average trade length   6.61            </span>
-<span class="co">#&gt; Winning trades %       27.78           </span>
+<span class="co">#&gt; Trade success %        27.78           </span>
 <span class="co">#&gt; Worst trade ret %      -2.54           </span>
 <span class="co">#&gt; ---------------------  "----------"    </span>
 <span class="co">#&gt; Benchmark cuml ret %   3.38            </span>
@@ -187,28 +195,30 @@
 <span class="co">#&gt; Start                  2020-01-13      </span>
 <span class="co">#&gt; End                    2020-09-29      </span>
 <span class="co">#&gt; Ticker                 "TKR"</span></code></pre></div>
-<p>The summary is meant to provide a quick overview of whether a strategy is effective or not.</p>
+<p>The summary is meant to provide a quick overview of whether a strategy is effective / desirable:</p>
 <ul>
-<li>Strategy returns are compared with the benchmark, which is simply being in the market the entire time.</li>
-<li>Comparing returns combined with total periods in the market can help determine if the strategy is substantially different from just taking market risk.</li>
-<li>Total trades along with average trade length can be used to filter out undesirable strategies that over-trade.</li>
-<li>Winning trade % helps to characterise the consistency of the strategy or whether it relies on a small percentage of outsize winners.</li>
-<li>The return of the worst-performing trade provides a measure of downside risk.</li>
+<li>Strategy returns are compared with the benchmark, which is simply being in the market the entire time</li>
+<li>Comparing returns combined with total periods in the market can help determine if the strategy is substantially different from just taking market risk</li>
+<li>Total trades along with average trade length can be used to filter out undesirable strategies that over-trade</li>
+<li>Trade success % helps to characterise the consistency of the strategy or whether it relies on a small percentage of outsize returns</li>
+<li>The return of the worst-performing trade provides a measure of downside risk</li>
 </ul>
 <p>See <a href="#strategy-summary-specification">strategy summary specification</a> for details of the reported measures.</p>
-<ol start="4" style="list-style-type: decimal">
-<li>Visualize by calling <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code>.</li>
-</ol>
+</div>
+<div id="visualize-by-calling-plot-" class="section level3">
+<h3 class="hasAnchor">
+<a href="#visualize-by-calling-plot-" class="anchor"></a>4. Visualize by calling <code>plot()</code>.</h3>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">strat</span><span class="op">)</span></code></pre></div>
 <p><img src="strategies_files/figure-html/plot-1.png" width="672"></p>
-<p>The periods where the strategy results in a market position are now highlighted on the ichimoku cloud chart. To view the original chart without the strategy, simply pass the argument <code>strat = FALSE</code> when calling <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code>.</p>
+<p>The periods where the strategy results in a market position are now shaded on the ichimoku cloud chart. To view the original chart without the strategy, simply pass the argument <code>strat = FALSE</code> when calling <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code>.</p>
 <p>Note: <code><a href="../reference/iplot.html">iplot()</a></code> interactive charting currently does not implement this additional functionality for strategies.</p>
-<ol start="5" style="list-style-type: decimal">
-<li>Combining strategies using <code><a href="../reference/stratcombine.html">stratcombine()</a></code>
-</li>
-</ol>
-<p>Strategies may be combined to form more complex strategies if desired. The function can be used on 2 ichimoku objects containing rules c1 &gt; c2 and c3 &gt; c4 respectively, combining them into a new strategy with a rule of c1 &gt; c2 &amp; c3 &gt; c4.</p>
+</div>
+<div id="combine-strategies-using-stratcombine" class="section level3">
+<h3 class="hasAnchor">
+<a href="#combine-strategies-using-stratcombine" class="anchor"></a>5. Combine strategies using <code>stratcombine()</code>
+</h3>
+<p>Strategies may be combined to form more complex strategies if desired. The function can be used on 2 ichimoku objects containing rule conditions ‘c1 &gt; c2’ and ‘c3 &gt; c4’ respectively, combining them into a new strategy with a rule condition of ‘c1 &gt; c2 &amp; c3 &gt; c4’.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">strat2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/strat.html">strat</a></span><span class="op">(</span><span class="va">cloud</span>, <span class="st">"cloudBase"</span>, <span class="st">"kijun"</span><span class="op">)</span>
 
@@ -222,7 +232,7 @@
 <span class="co">#&gt; Periods in market      32                                  </span>
 <span class="co">#&gt; Total trades           3                                   </span>
 <span class="co">#&gt; Average trade length   10.67                               </span>
-<span class="co">#&gt; Winning trades %       66.67                               </span>
+<span class="co">#&gt; Trade success %        66.67                               </span>
 <span class="co">#&gt; Worst trade ret %      -1.4                                </span>
 <span class="co">#&gt; ---------------------  "----------"                        </span>
 <span class="co">#&gt; Benchmark cuml ret %   0.94                                </span>
@@ -233,10 +243,13 @@
 <span class="co">#&gt; Start                  2020-04-02                          </span>
 <span class="co">#&gt; End                    2020-09-29                          </span>
 <span class="co">#&gt; Ticker                 "TKR"</span></code></pre></div>
-<ol start="6" style="list-style-type: decimal">
-<li>Further backtesting and returns analysis</li>
-</ol>
-<p>The strategy returns are saved within the ichimoku object in the columns ‘slogret’ (strategy log returns) and ‘sret’ (strategy discrete returns). The returns (benchmark) for all periods are saved as ‘logret’ (log returns) and ‘ret’ (discrete returns). As the ichimoku object inherits the ‘xts’ class, these columns may be fed directly into other econometrics or analytics packages such as ‘PerformanceAnalytics’, as per the example below.</p>
+</div>
+<div id="further-backtesting-and-returns-analysis" class="section level3">
+<h3 class="hasAnchor">
+<a href="#further-backtesting-and-returns-analysis" class="anchor"></a>6. Further backtesting and returns analysis</h3>
+<p>The strategy returns are saved within the ichimoku object in the columns ‘slogret’ (strategy log returns) and ‘sret’ (strategy discrete returns).</p>
+<p>The returns (benchmark) for all periods are saved as ‘logret’ (log returns) and ‘ret’ (discrete returns).</p>
+<p>As the ichimoku object inherits the ‘xts’ class, these columns may be fed directly into other econometrics or analytics packages such as ‘PerformanceAnalytics’, as per the example below.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">PerformanceAnalytics</span><span class="op">)</span>
 <span class="co"># To chart performance comparison of strategy vs benchmark, daily returns and drawdowns</span>
@@ -244,20 +257,22 @@
 <span class="co"># For a table detailing drawdowns, including depth, length of recovery etc.</span>
 <span class="fu">table.Drawdowns</span><span class="op">(</span><span class="va">strat</span><span class="op">[</span>, <span class="st">"sret"</span><span class="op">]</span><span class="op">)</span></code></pre></div>
 </div>
+</div>
 <div id="advanced-strategies" class="section level2">
 <h2 class="hasAnchor">
 <a href="#advanced-strategies" class="anchor"></a>Advanced Strategies</h2>
 <div id="autostrat" class="section level3">
 <h3 class="hasAnchor">
-<a href="#autostrat" class="anchor"></a>autostrat()</h3>
+<a href="#autostrat" class="anchor"></a><code>autostrat()</code>
+</h3>
 <p>The analytic capability of R can be leveraged to generate and evaluate all possible strategies. This function is designed for simplicity and can be run without any additional arguments on an ichimoku object. The arguments it does take are limited to:</p>
 <ul>
 <li>
-<strong>n</strong> [default ‘8’] number of strategies to return</li>
+<strong>n</strong> [default 8] number of strategies to return</li>
 <li>
 <strong>dir</strong> [default ‘long’] trade direction ‘long’ or ‘short’</li>
 <li>
-<strong>level</strong> [default ‘1’] ‘1’ or ‘2’ to also return combined strategies</li>
+<strong>level</strong> [default 1] set to 2 to also return combined strategies</li>
 </ul>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/autostrat.html">autostrat</a></span><span class="op">(</span><span class="va">cloud</span>, n <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
@@ -269,7 +284,7 @@
 <span class="co">#&gt; Periods in market      57                 38                  57               </span>
 <span class="co">#&gt; Total trades           3                  3                   3                </span>
 <span class="co">#&gt; Average trade length   19                 12.67               19               </span>
-<span class="co">#&gt; Winning trades %       66.67              66.67               66.67            </span>
+<span class="co">#&gt; Trade success %        66.67              66.67               66.67            </span>
 <span class="co">#&gt; Worst trade ret %      -0.31              -0.31               -0.31            </span>
 <span class="co">#&gt; ---------------------  "----------"       "----------"        "----------"     </span>
 <span class="co">#&gt; Benchmark cuml ret %   0.94               0.94                0.94             </span>
@@ -286,13 +301,13 @@
 <li><p><strong>summary</strong>: the strategy summaries</p></li>
 <li><p><strong>logret</strong>: the log returns of all combinations computed by autostrat</p></li>
 </ul>
-<p>Note: the strategies returned may not be in perfect order of strategy returns. This is due to the fact that the implementation via <code><a href="../reference/mlgrid.html">mlgrid()</a></code> simultaneously tests all strategies using the same time interval for comparability. However individual strategies are then run on the top ‘n’ strategies, and this uses all of the available data for those indicators, which may be more than that used during comparison.</p>
-<p>Note: as SenkouA, SenkouB, cloudTop and cloudBase are used in conjuction with other indicators, it is possible to get a series of similar returns with cloudBase &gt; c2, senkouB &gt; c2 etc. Although these strategies may at times be equivalent or considered equivalent, this is not always the case and ichimoku will presents all results.</p>
+<p>Note: the strategies returned may not be in perfect order of strategy returns. This is due to the fact that the implementation via <code><a href="../reference/mlgrid.html">mlgrid()</a></code> simultaneously tests all strategies using the same time interval for comparability. However individual strategies are then run on the top ‘n’ strategies using all of the available data for those indicators, which may be more than that used during comparison.</p>
+<p>Note: as SenkouA, SenkouB, cloudTop and cloudBase are used in conjuction with other indicators, it is possible to get a series of similar returns with cloudBase &gt; c2, senkouB &gt; c2 etc. Although these strategies may at times be equivalent or considered equivalent, this is not always the case and ichimoku presents all such results.</p>
 </div>
 <div id="autostrat-level-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#autostrat-level-2" class="anchor"></a>autostrat() level 2</h3>
-<p>Set the <code>level = 2</code> argument to <code><a href="../reference/autostrat.html">autostrat()</a></code> to test all strategies with a combination of up to 2 indicator rules.</p>
+<a href="#autostrat-level-2" class="anchor"></a><code>autostrat()</code> level 2</h3>
+<p>Set the <code>level = 2</code> argument to <code><a href="../reference/autostrat.html">autostrat()</a></code> to test all strategies with a combination of up to 2 rule conditions.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/autostrat.html">autostrat</a></span><span class="op">(</span><span class="va">cloud</span>, n <span class="op">=</span> <span class="fl">3</span>, dir <span class="op">=</span> <span class="st">"short"</span>, level <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
 <span class="co">#&gt;                        [,1]                              </span>
@@ -303,7 +318,7 @@
 <span class="co">#&gt; Periods in market      18                                </span>
 <span class="co">#&gt; Total trades           3                                 </span>
 <span class="co">#&gt; Average trade length   6                                 </span>
-<span class="co">#&gt; Winning trades %       0                                 </span>
+<span class="co">#&gt; Trade success %        0                                 </span>
 <span class="co">#&gt; Worst trade ret %      -7.68                             </span>
 <span class="co">#&gt; ---------------------  "----------"                      </span>
 <span class="co">#&gt; Benchmark cuml ret %   -0.93                             </span>
@@ -322,7 +337,7 @@
 <span class="co">#&gt; Periods in market      22                                  </span>
 <span class="co">#&gt; Total trades           3                                   </span>
 <span class="co">#&gt; Average trade length   7.33                                </span>
-<span class="co">#&gt; Winning trades %       0                                   </span>
+<span class="co">#&gt; Trade success %        0                                   </span>
 <span class="co">#&gt; Worst trade ret %      -7.68                               </span>
 <span class="co">#&gt; ---------------------  "----------"                        </span>
 <span class="co">#&gt; Benchmark cuml ret %   -0.93                               </span>
@@ -341,7 +356,7 @@
 <span class="co">#&gt; Periods in market      57                               </span>
 <span class="co">#&gt; Total trades           9                                </span>
 <span class="co">#&gt; Average trade length   6.33                             </span>
-<span class="co">#&gt; Winning trades %       44.44                            </span>
+<span class="co">#&gt; Trade success %        44.44                            </span>
 <span class="co">#&gt; Worst trade ret %      -6.35                            </span>
 <span class="co">#&gt; ---------------------  "----------"                     </span>
 <span class="co">#&gt; Benchmark cuml ret %   -0.93                            </span>
@@ -358,29 +373,30 @@
 <h2 class="hasAnchor">
 <a href="#strategy-summary-specification" class="anchor"></a>Strategy Summary Specification</h2>
 <p><code>---</code></p>
-<p><strong>Strategy cuml return %</strong>: The (discrete) percentage return achieved by pursuing the strategy, assuming all returns are compounded. This measure is equivalent to the sum of log returns converted back into a discrete return.</p>
-<p><strong>Per period mean ret %</strong>: The percentage return (above) divided by the periods in market (below).</p>
-<p><strong>Periods in market</strong>: The number of periods (days, or whatever the periodicity of the data is) in the market.</p>
-<p><strong>Total trades</strong>: Total number of trades to implement the strategy. Note that each trade requires 2 transactions, one to enter the trade and one to close out of it. Note: the benchmark would imply one trade.</p>
-<p><strong>Average trade length</strong>: Periods in Market (above) divided by total trades (above).</p>
-<p><strong>Winning trades %</strong>: Number of trades where the return is strictly greater than zero divided by the total number of trades.</p>
-<p><strong>Worst trade ret %</strong>: The (discrete) percentage return of the worst-performing trade.</p>
+<p><strong>Strategy cuml return %</strong>: The (discrete) percentage return achieved by pursuing the strategy, assuming all returns are compounded. This measure is equivalent to the sum of log returns converted back into a discrete return</p>
+<p><strong>Per period mean ret %</strong>: The percentage return (above) divided by the periods in market (below)</p>
+<p><strong>Periods in market</strong>: The number of periods (days, or whatever the periodicity of the data is) in the market</p>
+<p><strong>Total trades</strong>: Total number of trades to implement the strategy. Note that each trade requires 2 transactions, one to enter the trade and one to close out of it. Note: the benchmark would imply one trade</p>
+<p><strong>Average trade length</strong>: Periods in Market (above) divided by total trades (above)</p>
+<p><strong>Trade success %</strong>: Number of trades where the return is strictly greater than zero divided by the total number of trades</p>
+<p><strong>Worst trade ret %</strong>: The (discrete) percentage return of the worst-performing trade</p>
 <p><code>---</code></p>
-<p><strong>Benchmark cuml return %</strong>: The (discrete) percentage return achieved using a ‘buy and hold’ strategy.</p>
-<p><strong>Per period mean ret %</strong>: The percentage return (above) divided by the periods in market (below).</p>
-<p><strong>Periods in market</strong>: The number of periods (days, or whatever the periodicity of the data is) from the ‘start’ to ‘end’ dates.</p>
+<p><strong>Benchmark cuml return %</strong>: The (discrete) percentage return achieved using a ‘buy and hold’ strategy</p>
+<p><strong>Per period mean ret %</strong>: The percentage return (above) divided by the periods in market (below)</p>
+<p><strong>Periods in market</strong>: The number of periods (days, or whatever the periodicity of the data is) from the ‘start’ to ‘end’ dates</p>
 <p><code>---</code></p>
-<p><strong>Ticker</strong>: The ticker saved in the ichimoku object.</p>
-<p><strong>Start/end</strong>: The start and end dates of this backtest. These dates will differ for different cloud lines depending on how many periods it takes to calculate them, or if involving the chikou, shifting back a number of periods.</p>
-<p><strong>Direction</strong>: ‘long’ or ‘short’ trade direction as can be set via the argument ‘dir’ to strat(). Only single direction strategies are considered.</p>
+<p><strong>Ticker</strong>: The ticker saved in the ichimoku object</p>
+<p><strong>Start/end</strong>: The start and end dates of this backtest. These dates will differ for different cloud lines depending on how many periods it takes to calculate them, or if involving the chikou, shifting back a number of periods</p>
+<p><strong>Direction</strong>: ‘long’ or ‘short’ trade direction as can be set via the argument ‘dir’ to strat(). Only single direction strategies are considered</p>
 </div>
 <div id="ichimoku-ml-layer" class="section level2">
 <h2 class="hasAnchor">
 <a href="#ichimoku-ml-layer" class="anchor"></a>ichimoku ML Layer</h2>
 <p>The ML layer provides tools for further developing quantitative ichimoku solutions.</p>
-<div id="mlgrid" class="section level4">
-<h4 class="hasAnchor">
-<a href="#mlgrid" class="anchor"></a>mlgrid()</h4>
+<div id="mlgrid" class="section level3">
+<h3 class="hasAnchor">
+<a href="#mlgrid" class="anchor"></a><code>mlgrid()</code>
+</h3>
 <p><code><a href="../reference/mlgrid.html">mlgrid()</a></code> generates a numeric representation of the relationship between ichimoku cloud chart elements. Its purpose is to provide a base grid which can then be manipulated as required before being fed into machine learning workflows.</p>
 <p><code><a href="../reference/mlgrid.html">mlgrid()</a></code> is used to power ichimoku’s <code><a href="../reference/autostrat.html">autostrat()</a></code> function.</p>
 <p>The object returned by the function is a data.frame in a ‘tidy’ format with one observation per row and one feature per column with the target ‘y’ as the first column. This is a format that is compatible with many machine learning packages.</p>

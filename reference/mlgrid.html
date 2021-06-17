@@ -40,8 +40,8 @@
 
 
 <meta property="og:title" content="mlgrid Numeric Representation — mlgrid" />
-<meta property="og:description" content="Create a grid of ichimoku indicator conditions and next period returns. The
-    grid facilitates comparing strategy returns or as a basis for further
+<meta property="og:description" content="Create a grid of ichimoku rule conditions and next period returns. The grid
+    facilitates comparing strategy returns or as a basis for further
     processing in machine learning applications. The purpose of this function
     is to translate the visual representation of the relationship between
     cloud chart elements into a numerical format for further analysis." />
@@ -76,7 +76,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -136,8 +136,8 @@
     </div>
 
     <div class="ref-description">
-    <p>Create a grid of ichimoku indicator conditions and next period returns. The
-    grid facilitates comparing strategy returns or as a basis for further
+    <p>Create a grid of ichimoku rule conditions and next period returns. The grid
+    facilitates comparing strategy returns or as a basis for further
     processing in machine learning applications. The purpose of this function
     is to translate the visual representation of the relationship between
     cloud chart elements into a numerical format for further analysis.</p>
@@ -210,7 +210,7 @@ Set to FALSE to return both c1 &gt; c2 and c2 &gt; c1.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>cloud</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ichimoku.html'>ichimoku</a></span><span class='op'>(</span><span class='va'>sample_ohlc_data</span>, ticker <span class='op'>=</span> <span class='st'>"TKR"</span><span class='op'>)</span>
-<span class='va'>grid</span> <span class='op'>&lt;-</span> <span class='fu'>mlgrid</span><span class='op'>(</span><span class='va'>cloud</span><span class='op'>)</span>
+<span class='va'>grid</span> <span class='op'>&lt;-</span> <span class='fu'>mlgrid</span><span class='op'>(</span><span class='va'>cloud</span>, y <span class='op'>=</span> <span class='st'>"ret"</span>, dir <span class='op'>=</span> <span class='st'>"short"</span>, type <span class='op'>=</span> <span class='st'>"numeric"</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/attributes.html'>attributes</a></span><span class='op'>(</span><span class='va'>grid</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; $names
 #&gt;  [1] "y"                "chikou_close"     "chikou_high"      "chikou_low"      
@@ -256,10 +256,10 @@ Set to FALSE to return both c1 &gt; c2 and c2 &gt; c1.</p></td>
 #&gt; [1] "data.frame"
 #&gt; 
 #&gt; $y
-#&gt; [1] "logret"
+#&gt; [1] "ret"
 #&gt; 
 #&gt; $direction
-#&gt; [1] "long"
+#&gt; [1] "short"
 #&gt; 
 #&gt; $mlgrid
 #&gt; [1] TRUE

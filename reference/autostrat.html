@@ -41,8 +41,8 @@
 
 <meta property="og:title" content="Automated Ichimoku Strategies — autostrat" />
 <meta property="og:description" content="Generate a list of the top performing ichimoku cloud strategies based on
-    indicator conditions of the form 'c1 &amp;gt; c2' or level 2 strategies based on
-    combined indicator conditions of the form 'c1 &amp;gt; c2' &amp;amp; 'c3 &amp;gt; c4'." />
+    rule conditions of the form 'c1 &amp;gt; c2' or level 2 strategies based on
+    combined rule conditions of the form 'c1 &amp;gt; c2 &amp;amp; c3 &amp;gt; c4'." />
 
 
 
@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -135,8 +135,8 @@
 
     <div class="ref-description">
     <p>Generate a list of the top performing ichimoku cloud strategies based on
-    indicator conditions of the form 'c1 &gt; c2' or level 2 strategies based on
-    combined indicator conditions of the form 'c1 &gt; c2' &amp; 'c3 &gt; c4'.</p>
+    rule conditions of the form 'c1 &gt; c2' or level 2 strategies based on
+    combined rule conditions of the form 'c1 &gt; c2 &amp; c3 &gt; c4'.</p>
     </div>
 
     <pre class="usage"><span class='fu'>autostrat</span><span class='op'>(</span><span class='va'>x</span>, n <span class='op'>=</span> <span class='fl'>8</span>, dir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"long"</span>, <span class='st'>"short"</span><span class='op'>)</span>, level <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></pre>
@@ -150,7 +150,7 @@
     </tr>
     <tr>
       <th>n</th>
-      <td><p>top 'n' number of strategies to return.</p></td>
+      <td><p>defaults to 8. Select top n number of strategies to return.</p></td>
     </tr>
     <tr>
       <th>dir</th>
@@ -158,7 +158,7 @@
     </tr>
     <tr>
       <th>level</th>
-      <td><p>set by default to '1'. Set to '2' to also return combined strategies.</p></td>
+      <td><p>defaults to 1. Set to 2 to also return combined strategies.</p></td>
     </tr>
     </table>
 
@@ -195,7 +195,7 @@
 #&gt; Periods in market      57                 38                  57               
 #&gt; Total trades           3                  3                   3                
 #&gt; Average trade length   19                 12.67               19               
-#&gt; Winning trades %       66.67              66.67               66.67            
+#&gt; Trade success %        66.67              66.67               66.67            
 #&gt; Worst trade ret %      -0.31              -0.31               -0.31            
 #&gt; ---------------------  "----------"       "----------"        "----------"     
 #&gt; Benchmark cuml ret %   0.94               0.94                0.94             
@@ -255,7 +255,7 @@
 #&gt; Periods in market      57                 38                  57               
 #&gt; Total trades           3                  3                   3                
 #&gt; Average trade length   19                 12.67               19               
-#&gt; Winning trades %       66.67              66.67               66.67            
+#&gt; Trade success %        66.67              66.67               66.67            
 #&gt; Worst trade ret %      -0.31              -0.31               -0.31            
 #&gt; ---------------------  "----------"       "----------"        "----------"     
 #&gt; Benchmark cuml ret %   0.94               0.94                0.94             
@@ -275,7 +275,7 @@
 #&gt; Periods in market      57                
 #&gt; Total trades           3                 
 #&gt; Average trade length   19                
-#&gt; Winning trades %       66.67             
+#&gt; Trade success %        66.67             
 #&gt; Worst trade ret %      -0.31             
 #&gt; ---------------------  "----------"      
 #&gt; Benchmark cuml ret %   0.94              
@@ -286,7 +286,7 @@
 #&gt; Start                  2020-04-02        
 #&gt; End                    2020-09-29        
 #&gt; Ticker                 "TKR"             </div><div class='input'>
-<span class='fu'>autostrat</span><span class='op'>(</span><span class='va'>cloud</span>, n <span class='op'>=</span> <span class='fl'>3</span>, dir <span class='op'>=</span> <span class='st'>"short"</span>, level <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
+<span class='fu'>autostrat</span><span class='op'>(</span><span class='va'>cloud</span>, n <span class='op'>=</span> <span class='fl'>1</span>, dir <span class='op'>=</span> <span class='st'>"short"</span>, level <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;                        [,1]                              
 #&gt; Strategy               "high &gt; chikou &amp; tenkan &gt; senkouB"
 #&gt; ---------------------  "----------"                      
@@ -295,7 +295,7 @@
 #&gt; Periods in market      18                                
 #&gt; Total trades           3                                 
 #&gt; Average trade length   6                                 
-#&gt; Winning trades %       0                                 
+#&gt; Trade success %        0                                 
 #&gt; Worst trade ret %      -7.68                             
 #&gt; ---------------------  "----------"                      
 #&gt; Benchmark cuml ret %   -0.93                             
@@ -305,45 +305,7 @@
 #&gt; Direction              "short"                           
 #&gt; Start                  2020-04-02                        
 #&gt; End                    2020-09-29                        
-#&gt; Ticker                 "TKR"                             
-#&gt;                        [,2]                                
-#&gt; Strategy               "high &gt; chikou &amp; tenkan &gt; cloudBase"
-#&gt; ---------------------  "----------"                        
-#&gt; Strategy cuml return % 12.86                               
-#&gt; Per period mean ret %  0.0781                              
-#&gt; Periods in market      22                                  
-#&gt; Total trades           3                                   
-#&gt; Average trade length   7.33                                
-#&gt; Winning trades %       0                                   
-#&gt; Worst trade ret %      -7.68                               
-#&gt; ---------------------  "----------"                        
-#&gt; Benchmark cuml ret %   -0.93                               
-#&gt; Per period mean ret %  -0.006                              
-#&gt; Periods in market      155                                 
-#&gt; ---------------------  "----------"                        
-#&gt; Direction              "short"                             
-#&gt; Start                  2020-04-02                          
-#&gt; End                    2020-09-29                          
-#&gt; Ticker                 "TKR"                               
-#&gt;                        [,3]                             
-#&gt; Strategy               "tenkan &gt; low &amp; tenkan &gt; senkouB"
-#&gt; ---------------------  "----------"                     
-#&gt; Strategy cuml return % 15.86                            
-#&gt; Per period mean ret %  0.095                            
-#&gt; Periods in market      57                               
-#&gt; Total trades           9                                
-#&gt; Average trade length   6.33                             
-#&gt; Winning trades %       44.44                            
-#&gt; Worst trade ret %      -6.35                            
-#&gt; ---------------------  "----------"                     
-#&gt; Benchmark cuml ret %   -0.93                            
-#&gt; Per period mean ret %  -0.006                           
-#&gt; Periods in market      155                              
-#&gt; ---------------------  "----------"                     
-#&gt; Direction              "short"                          
-#&gt; Start                  2020-04-02                       
-#&gt; End                    2020-09-29                       
-#&gt; Ticker                 "TKR"                            </div><div class='input'>
+#&gt; Ticker                 "TKR"                             </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -100,28 +100,29 @@
 <a href="#ichimoku-kinko-hyo" class="anchor"></a>Ichimoku Kinko Hyo</h2>
 <p>The system consists of the following chart lines added to a candlestick chart:</p>
 <ol style="list-style-type: decimal">
-<li><p><strong>Tenkan-sen</strong>: [conversion line] the mid-point of the highest high and lowest low for the past 9 periods.</p></li>
-<li><p><strong>Kijun-sen</strong>: [base line] the mid-point of the highest high and lowest low for the past 26 periods.</p></li>
-<li><p><strong>Senkou span A</strong>: [leading span A] the mid-point of Tenkan-sen and Kijun-sen plotted ahead 26 periods.</p></li>
-<li><p><strong>Senkou span B</strong>: [leading span B] the mid-point of the highest high and lowest low for the past 52 periods, plotted ahead 26 periods.</p></li>
-<li><p><strong>Chikou span</strong>: [lagging span] the current closing price plotted 26 periods behind.</p></li>
+<li><p><strong>Tenkan-sen</strong>: [conversion line] the mid-point of the highest high and lowest low for the past 9 periods</p></li>
+<li><p><strong>Kijun-sen</strong>: [base line] the mid-point of the highest high and lowest low for the past 26 periods</p></li>
+<li><p><strong>Senkou span A</strong>: [leading span A] the mid-point of Tenkan-sen and Kijun-sen plotted ahead 26 periods</p></li>
+<li><p><strong>Senkou span B</strong>: [leading span B] the mid-point of the highest high and lowest low for the past 52 periods, plotted ahead 26 periods</p></li>
+<li><p><strong>Chikou span</strong>: [lagging span] the current closing price plotted 26 periods behind</p></li>
 </ol>
 <p>The <strong>kumo</strong> [cloud] is the area between Senkou span A and Senkou span B (usually shaded on a chart).</p>
 <div id="interpretation" class="section level3">
 <h3 class="hasAnchor">
 <a href="#interpretation" class="anchor"></a>Interpretation</h3>
-<p>Ichimoku Kinko Hyo translates approximately to ‘one-glance equilibrium chart’. It is designed to allow the price action and market structure of financial securities to be determined ‘at-a-glance’ in a highly visual fashion.</p>
-<p>For example in a strongly upwards-trending market, the candlesticks will be above the Tenkan-sen, which will be above the Kijun-sen, which will be above the cloud, and the Chikou span may not have anything above it.</p>
-<p>The lines and the cloud represent dynamic support and resistance zones relative to the price candles. Generally the thicker the cloud, the tougher the support/resistance. In our previous example, if the price now reverts downwards, it can expect support first at the Kijun-sen, then the Tenkan-sen and finally the cloud itself.</p>
+<p>Ichimoku Kinko Hyo can be translated as ‘one-glance equilibrium chart’. It is designed to allow the price action and market structure of financial securities to be determined visually ‘at-a-glance’.</p>
+<p>For example in a strongly upwards-trending market, the candlesticks would be above the Tenkan-sen, which would be above the Kijun-sen, which in turn would be above the cloud, and the Chikou span may not have anything above it.</p>
+<p>The lines and the cloud represent dynamic support and resistance zones relative to the price candles. Generally, the thicker the cloud, the tougher the support/resistance. In our previous example, if the price now reverts downwards, it can expect support first at the Kijun-sen, then the Tenkan-sen and finally the cloud itself.</p>
+<p>When the price enters the cloud, i.e. it is between the cloud base and cloud top, it is an important area to guage whether there is sufficient momentum for the price to break through the cloud or whether the cloud eventually provokes a reversal.</p>
 <p>More subtle interpretations involve the Chikou span in particular and its action in relation to the cloud lines as well as the candles.</p>
 <p>It is outside the scope of this vignette to provide a full tutorial on the use of Ichimoku Kinko Hyo.</p>
 </div>
 <div id="context" class="section level3">
 <h3 class="hasAnchor">
 <a href="#context" class="anchor"></a>Context</h3>
-<p>Ichimoku analysis is the latest evolution in refining candlestick charting techniques, which also originated from Japan in the 18th century. Actually developed during the mid-20th century, it gained popularity especially from the late 1990s onward, and is now used on trading floors worldwide.</p>
-<p>The time periods have traditionally been calculated as 9, 26 and 52 based on manual data analysis performed in Japan in a pre-computer age where there was a 6-day working week resulting in 26 average trading days in a month. Although this bears little relevance to the current day, the use of these time periods has persisted as an ‘industry norm’ or ‘accepted practice’. To use other periods would be meaningless in a sense as everyone uses these parameters and ‘market psychology’ can and often does create its own realities, independent of any fundamentals.</p>
-<p>However, there is no reason for the technique not to evolve, and to reflect changing trading realities perhaps other parameters will become more relevant in the collective psychology. For this reason, the length of these periods is allowed to be set by the user. However please do so with a strong sense of caution and note that using other periods invalidates the traditional interpretations of Ichimoku Kinko Hyo.</p>
+<p>Ichimoku analysis is the latest refinement in candlestick charting techniques, which also originated from Japan back in the 18th century. Actually developed during the mid-20th century, it gained popularity especially from the late 1990s onward, and is now used on trading floors worldwide.</p>
+<p>The ichimoku time periods have traditionally been calculated as 9, 26 and 52 based on manual data analysis performed in Japan in a pre-computer age where there was a 6-day working week resulting in 26 average trading days in a month. Although this bears little relevance to the current day, the use of these time periods has persisted as an ‘industry norm’ or ‘accepted practice’. To use other periods would be meaningless in a sense as everyone uses these parameters and ‘market psychology’ can and often does create its own realities, independent of any fundamentals.</p>
+<p>However, there is no reason for the technique not to evolve, and to reflect changing trading realities perhaps other parameters will become more relevant in the collective psychology. For this reason, the length of these periods can be freely set in the ‘ichimoku’ package. However please do so only with a strong sense of caution and note that using other periods invalidates the traditional interpretations of Ichimoku Kinko Hyo.</p>
 <p>Finally, the use originated with daily candlesticks, and the most valid interpretation remains for daily data. However, it is equally used today for both shorter intra-day, e.g. 4-hour or hourly, and longer, e.g. weekly or monthly, charts.</p>
 </div>
 </div>
@@ -133,7 +134,7 @@
 <div id="data" class="section level3">
 <h3 class="hasAnchor">
 <a href="#data" class="anchor"></a>data</h3>
-<p>ichimoku works with data frames and tabular data, and interfaces well with other R packages providing financial pricing data. The <code><a href="../reference/ichimoku.html">ichimoku()</a></code> function is able to handle as input ‘xts’, ‘data.frame’, ‘data.table’, ‘tibble’, ‘matrix’ and possibly other ‘data.frame’ compatible objects. For further details see the section <a href="#file-formats">file formats</a>.</p>
+<p>ichimoku works with data frames and tabular data, and interfaces well with other R packages providing financial price data. The <code><a href="../reference/ichimoku.html">ichimoku()</a></code> function is able to handle as input ‘xts’, ‘data.frame’, ‘data.table’, ‘tibble’, ‘matrix’ and possibly other ‘data.frame’ compatible objects. For further details see the section <a href="#file-formats">file formats</a>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># ichimoku is designed to interface well with other packages, for example:</span>
 <span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="fu">quantmod</span><span class="fu">::</span><span class="fu">getSymbols</span><span class="op">(</span><span class="st">"C"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
@@ -151,7 +152,7 @@
 <span class="co">#&gt; 5 2020-01-07 124.1 124.8 124.0 124.8</span>
 <span class="co">#&gt; 6 2020-01-08 124.8 125.4 124.5 125.3</span></code></pre></div>
 <p>ichimoku recognises data in columns containing “open”, “high”, “low” and “close”, which do not have to be nicely-formatted as in the example above and could also contain other text such as the ticker name. For further details see the section <a href="#data-validation">data validation</a>.</p>
-<p>Note: aim to retrieve as much data as possible, or slightly further back than the desired window. Run <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on the full dataset and then subset the data window when plotting to ensure that there is a full ichimoku cloud for all of the desired period. This is better than first subsetting the data and then calculating the ichimoku cloud as, given the cloud lines need several values to be calculated, there will be NAs and hence no cloud at the start of the data.</p>
+<p>Note: aim to retrieve as much data as possible, or slightly further back than the period being analysed. Run <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on the full dataset and then subset the data window when plotting to ensure that there is a full ichimoku cloud for all of the desired period. This is preferable to first subsetting the data and then calculating the ichimoku cloud as, given the cloud lines need several values to be calculated, there will be NAs and hence no cloud at the start of the data.</p>
 </div>
 <div id="ichimoku" class="section level3">
 <h3 class="hasAnchor">
@@ -178,7 +179,7 @@
 <li>open, high, low, close (candlestick values)</li>
 <li>cd (candle direction -1 = down, 0 = flat, 1 = up)</li>
 <li>tenkan, kijun, senkouA, senkouB, chikou (ichimoku cloud values)</li>
-<li>cloudTop, cloudBase (note: these are simply the respective maximum and minimum of SenkouA and SenkouB at each point in time)</li>
+<li>cloudTop, cloudBase (note: these are simply the respective max and min of SenkouA and SenkouB at each point in time)</li>
 </ul>
 </li>
 <li>Attributes:
@@ -222,13 +223,13 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># to view data as well as chart, simply issue:</span>
 <span class="va">cloud</span></code></pre></div>
-<p><code><a href="../reference/ichimoku.html">ichimoku()</a></code> may also be used on an ichimoku object to re-calculate the cloud values using the price data contained within. If ‘ticker’ is specified as an argument, this will overwrite the ticker stored in the original ichimoku object. Running <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on an ichimoku object containing a strategy will return the ichimoku object to its original state without the strategy.</p>
-<p>As an ichimoku object fully inherits the ‘xts’ and ‘zoo’ classes, all the existing methods for these classes should work seamlessly.</p>
+<p><code><a href="../reference/ichimoku.html">ichimoku()</a></code> may also be used on an ichimoku object to re-calculate the cloud values using the price data contained within. If ‘ticker’ is specified as an argument, this will overwrite the ticker stored in the original ichimoku object. Running <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on an ichimoku object containing a strategy will return the ichimoku object to its original state without the strategy. See the <a href="strategies.html">strategies vignette</a> for information on strategies.</p>
+<p>As an ichimoku object inherits the ‘xts’ and ‘zoo’ classes, all the existing methods for these classes should work seamlessly.</p>
 <div id="defining-custom-holidays" class="section level4">
 <h4 class="hasAnchor">
 <a href="#defining-custom-holidays" class="anchor"></a>Defining custom holidays</h4>
 <p>When calculating the future cloud, <code><a href="../reference/ichimoku.html">ichimoku()</a></code> makes a call to the <code><a href="../reference/tradingDays.html">tradingDays()</a></code> helper function to ensure that future dates fall on trading days (i.e. not weekends or holidays). By default, New Year’s and Christmas day are defined as holidays as these are practically universal across markets. These defaults should be acceptable for general use.</p>
-<p>However, if a particular strategy relies on the specific timing of the future cloud, and for the particular market other holidays are non-trading days, custom holidays may be defined via a ‘holidays’ argument to <code>ichimoku</code> which is then passed on to the <code><a href="../reference/tradingDays.html">tradingDays()</a></code> function.</p>
+<p>However, if a particular strategy relies on the specific timing of the future cloud, and for the particular market under consideration other holidays are non-trading days, custom holidays may be defined via a ‘holidays’ argument to <code>ichimoku</code> which is then passed on to the <code><a href="../reference/tradingDays.html">tradingDays()</a></code> function.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Holidays can be specified directly via a vector of dates:</span>
 <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span>, holidays <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2021-12-25"</span>, <span class="st">"2022-01-01"</span><span class="op">)</span><span class="op">)</span>
@@ -246,7 +247,7 @@
 <h4 class="hasAnchor">
 <a href="#static-plots" class="anchor"></a>1. Static Plots</h4>
 <p>The default plot function produces static plots, which have the advantage of being easily exportable to pdf or image formats in high resolution.</p>
-<p>ichimoku implements a custom S3 method for ggplot2’s <code><a href="../reference/autoplot.html">autoplot()</a></code> function for objects of class ‘ichimoku’. Although autoplot can be called directly on an ichimoku object, it is preferable to call <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> instead, as not only is it more convenient to type but also able to mute most of ggplot2’s verbose messaging.</p>
+<p>ichimoku implements a custom S3 method for ggplot2’s <code><a href="../reference/autoplot.html">autoplot()</a></code> function for objects of class ‘ichimoku’. Although autoplot can be called directly on an ichimoku object, it is preferable to call <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> instead, as not only is it more convenient to type but also able to mute the verbose messaging that is otherwise output.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span></code></pre></div>
 <p><img src="reference_files/figure-html/plot-1.png" width="672"></p>
@@ -259,7 +260,7 @@
 <div id="interactive-plots" class="section level4">
 <h4 class="hasAnchor">
 <a href="#interactive-plots" class="anchor"></a>2. Interactive Plots</h4>
-<p>To use fully-interactive charts, the ‘plotly’ package must first be installed. If ‘plotly’ is not available, ichimoku will fall back to a static chart and issue an informational message. The ‘plotly’ package will not be automatically installed. In this way, interactive charting remains an optional part of the package as it is recognised that ‘plotly’ may not always be available in all environments.</p>
+<p>To use fully-interactive charts, the ‘plotly’ package must first be installed. If plotly is not available, ichimoku will fall back to a static chart and issue an informational message. The ‘plotly’ package will not be automatically installed. In this way, interactive charting remains an optional part of the package as it is recognised that plotly may not always be available in all environments.</p>
 <p>To produce an interactive plot, use ichimoku’s <code><a href="../reference/iplot.html">iplot()</a></code> function. The interactive plot will be almost identical in format to the equivalent static plot.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># For interactive charting:</span>
@@ -281,7 +282,7 @@
 <p>The same arguments are used across <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> and <code><a href="../reference/iplot.html">iplot()</a></code> functions:</p>
 <ul>
 <li>
-<strong>window</strong>: indispensable in a proper workflow. <code><a href="../reference/ichimoku.html">ichimoku()</a></code> is run on a larger dataset than that of interest and then at the visualization stage, the data can be subset to the window of interest. Supply as an ISO-8601 compatible range string in the format used for ‘xts’ objects, for example the range “2020-02-15/2020-08-15” or “2020-02-15/” (from 15 Feb 2020) or “/2020-08” (until end-Aug 2020) or simply “2020” to select all of the year 2020</li>
+<strong>window</strong>: indispensable in a proper workflow. <code><a href="../reference/ichimoku.html">ichimoku()</a></code> is run on a larger dataset than that of interest and then at the visualization stage, the data can be subset to the window of interest. Supply as an ISO-8601 compatible range string in the format used for ‘xts’ objects, for example the range ‘2020-02-15/2020-08-15’ or ‘2020-02-15/’ (from 15 Feb 2020) or ‘/2020-08’ (until end-Aug 2020) or simply ‘2020’ to select all of the year 2020</li>
 <li>
 <strong>ticker</strong>: used to supply a different ticker to that stored in the ichimoku object, or alternatively a longer-form name or other text that will appear in the chart heading</li>
 <li>
@@ -289,7 +290,11 @@
 <li>
 <strong>gaps</strong>: [default FALSE] financial charts are conventionally shown without weekend or holiday gaps for non-trading days. Set to TRUE to use a true continuous time scale which does show these gaps</li>
 </ul>
-<p><code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> has the following additional argument, currently unavailable for interactive charting: - <strong>strat</strong>: [default TRUE] if true, the periods for which a strategy results in a market position will be shaded (if the ichimoku object contains a strategy). See the <a href="strategies.html">strategies vignette</a> for more information on working with strategies.</p>
+<p><code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> has the following additional argument, currently unavailable for interactive charting:</p>
+<ul>
+<li>
+<strong>strat</strong>: [default TRUE] if true, the periods for which a strategy results in a market position will be shaded (if the ichimoku object contains a strategy). See the <a href="strategies.html">strategies vignette</a> for more information on working with strategies.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -299,8 +304,8 @@
 <div id="file-formats" class="section level3">
 <h3 class="hasAnchor">
 <a href="#file-formats" class="anchor"></a>File formats</h3>
-<p><code><a href="../reference/ichimoku.html">ichimoku()</a></code> is a generic function that provides S3 methods for objects of class ‘xts’, ‘data.frame’ and ‘matrix’. Other popular formats such as ‘data.table’ and ‘tibble’ also inherit the class ‘data.frame’ and hence also work with <code><a href="../reference/ichimoku.html">ichimoku()</a></code>.</p>
-<p>ichimoku has been designed to be fully pipe-able and interfaces well with other R packages that return financial data. As an example, the <code>getSymbols()</code> function from the ‘quantmod’ package exhibits non-standard R behaviour which assigns the data into an object but returns a text string containing the name of the object. ichimoku handles such behaviour automatically such that a chart can be created without the need to save intermediate objects:</p>
+<p><code><a href="../reference/ichimoku.html">ichimoku()</a></code> is a generic function that provides S3 methods for objects of class ‘xts’, ‘data.frame’ and ‘matrix’. Other popular formats such as ‘data.table’ and ‘tibble’ that also inherit the class ‘data.frame’ should also work with <code><a href="../reference/ichimoku.html">ichimoku()</a></code>.</p>
+<p>ichimoku has been designed to be fully pipeable and interfaces well with other R packages that return financial data. As an example, the <code>getSymbols()</code> function from the ‘quantmod’ package exhibits non-standard R behaviour which assigns the data into an object but returns a text string containing the name of the object. ichimoku handles such behaviour automatically such that a chart can be created without the need to save intermediate objects:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Using R 4.1's new pipe operator:</span>
 <span class="fu">quantmod</span><span class="fu">::</span><span class="fu">getSymbols</span><span class="op">(</span><span class="st">"C"</span><span class="op">)</span> |&gt; <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span>
@@ -308,45 +313,45 @@
 <span class="fu">quantmod</span><span class="fu">::</span><span class="fu">getSymbols</span><span class="op">(</span><span class="st">"C"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>For reading external raw data into R, if the file uses a form of custom delimited format, the <code>fread()</code> function from the ‘data.table’ package on default settings is often successful.</p>
 <p>Alternatively, the ‘datapasta’ package allows data copied from website tables or in spreadsheets etc. to be pasted into R as a data frame.</p>
-<p>After importing data, please check that the date-time index is in an unambiguous format (ideally POSIXct), and that the pricing data is of type ‘numeric’ and not ‘character’.</p>
+<p>After importing data, please check that the date-time index is in an unambiguous format (ideally POSIXct), and that the price data is of type ‘numeric’ and not coerced to type ‘character’.</p>
 </div>
 <div id="data-validation" class="section level3">
 <h3 class="hasAnchor">
 <a href="#data-validation" class="anchor"></a>Data validation</h3>
 <p>ichimoku performs the following data validation steps before attempting to compute the cloud values. Failure at any step causes <code><a href="../reference/ichimoku.html">ichimoku()</a></code> to halt.</p>
 <ol style="list-style-type: decimal">
-<li>Searches the row names of the data object for a time index that is in, or can readily be convertible into, POSIXct format. Note: ‘xts’ objects are always indexed by a valid time-stamp and ichimoku handles this automatically.</li>
+<li>Searches the row names of the data object for a time index that is in, or can readily be convertible into, POSIXct format. Note: ‘xts’ objects are always indexed by a valid time-stamp and ichimoku handles this automatically</li>
 </ol>
 <ul>
 <li>
-<em>If not found:</em> searches in column names containing ‘index’, ‘date’ or ‘time’ (not case-dependent) for a time index that is in, or can readily be convertible into, POSIXct format.</li>
+<em>If not found:</em> searches in column names containing ‘index’, ‘date’ or ‘time’ (not case-dependent) for a time index that is in, or can readily be convertible into, POSIXct format</li>
 </ul>
 <ol start="2" style="list-style-type: decimal">
-<li><p>Searches for HLC price data in columns with names containing ‘high’, ‘low’ and ‘close’ (not case-dependent) respectively.</p></li>
-<li><p>Checks that the length of the medium cloud period is less than that of the dataset. If this is not the case then none of the cloud lines can be calculated.</p></li>
-<li><p>Searches for opening price data in a column with name containing ‘open’ (not case-dependent).</p></li>
+<li><p>Searches for HLC price data in columns with names containing ‘high’, ‘low’ and ‘close’ (not case-dependent) respectively</p></li>
+<li><p>Checks that the length of the medium cloud period is less than that of the dataset. If this is not the case then none of the cloud lines can be calculated</p></li>
+<li><p>Searches for opening price data in a column with name containing ‘open’ (not case-dependent)</p></li>
 </ol>
 <ul>
 <li>
-<em>If not found:</em> sets the opening prices to be the closing prices of the previous period.</li>
+<em>If not found:</em> sets the opening prices to be the closing prices of the previous period</li>
 </ul>
-<p>There may however still be other issues with the input data that prevent cloud values from being computed, not handled explicitly by <code><a href="../reference/ichimoku.html">ichimoku()</a></code>. For example:</p>
+<p>There may however still be other issues with the input data that prevent cloud values from being computed, not handled explicitly by <code><a href="../reference/ichimoku.html">ichimoku()</a></code>. For example, if:</p>
 <ul>
-<li><p>The date-time index is in a header-less column, or in a column where the column name does not contain “Index”, Date“, or”Time" (not case-dependent). Please rename the column to “Index” in such cases.</p></li>
-<li><p>HLC price data is in header-less columns or in columns labelled, for example, “Op”, Hi“,”Lo“,”Cl“. Please rename the columns”Open“,”High“,”Low" and “Close” in such cases.</p></li>
-<li><p>Imported price data is stored as class ‘character’ rather than ‘numeric’. Please convert the price data to ‘numeric’ in such cases.</p></li>
-<li><p>There are NA values within the price data. This will affect the algorithm calculating the cloud lines in the window immediately following such NA values. Please check the data and manually correct NA values before invoking <code><a href="../reference/ichimoku.html">ichimoku()</a></code>.</p></li>
+<li><p>The date-time index is in a headerless column, or in a column where the column name does not contain “index”, date“, or”time" (not case-dependent). Please rename the column to “index” in such cases</p></li>
+<li><p>HLC price data is in headerless columns or in columns labelled, for example, “Op”, Hi“,”Lo“,”Cl“. Please rename the columns”open“,”high“,”low" and “close” in such cases</p></li>
+<li><p>Imported price data is stored as type ‘character’ rather than ‘numeric’. Please convert the price data to ‘numeric’ in such cases</p></li>
+<li><p>There are NA values within the price data. This will affect the algorithm calculating the cloud lines in the window immediately following such NA values. Please check the data and manually correct NA values before invoking <code><a href="../reference/ichimoku.html">ichimoku()</a></code></p></li>
 </ul>
 </div>
 <div id="changes-since-version-0-1" class="section level3">
 <h3 class="hasAnchor">
 <a href="#changes-since-version-0-1" class="anchor"></a>Changes since version 0.1</h3>
 <ul>
-<li><p>‘ichimoku’ objects now inherit ‘xts’ and ‘zoo’ classes instead of ‘data.frame’. This means that columns extracted from ‘ichimoku’ objects are able to work seamlessly in packages expecting ‘xts’ indexed time series. Conversely for use with packages that only accept data frames then ‘ichimoku’ objects must first be wrapped in as.data.frame().</p></li>
-<li><p>For candle direction, the column has been renamed from ‘candle’ to ‘cd’ and is now stored as numeric values -1 for ‘down’, 0 for ‘flat’, and 1 for ‘up’, rather than as a factor.</p></li>
-<li><p>plot() now references the new ‘cd’ column as well as new ‘cloudTop’ and ‘cloudBase’ columns to eliminate potential artefacts when drawing the cloud. This means that using plot() on an ichimoku object created in version 0.1.* will no longer work. The solution is to run <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on the old object to re-create the object according to the new specification (all data is preserved).</p></li>
-<li><p>The ‘i = TRUE’ argument has been retired from plot() so that both plot() and iplot() now take exactly the same sequence of arguments for ease of use. Use <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> for static charting, <code><a href="../reference/iplot.html">iplot()</a></code> for interactive charting.</p></li>
-<li><p>The ‘from’ and ‘to’ arguments of the plot() and iplot() functions have been changed to a single argument ‘window’ which takes an ISO-8601 compatible range string and is much more flexible in use, taking full advantage of ichimoku’s switch to the ‘xts’ format.</p></li>
+<li><p>‘ichimoku’ objects now inherit ‘xts’ and ‘zoo’ classes instead of ‘data.frame’. This means that columns extracted from ‘ichimoku’ objects are able to work seamlessly in packages expecting ‘xts’ indexed time series. Conversely for use with packages that only accept data frames then ‘ichimoku’ objects must first be wrapped in as.data.frame()</p></li>
+<li><p>For candle direction, the column has been renamed from ‘candle’ to ‘cd’ and is now stored as numeric values -1 for ‘down’, 0 for ‘flat’, and 1 for ‘up’, rather than as a factor</p></li>
+<li><p>plot() now references the new ‘cd’ column as well as new ‘cloudTop’ and ‘cloudBase’ columns to eliminate potential artefacts when drawing the cloud. This means that using plot() on an ichimoku object created in version 0.1.* will no longer work. The solution is to run <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on the old object to re-create the object according to the new specification (all data is preserved)</p></li>
+<li><p>The ‘i = TRUE’ argument has been retired from plot() so that both plot() and iplot() now take exactly the same sequence of arguments for ease of use. Use <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> for static charting, <code><a href="../reference/iplot.html">iplot()</a></code> for interactive charting</p></li>
+<li><p>The ‘from’ and ‘to’ arguments of the plot() and iplot() functions have been replaced by a single argument ‘window’ which takes an ISO-8601 compatible range string and is much more flexible in use, taking full advantage of ichimoku’s switch to the ‘xts’ format</p></li>
 </ul>
 </div>
 </div>
