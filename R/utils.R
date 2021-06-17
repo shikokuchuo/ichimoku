@@ -91,8 +91,8 @@ trimdf <- function(x) {
 #' @examples
 #' n <- 3
 #' expand.grid(1:n, 1:n)
-#' expand.grid(1:n, 1:n)[-duplicate(n),]
-#' expand.grid(1:n, 1:n)[-duplicate(n, identical = TRUE),]
+#' expand.grid(1:n, 1:n)[-duplicate(n), ]
+#' expand.grid(1:n, 1:n)[-duplicate(n, identical = TRUE), ]
 #'
 #' @export
 #'

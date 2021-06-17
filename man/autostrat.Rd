@@ -9,11 +9,11 @@ autostrat(x, n = 8, dir = c("long", "short"), level = 1)
 \arguments{
 \item{x}{an ichimoku object.}
 
-\item{n}{top 'n' number of strategies to return.}
+\item{n}{defaults to 8. Select top n number of strategies to return.}
 
 \item{dir}{trade direction either 'long' or 'short' with a default of 'long'.}
 
-\item{level}{set by default to '1'. Set to '2' to also return combined strategies.}
+\item{level}{defaults to 1. Set to 2 to also return combined strategies.}
 }
 \value{
 A list of 'n' ichimoku objects containing strategies. The
@@ -23,8 +23,8 @@ A list of 'n' ichimoku objects containing strategies. The
 }
 \description{
 Generate a list of the top performing ichimoku cloud strategies based on
-    indicator conditions of the form 'c1 > c2' or level 2 strategies based on
-    combined indicator conditions of the form 'c1 > c2' & 'c3 > c4'.
+    rule conditions of the form 'c1 > c2' or level 2 strategies based on
+    combined rule conditions of the form 'c1 > c2 & c3 > c4'.
 }
 \details{
 Ichimoku objects for each strategy are returned as a list. The
@@ -48,6 +48,6 @@ stratlist <- autostrat(cloud, n = 3)
 attributes(stratlist)
 summary(stratlist[[1]])
 
-autostrat(cloud, n = 3, dir = "short", level = 2)
+autostrat(cloud, n = 1, dir = "short", level = 2)
 
 }

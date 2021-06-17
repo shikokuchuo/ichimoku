@@ -26,8 +26,8 @@ strat(
 An ichimoku object augmented with the strategy.
 }
 \description{
-Create custom ichimoku cloud strategies using the rule 'long (or short)
-    while c1 > c2'.
+Create custom ichimoku cloud strategies using the rule condition 'long (or
+    short) while c1 > c2'.
 }
 \details{
 The following assumption applies to all strategies: confirmation of

@@ -1,4 +1,4 @@
-# ichimoku 0.1.10
+# ichimoku 0.2.0
 
 ichimoku now has the following capabilities:
 * visualization layer: compute and plot ichimoku cloud charts.
@@ -11,7 +11,7 @@ New features:
 * tradingDays() function to allow customisation of holidays when calculating the future cloud.
 
 Updates:
-* Ichimoku object specification updated - this is breaking, but can be fixed by re-running 'ichimoku()' on previous ichimoku objects.
+* Ichimoku object specification updated - this is breaking but can be fixed by re-running 'ichimoku()' on previous objects.
 * Ichimoku objects now inherit 'xts' and 'zoo' classes for better integration with other econometrics and analytics packages.
 * Package now depends on Rcpp and requires compilation - added more performant rolling window functions minOver() and maxOver() using customised C++ algorithm.
 * 'RcppRoll' and 'timeDate' package dependencies retired.

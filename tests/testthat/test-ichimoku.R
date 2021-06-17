@@ -3,7 +3,7 @@ cloud2 <- ichimoku(cloud, ticker = "TKR")
 plot <- plot(cloud, ticker = "TKR Co.", theme = "solarized")
 iplot <- iplot(cloud, window = "2020-02-02/2020-02-04", theme = "dark", gaps = TRUE)
 strat <- strat(cloud, c1 = "chikou", c2 = "cloudTop", dir = "long")
-stratlist <- autostrat(cloud, n = 2, level = 2)
+stratlist <- autostrat(cloud, n = 2, dir = "short", level = 2)
 comb <- stratcombine(stratlist[[1]], stratlist[[2]])
 grid <- mlgrid(strat)
 

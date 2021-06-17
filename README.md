@@ -69,7 +69,7 @@ autostrat(cloud, n = 3)
 #> Periods in market      57                 38                  57               
 #> Total trades           3                  3                   3                
 #> Average trade length   19                 12.67               19               
-#> Winning trades %       66.67              66.67               66.67            
+#> Trade success %        66.67              66.67               66.67            
 #> Worst trade ret %      -0.31              -0.31               -0.31            
 #> ---------------------  "----------"       "----------"        "----------"     
 #> Benchmark cuml ret %   0.94               0.94                0.94             

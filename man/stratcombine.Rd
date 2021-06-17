@@ -15,7 +15,9 @@ stratcombine(s1, s2)
 An ichimoku object augmented with the combined strategy.
 }
 \description{
-Create more complex strategies by combining strategy rules of the form 's1 & s2'.
+Create more complex strategies with a rule condition of the form
+    'c1 > c2 & c3 > c4' by combining existing strategies with rule conditions
+    'c1 > c2' and 'c3 > c4' respectively.
 }
 \details{
 The combined strategy 's1 & s2' means conditions in 's1' and 's2'
@@ -36,6 +38,8 @@ The combined strategy 's1 & s2' means conditions in 's1' and 's2'
 cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 strat1 <- strat(cloud, c1 = "close", c2 = "kijun")
 strat2 <- strat(cloud, c1 = "cloudBase", c2 = "tenkan")
-summary(stratcombine(strat1, strat2))
+cstrat <- stratcombine(strat1, strat2)
+summary(cstrat)
+plot(cstrat)
 
 }

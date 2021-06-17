@@ -25,7 +25,7 @@ Create a vector of element positions of duplicates in the output of expand.grid
 \examples{
 n <- 3
 expand.grid(1:n, 1:n)
-expand.grid(1:n, 1:n)[-duplicate(n),]
-expand.grid(1:n, 1:n)[-duplicate(n, identical = TRUE),]
+expand.grid(1:n, 1:n)[-duplicate(n), ]
+expand.grid(1:n, 1:n)[-duplicate(n, identical = TRUE), ]
 
 }

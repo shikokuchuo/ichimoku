@@ -2,8 +2,8 @@
 
 #' Create Ichimoku Strategies
 #'
-#' Create custom ichimoku cloud strategies using the rule 'long (or short)
-#'     while c1 > c2'.
+#' Create custom ichimoku cloud strategies using the rule condition 'long (or
+#'     short) while c1 > c2'.
 #'
 #' @param x an ichimoku object.
 #' @param c1 column name specified as a string, with a default of 'close'.
@@ -117,7 +117,7 @@ writeStrat <- function(x, strategy, dir, start, end) {
     `Periods in market` = sum(x[start:end, "posn"]),
     `Total trades` = tlen,
     `Average trade length` = round(sum(x[start:end, "posn"]) / tlen, 2),
-    `Winning trades %` = round(length(trades[trades > 0]) / tlen * 100, 2),
+    `Trade success %` = round(length(trades[trades > 0]) / tlen * 100, 2),
     `Worst trade ret %` = round(min(trades) * 100, 2),
     `---------------------` = "----------",
     `Benchmark cuml ret %` = round((exp(sum(x[start:end, "logret"])) - 1) * 100, 2),
@@ -134,7 +134,9 @@ writeStrat <- function(x, strategy, dir, start, end) {
 
 #' Combine Ichimoku Strategies
 #'
-#' Create more complex strategies by combining strategy rules of the form 's1 & s2'.
+#' Create more complex strategies with a rule condition of the form
+#'     'c1 > c2 & c3 > c4' by combining existing strategies with rule conditions
+#'     'c1 > c2' and 'c3 > c4' respectively.
 #'
 #' @param s1 an ichimoku object containing a strategy.
 #' @param s2 an ichimoku object containing a strategy.
@@ -157,7 +159,9 @@ writeStrat <- function(x, strategy, dir, start, end) {
 #' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 #' strat1 <- strat(cloud, c1 = "close", c2 = "kijun")
 #' strat2 <- strat(cloud, c1 = "cloudBase", c2 = "tenkan")
-#' summary(stratcombine(strat1, strat2))
+#' cstrat <- stratcombine(strat1, strat2)
+#' summary(cstrat)
+#' plot(cstrat)
 #'
 #' @export
 #'
@@ -203,12 +207,12 @@ stratcombine <- function(s1, s2) {
 #' Automated Ichimoku Strategies
 #'
 #' Generate a list of the top performing ichimoku cloud strategies based on
-#'     indicator conditions of the form 'c1 > c2' or level 2 strategies based on
-#'     combined indicator conditions of the form 'c1 > c2' & 'c3 > c4'.
+#'     rule conditions of the form 'c1 > c2' or level 2 strategies based on
+#'     combined rule conditions of the form 'c1 > c2 & c3 > c4'.
 #'
 #' @inheritParams strat
-#' @param n top 'n' number of strategies to return.
-#' @param level set by default to '1'. Set to '2' to also return combined strategies.
+#' @param n defaults to 8. Select top n number of strategies to return.
+#' @param level defaults to 1. Set to 2 to also return combined strategies.
 #'
 #' @return A list of 'n' ichimoku objects containing strategies. The
 #'     cumulative log returns for all strategies as well as the summaries for
@@ -234,7 +238,7 @@ stratcombine <- function(s1, s2) {
 #' attributes(stratlist)
 #' summary(stratlist[[1]])
 #'
-#' autostrat(cloud, n = 3, dir = "short", level = 2)
+#' autostrat(cloud, n = 1, dir = "short", level = 2)
 #'
 #' @export
 #'
@@ -242,7 +246,7 @@ autostrat <- function(x, n = 8, dir = c("long", "short"), level = 1) {
   if(is.ichimoku(x)) {
     dir <- match.arg(dir)
     grid <- mlgrid(x, y = "logret", dir = dir, type = "boolean", unique = FALSE)
-    if(level == 2) {
+    if(identical(level, 2)) {
       lgrid <- grid[, -1]
       w <- dim(lgrid)[2L]
       pairs <- expand.grid(seq_len(w), seq_len(w), KEEP.OUT.ATTRS = FALSE)[-duplicate(w), ]

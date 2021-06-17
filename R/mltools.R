@@ -2,8 +2,8 @@
 
 #' mlgrid Numeric Representation
 #'
-#' Create a grid of ichimoku indicator conditions and next period returns. The
-#'     grid facilitates comparing strategy returns or as a basis for further
+#' Create a grid of ichimoku rule conditions and next period returns. The grid
+#'     facilitates comparing strategy returns or as a basis for further
 #'     processing in machine learning applications. The purpose of this function
 #'     is to translate the visual representation of the relationship between
 #'     cloud chart elements into a numerical format for further analysis.
@@ -46,7 +46,7 @@
 #'
 #' @examples
 #' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
-#' grid <- mlgrid(cloud)
+#' grid <- mlgrid(cloud, y = "ret", dir = "short", type = "numeric")
 #' attributes(grid)
 #'
 #' @export
