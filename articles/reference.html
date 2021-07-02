@@ -5,13 +5,13 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ichimoku: Reference • ichimoku</title>
+<title>ichimoku: Cloud Charts - The Reference Manual • ichimoku</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="ichimoku: Reference">
+<script src="../pkgdown.js"></script><meta property="og:title" content="ichimoku: Cloud Charts - The Reference Manual">
 <meta property="og:description" content="ichimoku">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
       </span>
     </div>
 
@@ -54,10 +54,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/reference.html">ichimoku: Reference</a>
+      <a href="../articles/reference.html">ichimoku: Cloud Charts - The Reference Manual</a>
     </li>
     <li>
-      <a href="../articles/strategies.html">ichimoku: Strategies</a>
+      <a href="../articles/strategies.html">ichimoku: Beyond Visualization - Quantitative Strategies</a>
     </li>
   </ul>
 </li>
@@ -85,7 +85,7 @@
       </header><script src="reference_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>ichimoku: Reference</h1>
+      <h1 data-toc-skip>ichimoku: Cloud Charts - The Reference Manual</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/shikokuchuo/ichimoku/blob/master/vignettes/reference.Rmd"><code>vignettes/reference.Rmd</code></a></small>
@@ -194,30 +194,30 @@
 <code class="sourceCode R"><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">[</span><span class="fl">100</span><span class="op">:</span><span class="fl">110</span>,<span class="op">]</span>, plot <span class="op">=</span> <span class="cn">FALSE</span>, digits <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
-<span class="co">#&gt;             open  high   low close cd tenkan kijun senkouA senkouB chikou</span>
-<span class="co">#&gt; 2020-04-27 122.7 122.7 121.8 122.4 -1  120.5 123.3   125.6   124.8  135.6</span>
-<span class="co">#&gt; 2020-04-28 122.4 122.6 121.1 121.9 -1  120.5 123.3   125.7   124.8  134.5</span>
-<span class="co">#&gt; 2020-04-29 121.9 123.7 121.7 123.3  1  120.8 123.2   125.7   124.8  134.3</span>
-<span class="co">#&gt; 2020-04-30 123.3 124.0 123.0 124.0  1  121.0 123.2   125.7   124.8  135.9</span>
-<span class="co">#&gt; 2020-05-01 124.2 124.3 124.0 124.1 -1  121.4 123.1   125.7   124.8  135.2</span>
-<span class="co">#&gt; 2020-05-03 124.1 124.1 123.4 123.9 -1  122.2 123.1   126.0   124.8  135.7</span>
-<span class="co">#&gt; 2020-05-04 123.9 124.7 123.7 124.5  1  122.9 123.1   126.5   124.8  135.4</span>
-<span class="co">#&gt; 2020-05-05 124.5 124.7 123.9 124.2 -1  122.9 123.0   126.6   124.8  135.7</span>
-<span class="co">#&gt; 2020-05-06 124.2 125.2 124.0 124.7  1  123.2 123.0   126.2   124.8  135.6</span>
-<span class="co">#&gt; 2020-05-07 124.7 129.8 124.7 129.6  1  125.5 123.9   126.1   124.8  136.2</span>
-<span class="co">#&gt; 2020-05-08 129.9 130.6 129.9 130.2  1  126.2 124.3   125.7   124.8  136.5</span>
-<span class="co">#&gt;            cloudTop cloudBase</span>
-<span class="co">#&gt; 2020-04-27    125.6     124.8</span>
-<span class="co">#&gt; 2020-04-28    125.7     124.8</span>
-<span class="co">#&gt; 2020-04-29    125.7     124.8</span>
-<span class="co">#&gt; 2020-04-30    125.7     124.8</span>
-<span class="co">#&gt; 2020-05-01    125.7     124.8</span>
-<span class="co">#&gt; 2020-05-03    126.0     124.8</span>
-<span class="co">#&gt; 2020-05-04    126.5     124.8</span>
-<span class="co">#&gt; 2020-05-05    126.6     124.8</span>
-<span class="co">#&gt; 2020-05-06    126.2     124.8</span>
-<span class="co">#&gt; 2020-05-07    126.1     124.8</span>
-<span class="co">#&gt; 2020-05-08    125.7     124.8</span></code></pre></div>
+<span class="co">#&gt;                      open  high   low close cd tenkan kijun senkouA senkouB</span>
+<span class="co">#&gt; 2020-04-26 23:00:00 122.7 122.7 121.8 122.4 -1  120.5 123.3   125.6   124.8</span>
+<span class="co">#&gt; 2020-04-27 23:00:00 122.4 122.6 121.1 121.9 -1  120.5 123.3   125.7   124.8</span>
+<span class="co">#&gt; 2020-04-28 23:00:00 121.9 123.7 121.7 123.3  1  120.8 123.2   125.7   124.8</span>
+<span class="co">#&gt; 2020-04-29 23:00:00 123.3 124.0 123.0 124.0  1  121.0 123.2   125.7   124.8</span>
+<span class="co">#&gt; 2020-04-30 23:00:00 124.2 124.3 124.0 124.1 -1  121.4 123.1   125.7   124.8</span>
+<span class="co">#&gt; 2020-05-02 23:00:00 124.1 124.1 123.4 123.9 -1  122.2 123.1   126.0   124.8</span>
+<span class="co">#&gt; 2020-05-03 23:00:00 123.9 124.7 123.7 124.5  1  122.9 123.1   126.5   124.8</span>
+<span class="co">#&gt; 2020-05-04 23:00:00 124.5 124.7 123.9 124.2 -1  122.9 123.0   126.6   124.8</span>
+<span class="co">#&gt; 2020-05-05 23:00:00 124.2 125.2 124.0 124.7  1  123.2 123.0   126.2   124.8</span>
+<span class="co">#&gt; 2020-05-06 23:00:00 124.7 129.8 124.7 129.6  1  125.5 123.9   126.1   124.8</span>
+<span class="co">#&gt; 2020-05-07 23:00:00 129.9 130.6 129.9 130.2  1  126.2 124.3   125.7   124.8</span>
+<span class="co">#&gt;                     chikou cloudTop cloudBase</span>
+<span class="co">#&gt; 2020-04-26 23:00:00  135.6    125.6     124.8</span>
+<span class="co">#&gt; 2020-04-27 23:00:00  134.5    125.7     124.8</span>
+<span class="co">#&gt; 2020-04-28 23:00:00  134.3    125.7     124.8</span>
+<span class="co">#&gt; 2020-04-29 23:00:00  135.9    125.7     124.8</span>
+<span class="co">#&gt; 2020-04-30 23:00:00  135.2    125.7     124.8</span>
+<span class="co">#&gt; 2020-05-02 23:00:00  135.7    126.0     124.8</span>
+<span class="co">#&gt; 2020-05-03 23:00:00  135.4    126.5     124.8</span>
+<span class="co">#&gt; 2020-05-04 23:00:00  135.7    126.6     124.8</span>
+<span class="co">#&gt; 2020-05-05 23:00:00  135.6    126.2     124.8</span>
+<span class="co">#&gt; 2020-05-06 23:00:00  136.2    126.1     124.8</span>
+<span class="co">#&gt; 2020-05-07 23:00:00  136.5    125.7     124.8</span></code></pre></div>
 <p>A section (rows 100 to 110) of the cloud object is shown above. Note that print is called setting ‘plot = FALSE’ to return the data frame without the plot.</p>
 <p>ichimoku objects employ a custom S3 print method which by default plots the cloud chart in the graphical device as well as returning the data frame to the console.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -242,7 +242,7 @@
 <div id="plot" class="section level3">
 <h3 class="hasAnchor">
 <a href="#plot" class="anchor"></a>plot()</h3>
-<p>ichimoku offers the choice of 2 visualization systems: static (default) and interactive.</p>
+<p>ichimoku offers the choice of 3 visualization systems: static (default) and interactive (with plotly) and reactive (with Shiny).</p>
 <div id="static-plots" class="section level4">
 <h4 class="hasAnchor">
 <a href="#static-plots" class="anchor"></a>1. Static Plots</h4>
@@ -260,7 +260,7 @@
 <div id="interactive-plots" class="section level4">
 <h4 class="hasAnchor">
 <a href="#interactive-plots" class="anchor"></a>2. Interactive Plots</h4>
-<p>To use fully-interactive charts, the ‘plotly’ package must first be installed. If plotly is not available, ichimoku will fall back to a static chart and issue an informational message. The ‘plotly’ package will not be automatically installed. In this way, interactive charting remains an optional part of the package as it is recognised that plotly may not always be available in all environments.</p>
+<p>Interactive charts require the ‘plotly’ package. If plotly is not available, ichimoku will issue an informational message, but not install the package automatically as it is recognised that plotly may not be available in all environments.</p>
 <p>To produce an interactive plot, use ichimoku’s <code><a href="../reference/iplot.html">iplot()</a></code> function. The interactive plot will be almost identical in format to the equivalent static plot.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># For interactive charting:</span>
@@ -272,12 +272,22 @@
 <li>double click anywhere to quickly reset</li>
 </ul>
 </div>
+<div id="reactive-plots" class="section level4">
+<h4 class="hasAnchor">
+<a href="#reactive-plots" class="anchor"></a>3. Reactive Plots</h4>
+<p>Reactive plots require the ‘Shiny’ package to be installed. If shiny is not available, ichimoku will issue an informational message, but not install the package automatically as it is recognised that shiny may not be available in all environments.</p>
+<p>Simply use <code><a href="../reference/rplot.html">rplot()</a></code> on an ichimoku object to launch an R Shiny app, which will allow full further customisation of the chart interactively, incluing selecting the theme and time window etc.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># For interactive charting:</span>
+<span class="fu"><a href="../reference/rplot.html">rplot</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span></code></pre></div>
+<p>The key feature of <code><a href="../reference/rplot.html">rplot()</a></code> is an intuitive cursor tooltip which allows ready access to the data when hovering over the chart.</p>
+</div>
 <div id="plot-customisation" class="section level4">
 <h4 class="hasAnchor">
 <a href="#plot-customisation" class="anchor"></a>Plot customisation</h4>
 <p>A plot with default parameters is shown above, but the plot functions contain built-in customisations to allow for most envisioned use cases. The example below demonstrates the arguments that can be supplied to customise the plot.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">cloud</span>, window <span class="op">=</span> <span class="st">"2020-05-01/2020-11-01"</span>, ticker <span class="op">=</span> <span class="st">"TKR Co."</span>, theme <span class="op">=</span> <span class="st">"dark"</span>, gaps <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">cloud</span>, window <span class="op">=</span> <span class="st">"2020-05-01/2020-11-01"</span>, ticker <span class="op">=</span> <span class="st">"TKR Co."</span>, theme <span class="op">=</span> <span class="st">"dark"</span><span class="op">)</span></code></pre></div>
 <p><img src="reference_files/figure-html/plot2-1.png" width="672"></p>
 <p>The same arguments are used across <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> and <code><a href="../reference/iplot.html">iplot()</a></code> functions:</p>
 <ul>
@@ -287,8 +297,6 @@
 <strong>ticker</strong>: used to supply a different ticker to that stored in the ichimoku object, or alternatively a longer-form name or other text that will appear in the chart heading</li>
 <li>
 <strong>theme</strong>: [default ‘original’] the following themes are also available: ‘dark’, ‘solarized’ and ‘mono’</li>
-<li>
-<strong>gaps</strong>: [default FALSE] financial charts are conventionally shown without weekend or holiday gaps for non-trading days. Set to TRUE to use a true continuous time scale which does show these gaps</li>
 </ul>
 <p><code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> has the following additional argument, currently unavailable for interactive charting:</p>
 <ul>
@@ -305,8 +313,8 @@
 <h3 class="hasAnchor">
 <a href="#file-formats" class="anchor"></a>File formats</h3>
 <p><code><a href="../reference/ichimoku.html">ichimoku()</a></code> is a generic function that provides S3 methods for objects of class ‘xts’, ‘data.frame’ and ‘matrix’. Other popular formats such as ‘data.table’ and ‘tibble’ that also inherit the class ‘data.frame’ should also work with <code><a href="../reference/ichimoku.html">ichimoku()</a></code>.</p>
-<p>ichimoku has been designed to be fully pipeable and interfaces well with other R packages that return financial data. As an example, the <code>getSymbols()</code> function from the ‘quantmod’ package exhibits non-standard R behaviour which assigns the data into an object but returns a text string containing the name of the object. ichimoku handles such behaviour automatically such that a chart can be created without the need to save intermediate objects:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<p>ichimoku has been designed to be fully pipeable and interfaces well with other R packages that return financial data. As an example, the <code>getSymbols()</code> function from the ‘quantmod’ package currently exhibit non-standard R behaviour which assigns the data into an object but returns a text string containing the name of the object. ichimoku is able to handle this automatically such that a chart can be created without the need to save intermediate objects:</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Using R 4.1's new pipe operator:</span>
 <span class="fu">quantmod</span><span class="fu">::</span><span class="fu">getSymbols</span><span class="op">(</span><span class="st">"C"</span><span class="op">)</span> |&gt; <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co"># Or equally using the 'magrittr' pipe:</span>
@@ -320,15 +328,15 @@
 <a href="#data-validation" class="anchor"></a>Data validation</h3>
 <p>ichimoku performs the following data validation steps before attempting to compute the cloud values. Failure at any step causes <code><a href="../reference/ichimoku.html">ichimoku()</a></code> to halt.</p>
 <ol style="list-style-type: decimal">
-<li>Searches the row names of the data object for a time index that is in, or can readily be convertible into, POSIXct format. Note: ‘xts’ objects are always indexed by a valid time-stamp and ichimoku handles this automatically</li>
+<li>Searches column names of the data object for the first column containing ‘index’, ‘date’ or ‘time’ (not case-dependent). If such a column is found but the data is not convertible into POSIXct format, an error is returned</li>
 </ol>
 <ul>
 <li>
-<em>If not found:</em> searches in column names containing ‘index’, ‘date’ or ‘time’ (not case-dependent) for a time index that is in, or can readily be convertible into, POSIXct format</li>
+<em>If not found:</em> searches in row names of the data object if present. If the row names do not contain data that is convertible into POSIXct format, an error is returned. Note: ‘xts’ objects are always indexed by a valid time-stamp and ichimoku handles this automatically</li>
 </ul>
 <ol start="2" style="list-style-type: decimal">
 <li><p>Searches for HLC price data in columns with names containing ‘high’, ‘low’ and ‘close’ (not case-dependent) respectively</p></li>
-<li><p>Checks that the length of the medium cloud period is less than that of the dataset. If this is not the case then none of the cloud lines can be calculated</p></li>
+<li><p>Checks that the dataset is longer than the medium cloud period. If this is not the case then none of the cloud lines can be calculated</p></li>
 <li><p>Searches for opening price data in a column with name containing ‘open’ (not case-dependent)</p></li>
 </ol>
 <ul>
@@ -337,10 +345,21 @@
 </ul>
 <p>There may however still be other issues with the input data that prevent cloud values from being computed, not handled explicitly by <code><a href="../reference/ichimoku.html">ichimoku()</a></code>. For example, if:</p>
 <ul>
-<li><p>The date-time index is in a headerless column, or in a column where the column name does not contain “index”, date“, or”time" (not case-dependent). Please rename the column to “index” in such cases</p></li>
-<li><p>HLC price data is in headerless columns or in columns labelled, for example, “Op”, Hi“,”Lo“,”Cl“. Please rename the columns”open“,”high“,”low" and “close” in such cases</p></li>
+<li><p>The date-time index is in a headerless column, or in a column where the name does not contain ‘index’, ‘date’ or ‘time’ (not case-dependent). Please rename the column to ‘index’ in such cases</p></li>
+<li><p>The correct date-time index is in the rownames, or index of an ‘xts’ object, but there are also columns that contains the word ‘index’, ‘date’ or ‘time’. Please rename the columns that do not serve as the date-time index so that the correct date-time index can be detected</p></li>
+<li><p>There is more than one column that contains the word ‘index’, ‘date’ or ‘time’. Please either rename the columns that do not serve as the date-time index, or move the correct date-time column ahead of the other columns so that it is picked up first</p></li>
+<li><p>HLC price data is contained in headerless columns or in columns labelled, for example, ‘Op’, ‘Hi’, ‘Lo’, ‘Cl’. Please rename the columns ‘open’, ‘high’, ‘low’ and ‘close’ in such cases</p></li>
 <li><p>Imported price data is stored as type ‘character’ rather than ‘numeric’. Please convert the price data to ‘numeric’ in such cases</p></li>
 <li><p>There are NA values within the price data. This will affect the algorithm calculating the cloud lines in the window immediately following such NA values. Please check the data and manually correct NA values before invoking <code><a href="../reference/ichimoku.html">ichimoku()</a></code></p></li>
+</ul>
+</div>
+<div id="changes-since-version-0-2" class="section level3">
+<h3 class="hasAnchor">
+<a href="#changes-since-version-0-2" class="anchor"></a>Changes since version 0.2</h3>
+<ul>
+<li><p>Argument ‘gaps’ to the plot functions is deprecated. As a convenience, the functionality has been moved to a ‘gplot()’ function which will remain in the package for the time being.</p></li>
+<li><p>iplot() no longer falls back to a static plot when the ‘plotly’ package is not installed to ensure consistency of return types</p></li>
+<li><p>Validation changes to ichimoku() mean it will now take a column named ‘index’, ‘date’ or ‘time’ in precedence to a row index.</p></li>
 </ul>
 </div>
 <div id="changes-since-version-0-1" class="section level3">
@@ -360,8 +379,8 @@
 <a href="#dependencies" class="anchor"></a>Dependencies</h2>
 <p>The dependency on other packages is designed to be minimised to the extent possible. ichimoku currently has the following package dependencies:</p>
 <ul>
-<li>ggplot2 - the widely-used R graphics system for visualization</li>
 <li>Rcpp - allows the use of C++ code for fast rolling window calculations</li>
+<li>ggplot2 - the widely-used R graphics system for visualization</li>
 <li>rlang - R language requirement arising from the use of ‘ggplot2’</li>
 <li>xts - ichimoku shares the ‘xts’ format for time series</li>
 <li>zoo - ‘xts’ is built on top of ‘zoo’</li>
@@ -369,6 +388,7 @@
 <p>Optional:</p>
 <ul>
 <li>plotly - for interactive visualization</li>
+<li>shiny - for reactive customisable visualizations</li>
 </ul>
 </div>
 <div id="further-resources" class="section level2">

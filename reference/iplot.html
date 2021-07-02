@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>iplot Interactive Ichimoku Plot — iplot • ichimoku</title>
+<title>iplot Interactive Ichimoku Cloud Plot — iplot • ichimoku</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,10 @@
 
 
 
-<meta property="og:title" content="iplot Interactive Ichimoku Plot — iplot" />
-<meta property="og:description" content="Plot interactive Ichimoku Kinko Hyo cloud charts from ichimoku objects." />
+<meta property="og:title" content="iplot Interactive Ichimoku Cloud Plot — iplot" />
+<meta property="og:description" content="Plot interactive Ichimoku Kinko Hyo cloud charts from ichimoku objects. iplot()
+    can be used in conjunction with R Markdown to create portable, self-contained
+    interactive HTML charts." />
 
 
 
@@ -72,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
       </span>
     </div>
 
@@ -95,10 +97,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/reference.html">ichimoku: Reference</a>
+      <a href="../articles/reference.html">ichimoku: Cloud Charts - The Reference Manual</a>
     </li>
     <li>
-      <a href="../articles/strategies.html">ichimoku: Strategies</a>
+      <a href="../articles/strategies.html">ichimoku: Beyond Visualization - Quantitative Strategies</a>
     </li>
   </ul>
 </li>
@@ -126,21 +128,23 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>iplot Interactive Ichimoku Plot</h1>
+    <h1>iplot Interactive Ichimoku Cloud Plot</h1>
     <small class="dont-index">Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/R/ichimoku.R'><code>R/ichimoku.R</code></a></small>
     <div class="hidden name"><code>iplot.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Plot interactive Ichimoku Kinko Hyo cloud charts from ichimoku objects.</p>
+    <p>Plot interactive Ichimoku Kinko Hyo cloud charts from ichimoku objects. iplot()
+    can be used in conjunction with R Markdown to create portable, self-contained
+    interactive HTML charts.</p>
     </div>
 
     <pre class="usage"><span class='fu'>iplot</span><span class='op'>(</span>
   <span class='va'>x</span>,
   <span class='va'>window</span>,
   <span class='va'>ticker</span>,
+  <span class='va'>message</span>,
   theme <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"original"</span>, <span class='st'>"dark"</span>, <span class='st'>"solarized"</span>, <span class='st'>"mono"</span><span class='op'>)</span>,
-  gaps <span class='op'>=</span> <span class='cn'>FALSE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
@@ -164,24 +168,26 @@ chart heading. If not set, the ticker saved within the ichimoku object
 will be used.</p></td>
     </tr>
     <tr>
+      <th>message</th>
+      <td><p>(optional) specify a chart message to display under the title.</p></td>
+    </tr>
+    <tr>
       <th>theme</th>
-      <td><p>defaults to 'original'. This can also be set to 'dark',
+      <td><p>[default 'original'] with alternative choices of 'dark',
 'solarized' or 'mono'.</p></td>
     </tr>
     <tr>
-      <th>gaps</th>
-      <td><p>defaults to FALSE to remove weekend and holiday gaps. Set to TRUE
-for a continuous timescale axis, but with gaps for non-trading days.</p></td>
-    </tr>
-    <tr>
       <th>...</th>
-      <td><p>other arguments to be passed along.</p></td>
+      <td><p>additional arguments to be passed along.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Returns a plotly object with classes 'plotly' and 'htmlwidget'.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>This function has a dependency on the 'plotly' package.</p>
     <h2 class="hasAnchor" id="further-details"><a class="anchor" href="#further-details"></a>Further Details</h2>
 
     
@@ -194,8 +200,7 @@ for a continuous timescale axis, but with gaps for non-trading days.</p></td>
 <span class='va'>cloud</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ichimoku.html'>ichimoku</a></span><span class='op'>(</span><span class='va'>sample_ohlc_data</span>, ticker <span class='op'>=</span> <span class='st'>"TKR"</span><span class='op'>)</span>
 
 <span class='fu'>iplot</span><span class='op'>(</span><span class='va'>cloud</span><span class='op'>)</span>
-<span class='fu'>iplot</span><span class='op'>(</span><span class='va'>cloud</span>, window <span class='op'>=</span> <span class='st'>"2020-05-15/2020-10-30"</span>, theme <span class='op'>=</span> <span class='st'>"dark"</span><span class='op'>)</span>
-<span class='fu'>iplot</span><span class='op'>(</span><span class='va'>cloud</span>, ticker <span class='op'>=</span> <span class='st'>"TKR Co."</span>, theme <span class='op'>=</span> <span class='st'>"solarized"</span>, gaps <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='fu'>iplot</span><span class='op'>(</span><span class='va'>cloud</span>, window <span class='op'>=</span> <span class='st'>"2020-05-15/2020-10-30"</span>, ticker <span class='op'>=</span> <span class='st'>"TKR Co."</span>, theme <span class='op'>=</span> <span class='st'>"dark"</span><span class='op'>)</span>
 <span class='co'># }</span>
 
 </div></pre>

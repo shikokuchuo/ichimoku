@@ -40,8 +40,8 @@
 
 
 <meta property="og:title" content="mlgrid Numeric Representation — mlgrid" />
-<meta property="og:description" content="Create a grid of ichimoku rule conditions and next period returns. The grid
-    facilitates comparing strategy returns or as a basis for further
+<meta property="og:description" content="Create a grid of ichimoku indicator conditions and next period returns. The
+    grid facilitates comparing strategy returns or as a basis for further
     processing in machine learning applications. The purpose of this function
     is to translate the visual representation of the relationship between
     cloud chart elements into a numerical format for further analysis." />
@@ -76,7 +76,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
       </span>
     </div>
 
@@ -99,10 +99,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/reference.html">ichimoku: Reference</a>
+      <a href="../articles/reference.html">ichimoku: Cloud Charts - The Reference Manual</a>
     </li>
     <li>
-      <a href="../articles/strategies.html">ichimoku: Strategies</a>
+      <a href="../articles/strategies.html">ichimoku: Beyond Visualization - Quantitative Strategies</a>
     </li>
   </ul>
 </li>
@@ -136,8 +136,8 @@
     </div>
 
     <div class="ref-description">
-    <p>Create a grid of ichimoku rule conditions and next period returns. The grid
-    facilitates comparing strategy returns or as a basis for further
+    <p>Create a grid of ichimoku indicator conditions and next period returns. The
+    grid facilitates comparing strategy returns or as a basis for further
     processing in machine learning applications. The purpose of this function
     is to translate the visual representation of the relationship between
     cloud chart elements into a numerical format for further analysis.</p>
@@ -160,23 +160,23 @@
     </tr>
     <tr>
       <th>y</th>
-      <td><p>choose target variable 'logret' (log returns) or 'ret' (discrete
-returns), with a default of 'logret'.</p></td>
+      <td><p>[default 'logret'] choose target variable 'logret' (log returns) or
+'ret' (discrete returns).</p></td>
     </tr>
     <tr>
       <th>dir</th>
-      <td><p>trade direction either 'long' or 'short' with a default of 'long'.</p></td>
+      <td><p>[default 'long'] trade direction, either 'long' or 'short'.</p></td>
     </tr>
     <tr>
       <th>type</th>
-      <td><p>either 'boolean' or 'numeric' with a default of 'boolean'.
-'boolean' creates a grid of dummy variables for ichimoku indicator
-conditions of the form 1 if c1 &gt; c2, 0 otherwise. 'numeric' creates a
-grid of the numeric difference c1 - c2.</p></td>
+      <td><p>[default 'boolean'] either 'boolean' or 'numeric'. 'boolean'
+creates a grid of dummy variables for ichimoku indicator conditions of
+the form 1 if c1 &gt; c2, 0 otherwise. 'numeric' creates a grid of the
+numeric difference c1 - c2.</p></td>
     </tr>
     <tr>
       <th>unique</th>
-      <td><p>defaults to TRUE to return only unique combinations of c1 and c2.
+      <td><p>[default TRUE] to return only unique combinations of c1 and c2.
 Set to FALSE to return both c1 &gt; c2 and c2 &gt; c1.</p></td>
     </tr>
     </table>
@@ -186,17 +186,17 @@ Set to FALSE to return both c1 &gt; c2 and c2 &gt; c1.</p></td>
     <p>A data.frame in a 'tidy' format with one observation per row and one
     feature per column with the target 'y' as the first column.</p>
 <p>The 'y' parameter and trade direction are set as atrributes. To view these,
-    use the attributes() function on the returned object.</p>
+    use the <code><a href='look.html'>look</a></code> function on the returned object.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The date-time index corresponds to when the condition is met at the
-    close for that period. The return is the single-period return achieved by
-    transacting at the immediately following opening price until the next
-    opening price.</p>
+    <p>The date-time index corresponds to when the indicator condition is
+    met at the close for that period. The return is the single-period return
+    achieved by transacting at the immediately following opening price until
+    the next opening price.</p>
 <p>Only valid combinations are included. This excludes any combination
     involving 'open' as it is in effect a lagged indicator and not
     contemporaneous. The following trivial or highly-collinear pairs are also
-    excluded: (high, close) ,(low, close), (low, high), (cloudTop, Senkou A),
+    excluded: (high, close), (low, close), (low, high), (cloudTop, Senkou A),
     (cloudBase, senkou A), (cloudTop, senkouB), (cloudBase, senkouB),
     (cloudBase, cloudTop).</p>
 <p>mlgrid is used by <code><a href='autostrat.html'>autostrat</a></code> to enumerate the returns for all
@@ -211,58 +211,15 @@ Set to FALSE to return both c1 &gt; c2 and c2 &gt; c1.</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>cloud</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ichimoku.html'>ichimoku</a></span><span class='op'>(</span><span class='va'>sample_ohlc_data</span>, ticker <span class='op'>=</span> <span class='st'>"TKR"</span><span class='op'>)</span>
 <span class='va'>grid</span> <span class='op'>&lt;-</span> <span class='fu'>mlgrid</span><span class='op'>(</span><span class='va'>cloud</span>, y <span class='op'>=</span> <span class='st'>"ret"</span>, dir <span class='op'>=</span> <span class='st'>"short"</span>, type <span class='op'>=</span> <span class='st'>"numeric"</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/attributes.html'>attributes</a></span><span class='op'>(</span><span class='va'>grid</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $names
-#&gt;  [1] "y"                "chikou_close"     "chikou_high"      "chikou_low"      
-#&gt;  [5] "chikou_tenkan"    "chikou_kijun"     "chikou_senkouA"   "chikou_senkouB"  
-#&gt;  [9] "chikou_cloudTop"  "chikou_cloudBase" "close_tenkan"     "close_kijun"     
-#&gt; [13] "close_senkouA"    "close_senkouB"    "close_cloudTop"   "close_cloudBase" 
-#&gt; [17] "high_tenkan"      "high_kijun"       "high_senkouA"     "high_senkouB"    
-#&gt; [21] "high_cloudTop"    "high_cloudBase"   "low_tenkan"       "low_kijun"       
-#&gt; [25] "low_senkouA"      "low_senkouB"      "low_cloudTop"     "low_cloudBase"   
-#&gt; [29] "tenkan_kijun"     "tenkan_senkouA"   "tenkan_senkouB"   "tenkan_cloudTop" 
-#&gt; [33] "tenkan_cloudBase" "kijun_senkouA"    "kijun_senkouB"    "kijun_cloudTop"  
-#&gt; [37] "kijun_cloudBase"  "senkouA_senkouB" 
-#&gt; 
-#&gt; $row.names
-#&gt;   [1] "2020-05-01" "2020-05-03" "2020-05-04" "2020-05-05" "2020-05-06"
-#&gt;   [6] "2020-05-07" "2020-05-08" "2020-05-10" "2020-05-11" "2020-05-12"
-#&gt;  [11] "2020-05-13" "2020-05-14" "2020-05-15" "2020-05-17" "2020-05-18"
-#&gt;  [16] "2020-05-19" "2020-05-20" "2020-05-21" "2020-05-22" "2020-05-24"
-#&gt;  [21] "2020-05-25" "2020-05-26" "2020-05-27" "2020-05-28" "2020-05-29"
-#&gt;  [26] "2020-05-31" "2020-06-01" "2020-06-02" "2020-06-03" "2020-06-04"
-#&gt;  [31] "2020-06-05" "2020-06-07" "2020-06-08" "2020-06-09" "2020-06-10"
-#&gt;  [36] "2020-06-11" "2020-06-12" "2020-06-14" "2020-06-15" "2020-06-16"
-#&gt;  [41] "2020-06-17" "2020-06-18" "2020-06-19" "2020-06-21" "2020-06-22"
-#&gt;  [46] "2020-06-23" "2020-06-24" "2020-06-25" "2020-06-26" "2020-06-28"
-#&gt;  [51] "2020-06-29" "2020-06-30" "2020-07-01" "2020-07-02" "2020-07-03"
-#&gt;  [56] "2020-07-05" "2020-07-06" "2020-07-07" "2020-07-08" "2020-07-09"
-#&gt;  [61] "2020-07-10" "2020-07-12" "2020-07-13" "2020-07-14" "2020-07-15"
-#&gt;  [66] "2020-07-16" "2020-07-17" "2020-07-19" "2020-07-20" "2020-07-21"
-#&gt;  [71] "2020-07-22" "2020-07-23" "2020-07-24" "2020-07-26" "2020-07-27"
-#&gt;  [76] "2020-07-28" "2020-07-29" "2020-07-30" "2020-07-31" "2020-08-02"
-#&gt;  [81] "2020-08-03" "2020-08-04" "2020-08-05" "2020-08-06" "2020-08-07"
-#&gt;  [86] "2020-08-09" "2020-08-10" "2020-08-11" "2020-08-12" "2020-08-13"
-#&gt;  [91] "2020-08-14" "2020-08-16" "2020-08-17" "2020-08-18" "2020-08-19"
-#&gt;  [96] "2020-08-20" "2020-08-21" "2020-08-23" "2020-08-24" "2020-08-25"
-#&gt; [101] "2020-08-26" "2020-08-27" "2020-08-28" "2020-08-30" "2020-08-31"
-#&gt; [106] "2020-09-01" "2020-09-02" "2020-09-03" "2020-09-04" "2020-09-06"
-#&gt; [111] "2020-09-07" "2020-09-08" "2020-09-09" "2020-09-10" "2020-09-11"
-#&gt; [116] "2020-09-13" "2020-09-14" "2020-09-15" "2020-09-16" "2020-09-17"
-#&gt; [121] "2020-09-18" "2020-09-20" "2020-09-21" "2020-09-22" "2020-09-23"
-#&gt; [126] "2020-09-24" "2020-09-25" "2020-09-27" "2020-09-28"
-#&gt; 
-#&gt; $class
-#&gt; [1] "data.frame"
-#&gt; 
-#&gt; $y
+<span class='fu'><a href='look.html'>look</a></span><span class='op'>(</span><span class='va'>grid</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $y
 #&gt; [1] "ret"
 #&gt; 
 #&gt; $direction
 #&gt; [1] "short"
 #&gt; 
-#&gt; $mlgrid
-#&gt; [1] TRUE
+#&gt; $ticker
+#&gt; [1] "TKR"
 #&gt; </div><div class='input'>
 </div></pre>
   </div>

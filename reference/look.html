@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Automated Ichimoku Strategies — autostrat • ichimoku</title>
+<title>Look at Ichimoku Objects — look • ichimoku</title>
 
 
 <!-- jquery -->
@@ -39,10 +39,10 @@
 
 
 
-<meta property="og:title" content="Automated Ichimoku Strategies — autostrat" />
-<meta property="og:description" content="Generate a list of the top performing ichimoku cloud strategies based on
-    indicator conditions of the form 'c1 &amp;gt; c2' or level 2 strategies based on
-    combined indicator conditions of the form 'c1 &amp;gt; c2 &amp;amp; c3 &amp;gt; c4'." />
+<meta property="og:title" content="Look at Ichimoku Objects — look" />
+<meta property="og:description" content="Inspect the informational attributes of objects created by the 'ichimoku'
+    package. Can also be used to extract ichimoku objects from lists returned
+    by autostrat." />
 
 
 
@@ -128,55 +128,42 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Automated Ichimoku Strategies</h1>
-    <small class="dont-index">Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/R/strat.R'><code>R/strat.R</code></a></small>
-    <div class="hidden name"><code>autostrat.Rd</code></div>
+    <h1>Look at Ichimoku Objects</h1>
+    <small class="dont-index">Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/R/mltools.R'><code>R/mltools.R</code></a></small>
+    <div class="hidden name"><code>look.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Generate a list of the top performing ichimoku cloud strategies based on
-    indicator conditions of the form 'c1 &gt; c2' or level 2 strategies based on
-    combined indicator conditions of the form 'c1 &gt; c2 &amp; c3 &gt; c4'.</p>
+    <p>Inspect the informational attributes of objects created by the 'ichimoku'
+    package. Can also be used to extract ichimoku objects from lists returned
+    by <code><a href='autostrat.html'>autostrat</a></code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>autostrat</span><span class='op'>(</span><span class='va'>x</span>, n <span class='op'>=</span> <span class='fl'>8</span>, dir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"long"</span>, <span class='st'>"short"</span><span class='op'>)</span>, level <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>look</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>which</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>an ichimoku object.</p></td>
+      <td><p>an ichimoku object or an object returned by <code><a href='autostrat.html'>autostrat</a></code>
+or <code><a href='mlgrid.html'>mlgrid</a></code>.</p></td>
     </tr>
     <tr>
-      <th>n</th>
-      <td><p>[default 8] select top n number of strategies to return.</p></td>
-    </tr>
-    <tr>
-      <th>dir</th>
-      <td><p>[default 'long'] trade direction, either 'long' or 'short'.</p></td>
-    </tr>
-    <tr>
-      <th>level</th>
-      <td><p>[default 1] set to 2 to also return combined strategies.</p></td>
+      <th>which</th>
+      <td><p>(optional) integer value of strategy to return from an autostrat
+list.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A list of 'n' ichimoku objects containing strategies. The
-    cumulative log returns for all strategies as well as the summaries for
-    the 'n' top strategies are saved as attributes to the list. The strategy
-    summaries are printed to the console as a side effect.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>Ichimoku objects for each strategy are returned as a list. The
-    cumulative log returns for all strategies as well as the summaries for
-    the 'n' top strategies are saved as attributes to the list. This
-    information may be viewed by using look() on the returned list.</p>
-<p>Each individual ichimoku object may be accessed via its position in the
-    list, e.g. [[1]] for the 1st item, or by using <code><a href='look.html'>look</a></code>
-    specifying the parameter 'which'.</p>
+    <p>List of attribute values, or if 'which' is specified on an autostrat
+    list, an ichimoku object containing a strategy.</p>
+<p>Note: for a level 2 autostrat object, if the object fails to print
+    correctly due to its length, please access the list items directly using
+    <code>look(x)$summary</code> and <code>look(x)$logret</code>, possibly in conjunction
+    with head() or by setting the 'max' argument in print().</p>
     <h2 class="hasAnchor" id="further-details"><a class="anchor" href="#further-details"></a>Further Details</h2>
 
     
@@ -186,8 +173,17 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>cloud</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ichimoku.html'>ichimoku</a></span><span class='op'>(</span><span class='va'>sample_ohlc_data</span>, ticker <span class='op'>=</span> <span class='st'>"TKR"</span><span class='op'>)</span>
-
-<span class='va'>stratlist</span> <span class='op'>&lt;-</span> <span class='fu'>autostrat</span><span class='op'>(</span><span class='va'>cloud</span>, n <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
+<span class='fu'>look</span><span class='op'>(</span><span class='va'>cloud</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $periods
+#&gt; [1]  9 26 52
+#&gt; 
+#&gt; $periodicity
+#&gt; [1] 86400
+#&gt; 
+#&gt; $ticker
+#&gt; [1] "TKR"
+#&gt; </div><div class='input'>
+<span class='va'>stratlist</span> <span class='op'>&lt;-</span> <span class='fu'><a href='autostrat.html'>autostrat</a></span><span class='op'>(</span><span class='va'>cloud</span>, n <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;                        [,1]                [,2]               
 #&gt; Strategy               "senkouB &gt; tenkan"  "cloudBase &gt; kijun"
 #&gt; ---------------------  "----------"        "----------"       
@@ -225,7 +221,7 @@
 #&gt; Direction              "long"             
 #&gt; Start                  2020-04-01 23:00:00
 #&gt; End                    2020-09-28 23:00:00
-#&gt; Ticker                 "TKR"              </div><div class='input'><span class='fu'><a href='look.html'>look</a></span><span class='op'>(</span><span class='va'>stratlist</span><span class='op'>)</span>
+#&gt; Ticker                 "TKR"              </div><div class='input'><span class='fu'>look</span><span class='op'>(</span><span class='va'>stratlist</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; $logret
 #&gt;                         logret
 #&gt; senkouB_tenkan    0.0995100937
@@ -342,8 +338,20 @@
 #&gt; Start                  2020-04-01 23:00:00
 #&gt; End                    2020-09-28 23:00:00
 #&gt; Ticker                 "TKR"              
-#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='fu'><a href='look.html'>look</a></span><span class='op'>(</span><span class='va'>stratlist</span>, which <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                        [,1]               
+#&gt; </div><div class='input'>
+<span class='va'>strat</span> <span class='op'>&lt;-</span> <span class='fu'>look</span><span class='op'>(</span><span class='va'>stratlist</span>, which <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+<span class='fu'>look</span><span class='op'>(</span><span class='va'>strat</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $periods
+#&gt; [1]  9 26 52
+#&gt; 
+#&gt; $periodicity
+#&gt; [1] 86400
+#&gt; 
+#&gt; $ticker
+#&gt; [1] "TKR"
+#&gt; 
+#&gt; $strat
+#&gt;                        [,1]               
 #&gt; Strategy               "senkouB &gt; tenkan" 
 #&gt; ---------------------  "----------"       
 #&gt; Strategy cuml return % 14.72              
@@ -361,27 +369,19 @@
 #&gt; Direction              "long"             
 #&gt; Start                  2020-04-01 23:00:00
 #&gt; End                    2020-09-28 23:00:00
-#&gt; Ticker                 "TKR"              </div><div class='input'>
-<span class='fu'>autostrat</span><span class='op'>(</span><span class='va'>cloud</span>, n <span class='op'>=</span> <span class='fl'>1</span>, dir <span class='op'>=</span> <span class='st'>"short"</span>, level <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                        [,1]                              
-#&gt; Strategy               "high &gt; chikou &amp; tenkan &gt; senkouB"
-#&gt; ---------------------  "----------"                      
-#&gt; Strategy cuml return % 13.38                             
-#&gt; Per period mean ret %  0.0811                            
-#&gt; Periods in market      18                                
-#&gt; Total trades           3                                 
-#&gt; Average trade length   6                                 
-#&gt; Trade success %        0                                 
-#&gt; Worst trade ret %      -7.68                             
-#&gt; ---------------------  "----------"                      
-#&gt; Benchmark cuml ret %   -0.93                             
-#&gt; Per period mean ret %  -0.006                            
-#&gt; Periods in market      155                               
-#&gt; ---------------------  "----------"                      
-#&gt; Direction              "short"                           
-#&gt; Start                  2020-04-01 23:00:00               
-#&gt; End                    2020-09-28 23:00:00               
-#&gt; Ticker                 "TKR"                             </div><div class='input'>
+#&gt; Ticker                 "TKR"              
+#&gt; </div><div class='input'>
+<span class='va'>grid</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mlgrid.html'>mlgrid</a></span><span class='op'>(</span><span class='va'>cloud</span><span class='op'>)</span>
+<span class='fu'>look</span><span class='op'>(</span><span class='va'>grid</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $y
+#&gt; [1] "logret"
+#&gt; 
+#&gt; $direction
+#&gt; [1] "long"
+#&gt; 
+#&gt; $ticker
+#&gt; [1] "TKR"
+#&gt; </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

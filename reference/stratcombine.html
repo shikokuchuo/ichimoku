@@ -40,9 +40,9 @@
 
 
 <meta property="og:title" content="Combine Ichimoku Strategies — stratcombine" />
-<meta property="og:description" content="Create more complex strategies with a rule condition of the form
-    'c1 &amp;gt; c2 &amp;amp; c3 &amp;gt; c4' by combining existing strategies with rule conditions
-    'c1 &amp;gt; c2' and 'c3 &amp;gt; c4' respectively." />
+<meta property="og:description" content="Create more complex strategies with an indicator condition of the form
+    'c1 &amp;gt; c2 &amp;amp; c3 &amp;gt; c4' by combining existing strategies with indicator
+    conditions 'c1 &amp;gt; c2' and 'c3 &amp;gt; c4' respectively." />
 
 
 
@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
       </span>
     </div>
 
@@ -97,10 +97,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/reference.html">ichimoku: Reference</a>
+      <a href="../articles/reference.html">ichimoku: Cloud Charts - The Reference Manual</a>
     </li>
     <li>
-      <a href="../articles/strategies.html">ichimoku: Strategies</a>
+      <a href="../articles/strategies.html">ichimoku: Beyond Visualization - Quantitative Strategies</a>
     </li>
   </ul>
 </li>
@@ -134,9 +134,9 @@
     </div>
 
     <div class="ref-description">
-    <p>Create more complex strategies with a rule condition of the form
-    'c1 &gt; c2 &amp; c3 &gt; c4' by combining existing strategies with rule conditions
-    'c1 &gt; c2' and 'c3 &gt; c4' respectively.</p>
+    <p>Create more complex strategies with an indicator condition of the form
+    'c1 &gt; c2 &amp; c3 &gt; c4' by combining existing strategies with indicator
+    conditions 'c1 &gt; c2' and 'c3 &gt; c4' respectively.</p>
     </div>
 
     <pre class="usage"><span class='fu'>stratcombine</span><span class='op'>(</span><span class='va'>s1</span>, <span class='va'>s2</span><span class='op'>)</span></pre>
@@ -159,8 +159,8 @@
     <p>An ichimoku object augmented with the combined strategy.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The combined strategy 's1 &amp; s2' means conditions in 's1' and 's2'
-    have to be simulateneously met for a trade position to be taken.</p>
+    <p>The combined strategy 's1 &amp; s2' means indicator conditions in 's1'
+    and 's2' have to be met simulateneously for a trade position to be taken.</p>
 <p>The boolean values showing whether these conditions are met are stored in
     the 'cond' column.</p>
 <p>The stategy summary may be accessed via the summary() function.</p>
@@ -193,8 +193,8 @@
 #&gt; Periods in market      155                                 
 #&gt; ---------------------  "----------"                        
 #&gt; Direction              "long"                              
-#&gt; Start                  2020-04-02                          
-#&gt; End                    2020-09-29                          
+#&gt; Start                  2020-04-01 23:00:00                 
+#&gt; End                    2020-09-28 23:00:00                 
 #&gt; Ticker                 "TKR"                               </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>cstrat</span><span class='op'>)</span>
 </div><div class='img'><img src='stratcombine-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>

@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
       </span>
     </div>
 
@@ -95,10 +95,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/reference.html">ichimoku: Reference</a>
+      <a href="../articles/reference.html">ichimoku: Cloud Charts - The Reference Manual</a>
     </li>
     <li>
-      <a href="../articles/strategies.html">ichimoku: Strategies</a>
+      <a href="../articles/strategies.html">ichimoku: Beyond Visualization - Quantitative Strategies</a>
     </li>
   </ul>
 </li>
@@ -140,8 +140,8 @@
   <span class='va'>object</span>,
   <span class='va'>window</span>,
   <span class='va'>ticker</span>,
+  <span class='va'>message</span>,
   theme <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"original"</span>, <span class='st'>"dark"</span>, <span class='st'>"solarized"</span>, <span class='st'>"mono"</span><span class='op'>)</span>,
-  gaps <span class='op'>=</span> <span class='cn'>FALSE</span>,
   strat <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
@@ -166,24 +166,23 @@ chart heading. If not set, the ticker saved within the ichimoku object
 will be used.</p></td>
     </tr>
     <tr>
+      <th>message</th>
+      <td><p>(optional) specify a chart message to display under the title.</p></td>
+    </tr>
+    <tr>
       <th>theme</th>
-      <td><p>defaults to 'original'. This can also be set to 'dark',
+      <td><p>[default 'original'] with alternative choices of 'dark',
 'solarized' or 'mono'.</p></td>
     </tr>
     <tr>
-      <th>gaps</th>
-      <td><p>defaults to FALSE to remove weekend and holiday gaps. Set to TRUE
-for a continuous timescale axis, but with gaps for non-trading days.</p></td>
-    </tr>
-    <tr>
       <th>strat</th>
-      <td><p>set to TRUE by default. If the ichimoku object contains a
-strategy, the periods for which the strategy results in a position will
-be shaded. Set to FALSE to turn off this behaviour.</p></td>
+      <td><p>[default TRUE] if the ichimoku object contains a strategy, the
+periods for which the strategy results in a position will be shaded. Set
+to FALSE to turn off this behaviour.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>other arguments to be passed along.</p></td>
+      <td><p>additional arguments to be passed along.</p></td>
     </tr>
     </table>
 
@@ -206,9 +205,9 @@ be shaded. Set to FALSE to turn off this behaviour.</p></td>
     <pre class="examples"><div class='input'><span class='va'>cloud</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ichimoku.html'>ichimoku</a></span><span class='op'>(</span><span class='va'>sample_ohlc_data</span>, ticker <span class='op'>=</span> <span class='st'>"TKR"</span><span class='op'>)</span>
 
 <span class='fu'>autoplot</span><span class='op'>(</span><span class='va'>cloud</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: Ignoring unknown aesthetics: open, close</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 26 rows containing missing values (geom_segment).</span></div><div class='img'><img src='autoplot.ichimoku-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>autoplot</span><span class='op'>(</span><span class='va'>cloud</span>, window <span class='op'>=</span> <span class='st'>"2020-05-15/2020-10-30"</span>, theme <span class='op'>=</span> <span class='st'>"dark"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: Ignoring unknown aesthetics: open, close</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 22 rows containing missing values (geom_segment).</span></div><div class='img'><img src='autoplot.ichimoku-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>autoplot</span><span class='op'>(</span><span class='va'>cloud</span>, ticker <span class='op'>=</span> <span class='st'>"TKR Co."</span>, theme <span class='op'>=</span> <span class='st'>"solarized"</span>, gaps <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: Ignoring unknown aesthetics: open, close, date</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 26 rows containing missing values (geom_segment).</span></div><div class='img'><img src='autoplot.ichimoku-3.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='img'><img src='autoplot.ichimoku-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>autoplot</span><span class='op'>(</span><span class='va'>cloud</span>, window <span class='op'>=</span> <span class='st'>"2020-05-15/2020-10-30"</span>, theme <span class='op'>=</span> <span class='st'>"dark"</span><span class='op'>)</span>
+</div><div class='img'><img src='autoplot.ichimoku-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>autoplot</span><span class='op'>(</span><span class='va'>cloud</span>, ticker <span class='op'>=</span> <span class='st'>"TKR Co."</span>, theme <span class='op'>=</span> <span class='st'>"solarized"</span><span class='op'>)</span>
+</div><div class='img'><img src='autoplot.ichimoku-3.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

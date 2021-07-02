@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
       </span>
     </div>
 
@@ -95,10 +95,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/reference.html">ichimoku: Reference</a>
+      <a href="../articles/reference.html">ichimoku: Cloud Charts - The Reference Manual</a>
     </li>
     <li>
-      <a href="../articles/strategies.html">ichimoku: Strategies</a>
+      <a href="../articles/strategies.html">ichimoku: Beyond Visualization - Quantitative Strategies</a>
     </li>
   </ul>
 </li>
@@ -147,12 +147,12 @@
     </tr>
     <tr>
       <th>strat</th>
-      <td><p>defaults to TRUE to show the strategy summary if present. Set to
+      <td><p>[default TRUE] to show the strategy summary if present. Set to
 FALSE to show the data summary instead.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>other arguments to be passed along.</p></td>
+      <td><p>additional arguments to be passed along.</p></td>
     </tr>
     </table>
 
@@ -175,25 +175,25 @@ FALSE to show the data summary instead.</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>strat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='strat.html'>strat</a></span><span class='op'>(</span><span class='fu'><a href='ichimoku.html'>ichimoku</a></span><span class='op'>(</span><span class='va'>sample_ohlc_data</span>, ticker <span class='op'>=</span> <span class='st'>"TKR"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>strat</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                        [,1]            
-#&gt; Strategy               "close &gt; tenkan"
-#&gt; ---------------------  "----------"    
-#&gt; Strategy cuml return % 5.01            
-#&gt; Per period mean ret %  0.0218          
-#&gt; Periods in market      119             
-#&gt; Total trades           18              
-#&gt; Average trade length   6.61            
-#&gt; Trade success %        27.78           
-#&gt; Worst trade ret %      -2.54           
-#&gt; ---------------------  "----------"    
-#&gt; Benchmark cuml ret %   3.38            
-#&gt; Per period mean ret %  0.0148          
-#&gt; Periods in market      224             
-#&gt; ---------------------  "----------"    
-#&gt; Direction              "long"          
-#&gt; Start                  2020-01-13      
-#&gt; End                    2020-09-29      
-#&gt; Ticker                 "TKR"           </div><div class='input'>
+</div><div class='output co'>#&gt;                        [,1]               
+#&gt; Strategy               "close &gt; tenkan"   
+#&gt; ---------------------  "----------"       
+#&gt; Strategy cuml return % 5.01               
+#&gt; Per period mean ret %  0.0218             
+#&gt; Periods in market      119                
+#&gt; Total trades           18                 
+#&gt; Average trade length   6.61               
+#&gt; Trade success %        27.78              
+#&gt; Worst trade ret %      -2.54              
+#&gt; ---------------------  "----------"       
+#&gt; Benchmark cuml ret %   3.38               
+#&gt; Per period mean ret %  0.0148             
+#&gt; Periods in market      224                
+#&gt; ---------------------  "----------"       
+#&gt; Direction              "long"             
+#&gt; Start                  2020-01-13         
+#&gt; End                    2020-09-28 23:00:00
+#&gt; Ticker                 "TKR"              </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

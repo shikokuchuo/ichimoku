@@ -5,13 +5,13 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ichimoku: Strategies • ichimoku</title>
+<title>ichimoku: Beyond Visualization - Quantitative Strategies • ichimoku</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="ichimoku: Strategies">
+<script src="../pkgdown.js"></script><meta property="og:title" content="ichimoku: Beyond Visualization - Quantitative Strategies">
 <meta property="og:description" content="ichimoku">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
       </span>
     </div>
 
@@ -54,10 +54,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/reference.html">ichimoku: Reference</a>
+      <a href="../articles/reference.html">ichimoku: Cloud Charts - The Reference Manual</a>
     </li>
     <li>
-      <a href="../articles/strategies.html">ichimoku: Strategies</a>
+      <a href="../articles/strategies.html">ichimoku: Beyond Visualization - Quantitative Strategies</a>
     </li>
   </ul>
 </li>
@@ -85,7 +85,7 @@
       </header><script src="strategies_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>ichimoku: Strategies</h1>
+      <h1 data-toc-skip>ichimoku: Beyond Visualization - Quantitative Strategies</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/shikokuchuo/ichimoku/blob/master/vignettes/strategies.Rmd"><code>vignettes/strategies.Rmd</code></a></small>
@@ -123,37 +123,37 @@
 <h3 class="hasAnchor">
 <a href="#use-strat" class="anchor"></a>2. Use <code>strat()</code>
 </h3>
-<p>To test a simple strategy with a rule condition of the form ‘long (or short) while c1 &gt; c2’.</p>
+<p>To test a simple strategy with an indicator condition of the form ‘long (or short) while c1 &gt; c2’.</p>
 <p>Here the references c1 and c2 are columns of the ichimoku object representing either candlestick values e.g. ‘close’ or cloud values e.g. ‘tenkan’.</p>
-<p>Note: the rule condition is c1 &gt; c2 even for short trades. Hence please take care for example when inverting ‘long while close &gt; tenkan’ to ‘short while close &lt; tenkan’, this should be formulated as ‘short while tenkan &gt; close’.</p>
+<p>Note: the indicator condition is c1 &gt; c2 even for short trades. Hence please take care for example when inverting ‘long while close &gt; tenkan’ to ‘short while close &lt; tenkan’, this should be formulated as ‘short while tenkan &gt; close’.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">strat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/strat.html">strat</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">strat</span><span class="op">[</span><span class="fl">100</span><span class="op">:</span><span class="fl">105</span><span class="op">]</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="co">#&gt;             open  high   low close cd tenkan  kijun senkouA senkouB chikou</span>
-<span class="co">#&gt; 2020-04-27 122.7 122.7 121.8 122.4 -1 120.50 123.35 125.625  124.85  135.6</span>
-<span class="co">#&gt; 2020-04-28 122.4 122.6 121.1 121.9 -1 120.50 123.35 125.675  124.85  134.5</span>
-<span class="co">#&gt; 2020-04-29 121.9 123.7 121.7 123.3  1 120.85 123.25 125.675  124.85  134.3</span>
-<span class="co">#&gt; 2020-04-30 123.3 124.0 123.0 124.0  1 121.00 123.25 125.675  124.85  135.9</span>
-<span class="co">#&gt; 2020-05-01 124.2 124.3 124.0 124.1 -1 121.40 123.10 125.675  124.85  135.2</span>
-<span class="co">#&gt; 2020-05-03 124.1 124.1 123.4 123.9 -1 122.25 123.10 125.975  124.85  135.7</span>
-<span class="co">#&gt;            cloudTop cloudBase cond posn txn        logret       slogret</span>
-<span class="co">#&gt; 2020-04-27  125.625    124.85    1    1   0 -0.0024479816 -0.0024479816</span>
-<span class="co">#&gt; 2020-04-28  125.675    124.85    1    1   0 -0.0040933336 -0.0040933336</span>
-<span class="co">#&gt; 2020-04-29  125.675    124.85    1    1   0  0.0114193737  0.0114193737</span>
-<span class="co">#&gt; 2020-04-30  125.675    124.85    1    1   0  0.0072727593  0.0072727593</span>
-<span class="co">#&gt; 2020-05-01  125.675    124.85    1    1   0 -0.0008054773 -0.0008054773</span>
-<span class="co">#&gt; 2020-05-03  125.975    124.85    1    1   0 -0.0016129036 -0.0016129036</span>
-<span class="co">#&gt;                     ret         sret</span>
-<span class="co">#&gt; 2020-04-27 -0.002444988 -0.002444988</span>
-<span class="co">#&gt; 2020-04-28 -0.004084967 -0.004084967</span>
-<span class="co">#&gt; 2020-04-29  0.011484824  0.011484824</span>
-<span class="co">#&gt; 2020-04-30  0.007299270  0.007299270</span>
-<span class="co">#&gt; 2020-05-01 -0.000805153 -0.000805153</span>
-<span class="co">#&gt; 2020-05-03 -0.001611604 -0.001611604</span></code></pre></div>
+<span class="co">#&gt;                      open  high   low close cd tenkan  kijun senkouA senkouB</span>
+<span class="co">#&gt; 2020-04-26 23:00:00 122.7 122.7 121.8 122.4 -1 120.50 123.35 125.625  124.85</span>
+<span class="co">#&gt; 2020-04-27 23:00:00 122.4 122.6 121.1 121.9 -1 120.50 123.35 125.675  124.85</span>
+<span class="co">#&gt; 2020-04-28 23:00:00 121.9 123.7 121.7 123.3  1 120.85 123.25 125.675  124.85</span>
+<span class="co">#&gt; 2020-04-29 23:00:00 123.3 124.0 123.0 124.0  1 121.00 123.25 125.675  124.85</span>
+<span class="co">#&gt; 2020-04-30 23:00:00 124.2 124.3 124.0 124.1 -1 121.40 123.10 125.675  124.85</span>
+<span class="co">#&gt; 2020-05-02 23:00:00 124.1 124.1 123.4 123.9 -1 122.25 123.10 125.975  124.85</span>
+<span class="co">#&gt;                     chikou cloudTop cloudBase cond posn txn        logret</span>
+<span class="co">#&gt; 2020-04-26 23:00:00  135.6  125.625    124.85    1    1   0 -0.0024479816</span>
+<span class="co">#&gt; 2020-04-27 23:00:00  134.5  125.675    124.85    1    1   0 -0.0040933336</span>
+<span class="co">#&gt; 2020-04-28 23:00:00  134.3  125.675    124.85    1    1   0  0.0114193737</span>
+<span class="co">#&gt; 2020-04-29 23:00:00  135.9  125.675    124.85    1    1   0  0.0072727593</span>
+<span class="co">#&gt; 2020-04-30 23:00:00  135.2  125.675    124.85    1    1   0 -0.0008054773</span>
+<span class="co">#&gt; 2020-05-02 23:00:00  135.7  125.975    124.85    1    1   0 -0.0016129036</span>
+<span class="co">#&gt;                           slogret          ret         sret</span>
+<span class="co">#&gt; 2020-04-26 23:00:00 -0.0024479816 -0.002444988 -0.002444988</span>
+<span class="co">#&gt; 2020-04-27 23:00:00 -0.0040933336 -0.004084967 -0.004084967</span>
+<span class="co">#&gt; 2020-04-28 23:00:00  0.0114193737  0.011484824  0.011484824</span>
+<span class="co">#&gt; 2020-04-29 23:00:00  0.0072727593  0.007299270  0.007299270</span>
+<span class="co">#&gt; 2020-04-30 23:00:00 -0.0008054773 -0.000805153 -0.000805153</span>
+<span class="co">#&gt; 2020-05-02 23:00:00 -0.0016129036 -0.001611604 -0.001611604</span></code></pre></div>
 <p>The use of strat() returns an augmented ichimoku object. The printout above of a slice of the object (rows 100 to 105) shows that the following columns are appended:</p>
 <ul>
 <li>
-<strong>cond</strong>: ‘1’ if the rule condition is met at the close of the the time period (note: if the rule involves chikou span, the comparison will be of past periods)</li>
+<strong>cond</strong>: ‘1’ if the indicator condition is met at the close of the the time period (note: if the indicator condition involves chikou span, the comparison will be of past periods)</li>
 <li>
 <strong>posn</strong>: ‘1’ represents that a position is held during this time period (i.e. from the ‘open’ to the ‘close’)</li>
 <li>
@@ -176,24 +176,24 @@
 <p>A summary of the strategy is saved as an attribute to the ichimoku object and can be accessed by the <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> function.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">strat</span><span class="op">)</span>
-<span class="co">#&gt;                        [,1]            </span>
-<span class="co">#&gt; Strategy               "close &gt; tenkan"</span>
-<span class="co">#&gt; ---------------------  "----------"    </span>
-<span class="co">#&gt; Strategy cuml return % 5.01            </span>
-<span class="co">#&gt; Per period mean ret %  0.0218          </span>
-<span class="co">#&gt; Periods in market      119             </span>
-<span class="co">#&gt; Total trades           18              </span>
-<span class="co">#&gt; Average trade length   6.61            </span>
-<span class="co">#&gt; Trade success %        27.78           </span>
-<span class="co">#&gt; Worst trade ret %      -2.54           </span>
-<span class="co">#&gt; ---------------------  "----------"    </span>
-<span class="co">#&gt; Benchmark cuml ret %   3.38            </span>
-<span class="co">#&gt; Per period mean ret %  0.0148          </span>
-<span class="co">#&gt; Periods in market      224             </span>
-<span class="co">#&gt; ---------------------  "----------"    </span>
-<span class="co">#&gt; Direction              "long"          </span>
-<span class="co">#&gt; Start                  2020-01-13      </span>
-<span class="co">#&gt; End                    2020-09-29      </span>
+<span class="co">#&gt;                        [,1]               </span>
+<span class="co">#&gt; Strategy               "close &gt; tenkan"   </span>
+<span class="co">#&gt; ---------------------  "----------"       </span>
+<span class="co">#&gt; Strategy cuml return % 5.01               </span>
+<span class="co">#&gt; Per period mean ret %  0.0218             </span>
+<span class="co">#&gt; Periods in market      119                </span>
+<span class="co">#&gt; Total trades           18                 </span>
+<span class="co">#&gt; Average trade length   6.61               </span>
+<span class="co">#&gt; Trade success %        27.78              </span>
+<span class="co">#&gt; Worst trade ret %      -2.54              </span>
+<span class="co">#&gt; ---------------------  "----------"       </span>
+<span class="co">#&gt; Benchmark cuml ret %   3.38               </span>
+<span class="co">#&gt; Per period mean ret %  0.0148             </span>
+<span class="co">#&gt; Periods in market      224                </span>
+<span class="co">#&gt; ---------------------  "----------"       </span>
+<span class="co">#&gt; Direction              "long"             </span>
+<span class="co">#&gt; Start                  2020-01-13         </span>
+<span class="co">#&gt; End                    2020-09-28 23:00:00</span>
 <span class="co">#&gt; Ticker                 "TKR"</span></code></pre></div>
 <p>The summary is meant to provide a quick overview of whether a strategy is effective / desirable:</p>
 <ul>
@@ -218,7 +218,7 @@
 <h3 class="hasAnchor">
 <a href="#combine-strategies-using-stratcombine" class="anchor"></a>5. Combine strategies using <code>stratcombine()</code>
 </h3>
-<p>Strategies may be combined to form more complex strategies if desired. The function can be used on 2 ichimoku objects containing rule conditions ‘c1 &gt; c2’ and ‘c3 &gt; c4’ respectively, combining them into a new strategy with a rule condition of ‘c1 &gt; c2 &amp; c3 &gt; c4’.</p>
+<p>Strategies may be combined to form more complex strategies if desired. The function can be used on 2 ichimoku objects containing indicator conditions ‘c1 &gt; c2’ and ‘c3 &gt; c4’ respectively, combining them into a new strategy with indicator condition of ‘c1 &gt; c2 &amp; c3 &gt; c4’.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">strat2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/strat.html">strat</a></span><span class="op">(</span><span class="va">cloud</span>, <span class="st">"cloudBase"</span>, <span class="st">"kijun"</span><span class="op">)</span>
 
@@ -240,8 +240,8 @@
 <span class="co">#&gt; Periods in market      155                                 </span>
 <span class="co">#&gt; ---------------------  "----------"                        </span>
 <span class="co">#&gt; Direction              "long"                              </span>
-<span class="co">#&gt; Start                  2020-04-02                          </span>
-<span class="co">#&gt; End                    2020-09-29                          </span>
+<span class="co">#&gt; Start                  2020-04-01 23:00:00                 </span>
+<span class="co">#&gt; End                    2020-09-28 23:00:00                 </span>
 <span class="co">#&gt; Ticker                 "TKR"</span></code></pre></div>
 </div>
 <div id="further-backtesting-and-returns-analysis" class="section level3">
@@ -276,27 +276,46 @@
 </ul>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/autostrat.html">autostrat</a></span><span class="op">(</span><span class="va">cloud</span>, n <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
-<span class="co">#&gt;                        [,1]               [,2]                [,3]             </span>
-<span class="co">#&gt; Strategy               "senkouB &gt; tenkan" "cloudBase &gt; kijun" "senkouB &gt; kijun"</span>
-<span class="co">#&gt; ---------------------  "----------"       "----------"        "----------"     </span>
-<span class="co">#&gt; Strategy cuml return % 14.72              11.96               11.7             </span>
-<span class="co">#&gt; Per period mean ret %  0.0886             0.0729              0.0714           </span>
-<span class="co">#&gt; Periods in market      57                 38                  57               </span>
-<span class="co">#&gt; Total trades           3                  3                   3                </span>
-<span class="co">#&gt; Average trade length   19                 12.67               19               </span>
-<span class="co">#&gt; Trade success %        66.67              66.67               66.67            </span>
-<span class="co">#&gt; Worst trade ret %      -0.31              -0.31               -0.31            </span>
-<span class="co">#&gt; ---------------------  "----------"       "----------"        "----------"     </span>
-<span class="co">#&gt; Benchmark cuml ret %   0.94               0.94                0.94             </span>
-<span class="co">#&gt; Per period mean ret %  0.006              0.006               0.006            </span>
-<span class="co">#&gt; Periods in market      155                155                 155              </span>
-<span class="co">#&gt; ---------------------  "----------"       "----------"        "----------"     </span>
-<span class="co">#&gt; Direction              "long"             "long"              "long"           </span>
-<span class="co">#&gt; Start                  2020-04-02         2020-04-02          2020-04-02       </span>
-<span class="co">#&gt; End                    2020-09-29         2020-09-29          2020-09-29       </span>
-<span class="co">#&gt; Ticker                 "TKR"              "TKR"               "TKR"</span></code></pre></div>
-<p>The output of autostrat is a list of ichimoku objects. Each object can be accessed by its individual item number e.g. [[1]] for the first object.</p>
-<p>The metadata is also saved as attributes to the list and can be accessed by the function <code><a href="https://rdrr.io/r/base/attributes.html">attributes()</a></code>:</p>
+<span class="co">#&gt;                        [,1]                [,2]               </span>
+<span class="co">#&gt; Strategy               "senkouB &gt; tenkan"  "cloudBase &gt; kijun"</span>
+<span class="co">#&gt; ---------------------  "----------"        "----------"       </span>
+<span class="co">#&gt; Strategy cuml return % 14.72               11.96              </span>
+<span class="co">#&gt; Per period mean ret %  0.0886              0.0729             </span>
+<span class="co">#&gt; Periods in market      57                  38                 </span>
+<span class="co">#&gt; Total trades           3                   3                  </span>
+<span class="co">#&gt; Average trade length   19                  12.67              </span>
+<span class="co">#&gt; Trade success %        66.67               66.67              </span>
+<span class="co">#&gt; Worst trade ret %      -0.31               -0.31              </span>
+<span class="co">#&gt; ---------------------  "----------"        "----------"       </span>
+<span class="co">#&gt; Benchmark cuml ret %   0.94                0.94               </span>
+<span class="co">#&gt; Per period mean ret %  0.006               0.006              </span>
+<span class="co">#&gt; Periods in market      155                 155                </span>
+<span class="co">#&gt; ---------------------  "----------"        "----------"       </span>
+<span class="co">#&gt; Direction              "long"              "long"             </span>
+<span class="co">#&gt; Start                  2020-04-01 23:00:00 2020-04-01 23:00:00</span>
+<span class="co">#&gt; End                    2020-09-28 23:00:00 2020-09-28 23:00:00</span>
+<span class="co">#&gt; Ticker                 "TKR"               "TKR"              </span>
+<span class="co">#&gt;                        [,3]               </span>
+<span class="co">#&gt; Strategy               "senkouB &gt; kijun"  </span>
+<span class="co">#&gt; ---------------------  "----------"       </span>
+<span class="co">#&gt; Strategy cuml return % 11.7               </span>
+<span class="co">#&gt; Per period mean ret %  0.0714             </span>
+<span class="co">#&gt; Periods in market      57                 </span>
+<span class="co">#&gt; Total trades           3                  </span>
+<span class="co">#&gt; Average trade length   19                 </span>
+<span class="co">#&gt; Trade success %        66.67              </span>
+<span class="co">#&gt; Worst trade ret %      -0.31              </span>
+<span class="co">#&gt; ---------------------  "----------"       </span>
+<span class="co">#&gt; Benchmark cuml ret %   0.94               </span>
+<span class="co">#&gt; Per period mean ret %  0.006              </span>
+<span class="co">#&gt; Periods in market      155                </span>
+<span class="co">#&gt; ---------------------  "----------"       </span>
+<span class="co">#&gt; Direction              "long"             </span>
+<span class="co">#&gt; Start                  2020-04-01 23:00:00</span>
+<span class="co">#&gt; End                    2020-09-28 23:00:00</span>
+<span class="co">#&gt; Ticker                 "TKR"</span></code></pre></div>
+<p>The output of autostrat is a list of ichimoku objects. Each object can be accessed by its individual item number e.g. [[1]] for the first object, or by using look() specifying the parameter ‘which’.</p>
+<p>The metadata is also saved as attributes to the list and can be accessed by the function <code><a href="../reference/look.html">look()</a></code>:</p>
 <ul>
 <li><p><strong>summary</strong>: the strategy summaries</p></li>
 <li><p><strong>logret</strong>: the log returns of all combinations computed by autostrat</p></li>
@@ -307,7 +326,7 @@
 <div id="autostrat-level-2" class="section level3">
 <h3 class="hasAnchor">
 <a href="#autostrat-level-2" class="anchor"></a><code>autostrat()</code> level 2</h3>
-<p>Set the <code>level = 2</code> argument to <code><a href="../reference/autostrat.html">autostrat()</a></code> to test all strategies with a combination of up to 2 rule conditions.</p>
+<p>Set the <code>level = 2</code> argument to <code><a href="../reference/autostrat.html">autostrat()</a></code> to test all strategies with a combination of up to 2 indicator conditions.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/autostrat.html">autostrat</a></span><span class="op">(</span><span class="va">cloud</span>, n <span class="op">=</span> <span class="fl">3</span>, dir <span class="op">=</span> <span class="st">"short"</span>, level <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
 <span class="co">#&gt;                        [,1]                              </span>
@@ -326,8 +345,8 @@
 <span class="co">#&gt; Periods in market      155                               </span>
 <span class="co">#&gt; ---------------------  "----------"                      </span>
 <span class="co">#&gt; Direction              "short"                           </span>
-<span class="co">#&gt; Start                  2020-04-02                        </span>
-<span class="co">#&gt; End                    2020-09-29                        </span>
+<span class="co">#&gt; Start                  2020-04-01 23:00:00               </span>
+<span class="co">#&gt; End                    2020-09-28 23:00:00               </span>
 <span class="co">#&gt; Ticker                 "TKR"                             </span>
 <span class="co">#&gt;                        [,2]                                </span>
 <span class="co">#&gt; Strategy               "high &gt; chikou &amp; tenkan &gt; cloudBase"</span>
@@ -345,8 +364,8 @@
 <span class="co">#&gt; Periods in market      155                                 </span>
 <span class="co">#&gt; ---------------------  "----------"                        </span>
 <span class="co">#&gt; Direction              "short"                             </span>
-<span class="co">#&gt; Start                  2020-04-02                          </span>
-<span class="co">#&gt; End                    2020-09-29                          </span>
+<span class="co">#&gt; Start                  2020-04-01 23:00:00                 </span>
+<span class="co">#&gt; End                    2020-09-28 23:00:00                 </span>
 <span class="co">#&gt; Ticker                 "TKR"                               </span>
 <span class="co">#&gt;                        [,3]                             </span>
 <span class="co">#&gt; Strategy               "tenkan &gt; low &amp; tenkan &gt; senkouB"</span>
@@ -364,8 +383,8 @@
 <span class="co">#&gt; Periods in market      155                              </span>
 <span class="co">#&gt; ---------------------  "----------"                     </span>
 <span class="co">#&gt; Direction              "short"                          </span>
-<span class="co">#&gt; Start                  2020-04-02                       </span>
-<span class="co">#&gt; End                    2020-09-29                       </span>
+<span class="co">#&gt; Start                  2020-04-01 23:00:00              </span>
+<span class="co">#&gt; End                    2020-09-28 23:00:00              </span>
 <span class="co">#&gt; Ticker                 "TKR"</span></code></pre></div>
 </div>
 </div>
@@ -404,22 +423,22 @@
 <p>The ‘y’ column can be switched between log and discrete returns. The date-time index corresponds to when the condition is met at the close for that period. The return is the single-period return achieved by transacting at the immediately following opening price until the next opening price. In this sense, the time periods do not strictly match, but are nevertheless correctly paired.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/mlgrid.html">mlgrid</a></span><span class="op">(</span><span class="va">cloud</span>, y <span class="op">=</span> <span class="st">"logret"</span>, dir <span class="op">=</span> <span class="st">"long"</span>, type <span class="op">=</span> <span class="st">"boolean"</span>, unique <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">[</span><span class="fl">100</span><span class="op">:</span><span class="fl">105</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>
-<span class="co">#&gt;                        y chikou_close chikou_high chikou_low</span>
-<span class="co">#&gt; 2020-08-25  0.0022497197            1           1          1</span>
-<span class="co">#&gt; 2020-08-26 -0.0014992507            1           1          1</span>
-<span class="co">#&gt; 2020-08-27 -0.0007504691            1           1          1</span>
-<span class="co">#&gt; 2020-08-28  0.0037467260            1           1          1</span>
-<span class="co">#&gt; 2020-08-30  0.0000000000            1           1          1</span>
-<span class="co">#&gt; 2020-08-31  0.0059657149            1           1          1</span></code></pre></div>
+<span class="co">#&gt;                                 y chikou_close chikou_high chikou_low</span>
+<span class="co">#&gt; 2020-08-24 23:00:00  0.0022497197            1           1          1</span>
+<span class="co">#&gt; 2020-08-25 23:00:00 -0.0014992507            1           1          1</span>
+<span class="co">#&gt; 2020-08-26 23:00:00 -0.0007504691            1           1          1</span>
+<span class="co">#&gt; 2020-08-27 23:00:00  0.0037467260            1           1          1</span>
+<span class="co">#&gt; 2020-08-29 23:00:00  0.0000000000            1           1          1</span>
+<span class="co">#&gt; 2020-08-30 23:00:00  0.0059657149            1           1          1</span></code></pre></div>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/mlgrid.html">mlgrid</a></span><span class="op">(</span><span class="va">cloud</span>, y <span class="op">=</span> <span class="st">"ret"</span>, dir <span class="op">=</span> <span class="st">"short"</span>, type <span class="op">=</span> <span class="st">"numeric"</span>, unique <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">[</span><span class="fl">100</span><span class="op">:</span><span class="fl">105</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>
-<span class="co">#&gt;                        y chikou_close chikou_high chikou_low</span>
-<span class="co">#&gt; 2020-08-25 -0.0022471910          5.5         4.8        6.2</span>
-<span class="co">#&gt; 2020-08-26  0.0015003751          3.8         3.2        5.9</span>
-<span class="co">#&gt; 2020-08-27  0.0007507508          4.7         3.4        6.1</span>
-<span class="co">#&gt; 2020-08-28 -0.0037397158          5.1         4.0        6.0</span>
-<span class="co">#&gt; 2020-08-30  0.0000000000          7.2         5.5        7.6</span>
-<span class="co">#&gt; 2020-08-31 -0.0059479554          7.7         7.0        7.9</span></code></pre></div>
+<span class="co">#&gt;                                 y chikou_close chikou_high chikou_low</span>
+<span class="co">#&gt; 2020-08-24 23:00:00 -0.0022471910          5.5         4.8        6.2</span>
+<span class="co">#&gt; 2020-08-25 23:00:00  0.0015003751          3.8         3.2        5.9</span>
+<span class="co">#&gt; 2020-08-26 23:00:00  0.0007507508          4.7         3.4        6.1</span>
+<span class="co">#&gt; 2020-08-27 23:00:00 -0.0037397158          5.1         4.0        6.0</span>
+<span class="co">#&gt; 2020-08-29 23:00:00  0.0000000000          7.2         5.5        7.6</span>
+<span class="co">#&gt; 2020-08-30 23:00:00 -0.0059479554          7.7         7.0        7.9</span></code></pre></div>
 <p>Note: only valid combinations are included within the grid. This means excluding any combination involving ‘open’ as it is in effect a lagged indicator and not contemporaneous. The following trivial or highly-collinear pairs are also excluded: {high, close} ,{low, close}, {low, high}, {cloudTop, Senkou A}, {cloudBase, senkou A}, {cloudTop, senkouB}, {cloudBase, senkouB}, {cloudBase, cloudTop}.</p>
 </div>
 </div>

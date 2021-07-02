@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
       </span>
     </div>
 
@@ -61,10 +61,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/reference.html">ichimoku: Reference</a>
+      <a href="articles/reference.html">ichimoku: Cloud Charts - The Reference Manual</a>
     </li>
     <li>
-      <a href="articles/strategies.html">ichimoku: Strategies</a>
+      <a href="articles/strategies.html">ichimoku: Beyond Visualization - Quantitative Strategies</a>
     </li>
   </ul>
 </li>
@@ -116,20 +116,14 @@
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://shikokuchuo.net/ichimoku/">ichimoku</a></span><span class="op">)</span>
 <span class="va">TKR</span> <span class="op">&lt;-</span> <span class="va">sample_ohlc_data</span></code></pre></div>
-<div id="visualization" class="section level4">
-<h4 class="hasAnchor">
-<a href="#visualization" class="anchor"></a>Visualization</h4>
 <p>Simply <code><a href="reference/ichimoku.html">ichimoku()</a></code> and <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code>:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">cloud</span>, window <span class="op">=</span> <span class="st">"2020-04/"</span><span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/README-plot-1.png" width="672"></p>
-</div>
-<div id="strategies" class="section level4">
-<h4 class="hasAnchor">
-<a href="#strategies" class="anchor"></a>Strategies</h4>
-<p><code><a href="reference/autostrat.html">autostrat()</a></code> to automatically generate top-performing strategies:</p>
+<code class="sourceCode R"><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">cloud</span>, window <span class="op">=</span> <span class="st">"2020-04/"</span><span class="op">)</span></code></pre></div>
+<p><img src="reference/figures/README-plot-1.png"></p>
+<p><code><a href="reference/autostrat.html">autostrat()</a></code> to automatically evaluate and rank top-performing strategies:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/autostrat.html">autostrat</a></span><span class="op">(</span><span class="va">cloud</span>, n <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="co">#&gt;                        [,1]               [,2]                [,3]             </span>
 <span class="co">#&gt; Strategy               "senkouB &gt; tenkan" "cloudBase &gt; kijun" "senkouB &gt; kijun"</span>
@@ -150,6 +144,29 @@
 <span class="co">#&gt; Start                  2020-04-02         2020-04-02          2020-04-02       </span>
 <span class="co">#&gt; End                    2020-09-29         2020-09-29          2020-09-29       </span>
 <span class="co">#&gt; Ticker                 "TKR"              "TKR"               "TKR"</span></code></pre></div>
+</div>
+<div id="principal-ichimoku-functions" class="section level2">
+<h2 class="hasAnchor">
+<a href="#principal-ichimoku-functions" class="anchor"></a>Principal ichimoku functions</h2>
+<div id="data--visualization" class="section level4">
+<h4 class="hasAnchor">
+<a href="#data--visualization" class="anchor"></a>Data &amp; Visualization</h4>
+<ul>
+<li><p><a href="https://shikokuchuo.net/ichimoku/reference/ichimoku.html"><code>ichimoku()</code></a> - to create an ichimoku object from price data.</p></li>
+<li><p><a href="https://shikokuchuo.net/ichimoku/reference/plot.ichimoku.html"><code>plot()</code></a> - to plot a cloud chart from an ichimoku object.</p></li>
+<li><p><a href="https://shikokuchuo.net/ichimoku/reference/iplot.html"><code>iplot()</code></a> - to plot an interactive cloud chart from an ichimoku object.</p></li>
+<li><p><a href="https://shikokuchuo.net/ichimoku/reference/rplot.html"><code>rplot()</code></a> - to plot a customisable reactive cloud chart from an ichimoku object.</p></li>
+</ul>
+</div>
+<div id="strategies--ml" class="section level4">
+<h4 class="hasAnchor">
+<a href="#strategies--ml" class="anchor"></a>Strategies &amp; ML</h4>
+<ul>
+<li><p><a href="https://shikokuchuo.net/ichimoku/reference/strat.html"><code>strat()</code></a> - to augment an ichimoku object with a strategy.</p></li>
+<li><p><a href="https://shikokuchuo.net/ichimoku/reference/stratcombine.html"><code>stratcombine()</code></a> - to combine and create more complex strategies.</p></li>
+<li><p><a href="https://shikokuchuo.net/ichimoku/reference/autostrat.html"><code>autostrat()</code></a> - to automatically evaluate and rank top-performing strategies.</p></li>
+<li><p><a href="https://shikokuchuo.net/ichimoku/reference/mlgrid.html"><code>mlgrid()</code></a> - to generate a numeric representation of the relationship between ichimoku cloud chart elements.</p></li>
+</ul>
 </div>
 </div>
 <div id="reference" class="section level2">

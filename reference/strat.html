@@ -40,8 +40,8 @@
 
 
 <meta property="og:title" content="Create Ichimoku Strategies — strat" />
-<meta property="og:description" content="Create custom ichimoku cloud strategies using the rule condition 'long (or
-    short) while c1 &amp;gt; c2'." />
+<meta property="og:description" content="Create custom ichimoku cloud strategies using the indicator condition 'long
+    (or short) while c1 &amp;gt; c2'." />
 
 
 
@@ -73,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
       </span>
     </div>
 
@@ -96,10 +96,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/reference.html">ichimoku: Reference</a>
+      <a href="../articles/reference.html">ichimoku: Cloud Charts - The Reference Manual</a>
     </li>
     <li>
-      <a href="../articles/strategies.html">ichimoku: Strategies</a>
+      <a href="../articles/strategies.html">ichimoku: Beyond Visualization - Quantitative Strategies</a>
     </li>
   </ul>
 </li>
@@ -133,8 +133,8 @@
     </div>
 
     <div class="ref-description">
-    <p>Create custom ichimoku cloud strategies using the rule condition 'long (or
-    short) while c1 &gt; c2'.</p>
+    <p>Create custom ichimoku cloud strategies using the indicator condition 'long
+    (or short) while c1 &gt; c2'.</p>
     </div>
 
     <pre class="usage"><span class='fu'>strat</span><span class='op'>(</span>
@@ -155,15 +155,15 @@
     </tr>
     <tr>
       <th>c1</th>
-      <td><p>column name specified as a string, with a default of 'close'.</p></td>
+      <td><p>[default 'close'] column name specified as a string.</p></td>
     </tr>
     <tr>
       <th>c2</th>
-      <td><p>column name specified as a string, with a default of 'tenkan'.</p></td>
+      <td><p>[default 'tenkan'] column name specified as a string.</p></td>
     </tr>
     <tr>
       <th>dir</th>
-      <td><p>trade direction either 'long' or 'short' with a default of 'long'.</p></td>
+      <td><p>[default 'long'] trade direction, either 'long' or 'short'.</p></td>
     </tr>
     </table>
 
@@ -178,14 +178,14 @@
     happen at the 'open'.</p>
 <p>The original ichimoku object 'x' is augmented with the following
     additional columns used to calculate the strategy:</p>
-<p>'cond', a boolean vector if the rule condition is met, 'posn', a boolean
-    vector indicating if a position is held, and 'txn', a vector representing
-    the transactions to implement the position.</p>
+<p>'cond', a boolean vector if the indicator condition is met, 'posn', a
+    boolean vector indicating if a position is held, and 'txn', a vector
+    representing the transactions to implement the position.</p>
 <p>logret' is a column of log returns, 'slogret' is a column of log returns
     for the strategy.</p>
 <p>ret' is a column of discrete returns, and 'sret' is a column of discrete
     returns for the strategy.</p>
-<p>The stategy summary is saved as an object attribute and may be accessed
+<p>The strategy summary is saved as an object attribute and may be accessed
     via the summary() function.</p>
 <p>The periods in which the strategy results in a position is shaded by
     default on the ichimoku cloud chart. To turn off this behaviour, pass the
@@ -201,25 +201,25 @@
     <pre class="examples"><div class='input'><span class='va'>cloud</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ichimoku.html'>ichimoku</a></span><span class='op'>(</span><span class='va'>sample_ohlc_data</span>, ticker <span class='op'>=</span> <span class='st'>"TKR"</span><span class='op'>)</span>
 <span class='va'>strat</span> <span class='op'>&lt;-</span> <span class='fu'>strat</span><span class='op'>(</span><span class='va'>cloud</span>, c1 <span class='op'>=</span> <span class='st'>"close"</span>, c2 <span class='op'>=</span> <span class='st'>"tenkan"</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>strat</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                        [,1]            
-#&gt; Strategy               "close &gt; tenkan"
-#&gt; ---------------------  "----------"    
-#&gt; Strategy cuml return % 5.01            
-#&gt; Per period mean ret %  0.0218          
-#&gt; Periods in market      119             
-#&gt; Total trades           18              
-#&gt; Average trade length   6.61            
-#&gt; Trade success %        27.78           
-#&gt; Worst trade ret %      -2.54           
-#&gt; ---------------------  "----------"    
-#&gt; Benchmark cuml ret %   3.38            
-#&gt; Per period mean ret %  0.0148          
-#&gt; Periods in market      224             
-#&gt; ---------------------  "----------"    
-#&gt; Direction              "long"          
-#&gt; Start                  2020-01-13      
-#&gt; End                    2020-09-29      
-#&gt; Ticker                 "TKR"           </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>strat</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;                        [,1]               
+#&gt; Strategy               "close &gt; tenkan"   
+#&gt; ---------------------  "----------"       
+#&gt; Strategy cuml return % 5.01               
+#&gt; Per period mean ret %  0.0218             
+#&gt; Periods in market      119                
+#&gt; Total trades           18                 
+#&gt; Average trade length   6.61               
+#&gt; Trade success %        27.78              
+#&gt; Worst trade ret %      -2.54              
+#&gt; ---------------------  "----------"       
+#&gt; Benchmark cuml ret %   3.38               
+#&gt; Per period mean ret %  0.0148             
+#&gt; Periods in market      224                
+#&gt; ---------------------  "----------"       
+#&gt; Direction              "long"             
+#&gt; Start                  2020-01-13         
+#&gt; End                    2020-09-28 23:00:00
+#&gt; Ticker                 "TKR"              </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>strat</span><span class='op'>)</span>
 </div><div class='img'><img src='strat-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>

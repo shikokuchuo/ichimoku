@@ -10,7 +10,13 @@
     <loc>https://shikokuchuo.net/ichimoku/reference/autostrat.html</loc>
   </url>
   <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/duplicate.html</loc>
+    <loc>https://shikokuchuo.net/ichimoku/reference/df_trim.html</loc>
+  </url>
+  <url>
+    <loc>https://shikokuchuo.net/ichimoku/reference/gplot.html</loc>
+  </url>
+  <url>
+    <loc>https://shikokuchuo.net/ichimoku/reference/grid_dup.html</loc>
   </url>
   <url>
     <loc>https://shikokuchuo.net/ichimoku/reference/hasStrat.html</loc>
@@ -28,6 +34,9 @@
     <loc>https://shikokuchuo.net/ichimoku/reference/is.ichimoku.html</loc>
   </url>
   <url>
+    <loc>https://shikokuchuo.net/ichimoku/reference/look.html</loc>
+  </url>
+  <url>
     <loc>https://shikokuchuo.net/ichimoku/reference/maxOver.html</loc>
   </url>
   <url>
@@ -41,6 +50,9 @@
   </url>
   <url>
     <loc>https://shikokuchuo.net/ichimoku/reference/print.ichimoku.html</loc>
+  </url>
+  <url>
+    <loc>https://shikokuchuo.net/ichimoku/reference/rplot.html</loc>
   </url>
   <url>
     <loc>https://shikokuchuo.net/ichimoku/reference/sample_ohlc_data.html</loc>
@@ -58,13 +70,13 @@
     <loc>https://shikokuchuo.net/ichimoku/reference/tradingDays.html</loc>
   </url>
   <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/trimdf.html</loc>
-  </url>
-  <url>
     <loc>https://shikokuchuo.net/ichimoku/reference/writeMatrix.html</loc>
   </url>
   <url>
     <loc>https://shikokuchuo.net/ichimoku/reference/writeStrat.html</loc>
+  </url>
+  <url>
+    <loc>https://shikokuchuo.net/ichimoku/reference/xts_df.html</loc>
   </url>
   <url>
     <loc>https://shikokuchuo.net/ichimoku/articles/reference.html</loc>
