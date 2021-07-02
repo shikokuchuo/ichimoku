@@ -16,7 +16,7 @@ An implementation of 'Ichimoku Kinko Hyo', also commonly known as 'cloud
 }
 \section{Principal ichimoku functions}{
 
-Visualization layer
+Data & Visualization
 \itemize{
     \item{\code{\link{ichimoku}}} {to create an ichimoku object from price
     data.}
@@ -24,17 +24,16 @@ Visualization layer
     ichimoku object.}
     \item{\code{\link{iplot}}} {to plot an interactive cloud chart from an
     ichimoku object.}
+    \item{\code{\link{rplot}}} {to plot a customisable reactive cloud chart
+    from an ichimoku object.}
 }
-Strategy layer
+Strategies & ML
 \itemize{
     \item{\code{\link{strat}}} {to augment an ichimoku object with a strategy.}
     \item{\code{\link{stratcombine}}} {to combine and create more complex
     strategies.}
-    \item{\code{\link{autostrat}}} {to automatically generate top-performing
-    strategies.}
-}
-ML layer
-\itemize{
+    \item{\code{\link{autostrat}}} {to automatically evaluate and rank
+    top-performing strategies.}
     \item{\code{\link{mlgrid}}} {to generate a numeric representation of the
     relationship between ichimoku cloud chart elements.}
 }

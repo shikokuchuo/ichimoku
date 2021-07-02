@@ -1,24 +1,39 @@
+# ichimoku 0.2.2
+
+* New features:
+  * Interactive customisable ichimoku cloud plots using R Shiny with rplot().
+  * rplot() introduces an intuitive cursor tooltip allowing data to be read easily from the chart.
+  * look() function for easily viewing informational attributes of objects created by the package, and for extracting ichimoku objects from lists returned by autostrat().
+
+* Updates:
+  * Chikou span now the top layer in plots so visible over the candlesticks.
+  * Argument 'gaps' for the plot functions is deprecated but remains available through the gplot() function for the time being.
+  * Performance enhancements for main ichimoku and plot functions.
+  * Optimised data validation / error handling code in various functions.
+  * Renamed certain helper functions for consistency.
+  * Documentation and README refresh.
+
 # ichimoku 0.2.0
 
-ichimoku now has the following capabilities:
-* visualization layer: compute and plot ichimoku cloud charts.
-* strategy layer: tools for creating and backtesting ichimoku strategies.
-* ML layer: tools for further developing quantitative ichimoku solutions.
+* ichimoku now has the following capabilities:
+  * Visualization layer: compute and plot ichimoku cloud charts.
+  * Strategy layer: tools for creating and backtesting ichimoku strategies.
+  * ML layer: tools for further developing quantitative ichimoku solutions.
 
-New features:
-* Create and backtest ichimoku strategies.
-* New all-greyscale 'mono' theme.
-* tradingDays() function to allow customisation of holidays when calculating the future cloud.
+* New features:
+  * Create and backtest ichimoku strategies.
+  * New all-greyscale 'mono' theme.
+  * tradingDays() function to allow customisation of holidays when calculating the future cloud.
 
-Updates:
-* Ichimoku object specification updated - this is breaking but can be fixed by re-running 'ichimoku()' on previous objects.
-* Ichimoku objects now inherit 'xts' and 'zoo' classes for better integration with other econometrics and analytics packages.
-* Package now depends on Rcpp and requires compilation - added more performant rolling window functions minOver() and maxOver() using customised C++ algorithm.
-* 'RcppRoll' and 'timeDate' package dependencies retired.
-* 'sample_ohlc_data' updated to better demonstrate new features.
+* Updates:
+  * Ichimoku object specification updated - this is breaking but can be fixed by re-running 'ichimoku()' on previous objects.
+  * Ichimoku objects now inherit 'xts' and 'zoo' classes for better integration with other econometrics and analytics packages.
+  * Package now depends on Rcpp and requires compilation - added more performant rolling window functions minOver() and maxOver() using customised C++ algorithm.
+  * 'RcppRoll' and 'timeDate' package dependencies retired.
+  * 'sample_ohlc_data' updated to better demonstrate new features.
 
-Other:
-* Updated with CRAN release status.
+* Other:
+  * Updated with CRAN release status.
 
 # ichimoku 0.1.2
 

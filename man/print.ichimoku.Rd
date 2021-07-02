@@ -9,10 +9,10 @@
 \arguments{
 \item{x}{an object of class 'ichimoku'.}
 
-\item{plot}{defaults to TRUE. Set to FALSE to prevent automatic plotting of
+\item{plot}{[default TRUE] set to FALSE to prevent automatic plotting of
 the ichimoku cloud chart.}
 
-\item{...}{other arguments to be passed along.}
+\item{...}{additional arguments to be passed along.}
 }
 \value{
 The ichimoku object 'x' passed as parameter.

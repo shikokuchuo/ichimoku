@@ -10,7 +10,7 @@
 #'     structure of financial securities to be determined 'at-a-glance'.
 #'
 #' @section Principal ichimoku functions:
-#' Visualization layer
+#' Data & Visualization
 #' \itemize{
 #'     \item{\code{\link{ichimoku}}} {to create an ichimoku object from price
 #'     data.}
@@ -18,17 +18,16 @@
 #'     ichimoku object.}
 #'     \item{\code{\link{iplot}}} {to plot an interactive cloud chart from an
 #'     ichimoku object.}
+#'     \item{\code{\link{rplot}}} {to plot a customisable reactive cloud chart
+#'     from an ichimoku object.}
 #' }
-#' Strategy layer
+#' Strategies & ML
 #' \itemize{
 #'     \item{\code{\link{strat}}} {to augment an ichimoku object with a strategy.}
 #'     \item{\code{\link{stratcombine}}} {to combine and create more complex
 #'     strategies.}
-#'     \item{\code{\link{autostrat}}} {to automatically generate top-performing
-#'     strategies.}
-#' }
-#' ML layer
-#' \itemize{
+#'     \item{\code{\link{autostrat}}} {to automatically evaluate and rank
+#'     top-performing strategies.}
 #'     \item{\code{\link{mlgrid}}} {to generate a numeric representation of the
 #'     relationship between ichimoku cloud chart elements.}
 #' }
@@ -41,15 +40,16 @@
 #'     \url{https://github.com/shikokuchuo/ichimoku/}
 #'
 #' @useDynLib ichimoku, .registration = TRUE
-#' @importFrom ggplot2 ggplot aes geom_ribbon geom_line geom_linerange geom_rect
+#' @importFrom ggplot2 ggplot aes geom_ribbon geom_line geom_segment geom_rect
 #'     scale_color_manual scale_fill_manual guides scale_x_datetime
 #'     scale_x_continuous scale_y_continuous labs theme_light theme element_rect
 #'     element_line element_text
-#' @importFrom Rcpp sourceCpp
 #' @importFrom rlang .data
+#' @importFrom Rcpp sourceCpp
 #' @importFrom xts xts
 #' @importFrom zoo index coredata
 #'
 #' @docType package
 #' @name ichimoku-package
 NULL
+

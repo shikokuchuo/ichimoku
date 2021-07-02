@@ -19,23 +19,23 @@ ichimoku(x, ...)
 
 \method{ichimoku}{data.frame}(x, ticker, periods = c(9, 26, 52), ...)
 
-\method{ichimoku}{default}(x = NULL, ticker, periods = c(9, 26, 52), ...)
+\method{ichimoku}{default}(x, ticker, periods = c(9, 26, 52), ...)
 }
 \arguments{
 \item{x}{a data.frame or other compatible object, which includes xts,
 data.table, tibble, and matrix.}
 
-\item{...}{other arguments to be passed along. For instance, 'holidays' may
-be passed to the \code{\link{tradingDays}} function, used by ichimoku when
-calculating the future cloud.}
+\item{...}{additional arguments to be passed along. For instance, 'holidays'
+may be passed to the \code{\link{tradingDays}} function, used by ichimoku
+when calculating the future cloud.}
 
 \item{ticker}{(optional) specify a ticker to identify the instrument,
 otherwise this is set to the name of the input object 'x'.}
 
-\item{periods}{a vector defining the length of periods used for the cloud,
-with a default of c(9, 26, 52). This parameter shoud not normally be
-changed as using other values would be invalid in the context of
-traditional Ichimoku analysis.}
+\item{periods}{[default c(9, 26, 52)] a vector defining the length of periods
+used for the cloud. This parameter shoud not normally be changed as using
+other values would be invalid in the context of traditional Ichimoku
+analysis.}
 }
 \value{
 An ichimoku object is returned with S3 classes of 'ichimoku', 'xts'

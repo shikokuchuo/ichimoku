@@ -9,11 +9,11 @@ autostrat(x, n = 8, dir = c("long", "short"), level = 1)
 \arguments{
 \item{x}{an ichimoku object.}
 
-\item{n}{defaults to 8. Select top n number of strategies to return.}
+\item{n}{[default 8] select top n number of strategies to return.}
 
-\item{dir}{trade direction either 'long' or 'short' with a default of 'long'.}
+\item{dir}{[default 'long'] trade direction, either 'long' or 'short'.}
 
-\item{level}{defaults to 1. Set to 2 to also return combined strategies.}
+\item{level}{[default 1] set to 2 to also return combined strategies.}
 }
 \value{
 A list of 'n' ichimoku objects containing strategies. The
@@ -23,17 +23,18 @@ A list of 'n' ichimoku objects containing strategies. The
 }
 \description{
 Generate a list of the top performing ichimoku cloud strategies based on
-    rule conditions of the form 'c1 > c2' or level 2 strategies based on
-    combined rule conditions of the form 'c1 > c2 & c3 > c4'.
+    indicator conditions of the form 'c1 > c2' or level 2 strategies based on
+    combined indicator conditions of the form 'c1 > c2 & c3 > c4'.
 }
 \details{
 Ichimoku objects for each strategy are returned as a list. The
     cumulative log returns for all strategies as well as the summaries for
-    the 'n' top strategies are saved as attributes to the list and may be
-    viewed by using attributes() on the returned list.
+    the 'n' top strategies are saved as attributes to the list. This
+    information may be viewed by using look() on the returned list.
 
     Each individual ichimoku object may be accessed via its position in the
-    list e.g. [[1]] for the 1st item.
+    list, e.g. [[1]] for the 1st item, or by using \code{\link{look}}
+    specifying the parameter 'which'.
 }
 \section{Further Details}{
 
@@ -45,8 +46,8 @@ Ichimoku objects for each strategy are returned as a list. The
 cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 
 stratlist <- autostrat(cloud, n = 3)
-attributes(stratlist)
-summary(stratlist[[1]])
+look(stratlist)
+summary(look(stratlist, which = 1))
 
 autostrat(cloud, n = 1, dir = "short", level = 2)
 

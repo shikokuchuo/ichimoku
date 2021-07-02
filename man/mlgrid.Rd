@@ -15,17 +15,17 @@ mlgrid(
 \arguments{
 \item{x}{an ichimoku object.}
 
-\item{y}{choose target variable 'logret' (log returns) or 'ret' (discrete
-returns), with a default of 'logret'.}
+\item{y}{[default 'logret'] choose target variable 'logret' (log returns) or
+'ret' (discrete returns).}
 
-\item{dir}{trade direction either 'long' or 'short' with a default of 'long'.}
+\item{dir}{[default 'long'] trade direction, either 'long' or 'short'.}
 
-\item{type}{either 'boolean' or 'numeric' with a default of 'boolean'.
-'boolean' creates a grid of dummy variables for ichimoku indicator
-conditions of the form 1 if c1 > c2, 0 otherwise. 'numeric' creates a
-grid of the numeric difference c1 - c2.}
+\item{type}{[default 'boolean'] either 'boolean' or 'numeric'. 'boolean'
+creates a grid of dummy variables for ichimoku indicator conditions of
+the form 1 if c1 > c2, 0 otherwise. 'numeric' creates a grid of the
+numeric difference c1 - c2.}
 
-\item{unique}{defaults to TRUE to return only unique combinations of c1 and c2.
+\item{unique}{[default TRUE] to return only unique combinations of c1 and c2.
 Set to FALSE to return both c1 > c2 and c2 > c1.}
 }
 \value{
@@ -33,25 +33,25 @@ A data.frame in a 'tidy' format with one observation per row and one
     feature per column with the target 'y' as the first column.
 
     The 'y' parameter and trade direction are set as atrributes. To view these,
-    use the attributes() function on the returned object.
+    use the \code{\link{look}} function on the returned object.
 }
 \description{
-Create a grid of ichimoku rule conditions and next period returns. The grid
-    facilitates comparing strategy returns or as a basis for further
+Create a grid of ichimoku indicator conditions and next period returns. The
+    grid facilitates comparing strategy returns or as a basis for further
     processing in machine learning applications. The purpose of this function
     is to translate the visual representation of the relationship between
     cloud chart elements into a numerical format for further analysis.
 }
 \details{
-The date-time index corresponds to when the condition is met at the
-    close for that period. The return is the single-period return achieved by
-    transacting at the immediately following opening price until the next
-    opening price.
+The date-time index corresponds to when the indicator condition is
+    met at the close for that period. The return is the single-period return
+    achieved by transacting at the immediately following opening price until
+    the next opening price.
 
     Only valid combinations are included. This excludes any combination
     involving 'open' as it is in effect a lagged indicator and not
     contemporaneous. The following trivial or highly-collinear pairs are also
-    excluded: (high, close) ,(low, close), (low, high), (cloudTop, Senkou A),
+    excluded: (high, close), (low, close), (low, high), (cloudTop, Senkou A),
     (cloudBase, senkou A), (cloudTop, senkouB), (cloudBase, senkouB),
     (cloudBase, cloudTop).
 
@@ -67,6 +67,6 @@ The date-time index corresponds to when the condition is met at the
 \examples{
 cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 grid <- mlgrid(cloud, y = "ret", dir = "short", type = "numeric")
-attributes(grid)
+look(grid)
 
 }

@@ -16,18 +16,18 @@ strat(
 \arguments{
 \item{x}{an ichimoku object.}
 
-\item{c1}{column name specified as a string, with a default of 'close'.}
+\item{c1}{[default 'close'] column name specified as a string.}
 
-\item{c2}{column name specified as a string, with a default of 'tenkan'.}
+\item{c2}{[default 'tenkan'] column name specified as a string.}
 
-\item{dir}{trade direction either 'long' or 'short' with a default of 'long'.}
+\item{dir}{[default 'long'] trade direction, either 'long' or 'short'.}
 }
 \value{
 An ichimoku object augmented with the strategy.
 }
 \description{
-Create custom ichimoku cloud strategies using the rule condition 'long (or
-    short) while c1 > c2'.
+Create custom ichimoku cloud strategies using the indicator condition 'long
+    (or short) while c1 > c2'.
 }
 \details{
 The following assumption applies to all strategies: confirmation of
@@ -38,9 +38,9 @@ The following assumption applies to all strategies: confirmation of
     The original ichimoku object 'x' is augmented with the following
     additional columns used to calculate the strategy:
 
-    'cond', a boolean vector if the rule condition is met, 'posn', a boolean
-    vector indicating if a position is held, and 'txn', a vector representing
-    the transactions to implement the position.
+    'cond', a boolean vector if the indicator condition is met, 'posn', a
+    boolean vector indicating if a position is held, and 'txn', a vector
+    representing the transactions to implement the position.
 
     logret' is a column of log returns, 'slogret' is a column of log returns
     for the strategy.
@@ -48,7 +48,7 @@ The following assumption applies to all strategies: confirmation of
     ret' is a column of discrete returns, and 'sret' is a column of discrete
     returns for the strategy.
 
-    The stategy summary is saved as an object attribute and may be accessed
+    The strategy summary is saved as an object attribute and may be accessed
     via the summary() function.
 
     The periods in which the strategy results in a position is shaded by

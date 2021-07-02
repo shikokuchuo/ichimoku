@@ -1,10 +1,10 @@
 ---
-title: "ichimoku: Reference"
+title: "ichimoku: Cloud Charts - The Reference Manual"
 output:
   rmarkdown::html_vignette:
     toc: true
 vignette: >
-  %\VignetteIndexEntry{ichimoku: Reference}
+  %\VignetteIndexEntry{ichimoku: Cloud Charts - The Reference Manual}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -147,7 +147,7 @@ ichimoku(TKR, holidays = timeDate::holidayNYSE())
 
 ### plot()
 
-ichimoku offers the choice of 2 visualization systems: static (default) and interactive.
+ichimoku offers the choice of 3 visualization systems: static (default) and interactive (with plotly) and reactive (with Shiny).
 
 #### 1. Static Plots
 
@@ -169,7 +169,7 @@ plot + ggplot2::theme_classic()
 
 #### 2. Interactive Plots
 
-To use fully-interactive charts, the 'plotly' package must first be installed. If plotly is not available, ichimoku will fall back to a static chart and issue an informational message. The 'plotly' package will not be automatically installed. In this way, interactive charting remains an optional part of the package as it is recognised that plotly may not always be available in all environments.
+Interactive charts require the 'plotly' package. If plotly is not available, ichimoku will issue an informational message, but not install the package automatically as it is recognised that plotly may not be available in all environments.
 
 To produce an interactive plot, use ichimoku's `iplot()` function. The interactive plot will be almost identical in format to the equivalent static plot.
 
@@ -184,12 +184,25 @@ In a live analysis environment, as opposed to creating charts for reports, it is
 - select an area of interest to zoom into
 - double click anywhere to quickly reset
 
+#### 3. Reactive Plots
+
+Reactive plots require the 'Shiny' package to be installed. If shiny is not available, ichimoku will issue an informational message, but not install the package automatically as it is recognised that shiny may not be available in all environments.
+
+Simply use `rplot()` on an ichimoku object to launch an R Shiny app, which will allow full further customisation of the chart interactively, incluing selecting the theme and time window etc.
+
+```{r rplotnotrun, eval = FALSE}
+# For interactive charting:
+rplot(cloud)
+```
+
+The key feature of `rplot()` is an intuitive cursor tooltip which allows ready access to the data when hovering over the chart.
+
 #### Plot customisation
 
 A plot with default parameters is shown above, but the plot functions contain built-in customisations to allow for most envisioned use cases. The example below demonstrates the arguments that can be supplied to customise the plot.
 
 ```{r plot2}
-plot(cloud, window = "2020-05-01/2020-11-01", ticker = "TKR Co.", theme = "dark", gaps = TRUE)
+plot(cloud, window = "2020-05-01/2020-11-01", ticker = "TKR Co.", theme = "dark")
 ```
 
 The same arguments are used across `plot()` and `iplot()` functions:
@@ -197,7 +210,6 @@ The same arguments are used across `plot()` and `iplot()` functions:
 - **window**: indispensable in a proper workflow. `ichimoku()` is run on a larger dataset than that of interest and then at the visualization stage, the data can be subset to the window of interest. Supply as an ISO-8601 compatible range string in the format used for 'xts' objects, for example the range '2020-02-15/2020-08-15' or '2020-02-15/' (from 15 Feb 2020) or '/2020-08' (until end-Aug 2020) or simply '2020' to select all of the year 2020
 - **ticker**: used to supply a different ticker to that stored in the ichimoku object, or alternatively a longer-form name or other text that will appear in the chart heading
 - **theme**: [default 'original'] the following themes are also available: 'dark', 'solarized' and 'mono'
-- **gaps**: [default FALSE] financial charts are conventionally shown without weekend or holiday gaps for non-trading days. Set to TRUE to use a true continuous time scale which does show these gaps
 
 `plot()` has the following additional argument, currently unavailable for interactive charting:
 
@@ -209,7 +221,7 @@ The same arguments are used across `plot()` and `iplot()` functions:
 
 `ichimoku()` is a generic function that provides S3 methods for objects of class 'xts', 'data.frame' and 'matrix'. Other popular formats such as 'data.table' and 'tibble' that also inherit the class 'data.frame' should also work with `ichimoku()`.
 
-ichimoku has been designed to be fully pipeable and interfaces well with other R packages that return financial data. As an example, the `getSymbols()` function from the 'quantmod' package exhibits non-standard R behaviour which assigns the data into an object but returns a text string containing the name of the object. ichimoku handles such behaviour automatically such that a chart can be created without the need to save intermediate objects:
+ichimoku has been designed to be fully pipeable and interfaces well with other R packages that return financial data. As an example, the `getSymbols()` function from the 'quantmod' package currently exhibit non-standard R behaviour which assigns the data into an object but returns a text string containing the name of the object. ichimoku is able to handle this automatically such that a chart can be created without the need to save intermediate objects:
 
 ```{r pipe, eval = FALSE}
 # Using R 4.1's new pipe operator:
@@ -228,13 +240,13 @@ After importing data, please check that the date-time index is in an unambiguous
 
 ichimoku performs the following data validation steps before attempting to compute the cloud values. Failure at any step causes `ichimoku()` to halt.
 
-1. Searches the row names of the data object for a time index that is in, or can readily be convertible into, POSIXct format. Note: 'xts' objects are always indexed by a valid time-stamp and ichimoku handles this automatically
+1. Searches column names of the data object for the first column containing 'index', 'date' or 'time' (not case-dependent). If such a column is found but the data is not convertible into POSIXct format, an error is returned
 
-  + *If not found:* searches in column names containing 'index', 'date' or 'time' (not case-dependent) for a time index that is in, or can readily be convertible into, POSIXct format
+  + *If not found:* searches in row names of the data object if present. If the row names do not contain data that is convertible into POSIXct format, an error is returned. Note: 'xts' objects are always indexed by a valid time-stamp and ichimoku handles this automatically
 
 2. Searches for HLC price data in columns with names containing 'high', 'low' and 'close' (not case-dependent) respectively
 
-4. Checks that the length of the medium cloud period is less than that of the dataset. If this is not the case then none of the cloud lines can be calculated
+4. Checks that the dataset is longer than the medium cloud period. If this is not the case then none of the cloud lines can be calculated
 
 3. Searches for opening price data in a column with name containing 'open' (not case-dependent)
 
@@ -242,13 +254,25 @@ ichimoku performs the following data validation steps before attempting to compu
 
 There may however still be other issues with the input data that prevent cloud values from being computed, not handled explicitly by `ichimoku()`. For example, if:
 
-- The date-time index is in a headerless column, or in a column where the column name does not contain "index", date", or "time" (not case-dependent). Please rename the column to "index" in such cases
+- The date-time index is in a headerless column, or in a column where the name does not contain 'index', 'date' or 'time' (not case-dependent). Please rename the column to 'index' in such cases
 
-- HLC price data is in headerless columns or in columns labelled, for example, "Op", Hi", "Lo", "Cl". Please rename the columns "open", "high", "low" and "close" in such cases
+- The correct date-time index is in the rownames, or index of an 'xts' object, but there are also columns that contains the word 'index', 'date' or 'time'. Please rename the columns that do not serve as the date-time index so that the correct date-time index can be detected
+
+- There is more than one column that contains the word 'index', 'date' or 'time'. Please either rename the columns that do not serve as the date-time index, or move the correct date-time column ahead of the other columns so that it is picked up first
+
+- HLC price data is contained in headerless columns or in columns labelled, for example, 'Op', 'Hi', 'Lo', 'Cl'. Please rename the columns 'open', 'high', 'low' and 'close' in such cases
 
 - Imported price data is stored as type 'character' rather than 'numeric'. Please convert the price data to 'numeric' in such cases
 
 - There are NA values within the price data. This will affect the algorithm calculating the cloud lines in the window immediately following such NA values. Please check the data and manually correct NA values before invoking `ichimoku()`
+
+### Changes since version 0.2
+
+- Argument 'gaps' to the plot functions is deprecated. As a convenience, the functionality has been moved to a 'gplot()' function which will remain in the package for the time being.
+
+- iplot() no longer falls back to a static plot when the 'plotly' package is not installed to ensure consistency of return types
+
+- Validation changes to ichimoku() mean it will now take a column named 'index', 'date' or 'time' in precedence to a row index.
 
 ### Changes since version 0.1
 
@@ -266,8 +290,8 @@ There may however still be other issues with the input data that prevent cloud v
 
 The dependency on other packages is designed to be minimised to the extent possible. ichimoku currently has the following package dependencies:
 
-- ggplot2 - the widely-used R graphics system for visualization
 - Rcpp  - allows the use of C++ code for fast rolling window calculations
+- ggplot2 - the widely-used R graphics system for visualization
 - rlang - R language requirement arising from the use of 'ggplot2'
 - xts - ichimoku shares the 'xts' format for time series
 - zoo - 'xts' is built on top of 'zoo'
@@ -275,6 +299,8 @@ The dependency on other packages is designed to be minimised to the extent possi
 Optional:
 
 - plotly - for interactive visualization
+- shiny - for reactive customisable visualizations
+
 
 ## Further resources
 

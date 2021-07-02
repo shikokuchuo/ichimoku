@@ -1,4 +1,4 @@
-# Ichimoku: Visualization Layer ------------------------------------------------
+# Ichimoku - Visualization Layer -----------------------------------------------
 
 #' ichimoku
 #'
@@ -12,13 +12,13 @@
 #'     data.table, tibble, and matrix.
 #' @param ticker (optional) specify a ticker to identify the instrument,
 #'     otherwise this is set to the name of the input object 'x'.
-#' @param periods a vector defining the length of periods used for the cloud,
-#'     with a default of c(9, 26, 52). This parameter shoud not normally be
-#'     changed as using other values would be invalid in the context of
-#'     traditional Ichimoku analysis.
-#' @param ... other arguments to be passed along. For instance, 'holidays' may
-#'     be passed to the \code{\link{tradingDays}} function, used by ichimoku when
-#'     calculating the future cloud.
+#' @param periods [default c(9, 26, 52)] a vector defining the length of periods
+#'     used for the cloud. This parameter shoud not normally be changed as using
+#'     other values would be invalid in the context of traditional Ichimoku
+#'     analysis.
+#' @param ... additional arguments to be passed along. For instance, 'holidays'
+#'     may be passed to the \code{\link{tradingDays}} function, used by ichimoku
+#'     when calculating the future cloud.
 #'
 #' @return An ichimoku object is returned with S3 classes of 'ichimoku', 'xts'
 #'     and 'zoo'.
@@ -58,8 +58,8 @@ ichimoku <- function(x, ...) UseMethod("ichimoku")
 #'
 ichimoku.ichimoku <- function(x, ticker, periods = c(9, 26, 52), ...) {
   if(missing(ticker)) ticker <- attr(x, "ticker")
-  x <- as.data.frame(x)
-  x <- x[!is.na(x$close),]
+  x <- xts_df(x)
+  x <- x[!is.na(x$close), ]
   ichimoku.data.frame(x, ticker = ticker, periods = periods, ...)
 }
 
@@ -69,7 +69,7 @@ ichimoku.ichimoku <- function(x, ticker, periods = c(9, 26, 52), ...) {
 #'
 ichimoku.xts <- function(x, ticker, periods = c(9, 26, 52), ...) {
   if(missing(ticker)) ticker <- deparse(substitute(x))
-  x <- as.data.frame(x)
+  x <- xts_df(x)
   ichimoku.data.frame(x, ticker = ticker, periods = periods, ...)
 }
 
@@ -79,7 +79,9 @@ ichimoku.xts <- function(x, ticker, periods = c(9, 26, 52), ...) {
 #'
 ichimoku.matrix <- function(x, ticker, periods = c(9, 26, 52), ...) {
   if(missing(ticker)) ticker <- deparse(substitute(x))
-  x <- as.data.frame(x)
+  x <- structure(apply(x, 2, identity, simplify = FALSE),
+                 class = "data.frame",
+                 row.names = row.names(x))
   ichimoku.data.frame(x, ticker = ticker, periods = periods, ...)
 }
 
@@ -91,56 +93,49 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9, 26, 52), ...) {
 
   if(missing(ticker)) ticker <- deparse(substitute(x))
 
-  if(!is.null(rownames(x)) &&
-     !inherits(try(as.POSIXct(rownames(x)), silent = TRUE), "try-error")) {
-    index <- as.POSIXct(rownames(x))
-  } else if (length(grep("index|date|time", colnames(x), ignore.case = TRUE)) == 1) {
-    tryCatch(index <- as.POSIXct(x[ ,grep("index|date|time", colnames(x), ignore.case = TRUE)]),
-      error = function(e) {
-        stop("ichimoku: dataset index not convertible to a POSIXct date-time format",
-             call. = FALSE)
+  coli <- grep("index|date|time", colnames(x), ignore.case = TRUE, perl = TRUE)[1L]
+  if(!is.na(coli)) {
+    index <- tryCatch(as.POSIXct(x[, coli]), error = function(e) {
+      stop("Index/date/time column not convertible to a POSIXct date-time format",
+           call. = FALSE)
       })
+  } else if(!is.null(rownames(x))) {
+    index <- tryCatch(as.POSIXct(rownames(x)), error = function(e) {
+      stop("Valid date-time index not found within the dataset",
+           call. = FALSE)
+    })
   } else {
-    stop("ichimoku: unique date-time index not found within the dataset", call. = FALSE)
+    stop("Date-time index not found within the dataset", call. = FALSE)
   }
-
-  tryCatch(
-  stopifnot(length(grep("high", colnames(x), ignore.case = TRUE)) == 1,
-            length(grep("low", colnames(x), ignore.case = TRUE)) == 1,
-            length(grep("close", colnames(x), ignore.case = TRUE)) == 1),
-  error = function (e) {
-  stop("ichimoku: clearly-defined High/Low/Close columns not found within the dataset",
-       call. = FALSE)
-  })
-
-  tryPeriods <- tryCatch(
-    stopifnot(is.vector(periods, mode = "numeric"), length(periods) == 3, all(periods > 0)),
-    error = function(e) {
-      warning("ichimoku: specified cloud periods invalid - using defaults c(9, 26, 52) instead",
-              call. = FALSE)
-      c(9L, 26L, 52L)
-      })
-  if(!is.null(tryPeriods)) periods <- tryPeriods
+  colh <- grep("high", colnames(x), ignore.case = TRUE, perl = TRUE)[1L]
+  coll <- grep("low", colnames(x), ignore.case = TRUE, perl = TRUE)[1L]
+  colc <- grep("close", colnames(x), ignore.case = TRUE, perl = TRUE)[1L]
+  if(anyNA(c(colh, coll, colc))) {
+    stop("Clearly-defined high/low/close columns not found within the dataset", call. = FALSE)
+  }
+  if(!is.vector(periods, mode = "numeric") || !length(periods) == 3 || !all(periods > 0)) {
+    warning("Specified cloud periods invalid - using defaults c(9, 26, 52) instead",
+            call. = FALSE)
+    periods <- c(9L, 26L, 52L)
+  }
   p1 <- as.integer(periods[1L])
   p2 <- as.integer(periods[2L])
   p3 <- as.integer(periods[3L])
   xlen <- dim(x)[1L]
-  tryCatch(stopifnot(p2 < xlen), error = function(e) {
-    stop("ichimoku: medium cloud period '", p2, "' must be within the length of the dataset",
-         call. = FALSE)
-    })
+  if(p2 >= xlen) stop("Dataset must be longer than the medium cloud period '",
+                     p2, "'", call. = FALSE)
 
-  high <- x[ ,grep("high", colnames(x), ignore.case = TRUE)]
-  low <- x[ ,grep("low", colnames(x), ignore.case = TRUE)]
-  close <- x[ ,grep("close", colnames(x), ignore.case = TRUE)]
-  if(length(grep("open", colnames(x), ignore.case = TRUE)) == 1) {
-    open <- x[ ,grep("open", colnames(x), ignore.case = TRUE)]
+  high <- x[, colh]
+  low <- x[, coll]
+  close <- x[, colc]
+  colo <- grep("open", colnames(x), ignore.case = TRUE, perl = TRUE)[1L]
+  if(!is.na(colo)) {
+    open <- x[, colo]
   } else {
-    open <- c(NA, close[1:(xlen - 1)])
-    warning("ichimoku: opening prices not found - using previous closing prices as substitute",
+    warning("Opening prices not found - using previous closing prices as substitute",
             "\nThis affects the candles but not the calculation of the cloud", call. = FALSE)
+    open <- c(NA, close[1:(xlen - 1)])
   }
-
   cd <- rep(0, xlen)
   cd[open < close] <- 1
   cd[open > close] <- -1
@@ -152,13 +147,13 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9, 26, 52), ...) {
   cloudTop <- pmax.int(senkouA, senkouB)
   cloudBase <- pmin.int(senkouA, senkouB)
 
-  periodicity <- min(diff(index[1:4]))
-  extra <- seq.POSIXt(from = index[length(index)], by = periodicity, length.out = p2 + p2)[-1]
-  if(attr(periodicity, "units") == "days") {
-    extra <- extra[tradingDays(extra, ...)][1:p2]
-  } else {
-    extra <- extra[1:p2]
-  }
+  periodicity <- min(diff.POSIXt(index[1:4]))
+  switch(attr(periodicity, "units"),
+         days = {
+           extra <- seq.POSIXt(from = index[length(index)], by = periodicity, length.out = p2 + p2)[-1]
+           extra <- extra[tradingDays(extra, ...)][1:p2]
+           },
+         extra <- seq.POSIXt(from = index[length(index)], by = periodicity, length.out = p2 + 1)[-1])
 
   cloud <- xts(cbind(
     open = c(open, rep(NA, p2)),
@@ -174,26 +169,26 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9, 26, 52), ...) {
     cloudTop = c(rep(NA, p2), cloudTop),
     cloudBase = c(rep(NA, p2), cloudBase)
   ), order.by = c(index, extra))
-  attr(cloud, "periods") <- c(p1, p2, p3)
-  attr(cloud, "periodicity") <- as.numeric(periodicity, units = "secs")
-  attr(cloud, "ticker") <- ticker
 
-  structure(cloud, class = c("ichimoku", "xts", "zoo"))
+  structure(cloud,
+            class = c("ichimoku", "xts", "zoo"),
+            periods = c(p1, p2, p3),
+            periodicity = as.numeric(periodicity, units = "secs"),
+            ticker = ticker)
 }
 
 #' @rdname ichimoku
 #' @method ichimoku default
 #' @export
 #'
-ichimoku.default <- function(x = NULL, ticker, periods = c(9, 26, 52), ...) {
-  tryExists <- try(exists(x), silent = TRUE)
-  if(inherits(tryExists, "try-error")) {
-    message("ichimoku: cannot create an ichimoku object from a '", class(x), "' object")
-  } else {
-    if(!tryExists) message("Error in ichimoku(", x, "): object '", x, "' not found")
-    else if(missing(ticker)) ichimoku(get(x), ticker = x, periods = periods, ...)
-    else ichimoku(get(x), ticker = ticker, periods = periods, ...)
-  }
+ichimoku.default <- function(x, ticker, periods = c(9, 26, 52), ...) {
+  if(missing(x)) stop("Argument 'x' must be specified", call. = FALSE)
+  tryExists <- tryCatch(exists(x), error = function(e) {
+    stop("Cannot create an ichimoku object from a '", class(x)[1L], "' object", call. = FALSE)
+  })
+  if(!tryExists) message("Error in ichimoku(", x, "): object '", x, "' not found")
+  else if(missing(ticker)) ichimoku(get(x), ticker = x, periods = periods, ...)
+  else ichimoku(get(x), ticker = ticker, periods = periods, ...)
 }
 
 #' Print Ichimoku Objects
@@ -201,9 +196,9 @@ ichimoku.default <- function(x = NULL, ticker, periods = c(9, 26, 52), ...) {
 #' Custom print method for ichimoku objects.
 #'
 #' @param x an object of class 'ichimoku'.
-#' @param plot defaults to TRUE. Set to FALSE to prevent automatic plotting of
+#' @param plot [default TRUE] set to FALSE to prevent automatic plotting of
 #'     the ichimoku cloud chart.
-#' @param ... other arguments to be passed along.
+#' @param ... additional arguments to be passed along.
 #'
 #' @return The ichimoku object 'x' passed as parameter.
 #'
@@ -225,7 +220,7 @@ ichimoku.default <- function(x = NULL, ticker, periods = c(9, 26, 52), ...) {
 #' @export
 #'
 print.ichimoku <- function(x, plot = TRUE, ...) {
-  if(isTRUE(plot) && (dim(x)[2L] == 12 || dim(x)[2L] == 19)) plot.ichimoku(x, ...)
+  if((dim(x)[2L] == 12 || dim(x)[2L] == 19) && isTRUE(plot)) plot.ichimoku(x, ...)
   NextMethod(print)
   invisible(x)
 }
@@ -247,14 +242,13 @@ NULL
 #' @param ticker (optional) specify a ticker (or other text) to include in the
 #'     chart heading. If not set, the ticker saved within the ichimoku object
 #'     will be used.
-#' @param theme defaults to 'original'. This can also be set to 'dark',
+#' @param message (optional) specify a chart message to display under the title.
+#' @param theme [default 'original'] with alternative choices of 'dark',
 #'     'solarized' or 'mono'.
-#' @param gaps defaults to FALSE to remove weekend and holiday gaps. Set to TRUE
-#'     for a continuous timescale axis, but with gaps for non-trading days.
-#' @param strat set to TRUE by default. If the ichimoku object contains a
-#'     strategy, the periods for which the strategy results in a position will
-#'     be shaded. Set to FALSE to turn off this behaviour.
-#' @param ... other arguments to be passed along.
+#' @param strat [default TRUE] if the ichimoku object contains a strategy, the
+#'     periods for which the strategy results in a position will be shaded. Set
+#'     to FALSE to turn off this behaviour.
+#' @param ... additional arguments to be passed along.
 #'
 #' @return Returns a ggplot2 object with S3 classes 'gg' and 'ggplot'.
 #'
@@ -271,160 +265,82 @@ NULL
 #'
 #' autoplot(cloud)
 #' autoplot(cloud, window = "2020-05-15/2020-10-30", theme = "dark")
-#' autoplot(cloud, ticker = "TKR Co.", theme = "solarized", gaps = TRUE)
+#' autoplot(cloud, ticker = "TKR Co.", theme = "solarized")
 #'
 #' @rdname autoplot.ichimoku
 #' @method autoplot ichimoku
 #' @export
 #'
-autoplot.ichimoku <- function(object, window, ticker,
+autoplot.ichimoku <- function(object, window, ticker, message,
                               theme = c("original", "dark", "solarized", "mono"),
-                              gaps = FALSE, strat = TRUE, ...) {
+                              strat = TRUE, ...) {
 
+  theme <- match.arg(theme)
+  pal <- ichimoku_themes[, theme]
   periodicity <- attr(object, "periodicity")
   if(missing(ticker)) ticker <- attr(object, "ticker")
   if(!missing(window)) object <- object[window]
-  index <- index(object)
-  theme <- tryCatch(match.arg(theme), error = function(e) {
-    message("ichimoku: theme '", theme, "' not found - using 'original' theme instead")
-    "original"
-  })
-  pal <- ichimoku_themes[, theme]
-  candle <- as.factor(object$cd)
+  xlen <- dim(object)[1L]
+  data <- xts_df(object)
+  data$idx <- seq_len(xlen)
+  data$cd <- as.character(data$cd)
 
-  ichimoku_layers_strat <- list(
-    if(isTRUE(strat) && hasStrat(object)) {
-      geom_rect(aes(xmin = .data$posn * (seq_along(index) - 0.5),
-                    xmax = .data$posn * (seq_along(index) + 0.5),
-                    ymin = -Inf, ymax = Inf, na.rm = TRUE), fill = pal[1], alpha = 0.2)
-    })
-
-  ichimoku_layers_base <- list(
-    if(!all(is.na(object$cloudTop))) {
-    geom_ribbon(aes(ymax = .data$cloudTop, ymin = .data$cloudBase),
-                fill = pal[1L], alpha = 0.6, na.rm = TRUE)},
-    geom_line(aes(y = .data$senkouA), col = pal[2L], alpha = 0.6, na.rm = TRUE),
-    geom_line(aes(y = .data$senkouB), col = pal[3L], alpha = 0.6, na.rm = TRUE),
-    geom_line(aes(y = .data$tenkan), col = pal[4L], na.rm = TRUE),
-    geom_line(aes(y = .data$kijun), col = pal[5L], na.rm = TRUE),
-    geom_line(aes(y = .data$chikou), col = pal[6L], na.rm = TRUE),
-    geom_linerange(aes(ymax = .data$high, ymin = .data$low, colour = candle),
-                   size = 0.3, na.rm = TRUE)
-  )
-
-  ichimoku_layers_front <- list(
-    scale_y_continuous(breaks = function(x) pretty(x, n = 9L)),
-    scale_color_manual(values = c(`1` = pal[7L], `-1` = pal[8L], `0` = pal[9L])),
-    scale_fill_manual(values = c(`1` = pal[10L], `-1` = pal[11L], `0` = pal[12L])),
-    labs(x = "Date | Time", y = "Price", title = paste("Ichimoku Kinko Hyo : :", ticker)),
-    theme_light(),
-    theme(legend.position = "none"),
-    if(theme == "dark") {
-      theme(plot.title = element_text(colour = "#eee8d5"),
-            plot.background = element_rect(fill = "#586e75", colour = NA),
-            panel.background = element_rect(fill = "#002b36", colour = NA),
-            panel.grid = element_line(colour = "#073642"),
-            axis.title = element_text(colour = "#eee8d5"),
-            axis.text = element_text(colour = "#eee8d5"),
-            axis.ticks = element_line(colour = "#eee8d5"))
+  conditional_layers <- list(
+    if(hasStrat(object) && isTRUE(strat)) {
+      geom_rect(aes(xmin = .data$posn * (.data$idx - 0.5),
+                    xmax = .data$posn * (.data$idx + 0.5),
+                    ymin = -Inf, ymax = Inf), fill = pal[1L], alpha = 0.2, na.rm = TRUE)
+      },
+    if(!all(is.na(data$cloudTop))) {
+      geom_ribbon(aes(ymax = .data$cloudTop, ymin = .data$cloudBase),
+                  fill = pal[1L], alpha = 0.6, na.rm = TRUE)
     }
-  )
+    )
 
-  if(isTRUE(gaps)) {
-    w <- periodicity * 0.4
-    chart <- ggplot(data = object, aes(x = index)) +
-      ichimoku_layers_base +
-      geom_rect(aes(xmin = index - w,
-                    xmax = index + w,
-                    ymin = pmin.int(.data$open, .data$close),
-                    ymax = pmax.int(.data$open, .data$close),
-                    colour = candle, fill = candle,
-                    open = .data$open, close = .data$close,
-                    date = index), size = 0.3, na.rm = TRUE) +
-      scale_x_datetime(breaks = function(x) pretty(x, n = 9L),
-                       labels = function(x) {
-                         if(periodicity < 80000) {
-                           labs <- format(x, paste("%H:%M", "%d-%b", "%Y", sep = "\n"))
-                           } else {
-                             labs <- format(x, paste("%d-%b", "%Y", sep = "\n"))
-                           }
-                         }) +
-      ichimoku_layers_front
-  } else {
-    chart <- ggplot(data = object, aes(x = seq_along(index), date = index)) +
-      ichimoku_layers_strat +
-      ichimoku_layers_base +
-      geom_rect(aes(xmin = seq_along(index) - 0.4,
-                    xmax = seq_along(index) + 0.4,
-                    ymin = pmin.int(.data$open, .data$close),
-                    ymax = pmax.int(.data$open, .data$close),
-                    colour = candle, fill = candle,
-                    open = .data$open, close = .data$close),
-                size = 0.3, na.rm = TRUE) +
-      scale_x_continuous(breaks = function(x) {
-        x <- pretty(seq_along(index), n = 9L) + 1
-        if(x[length(x)] > dim(object)[1L]) x <- x[-length(x)]
-        x
+  chart <- ggplot(data = data, aes(x = .data$idx, date = .data$index, close = .data$close)) +
+    conditional_layers +
+    geom_line(aes(y = .data$senkouA), col = pal[2L], alpha = 0.6, na.rm = TRUE) +
+    geom_line(aes(y = .data$senkouB), col = pal[3L], alpha = 0.6, na.rm = TRUE) +
+    geom_line(aes(y = .data$tenkan), col = pal[4L], na.rm = TRUE) +
+    geom_line(aes(y = .data$kijun), col = pal[5L], na.rm = TRUE) +
+    geom_segment(aes(xend = .data$idx, y = .data$high, yend = .data$low, colour = .data$cd),
+                 size = 0.3, na.rm = TRUE) +
+    geom_rect(aes(xmin = .data$idx - 0.4, xmax = .data$idx + 0.4,
+                  ymin = .data$open, ymax = .data$close,
+                  colour = .data$cd, fill = .data$cd),
+              size = 0.3, na.rm = TRUE) +
+    geom_line(aes(y = .data$chikou), col = pal[6L], na.rm = TRUE) +
+    scale_x_continuous(breaks = function(x) {
+      x <- pretty.default(data$idx, n = 9L) + 1
+      if(x[length(x)] > xlen) x <- x[-length(x)]
+      x
       }, labels = function(x) {
         if(periodicity < 80000) {
-          labs <- format(index[x], paste("%H:%M", "%d-%b", "%Y", sep = "\n"))
-        } else {
-          labs <- format(index[x], paste("%d-%b", "%Y", sep = "\n"))
+          labs <- format(data$index[x], paste("%H:%M", "%d-%b", "%Y", sep = "\n"))
+          } else {
+            labs <- format(data$index[x], paste("%d-%b", "%Y", sep = "\n"))
+          }
         }
-     }) +
-      ichimoku_layers_front
-  }
+      ) +
+    scale_y_continuous(breaks = function(x) pretty.default(x, n = 9L)) +
+    scale_color_manual(values = c("1" = pal[7L], "-1" = pal[8L], "0" = pal[9L])) +
+    scale_fill_manual(values = c("1" = pal[10L], "-1" = pal[11L], "0" = pal[12L])) +
+    labs(x = "Date | Time", y = "Price", title = paste0("Ichimoku Kinko Hyo : : ", ticker),
+         subtitle = if(!missing(message)) message else NULL) +
+    theme_light() +
+    switch(theme,
+           dark = theme(legend.position = "none",
+                        plot.title = element_text(colour = "#eee8d5"),
+                        plot.subtitle = element_text(colour = "#eee8d5"),
+                        plot.background = element_rect(fill = "#586e75", colour = NA),
+                        panel.background = element_rect(fill = "#002b36", colour = NA),
+                        panel.grid = element_line(colour = "#073642"),
+                        axis.title = element_text(colour = "#eee8d5"),
+                        axis.text = element_text(colour = "#eee8d5"),
+                        axis.ticks = element_line(colour = "#eee8d5")),
+           theme(legend.position = "none"))
 
   chart
-}
-
-#' iplot Interactive Ichimoku Plot
-#'
-#' Plot interactive Ichimoku Kinko Hyo cloud charts from ichimoku objects.
-#'
-#' @param x an object of class 'ichimoku'.
-#' @inheritParams autoplot
-#'
-#' @return Returns a plotly object with classes 'plotly' and 'htmlwidget'.
-#'
-#' @section Further Details:
-#'     Please refer to the reference vignette by running:
-#'     \code{vignette("reference", package = "ichimoku")}
-#'
-#' @examples
-#' \donttest{
-#' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
-#'
-#' iplot(cloud)
-#' iplot(cloud, window = "2020-05-15/2020-10-30", theme = "dark")
-#' iplot(cloud, ticker = "TKR Co.", theme = "solarized", gaps = TRUE)
-#' }
-#'
-#' @export
-#'
-iplot <- function(x, window, ticker, theme = c("original", "dark", "solarized", "mono"),
-                  gaps = FALSE, ...) {
-
-  if(is.ichimoku(x)) {
-    if(requireNamespace("plotly", quietly = TRUE)) {
-      if(isTRUE(gaps)) {
-        suppressWarnings(plotly::ggplotly(
-          autoplot(x, window = window, ticker = ticker, theme = theme, gaps = gaps, ...),
-          source = "select", tooltip = c("date", "x", "y", "ymax", "ymin", "open", "close")))
-        } else {
-          suppressWarnings(plotly::ggplotly(
-            autoplot(x, window = window, ticker = ticker, theme = theme, gaps = gaps, ...),
-            source = "select", tooltip = c("date", "y", "ymax", "ymin", "open", "close")))
-          }
-      } else {
-        message("ichimoku: please install the 'plotly' package for interactive charting")
-        suppressWarnings(print(autoplot(x, window = window, ticker = ticker,
-                                        theme = theme, gaps = gaps, ...)
-        ))
-      }
-  } else {
-    message("ichimoku: iplot only works with ichimoku objects")
-  }
 }
 
 #' Plot Ichimoku Cloud Chart
@@ -453,13 +369,12 @@ iplot <- function(x, window, ticker, theme = c("original", "dark", "solarized", 
 #' @method plot ichimoku
 #' @export
 #'
-plot.ichimoku <- function(x, window, ticker,
+plot.ichimoku <- function(x, window, ticker, message,
                           theme = c("original", "dark", "solarized", "mono"),
-                          gaps = FALSE, strat = TRUE, ...) {
+                          strat = TRUE, ...) {
 
-  suppressWarnings(print(
-    autoplot(x, window = window, ticker = ticker, theme = theme, gaps = gaps, strat = strat, ...)
-    ))
+  print(autoplot.ichimoku(x, window = window, ticker = ticker, message = message,
+                          theme = theme, strat = strat, ...))
 }
 
 #' is.ichimoku
@@ -481,4 +396,276 @@ plot.ichimoku <- function(x, window, ticker,
 #' @export
 #'
 is.ichimoku <- function(x) inherits(x, "ichimoku")
+
+#' iplot Interactive Ichimoku Cloud Plot
+#'
+#' Plot interactive Ichimoku Kinko Hyo cloud charts from ichimoku objects. iplot()
+#'     can be used in conjunction with R Markdown to create portable, self-contained
+#'     interactive HTML charts.
+#'
+#' @param x an object of class 'ichimoku'.
+#' @inheritParams autoplot
+#'
+#' @return Returns a plotly object with classes 'plotly' and 'htmlwidget'.
+#'
+#' @details This function has a dependency on the 'plotly' package.
+#'
+#' @section Further Details:
+#'     Please refer to the reference vignette by running:
+#'     \code{vignette("reference", package = "ichimoku")}
+#'
+#' @examples
+#' \donttest{
+#' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
+#'
+#' iplot(cloud)
+#' iplot(cloud, window = "2020-05-15/2020-10-30", ticker = "TKR Co.", theme = "dark")
+#' }
+#'
+#' @export
+#'
+iplot <- function(x, window, ticker, message,
+                  theme = c("original", "dark", "solarized", "mono"), ...) {
+
+  if(!is.ichimoku(x)) stop("iplot() only works with ichimoku objects", call. = FALSE)
+  if(requireNamespace("plotly", quietly = TRUE)) {
+      plotly::ggplotly(
+        autoplot.ichimoku(x, window = window, ticker = ticker, message = message,
+                          theme = theme, ...),
+        tooltip = c("date", "y", "yend", "close"))
+  } else {
+    message("Note: please install the 'plotly' package to enable interactive charting",
+            "\nAlternatively use plot() for static charts")
+  }
+}
+
+#' rplot Reactive Ichimoku Cloud Plot
+#'
+#' Plot Ichimoku Kinko Hyo cloud charts from ichimoku objects in a Shiny app,
+#'     allowing full customisation of chart elements in an interactive environment.
+#'     Intuitive cursor tooltip allows ready access to the data directly from the
+#'     chart.
+#'
+#' @param x an object of class 'ichimoku'.
+#' @inheritParams autoplot
+#'
+#' @return Returns a Shiny app object with class 'shiny.appobj'.
+#'
+#' @details This function has a dependency on the 'shiny' package.
+#'
+#' @examples
+#' if(interactive()) {
+#' # Only run examples in interactive R sessions
+#' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
+#' rplot(cloud)
+#' }
+#'
+#' @export
+#'
+rplot <- function(x, ticker, theme = c("original", "dark", "solarized", "mono"),
+                  message, strat = TRUE, ...) {
+
+  if(!is.ichimoku(x)) stop("rplot() only works with ichimoku objects", call. = FALSE)
+
+  if(requireNamespace("shiny", quietly = TRUE)) {
+    theme <- match.arg(theme)
+    if(missing(ticker)) ticker <- attr(x, "ticker")
+    if(missing(message)) message <- NULL
+    tformat <- if(attr(x, "periodicity") > 80000) "%F" else "%F %T"
+    start <- index(x)[1]
+    end <- index(x)[dim(x)[1L]]
+    xadj <- if(nchar(as.character(start)) > 10) -17 else 5
+
+    ui <- shiny::fluidPage(
+      shiny::fillPage(
+        padding = 20,
+        shiny::tags$style(type = "text/css", "#chart {height: calc(100vh - 190px) !important;}"),
+        shiny::plotOutput("chart", width = "100%",
+                          hover = shiny::hoverOpts(id = "plot_hover",
+                                                   delay = 80, delayType = "throttle")),
+        shiny::uiOutput("hover_x"), shiny::uiOutput("hover_y"), shiny::uiOutput("tooltip")
+        ),
+      shiny::fluidRow(
+        shiny::column(width = 10, offset = 1,
+                      shiny::sliderInput("dates", label = NULL,
+                                         min = start, max = end,
+                                         value = c(start, end),
+                                         width = "100%", timeFormat = tformat))
+        ),
+      shiny::fluidRow(
+        shiny::column(width = 2, offset = 1,
+                      shiny::selectInput("theme", label = "Theme",
+                                         choices = c("original", "dark", "solarized", "mono"),
+                                         selected = theme,
+                                         selectize = FALSE)),
+        shiny::column(width = 2,
+                      shiny::textInput("ticker", label = "Ticker",
+                                       value = ticker, width = "100%")),
+        shiny::column(width = 1,
+                      shiny::HTML("<label class='control-label'>Show</label>"),
+                      shiny::checkboxInput("tooltip", "Tooltip", value = TRUE)),
+        shiny::column(width = 1,
+                      shiny::HTML("<label class='control-label'>&nbsp;</label>"),
+                      if(hasStrat(x)) shiny::checkboxInput("strat", "Strategy", value = isTRUE(strat)))
+        )
+    )
+
+    server <- function(input, output) {
+      window <- shiny::reactive(paste0(input$dates[1L], "/", input$dates[2L]))
+      pdata <- shiny::reactive(x[window()])
+      left_px <- shiny::reactive(input$plot_hover$coords_css$x)
+      top_px <- shiny::reactive(input$plot_hover$coords_css$y)
+      posi_x <- shiny::reactive(round(input$plot_hover$x, digits = 0))
+
+      output$chart <- shiny::renderPlot(
+        autoplot.ichimoku(x, window = window(), ticker = input$ticker, message = message,
+                          theme = input$theme, strat = if(hasStrat(x)) input$strat)
+      )
+
+      output$hover_x <- shiny::renderUI({
+        shiny::req(input$plot_hover, posi_x() > 0, posi_x() <= dim(pdata())[1L])
+        shiny::wellPanel(
+          style = paste0("position:absolute; z-index:100; background-color: rgba(245, 245, 245, 0.85); ",
+                         "left:", left_px() + xadj, "px; top:45px; ",
+                         "font-size: 0.8em; padding:0;"),
+          shiny::HTML(
+            paste(index(pdata())[posi_x()])
+          ))
+      })
+      output$hover_y <- shiny::renderUI({
+        shiny::req(input$plot_hover)
+        shiny::wellPanel(
+          style = paste0("position:absolute; z-index:100; background-color: rgba(245, 245, 245, 0.85); ",
+                         "left:75px; top:", top_px() + 11, "px; ",
+                         "font-size: 0.8em; padding:0;"),
+          shiny::HTML(
+            paste(signif(input$plot_hover$y, digits = 5))
+          ))
+      })
+
+      output$tooltip <- shiny::renderUI({
+        shiny::req(input$tooltip, input$plot_hover, posi_x() > 0, posi_x() <= dim(pdata())[1L])
+        sdata <- pdata()[posi_x(), ]
+        shiny::wellPanel(
+          style = paste0("position:absolute; z-index:100; background-color: rgba(245, 245, 245, 0.85); ",
+                         "left:", left_px() + 43, "px; top:", top_px() + 30, "px; ",
+                         "font-size: 0.8em; padding: 1px 5px 5px 5px;"),
+          shiny::HTML(
+            paste("<div style = 'margin:0; padding:0; font-weight:bold;'>",
+                  if(isTRUE(sdata$cd == 1)) "&uarr;<br />"
+                  else if(isTRUE(sdata$cd == -1)) "&darr;<br />" else "&rarr;<br />",
+                  index(sdata),"</div><div style = 'text-align:center; margin:2px 0 0 0; padding:0;'>H:",
+                  signif(sdata$high, digits = 5),
+                  "</div><div style = 'margin:0; padding:0;'>O:",
+                  signif(sdata$open, digits = 5),
+                  "&nbsp;&nbsp;C:", signif(sdata$close, digits = 5),
+                  "</div><div style = 'text-align:center; margin:0; padding:0;'>L:",
+                  signif(sdata$low, digits = 5),
+                  "</div><div style = 'margin:2px 0 0 0; padding:0;'>Tenkan:",
+                  signif(sdata$tenkan, digits = 5),
+                  "<br />Kijun:", signif(sdata$kijun, digits = 5),
+                  "<br />Senkou A:", signif(sdata$senkouA, digits = 5),
+                  "<br />Senkou B:", signif(sdata$senkouB, digits = 5),
+                  "<br />Chikou:", signif(sdata$chikou, digits = 5), "</div>")
+          ))
+      })
+    }
+
+    shiny::shinyApp(ui, server)
+
+  } else {
+    message("Note: please install the 'shiny' package to enable reactive charting",
+            "\nAlternatively use plot() for static charts")
+  }
+}
+
+#' gplot Plot Ichimoku Cloud Chart with Weekend Gaps
+#'
+#' Deprecated plot method for Ichimoku Kinko Hyo cloud charts with weekend gaps
+#'     for non-trading days. This feature is deprecated and this function is
+#'     included as a convenience only.
+#'
+#' @param object an object of class 'ichimoku'.
+#' @param window (optional) a date-time window to subset the plot, in ISO-8601
+#'     compatible range strings of the format used for 'xts' objects, for example
+#'     "2020-02-15/2020-08-15" or "2020-02-15/", "/2020-08" or "2020-07".
+#' @param ticker (optional) specify a ticker (or other text) to include in the
+#'     chart heading. If not set, the ticker saved within the ichimoku object
+#'     will be used.
+#' @param message (optional) specify a chart message to display under the title.
+#' @param theme [default 'original'] with alternative choices of 'dark',
+#'     'solarized' or 'mono'.
+#' @param strat [default TRUE] if the ichimoku object contains a strategy, the
+#'     periods for which the strategy results in a position will be shaded. Set
+#'     to FALSE to turn off this behaviour.
+#' @param ... additional arguments to be passed along.
+#'
+#' @return Returns a ggplot2 object with S3 classes 'gg' and 'ggplot'.
+#'
+#' @examples
+#' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
+#' gplot(cloud)
+#'
+#' @export
+#'
+gplot <- function(object, window, ticker, message,
+                              theme = c("original", "dark", "solarized", "mono"),
+                              strat = TRUE, ...) {
+
+  theme <- match.arg(theme)
+  pal <- ichimoku_themes[, theme]
+  periodicity <- attr(object, "periodicity")
+  if(missing(ticker)) ticker <- attr(object, "ticker")
+  if(!missing(window)) object <- object[window]
+  xlen <- dim(object)[1L]
+  data <- xts_df(object)
+  data$idx <- seq_len(xlen)
+  data$cd <- as.character(data$cd)
+
+  conditional_layers <- list(if(!all(is.na(data$cloudTop))) {
+    geom_ribbon(aes(ymax = .data$cloudTop, ymin = .data$cloudBase),
+                fill = pal[1L], alpha = 0.6, na.rm = TRUE)}
+  )
+
+  chart <- ggplot(data = data, aes(x = .data$index, date = .data$index)) +
+    conditional_layers +
+    geom_line(aes(y = .data$senkouA), col = pal[2L], alpha = 0.6, na.rm = TRUE) +
+    geom_line(aes(y = .data$senkouB), col = pal[3L], alpha = 0.6, na.rm = TRUE) +
+    geom_line(aes(y = .data$tenkan), col = pal[4L], na.rm = TRUE) +
+    geom_line(aes(y = .data$kijun), col = pal[5L], na.rm = TRUE) +
+    geom_segment(aes(xend = .data$index, y = .data$high, yend = .data$low, colour = .data$cd),
+                 size = 0.3, na.rm = TRUE) +
+    geom_rect(aes(xmin = .data$index - periodicity * 0.4, xmax = .data$index + periodicity * 0.4,
+                  ymin = .data$open, ymax = .data$close,
+                  colour = .data$cd, fill = .data$cd),
+              size = 0.3, na.rm = TRUE) +
+    geom_line(aes(y = .data$chikou), col = pal[6L], na.rm = TRUE) +
+    scale_x_datetime(breaks = function(x) pretty(x, n = 9L),
+                     labels = function(x) {
+                       if(periodicity < 80000) {
+                         labs <- format(x, paste("%H:%M", "%d-%b", "%Y", sep = "\n"))
+                         } else {
+                           labs <- format(x, paste("%d-%b", "%Y", sep = "\n"))
+                           }
+                       }) +
+    scale_y_continuous(breaks = function(x) pretty.default(x, n = 9L)) +
+    scale_color_manual(values = c("1" = pal[7L], "-1" = pal[8L], "0" = pal[9L])) +
+    scale_fill_manual(values = c("1" = pal[10L], "-1" = pal[11L], "0" = pal[12L])) +
+    labs(x = "Date | Time", y = "Price", title = paste0("Ichimoku Kinko Hyo : : ", ticker),
+         subtitle = if(!missing(message)) message else NULL) +
+    theme_light() +
+    switch(theme,
+           dark = theme(legend.position = "none",
+                        plot.title = element_text(colour = "#eee8d5"),
+                        plot.subtitle = element_text(colour = "#eee8d5"),
+                        plot.background = element_rect(fill = "#586e75", colour = NA),
+                        panel.background = element_rect(fill = "#002b36", colour = NA),
+                        panel.grid = element_line(colour = "#073642"),
+                        axis.title = element_text(colour = "#eee8d5"),
+                        axis.text = element_text(colour = "#eee8d5"),
+                        axis.ticks = element_line(colour = "#eee8d5")),
+           theme(legend.position = "none"))
+
+  chart
+}
 

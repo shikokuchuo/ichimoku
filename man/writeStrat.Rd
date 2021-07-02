@@ -11,7 +11,7 @@ writeStrat(x, strategy, dir, start, end)
 
 \item{strategy}{string describing strategy rule.}
 
-\item{dir}{trade direction either 'long' or 'short'.}
+\item{dir}{trade direction, either 'long' or 'short'.}
 
 \item{start}{integer position of start date in index.}
 

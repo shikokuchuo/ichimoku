@@ -9,8 +9,8 @@
   object,
   window,
   ticker,
+  message,
   theme = c("original", "dark", "solarized", "mono"),
-  gaps = FALSE,
   strat = TRUE,
   ...
 )
@@ -26,17 +26,16 @@ compatible range strings of the format used for 'xts' objects, for example
 chart heading. If not set, the ticker saved within the ichimoku object
 will be used.}
 
-\item{theme}{defaults to 'original'. This can also be set to 'dark',
+\item{message}{(optional) specify a chart message to display under the title.}
+
+\item{theme}{[default 'original'] with alternative choices of 'dark',
 'solarized' or 'mono'.}
 
-\item{gaps}{defaults to FALSE to remove weekend and holiday gaps. Set to TRUE
-for a continuous timescale axis, but with gaps for non-trading days.}
+\item{strat}{[default TRUE] if the ichimoku object contains a strategy, the
+periods for which the strategy results in a position will be shaded. Set
+to FALSE to turn off this behaviour.}
 
-\item{strat}{set to TRUE by default. If the ichimoku object contains a
-strategy, the periods for which the strategy results in a position will
-be shaded. Set to FALSE to turn off this behaviour.}
-
-\item{...}{other arguments to be passed along.}
+\item{...}{additional arguments to be passed along.}
 }
 \value{
 Returns a ggplot2 object with S3 classes 'gg' and 'ggplot'.
@@ -60,6 +59,6 @@ cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 
 autoplot(cloud)
 autoplot(cloud, window = "2020-05-15/2020-10-30", theme = "dark")
-autoplot(cloud, ticker = "TKR Co.", theme = "solarized", gaps = TRUE)
+autoplot(cloud, ticker = "TKR Co.", theme = "solarized")
 
 }

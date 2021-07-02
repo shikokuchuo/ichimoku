@@ -13,7 +13,7 @@ tradingDays(x, holidays, ...)
 vector, of dates defined as holidays. If not specified, New Year's and
 Christmas day are defined as holidays by default.}
 
-\item{...}{other arguments to be passed along.}
+\item{...}{additional arguments to be passed along.}
 }
 \value{
 A vector of logical values: TRUE if the corresponding element of 'x'

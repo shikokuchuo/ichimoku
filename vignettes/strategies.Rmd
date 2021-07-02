@@ -1,10 +1,10 @@
 ---
-title: "ichimoku: Strategies"
+title: "ichimoku: Beyond Visualization - Quantitative Strategies"
 output:
   rmarkdown::html_vignette:
     toc: true
 vignette: >
-  %\VignetteIndexEntry{ichimoku: Strategies}
+  %\VignetteIndexEntry{ichimoku: Beyond Visualization - Quantitative Strategies}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -46,11 +46,11 @@ cloud <- ichimoku(TKR)
 
 ### 2. Use `strat()` 
 
-To test a simple strategy with a rule condition of the form 'long (or short) while c1 > c2'.
+To test a simple strategy with an indicator condition of the form 'long (or short) while c1 > c2'.
 
 Here the references c1 and c2 are columns of the ichimoku object representing either candlestick values e.g. 'close' or cloud values e.g. 'tenkan'.
 
-Note: the rule condition is c1 > c2 even for short trades. Hence please take care for example when inverting 'long while close > tenkan' to 'short while close < tenkan', this should be formulated as 'short while tenkan > close'.
+Note: the indicator condition is c1 > c2 even for short trades. Hence please take care for example when inverting 'long while close > tenkan' to 'short while close < tenkan', this should be formulated as 'short while tenkan > close'.
 
 ```{r strat}
 strat <- strat(cloud)
@@ -59,7 +59,7 @@ print(strat[100:105], plot = FALSE)
 
 The use of strat() returns an augmented ichimoku object. The printout above of a slice of the object (rows 100 to 105) shows that the following columns are appended:
 
-- **cond**: '1' if the rule condition is met at the close of the the time period (note: if the rule involves chikou span, the comparison will be of past periods)
+- **cond**: '1' if the indicator condition is met at the close of the the time period (note: if the indicator condition involves chikou span, the comparison will be of past periods)
 - **posn**: '1' represents that a position is held during this time period (i.e. from the 'open' to the 'close')
 - **txn**: '1' represents a transaction to initiate a new position, '-1' represents a transaction to square an existing position. All transactions are assumed to happen at the 'open' of the respective period
 - **logret**: the log returns from the 'open' price of the period to the 'open' price of the next period. For the avoidance of doubt, 'log returns' means the natural logarithm of the difference between the prices
@@ -99,7 +99,7 @@ Note: `iplot()` interactive charting currently does not implement this additiona
 
 ### 5. Combine strategies using `stratcombine()`
 
-Strategies may be combined to form more complex strategies if desired. The function can be used on 2 ichimoku objects containing rule conditions 'c1 > c2' and 'c3 > c4' respectively, combining them into a new strategy with a rule condition of 'c1 > c2 & c3 > c4'.
+Strategies may be combined to form more complex strategies if desired. The function can be used on 2 ichimoku objects containing indicator conditions 'c1 > c2' and 'c3 > c4' respectively, combining them into a new strategy with indicator condition of 'c1 > c2 & c3 > c4'.
 
 ```{r combine}
 strat2 <- strat(cloud, "cloudBase", "kijun")
@@ -138,9 +138,9 @@ The analytic capability of R can be leveraged to generate and evaluate all possi
 autostrat(cloud, n = 3)
 ```
 
-The output of autostrat is a list of ichimoku objects. Each object can be accessed by its individual item number e.g. [[1]] for the first object.
+The output of autostrat is a list of ichimoku objects. Each object can be accessed by its individual item number e.g. [[1]] for the first object, or by using look() specifying the parameter 'which'.
 
-The metadata is also saved as attributes to the list and can be accessed by the function `attributes()`:
+The metadata is also saved as attributes to the list and can be accessed by the function `look()`:
 
 - **summary**: the strategy summaries
 
@@ -152,7 +152,7 @@ Note: as SenkouA, SenkouB, cloudTop and cloudBase are used in conjuction with ot
 
 ### `autostrat()` level 2
 
-Set the `level = 2` argument to `autostrat()` to test all strategies with a combination of up to 2 rule conditions.
+Set the `level = 2` argument to `autostrat()` to test all strategies with a combination of up to 2 indicator conditions.
 
 ```{r autostrat2}
 autostrat(cloud, n = 3, dir = "short", level = 2)

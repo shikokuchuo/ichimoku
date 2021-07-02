@@ -9,10 +9,10 @@
 \arguments{
 \item{object}{an object of class 'ichimoku'.}
 
-\item{strat}{defaults to TRUE to show the strategy summary if present. Set to
+\item{strat}{[default TRUE] to show the strategy summary if present. Set to
 FALSE to show the data summary instead.}
 
-\item{...}{other arguments to be passed along.}
+\item{...}{additional arguments to be passed along.}
 }
 \value{
 A matrix containing the strategy summary if present, otherwise a table

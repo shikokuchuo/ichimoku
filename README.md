@@ -15,7 +15,7 @@ Visualization and Tools for Ichimoku Kinko Hyo Strategies
 An implementation of ‘Ichimoku Kinko Hyo’, also commonly known as ‘cloud
 charts’. Static and interactive visualizations with tools for creating,
 backtesting and development of quantitative ‘ichimoku’ strategies. As
-described in Sasaki (1996, ISBN:4925152009), the technique is a
+described in Sasaki (1996, <ISBN:4925152009>), the technique is a
 refinement on candlestick charting originating from Japan, now in
 widespread use in technical analysis worldwide. Translating as
 ‘one-glance equilibrium chart’, it allows the price action and market
@@ -44,20 +44,20 @@ library(ichimoku)
 TKR <- sample_ohlc_data
 ```
 
-#### Visualization
-
 Simply `ichimoku()` and `plot()`:
 
 ``` r
 cloud <- ichimoku(TKR)
+```
+
+``` r
 plot(cloud, window = "2020-04/")
 ```
 
-<img src="man/figures/README-plot-1.png" width="672" width="480" />
+![](man/figures/README-plot-1.png)
 
-#### Strategies
-
-`autostrat()` to automatically generate top-performing strategies:
+`autostrat()` to automatically evaluate and rank top-performing
+strategies:
 
 ``` r
 autostrat(cloud, n = 3)
@@ -81,6 +81,37 @@ autostrat(cloud, n = 3)
 #> End                    2020-09-29         2020-09-29          2020-09-29       
 #> Ticker                 "TKR"              "TKR"               "TKR"
 ```
+
+## Principal ichimoku functions
+
+#### Data & Visualization
+
+-   [`ichimoku()`](https://shikokuchuo.net/ichimoku/reference/ichimoku.html) -
+    to create an ichimoku object from price data.
+
+-   [`plot()`](https://shikokuchuo.net/ichimoku/reference/plot.ichimoku.html) -
+    to plot a cloud chart from an ichimoku object.
+
+-   [`iplot()`](https://shikokuchuo.net/ichimoku/reference/iplot.html) -
+    to plot an interactive cloud chart from an ichimoku object.
+
+-   [`rplot()`](https://shikokuchuo.net/ichimoku/reference/rplot.html) -
+    to plot a customisable reactive cloud chart from an ichimoku object.
+
+#### Strategies & ML
+
+-   [`strat()`](https://shikokuchuo.net/ichimoku/reference/strat.html) -
+    to augment an ichimoku object with a strategy.
+
+-   [`stratcombine()`](https://shikokuchuo.net/ichimoku/reference/stratcombine.html) -
+    to combine and create more complex strategies.
+
+-   [`autostrat()`](https://shikokuchuo.net/ichimoku/reference/autostrat.html) -
+    to automatically evaluate and rank top-performing strategies.
+
+-   [`mlgrid()`](https://shikokuchuo.net/ichimoku/reference/mlgrid.html) -
+    to generate a numeric representation of the relationship between
+    ichimoku cloud chart elements.
 
 ## Reference
 
