@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>iplot Interactive Ichimoku Cloud Plot — iplot • ichimoku</title>
+<title>Interactive Live Analysis Environment for OANDA Data — oanda_studio • ichimoku</title>
 
 
 <!-- jquery -->
@@ -39,11 +39,9 @@
 
 
 
-<meta property="og:title" content="iplot Interactive Ichimoku Cloud Plot — iplot" />
-<meta property="og:description" content="Plot Ichimoku Kinko Hyo cloud charts from ichimoku objects in a Shiny app,
-    allowing full customisation of chart elements in an interactive environment.
-    Intuitive cursor infotip allows ready access to the data directly from the
-    chart." />
+<meta property="og:title" content="Interactive Live Analysis Environment for OANDA Data — oanda_studio" />
+<meta property="og:description" content="Dynamically-generated Ichimoku Kinko Hyo cloud charts using OANDA fxTrade API
+    data in a completely customisable Shiny environment." />
 
 
 
@@ -135,24 +133,26 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>iplot Interactive Ichimoku Cloud Plot</h1>
-    <small class="dont-index">Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/R/ichimoku.R'><code>R/ichimoku.R</code></a></small>
-    <div class="hidden name"><code>iplot.Rd</code></div>
+    <h1>Interactive Live Analysis Environment for OANDA Data</h1>
+    <small class="dont-index">Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/R/oanda.R'><code>R/oanda.R</code></a></small>
+    <div class="hidden name"><code>oanda_studio.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Plot Ichimoku Kinko Hyo cloud charts from ichimoku objects in a Shiny app,
-    allowing full customisation of chart elements in an interactive environment.
-    Intuitive cursor infotip allows ready access to the data directly from the
-    chart.</p>
+    <p>Dynamically-generated Ichimoku Kinko Hyo cloud charts using OANDA fxTrade API
+    data in a completely customisable Shiny environment.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>iplot</span><span class='op'>(</span>
-  <span class='va'>x</span>,
-  <span class='va'>ticker</span>,
+    <pre class="usage"><span class='fu'>oanda_studio</span><span class='op'>(</span>
+  instrument <span class='op'>=</span> <span class='st'>"USD_JPY"</span>,
+  granularity <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"D"</span>, <span class='st'>"W"</span>, <span class='st'>"M"</span>, <span class='st'>"H12"</span>, <span class='st'>"H8"</span>, <span class='st'>"H6"</span>, <span class='st'>"H4"</span>, <span class='st'>"H3"</span>, <span class='st'>"H2"</span>, <span class='st'>"H1"</span>, <span class='st'>"M30"</span>,
+    <span class='st'>"M15"</span>, <span class='st'>"M10"</span>, <span class='st'>"M5"</span>, <span class='st'>"M4"</span>, <span class='st'>"M2"</span>, <span class='st'>"M1"</span>, <span class='st'>"S30"</span>, <span class='st'>"S15"</span>, <span class='st'>"S10"</span>, <span class='st'>"S5"</span><span class='op'>)</span>,
+  refresh <span class='op'>=</span> <span class='fl'>5</span>,
+  count <span class='op'>=</span> <span class='fl'>250</span>,
+  price <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"M"</span>, <span class='st'>"B"</span>, <span class='st'>"A"</span><span class='op'>)</span>,
   theme <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"original"</span>, <span class='st'>"dark"</span>, <span class='st'>"solarized"</span>, <span class='st'>"mono"</span><span class='op'>)</span>,
-  <span class='va'>message</span>,
-  strat <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  server <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"practice"</span>, <span class='st'>"live"</span><span class='op'>)</span>,
+  <span class='va'>apikey</span>,
   <span class='va'>...</span>,
   launch.browser <span class='op'>=</span> <span class='cn'>TRUE</span>
 <span class='op'>)</span></pre>
@@ -161,35 +161,53 @@
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>an object of class 'ichimoku'.</p></td>
+      <th>instrument</th>
+      <td><p>[default 'USD_JPY'] string containing the base currency and
+quote currency delimited by a '_'. Use the <code><a href='oanda_instruments.html'>oanda_instruments</a></code>
+function to return a list of all valid instruments.</p></td>
     </tr>
     <tr>
-      <th>ticker</th>
-      <td><p>(optional) specify a ticker (or other text) to include in the
-chart heading. If not set, the ticker saved within the ichimoku object
-will be used.</p></td>
+      <th>granularity</th>
+      <td><p>[default "D"] the granularity of the price data to fetch,
+one of "M", "W", "D", "H12", "H8", "H6", "H4", "H3", "H2", "H1", "M30",
+"M15", "M10", "M5", "M4", "M2", "M1", "S30", "S15", "S10", "S5".</p></td>
+    </tr>
+    <tr>
+      <th>refresh</th>
+      <td><p>[default 5] data refresh interval in seconds, with a minimum of 1.</p></td>
+    </tr>
+    <tr>
+      <th>count</th>
+      <td><p>[default 250] the number of periods to return. The API supports
+a maximum of 5000 for each individual request.</p></td>
+    </tr>
+    <tr>
+      <th>price</th>
+      <td><p>[default "M"] pricing component, one of "M" (midpoint), "B" (bid)
+or "A" (ask).</p></td>
     </tr>
     <tr>
       <th>theme</th>
-      <td><p>[default 'original'] with alternative choices of 'dark',
-'solarized' or 'mono'.</p></td>
+      <td><p>[default 'original'] chart theme with alternative choices of
+'dark', 'solarized' or 'mono'.</p></td>
     </tr>
     <tr>
-      <th>message</th>
-      <td><p>(optional) specify a chart message to display under the title.</p></td>
+      <th>server</th>
+      <td><p>[default "practice"] select either the "practice" or "live" server
+depending on the account type held with OANDA.</p></td>
     </tr>
     <tr>
-      <th>strat</th>
-      <td><p>[default TRUE] if the ichimoku object contains a strategy, the
-periods for which the strategy results in a position will be shaded, and
-the strategy printed as the chart message (if a message is not already
-specified). Set to FALSE to turn off this behaviour.</p></td>
+      <th>apikey</th>
+      <td><p>(optional) string containing the OANDA fxTrade API key (personal
+access token), or function that returns this string. Does not need to be
+specified if already stored by oanda_set_key(). Can also be entered
+interactively if not specified.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>additional parameters passed along to the 'options' argument of
-<code><a href='https://rdrr.io/pkg/shiny/man/shinyApp.html'>shiny::shinyApp()</a></code>.</p></td>
+      <td><p>additional arguments passed along to <code><a href='ichimoku.html'>ichimoku</a></code> for
+calculating the ichimoku cloud, <code><a href='autoplot.html'>autoplot</a></code> to set chart
+parameters, or the 'options' argument of <code><a href='https://rdrr.io/pkg/shiny/man/shinyApp.html'>shiny::shinyApp()</a></code>.</p></td>
     </tr>
     <tr>
       <th>launch.browser</th>
@@ -203,19 +221,22 @@ To use the default Shiny viewer in RStudio, please specify
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns a Shiny app object with class 'shiny.appobj'.</p>
+    <p>Returns a Shiny app object with class 'shiny.appobj'. Note that
+    returned times within the app are represented in UTC.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function has a dependency on the 'shiny' package.</p>
+    <p>This function polls the OANDA fxTrade API for the latest prices and
+    updates a customisable reactive Shiny app at each refresh interval.</p>
+<p>For further details please refer to the OANDA fxTrade API vignette by
+    running: <code><a href='../articles/xoanda.html'>vignette("xoanda", package = "ichimoku")</a></code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='co'># Only run examples in interactive R sessions</span>
-<span class='va'>cloud</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ichimoku.html'>ichimoku</a></span><span class='op'>(</span><span class='va'>sample_ohlc_data</span>, ticker <span class='op'>=</span> <span class='st'>"TKR"</span><span class='op'>)</span>
-<span class='fu'>iplot</span><span class='op'>(</span><span class='va'>cloud</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='co'># OANDA fxTrade API key required to run this example</span>
+<span class='fu'>oanda_studio</span><span class='op'>(</span><span class='op'>)</span>
 
 <span class='co'># To open in RStudio viewer instead of default browser</span>
-<span class='fu'>iplot</span><span class='op'>(</span><span class='va'>cloud</span>, launch.browser <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"shiny.launch.browser"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>oanda_studio</span><span class='op'>(</span>launch.browser <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"shiny.launch.browser"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>}</span>
 
 </div></pre>

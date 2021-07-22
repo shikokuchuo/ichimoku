@@ -40,9 +40,8 @@
 
 
 <meta property="og:title" content="Combine Ichimoku Strategies — stratcombine" />
-<meta property="og:description" content="Create more complex strategies with an indicator condition of the form
-    'c1 &amp;gt; c2 &amp;amp; c3 &amp;gt; c4' by combining existing strategies with indicator
-    conditions 'c1 &amp;gt; c2' and 'c3 &amp;gt; c4' respectively." />
+<meta property="og:description" content="Create custom combined strategies from existing strategies contained in 's1'
+    and 's2' to form 's1 &amp;amp; s2'." />
 
 
 
@@ -74,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -101,6 +100,12 @@
     </li>
     <li>
       <a href="../articles/strategies.html">ichimoku: Beyond Visualization - Quantitative Strategies</a>
+    </li>
+    <li>
+      <a href="../articles/utilities.html">ichimoku: Auxiliary Functions</a>
+    </li>
+    <li>
+      <a href="../articles/xoanda.html">ichimoku: The OANDA fxTrade API</a>
     </li>
   </ul>
 </li>
@@ -134,9 +139,8 @@
     </div>
 
     <div class="ref-description">
-    <p>Create more complex strategies with an indicator condition of the form
-    'c1 &gt; c2 &amp; c3 &gt; c4' by combining existing strategies with indicator
-    conditions 'c1 &gt; c2' and 'c3 &gt; c4' respectively.</p>
+    <p>Create custom combined strategies from existing strategies contained in 's1'
+    and 's2' to form 's1 &amp; s2'.</p>
     </div>
 
     <pre class="usage"><span class='fu'>stratcombine</span><span class='op'>(</span><span class='va'>s1</span>, <span class='va'>s2</span><span class='op'>)</span></pre>
@@ -163,7 +167,8 @@
     and 's2' have to be met simulateneously for a trade position to be taken.</p>
 <p>The boolean values showing whether these conditions are met are stored in
     the 'cond' column.</p>
-<p>The stategy summary may be accessed via the summary() function.</p>
+<p>The stategy summary may be accessed by the summary() function or via
+    look().</p>
     <h2 class="hasAnchor" id="further-details"><a class="anchor" href="#further-details"></a>Further Details</h2>
 
     

@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -101,6 +101,12 @@
     </li>
     <li>
       <a href="../articles/strategies.html">ichimoku: Beyond Visualization - Quantitative Strategies</a>
+    </li>
+    <li>
+      <a href="../articles/utilities.html">ichimoku: Auxiliary Functions</a>
+    </li>
+    <li>
+      <a href="../articles/xoanda.html">ichimoku: The OANDA fxTrade API</a>
     </li>
   </ul>
 </li>
@@ -145,7 +151,6 @@
   <span class='va'>ticker</span>,
   <span class='va'>message</span>,
   theme <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"original"</span>, <span class='st'>"dark"</span>, <span class='st'>"solarized"</span>, <span class='st'>"mono"</span><span class='op'>)</span>,
-  strat <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
@@ -178,14 +183,8 @@ will be used.</p></td>
 'solarized' or 'mono'.</p></td>
     </tr>
     <tr>
-      <th>strat</th>
-      <td><p>[default TRUE] if the ichimoku object contains a strategy, the
-periods for which the strategy results in a position will be shaded. Set
-to FALSE to turn off this behaviour.</p></td>
-    </tr>
-    <tr>
       <th>...</th>
-      <td><p>additional arguments to be passed along.</p></td>
+      <td><p>other arguments not used by this method.</p></td>
     </tr>
     </table>
 

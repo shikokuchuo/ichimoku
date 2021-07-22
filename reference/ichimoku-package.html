@@ -47,7 +47,11 @@
     refinement on candlestick charting originating from Japan, now in
     widespread use in technical analysis worldwide. Translating as
     'one-glance equilibrium chart', it allows the price action and market
-    structure of financial securities to be determined 'at-a-glance'." />
+    structure of financial securities to be determined 'at-a-glance'.
+    Incorporates an interface with the OANDA fxTrade API
+    https://developer.oanda.com/ for retrieving historical and live
+    streaming price data for major currencies, metals, commodities,
+    government bonds and stock indices." />
 
 
 
@@ -79,7 +83,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -106,6 +110,12 @@
     </li>
     <li>
       <a href="../articles/strategies.html">ichimoku: Beyond Visualization - Quantitative Strategies</a>
+    </li>
+    <li>
+      <a href="../articles/utilities.html">ichimoku: Auxiliary Functions</a>
+    </li>
+    <li>
+      <a href="../articles/xoanda.html">ichimoku: The OANDA fxTrade API</a>
     </li>
   </ul>
 </li>
@@ -146,7 +156,11 @@
     refinement on candlestick charting originating from Japan, now in
     widespread use in technical analysis worldwide. Translating as
     'one-glance equilibrium chart', it allows the price action and market
-    structure of financial securities to be determined 'at-a-glance'.</p>
+    structure of financial securities to be determined 'at-a-glance'.
+    Incorporates an interface with the OANDA fxTrade API
+    <a href='https://developer.oanda.com/'>https://developer.oanda.com/</a> for retrieving historical and live
+    streaming price data for major currencies, metals, commodities,
+    government bonds and stock indices.</p>
     </div>
 
 
@@ -155,19 +169,26 @@
 
     
 
-<p>Data &amp; Visualization</p><ul>
+<p>Data</p><ul>
 <li><p><code><a href='ichimoku.html'>ichimoku</a></code> to create an ichimoku object from price
     data.</p></li>
+<li><p><code><a href='oanda.html'>oanda</a></code> to retrieve price data from the OANDA fxTrade
+    API.</p></li>
+<li><p><code><a href='oanda_stream.html'>oanda_stream</a></code> to stream a live data feed from the
+    OANDA fxTrade API.</p></li>
+</ul><p>Visualization</p><ul>
 <li><p><code><a href='plot.ichimoku.html'>plot.ichimoku</a></code> to plot a cloud chart from an
     ichimoku object.</p></li>
 <li><p><code><a href='iplot.html'>iplot</a></code> to plot an interactive cloud chart from an
     ichimoku object.</p></li>
-<li><p><code><a href='rplot.html'>rplot</a></code> to plot a customisable reactive cloud chart
-    from an ichimoku object.</p></li>
+<li><p><code><a href='oanda_chart.html'>oanda_chart</a></code> to create live updating ichimoku cloud
+    charts using OANDA data.</p></li>
+<li><p><code><a href='oanda_studio.html'>oanda_studio</a></code> a complete live analysis environment
+    using OANDA data implemented in R Shiny.</p></li>
 </ul><p>Strategies &amp; ML</p><ul>
-<li><p><code><a href='strat.html'>strat</a></code> to augment an ichimoku object with a strategy.</p></li>
-<li><p><code><a href='stratcombine.html'>stratcombine</a></code> to combine and create more complex
-    strategies.</p></li>
+<li><p><code><a href='strat.html'>strat</a></code> to augment an ichimoku object with a strategy,
+    including complex combined and asymmetric strategies.</p></li>
+<li><p><code><a href='stratcombine.html'>stratcombine</a></code> to create custom combined strategies.</p></li>
 <li><p><code><a href='autostrat.html'>autostrat</a></code> to automatically evaluate and rank
     top-performing strategies.</p></li>
 <li><p><code><a href='mlgrid.html'>mlgrid</a></code> to generate a numeric representation of the
@@ -176,7 +197,9 @@
 
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Package website:
+    <p>'OANDA' and 'fxTrade' are trademarks owned by OANDA Corporation,
+    an entity unaffiliated with the ichimoku package.</p>
+<p>Package website:
     <a href='https://shikokuchuo.net/ichimoku/'>https://shikokuchuo.net/ichimoku/</a></p>
 <p>The most recent version of the package may be found at
     <a href='https://github.com/shikokuchuo/ichimoku/'>https://github.com/shikokuchuo/ichimoku/</a></p>

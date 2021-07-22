@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Convert xts to data.frame — xts_df • ichimoku</title>
+<title>Merge Dataframes — df_merge • ichimoku</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,11 @@
 
 
 
-<meta property="og:title" content="Convert xts to data.frame — xts_df" />
-<meta property="og:description" content="A performant 'xts' to 'data.frame' constructor with no data validation or
-    checking." />
+<meta property="og:title" content="Merge Dataframes — df_merge" />
+<meta property="og:description" content="Full join on an arbitrary number of 'data.frame' objects passed as arguments,
+    preserving all unique entries. Can be used to combine historical time
+    series data where each observation is indexed by a unique timestamp and
+    all periods are complete." />
 
 
 
@@ -133,50 +135,73 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Convert xts to data.frame</h1>
+    <h1>Merge Dataframes</h1>
     <small class="dont-index">Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
-    <div class="hidden name"><code>xts_df.Rd</code></div>
+    <div class="hidden name"><code>df_merge.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>A performant 'xts' to 'data.frame' constructor with no data validation or
-    checking.</p>
+    <p>Full join on an arbitrary number of 'data.frame' objects passed as arguments,
+    preserving all unique entries. Can be used to combine historical time
+    series data where each observation is indexed by a unique timestamp and
+    all periods are complete.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>xts_df</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>df_merge</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>an 'xts' object.</p></td>
+      <th>...</th>
+      <td><p>data.frame objects to combine.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A 'data.frame' object. The 'xts' index is preserved as the first
-    column with header 'index'.</p>
+    <p>A data.frame containing all unique entries in the objects passed is
+    returned.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Can be used to join price dataframes retrieved by <code><a href='oanda.html'>oanda</a></code>.
+    The function is designed to join complete historical data. If the data to
+    be merged contains data with incomplete periods, all entries are preserved
+    rather than updated. If incomplete periods are detected within the data,
+    a warning is issued, and the resulting dataframe should be manually checked
+    in case it contains unwanted duplicates. Use <code><a href='df_append.html'>df_append</a></code> for
+    updating dataframes with new values.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>cloud</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ichimoku.html'>ichimoku</a></span><span class='op'>(</span><span class='va'>sample_ohlc_data</span><span class='op'>)</span>
-<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>xts_df</span><span class='op'>(</span><span class='va'>cloud</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 'data.frame':	260 obs. of  13 variables:
-#&gt;  $ index    : POSIXct, format: "2020-01-02 00:00:00" "2020-01-03 00:00:00" ...
-#&gt;  $ open     : num  123 123 123 123 124 ...
-#&gt;  $ high     : num  123 123 123 124 125 ...
-#&gt;  $ low      : num  122 123 122 123 124 ...
-#&gt;  $ close    : num  123 123 123 124 125 ...
-#&gt;  $ cd       : num  -1 1 1 1 1 1 -1 0 -1 -1 ...
-#&gt;  $ tenkan   : num  NA NA NA NA NA ...
-#&gt;  $ kijun    : num  NA NA NA NA NA NA NA NA NA NA ...
-#&gt;  $ senkouA  : num  NA NA NA NA NA NA NA NA NA NA ...
-#&gt;  $ senkouB  : num  NA NA NA NA NA NA NA NA NA NA ...
-#&gt;  $ chikou   : num  123 123 124 124 122 ...
-#&gt;  $ cloudTop : num  NA NA NA NA NA NA NA NA NA NA ...
-#&gt;  $ cloudBase: num  NA NA NA NA NA NA NA NA NA NA ...</div><div class='input'>
+    <pre class="examples"><div class='input'><span class='va'>data1</span> <span class='op'>&lt;-</span> <span class='va'>sample_ohlc_data</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>6</span>, <span class='op'>]</span>
+<span class='va'>data1</span>
+</div><div class='output co'>#&gt;         time  open  high   low close
+#&gt; 1 2020-01-02 123.0 123.1 122.5 122.7
+#&gt; 2 2020-01-03 122.7 122.8 122.6 122.8
+#&gt; 3 2020-01-05 122.8 123.4 122.4 123.3
+#&gt; 4 2020-01-06 123.3 124.3 123.3 124.1
+#&gt; 5 2020-01-07 124.1 124.8 124.0 124.8
+#&gt; 6 2020-01-08 124.8 125.4 124.5 125.3</div><div class='input'><span class='va'>data2</span> <span class='op'>&lt;-</span> <span class='va'>sample_ohlc_data</span><span class='op'>[</span><span class='fl'>4</span><span class='op'>:</span><span class='fl'>10</span>, <span class='op'>]</span>
+<span class='va'>data2</span>
+</div><div class='output co'>#&gt;          time  open  high   low close
+#&gt; 4  2020-01-06 123.3 124.3 123.3 124.1
+#&gt; 5  2020-01-07 124.1 124.8 124.0 124.8
+#&gt; 6  2020-01-08 124.8 125.4 124.5 125.3
+#&gt; 7  2020-01-09 125.3 125.3 124.8 125.2
+#&gt; 8  2020-01-10 125.2 125.3 125.1 125.2
+#&gt; 9  2020-01-12 125.2 125.2 124.3 124.4
+#&gt; 10 2020-01-13 124.4 124.5 123.7 123.9</div><div class='input'><span class='fu'>df_merge</span><span class='op'>(</span><span class='va'>data1</span>, <span class='va'>data2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;          time  open  high   low close
+#&gt; 1  2020-01-02 123.0 123.1 122.5 122.7
+#&gt; 2  2020-01-03 122.7 122.8 122.6 122.8
+#&gt; 3  2020-01-05 122.8 123.4 122.4 123.3
+#&gt; 4  2020-01-06 123.3 124.3 123.3 124.1
+#&gt; 5  2020-01-07 124.1 124.8 124.0 124.8
+#&gt; 6  2020-01-08 124.8 125.4 124.5 125.3
+#&gt; 7  2020-01-09 125.3 125.3 124.8 125.2
+#&gt; 8  2020-01-10 125.2 125.3 125.1 125.2
+#&gt; 9  2020-01-12 125.2 125.2 124.3 124.4
+#&gt; 10 2020-01-13 124.4 124.5 123.7 123.9</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

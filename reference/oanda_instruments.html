@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Convert xts to data.frame — xts_df • ichimoku</title>
+<title>Get OANDA Instruments — oanda_instruments • ichimoku</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,10 @@
 
 
 
-<meta property="og:title" content="Convert xts to data.frame — xts_df" />
-<meta property="og:description" content="A performant 'xts' to 'data.frame' constructor with no data validation or
-    checking." />
+<meta property="og:title" content="Get OANDA Instruments — oanda_instruments" />
+<meta property="og:description" content="Return list of instruments including major currencies, metals, commodities,
+    government bonds and stock indices for which pricing data is available
+    from the OANDA fxTrade API." />
 
 
 
@@ -133,50 +134,52 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Convert xts to data.frame</h1>
-    <small class="dont-index">Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
-    <div class="hidden name"><code>xts_df.Rd</code></div>
+    <h1>Get OANDA Instruments</h1>
+    <small class="dont-index">Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/R/oanda.R'><code>R/oanda.R</code></a></small>
+    <div class="hidden name"><code>oanda_instruments.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>A performant 'xts' to 'data.frame' constructor with no data validation or
-    checking.</p>
+    <p>Return list of instruments including major currencies, metals, commodities,
+    government bonds and stock indices for which pricing data is available
+    from the OANDA fxTrade API.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>xts_df</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>oanda_instruments</span><span class='op'>(</span>server <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"practice"</span>, <span class='st'>"live"</span><span class='op'>)</span>, <span class='va'>apikey</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>an 'xts' object.</p></td>
+      <th>server</th>
+      <td><p>[default "practice"] select either the "practice" or "live" server
+depending on the account type held with OANDA.</p></td>
+    </tr>
+    <tr>
+      <th>apikey</th>
+      <td><p>(optional) string containing the OANDA fxTrade API key (personal
+access token), or function that returns this string. Does not need to be
+specified if already stored by oanda_set_key(). Can also be entered
+interactively if not specified.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A 'data.frame' object. The 'xts' index is preserved as the first
-    column with header 'index'.</p>
+    <p>A data.frame containing the instrument name, type, and full display name.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>This function returns a data.frame listing the instrument names
+    available for an account associated with the supplied OANDA fxTrade API key.</p>
+<p>For further details please refer to the OANDA fxTrade API vignette by
+    running: <code><a href='../articles/xoanda.html'>vignette("xoanda", package = "ichimoku")</a></code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>cloud</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ichimoku.html'>ichimoku</a></span><span class='op'>(</span><span class='va'>sample_ohlc_data</span><span class='op'>)</span>
-<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>xts_df</span><span class='op'>(</span><span class='va'>cloud</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 'data.frame':	260 obs. of  13 variables:
-#&gt;  $ index    : POSIXct, format: "2020-01-02 00:00:00" "2020-01-03 00:00:00" ...
-#&gt;  $ open     : num  123 123 123 123 124 ...
-#&gt;  $ high     : num  123 123 123 124 125 ...
-#&gt;  $ low      : num  122 123 122 123 124 ...
-#&gt;  $ close    : num  123 123 123 124 125 ...
-#&gt;  $ cd       : num  -1 1 1 1 1 1 -1 0 -1 -1 ...
-#&gt;  $ tenkan   : num  NA NA NA NA NA ...
-#&gt;  $ kijun    : num  NA NA NA NA NA NA NA NA NA NA ...
-#&gt;  $ senkouA  : num  NA NA NA NA NA NA NA NA NA NA ...
-#&gt;  $ senkouB  : num  NA NA NA NA NA NA NA NA NA NA ...
-#&gt;  $ chikou   : num  123 123 124 124 122 ...
-#&gt;  $ cloudTop : num  NA NA NA NA NA NA NA NA NA NA ...
-#&gt;  $ cloudBase: num  NA NA NA NA NA NA NA NA NA NA ...</div><div class='input'>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='co'># OANDA fxTrade API key required to run this example</span>
+<span class='fu'>oanda_instruments</span><span class='op'>(</span><span class='op'>)</span>
+<span class='op'>}</span>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

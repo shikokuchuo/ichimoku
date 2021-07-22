@@ -10,7 +10,19 @@
     <loc>https://shikokuchuo.net/ichimoku/reference/autostrat.html</loc>
   </url>
   <url>
+    <loc>https://shikokuchuo.net/ichimoku/reference/df_append.html</loc>
+  </url>
+  <url>
+    <loc>https://shikokuchuo.net/ichimoku/reference/df_merge.html</loc>
+  </url>
+  <url>
     <loc>https://shikokuchuo.net/ichimoku/reference/df_trim.html</loc>
+  </url>
+  <url>
+    <loc>https://shikokuchuo.net/ichimoku/reference/drawGuide.html</loc>
+  </url>
+  <url>
+    <loc>https://shikokuchuo.net/ichimoku/reference/drawInfotip.html</loc>
   </url>
   <url>
     <loc>https://shikokuchuo.net/ichimoku/reference/gplot.html</loc>
@@ -37,6 +49,9 @@
     <loc>https://shikokuchuo.net/ichimoku/reference/look.html</loc>
   </url>
   <url>
+    <loc>https://shikokuchuo.net/ichimoku/reference/matrix_df.html</loc>
+  </url>
+  <url>
     <loc>https://shikokuchuo.net/ichimoku/reference/maxOver.html</loc>
   </url>
   <url>
@@ -46,13 +61,34 @@
     <loc>https://shikokuchuo.net/ichimoku/reference/mlgrid.html</loc>
   </url>
   <url>
+    <loc>https://shikokuchuo.net/ichimoku/reference/oanda.html</loc>
+  </url>
+  <url>
+    <loc>https://shikokuchuo.net/ichimoku/reference/oanda_accounts.html</loc>
+  </url>
+  <url>
+    <loc>https://shikokuchuo.net/ichimoku/reference/oanda_chart.html</loc>
+  </url>
+  <url>
+    <loc>https://shikokuchuo.net/ichimoku/reference/oanda_get_key.html</loc>
+  </url>
+  <url>
+    <loc>https://shikokuchuo.net/ichimoku/reference/oanda_instruments.html</loc>
+  </url>
+  <url>
+    <loc>https://shikokuchuo.net/ichimoku/reference/oanda_set_key.html</loc>
+  </url>
+  <url>
+    <loc>https://shikokuchuo.net/ichimoku/reference/oanda_stream.html</loc>
+  </url>
+  <url>
+    <loc>https://shikokuchuo.net/ichimoku/reference/oanda_studio.html</loc>
+  </url>
+  <url>
     <loc>https://shikokuchuo.net/ichimoku/reference/plot.ichimoku.html</loc>
   </url>
   <url>
     <loc>https://shikokuchuo.net/ichimoku/reference/print.ichimoku.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/rplot.html</loc>
   </url>
   <url>
     <loc>https://shikokuchuo.net/ichimoku/reference/sample_ohlc_data.html</loc>
@@ -83,5 +119,11 @@
   </url>
   <url>
     <loc>https://shikokuchuo.net/ichimoku/articles/strategies.html</loc>
+  </url>
+  <url>
+    <loc>https://shikokuchuo.net/ichimoku/articles/utilities.html</loc>
+  </url>
+  <url>
+    <loc>https://shikokuchuo.net/ichimoku/articles/xoanda.html</loc>
   </url>
 </urlset>

@@ -41,8 +41,9 @@
 
 <meta property="og:title" content="Automated Ichimoku Strategies — autostrat" />
 <meta property="og:description" content="Generate a list of the top performing ichimoku cloud strategies based on
-    indicator conditions of the form 'c1 &amp;gt; c2' or level 2 strategies based on
-    combined indicator conditions of the form 'c1 &amp;gt; c2 &amp;amp; c3 &amp;gt; c4'." />
+    simple indicator conditions of the form 'c1 &amp;gt; c2' (level 1), complex
+    combined strategies of the form 'c1 &amp;gt; c2 &amp;amp; c3 &amp;gt; c4' (level 2), or complex
+    asymmetric strategies of the form 'c1 &amp;gt; c2 x c3 &amp;gt; c4' (level 3)." />
 
 
 
@@ -74,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -101,6 +102,12 @@
     </li>
     <li>
       <a href="../articles/strategies.html">ichimoku: Beyond Visualization - Quantitative Strategies</a>
+    </li>
+    <li>
+      <a href="../articles/utilities.html">ichimoku: Auxiliary Functions</a>
+    </li>
+    <li>
+      <a href="../articles/xoanda.html">ichimoku: The OANDA fxTrade API</a>
     </li>
   </ul>
 </li>
@@ -135,8 +142,9 @@
 
     <div class="ref-description">
     <p>Generate a list of the top performing ichimoku cloud strategies based on
-    indicator conditions of the form 'c1 &gt; c2' or level 2 strategies based on
-    combined indicator conditions of the form 'c1 &gt; c2 &amp; c3 &gt; c4'.</p>
+    simple indicator conditions of the form 'c1 &gt; c2' (level 1), complex
+    combined strategies of the form 'c1 &gt; c2 &amp; c3 &gt; c4' (level 2), or complex
+    asymmetric strategies of the form 'c1 &gt; c2 x c3 &gt; c4' (level 3).</p>
     </div>
 
     <pre class="usage"><span class='fu'>autostrat</span><span class='op'>(</span><span class='va'>x</span>, n <span class='op'>=</span> <span class='fl'>8</span>, dir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"long"</span>, <span class='st'>"short"</span><span class='op'>)</span>, level <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></pre>
@@ -158,7 +166,9 @@
     </tr>
     <tr>
       <th>level</th>
-      <td><p>[default 1] set to 2 to also return combined strategies.</p></td>
+      <td><p>[default 1] to return simple strategies. For complex strategies,
+set level to 2 to return strategies of the form 's1 &amp; s2' or level to 3
+to return strategies of the form 's1 x s2'</p></td>
     </tr>
     </table>
 
@@ -173,7 +183,7 @@
     <p>Ichimoku objects for each strategy are returned as a list. The
     cumulative log returns for all strategies as well as the summaries for
     the 'n' top strategies are saved as attributes to the list. This
-    information may be viewed by using look() on the returned list.</p>
+    information may be retrieved by using look() on the returned list.</p>
 <p>Each individual ichimoku object may be accessed via its position in the
     list, e.g. [[1]] for the 1st item, or by using <code><a href='look.html'>look</a></code>
     specifying the parameter 'which'.</p>
@@ -381,7 +391,26 @@
 #&gt; Direction              "short"                           
 #&gt; Start                  2020-04-01 23:00:00               
 #&gt; End                    2020-09-28 23:00:00               
-#&gt; Ticker                 "TKR"                             </div><div class='input'>
+#&gt; Ticker                 "TKR"                             </div><div class='input'><span class='fu'>autostrat</span><span class='op'>(</span><span class='va'>cloud</span>, n <span class='op'>=</span> <span class='fl'>1</span>, dir <span class='op'>=</span> <span class='st'>"long"</span>, level <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;                        [,1]                               
+#&gt; Strategy               "senkouB &gt; high x cloudTop &gt; close"
+#&gt; ---------------------  "----------"                       
+#&gt; Strategy cuml return % 15.26                              
+#&gt; Per period mean ret %  0.0917                             
+#&gt; Periods in market      113                                
+#&gt; Total trades           3                                  
+#&gt; Average trade length   37.67                              
+#&gt; Trade success %        66.67                              
+#&gt; Worst trade ret %      -0.38                              
+#&gt; ---------------------  "----------"                       
+#&gt; Benchmark cuml ret %   0.94                               
+#&gt; Per period mean ret %  0.006                              
+#&gt; Periods in market      155                                
+#&gt; ---------------------  "----------"                       
+#&gt; Direction              "long"                             
+#&gt; Start                  2020-04-01 23:00:00                
+#&gt; End                    2020-09-28 23:00:00                
+#&gt; Ticker                 "TKR"                              </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

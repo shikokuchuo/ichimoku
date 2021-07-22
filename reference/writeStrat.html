@@ -73,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -100,6 +100,12 @@
     </li>
     <li>
       <a href="../articles/strategies.html">ichimoku: Beyond Visualization - Quantitative Strategies</a>
+    </li>
+    <li>
+      <a href="../articles/utilities.html">ichimoku: Auxiliary Functions</a>
+    </li>
+    <li>
+      <a href="../articles/xoanda.html">ichimoku: The OANDA fxTrade API</a>
     </li>
   </ul>
 </li>
@@ -137,7 +143,7 @@
     objects.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>writeStrat</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>strategy</span>, <span class='va'>dir</span>, <span class='va'>start</span>, <span class='va'>end</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>writeStrat</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>strategy</span>, <span class='va'>dir</span>, <span class='va'>xlen</span>, <span class='va'>p2</span>, <span class='va'>end</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -155,8 +161,12 @@
       <td><p>trade direction, either 'long' or 'short'.</p></td>
     </tr>
     <tr>
-      <th>start</th>
-      <td><p>integer position of start date in index.</p></td>
+      <th>xlen</th>
+      <td><p>integer number of rows of 'x'.</p></td>
+    </tr>
+    <tr>
+      <th>p2</th>
+      <td><p>integer medium cloud period.</p></td>
     </tr>
     <tr>
       <th>end</th>
@@ -170,8 +180,8 @@
     'strat'.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The stategy summary may subsequently be accessed via the summary()
-    function.</p>
+    <p>The stategy summary may subsequently be accessed by the summary()
+    function or via look().</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

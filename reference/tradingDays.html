@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -99,6 +99,12 @@
     </li>
     <li>
       <a href="../articles/strategies.html">ichimoku: Beyond Visualization - Quantitative Strategies</a>
+    </li>
+    <li>
+      <a href="../articles/utilities.html">ichimoku: Auxiliary Functions</a>
+    </li>
+    <li>
+      <a href="../articles/xoanda.html">ichimoku: The OANDA fxTrade API</a>
     </li>
   </ul>
 </li>
@@ -147,12 +153,11 @@
     <tr>
       <th>holidays</th>
       <td><p>(optional) a vector, or function which outputs a
-vector, of dates defined as holidays. If not specified, New Year's and
-Christmas day are defined as holidays by default.</p></td>
+vector, of dates defined as holidays.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>additional arguments to be passed along.</p></td>
+      <td><p>other arguments not used by this function.</p></td>
     </tr>
     </table>
 
@@ -160,11 +165,18 @@ Christmas day are defined as holidays by default.</p></td>
 
     <p>A vector of logical values: TRUE if the corresponding element of 'x'
     is a weekday and not a holiday, FALSE otherwise.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>New Year's Day (01/01) and Christmas Day (25/12) are defined as
+    holidays by default regardless of the values supplied by 'holidays'.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>dates</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span>from <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.POSIXlt.html'>as.POSIXct</a></span><span class='op'>(</span><span class='st'>"2020-01-01"</span><span class='op'>)</span>, by <span class='op'>=</span> <span class='st'>"1 day"</span>, length.out <span class='op'>=</span> <span class='fl'>7</span><span class='op'>)</span>
-<span class='fu'>tradingDays</span><span class='op'>(</span><span class='va'>dates</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] FALSE  TRUE  TRUE FALSE FALSE  TRUE  TRUE</div><div class='input'>
+<span class='va'>dates</span>
+</div><div class='output co'>#&gt; [1] "2020-01-01 UTC" "2020-01-02 UTC" "2020-01-03 UTC" "2020-01-04 UTC"
+#&gt; [5] "2020-01-05 UTC" "2020-01-06 UTC" "2020-01-07 UTC"</div><div class='input'><span class='fu'>tradingDays</span><span class='op'>(</span><span class='va'>dates</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] FALSE  TRUE  TRUE FALSE FALSE  TRUE  TRUE</div><div class='input'><span class='fu'>tradingDays</span><span class='op'>(</span><span class='va'>dates</span>, holidays <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"2020-01-02"</span>, <span class='st'>"2020-01-03"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

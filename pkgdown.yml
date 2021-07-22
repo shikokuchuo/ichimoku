@@ -4,7 +4,9 @@ pkgdown_sha: ~
 articles:
   reference: reference.html
   strategies: strategies.html
-last_built: 2021-07-02T11:18Z
+  utilities: utilities.html
+  xoanda: xoanda.html
+last_built: 2021-07-22T10:32Z
 urls:
   reference: https://shikokuchuo.net/ichimoku/reference
   article: https://shikokuchuo.net/ichimoku/articles

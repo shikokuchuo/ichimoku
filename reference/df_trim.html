@@ -40,8 +40,8 @@
 
 
 <meta property="og:title" content="Trim Dataframe Rows with NA Values — df_trim" />
-<meta property="og:description" content="Trim rows containing NA values from a 'data.frame' object. A performant
-    version of na.omit.data.frame with no data validation or checking." />
+<meta property="og:description" content="Trim rows containing NA values from a 'data.frame' object. A more performant
+    version of stats::na.omit() with no data validation or checking." />
 
 
 
@@ -73,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -100,6 +100,12 @@
     </li>
     <li>
       <a href="../articles/strategies.html">ichimoku: Beyond Visualization - Quantitative Strategies</a>
+    </li>
+    <li>
+      <a href="../articles/utilities.html">ichimoku: Auxiliary Functions</a>
+    </li>
+    <li>
+      <a href="../articles/xoanda.html">ichimoku: The OANDA fxTrade API</a>
     </li>
   </ul>
 </li>
@@ -133,8 +139,8 @@
     </div>
 
     <div class="ref-description">
-    <p>Trim rows containing NA values from a 'data.frame' object. A performant
-    version of na.omit.data.frame with no data validation or checking.</p>
+    <p>Trim rows containing NA values from a 'data.frame' object. A more performant
+    version of <code><a href='https://rdrr.io/r/stats/na.fail.html'>stats::na.omit()</a></code> with no data validation or checking.</p>
     </div>
 
     <pre class="usage"><span class='fu'>df_trim</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
@@ -151,10 +157,20 @@
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>The data.frame 'x' with rows containing NA values removed.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Works only where the columns contain atomic (e.g. numeric) and not
+    recursive types (e.g. lists).</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>, <span class='cn'>NA</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='fl'>2</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'>df_trim</span><span class='op'>(</span><span class='va'>data</span><span class='op'>)</span>
+<span class='va'>data</span>
+</div><div class='output co'>#&gt;   c.1.4..NA. c.NA..2.5.
+#&gt; 1          1         NA
+#&gt; 2          2          2
+#&gt; 3          3          3
+#&gt; 4          4          4
+#&gt; 5         NA          5</div><div class='input'><span class='fu'>df_trim</span><span class='op'>(</span><span class='va'>data</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;   c.1.4..NA. c.NA..2.5.
 #&gt; 2          2          2
 #&gt; 3          3          3

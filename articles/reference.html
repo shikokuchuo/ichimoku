@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -58,6 +58,12 @@
     </li>
     <li>
       <a href="../articles/strategies.html">ichimoku: Beyond Visualization - Quantitative Strategies</a>
+    </li>
+    <li>
+      <a href="../articles/utilities.html">ichimoku: Auxiliary Functions</a>
+    </li>
+    <li>
+      <a href="../articles/xoanda.html">ichimoku: The OANDA fxTrade API</a>
     </li>
   </ul>
 </li>
@@ -113,7 +119,7 @@
 <p>Ichimoku Kinko Hyo can be translated as ‘one-glance equilibrium chart’. It is designed to allow the price action and market structure of financial securities to be determined visually ‘at-a-glance’.</p>
 <p>For example in a strongly upwards-trending market, the candlesticks would be above the Tenkan-sen, which would be above the Kijun-sen, which in turn would be above the cloud, and the Chikou span may not have anything above it.</p>
 <p>The lines and the cloud represent dynamic support and resistance zones relative to the price candles. Generally, the thicker the cloud, the tougher the support/resistance. In our previous example, if the price now reverts downwards, it can expect support first at the Kijun-sen, then the Tenkan-sen and finally the cloud itself.</p>
-<p>When the price enters the cloud, i.e. it is between the cloud base and cloud top, it is an important area to guage whether there is sufficient momentum for the price to break through the cloud or whether the cloud eventually provokes a reversal.</p>
+<p>When the price enters the cloud, i.e. it is between the cloud base and cloud top, it is an important area to gauge whether there is sufficient momentum for the price to break through the cloud or whether the cloud eventually provokes a reversal.</p>
 <p>More subtle interpretations involve the Chikou span in particular and its action in relation to the cloud lines as well as the candles.</p>
 <p>It is outside the scope of this vignette to provide a full tutorial on the use of Ichimoku Kinko Hyo.</p>
 </div>
@@ -144,7 +150,7 @@
 <code class="sourceCode R"><span class="co"># Simulated OHLC price data is assigned to data frame 'TKR':</span>
 <span class="va">TKR</span> <span class="op">&lt;-</span> <span class="va">sample_ohlc_data</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">TKR</span><span class="op">)</span>
-<span class="co">#&gt;         date  open  high   low close</span>
+<span class="co">#&gt;         time  open  high   low close</span>
 <span class="co">#&gt; 1 2020-01-02 123.0 123.1 122.5 122.7</span>
 <span class="co">#&gt; 2 2020-01-03 122.7 122.8 122.6 122.8</span>
 <span class="co">#&gt; 3 2020-01-05 122.8 123.4 122.4 123.3</span>
@@ -161,11 +167,11 @@
 <p>Optional arguments:</p>
 <ul>
 <li>
-<strong>ticker</strong>: a ticker to identify the instrument, otherwise this is set to the name of the input object</li>
+<code>ticker</code> a ticker to identify the instrument, otherwise this is set to the name of the input object</li>
 <li>
-<strong>periods</strong>: [default c(9, 26, 52)] a vector defining the length of periods used for the cloud. This parameter should not normally be changed as using other values would be invalid in the context of traditional Ichimoku analysis</li>
+<code>periods</code> [default c(9, 26, 52)] a vector defining the length of periods used for the cloud. This parameter should not normally be modified as using other values would be invalid in the context of traditional Ichimoku analysis</li>
 <li>
-<strong>…</strong> other arguments to be passed along. For instance, to the <code><a href="../reference/tradingDays.html">tradingDays()</a></code> function, which is used by ichimoku to exclude weekend and holiday dates when calculating the future cloud</li>
+<code>...</code> additional arguments, for instance ‘holidays’, passed along to <code><a href="../reference/tradingDays.html">tradingDays()</a></code> for calculating the future cloud on daily data</li>
 </ul>
 <p>The returned object has the following specification:</p>
 <ul>
@@ -242,7 +248,7 @@
 <div id="plot" class="section level3">
 <h3 class="hasAnchor">
 <a href="#plot" class="anchor"></a>plot()</h3>
-<p>ichimoku offers the choice of 3 visualization systems: static (default) and interactive (with plotly) and reactive (with Shiny).</p>
+<p>ichimoku offers the choice of 2 visualization systems: static (default) and interactive (reactive charts using R Shiny).</p>
 <div id="static-plots" class="section level4">
 <h4 class="hasAnchor">
 <a href="#static-plots" class="anchor"></a>1. Static Plots</h4>
@@ -256,52 +262,54 @@
 <code class="sourceCode R"><span class="co"># Example code for incrementally updating ggplot2 layers:</span>
 <span class="va">plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span>
 <span class="va">plot</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p>The ‘ggplot’ object can be further used to produce an interactive chart that can be embedded in HTML output created by R Markdown, by using the ‘plotly’ package as per the below:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># For a plotly interactive plot:</span>
+<span class="fu">plotly</span><span class="fu">::</span><span class="fu">ggplotly</span><span class="op">(</span><span class="va">plot</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="interactive-plots" class="section level4">
 <h4 class="hasAnchor">
 <a href="#interactive-plots" class="anchor"></a>2. Interactive Plots</h4>
-<p>Interactive charts require the ‘plotly’ package. If plotly is not available, ichimoku will issue an informational message, but not install the package automatically as it is recognised that plotly may not be available in all environments.</p>
-<p>To produce an interactive plot, use ichimoku’s <code><a href="../reference/iplot.html">iplot()</a></code> function. The interactive plot will be almost identical in format to the equivalent static plot.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># For interactive charting:</span>
-<span class="fu"><a href="../reference/iplot.html">iplot</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span></code></pre></div>
+<p>Interactive plots require the ‘shiny’ package to be installed. If Shiny is not available, ichimoku will issue an informational message, but not install the package automatically as it is recognised that Shiny may not be available in all environments.</p>
+<p>To produce an interactive plot, use ichimoku’s <code><a href="../reference/iplot.html">iplot()</a></code> function. An R Shiny app will be launched, allowing full further customisation of the chart interactively, including selecting the time window etc.</p>
 <p>In a live analysis environment, as opposed to creating charts for reports, it is usually preferable to work with interactive plots. This is simply due to the ease of use of being able to directly manipulate the chart:</p>
 <ul>
-<li>hover over the candles or cloud lines to read off values at any given date-time</li>
-<li>select an area of interest to zoom into</li>
-<li>double click anywhere to quickly reset</li>
+<li>hover over the chart to read off data values at any given date-time</li>
+<li>cursor guides provide easy calibration of date-times and price levels</li>
+<li>select periods of interest on the timeline to subset / enlarge</li>
 </ul>
-</div>
-<div id="reactive-plots" class="section level4">
-<h4 class="hasAnchor">
-<a href="#reactive-plots" class="anchor"></a>3. Reactive Plots</h4>
-<p>Reactive plots require the ‘Shiny’ package to be installed. If shiny is not available, ichimoku will issue an informational message, but not install the package automatically as it is recognised that shiny may not be available in all environments.</p>
-<p>Simply use <code><a href="../reference/rplot.html">rplot()</a></code> on an ichimoku object to launch an R Shiny app, which will allow full further customisation of the chart interactively, incluing selecting the theme and time window etc.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># For interactive charting:</span>
-<span class="fu"><a href="../reference/rplot.html">rplot</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span></code></pre></div>
-<p>The key feature of <code><a href="../reference/rplot.html">rplot()</a></code> is an intuitive cursor tooltip which allows ready access to the data when hovering over the chart.</p>
 </div>
 <div id="plot-customisation" class="section level4">
 <h4 class="hasAnchor">
 <a href="#plot-customisation" class="anchor"></a>Plot customisation</h4>
 <p>A plot with default parameters is shown above, but the plot functions contain built-in customisations to allow for most envisioned use cases. The example below demonstrates the arguments that can be supplied to customise the plot.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">cloud</span>, window <span class="op">=</span> <span class="st">"2020-05-01/2020-11-01"</span>, ticker <span class="op">=</span> <span class="st">"TKR Co."</span>, theme <span class="op">=</span> <span class="st">"dark"</span><span class="op">)</span></code></pre></div>
 <p><img src="reference_files/figure-html/plot2-1.png" width="672"></p>
-<p>The same arguments are used across <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> and <code><a href="../reference/iplot.html">iplot()</a></code> functions:</p>
+<p>The following arguments for customisation are shared across <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> and <code><a href="../reference/iplot.html">iplot()</a></code>:</p>
 <ul>
 <li>
-<strong>window</strong>: indispensable in a proper workflow. <code><a href="../reference/ichimoku.html">ichimoku()</a></code> is run on a larger dataset than that of interest and then at the visualization stage, the data can be subset to the window of interest. Supply as an ISO-8601 compatible range string in the format used for ‘xts’ objects, for example the range ‘2020-02-15/2020-08-15’ or ‘2020-02-15/’ (from 15 Feb 2020) or ‘/2020-08’ (until end-Aug 2020) or simply ‘2020’ to select all of the year 2020</li>
+<code>window</code> (optional) indispensable in a proper workflow. <code><a href="../reference/ichimoku.html">ichimoku()</a></code> is run on a larger dataset than that of interest and at the visualization stage the data is subset to the window of interest. Supply as an ISO-8601 compatible range string in the format used for ‘xts’ objects, for example the range ‘2020-02-15/2020-08-15’ or ‘2020-02-15/’ (from 15 Feb 2020) or ‘/2020-08’ (until end-Aug 2020) or simply ‘2020’ to select all of the year 2020</li>
 <li>
-<strong>ticker</strong>: used to supply a different ticker to that stored in the ichimoku object, or alternatively a longer-form name or other text that will appear in the chart heading</li>
+<code>ticker</code> (optional) used to supply a different ticker to that stored in the ichimoku object, or alternatively a longer-form name or other text that will appear in the chart heading</li>
 <li>
-<strong>theme</strong>: [default ‘original’] the following themes are also available: ‘dark’, ‘solarized’ and ‘mono’</li>
+<code>message</code> (optional) used to specify a chart message to display under the title</li>
+<li>
+<code>theme</code> [default ‘original’] the following themes are also available: ‘dark’, ‘solarized’ and ‘mono’</li>
+<li>
+<code>strat</code> [default TRUE] if true, the periods for which a strategy results in a market position will be shaded (if the ichimoku object contains a strategy) with the strategy printed as the chart message (if a message is not already specified). See the <a href="strategies.html">strategies vignette</a> for more information on working with strategies.</li>
 </ul>
-<p><code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> has the following additional argument, currently unavailable for interactive charting:</p>
+<p><code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> takes additional parameters as follows:</p>
 <ul>
 <li>
-<strong>strat</strong>: [default TRUE] if true, the periods for which a strategy results in a market position will be shaded (if the ichimoku object contains a strategy). See the <a href="strategies.html">strategies vignette</a> for more information on working with strategies.</li>
+<code>...</code> additional arguments passed along to the print method for ‘ggplot’ objects.</li>
+</ul>
+<p><code><a href="../reference/iplot.html">iplot()</a></code> takes the following additional parameters:</p>
+<ul>
+<li>
+<code>...</code> additional parameters passed along to the ‘options’ argument of <code><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html">shiny::shinyApp()</a></code>.</li>
+<li>
+<code>launch.browser</code> [default TRUE] If TRUE, the system’s default web browser will be launched automatically after the app is started. The value of this argument can also be a function to call with the application’s URL. To use the default Shiny viewer in RStudio, please specify <code><a href="https://rdrr.io/r/base/options.html">getOption("shiny.launch.browser")</a></code>.</li>
 </ul>
 </div>
 </div>
@@ -314,7 +322,7 @@
 <a href="#file-formats" class="anchor"></a>File formats</h3>
 <p><code><a href="../reference/ichimoku.html">ichimoku()</a></code> is a generic function that provides S3 methods for objects of class ‘xts’, ‘data.frame’ and ‘matrix’. Other popular formats such as ‘data.table’ and ‘tibble’ that also inherit the class ‘data.frame’ should also work with <code><a href="../reference/ichimoku.html">ichimoku()</a></code>.</p>
 <p>ichimoku has been designed to be fully pipeable and interfaces well with other R packages that return financial data. As an example, the <code>getSymbols()</code> function from the ‘quantmod’ package currently exhibit non-standard R behaviour which assigns the data into an object but returns a text string containing the name of the object. ichimoku is able to handle this automatically such that a chart can be created without the need to save intermediate objects:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Using R 4.1's new pipe operator:</span>
 <span class="fu">quantmod</span><span class="fu">::</span><span class="fu">getSymbols</span><span class="op">(</span><span class="st">"C"</span><span class="op">)</span> |&gt; <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co"># Or equally using the 'magrittr' pipe:</span>
@@ -353,24 +361,24 @@
 <li><p>There are NA values within the price data. This will affect the algorithm calculating the cloud lines in the window immediately following such NA values. Please check the data and manually correct NA values before invoking <code><a href="../reference/ichimoku.html">ichimoku()</a></code></p></li>
 </ul>
 </div>
-<div id="changes-since-version-0-2" class="section level3">
+<div id="function-modifications-since-version-0-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#changes-since-version-0-2" class="anchor"></a>Changes since version 0.2</h3>
+<a href="#function-modifications-since-version-0-2" class="anchor"></a>Function modifications since version 0.2</h3>
 <ul>
-<li><p>Argument ‘gaps’ to the plot functions is deprecated. As a convenience, the functionality has been moved to a ‘gplot()’ function which will remain in the package for the time being.</p></li>
-<li><p>iplot() no longer falls back to a static plot when the ‘plotly’ package is not installed to ensure consistency of return types</p></li>
-<li><p>Validation changes to ichimoku() mean it will now take a column named ‘index’, ‘date’ or ‘time’ in precedence to a row index.</p></li>
+<li><p><code><a href="../reference/iplot.html">iplot()</a></code> now uses an R Shiny backend rather than plotly, as it is performant and scalable for large datasets and offers similar/enhanced functionality. To continue working with plotly, simply pass the ‘ggplot’ object created by plot() to <code>plotly::ggplotly()</code></p></li>
+<li><p>Argument ‘gaps’ to the plot functions is deprecated. As a convenience, the functionality has been moved to a <code><a href="../reference/gplot.html">gplot()</a></code> function which will remain in the package until at least version 0.4.</p></li>
+<li><p><code><a href="../reference/ichimoku.html">ichimoku()</a></code> validation changes mean it will now take a column named ‘index’, ‘date’ or ‘time’ in precedence to a row index.</p></li>
 </ul>
 </div>
-<div id="changes-since-version-0-1" class="section level3">
+<div id="function-modifications-since-version-0-1" class="section level3">
 <h3 class="hasAnchor">
-<a href="#changes-since-version-0-1" class="anchor"></a>Changes since version 0.1</h3>
+<a href="#function-modifications-since-version-0-1" class="anchor"></a>Function modifications since version 0.1</h3>
 <ul>
-<li><p>‘ichimoku’ objects now inherit ‘xts’ and ‘zoo’ classes instead of ‘data.frame’. This means that columns extracted from ‘ichimoku’ objects are able to work seamlessly in packages expecting ‘xts’ indexed time series. Conversely for use with packages that only accept data frames then ‘ichimoku’ objects must first be wrapped in as.data.frame()</p></li>
+<li><p>‘ichimoku’ objects now inherit ‘xts’ and ‘zoo’ classes instead of ‘data.frame’. This means that columns extracted from ‘ichimoku’ objects are able to work seamlessly in packages expecting ‘xts’ indexed time series. Conversely for use with packages that only accept data frames then ‘ichimoku’ objects must first be wrapped in <code><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame()</a></code> or translated using the included <code><a href="../reference/xts_df.html">xts_df()</a></code> utility.</p></li>
 <li><p>For candle direction, the column has been renamed from ‘candle’ to ‘cd’ and is now stored as numeric values -1 for ‘down’, 0 for ‘flat’, and 1 for ‘up’, rather than as a factor</p></li>
-<li><p>plot() now references the new ‘cd’ column as well as new ‘cloudTop’ and ‘cloudBase’ columns to eliminate potential artefacts when drawing the cloud. This means that using plot() on an ichimoku object created in version 0.1.* will no longer work. The solution is to run <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on the old object to re-create the object according to the new specification (all data is preserved)</p></li>
-<li><p>The ‘i = TRUE’ argument has been retired from plot() so that both plot() and iplot() now take exactly the same sequence of arguments for ease of use. Use <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> for static charting, <code><a href="../reference/iplot.html">iplot()</a></code> for interactive charting</p></li>
-<li><p>The ‘from’ and ‘to’ arguments of the plot() and iplot() functions have been replaced by a single argument ‘window’ which takes an ISO-8601 compatible range string and is much more flexible in use, taking full advantage of ichimoku’s switch to the ‘xts’ format</p></li>
+<li><p><code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> now references the new ‘cd’ column as well as new ‘cloudTop’ and ‘cloudBase’ columns to eliminate potential artefacts when drawing the cloud. This means that using <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> on an ichimoku object created in version 0.1.* will no longer work. The solution is to run <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on the old object to re-create the object according to the new specification (all data is preserved)</p></li>
+<li><p>The ‘i = TRUE’ argument has been retired from <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> so that both <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> and <code><a href="../reference/iplot.html">iplot()</a></code> now take exactly the same sequence of arguments for ease of use. Use <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> for static charting, <code><a href="../reference/iplot.html">iplot()</a></code> for interactive charting</p></li>
+<li><p>The ‘from’ and ‘to’ arguments of the <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> and <code><a href="../reference/iplot.html">iplot()</a></code> functions have been replaced by a single argument ‘window’ which takes an ISO-8601 compatible range string and is much more flexible in use, taking full advantage of ichimoku’s switch to the ‘xts’ format</p></li>
 </ul>
 </div>
 </div>
@@ -381,19 +389,21 @@
 <ul>
 <li>Rcpp - allows the use of C++ code for fast rolling window calculations</li>
 <li>ggplot2 - the widely-used R graphics system for visualization</li>
+<li>httr - for interfacing with external APIs</li>
+<li>jsonlite - for processing data retrieved from external APIs</li>
 <li>rlang - R language requirement arising from the use of ‘ggplot2’</li>
 <li>xts - ichimoku shares the ‘xts’ format for time series</li>
 <li>zoo - ‘xts’ is built on top of ‘zoo’</li>
 </ul>
 <p>Optional:</p>
 <ul>
-<li>plotly - for interactive visualization</li>
-<li>shiny - for reactive customisable visualizations</li>
+<li>shiny - for interactive visualizations</li>
+<li>keyring - for storing external API credentials</li>
 </ul>
 </div>
 <div id="further-resources" class="section level2">
 <h2 class="hasAnchor">
-<a href="#further-resources" class="anchor"></a>Further resources</h2>
+<a href="#further-resources" class="anchor"></a>Further Resources</h2>
 <p>Package website: <a href="https://shikokuchuo.net/ichimoku/" class="uri">https://shikokuchuo.net/ichimoku/</a></p>
 <p>The most recent version of the package may be found at <a href="https://github.com/shikokuchuo/ichimoku/" class="uri">https://github.com/shikokuchuo/ichimoku/</a></p>
 <hr>
