@@ -13,11 +13,16 @@ df_trim(x)
 The data.frame 'x' with rows containing NA values removed.
 }
 \description{
-Trim rows containing NA values from a 'data.frame' object. A performant
-    version of na.omit.data.frame with no data validation or checking.
+Trim rows containing NA values from a 'data.frame' object. A more performant
+    version of \code{stats::na.omit()} with no data validation or checking.
+}
+\details{
+Works only where the columns contain atomic (e.g. numeric) and not
+    recursive types (e.g. lists).
 }
 \examples{
 data <- data.frame(c(1:4, NA), c(NA, 2:5))
+data
 df_trim(data)
 
 }

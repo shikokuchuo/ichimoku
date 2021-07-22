@@ -11,31 +11,30 @@
 \usage{
 ichimoku(x, ...)
 
-\method{ichimoku}{ichimoku}(x, ticker, periods = c(9, 26, 52), ...)
+\method{ichimoku}{ichimoku}(x, ticker, periods = c(9L, 26L, 52L), ...)
 
-\method{ichimoku}{xts}(x, ticker, periods = c(9, 26, 52), ...)
+\method{ichimoku}{xts}(x, ticker, periods = c(9L, 26L, 52L), ...)
 
-\method{ichimoku}{matrix}(x, ticker, periods = c(9, 26, 52), ...)
+\method{ichimoku}{matrix}(x, ticker, periods = c(9L, 26L, 52L), ...)
 
-\method{ichimoku}{data.frame}(x, ticker, periods = c(9, 26, 52), ...)
+\method{ichimoku}{data.frame}(x, ticker, periods = c(9L, 26L, 52L), ...)
 
-\method{ichimoku}{default}(x, ticker, periods = c(9, 26, 52), ...)
+\method{ichimoku}{default}(x, ticker, periods = c(9L, 26L, 52L), ...)
 }
 \arguments{
 \item{x}{a data.frame or other compatible object, which includes xts,
 data.table, tibble, and matrix.}
 
-\item{...}{additional arguments to be passed along. For instance, 'holidays'
-may be passed to the \code{\link{tradingDays}} function, used by ichimoku
-when calculating the future cloud.}
+\item{...}{additional arguments, for instance 'holidays', passed along to
+\code{\link{tradingDays}} for calculating the future cloud on daily data.}
 
 \item{ticker}{(optional) specify a ticker to identify the instrument,
 otherwise this is set to the name of the input object 'x'.}
 
-\item{periods}{[default c(9, 26, 52)] a vector defining the length of periods
-used for the cloud. This parameter shoud not normally be changed as using
-other values would be invalid in the context of traditional Ichimoku
-analysis.}
+\item{periods}{[default c(9L, 26L, 52L)] a vector defining the length of
+periods used for the cloud. This parameter shoud not normally be modified
+as using other values would be invalid in the context of traditional
+Ichimoku analysis.}
 }
 \value{
 An ichimoku object is returned with S3 classes of 'ichimoku', 'xts'
@@ -48,19 +47,20 @@ An ichimoku object is returned with S3 classes of 'ichimoku', 'xts'
 }
 \description{
 Create an ichimoku object containing the values for all components of the
-    Ichimoku Kinko Hyo cloud chart, ready for plotting. The object includes
-    a date-time index, OHLC pricing data, candle direction, the cloud lines
-    Tenkan-sen, Kijun-sen, Senkou span A, Senkou span B and Chikou span, as
-    well as values for the cloud top and base.
+    Ichimoku Kinko Hyo cloud chart, ready for visualization and quantitative
+    analysis. The object includes a date-time index, OHLC pricing data,
+    candle direction, the cloud lines Tenkan-sen, Kijun-sen, Senkou span A,
+    Senkou span B and Chikou span, as well as values for the cloud top and
+    base.
 }
 \details{
 Calling an ichimoku object automatically invokes its print method,
     which will by default produce a printout of the data to the console as
     well as a static plot of the cloud chart to the graphical device.
 
-    For further options, including interactive charting, use plot() on the
-    returned ichimoku object to pass further arguments for customising
-    the chart.
+    For further options, please use plot() on the returned ichimoku object to
+    pass further arguments for customising the chart. Use iplot() for
+    interactive charting.
 
     Where an ichimoku object is passed to ichimoku(), the ichimoku object is
     re-calculated using the OHLC pricing data contained within.
@@ -73,6 +73,6 @@ Calling an ichimoku object automatically invokes its print method,
 
 \examples{
 cloud <- ichimoku(sample_ohlc_data)
-ichimoku(sample_ohlc_data, ticker = "TKR", periods = c(9, 26, 52))
+ichimoku(sample_ohlc_data, ticker = "TKR", periods = c(9L, 26L, 52L))
 
 }

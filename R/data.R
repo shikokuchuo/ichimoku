@@ -5,11 +5,11 @@
 #'
 #' @format A data frame with 234 observations of 5 variables:
 #' \itemize{
-#'   \item{Date}{ - date of observation}
-#'   \item{Open}{ - daily opening price}
-#'   \item{Low}{ - daily low price}
-#'   \item{High}{ - daily high price}
-#'   \item{Close}{ - daily closing price}
+#'   \item{time}{ - timestamp of observation}
+#'   \item{open}{ - opening price}
+#'   \item{low}{ - low price}
+#'   \item{high}{ - high price}
+#'   \item{close}{ - closing price}
 #' }
 #'
 #' @usage sample_ohlc_data

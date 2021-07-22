@@ -30,7 +30,7 @@ However if a more methodical approach is required, for instance to test hypothes
 
 The 'strategy layer' of the ichimoku package aims to prepare the data in a standardized format for easy analysis in R packages such as 'PerformanceAnalytics'. Short strategy summaries are generated automatically, but are designed to serve as a quick reference rather than a replacement for a full backtest.
 
-The `autostrat()` function is used to further facilitate idea and strategy generation, and leverages the computational abilities of R to simultaneously test all valid indicator combinations. Whilst not all strategies returned may make intuitive sense, it does at least serve to provide another benchmark if nothing else. Again, the results generated are meant to be fed through a full backtest, with all the implications analysed. Past results do not imply future performance, and the results obtained should not be used on the basis of the results alone.
+The `autostrat()` function is used to further facilitate idea and strategy generation, and leverages the computational abilities of R to simultaneously test all valid indicator combinations. Whilst not all strategies returned may make intuitive sense, they will at a minimum serve to provide another benchmark. Again, the results generated are meant to be fed through a full backtest, with all the implications analysed. Past results do not imply future performance, and the results obtained should not be relied upon on the basis of the results alone.
 
 ## Working with Strategies
 
@@ -44,16 +44,16 @@ TKR <- sample_ohlc_data
 cloud <- ichimoku(TKR)
 ```
 
-### 2. Use `strat()` 
+### 2a. Simple strategies using `strat()` 
 
 To test a simple strategy with an indicator condition of the form 'long (or short) while c1 > c2'.
 
-Here the references c1 and c2 are columns of the ichimoku object representing either candlestick values e.g. 'close' or cloud values e.g. 'tenkan'.
+Here 'c1' and 'c2' are the quoted column names of the ichimoku object representing either candlestick values e.g. 'close' or cloud values e.g. 'tenkan'.
 
 Note: the indicator condition is c1 > c2 even for short trades. Hence please take care for example when inverting 'long while close > tenkan' to 'short while close < tenkan', this should be formulated as 'short while tenkan > close'.
 
 ```{r strat}
-strat <- strat(cloud)
+strat <- strat(cloud, c1 = "close", c2 = "tenkan")
 print(strat[100:105], plot = FALSE)
 ```
 
@@ -68,6 +68,16 @@ The use of strat() returns an augmented ichimoku object. The printout above of a
 - **sret**: the discrete returns for the strategy. It is simply ret * posn, i.e. the returns where a position is held
 
 Note: the assumption applies to all strategies that confirmation of whether a condition is satisfied is received at the 'close' of a particular period, and a transaction is initiated at the immediately following 'open'. It is assumed that all transactions are conducted at opening prices. All events are aligned to their correct time periods, which are taken to be from the 'open' to the 'close' inclusive of that period. Hence 'cond' refers to if the condition is satisfied at the 'close' of the period, 'posn' also refers to whether a position is held at the 'close' of the period, and 'txn' refers to if there has been a transaction during that period (in this case occurring at the 'open').
+
+### 2b. Complex strategies using `strat()` 
+
+Complex strategies can be created by `strat()` simply by supplying 'c3' and 'c4' to the function. These are the quoted column names of the ichimoku object that form the second part of the indicator condition.
+
+To create the desired complex strategy, the argument 'type' must also be specified. By default this is set to 2, which means the strategy will be a combined strategy formulated as 'c1 > c2 & c3 > c4', where both conditions must be satisfied.
+
+If 'type' is set to 3, the strategy will be formulated as an asymmetric strategy 'c1 > c2 x c3 > c4', where 'c1 > c2' is used as a position entry indicator, and 'c3 > c4' as a position exit indicator.
+ 
+ + Note: when the strategy is for example 'close' > 'tenkan' x 'tenkan' > 'close', this is equivalent to the simple strategy 'close' > 'tenkan' but not identical due to the strict inequality. In the former case the situation 'close = tenkan' does not trigger a position exit but in the latter it does.
 
 ### 3. View strategy summary with `summary()`
 
@@ -87,19 +97,19 @@ The summary is meant to provide a quick overview of whether a strategy is effect
 
 See [strategy summary specification](#strategy-summary-specification) for details of the reported measures.
 
-### 4. Visualize by calling `plot()`.
+### 4. Visualize by calling `plot()` or `iplot()`.
 
 ```{r plot}
 plot(strat)
 ```
 
-The periods where the strategy results in a market position are now shaded on the ichimoku cloud chart. To view the original chart without the strategy, simply pass the argument `strat = FALSE` when calling `plot()`.
+The periods where the strategy results in a market position are now shaded on the ichimoku cloud chart. The strategy is also printed as the chart message (if not otherwise specified).
 
-Note: `iplot()` interactive charting currently does not implement this additional functionality for strategies.
+To view the original chart without the strategy, simply pass the argument `strat = FALSE` when calling `plot()` or `iplot()`.
 
 ### 5. Combine strategies using `stratcombine()`
 
-Strategies may be combined to form more complex strategies if desired. The function can be used on 2 ichimoku objects containing indicator conditions 'c1 > c2' and 'c3 > c4' respectively, combining them into a new strategy with indicator condition of 'c1 > c2 & c3 > c4'.
+`stratcombine()` can be used to create custom combined strategies from existing strategies contained in 's1' and 's2' to form 's1 & s2'.
 
 ```{r combine}
 strat2 <- strat(cloud, "cloudBase", "kijun")
@@ -107,6 +117,8 @@ strat2 <- strat(cloud, "cloudBase", "kijun")
 newstrat <- stratcombine(strat, strat2)
 summary(newstrat)
 ```
+
+Note: rather than combining simple strategies using `stratcombine()`, it is preferable to supply all 4 arguments `c1`, `c2`, `c3`, and `c4` directly to `strat()` to generate a strategy of 'c1 > c2 & c3 > c4'.
 
 ### 6. Further backtesting and returns analysis
 
@@ -130,15 +142,15 @@ table.Drawdowns(strat[, "sret"])
 
 The analytic capability of R can be leveraged to generate and evaluate all possible strategies. This function is designed for simplicity and can be run without any additional arguments on an ichimoku object. The arguments it does take are limited to:
 
-- **n** [default 8] number of strategies to return
-- **dir** [default 'long'] trade direction 'long' or 'short'
-- **level** [default 1] set to 2 to also return combined strategies
+- `n` [default 8] number of strategies to return
+- `dir` [default 'long'] trade direction 'long' or 'short'
+- `level` [default 1] to return simple strategies. For complex strategies, set `level = 2` to return combined strategies of the form 's1 & s2' or `level = 3` to return asymmetric strategies of the form 's1 x s2'
 
 ```{r autostrat}
 autostrat(cloud, n = 3)
 ```
 
-The output of autostrat is a list of ichimoku objects. Each object can be accessed by its individual item number e.g. [[1]] for the first object, or by using look() specifying the parameter 'which'.
+The output of `autostrat()` is a list of ichimoku objects. Each object can be accessed by its individual item number e.g. [[1]] for the first object, or by using look() specifying the parameter 'which'.
 
 The metadata is also saved as attributes to the list and can be accessed by the function `look()`:
 
@@ -148,16 +160,23 @@ The metadata is also saved as attributes to the list and can be accessed by the 
 
 Note: the strategies returned may not be in perfect order of strategy returns. This is due to the fact that the implementation via `mlgrid()` simultaneously tests all strategies using the same time interval for comparability. However individual strategies are then run on the top 'n' strategies using all of the available data for those indicators, which may be more than that used during comparison.
 
-Note: as SenkouA, SenkouB, cloudTop and cloudBase are used in conjuction with other indicators, it is possible to get a series of similar returns with cloudBase > c2, senkouB > c2 etc. Although these strategies may at times be equivalent or considered equivalent, this is not always the case and ichimoku presents all such results.
+Note: as SenkouA, SenkouB, cloudTop and cloudBase are used in conjunction with other indicators, it is possible to get a series of similar returns with cloudBase > c2, senkouB > c2 etc. Although these strategies may at times be equivalent or considered equivalent, this is not always the case and ichimoku presents all such results.
 
-### `autostrat()` level 2
+### `autostrat()` Levels 2 and 3
 
-Set the `level = 2` argument to `autostrat()` to test all strategies with a combination of up to 2 indicator conditions.
+Set the argument `level = 2` to `autostrat()` to test all strategies with a combination of up to 2 indicator conditions, i.e. strat() with type = 2.
 
 ```{r autostrat2}
-autostrat(cloud, n = 3, dir = "short", level = 2)
+autostrat(cloud, n = 2, dir = "short", level = "2")
 ```
 
+Set the argument `level = 3` to `autostrat()` to test all strategies using an asymmetric combination of up to 2 indicator conditions, i.e. strat() with type = 3.
+
+Please note that level 3 autostrat is considered experimental as the results are likely to have a higher sensitivity to the data and therefore be less robust.
+
+```{r autostrat3}
+autostrat(cloud, n = 2, dir = "long", level = "3")
+```
 
 ## Strategy Summary Specification
 
@@ -219,7 +238,17 @@ mlgrid(cloud, y = "ret", dir = "short", type = "numeric", unique = FALSE)[100:10
 
 Note: only valid combinations are included within the grid. This means excluding any combination involving 'open' as it is in effect a lagged indicator and not contemporaneous. The following trivial or highly-collinear pairs are also excluded: {high, close} ,{low, close}, {low, high}, {cloudTop, Senkou A}, {cloudBase, senkou A}, {cloudTop, senkouB}, {cloudBase, senkouB}, {cloudBase, cloudTop}.
 
-## Further resources
+### `look()`
+
+A core utility function has been included in the form of `look()`. This is used to inspect the informational attributes of an ichimoku object or an object returned by `autostrat()`, `mlgrid()` or `oanda()`.
+
+```{r look}
+look(cloud)
+
+look(strat)
+```
+
+## Further Resources
 
 Package website: https://shikokuchuo.net/ichimoku/
 

@@ -4,9 +4,9 @@
 #'
 #' Create a grid of ichimoku indicator conditions and next period returns. The
 #'     grid facilitates comparing strategy returns or as a basis for further
-#'     processing in machine learning applications. The purpose of this function
-#'     is to translate the visual representation of the relationship between
-#'     cloud chart elements into a numerical format for further analysis.
+#'     processing in machine learning applications. Translates the visual
+#'     representation of the relationship between cloud chart elements into a
+#'     numerical format for further analysis.
 #'
 #' @param x an ichimoku object.
 #' @param y [default 'logret'] choose target variable 'logret' (log returns) or
@@ -54,28 +54,30 @@
 mlgrid <- function(x, y = c("logret", "ret"), dir = c("long", "short"),
                    type = c("boolean", "numeric"), unique = TRUE) {
 
-  if(!is.ichimoku(x)) stop("mlgrid() only works on ichimoku objects", call. = FALSE)
+  if (!is.ichimoku(x)) stop("mlgrid() only works on ichimoku objects", call. = FALSE)
   target <- match.arg(y)
   dir <- match.arg(dir)
   type <- match.arg(type)
   xlen <- dim(x)[1L]
   p2 <- attr(x, "periods")[2L]
   y <- c(diff(log(coredata(x$open)))[2:(xlen - 1)], NA, NA)
-  if(dir == "short") y <- -y
-  if(target == "ret") y <- exp(y) - 1
+  if (dir == "short") y <- -y
+  if (target == "ret") y <- exp(y) - 1
   cols <- c("chikou", "close", "high", "low", "tenkan", "kijun",
             "senkouA", "senkouB", "cloudTop", "cloudBase")
   comb <- as.matrix(expand.grid(cols, cols, KEEP.OUT.ATTRS = FALSE, stringsAsFactors = FALSE)
-                    )[-grid_dup(length(cols), identical = TRUE), ]
+                    )[-grid_dup(length(cols), omit.id = TRUE), ]
   pairs <- comb[-c(10L, 11L, 18L, 41:45), ]
   matrix <- writeMatrix(x, pairs = pairs, p2 = p2, xlen = xlen, type = type)
-  if(!isTRUE(unique)) {
+  if (!isTRUE(unique)) {
     pairs <- cbind(pairs[, 2L], pairs[, 1L])
     matrixf <- writeMatrix(x, pairs = pairs, p2 = p2, xlen = xlen, type = type)
     matrix <- cbind(matrix, matrixf)
   }
-  grid <- structure(c(list(y = y), apply(matrix, 2, identity, simplify = FALSE)),
+  mat <- unname(matrix)
+  grid <- structure(c(list(y), lapply(seq_len(dim(mat)[2L]), function(i) mat[, i])),
                     class = "data.frame",
+                    names = c("y", colnames(matrix)),
                     row.names = as.character(index(x)),
                     y = target,
                     direction = dir,
@@ -117,22 +119,18 @@ writeMatrix <- function(x, pairs, p2, xlen, type) {
 #'     package. Can also be used to extract ichimoku objects from lists returned
 #'     by \code{\link{autostrat}}.
 #'
-#' @param x an ichimoku object or an object returned by \code{\link{autostrat}}
-#'     or \code{\link{mlgrid}}.
+#' @param x an ichimoku object or an object returned by \code{\link{autostrat}},
+#'     \code{\link{mlgrid}} or \code{\link{oanda}}.
 #' @param which (optional) integer value of strategy to return from an autostrat
 #'     list.
 #'
 #' @return List of attribute values, or if 'which' is specified on an autostrat
 #'     list, an ichimoku object containing a strategy.
 #'
-#'     Note: for a level 2 autostrat object, if the object fails to print
+#' @details Note: for a level 2 autostrat object, if the object fails to print
 #'     correctly due to its length, please access the list items directly using
 #'     \code{look(x)$summary} and \code{look(x)$logret}, possibly in conjunction
 #'     with head() or by setting the 'max' argument in print().
-#'
-#' @section Further Details:
-#'     Please refer to the strategies vignette by running:
-#'     \code{vignette("strategies", package = "ichimoku")}
 #'
 #' @examples
 #' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
@@ -147,24 +145,33 @@ writeMatrix <- function(x, pairs, p2, xlen, type) {
 #' grid <- mlgrid(cloud)
 #' look(grid)
 #'
+#' \dontrun{
+#' # OANDA API key required to run this example
+#' prices <- oanda("USD_JPY")
+#' look(prices)
+#' }
+#'
 #' @export
 #'
 look <- function(x, which) {
   name <- deparse(substitute(x))
-  if(is.ichimoku(x)) {
-    if(hasStrat(x)) list(periods = attr(x, "periods"), periodicity = attr(x, "periodicity"),
-                         ticker = attr(x, "ticker"), strat = attr(x, "strat"))
+  if (is.ichimoku(x)) {
+    if (hasStrat(x)) list(periods = attr(x, "periods"), periodicity = attr(x, "periodicity"),
+                          ticker = attr(x, "ticker"), strat = attr(x, "strat"))
     else list(periods = attr(x, "periods"), periodicity = attr(x, "periodicity"),
               ticker = attr(x, "ticker"))
   }
-  else if(isTRUE(attr(x, "autostrat"))) {
-    if(missing(which)) list(logret = attr(x, "logret"), summary = attr(x, "summary"))
+  else if (isTRUE(attr(x, "autostrat"))) {
+    if (missing(which)) list(logret = attr(x, "logret"), summary = attr(x, "summary"))
     else tryCatch(x[[which]], error = function(e) {
       stop("Value '", which, "' for 'which' is invalid\n'which' must be an integer ",
            "specifying one of the strategies contained in '", name, "'", call. = FALSE)
       })
-  } else if(isTRUE(attr(x, "mlgrid"))) {
+  } else if (isTRUE(attr(x, "mlgrid"))) {
     list(y = attr(x, "y"), direction = attr(x, "direction"), ticker = attr(x, "ticker"))
+  } else if (isTRUE(attr(x, "oanda"))) {
+    list(instrument = attr(x, "instrument"), price = attr(x, "price"),
+         timestamp = attr(x, "timestamp"))
   } else stop("look() only works with certain object types created with the ichimoku package",
               call. = FALSE)
 }

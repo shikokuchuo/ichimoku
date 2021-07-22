@@ -12,7 +12,7 @@
 \item{plot}{[default TRUE] set to FALSE to prevent automatic plotting of
 the ichimoku cloud chart.}
 
-\item{...}{additional arguments to be passed along.}
+\item{...}{additional arguments passed along to print and plot functions.}
 }
 \value{
 The ichimoku object 'x' passed as parameter.

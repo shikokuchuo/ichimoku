@@ -38,9 +38,9 @@ A data.frame in a 'tidy' format with one observation per row and one
 \description{
 Create a grid of ichimoku indicator conditions and next period returns. The
     grid facilitates comparing strategy returns or as a basis for further
-    processing in machine learning applications. The purpose of this function
-    is to translate the visual representation of the relationship between
-    cloud chart elements into a numerical format for further analysis.
+    processing in machine learning applications. Translates the visual
+    representation of the relationship between cloud chart elements into a
+    numerical format for further analysis.
 }
 \details{
 The date-time index corresponds to when the indicator condition is

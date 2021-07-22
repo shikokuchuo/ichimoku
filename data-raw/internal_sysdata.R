@@ -11,4 +11,6 @@ ichimoku_themes <- cbind(
            "gray10", "gray10", "gray10", "white", "gray20", "gray10")
 )
 
-usethis::use_data(ichimoku_themes, internal = TRUE, overwrite = TRUE)
+ichimoku_user_agent <- "r-ichimoku/0.3.0"
+
+usethis::use_data(ichimoku_themes, ichimoku_user_agent, internal = TRUE, overwrite = TRUE)

@@ -6,54 +6,60 @@
 \usage{
 iplot(
   x,
-  window,
   ticker,
-  message,
   theme = c("original", "dark", "solarized", "mono"),
-  ...
+  message,
+  strat = TRUE,
+  ...,
+  launch.browser = TRUE
 )
 }
 \arguments{
 \item{x}{an object of class 'ichimoku'.}
 
-\item{window}{(optional) a date-time window to subset the plot, in ISO-8601
-compatible range strings of the format used for 'xts' objects, for example
-"2020-02-15/2020-08-15" or "2020-02-15/", "/2020-08" or "2020-07".}
-
 \item{ticker}{(optional) specify a ticker (or other text) to include in the
 chart heading. If not set, the ticker saved within the ichimoku object
 will be used.}
 
-\item{message}{(optional) specify a chart message to display under the title.}
-
 \item{theme}{[default 'original'] with alternative choices of 'dark',
 'solarized' or 'mono'.}
 
-\item{...}{additional arguments to be passed along.}
+\item{message}{(optional) specify a chart message to display under the title.}
+
+\item{strat}{[default TRUE] if the ichimoku object contains a strategy, the
+periods for which the strategy results in a position will be shaded, and
+the strategy printed as the chart message (if a message is not already
+specified). Set to FALSE to turn off this behaviour.}
+
+\item{...}{additional parameters passed along to the 'options' argument of
+\code{shiny::shinyApp()}.}
+
+\item{launch.browser}{[default TRUE] If TRUE, the system's default web
+browser will be launched automatically after the app is started. The value
+of this argument can also be a function to call with the application's URL.
+To use the default Shiny viewer in RStudio, please specify
+\code{getOption("shiny.launch.browser")}.}
 }
 \value{
-Returns a plotly object with classes 'plotly' and 'htmlwidget'.
+Returns a Shiny app object with class 'shiny.appobj'.
 }
 \description{
-Plot interactive Ichimoku Kinko Hyo cloud charts from ichimoku objects. iplot()
-    can be used in conjunction with R Markdown to create portable, self-contained
-    interactive HTML charts.
+Plot Ichimoku Kinko Hyo cloud charts from ichimoku objects in a Shiny app,
+    allowing full customisation of chart elements in an interactive environment.
+    Intuitive cursor infotip allows ready access to the data directly from the
+    chart.
 }
 \details{
-This function has a dependency on the 'plotly' package.
+This function has a dependency on the 'shiny' package.
 }
-\section{Further Details}{
-
-    Please refer to the reference vignette by running:
-    \code{vignette("reference", package = "ichimoku")}
-}
-
 \examples{
-\donttest{
+if (interactive()) {
+# Only run examples in interactive R sessions
 cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
-
 iplot(cloud)
-iplot(cloud, window = "2020-05-15/2020-10-30", ticker = "TKR Co.", theme = "dark")
+
+# To open in RStudio viewer instead of default browser
+iplot(cloud, launch.browser = getOption("shiny.launch.browser"))
 }
 
 }

@@ -6,6 +6,8 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/shikokuchuo/ichimoku/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/shikokuchuo/ichimoku/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/shikokuchuo/ichimoku/branch/main/graph/badge.svg)](https://codecov.io/gh/shikokuchuo/ichimoku?branch=main)
 [![CRAN
 Status](https://www.r-pkg.org/badges/version/ichimoku)](https://CRAN.R-project.org/package=ichimoku)
 <!-- badges: end -->
@@ -15,11 +17,15 @@ Visualization and Tools for Ichimoku Kinko Hyo Strategies
 An implementation of ‘Ichimoku Kinko Hyo’, also commonly known as ‘cloud
 charts’. Static and interactive visualizations with tools for creating,
 backtesting and development of quantitative ‘ichimoku’ strategies. As
-described in Sasaki (1996, <ISBN:4925152009>), the technique is a
+described in Sasaki (1996, ISBN:4925152009), the technique is a
 refinement on candlestick charting originating from Japan, now in
 widespread use in technical analysis worldwide. Translating as
 ‘one-glance equilibrium chart’, it allows the price action and market
 structure of financial securities to be determined ‘at-a-glance’.
+Incorporates an interface with the OANDA fxTrade API
+<https://developer.oanda.com/> for retrieving historical and live
+streaming price data for major currencies, metals, commodities,
+government bonds and stock indices.
 
 ## Installation
 
@@ -84,10 +90,18 @@ autostrat(cloud, n = 3)
 
 ## Principal ichimoku functions
 
-#### Data & Visualization
+#### Data
 
 -   [`ichimoku()`](https://shikokuchuo.net/ichimoku/reference/ichimoku.html) -
     to create an ichimoku object from price data.
+
+-   [`oanda()`](https://shikokuchuo.net/ichimoku/reference/oanda.html) -
+    to retrieve price data from the OANDA fxTrade API.
+
+-   [`oanda_stream()`](https://shikokuchuo.net/ichimoku/reference/oanda_stream.html) -
+    to stream a live data feed from the OANDA fxTrade API.
+
+#### Visualization
 
 -   [`plot()`](https://shikokuchuo.net/ichimoku/reference/plot.ichimoku.html) -
     to plot a cloud chart from an ichimoku object.
@@ -95,16 +109,21 @@ autostrat(cloud, n = 3)
 -   [`iplot()`](https://shikokuchuo.net/ichimoku/reference/iplot.html) -
     to plot an interactive cloud chart from an ichimoku object.
 
--   [`rplot()`](https://shikokuchuo.net/ichimoku/reference/rplot.html) -
-    to plot a customisable reactive cloud chart from an ichimoku object.
+-   [`oanda_chart()`](https://shikokuchuo.net/ichimoku/reference/oanda_chart.html) -
+    to create live updating ichimoku cloud charts using OANDA data.
+
+-   [`oanda_studio()`](https://shikokuchuo.net/ichimoku/reference/oanda_studio.html) -
+    a complete live analysis environment using OANDA data implemented in
+    R Shiny.
 
 #### Strategies & ML
 
 -   [`strat()`](https://shikokuchuo.net/ichimoku/reference/strat.html) -
-    to augment an ichimoku object with a strategy.
+    to augment an ichimoku object with a strategy, including complex
+    combined and asymmetric strategies.
 
 -   [`stratcombine()`](https://shikokuchuo.net/ichimoku/reference/stratcombine.html) -
-    to combine and create more complex strategies.
+    to create custom combined strategies.
 
 -   [`autostrat()`](https://shikokuchuo.net/ichimoku/reference/autostrat.html) -
     to automatically evaluate and rank top-performing strategies.
@@ -113,7 +132,10 @@ autostrat(cloud, n = 3)
     to generate a numeric representation of the relationship between
     ichimoku cloud chart elements.
 
-## Reference
+## References
+
+‘OANDA’ and ‘fxTrade’ are trademarks owned by OANDA Corporation, an
+entity unaffiliated with the ichimoku package.
 
 R package site: <https://shikokuchuo.net/ichimoku/>
 

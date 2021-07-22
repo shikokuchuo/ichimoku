@@ -1,0 +1,155 @@
+---
+title: "ichimoku: Auxiliary Functions"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{ichimoku: Auxiliary Functions}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 7, fig.height = 5
+)
+```
+
+```{r setup}
+library(ichimoku)
+```
+## Introduction
+
+This vignette is dedicated to the auxiliary functions exported by the ichimoku package. 
+
+Note that all of the auxiliary functions are programmed for performance and are hence stripped of all validation and error-checking code. If they are used outside of their intended scopes then errors can be expected. In particular, the input types must match exactly.
+
+### Core Auxiliary Functions
+
+#### tradingDays()
+
+Used to subset a vector of dates to trading days. Note, if the argument 'holidays' is passed to `ichimoku()`, this is passed through to this function when calculating the dates that the future cloud will fall on.
+
+Takes 2 arguments:
+
+- `x`  a vector of POSIXct date objects.
+- `holidays`  (optional) a vector, or function which outputs a vector, of dates defined as holidays. If not specified, New Year's and Christmas day are defined as holidays by default.
+
+```{r tradingDays}
+dates <- seq(from = as.POSIXct("2020-01-01"), by = "1 day", length.out = 7)
+dates
+tradingDays(dates)
+tradingDays(dates, holidays = c("2020-01-01", "2020-01-02"))
+
+```
+
+#### grid_dup()
+
+Create a vector of element positions of duplicates in the output of expand.grid on 2 identical vectors. A faster method of creating combinations for 2 variabes than `utils::combn()`.
+
+Takes 2 arguments:
+
+- `n`  the length of vector passed to `expand.grid()`.
+- `omit.id`  [default FALSE] to not select the elements where the 2 items are identical. Set to TRUE to also select these. The output of expand.grid, subset to remove duplicates with 'omit.id' set to TRUE would be the equivalent of `utils::combn(n, 2)`.
+
+```{r griddup}
+n <- 3
+expand.grid(1:n, 1:n)
+expand.grid(1:n, 1:n)[-grid_dup(n), ]
+expand.grid(1:n, 1:n)[-grid_dup(n, omit.id = TRUE), ]
+```
+
+### Performant Dataframe Constructors
+
+#### xts_df()
+
+Convert an 'xts' object to 'data.frame'. This function can be an order of magnitude faster than `as.data.frame` for an 'xts' object.
+
+Takes a single argument:
+
+- `x`  the 'xts' object to convert to 'data.frame'.
+
+```{r xtsdf}
+cloud <- ichimoku(sample_ohlc_data)
+df <- xts_df(cloud)
+str(df)
+```
+
+#### matrix_df()
+
+Convert a matrix to 'data.frame'. This function is slightly faster than `as.data.frame()` for a matrix.
+
+Takes a single argument:
+
+- `x`  the matrix to convert to 'data.frame'.
+
+```{r matrixdf}
+cloud <- ichimoku(sample_ohlc_data)
+mcloud <- as.matrix(cloud)
+df <- matrix_df(mcloud)
+str(df)
+str(row.names(df))
+```
+
+### Dataframe Manipulation Functions
+
+#### df_trim()
+
+Trim rows containing NA values from a 'data.frame' object. This is a faster version of `stats:::na.omit()`.
+
+Takes a single argument:
+
+- `x`  the data.frame to trim.
+
+```{r dftrim}
+data <- data.frame(c(1:4, NA), c(NA, 2:5))
+data
+df_trim(data)
+```
+
+#### df_merge()
+
+Full join on an arbitrary number of 'data.frame' objects passed as arguments, preserving all unique entries. Can be used to combine historical time series data where each observation is indexed by a unique timestamp and all periods are complete.
+
+Takes an arbitrary number of arguments:
+
+- `...`  data.frame objects to combine.
+
+Can be used to join price dataframes retrieved by `oanda()`. The function is designed to join complete historical data. If the data to be merged contains data with incomplete periods, all entries are preserved rather than updated. If incomplete periods are detected within the data, a warning is issued, and the resulting dataframe should be manually inspected in case it contains unwanted duplicates. Use `df_append()` for updating dataframes with new values.
+
+```{r dfmerge}
+data1 <- sample_ohlc_data[1:6, ]
+data1
+data2 <- sample_ohlc_data[4:10, ]
+data2
+df_merge(data1, data2)
+```
+
+#### df_append()
+
+Update a 'data.frame' object with new data. Can be used to append new updated time series data to an existing dataframe, where each observation is indexed by a unique timestamp.
+
+Takes 2 arguments:
+
+- `new`  data.frame object containing new data.
+- `old`  data.frame object containing existing data.
+
+Can be used to update price dataframes retrieved by `oanda()`. The function is designed to update existing data with new values as they become available. As opposed to `df_merge()`, the data in 'new' will overwrite the data in 'old' rather than create duplicates.
+
+```{r dfappend}
+data1 <- sample_ohlc_data[7:10, ]
+data1
+data2 <- sample_ohlc_data[1:8, ]
+data2
+df_append(data1, data2)
+```
+
+## Further Resources
+
+Package website: https://shikokuchuo.net/ichimoku/
+
+The most recent version of the package may be found at https://github.com/shikokuchuo/ichimoku/
+
+---

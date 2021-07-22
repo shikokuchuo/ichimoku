@@ -10,7 +10,6 @@ gplot(
   ticker,
   message,
   theme = c("original", "dark", "solarized", "mono"),
-  strat = TRUE,
   ...
 )
 }
@@ -30,11 +29,7 @@ will be used.}
 \item{theme}{[default 'original'] with alternative choices of 'dark',
 'solarized' or 'mono'.}
 
-\item{strat}{[default TRUE] if the ichimoku object contains a strategy, the
-periods for which the strategy results in a position will be shaded. Set
-to FALSE to turn off this behaviour.}
-
-\item{...}{additional arguments to be passed along.}
+\item{...}{other arguments not used by this method.}
 }
 \value{
 Returns a ggplot2 object with S3 classes 'gg' and 'ggplot'.

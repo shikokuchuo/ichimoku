@@ -1,0 +1,60 @@
+{
+    "instruments": [
+        {
+            "name": "USD_JPY",
+            "type": "CURRENCY",
+            "displayName": "USD/JPY",
+            "pipLocation": 0,
+            "displayPrecision": 0,
+            "tradeUnitsPrecision": 0,
+            "minimumTradeSize": "0",
+            "maximumTrailingStopDistance": "0.000",
+            "minimumTrailingStopDistance": "0.000",
+            "maximumPositionSize": "0",
+            "maximumOrderUnits": "0",
+            "marginRate": "0.0000",
+            "guaranteedStopLossOrderMode": "DISABLED",
+            "tags": [
+                {
+                    "type": "ASSET_CLASS",
+                    "name": "CURRENCY"
+                }
+            ],
+            "financing": {
+                "longRate": "-0.0000",
+                "shortRate": "-0.0000",
+                "financingDaysOfWeek": [
+                    {
+                        "dayOfWeek": "MONDAY",
+                        "daysCharged": 1
+                    },
+                    {
+                        "dayOfWeek": "TUESDAY",
+                        "daysCharged": 1
+                    },
+                    {
+                        "dayOfWeek": "WEDNESDAY",
+                        "daysCharged": 1
+                    },
+                    {
+                        "dayOfWeek": "THURSDAY",
+                        "daysCharged": 1
+                    },
+                    {
+                        "dayOfWeek": "FRIDAY",
+                        "daysCharged": 1
+                    },
+                    {
+                        "dayOfWeek": "SATURDAY",
+                        "daysCharged": 0
+                    },
+                    {
+                        "dayOfWeek": "SUNDAY",
+                        "daysCharged": 0
+                    }
+                ]
+            }
+        }
+    ],
+    "lastTransactionID": "0"
+}

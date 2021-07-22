@@ -7,8 +7,8 @@
 look(x, which)
 }
 \arguments{
-\item{x}{an ichimoku object or an object returned by \code{\link{autostrat}}
-or \code{\link{mlgrid}}.}
+\item{x}{an ichimoku object or an object returned by \code{\link{autostrat}},
+\code{\link{mlgrid}} or \code{\link{oanda}}.}
 
 \item{which}{(optional) integer value of strategy to return from an autostrat
 list.}
@@ -16,23 +16,18 @@ list.}
 \value{
 List of attribute values, or if 'which' is specified on an autostrat
     list, an ichimoku object containing a strategy.
-
-    Note: for a level 2 autostrat object, if the object fails to print
-    correctly due to its length, please access the list items directly using
-    \code{look(x)$summary} and \code{look(x)$logret}, possibly in conjunction
-    with head() or by setting the 'max' argument in print().
 }
 \description{
 Inspect the informational attributes of objects created by the 'ichimoku'
     package. Can also be used to extract ichimoku objects from lists returned
     by \code{\link{autostrat}}.
 }
-\section{Further Details}{
-
-    Please refer to the strategies vignette by running:
-    \code{vignette("strategies", package = "ichimoku")}
+\details{
+Note: for a level 2 autostrat object, if the object fails to print
+    correctly due to its length, please access the list items directly using
+    \code{look(x)$summary} and \code{look(x)$logret}, possibly in conjunction
+    with head() or by setting the 'max' argument in print().
 }
-
 \examples{
 cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 look(cloud)
@@ -45,5 +40,11 @@ look(strat)
 
 grid <- mlgrid(cloud)
 look(grid)
+
+\dontrun{
+# OANDA API key required to run this example
+prices <- oanda("USD_JPY")
+look(prices)
+}
 
 }

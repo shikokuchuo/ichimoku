@@ -13,7 +13,9 @@ autostrat(x, n = 8, dir = c("long", "short"), level = 1)
 
 \item{dir}{[default 'long'] trade direction, either 'long' or 'short'.}
 
-\item{level}{[default 1] set to 2 to also return combined strategies.}
+\item{level}{[default 1] to return simple strategies. For complex strategies,
+set level to 2 to return strategies of the form 's1 & s2' or level to 3
+to return strategies of the form 's1 x s2'}
 }
 \value{
 A list of 'n' ichimoku objects containing strategies. The
@@ -23,14 +25,15 @@ A list of 'n' ichimoku objects containing strategies. The
 }
 \description{
 Generate a list of the top performing ichimoku cloud strategies based on
-    indicator conditions of the form 'c1 > c2' or level 2 strategies based on
-    combined indicator conditions of the form 'c1 > c2 & c3 > c4'.
+    simple indicator conditions of the form 'c1 > c2' (level 1), complex
+    combined strategies of the form 'c1 > c2 & c3 > c4' (level 2), or complex
+    asymmetric strategies of the form 'c1 > c2 x c3 > c4' (level 3).
 }
 \details{
 Ichimoku objects for each strategy are returned as a list. The
     cumulative log returns for all strategies as well as the summaries for
     the 'n' top strategies are saved as attributes to the list. This
-    information may be viewed by using look() on the returned list.
+    information may be retrieved by using look() on the returned list.
 
     Each individual ichimoku object may be accessed via its position in the
     list, e.g. [[1]] for the 1st item, or by using \code{\link{look}}
@@ -50,5 +53,6 @@ look(stratlist)
 summary(look(stratlist, which = 1))
 
 autostrat(cloud, n = 1, dir = "short", level = 2)
+autostrat(cloud, n = 1, dir = "long", level = 3)
 
 }

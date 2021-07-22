@@ -10,10 +10,9 @@ tradingDays(x, holidays, ...)
 \item{x}{a vector of POSIXct date objects.}
 
 \item{holidays}{(optional) a vector, or function which outputs a
-vector, of dates defined as holidays. If not specified, New Year's and
-Christmas day are defined as holidays by default.}
+vector, of dates defined as holidays.}
 
-\item{...}{additional arguments to be passed along.}
+\item{...}{other arguments not used by this function.}
 }
 \value{
 A vector of logical values: TRUE if the corresponding element of 'x'
@@ -22,8 +21,14 @@ A vector of logical values: TRUE if the corresponding element of 'x'
 \description{
 Used by \code{\link{ichimoku}} to subset a vector of dates to trading days.
 }
+\details{
+New Year's Day (01/01) and Christmas Day (25/12) are defined as
+    holidays by default regardless of the values supplied by 'holidays'.
+}
 \examples{
 dates <- seq(from = as.POSIXct("2020-01-01"), by = "1 day", length.out = 7)
+dates
 tradingDays(dates)
+tradingDays(dates, holidays = c("2020-01-02", "2020-01-03"))
 
 }

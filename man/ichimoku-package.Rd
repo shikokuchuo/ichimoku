@@ -13,25 +13,38 @@ An implementation of 'Ichimoku Kinko Hyo', also commonly known as 'cloud
     widespread use in technical analysis worldwide. Translating as
     'one-glance equilibrium chart', it allows the price action and market
     structure of financial securities to be determined 'at-a-glance'.
+    Incorporates an interface with the OANDA fxTrade API
+    \url{https://developer.oanda.com/} for retrieving historical and live
+    streaming price data for major currencies, metals, commodities,
+    government bonds and stock indices.
 }
 \section{Principal ichimoku functions}{
 
-Data & Visualization
+Data
 \itemize{
     \item{\code{\link{ichimoku}}} {to create an ichimoku object from price
     data.}
+    \item{\code{\link{oanda}}} {to retrieve price data from the OANDA fxTrade
+    API.}
+    \item{\code{\link{oanda_stream}}} {to stream a live data feed from the
+    OANDA fxTrade API.}
+}
+Visualization
+\itemize{
     \item{\code{\link{plot.ichimoku}}} {to plot a cloud chart from an
     ichimoku object.}
     \item{\code{\link{iplot}}} {to plot an interactive cloud chart from an
     ichimoku object.}
-    \item{\code{\link{rplot}}} {to plot a customisable reactive cloud chart
-    from an ichimoku object.}
+    \item{\code{\link{oanda_chart}}} {to create live updating ichimoku cloud
+    charts using OANDA data.}
+    \item{\code{\link{oanda_studio}}} {a complete live analysis environment
+    using OANDA data implemented in R Shiny.}
 }
 Strategies & ML
 \itemize{
-    \item{\code{\link{strat}}} {to augment an ichimoku object with a strategy.}
-    \item{\code{\link{stratcombine}}} {to combine and create more complex
-    strategies.}
+    \item{\code{\link{strat}}} {to augment an ichimoku object with a strategy,
+    including complex combined and asymmetric strategies.}
+    \item{\code{\link{stratcombine}}} {to create custom combined strategies.}
     \item{\code{\link{autostrat}}} {to automatically evaluate and rank
     top-performing strategies.}
     \item{\code{\link{mlgrid}}} {to generate a numeric representation of the
@@ -40,7 +53,10 @@ Strategies & ML
 }
 
 \references{
-Package website:
+'OANDA' and 'fxTrade' are trademarks owned by OANDA Corporation,
+    an entity unaffiliated with the ichimoku package.
+
+    Package website:
     \url{https://shikokuchuo.net/ichimoku/}
 
     The most recent version of the package may be found at

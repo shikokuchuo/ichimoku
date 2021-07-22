@@ -4,7 +4,7 @@
 \alias{writeStrat}
 \title{writeStrat}
 \usage{
-writeStrat(x, strategy, dir, start, end)
+writeStrat(x, strategy, dir, xlen, p2, end)
 }
 \arguments{
 \item{x}{an ichimoku object.}
@@ -13,7 +13,9 @@ writeStrat(x, strategy, dir, start, end)
 
 \item{dir}{trade direction, either 'long' or 'short'.}
 
-\item{start}{integer position of start date in index.}
+\item{xlen}{integer number of rows of 'x'.}
+
+\item{p2}{integer medium cloud period.}
 
 \item{end}{integer position of end date in index.}
 }
@@ -26,7 +28,7 @@ Internal function used by ichimoku to write strategy summaries to ichimoku
     objects.
 }
 \details{
-The stategy summary may subsequently be accessed via the summary()
-    function.
+The stategy summary may subsequently be accessed by the summary()
+    function or via look().
 }
 \keyword{internal}

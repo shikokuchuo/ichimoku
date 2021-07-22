@@ -1,7 +1,7 @@
 Package: ichimoku
 Type: Package
 Title: Visualization and Tools for Ichimoku Kinko Hyo Strategies
-Version: 0.2.2
+Version: 0.3.0
 Description: An implementation of 'Ichimoku Kinko Hyo', also commonly known as
     'cloud charts'. Static and interactive visualizations with tools for
     creating, backtesting and development of quantitative 'ichimoku' strategies.
@@ -9,7 +9,10 @@ Description: An implementation of 'Ichimoku Kinko Hyo', also commonly known as
     on candlestick charting originating from Japan, now in widespread use in
     technical analysis worldwide. Translating as 'one-glance equilibrium chart',
     it allows the price action and market structure of financial securities to
-    be determined 'at-a-glance'.
+    be determined 'at-a-glance'. Incorporates an interface with the OANDA
+    fxTrade API <https://developer.oanda.com/> for retrieving historical and
+    live streaming price data for major currencies, metals, commodities,
+    government bonds and stock indices.
 Authors@R: 
     person(given = "Charlie",
            family = "Gao",
@@ -22,22 +25,26 @@ License: GPL (>= 3)
 URL: https://shikokuchuo.net/ichimoku/, https://github.com/shikokuchuo/ichimoku/
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.1
-Imports:
+Depends: 
+    R (>= 3.2)
+Imports: 
     Rcpp,
-    rlang,
     ggplot2,
+    httr,
+    jsonlite,
+    rlang,
     xts,
     zoo
 LinkingTo: 
     Rcpp
-Suggests: 
+Suggests:
     shiny,
-    plotly,
-    rmarkdown,
+    keyring,
     knitr,
-    testthat (>= 3.0.0)
-Config/testthat/edition: 3
-Depends: 
-    R (>= 2.10)
+    rmarkdown,
+    testthat (>= 3.0.0),
+    httptest,
+    covr
 VignetteBuilder: knitr
+RoxygenNote: 7.1.1
+Config/testthat/edition: 3

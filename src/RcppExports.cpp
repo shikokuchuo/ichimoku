@@ -5,6 +5,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // maxOver
 NumericVector maxOver(const SEXP& x, int window);
 RcppExport SEXP _ichimoku_maxOver(SEXP xSEXP, SEXP windowSEXP) {

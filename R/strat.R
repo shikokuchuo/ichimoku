@@ -2,13 +2,21 @@
 
 #' Create Ichimoku Strategies
 #'
-#' Create custom ichimoku cloud strategies using the indicator condition 'long
-#'     (or short) while c1 > c2'.
+#' Create ichimoku cloud strategies using the indicator condition 'long / short
+#'     while c1 > c2'. Complex strategies can be formulated as combined
+#'     'c1 > c2 & c3 > c4' (both conditions must be satisfied) or asymmetric
+#'     'c1 > c2 x c3 > c4' (where 'c1 > c2' denotes the entry and 'c3 > c4' the
+#'     exit indicator).
 #'
 #' @param x an ichimoku object.
 #' @param c1 [default 'close'] column name specified as a string.
 #' @param c2 [default 'tenkan'] column name specified as a string.
+#' @param c3 (optional) column name specified as a string.
+#' @param c4 (optional) column name specified as a string.
 #' @param dir [default 'long'] trade direction, either 'long' or 'short'.
+#' @param type [default 2] if 'c3' and 'c4' are specified, type 2 will create the
+#'     combined strategy 'c1 > c2 & c3 > c4' whilst type 3 will create the
+#'     asymmetric strategy 'c1 > c2 x c3 > c4'.
 #'
 #' @return An ichimoku object augmented with the strategy.
 #'
@@ -31,11 +39,28 @@
 #'     returns for the strategy.
 #'
 #'     The strategy summary is saved as an object attribute and may be accessed
-#'     via the summary() function.
+#'     by the summary() function or via look().
 #'
-#'     The periods in which the strategy results in a position is shaded by
-#'     default on the ichimoku cloud chart. To turn off this behaviour, pass the
-#'     'strat = FALSE' argument to plot().
+#'     By default, the periods in which the strategy results in a position is
+#'     shaded on the ichimoku cloud chart and the strategy is printed as the
+#'     chart message (if not otherwise specified). To turn off this behaviour,
+#'     pass the 'strat = FALSE' argument to plot() or iplot().
+#'
+#' @section Complex Strategies:
+#'     For complex strategies, let 's1' denote the strategy 'c1 > c2' and 's2'
+#'     denote the strategy 'c3 > c4'.
+#'
+#'     The combined strategy 's1 & s2' means indicator conditions in 's1'
+#'     and 's2' have to be met simulateneously for a trade position to be taken.
+#'
+#'     The asymmetric strategy 's1 x s2' means the indicator condition in 's1'
+#'     has to be met to enter a trade position, and the indicator condition in
+#'     's2' has to be met to exit a trade position. These rules are applied
+#'     recursively over the length of the data.
+#'
+#'     The boolean values showing whether these conditions are met are stored in
+#'     the 'cond' column. For a strategy of type 's1 x s2', the 'cond' column
+#'     will show when the indicator condition is met in s1.
 #'
 #' @section Further Details:
 #'     Please refer to the strategies vignette by running:
@@ -54,32 +79,75 @@ strat <- function(x,
                          "kijun", "senkouA", "senkouB", "cloudTop", "cloudBase"),
                   c2 = c("tenkan", "kijun", "senkouA", "senkouB", "cloudTop",
                          "cloudBase", "chikou", "close", "open", "high", "low"),
-                  dir = c("long", "short")
-                  ) {
+                  c3 = c("close", "chikou", "open", "high", "low", "tenkan",
+                         "kijun", "senkouA", "senkouB", "cloudTop", "cloudBase"),
+                  c4 = c("tenkan", "kijun", "senkouA", "senkouB", "cloudTop",
+                         "cloudBase", "chikou", "close", "open", "high", "low"),
+                  dir = c("long", "short"),
+                  type = 2) {
 
-  if(!is.ichimoku(x)) stop("strat() only works on ichimoku objects", call. = FALSE)
+  if (!is.ichimoku(x)) stop("strat() only works on ichimoku objects", call. = FALSE)
   c1 <- match.arg(c1)
   c2 <- match.arg(c2)
   dir <- match.arg(dir)
-  strategy <- paste0(c1, " > ", c2)
   xlen <- dim(x)[1L]
   p2 <- attr(x, "periods")[2L]
   end <- xlen - p2 - 1L
-  offset <- p2 * (c1 == "chikou" | c2 == "chikou")
-  x$cond <- c(rep(NA, offset), (x[, c1] > x[, c2])[1:(xlen - offset)])
-  x$posn <- c(NA, x[1:(end - 1L), "cond"], rep(NA, p2 + 1L))
-  x$txn <- diff(x$posn)
-  x[x$posn == 1 & is.na(x$txn), "txn"] <- 1
-  if(x[end, "posn"] == 1) x[end + 1L, "txn"] <- -1
-  x$logret <- c(diff(log(coredata(x$open))), NA)
-  if(dir == "short") x$logret <- -x$logret
-  x$logret[is.na(x$posn)] <- NA
-  x$slogret <- x$logret * x$posn
-  x$ret <- exp(x$logret) - 1
-  x$sret <- exp(x$slogret) - 1
-  start <- xlen - length(x[!is.na(x$posn), "posn"]) - p2
 
-  writeStrat(x, strategy = strategy, dir = dir, start = start, end = end)
+  if (missing(c3) || missing(c4) || (identical(c1, c3) && identical(c2, c4))) {
+    strategy <- paste0(c1, " > ", c2)
+    offset <- p2 * (c1 == "chikou" || c2 == "chikou")
+    x$cond <- c(rep(NA, offset), (x[, c1] > x[, c2])[1:(xlen - offset)])
+    x$posn <- c(NA, x[1:(end - 1L), "cond"], rep(NA, p2 + 1L))
+
+  } else if (type == 2) {
+    c3 <- match.arg(c3)
+    c4 <- match.arg(c4)
+    strategy <- paste0(c1, " > ", c2, " & ", c3, " > ", c4)
+    offset <- p2 * (c1 == "chikou" || c2 == "chikou")
+    s1cond <- c(rep(NA, offset), (x[, c1] > x[, c2])[1:(xlen - offset)])
+    s1posn <- c(NA, s1cond[1:(end - 1L)], rep(NA, p2 + 1L))
+    offset <- p2 * (c3 == "chikou" || c4 == "chikou")
+    s2cond <- c(rep(NA, offset), (x[, c3] > x[, c4])[1:(xlen - offset)])
+    s2posn <- c(NA, s2cond[1:(end - 1L)], rep(NA, p2 + 1L))
+    x$cond <- s1cond * s2cond
+    x$posn <- s1posn * s2posn
+
+  } else if (type == 3) {
+    c3 <- match.arg(c3)
+    c4 <- match.arg(c4)
+    strategy <- paste0(c1, " > ", c2, " x ", c3, " > ", c4)
+
+    offset <- p2 * (c1 == "chikou" || c2 == "chikou")
+    s1cond <- c(rep(NA, offset), (x[, c1] > x[, c2])[1:(xlen - offset)])
+    s1posn <- c(NA, s1cond[1:(end - 1L)], rep(NA, p2 + 1L))
+    s1txn <- c(NA, diff(s1posn))
+    s1txn[s1posn == 1 & is.na(s1txn)] <- 1
+    if (s1posn[end] == 1) s1txn[end + 1L] <- -1
+    offset <- p2 * (c3 == "chikou" || c4 == "chikou")
+    s2cond <- c(rep(NA, offset), (x[, c3] > x[, c4])[1:(xlen - offset)])
+    s2posn <- c(NA, s2cond[1:(end - 1L)], rep(NA, p2 + 1L))
+    s2txn <- c(NA, diff(s2posn))
+    s2txn[s2posn == 1 & is.na(s2txn)] <- 1
+    if (s2posn[end] == 1) s2txn[end + 1L] <- -1
+
+    s1entry <- which(s1txn == 1)
+    s2exit <- which(s2txn == 1)
+    s2exit <- s2exit[s2exit > s1entry[1]]
+    position <- integer(xlen)
+    position[is.na(s1posn)] <- NA
+    while (length(s1entry) > 0 && length(s2exit) > 0) {
+      position[s1entry[1]:(s2exit[1] - 1L)] <- 1
+      s1entry <- s1entry[s1entry > s2exit[1]]
+      s2exit <- s2exit[s2exit > s1entry[1]]
+    }
+    x$cond <- s1cond
+    x$posn <- position
+  } else {
+    stop("Invalid type specified", call. = FALSE)
+  }
+
+  writeStrat(x = x, strategy = strategy, dir = dir, xlen = xlen, p2 = p2, end = end)
 
 }
 
@@ -91,22 +159,35 @@ strat <- function(x,
 #' @param x an ichimoku object.
 #' @param strategy string describing strategy rule.
 #' @param dir trade direction, either 'long' or 'short'.
-#' @param start integer position of start date in index.
+#' @param xlen integer number of rows of 'x'.
+#' @param p2 integer medium cloud period.
 #' @param end integer position of end date in index.
 #'
 #' @return An ichimoku object with the strategy summary set as the attribute
 #'     'strat'.
 #'
-#' @details The stategy summary may subsequently be accessed via the summary()
-#'     function.
+#' @details The stategy summary may subsequently be accessed by the summary()
+#'     function or via look().
 #'
 #' @keywords internal
 #'
-writeStrat <- function(x, strategy, dir, start, end) {
+writeStrat <- function(x, strategy, dir, xlen, p2, end) {
+
+  x$txn <- diff(x$posn)
+  x[x$posn == 1 & is.na(x$txn), "txn"] <- 1
+  if (x[end, "posn"] == 1) x[end + 1L, "txn"] <- -1
+  x$logret <- c(diff(log(coredata(x$open))), NA)
+  if (dir == "short") x$logret <- -x$logret
+  x$logret[is.na(x$posn)] <- NA
+  x$slogret <- x$logret * x$posn
+  x$ret <- exp(x$logret) - 1
+  x$sret <- exp(x$slogret) - 1
+  start <- xlen - length(x[!is.na(x$posn), "posn"]) - p2
   trades <- (coredata(x[x$txn == -1, "open"]) - coredata(x[x$txn == 1, "open"])) /
     coredata(x[x$txn == 1, "open"])
   tlen <- length(trades)
-  attr(x, "strat") <- cbind(list(
+
+  structure(x, strat = cbind(list(
     Strategy = strategy,
     `---------------------` = "----------",
     `Strategy cuml return %` = round((exp(sum(x[start:end, "slogret"])) - 1) * 100, 2),
@@ -125,15 +206,13 @@ writeStrat <- function(x, strategy, dir, start, end) {
     Start = index(x)[start],
     End = index(x)[end],
     Ticker = attr(x, "ticker")
-  ))
-  x
+    )))
 }
 
 #' Combine Ichimoku Strategies
 #'
-#' Create more complex strategies with an indicator condition of the form
-#'     'c1 > c2 & c3 > c4' by combining existing strategies with indicator
-#'     conditions 'c1 > c2' and 'c3 > c4' respectively.
+#' Create custom combined strategies from existing strategies contained in 's1'
+#'     and 's2' to form 's1 & s2'.
 #'
 #' @param s1 an ichimoku object containing a strategy.
 #' @param s2 an ichimoku object containing a strategy.
@@ -146,7 +225,8 @@ writeStrat <- function(x, strategy, dir, start, end) {
 #'     The boolean values showing whether these conditions are met are stored in
 #'     the 'cond' column.
 #'
-#'     The stategy summary may be accessed via the summary() function.
+#'     The stategy summary may be accessed by the summary() function or via
+#'     look().
 #'
 #' @section Further Details:
 #'     Please refer to the strategies vignette by running:
@@ -164,20 +244,19 @@ writeStrat <- function(x, strategy, dir, start, end) {
 #'
 stratcombine <- function(s1, s2) {
 
-  if(!is.ichimoku(s1) || !is.ichimoku(s2) || !hasStrat(s1) || !hasStrat(s2)) {
+  if (!is.ichimoku(s1) || !is.ichimoku(s2) || !hasStrat(s1) || !hasStrat(s2)) {
     stop("stratcombine() only works on ichimoku objects containing strategies", call. = FALSE)
   }
-  if(!identical(coredata(s1[, 1:4]), coredata(s2[, 1:4]))) {
+  if (!identical(coredata(s1[, 1:4]), coredata(s2[, 1:4]))) {
     stop("Strategies must be for the same data", call. = FALSE)
   }
   dir <- attr(s1, "strat")["Direction", ]$Direction
-  if(!identical(dir, attr(s2, "strat")["Direction", ]$Direction)) {
+  if (!identical(dir, attr(s2, "strat")["Direction", ]$Direction)) {
     stop("Trade direction must be the same for all strategies", call. = FALSE)
   }
-
   strat1 <- attr(s1, "strat")["Strategy", ]$Strategy
   strat2 <- attr(s2, "strat")["Strategy", ]$Strategy
-  if(identical(strat1, strat2)) return(s1)
+  if (identical(strat1, strat2)) return(s1)
 
   strategy <- paste0(strat1, " & ", strat2)
   xlen <- dim(s1)[1L]
@@ -185,30 +264,23 @@ stratcombine <- function(s1, s2) {
   end <- xlen - p2 - 1L
   s1$cond <- s1$cond * s2$cond
   s1$posn <- s1$posn * s2$posn
-  s1$txn <- diff(s1$posn)
-  s1[s1$posn == 1 & is.na(s1$txn), "txn"] <- 1
-  if(s1[end, "posn"] == 1) s1[end + 1L, "txn"] <- -1
-  s1$logret <- c(diff(log(coredata(s1$open))), NA)
-  if(dir == "short") s1$logret <- -s1$logret
-  s1$logret[is.na(s1$posn)] <- NA
-  s1$slogret <- s1$logret * s1$posn
-  s1$ret <- exp(s1$logret) - 1
-  s1$sret <- exp(s1$slogret) - 1
-  start <- xlen - length(s1[!is.na(s1$posn), "posn"]) - p2
 
-  writeStrat(s1, strategy = strategy, dir = dir, start = start, end = end)
+  writeStrat(x = s1, strategy = strategy, dir = dir, xlen = xlen, p2 = p2, end = end)
 
 }
 
 #' Automated Ichimoku Strategies
 #'
 #' Generate a list of the top performing ichimoku cloud strategies based on
-#'     indicator conditions of the form 'c1 > c2' or level 2 strategies based on
-#'     combined indicator conditions of the form 'c1 > c2 & c3 > c4'.
+#'     simple indicator conditions of the form 'c1 > c2' (level 1), complex
+#'     combined strategies of the form 'c1 > c2 & c3 > c4' (level 2), or complex
+#'     asymmetric strategies of the form 'c1 > c2 x c3 > c4' (level 3).
 #'
 #' @inheritParams strat
 #' @param n [default 8] select top n number of strategies to return.
-#' @param level [default 1] set to 2 to also return combined strategies.
+#' @param level [default 1] to return simple strategies. For complex strategies,
+#'     set level to 2 to return strategies of the form 's1 & s2' or level to 3
+#'     to return strategies of the form 's1 x s2'
 #'
 #' @return A list of 'n' ichimoku objects containing strategies. The
 #'     cumulative log returns for all strategies as well as the summaries for
@@ -218,7 +290,7 @@ stratcombine <- function(s1, s2) {
 #' @details Ichimoku objects for each strategy are returned as a list. The
 #'     cumulative log returns for all strategies as well as the summaries for
 #'     the 'n' top strategies are saved as attributes to the list. This
-#'     information may be viewed by using look() on the returned list.
+#'     information may be retrieved by using look() on the returned list.
 #'
 #'     Each individual ichimoku object may be accessed via its position in the
 #'     list, e.g. [[1]] for the 1st item, or by using \code{\link{look}}
@@ -236,47 +308,92 @@ stratcombine <- function(s1, s2) {
 #' summary(look(stratlist, which = 1))
 #'
 #' autostrat(cloud, n = 1, dir = "short", level = 2)
+#' autostrat(cloud, n = 1, dir = "long", level = 3)
 #'
 #' @export
 #'
 autostrat <- function(x, n = 8, dir = c("long", "short"), level = 1) {
 
-  if(!is.ichimoku(x)) stop("autostrat() only works on ichimoku objects", call. = FALSE)
+  if (!is.ichimoku(x)) stop("autostrat() only works on ichimoku objects", call. = FALSE)
   dir <- match.arg(dir)
+  if (!level %in% 1:3) {
+    warning("Invalid level specified, using default level of 1", call. = FALSE)
+    level <- 1
+  }
   grid <- mlgrid(x, y = "logret", dir = dir, type = "boolean", unique = FALSE)
-  if(identical(level, 2)) {
+
+  if (level == 1) {
+    matrix <- grid[, 1L] * grid[, -1L]
+    logret <- sort(colSums(matrix), decreasing = TRUE)
+    returns <- logret[!logret == 0]
+    args <- do.call(rbind, strsplit(names(returns[1:n]), "_", fixed = TRUE))
+    list <- mapply(strat, c1 = args[, 1L], c2 = args[, 2L],
+                   MoreArgs = list(x = x, dir = dir),
+                   SIMPLIFY = FALSE, USE.NAMES = FALSE)
+  }
+  else if (level == 2) {
     lgrid <- grid[, -1L]
-    w <- dim(lgrid)[2L]
+    w <- length(lgrid)
     pairs <- expand.grid(seq_len(w), seq_len(w), KEEP.OUT.ATTRS = FALSE)[-grid_dup(w), ]
     mgrid <- do.call(cbind,
                      mapply(function(a, b) lgrid[, a] * lgrid[, b],
                             a = pairs[, 1L], b = pairs[, 2L],
                             SIMPLIFY = FALSE, USE.NAMES = FALSE))
     colnames(mgrid) <- do.call(c,
-                               mapply(function(a, b) paste0(colnames(lgrid)[a], "&", colnames(lgrid)[b]),
+                               mapply(function(a, b) paste0(names(lgrid)[a], "&", names(lgrid)[b]),
                                       a = pairs[, 1L], b = pairs[, 2L],
                                       SIMPLIFY = FALSE, USE.NAMES = FALSE))
     matrix <- grid[, 1L] * mgrid
     logret <- sort(colSums(matrix), decreasing = TRUE)
     returns <- logret[!logret == 0]
     args <- do.call(rbind, strsplit(names(returns[1:n]), "&|_"))
-    list1 <- mapply(strat, c1 = args[, 1L], c2 = args[, 2L],
-                    MoreArgs = list(x = x, dir = dir), SIMPLIFY = FALSE, USE.NAMES = FALSE)
-    list2 <- mapply(strat, c1 = args[, 3L], c2 = args[, 4L],
-                    MoreArgs = list(x = x, dir = dir), SIMPLIFY = FALSE, USE.NAMES = FALSE)
-    list <- mapply(stratcombine, s1 = list1, s2 = list2, SIMPLIFY = FALSE, USE.NAMES = FALSE)
-  } else {
-    matrix <- grid[, 1L] * grid[, -1L]
+    list <- mapply(strat, c1 = args[, 1L], c2 = args[, 2L], c3 = args[, 3L], c4 = args[, 4L],
+                   MoreArgs = list(x = x, dir = dir, type = 2),
+                   SIMPLIFY = FALSE, USE.NAMES = FALSE)
+  } else if (level == 3) {
+    lgrid <- grid[, -1L]
+    w <- length(lgrid)
+    pairs <- expand.grid(seq_len(w), seq_len(w), KEEP.OUT.ATTRS = FALSE)[-grid_dup(w, omit.id = TRUE), ]
+    mgrid <- do.call(cbind,
+                     mapply(function(a, b) {
+                       xlen <- dim(lgrid)[1L]
+                       s1posn <- lgrid[, a]
+                       s1txn <- c(if (s1posn[1] == 1) 1 else 0,
+                                  diff(s1posn)[-1],
+                                  if (s1posn[xlen] == 1) -1 else 0)
+                       s2posn <- lgrid[, b]
+                       s2txn <- c(0,
+                                  diff(s2posn)[-1],
+                                  if (s2posn[xlen] == 1) -1 else 0)
+                       s1entry <- which(s1txn == 1)
+                       s2exit <- which(s2txn == 1)
+                       position <- integer(xlen)
+                       while (length(s1entry) > 0 && length(s2exit) > 0) {
+                         position[s1entry[1]:(s2exit[1] - 1L)] <- 1
+                         s1entry <- s1entry[s1entry > s2exit[1]]
+                         s2exit <- s2exit[s2exit > s1entry[1]]
+                       }
+                       position
+                     },
+                     a = pairs[, 1L], b = pairs[, 2L],
+                     SIMPLIFY = FALSE, USE.NAMES = FALSE))
+    colnames(mgrid) <- do.call(c,
+                               mapply(function(a, b) paste0(names(lgrid)[a], "x", names(lgrid)[b]),
+                                      a = pairs[, 1L], b = pairs[, 2L],
+                                      SIMPLIFY = FALSE, USE.NAMES = FALSE))
+    matrix <- grid[, 1L] * mgrid
     logret <- sort(colSums(matrix), decreasing = TRUE)
     returns <- logret[!logret == 0]
-    args <- do.call(rbind, strsplit(names(returns[1:n]), "_", fixed = TRUE))
-    list <- mapply(strat, c1 = args[, 1L], c2 = args[, 2L], MoreArgs = list(x = x, dir = dir),
+    args <- do.call(rbind, strsplit(names(returns[1:n]), "x|_"))
+    list <- mapply(strat, c1 = args[, 1L], c2 = args[, 2L], c3 = args[, 3L], c4 = args[, 4L],
+                   MoreArgs = list(x = x, dir = dir, type = 3),
                    SIMPLIFY = FALSE, USE.NAMES = FALSE)
   }
-  attr(list, "logret") <- cbind(logret)
-  attr(list, "summary") <- print(do.call(cbind, lapply(list, attr, which = "strat")))
-  attr(list, "autostrat") <- TRUE
-  invisible(list)
+
+  invisible(structure(list,
+                      logret = cbind(logret),
+                      summary = print(do.call(cbind, lapply(list, attr, which = "strat"))),
+                      autostrat = TRUE))
 }
 
 #' Summary of Ichimoku Strategies
@@ -307,7 +424,7 @@ autostrat <- function(x, n = 8, dir = c("long", "short"), level = 1) {
 #' @export
 #'
 summary.ichimoku <- function(object, strat = TRUE, ...) {
-  if(isTRUE(strat) && hasStrat(object)) attr(object, "strat")
+  if (hasStrat(object) && isTRUE(strat)) attr(object, "strat")
   else NextMethod(summary)
 }
 

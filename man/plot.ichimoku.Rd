@@ -31,10 +31,12 @@ will be used.}
 'solarized' or 'mono'.}
 
 \item{strat}{[default TRUE] if the ichimoku object contains a strategy, the
-periods for which the strategy results in a position will be shaded. Set
-to FALSE to turn off this behaviour.}
+periods for which the strategy results in a position will be shaded, and
+the strategy printed as the chart message (if a message is not already
+specified). Set to FALSE to turn off this behaviour.}
 
-\item{...}{additional arguments to be passed along.}
+\item{...}{additional arguments passed along to the print method for 'ggplot'
+objects.}
 }
 \value{
 Returns a ggplot2 object with classes 'gg' and 'ggplot'.

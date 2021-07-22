@@ -41,7 +41,7 @@ For example in a strongly upwards-trending market, the candlesticks would be abo
 
 The lines and the cloud represent dynamic support and resistance zones relative to the price candles. Generally, the thicker the cloud, the tougher the support/resistance. In our previous example, if the price now reverts downwards, it can expect support first at the Kijun-sen, then the Tenkan-sen and finally the cloud itself.
 
-When the price enters the cloud, i.e. it is between the cloud base and cloud top, it is an important area to guage whether there is sufficient momentum for the price to break through the cloud or whether the cloud eventually provokes a reversal.
+When the price enters the cloud, i.e. it is between the cloud base and cloud top, it is an important area to gauge whether there is sufficient momentum for the price to break through the cloud or whether the cloud eventually provokes a reversal.
 
 More subtle interpretations involve the Chikou span in particular and its action in relation to the cloud lines as well as the candles.
 
@@ -91,9 +91,9 @@ Note: aim to retrieve as much data as possible, or slightly further back than th
 
 Optional arguments:
 
-- **ticker**: a ticker to identify the instrument, otherwise this is set to the name of the input object
-- **periods**: [default c(9, 26, 52)] a vector defining the length of periods used for the cloud. This parameter should not normally be changed as using other values would be invalid in the context of traditional Ichimoku analysis
-- **...** other arguments to be passed along. For instance, to the `tradingDays()` function, which is used by ichimoku to exclude weekend and holiday dates when calculating the future cloud
+- `ticker` a ticker to identify the instrument, otherwise this is set to the name of the input object
+- `periods` [default c(9, 26, 52)] a vector defining the length of periods used for the cloud. This parameter should not normally be modified as using other values would be invalid in the context of traditional Ichimoku analysis
+- `...` additional arguments, for instance 'holidays', passed along to `tradingDays()` for calculating the future cloud on daily data
 
 The returned object has the following specification:
 
@@ -147,7 +147,7 @@ ichimoku(TKR, holidays = timeDate::holidayNYSE())
 
 ### plot()
 
-ichimoku offers the choice of 3 visualization systems: static (default) and interactive (with plotly) and reactive (with Shiny).
+ichimoku offers the choice of 2 visualization systems: static (default) and interactive (reactive charts using R Shiny).
 
 #### 1. Static Plots
 
@@ -167,35 +167,25 @@ plot <- plot(cloud)
 plot + ggplot2::theme_classic()
 ```
 
-#### 2. Interactive Plots
-
-Interactive charts require the 'plotly' package. If plotly is not available, ichimoku will issue an informational message, but not install the package automatically as it is recognised that plotly may not be available in all environments.
-
-To produce an interactive plot, use ichimoku's `iplot()` function. The interactive plot will be almost identical in format to the equivalent static plot.
+The 'ggplot' object can be further used to produce an interactive chart that can be embedded in HTML output created by R Markdown, by using the 'plotly' package as per the below:
 
 ```{r iplotnotrun, eval = FALSE}
-# For interactive charting:
-iplot(cloud)
+# For a plotly interactive plot:
+plotly::ggplotly(plot)
 ```
+
+
+#### 2. Interactive Plots
+
+Interactive plots require the 'shiny' package to be installed. If Shiny is not available, ichimoku will issue an informational message, but not install the package automatically as it is recognised that Shiny may not be available in all environments.
+
+To produce an interactive plot, use ichimoku's `iplot()` function. An R Shiny app will be launched, allowing full further customisation of the chart interactively, including selecting the time window etc.
 
 In a live analysis environment, as opposed to creating charts for reports, it is usually preferable to work with interactive plots. This is simply due to the ease of use of being able to directly manipulate the chart:
 
-- hover over the candles or cloud lines to read off values at any given date-time
-- select an area of interest to zoom into
-- double click anywhere to quickly reset
-
-#### 3. Reactive Plots
-
-Reactive plots require the 'Shiny' package to be installed. If shiny is not available, ichimoku will issue an informational message, but not install the package automatically as it is recognised that shiny may not be available in all environments.
-
-Simply use `rplot()` on an ichimoku object to launch an R Shiny app, which will allow full further customisation of the chart interactively, incluing selecting the theme and time window etc.
-
-```{r rplotnotrun, eval = FALSE}
-# For interactive charting:
-rplot(cloud)
-```
-
-The key feature of `rplot()` is an intuitive cursor tooltip which allows ready access to the data when hovering over the chart.
+- hover over the chart to read off data values at any given date-time
+- cursor guides provide easy calibration of date-times and price levels
+- select periods of interest on the timeline to subset / enlarge
 
 #### Plot customisation
 
@@ -205,15 +195,23 @@ A plot with default parameters is shown above, but the plot functions contain bu
 plot(cloud, window = "2020-05-01/2020-11-01", ticker = "TKR Co.", theme = "dark")
 ```
 
-The same arguments are used across `plot()` and `iplot()` functions:
+The following arguments for customisation are shared across `plot()` and `iplot()`:
 
-- **window**: indispensable in a proper workflow. `ichimoku()` is run on a larger dataset than that of interest and then at the visualization stage, the data can be subset to the window of interest. Supply as an ISO-8601 compatible range string in the format used for 'xts' objects, for example the range '2020-02-15/2020-08-15' or '2020-02-15/' (from 15 Feb 2020) or '/2020-08' (until end-Aug 2020) or simply '2020' to select all of the year 2020
-- **ticker**: used to supply a different ticker to that stored in the ichimoku object, or alternatively a longer-form name or other text that will appear in the chart heading
-- **theme**: [default 'original'] the following themes are also available: 'dark', 'solarized' and 'mono'
+- `window` (optional) indispensable in a proper workflow. `ichimoku()` is run on a larger dataset than that of interest and at the visualization stage the data is subset to the window of interest. Supply as an ISO-8601 compatible range string in the format used for 'xts' objects, for example the range '2020-02-15/2020-08-15' or '2020-02-15/' (from 15 Feb 2020) or '/2020-08' (until end-Aug 2020) or simply '2020' to select all of the year 2020
+- `ticker` (optional) used to supply a different ticker to that stored in the ichimoku object, or alternatively a longer-form name or other text that will appear in the chart heading
+- `message` (optional) used to specify a chart message to display under the title
+- `theme` [default 'original'] the following themes are also available: 'dark', 'solarized' and 'mono'
+- `strat` [default TRUE] if true, the periods for which a strategy results in a market position will be shaded (if the ichimoku object contains a strategy) with the strategy printed as the chart message (if a message is not already specified). See the [strategies vignette](strategies.html) for more information on working with strategies.
 
-`plot()` has the following additional argument, currently unavailable for interactive charting:
+`plot()` takes additional parameters as follows:
 
-- **strat**: [default TRUE] if true, the periods for which a strategy results in a market position will be shaded (if the ichimoku object contains a strategy). See the [strategies vignette](strategies.html) for more information on working with strategies.
+- `...` additional arguments passed along to the print method for 'ggplot' objects.
+
+`iplot()` takes the following additional parameters:
+
+- `...` additional parameters passed along to the 'options' argument of `shiny::shinyApp()`.
+- `launch.browser` [default TRUE] If TRUE, the system's default web browser will be launched automatically after the app is started. The value of this argument can also be a function to call with the application's URL. To use the default Shiny viewer in RStudio, please specify
+`getOption("shiny.launch.browser")`.
 
 ## Troubleshooting
 
@@ -266,25 +264,25 @@ There may however still be other issues with the input data that prevent cloud v
 
 - There are NA values within the price data. This will affect the algorithm calculating the cloud lines in the window immediately following such NA values. Please check the data and manually correct NA values before invoking `ichimoku()`
 
-### Changes since version 0.2
+### Function modifications since version 0.2
 
-- Argument 'gaps' to the plot functions is deprecated. As a convenience, the functionality has been moved to a 'gplot()' function which will remain in the package for the time being.
+- `iplot()` now uses an R Shiny backend rather than plotly, as it is performant and scalable for large datasets and offers similar/enhanced functionality. To continue working with plotly, simply pass the 'ggplot' object created by plot() to `plotly::ggplotly()`
 
-- iplot() no longer falls back to a static plot when the 'plotly' package is not installed to ensure consistency of return types
+- Argument 'gaps' to the plot functions is deprecated. As a convenience, the functionality has been moved to a `gplot()` function which will remain in the package until at least version 0.4.
 
-- Validation changes to ichimoku() mean it will now take a column named 'index', 'date' or 'time' in precedence to a row index.
+- `ichimoku()` validation changes mean it will now take a column named 'index', 'date' or 'time' in precedence to a row index.
 
-### Changes since version 0.1
+### Function modifications since version 0.1
 
-- 'ichimoku' objects now inherit 'xts' and 'zoo' classes instead of 'data.frame'. This means that columns extracted from 'ichimoku' objects are able to work seamlessly in packages expecting 'xts' indexed time series. Conversely for use with packages that only accept data frames then 'ichimoku' objects must first be wrapped in as.data.frame()
+- 'ichimoku' objects now inherit 'xts' and 'zoo' classes instead of 'data.frame'. This means that columns extracted from 'ichimoku' objects are able to work seamlessly in packages expecting 'xts' indexed time series. Conversely for use with packages that only accept data frames then 'ichimoku' objects must first be wrapped in `as.data.frame()` or translated using the included `xts_df()` utility.
 
 - For candle direction, the column has been renamed from 'candle' to 'cd' and is now stored as numeric values -1 for 'down', 0 for 'flat', and 1 for 'up', rather than as a factor
 
-- plot() now references the new 'cd' column as well as new 'cloudTop' and 'cloudBase' columns to eliminate potential artefacts when drawing the cloud. This means that using plot() on an ichimoku object created in version 0.1.* will no longer work. The solution is to run `ichimoku()` on the old object to re-create the object according to the new specification (all data is preserved)
+- `plot()` now references the new 'cd' column as well as new 'cloudTop' and 'cloudBase' columns to eliminate potential artefacts when drawing the cloud. This means that using `plot()` on an ichimoku object created in version 0.1.* will no longer work. The solution is to run `ichimoku()` on the old object to re-create the object according to the new specification (all data is preserved)
 
-- The 'i = TRUE' argument has been retired from plot() so that both plot() and iplot() now take exactly the same sequence of arguments for ease of use. Use `plot()` for static charting, `iplot()` for interactive charting
+- The 'i = TRUE' argument has been retired from `plot()` so that both `plot()` and `iplot()` now take exactly the same sequence of arguments for ease of use. Use `plot()` for static charting, `iplot()` for interactive charting
 
-- The 'from' and 'to' arguments of the plot() and iplot() functions have been replaced by a single argument 'window' which takes an ISO-8601 compatible range string and is much more flexible in use, taking full advantage of ichimoku's switch to the 'xts' format
+- The 'from' and 'to' arguments of the `plot()` and `iplot()` functions have been replaced by a single argument 'window' which takes an ISO-8601 compatible range string and is much more flexible in use, taking full advantage of ichimoku's switch to the 'xts' format
 
 ## Dependencies
 
@@ -292,17 +290,18 @@ The dependency on other packages is designed to be minimised to the extent possi
 
 - Rcpp  - allows the use of C++ code for fast rolling window calculations
 - ggplot2 - the widely-used R graphics system for visualization
+- httr - for interfacing with external APIs
+- jsonlite - for processing data retrieved from external APIs
 - rlang - R language requirement arising from the use of 'ggplot2'
 - xts - ichimoku shares the 'xts' format for time series
 - zoo - 'xts' is built on top of 'zoo'
 
 Optional:
 
-- plotly - for interactive visualization
-- shiny - for reactive customisable visualizations
+- shiny - for interactive visualizations
+- keyring - for storing external API credentials
 
-
-## Further resources
+## Further Resources
 
 Package website: https://shikokuchuo.net/ichimoku/
 

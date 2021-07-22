@@ -1,5 +1,4 @@
-// This file is modified from the original with the following license.
-
+// This file is modified from the original with the following license:
 /*
  Based on http://opensource.org/licenses/MIT
  Copyright (c) 2015, Andrew Uhl

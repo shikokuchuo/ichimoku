@@ -6,81 +6,48 @@
 #'
 #' @param x a vector of POSIXct date objects.
 #' @param holidays (optional) a vector, or function which outputs a
-#'     vector, of dates defined as holidays. If not specified, New Year's and
-#'     Christmas day are defined as holidays by default.
-#' @param ... additional arguments to be passed along.
+#'     vector, of dates defined as holidays.
+#' @param ... other arguments not used by this function.
 #'
 #' @return A vector of logical values: TRUE if the corresponding element of 'x'
 #'     is a weekday and not a holiday, FALSE otherwise.
 #'
+#' @details New Year's Day (01/01) and Christmas Day (25/12) are defined as
+#'     holidays by default regardless of the values supplied by 'holidays'.
+#'
 #' @examples
 #' dates <- seq(from = as.POSIXct("2020-01-01"), by = "1 day", length.out = 7)
+#' dates
 #' tradingDays(dates)
+#' tradingDays(dates, holidays = c("2020-01-02", "2020-01-03"))
 #'
 #' @export
 #'
 tradingDays <- function(x, holidays, ...) {
-  yr <- as.POSIXlt(x[1L])$year + 1900
-  if(missing(holidays)) {
-    holidays <- c(as.POSIXct(paste0(yr, "0101"), format = "%Y%m%d"),
-                  as.POSIXct(paste0(yr, "1225"), format = "%Y%m%d"),
-                  as.POSIXct(paste0(yr + 1, "0101"), format = "%Y%m%d"))
-  } else {
+  posixlt <- as.POSIXlt.POSIXct(x)
+  vec <- posixlt$wday %in% 1:5
+  vec[(posixlt$mon == 0 & posixlt$mday == 1) | (posixlt$mon == 11 & posixlt$mday == 25) ] <- FALSE
+  if (!missing(holidays)) {
     holidays <- tryCatch(as.POSIXct(holidays),
                          error = function(e) {
-                           warning("Specified holidays are invalid - disregarding",
-                                   call. = FALSE)
-                           c(as.POSIXct(paste0(yr, "0101"), format = "%Y%m%d"),
-                             as.POSIXct(paste0(yr, "1225"), format = "%Y%m%d"),
-                             as.POSIXct(paste0(yr + 1, "0101"), format = "%Y%m%d"))
+                           warning("Specified holidays are invalid - disregarding", call. = FALSE)
+                           return(vec)
                          })
+    vec[x %in% holidays] <- FALSE
   }
-  vec <- as.POSIXlt(x)$wday %in% 1:5
-  vec[x %in% holidays] <- FALSE
   vec
-}
-
-#' Trim Dataframe Rows with NA Values
-#'
-#' Trim rows containing NA values from a 'data.frame' object. A performant
-#'     version of na.omit.data.frame with no data validation or checking.
-#'
-#' @param x the data.frame to trim.
-#'
-#' @return The data.frame 'x' with rows containing NA values removed.
-#'
-#' @examples
-#' data <- data.frame(c(1:4, NA), c(NA, 2:5))
-#' df_trim(data)
-#'
-#' @export
-#'
-df_trim <- function(x) {
-  omit <- logical(dim(x)[1L])
-  for (i in 1:length(x)) {
-    y <- x[[i]]
-    if (!is.atomic(y))
-      next
-    y <- is.na(y)
-    d <- dim(y)
-    if (is.null(d) || length(d) != 2L)
-      omit <- omit | y
-    else for (ii in 1L:d[2L]) omit <- omit | y[, ii]
-  }
-  trim <- x[!omit, , drop = FALSE]
-  trim
 }
 
 #' Duplicates of expand.grid for 2 Variables
 #'
 #' Create a vector of element positions of duplicates in the output of expand.grid
 #'     on 2 identical vectors. A faster method of creating combinations for 2
-#'     variabes than the combn() function from the 'utils' package.
+#'     variabes than \code{utils::combn()}.
 #'
-#' @param n the length of vector passed to expand.grid.
-#' @param identical [default FALSE] to not select the elements where the 2 items
+#' @param n the length of vector passed to \code{expand.grid()}.
+#' @param omit.id [default FALSE] to not select the elements where the 2 items
 #'     are identical. Set to TRUE to also select these. The output of expand.grid,
-#'     subset to remove duplicates with 'identical' set to TRUE would be the
+#'     subset to remove duplicates with 'omit.id' set to TRUE would be the
 #'     equivalent of \code{utils::combn(n, 2)}.
 #'
 #' @return A numeric vector.
@@ -89,16 +56,43 @@ df_trim <- function(x) {
 #' n <- 3
 #' expand.grid(1:n, 1:n)
 #' expand.grid(1:n, 1:n)[-grid_dup(n), ]
-#' expand.grid(1:n, 1:n)[-grid_dup(n, identical = TRUE), ]
+#' expand.grid(1:n, 1:n)[-grid_dup(n, omit.id = TRUE), ]
 #'
 #' @export
 #'
-grid_dup <- function(n, identical = FALSE) {
+grid_dup <- function(n, omit.id = FALSE) {
   vec <- do.call(c, lapply(seq_len(n - 1), function(x) x * n + 1:x))
-  if(isTRUE(identical)) {
+  if (isTRUE(omit.id)) {
     vec <- c(vec, do.call(c, lapply(seq_len(n), function(x) x + n * (x -1))))
   }
   vec
+}
+
+#' Trim Dataframe Rows with NA Values
+#'
+#' Trim rows containing NA values from a 'data.frame' object. A more performant
+#'     version of \code{stats::na.omit()} with no data validation or checking.
+#'
+#' @param x the data.frame to trim.
+#'
+#' @return The data.frame 'x' with rows containing NA values removed.
+#'
+#' @details Works only where the columns contain atomic (e.g. numeric) and not
+#'     recursive types (e.g. lists).
+#'
+#' @examples
+#' data <- data.frame(c(1:4, NA), c(NA, 2:5))
+#' data
+#' df_trim(data)
+#'
+#' @export
+#'
+df_trim <- function(x) {
+  omit <- logical(dim(x)[1L])
+  for (i in 1:length(x)) {
+    omit <- omit | is.na(x[[i]])
+  }
+  x[!omit, , drop = FALSE]
 }
 
 #' Convert xts to data.frame
@@ -119,9 +113,116 @@ grid_dup <- function(n, identical = FALSE) {
 #' @export
 #'
 xts_df <- function(x) {
-  structure(c(list(index = index(x)),
-              apply(coredata(x), 2, identity, simplify = FALSE)),
+  core <- coredata(x)
+  structure(c(list(index(x)), lapply(seq_len(dim(core)[2L]), function(i) core[, i])),
             class = "data.frame",
+            names = c("index", colnames(core)),
             row.names = seq_len(dim(x)[1L]))
+}
+
+#' Convert matrix to data.frame
+#'
+#' A performant 'matrix' to 'data.frame' constructor with no data validation or
+#'     checking.
+#'
+#' @param x a matrix.
+#'
+#' @return A 'data.frame' object.
+#'
+#' @details Designed for working with time series data where the date-time index
+#'     is contained in the row names of the matrix.
+#'
+#'     Note: the function only works with matrices containing row names, as these
+#'     are preserved in the data frame. If the row names are null, the 'data.frame'
+#'     object is still created but will display as having zero rows. This can be
+#'     fixed by appending an index value to the row names of the resultant object:
+#'     \code{row.names(x) <- 1:nrow(x)}.
+#'
+#' @examples
+#' cloud <- ichimoku(sample_ohlc_data)
+#' mcloud <- as.matrix(cloud)
+#' df <- matrix_df(mcloud)
+#' str(df)
+#' str(rownames(df))
+#'
+#' @export
+#'
+matrix_df <- function(x) {
+  y <- unname(x)
+  structure(lapply(seq_len(dim(y)[2L]), function(i) y[, i]),
+            class = "data.frame",
+            names = colnames(x),
+            row.names = rownames(x))
+}
+
+#' Merge Dataframes
+#'
+#' Full join on an arbitrary number of 'data.frame' objects passed as arguments,
+#'     preserving all unique entries. Can be used to combine historical time
+#'     series data where each observation is indexed by a unique timestamp and
+#'     all periods are complete.
+#'
+#' @param ... data.frame objects to combine.
+#'
+#' @return A data.frame containing all unique entries in the objects passed is
+#'     returned.
+#'
+#' @details Can be used to join price dataframes retrieved by \code{\link{oanda}}.
+#'     The function is designed to join complete historical data. If the data to
+#'     be merged contains data with incomplete periods, all entries are preserved
+#'     rather than updated. If incomplete periods are detected within the data,
+#'     a warning is issued, and the resulting dataframe should be manually checked
+#'     in case it contains unwanted duplicates. Use \code{\link{df_append}} for
+#'     updating dataframes with new values.
+#'
+#' @examples
+#' data1 <- sample_ohlc_data[1:6, ]
+#' data1
+#' data2 <- sample_ohlc_data[4:10, ]
+#' data2
+#' df_merge(data1, data2)
+#'
+#' @export
+#'
+df_merge <- function(...) {
+  dots <- list(...)
+  merge <- Reduce(function(x, y) merge.data.frame(x, y, all = TRUE), dots)
+  if (isTRUE(attr(dots[[1]], "oanda")) && FALSE %in% merge$complete) {
+    warning("Incomplete periods in merged dataframe, please check for possible duplicates",
+            call. = FALSE)
+  }
+  merge
+}
+
+#' Append New Data to Dataframe
+#'
+#' Update a 'data.frame' object with new data. Can be used to append new updated
+#'     time series data to an existing dataframe, where each observation is indexed
+#'     by a unique timestamp.
+#'
+#' @param new data.frame object containing new data.
+#' @param old data.frame object containing existing data.
+#'
+#' @return A data.frame of the existing data appended with the new data. If the
+#'     data in 'new' contains data with the same value for 'time' as 'old',
+#'     the data in 'new' will overwrite the data in 'old'.
+#'
+#' @details Can be used to update price dataframes retrieved by \code{\link{oanda}}.
+#'     The function is designed to update existing data with new values as they
+#'     become available. As opposed to \code{\link{df_merge}}, the data in 'new'
+#'     will overwrite the data in 'old' rather than create duplicates.
+#'
+#' @examples
+#' data1 <- sample_ohlc_data[7:10, ]
+#' data1
+#' data2 <- sample_ohlc_data[1:8, ]
+#' data2
+#' df_append(data1, data2)
+#'
+#' @export
+#'
+df_append <- function(new, old) {
+  structure(rbind(old[!old$time %in% new$time, ], new),
+            timestamp = attr(new, "timestamp"))
 }
 
