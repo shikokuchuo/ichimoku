@@ -73,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
       </span>
     </div>
 
@@ -148,7 +148,7 @@
   granularity <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"D"</span>, <span class='st'>"W"</span>, <span class='st'>"M"</span>, <span class='st'>"H12"</span>, <span class='st'>"H8"</span>, <span class='st'>"H6"</span>, <span class='st'>"H4"</span>, <span class='st'>"H3"</span>, <span class='st'>"H2"</span>, <span class='st'>"H1"</span>, <span class='st'>"M30"</span>,
     <span class='st'>"M15"</span>, <span class='st'>"M10"</span>, <span class='st'>"M5"</span>, <span class='st'>"M4"</span>, <span class='st'>"M2"</span>, <span class='st'>"M1"</span>, <span class='st'>"S30"</span>, <span class='st'>"S15"</span>, <span class='st'>"S10"</span>, <span class='st'>"S5"</span><span class='op'>)</span>,
   refresh <span class='op'>=</span> <span class='fl'>5</span>,
-  count <span class='op'>=</span> <span class='fl'>250</span>,
+  count <span class='op'>=</span> <span class='fl'>300</span>,
   price <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"M"</span>, <span class='st'>"B"</span>, <span class='st'>"A"</span><span class='op'>)</span>,
   theme <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"original"</span>, <span class='st'>"dark"</span>, <span class='st'>"solarized"</span>, <span class='st'>"mono"</span><span class='op'>)</span>,
   server <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"practice"</span>, <span class='st'>"live"</span><span class='op'>)</span>,
@@ -178,8 +178,9 @@ one of "M", "W", "D", "H12", "H8", "H6", "H4", "H3", "H2", "H1", "M30",
     </tr>
     <tr>
       <th>count</th>
-      <td><p>[default 250] the number of periods to return. The API supports
-a maximum of 5000 for each individual request.</p></td>
+      <td><p>[default 300] the number of periods to return, from 100 to 800.
+Note that fewer periods are actually shown on the chart to ensure a full
+cloud is always displayed.</p></td>
     </tr>
     <tr>
       <th>price</th>
