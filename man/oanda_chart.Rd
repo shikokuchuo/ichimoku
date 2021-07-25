@@ -30,7 +30,8 @@ one of "M", "W", "D", "H12", "H8", "H6", "H4", "H3", "H2", "H1", "M30",
 \item{refresh}{[default 5] data refresh interval in seconds, with a minimum of 1.}
 
 \item{count}{[default 250] the number of periods to return. The API supports
-a maximum of 5000 for each individual request.}
+a maximum of 5000. Note that fewer periods are actually shown on the chart
+to ensure a full cloud is always displayed.}
 
 \item{price}{[default "M"] pricing component, one of "M" (midpoint), "B" (bid)
 or "A" (ask).}

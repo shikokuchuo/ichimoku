@@ -1,3 +1,7 @@
+# ichimoku 0.3.1
+
+* `oanda_studio()` subsets the plot window so as to always show a full cloud, consistent with the behaviour of `oanda_chart()`.
+
 # ichimoku 0.3.0
 
 * **New features:**

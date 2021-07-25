@@ -212,7 +212,8 @@ oanda_stream <- function(instrument, server = c("practice", "live"), apikey) {
 #' @inheritParams oanda
 #' @param refresh [default 5] data refresh interval in seconds, with a minimum of 1.
 #' @param count [default 250] the number of periods to return. The API supports
-#'     a maximum of 5000 for each individual request.
+#'     a maximum of 5000. Note that fewer periods are actually shown on the chart
+#'     to ensure a full cloud is always displayed.
 #' @param theme [default 'original'] chart theme with alternative choices of
 #'     'dark', 'solarized' or 'mono'.
 #' @param ... additional arguments passed along to \code{\link{ichimoku}} for
@@ -275,7 +276,7 @@ oanda_chart <- function(instrument,
   xlen <- dim(data)[1L]
   message("Chart updating every ", refresh, " secs in graphical device... Press 'Esc' to return")
   while (TRUE) {
-    window <- paste0(as.character(data$time[78L]), "/")
+    cdata <- ichimoku.data.frame(data, ...)
     message <- paste(instrument, px, "price [", data$close[xlen], "] at",
                      attr(data, "timestamp"), "| Chart:",
                      switch(granularity, M = "Monthly", W = "Weekly", D = "Daily",
@@ -285,8 +286,8 @@ oanda_chart <- function(instrument,
                             M2 = "1 Mins", M1 = "1 Min", S30 = "30 Secs", S15 = "15 Secs",
                             S10 = "10 Secs", S5 = "5 Secs"),
                      "| Cmplt:", data$complete[xlen])
-    plot.ichimoku(ichimoku.data.frame(data, ...), window = window, ticker = ticker,
-                  message = message, theme = theme, newpage = FALSE)
+    plot.ichimoku(cdata[78:dim(cdata)[1L], ], ticker = ticker, message = message,
+                  theme = theme, newpage = FALSE)
     Sys.sleep(refresh)
     newdata <- oanda(instrument = instrument, granularity = granularity,
                      count = ceiling(refresh / periodicity) + 1,
@@ -457,6 +458,9 @@ oanda_get_key <- function() {
 #' @param instrument [default 'USD_JPY'] string containing the base currency and
 #'     quote currency delimited by a '_'. Use the \code{\link{oanda_instruments}}
 #'     function to return a list of all valid instruments.
+#' @param count [default 300] the number of periods to return, from 100 to 800.
+#'     Note that fewer periods are actually shown on the chart to ensure a full
+#'     cloud is always displayed.
 #' @param ... additional arguments passed along to \code{\link{ichimoku}} for
 #'     calculating the ichimoku cloud, \code{\link{autoplot}} to set chart
 #'     parameters, or the 'options' argument of \code{shiny::shinyApp()}.
@@ -487,7 +491,7 @@ oanda_studio <- function(instrument = "USD_JPY",
                                          "H12", "H8", "H6", "H4", "H3", "H2", "H1",
                                          "M30", "M15", "M10", "M5", "M4", "M2", "M1",
                                          "S30", "S15", "S10", "S5"),
-                         refresh = 5, count = 250, price = c("M", "B", "A"),
+                         refresh = 5, count = 300, price = c("M", "B", "A"),
                          theme = c("original", "dark", "solarized", "mono"),
                          server = c("practice", "live"), apikey, ...,
                          launch.browser = TRUE) {
@@ -622,7 +626,8 @@ oanda_studio <- function(instrument = "USD_JPY",
         if (attr(datastore, "timestamp") > attr(idata(), "timestamp")) datastore
         else idata()
         })
-      pdata <- shiny::reactive(ichimoku(data(), ...))
+      cdata <- shiny::reactive(ichimoku(data(), ...))
+      pdata <- shiny::reactive(cdata()[78:dim(cdata())[1L], ])
       left_px <- shiny::reactive(input$plot_hover$coords_css$x)
       top_px <- shiny::reactive(input$plot_hover$coords_css$y)
       posi_x <- shiny::reactive(round(input$plot_hover$x, digits = 0))
