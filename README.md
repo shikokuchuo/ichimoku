@@ -5,11 +5,12 @@
 
 <!-- badges: start -->
 
+[![CRAN
+Status](https://www.r-pkg.org/badges/version/ichimoku)](https://CRAN.R-project.org/package=ichimoku)
 [![R-CMD-check](https://github.com/shikokuchuo/ichimoku/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/shikokuchuo/ichimoku/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/shikokuchuo/ichimoku/branch/main/graph/badge.svg)](https://codecov.io/gh/shikokuchuo/ichimoku?branch=main)
-[![CRAN
-Status](https://www.r-pkg.org/badges/version/ichimoku)](https://CRAN.R-project.org/package=ichimoku)
+[![r-universe](https://shikokuchuo.r-universe.dev/badges/ichimoku)](https://shikokuchuo.r-universe.dev/)
 <!-- badges: end -->
 
 Visualization and Tools for Ichimoku Kinko Hyo Strategies
@@ -35,10 +36,15 @@ Install the released version of ichimoku from CRAN:
 install.packages("ichimoku")
 ```
 
-Or install the development version of ichimoku from GitHub with:
+Or install the latest development version of ichimoku:
 
 ``` r
+# From the Github source:
 devtools::install_github("shikokuchuo/ichimoku")
+
+# Or using rOpenSci R-universe binaries:
+options(repos = c(shikokuchuo = "https://shikokuchuo.r-universe.dev", CRAN = "https://cloud.r-project.org"))
+install.packages("ichimoku")
 ```
 
 ## Example
@@ -140,3 +146,5 @@ entity unaffiliated with the ichimoku package.
 R package site: <https://shikokuchuo.net/ichimoku/>
 
 CRAN page: <https://CRAN.R-project.org/package=ichimoku>
+
+Listed CRAN Finance Task View: <https://CRAN.R-project.org/view=Finance>

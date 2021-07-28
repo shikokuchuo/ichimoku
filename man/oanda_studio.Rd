@@ -15,7 +15,8 @@ oanda_studio(
   server = c("practice", "live"),
   apikey,
   ...,
-  launch.browser = TRUE
+  launch.browser = TRUE,
+  periods = c(9L, 26L, 52L)
 )
 }
 \arguments{
@@ -30,8 +31,8 @@ one of "M", "W", "D", "H12", "H8", "H6", "H4", "H3", "H2", "H1", "M30",
 \item{refresh}{[default 5] data refresh interval in seconds, with a minimum of 1.}
 
 \item{count}{[default 300] the number of periods to return, from 100 to 800.
-Note that fewer periods are actually shown on the chart to ensure a full
-cloud is always displayed.}
+Note that 78 fewer periods are actually shown on the chart to ensure a
+full cloud is always displayed.}
 
 \item{price}{[default "M"] pricing component, one of "M" (midpoint), "B" (bid)
 or "A" (ask).}
@@ -56,6 +57,11 @@ browser will be launched automatically after the app is started. The value
 of this argument can also be a function to call with the application's URL.
 To use the default Shiny viewer in RStudio, please specify
 \code{getOption("shiny.launch.browser")}.}
+
+\item{periods}{[default c(9L, 26L, 52L)] a vector defining the length of
+periods used for the cloud. This parameter shoud not normally be modified
+as using other values would be invalid in the context of traditional
+Ichimoku analysis.}
 }
 \value{
 Returns a Shiny app object with class 'shiny.appobj'. Note that

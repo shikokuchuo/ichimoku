@@ -1,6 +1,7 @@
-# ichimoku 0.3.1
+# ichimoku 0.3.1.1
 
 * `oanda_studio()` subsets the plot window so as to always show a full cloud, consistent with the behaviour of `oanda_chart()`.
+* `oanda_studio()` and `oanda_chart()` add support for the 'periods' argument passed to `ichimoku()`.
 
 # ichimoku 0.3.0
 
@@ -8,7 +9,7 @@
 
 * OANDA fxTrade API interface for retrieving price data: new `oanda()`, `oanda_stream()` and `oanda_chart()` functions.
 * `oanda_studio()` is a complete live analysis envrionment using OANDA data in an R Shiny app.
-* `iplot()` is re-launched using R Shiny. Introduces an intuitive cursor tooltip that allows data to be easily read from the chart.
+* `iplot()` is re-launched using R Shiny. Introduces an intuitive cursor infotip that allows data to be read directly from the chart.
 * `look()` function for viewing informational attributes of objects created by the package, and for extracting ichimoku objects from lists returned by `autostrat()`.
 * `strat()` and `autostrat()` gain a new type/level 3 for asymmetric strategies using different indicators for position entry and exit (experimental). 
 

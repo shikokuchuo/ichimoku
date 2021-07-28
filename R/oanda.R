@@ -210,10 +210,11 @@ oanda_stream <- function(instrument, server = c("practice", "live"), apikey) {
 #' Live updating Ichimoku Kinko Hyo cloud charts using OANDA fxTrade API data.
 #'
 #' @inheritParams oanda
+#' @inheritParams ichimoku
 #' @param refresh [default 5] data refresh interval in seconds, with a minimum of 1.
 #' @param count [default 250] the number of periods to return. The API supports
-#'     a maximum of 5000. Note that fewer periods are actually shown on the chart
-#'     to ensure a full cloud is always displayed.
+#'     a maximum of 5000. Note that 78 fewer periods are actually shown on the
+#'     chart to ensure a full cloud is always displayed.
 #' @param theme [default 'original'] chart theme with alternative choices of
 #'     'dark', 'solarized' or 'mono'.
 #' @param ... additional arguments passed along to \code{\link{ichimoku}} for
@@ -247,7 +248,8 @@ oanda_chart <- function(instrument,
                         refresh = 5,
                         count = 250, price = c("M", "B", "A"),
                         theme = c("original", "dark", "solarized", "mono"),
-                        server = c("practice", "live"), apikey, ...) {
+                        server = c("practice", "live"), apikey, ...,
+                        periods = c(9L, 26L, 52L)) {
 
   if (missing(instrument)) stop("Argument 'instrument' must be specified", call. = FALSE)
   if (missing(apikey)) apikey <- oanda_get_key()
@@ -260,8 +262,15 @@ oanda_chart <- function(instrument,
     message("Invalid refresh interval '", refresh, "' secs specified - using default of 5 secs instead")
     refresh <- 5
   }
-  if (!is.numeric(count) || count <= 78) {
-    message("Invalid count specified - count must be greater than 78 - using default of 250 instead")
+  if (!is.numeric(periods) || !length(periods) == 3 || !all(periods > 0)) {
+    warning("Invalid cloud periods specified - using defaults c(9L, 26L, 52L) instead",
+            call. = FALSE)
+    periods <- c(9L, 26L, 52L)
+  }
+  p2 <- periods[2]
+  minlen <- p2 + periods[3]
+  if (!is.numeric(count) || count <= minlen) {
+    message("Invalid count specified - using default of 250 instead")
     count <- 250
   }
   ins <- oanda_instruments(server = server, apikey = apikey)
@@ -276,7 +285,7 @@ oanda_chart <- function(instrument,
   xlen <- dim(data)[1L]
   message("Chart updating every ", refresh, " secs in graphical device... Press 'Esc' to return")
   while (TRUE) {
-    cdata <- ichimoku.data.frame(data, ...)
+    pdata <- ichimoku.data.frame(data, periods = periods, ...)[minlen:(xlen + p2), ]
     message <- paste(instrument, px, "price [", data$close[xlen], "] at",
                      attr(data, "timestamp"), "| Chart:",
                      switch(granularity, M = "Monthly", W = "Weekly", D = "Daily",
@@ -286,8 +295,7 @@ oanda_chart <- function(instrument,
                             M2 = "1 Mins", M1 = "1 Min", S30 = "30 Secs", S15 = "15 Secs",
                             S10 = "10 Secs", S5 = "5 Secs"),
                      "| Cmplt:", data$complete[xlen])
-    plot.ichimoku(cdata[78:dim(cdata)[1L], ], ticker = ticker, message = message,
-                  theme = theme, newpage = FALSE)
+    plot.ichimoku(pdata, ticker = ticker, message = message, theme = theme, newpage = FALSE)
     Sys.sleep(refresh)
     newdata <- oanda(instrument = instrument, granularity = granularity,
                      count = ceiling(refresh / periodicity) + 1,
@@ -455,16 +463,16 @@ oanda_get_key <- function() {
 #'     data in a completely customisable Shiny environment.
 #'
 #' @inheritParams oanda_chart
+#' @inheritParams iplot
 #' @param instrument [default 'USD_JPY'] string containing the base currency and
 #'     quote currency delimited by a '_'. Use the \code{\link{oanda_instruments}}
 #'     function to return a list of all valid instruments.
 #' @param count [default 300] the number of periods to return, from 100 to 800.
-#'     Note that fewer periods are actually shown on the chart to ensure a full
-#'     cloud is always displayed.
+#'     Note that 78 fewer periods are actually shown on the chart to ensure a
+#'     full cloud is always displayed.
 #' @param ... additional arguments passed along to \code{\link{ichimoku}} for
 #'     calculating the ichimoku cloud, \code{\link{autoplot}} to set chart
 #'     parameters, or the 'options' argument of \code{shiny::shinyApp()}.
-#' @inheritParams iplot
 #'
 #' @return Returns a Shiny app object with class 'shiny.appobj'. Note that
 #'     returned times within the app are represented in UTC.
@@ -494,7 +502,8 @@ oanda_studio <- function(instrument = "USD_JPY",
                          refresh = 5, count = 300, price = c("M", "B", "A"),
                          theme = c("original", "dark", "solarized", "mono"),
                          server = c("practice", "live"), apikey, ...,
-                         launch.browser = TRUE) {
+                         launch.browser = TRUE,
+                         periods = c(9L, 26L, 52L)) {
 
   if (requireNamespace("shiny", quietly = TRUE)) {
 
@@ -507,6 +516,13 @@ oanda_studio <- function(instrument = "USD_JPY",
     price <- match.arg(price)
     theme <- match.arg(theme)
     srv <- match.arg(server)
+    if (!is.numeric(periods) || !length(periods) == 3 || !all(periods > 0)) {
+      warning("Specified cloud periods invalid - using defaults c(9L, 26L, 52L) instead",
+              call. = FALSE)
+      periods <- c(9L, 26L, 52L)
+    }
+    p2 <- periods[2]
+    minlen <- p2 + periods[3]
     ins <- oanda_instruments(server = server, apikey = apikey)
 
     ui <- shiny::fluidPage(
@@ -563,18 +579,6 @@ oanda_studio <- function(instrument = "USD_JPY",
 
     server <- function(input, output, session) {
 
-      ticker <- shiny::reactive(
-        paste(ins$displayName[ins$name %in% input$instrument], "  |",
-              input$instrument, switch(input$price, M = "mid", B = "bid", A = "ask"),
-              "price [", data()$close[dim(data())[1L]], "] at",
-              attr(data(), "timestamp"), "| Chart:",
-              switch(input$granularity, M = "Monthly", W = "Weekly", D = "Daily",
-                     H12 = "12 Hour", H8 = "8 Hour", H6 = "6 Hour", H4 = "4 Hour",
-                     H3 = "3 Hour", H2 = "2 Hour", H1 = "1 Hour", M30 = "30 Mins",
-                     M15 = "15 Mins", M10 = "10 Mins", M5 = "5 Mins", M4 = "4 Mins",
-                     M2 = "1 Mins", M1 = "1 Min", S30 = "30 Secs", S15 = "15 Secs",
-                     S10 = "10 Secs", S5 = "5 Secs"),
-              "| Cmplt:", data()$complete[dim(data())[1L]]))
       periodicity <- shiny::reactive(
         switch(input$granularity,
                M = 2419200, W = 604800, D = 86400, H12 = 43200, H8 = 28800,
@@ -582,12 +586,27 @@ oanda_studio <- function(instrument = "USD_JPY",
                M30 = 1800, M15 = 900, M10 = 600, M5 = 300, M4 = 240,
                M2 = 120, M1 = 60, S30 = 30, S15 = 15, S10 = 10, S5 = 5)
       )
-
       idata <- shiny::reactive(oanda(instrument = input$instrument,
                                      granularity = input$granularity,
                                      count = input$count,
                                      price = input$price,
                                      server = srv, apikey = apikey, .validate = TRUE))
+      left_px <- shiny::reactive(input$plot_hover$coords_css$x)
+      top_px <- shiny::reactive(input$plot_hover$coords_css$y)
+      posi_x <- shiny::reactive(round(input$plot_hover$x, digits = 0))
+
+      ticker <- shiny::reactive(
+        paste(ins$displayName[ins$name %in% input$instrument], "  |",
+              input$instrument, switch(input$price, M = "mid", B = "bid", A = "ask"),
+              "price [", data()$close[xlen()], "] at",
+              attr(data(), "timestamp"), "| Chart:",
+              switch(input$granularity, M = "Monthly", W = "Weekly", D = "Daily",
+                     H12 = "12 Hour", H8 = "8 Hour", H6 = "6 Hour", H4 = "4 Hour",
+                     H3 = "3 Hour", H2 = "2 Hour", H1 = "1 Hour", M30 = "30 Mins",
+                     M15 = "15 Mins", M10 = "10 Mins", M5 = "5 Mins", M4 = "4 Mins",
+                     M2 = "1 Mins", M1 = "1 Min", S30 = "30 Secs", S15 = "15 Secs",
+                     S10 = "10 Secs", S5 = "5 Secs"),
+              "| Cmplt:", data()$complete[xlen()]))
 
       newdata <- shiny::reactivePoll(
         intervalMillis = shiny::reactive({
@@ -597,45 +616,39 @@ oanda_studio <- function(instrument = "USD_JPY",
         session = session,
         checkFunc = function() Sys.time(),
         valueFunc = function() {
+          shiny::req(input$refresh >= 1)
           oanda(instrument = input$instrument,
                 granularity = input$granularity,
-                count = ceiling(refresh / periodicity()) + 1,
+                count = ceiling(input$refresh / periodicity()) + 1,
                 price = input$price,
                 server = srv, apikey = apikey, .validate = TRUE)
         }
       )
 
-      bit <- 0
-      datastore <- shiny::isolate(idata())
+      datastore <- shiny::reactiveVal(shiny::isolate(idata()))
       shiny::observeEvent(newdata(), {
-        if (bit == 0) {
-          datastore <<- df_append(new = newdata(), old = idata())
-          dlen <- dim(datastore)[1L]
-          if (dlen > input$count) datastore <<- datastore[(dlen - input$count + 1L):dlen, ]
-          bit <<- 1
+        if (unclass(attr(idata(), "timestamp")) > unclass(attr(datastore(), "timestamp"))) {
+          df <- df_append(new = newdata(), old = idata())
+          dlen <- dim(df)[1L]
+          if (dlen > input$count) df <- df[(dlen - input$count + 1L):dlen, ]
+          datastore(df)
         } else {
-          datastore <<- df_append(new = newdata(), old = datastore)
-          dlen <- dim(datastore)[1L]
-          if (dlen > input$count) datastore <<- datastore[(dlen - input$count + 1L):dlen, ]
+          df <- df_append(new = newdata(), old = datastore())
+          dlen <- dim(df)[1L]
+          if (dlen > input$count) df <- df[(dlen - input$count + 1L):dlen, ]
+          datastore(df)
         }
       }, domain = session)
-      shiny::observeEvent(idata(), {
-        bit <<- 0
-      }, domain = session)
-      data <- shiny::eventReactive(list(newdata(), idata()), {
-        if (attr(datastore, "timestamp") > attr(idata(), "timestamp")) datastore
+      data <- shiny::reactive({
+        if (unclass(attr(datastore(), "timestamp")) > unclass(attr(idata(), "timestamp"))) datastore()
         else idata()
-        })
-      cdata <- shiny::reactive(ichimoku(data(), ...))
-      pdata <- shiny::reactive(cdata()[78:dim(cdata())[1L], ])
-      left_px <- shiny::reactive(input$plot_hover$coords_css$x)
-      top_px <- shiny::reactive(input$plot_hover$coords_css$y)
-      posi_x <- shiny::reactive(round(input$plot_hover$x, digits = 0))
+      })
+      xlen <- shiny::reactive(dim(data())[1L])
+      pdata <- shiny::reactive(ichimoku(data(), periods = periods, ...)[minlen:(xlen() + p2), ])
 
       output$chart <- shiny::renderPlot(
         autoplot.ichimoku(pdata(), ticker = ticker(), theme = input$theme, ...)
       )
-
       output$hover_x <- shiny::renderUI({
         shiny::req(input$plot_hover, posi_x() > 0, posi_x() <= dim(pdata())[1L])
         drawGuide(label = index(pdata())[posi_x()], left = left_px() - 17, top = 45)
@@ -648,6 +661,7 @@ oanda_studio <- function(instrument = "USD_JPY",
         shiny::req(input$infotip, input$plot_hover, posi_x() > 0, posi_x() <= dim(pdata())[1L])
         drawInfotip(sdata = pdata()[posi_x(), ], left_px = left_px(), top_px = top_px())
       })
+
       session$onSessionEnded(function() shiny::stopApp())
     }
 

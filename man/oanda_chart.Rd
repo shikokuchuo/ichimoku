@@ -14,7 +14,8 @@ oanda_chart(
   theme = c("original", "dark", "solarized", "mono"),
   server = c("practice", "live"),
   apikey,
-  ...
+  ...,
+  periods = c(9L, 26L, 52L)
 )
 }
 \arguments{
@@ -30,8 +31,8 @@ one of "M", "W", "D", "H12", "H8", "H6", "H4", "H3", "H2", "H1", "M30",
 \item{refresh}{[default 5] data refresh interval in seconds, with a minimum of 1.}
 
 \item{count}{[default 250] the number of periods to return. The API supports
-a maximum of 5000. Note that fewer periods are actually shown on the chart
-to ensure a full cloud is always displayed.}
+a maximum of 5000. Note that 78 fewer periods are actually shown on the
+chart to ensure a full cloud is always displayed.}
 
 \item{price}{[default "M"] pricing component, one of "M" (midpoint), "B" (bid)
 or "A" (ask).}
@@ -49,6 +50,11 @@ interactively if not specified.}
 
 \item{...}{additional arguments passed along to \code{\link{ichimoku}} for
 calculating the ichimoku cloud.}
+
+\item{periods}{[default c(9L, 26L, 52L)] a vector defining the length of
+periods used for the cloud. This parameter shoud not normally be modified
+as using other values would be invalid in the context of traditional
+Ichimoku analysis.}
 }
 \value{
 Does not return a value, however a plot of the ichimoku chart for the

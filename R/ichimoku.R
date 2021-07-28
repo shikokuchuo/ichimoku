@@ -559,16 +559,16 @@ iplot <- function(x, ticker, theme = c("original", "dark", "solarized", "mono"),
 
     server <- function(input, output, session) {
       window <- shiny::reactive(paste0(input$dates[1L], "/", input$dates[2L]))
-      pdata <- shiny::reactive(x[window()])
       left_px <- shiny::reactive(input$plot_hover$coords_css$x)
       top_px <- shiny::reactive(input$plot_hover$coords_css$y)
       posi_x <- shiny::reactive(round(input$plot_hover$x, digits = 0))
 
+      pdata <- shiny::reactive(x[window()])
+
       output$chart <- shiny::renderPlot(
-        autoplot.ichimoku(x, window = window(), ticker = input$ticker, message = input$message,
+        autoplot.ichimoku(pdata(), ticker = input$ticker, message = input$message,
                           theme = input$theme, strat = input$strat)
       )
-
       output$hover_x <- shiny::renderUI({
         shiny::req(input$plot_hover, posi_x() > 0, posi_x() <= dim(pdata())[1L])
         drawGuide(label = index(pdata())[posi_x()], left = left_px() + xadj, top = 60)
@@ -577,11 +577,11 @@ iplot <- function(x, ticker, theme = c("original", "dark", "solarized", "mono"),
         shiny::req(input$plot_hover)
         drawGuide(label = signif(input$plot_hover$y, digits = 5), left = 75, top = top_px() + 11)
       })
-
       output$infotip <- shiny::renderUI({
         shiny::req(input$infotip, input$plot_hover, posi_x() > 0, posi_x() <= dim(pdata())[1L])
         drawInfotip(sdata = pdata()[posi_x(), ], left_px = left_px(), top_px = top_px())
       })
+
       session$onSessionEnded(function() shiny::stopApp())
     }
 

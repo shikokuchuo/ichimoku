@@ -25,6 +25,22 @@ with_mock_api({
 })
 
 with_mock_api({
+  test_that("oanda_stream ok", {
+    expect_error(oanda_stream("USD_JPY", apikey = NULL))
+  })
+})
+
+with_mock_api({
+  test_that("oanda_chart ok", {
+    expect_error(
+      suppressWarnings(
+        suppressMessages(
+          oanda_chart("USD_JPY", refresh = 0, count = 10, periods = 10, apikey = NULL)
+          )))
+  })
+})
+
+with_mock_api({
   test_that("oanda helpers ok", {
     expect_s3_class(oanda_accounts(apikey = NULL), "data.frame")
     expect_s3_class(oanda_instruments(apikey = NULL), "data.frame")
