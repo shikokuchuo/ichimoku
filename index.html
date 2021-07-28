@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1.1</span>
       </span>
     </div>
 
@@ -114,9 +114,14 @@
 <p>Install the released version of ichimoku from CRAN:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"ichimoku"</span><span class="op">)</span></code></pre></div>
-<p>Or install the development version of ichimoku from GitHub with:</p>
+<p>Or install the latest development version of ichimoku:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"shikokuchuo/ichimoku"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="co"># From the Github source:</span>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"shikokuchuo/ichimoku"</span><span class="op">)</span>
+
+<span class="co"># Or using rOpenSci R-universe binaries:</span>
+<span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>shikokuchuo <span class="op">=</span> <span class="st">"https://shikokuchuo.r-universe.dev"</span>, CRAN <span class="op">=</span> <span class="st">"https://cloud.r-project.org"</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"ichimoku"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
@@ -193,6 +198,7 @@
 <p>‘OANDA’ and ‘fxTrade’ are trademarks owned by OANDA Corporation, an entity unaffiliated with the ichimoku package.</p>
 <p>R package site: <a href="https://shikokuchuo.net/ichimoku/" class="uri">https://shikokuchuo.net/ichimoku/</a></p>
 <p>CRAN page: <a href="https://CRAN.R-project.org/package=ichimoku" class="uri">https://CRAN.R-project.org/package=ichimoku</a></p>
+<p>Listed CRAN Finance Task View: <a href="https://CRAN.R-project.org/view=Finance" class="uri">https://CRAN.R-project.org/view=Finance</a></p>
 </div>
 </div>
   </div>
@@ -226,9 +232,10 @@
   <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
+<li><a href="https://CRAN.R-project.org/package=ichimoku"><img src="https://www.r-pkg.org/badges/version/ichimoku" alt="CRAN Status"></a></li>
 <li><a href="https://github.com/shikokuchuo/ichimoku/actions/workflows/R-CMD-check.yaml"><img src="https://github.com/shikokuchuo/ichimoku/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
 <li><a href="https://codecov.io/gh/shikokuchuo/ichimoku?branch=main"><img src="https://codecov.io/gh/shikokuchuo/ichimoku/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
-<li><a href="https://CRAN.R-project.org/package=ichimoku"><img src="https://www.r-pkg.org/badges/version/ichimoku" alt="CRAN Status"></a></li>
+<li><a href="https://shikokuchuo.r-universe.dev/"><img src="https://shikokuchuo.r-universe.dev/badges/ichimoku" alt="r-universe"></a></li>
 </ul>
 </div>
 </div>
