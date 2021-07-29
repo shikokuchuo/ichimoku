@@ -591,10 +591,10 @@ oanda_studio <- function(instrument = "USD_JPY",
                                      count = input$count,
                                      price = input$price,
                                      server = srv, apikey = apikey, .validate = TRUE))
+      datastore <- shiny::reactiveVal(shiny::isolate(idata()))
       left_px <- shiny::reactive(input$plot_hover$coords_css$x)
       top_px <- shiny::reactive(input$plot_hover$coords_css$y)
       posi_x <- shiny::reactive(round(input$plot_hover$x, digits = 0))
-
       ticker <- shiny::reactive(
         paste(ins$displayName[ins$name %in% input$instrument], "  |",
               input$instrument, switch(input$price, M = "mid", B = "bid", A = "ask"),
@@ -608,24 +608,15 @@ oanda_studio <- function(instrument = "USD_JPY",
                      S10 = "10 Secs", S5 = "5 Secs"),
               "| Cmplt:", data()$complete[xlen()]))
 
-      newdata <- shiny::reactivePoll(
-        intervalMillis = shiny::reactive({
-          shiny::req(input$refresh >= 1)
-          input$refresh * 1000
-        }),
-        session = session,
-        checkFunc = function() Sys.time(),
-        valueFunc = function() {
-          shiny::req(input$refresh >= 1)
-          oanda(instrument = input$instrument,
-                granularity = input$granularity,
-                count = ceiling(input$refresh / periodicity()) + 1,
-                price = input$price,
-                server = srv, apikey = apikey, .validate = TRUE)
-        }
-      )
-
-      datastore <- shiny::reactiveVal(shiny::isolate(idata()))
+      newdata <- shiny::reactive({
+        shiny::req(input$refresh >= 1)
+        shiny::invalidateLater(millis = input$refresh * 1000, session = session)
+        oanda(instrument = input$instrument,
+              granularity = input$granularity,
+              count = ceiling(input$refresh / periodicity()) + 1,
+              price = input$price,
+              server = srv, apikey = apikey, .validate = TRUE)
+      })
       shiny::observeEvent(newdata(), {
         if (unclass(attr(idata(), "timestamp")) > unclass(attr(datastore(), "timestamp"))) {
           df <- df_append(new = newdata(), old = idata())
@@ -638,7 +629,8 @@ oanda_studio <- function(instrument = "USD_JPY",
           if (dlen > input$count) df <- df[(dlen - input$count + 1L):dlen, ]
           datastore(df)
         }
-      }, domain = session)
+      })
+
       data <- shiny::reactive({
         if (unclass(attr(datastore(), "timestamp")) > unclass(attr(idata(), "timestamp"))) datastore()
         else idata()

@@ -26,7 +26,7 @@ with_mock_api({
 
 with_mock_api({
   test_that("oanda_stream ok", {
-    expect_error(oanda_stream("USD_JPY", apikey = NULL))
+    expect_error(suppressMessages(oanda_stream("USD_JPY", apikey = NULL)))
   })
 })
 
