@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1.2</span>
       </span>
     </div>
 
@@ -105,15 +105,15 @@
 <h2 class="hasAnchor">
 <a href="#about-oanda-fxtrade" class="anchor"></a>About OANDA fxTrade</h2>
 <p>ichimoku contains an interface to the OANDA fxTrade API, creating a binding for the R language.</p>
-<p>OANDA is an authoritative source of foreign exchange data used globally by governments and corporations alike. The API can be used for retrieving historical and live streaming price data for major currencies, metals, commodities, government bonds and stock indices.</p>
-<p>This is considered a rich source of financial data with excellent availability, for instance daily OHLC pricing data for major forex pairs going back to the start of 2005, and data granularity ranging from 5 seconds to monthly.</p>
+<p>OANDA is an authoritative source of foreign exchange data used by governments and global corporations alike. The API can be used for retrieving historical and live streaming price data for major currencies, metals, commodities, government bonds and stock indices.</p>
+<p>It is considered a rich source of financial data with excellent availability, for instance daily OHLC pricing data for major forex pairs from the start of 2005, and data granularity ranging from 5 seconds to monthly. For the total list of over 120 covered instruments please refer to the <a href="#available-instruments">Available Instruments</a> section below.</p>
 <p>Please note that ‘OANDA’ and ‘fxTrade’ are trademarks owned by OANDA Corporation, an entity which is entirely unaffiliated with the ichimoku package.</p>
 </div>
 <div id="registering-with-oanda" class="section level2">
 <h2 class="hasAnchor">
 <a href="#registering-with-oanda" class="anchor"></a>Registering with OANDA</h2>
-<p>The OANDA fxTrade API, as distinct to other OANDA data sources such as its rates for business, is based upon their retail and professional trading offering. As such, access to the API requires an fxTrade account with OANDA and agreement to their API terms of use. Any account type is sufficient, including a ‘demo’ or ‘practice’ account, which at the time of writing is entirely free to sign up and use without limit.</p>
-<p>For registering an account, the following URL may be used: <a href="https://www.oanda.com/forex-trading/" class="uri">https://www.oanda.com/forex-trading/</a>.</p>
+<p>The OANDA fxTrade API, as distinct to other OANDA data sources such as its rates for business, is based upon their retail and professional trading offering of the same name. As such, access to the API requires an fxTrade account with OANDA and agreement to their API terms of use.</p>
+<p>Registering for a ‘demo’ or ‘practice’ account is entirely free at the time of writing and provides full access to the API. For registering an account, the following URL may be used: <a href="https://www.oanda.com/forex-trading/" class="uri">https://www.oanda.com/forex-trading/</a>.</p>
 <p>After successful registration, a link can be found on your OANDA fxTrade account profile page ‘Manage API Access’ (My Account -&gt; My Services -&gt; Manage API Access). From there, a personal access token to use with the OANDA API can be generated, as well as revoked. This access token will enable all the OANDA functions in this package.</p>
 <p>Note: this package only contains functions for retrieving available instruments and price data. It does not contain any code which implements any trading capability whatsoever. Hence using your access token with this package should be safe even for live accounts. However, the access token can be used (outside of this package) for all operations on your account including placing orders and trades. It is recommended therefore, for maximum security, that you sign up for a demo/practice account and use the access token for that account even if you hold an existing live account with OANDA.</p>
 </div>
@@ -135,21 +135,21 @@
 <p>The arguments to the function are phrased identically to that of the API itself where relevant:</p>
 <ul>
 <li>
-<code>instrument</code> a string containing the base currency and quote currency delimited by a ’_’ (for example “USD_JPY”). Use the <code><a href="../reference/oanda_instruments.html">oanda_instruments()</a></code> function to return a list of all valid instruments.</li>
+<code>instrument</code> a string containing the base currency and quote currency delimited by a ’_’ (for example “USD_JPY”). Use the <code><a href="../reference/oanda_instruments.html">oanda_instruments()</a></code> function to return a list of all valid instruments</li>
 <li>
-<code>granularity</code> [default “D”] the granularity of the price data to fetch, one of “M”, “W”, “D”, “H12”, “H8”, “H6”, “H4”, “H3”, “H2”, “H1”, “M30”, “M15”, “M10”, “M5”, “M4”, “M2”, “M1”, “S30”, “S15”, “S10”, “S5”.</li>
+<code>granularity</code> [default “D”] the granularity of the price data to fetch, one of “M”, “W”, “D”, “H12”, “H8”, “H6”, “H4”, “H3”, “H2”, “H1”, “M30”, “M15”, “M10”, “M5”, “M4”, “M2”, “M1”, “S30”, “S15”, “S10”, “S5”</li>
 <li>
-<code>count</code> (optional) the number of periods to return. The API supports a maximum of 5000 for each individual request, and defaults to 500 if not specified. ‘count’ should not be specified if both ‘from’ and ‘to’ arguments are provided, as the time range combined with ‘granularity’ will determine the number of periods to return.</li>
+<code>count</code> (optional) the number of periods to return. The API supports a maximum of 5000 for each individual request, and defaults to 500 if not specified. ‘count’ should not be specified if both ‘from’ and ‘to’ arguments are provided, as the time range combined with ‘granularity’ will determine the number of periods to return</li>
 <li>
-<code>from</code> (optional) the start of the time range for which to fetch price data, for example “2020-02-01”.</li>
+<code>from</code> (optional) the start of the time range for which to fetch price data, for example “2020-02-01”</li>
 <li>
-<code>to</code> (optional) the end of the time range for which to fetch price data, for example “2020-06-30”.</li>
+<code>to</code> (optional) the end of the time range for which to fetch price data, for example “2020-06-30”</li>
 <li>
-<code>price</code> [default “M”] the pricing component, one of “M” (midpoint), “B” (bid) or “A” (ask).</li>
+<code>price</code> [default “M”] the pricing component, one of “M” (midpoint), “B” (bid) or “A” (ask)</li>
 <li>
-<code>server</code> [default “practice”] select either the “practice” or “live” server depending on the account type held with OANDA.</li>
+<code>server</code> [default “practice”] select either the “practice” or “live” server depending on the account type held with OANDA</li>
 <li>
-<code>apikey</code> (optional) string containing the OANDA fxTrade API key (personal access token). This argument is designed for specifying a function that returns such a string rather than the string itself, which could be potentially unsecure. This allows other packages that provide secure storage of secrets to be used if preferred over ‘keyring’.</li>
+<code>apikey</code> (optional) string containing the OANDA fxTrade API key (personal access token). This argument is designed for specifying a function that returns such a string rather than the string itself, which could be potentially unsecure. This allows other packages that provide secure storage of secrets to be used if preferred over ‘keyring’</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://shikokuchuo.net/ichimoku/">ichimoku</a></span><span class="op">)</span>
@@ -160,13 +160,13 @@
 <span class="co">#&gt; 3 2010-11-03 21:00:00 80.632 81.585 80.594 81.069  22204     TRUE</span></code></pre></div>
 <p>The returned object is a dataframe with the following columns: ‘time’, ‘open’, ‘high’, ‘low’, ‘close’, ‘volume’ and ‘complete’.</p>
 <ul>
-<li><p><strong>volume</strong> should normally be disregarded as this reflects the trading volume registered by OANDA and may not be reflective of the broader market.</p></li>
-<li><p><strong>complete</strong> indicates whether the data period is complete or not. If TRUE, the values are historical and not subject to change. If FALSE, the period is ongoing and the values reflect the current snapshot and the final values may or may not differ.</p></li>
+<li><p><strong>volume</strong> should normally be disregarded as this reflects the trading volume registered by OANDA and may not be reflective of the broader market</p></li>
+<li><p><strong>complete</strong> indicates whether the data period is complete or not. If TRUE, the values are historical and not subject to change. If FALSE, the period is ongoing and the values reflect the current snapshot and the final values may or may not differ</p></li>
 </ul>
 <p>Important implementation notes:</p>
 <ul>
-<li><p>Incorporates automatic adjustment of the timestamps to end of period, as is customary for financial data. This means that, for example, today’s pricing data (incomplete trading period) will have today’s date as would be expected. In contrast, the raw data from the API has a timestamp of the start of the period.</p></li>
-<li><p>The API data sometimes includes data for non-trading days with very low volumes. This is more common for older data and less so with more recent data. These may represent OTC trades that occurred over the OANDA platform, but nevertheless do not reflect market rates. These are automatically excluded from the data returned as they would otherwise produce spurious results if used with <code><a href="../reference/ichimoku.html">ichimoku()</a></code>.</p></li>
+<li><p>Incorporates automatic adjustment of the timestamps to end of period, as is customary for financial data. This means that, for example, today’s pricing data (incomplete trading period) will have today’s date as would be expected. In contrast, the raw data from the API has a timestamp of the start of the period</p></li>
+<li><p>The API data sometimes includes data for non-trading days with very low volumes. This is more common for older data and less so with more recent data. These may represent OTC trades that occurred over the OANDA platform, but nevertheless do not reflect market rates. These are automatically excluded from the data returned as they would otherwise produce spurious results if used with <code><a href="../reference/ichimoku.html">ichimoku()</a></code></p></li>
 </ul>
 <p>For diagnostic purposes only, the parameter <code>.validate = FALSE</code> may be set to view the original data retrieved from the API without the automatic validation adjustments above. This parameter should not otherwise be set.</p>
 </div>
@@ -180,11 +180,11 @@
 <p>The streamed data is formatted for legibility, including the use of colour blocks in the console, but otherwise represents the raw data feed without omission.</p>
 <p>The following should be noted from the streaming API documentation:</p>
 <ul>
-<li>Get a stream of Account Prices starting from when the request is made.</li>
-<li>This pricing stream does not include every single price created for the Account, but instead will provide at most 4 prices per second (every 250 milliseconds) for each instrument being requested.</li>
-<li>If more than one price is created for an instrument during the 250 millisecond window, only the price in effect at the end of the window is sent.</li>
-<li>This means that during periods of rapid price movement, subscribers to this stream will not be sent every price.</li>
-<li>Pricing windows for different connections to the price stream are not all aligned in the same way (i.e. they are not all aligned to the top of the second). This means that during periods of rapid price movement, different subscribers may observe different prices depending on their alignment.</li>
+<li>Get a stream of Account Prices starting from when the request is made</li>
+<li>This pricing stream does not include every single price created for the Account, but instead will provide at most 4 prices per second (every 250 milliseconds) for each instrument being requested</li>
+<li>If more than one price is created for an instrument during the 250 millisecond window, only the price in effect at the end of the window is sent</li>
+<li>This means that during periods of rapid price movement, subscribers to this stream will not be sent every price</li>
+<li>Pricing windows for different connections to the price stream are not all aligned in the same way (i.e. they are not all aligned to the top of the second). This means that during periods of rapid price movement, different subscribers may observe different prices depending on their alignment</li>
 </ul>
 </div>
 <div id="oanda_chart" class="section level3">
@@ -192,9 +192,19 @@
 <a href="#oanda_chart" class="anchor"></a><code>oanda_chart()</code>
 </h3>
 <p>Create a live updating Ichimoku Kinko Hyo (cloud chart). The refresh rate can be set for the chart to be updated down to every second. A plot of the ichimoku chart for the price data requested is output to the graphical device at each refresh interval.</p>
-<p>The arguments are identical to <code><a href="../reference/oanda.html">oanda()</a></code> above with the addition of ‘refresh’ as the third argument to set the refresh rate of the chart in seconds, with a minimum of 1. ‘from’ and ‘to’ are also excluded as they are not relevant in this context.</p>
+<p>The arguments are identical to <code><a href="../reference/oanda.html">oanda()</a></code> above with the addition of:</p>
+<ul>
+<li>
+<code>refresh</code> set the refresh rate of the chart in seconds, with a minimum of 1</li>
+<li>
+<code>...</code> additional parameters passed onto <code><a href="../reference/ichimoku.html">ichimoku()</a></code> for calculating the ichimoku cloud</li>
+<li>
+<code>periods</code> [default c(9L, 26L, 52L)] a vector defining the length of periods used for the cloud. This parameter shoud not normally be modified as using other values would be invalid in the context of traditional Ichimoku analysis</li>
+</ul>
+<p>The arguments ‘from’ and ‘to’ are excluded as they are not relevant in this context.</p>
 <p>If focus is not initially on the plot pane (in RStudio), please switch to it to view the chart.</p>
 <p>Note that returned times are represented in UTC.</p>
+<p>Note also that the periods displayed on the chart will be fewer than the ‘count’ specified. This is by design to ensure a full cloud is always displayed (i.e. there are no missing values for certain cloud lines at the start of the data). If using the default cloud periods, the first 78 datapoints will be excluded from the chart. Please take this into account when setting the ‘count’ parameter.</p>
 </div>
 <div id="oanda_studio" class="section level3">
 <h3 class="hasAnchor">
@@ -206,9 +216,11 @@
 <p>The following additional parameters can be used to customise the behaviour of the Shiny app:</p>
 <ul>
 <li>
-<code>...</code> additional parameters passed along to the ‘options’ argument of <code><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html">shiny::shinyApp()</a></code>.</li>
+<code>...</code> additional arguments passed to <code><a href="../reference/ichimoku.html">ichimoku()</a></code> for calculating the ichimoku cloud, <code><a href="../reference/autoplot.html">autoplot()</a></code> to set chart parameters, or the ‘options’ argument of <code><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html">shiny::shinyApp()</a></code>
+</li>
 <li>
-<code>launch.browser</code> [default TRUE] If TRUE, the system’s default web browser will be launched automatically after the app is started. The value of this argument can also be a function to call with the application’s URL. To use the default Shiny viewer in RStudio, please specify <code><a href="https://rdrr.io/r/base/options.html">getOption("shiny.launch.browser")</a></code>.</li>
+<code>launch.browser</code> [default TRUE] If TRUE, the system’s default web browser will be launched automatically after the app is started. The value of this argument can also be a function to call with the application’s URL. To use the default Shiny viewer in RStudio, please specify <code><a href="https://rdrr.io/r/base/options.html">getOption("shiny.launch.browser")</a></code>
+</li>
 </ul>
 </div>
 </div>
