@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
       </span>
     </div>
 
@@ -153,11 +153,11 @@
 </ul>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://shikokuchuo.net/ichimoku/">ichimoku</a></span><span class="op">)</span>
-<span class="fu"><a href="../reference/oanda.html">oanda</a></span><span class="op">(</span><span class="st">"USD_JPY"</span>, count <span class="op">=</span> <span class="fl">3</span>, from <span class="op">=</span> <span class="st">"2010-11-01"</span>, price <span class="op">=</span> <span class="st">"B"</span>, apikey <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
-<span class="co">#&gt;                  time   open   high    low  close volume complete</span>
-<span class="co">#&gt; 1 2010-11-01 21:00:00 80.275 81.504 80.225 80.501  22291     TRUE</span>
-<span class="co">#&gt; 2 2010-11-02 21:00:00 80.504 80.956 80.460 80.617  13795     TRUE</span>
-<span class="co">#&gt; 3 2010-11-03 21:00:00 80.632 81.585 80.594 81.069  22204     TRUE</span></code></pre></div>
+<span class="fu"><a href="../reference/oanda.html">oanda</a></span><span class="op">(</span><span class="st">"USD_JPY"</span>, count <span class="op">=</span> <span class="fl">3</span>, from <span class="op">=</span> <span class="st">"2010-11-01"</span>, price <span class="op">=</span> <span class="st">"B"</span><span class="op">)</span></code></pre></div>
+<pre><code>#&gt;                  time   open   high    low  close volume complete
+#&gt; 1 2010-11-01 21:00:00 80.275 81.504 80.225 80.501  22291     TRUE
+#&gt; 2 2010-11-02 21:00:00 80.504 80.956 80.460 80.617  13795     TRUE
+#&gt; 3 2010-11-03 21:00:00 80.632 81.585 80.594 81.069  22204     TRUE</code></pre>
 <p>The returned object is a dataframe with the following columns: ‘time’, ‘open’, ‘high’, ‘low’, ‘close’, ‘volume’ and ‘complete’.</p>
 <ul>
 <li><p><strong>volume</strong> should normally be disregarded as this reflects the trading volume registered by OANDA and may not be reflective of the broader market</p></li>
@@ -229,7 +229,7 @@
 <a href="#available-instruments" class="anchor"></a>Available Instruments</h2>
 <p>The list of financial instruments below serves as a reference only and may not be exhaustive and/or differ from those available for your account type or country/region.</p>
 <p>The list of financial instruments available for your account may be retrieved by <code><a href="../reference/oanda_instruments.html">oanda_instruments()</a></code>. The available instruments are also automatically populated as an input in <code><a href="../reference/oanda_studio.html">oanda_studio()</a></code>.</p>
-<pre><code>#&gt;           name.....type.....displayName
+<pre><code>#&gt;           name     type     displayName
 #&gt; 1    AU200_AUD      CFD   Australia 200
 #&gt; 2      AUD_CAD CURRENCY         AUD/CAD
 #&gt; 3      AUD_CHF CURRENCY         AUD/CHF
