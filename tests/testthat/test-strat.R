@@ -59,4 +59,8 @@ test_that("look ok", {
   expect_s3_class(look(stratlist, which = 1), "ichimoku")
   expect_error(look(stratlist, which = 9), regexp = "one of the strategies")
   expect_error(look(sample_ohlc_data), regexp = "certain object types")
+  df <- structure(list(a = 1:10), class = "data.frame", row.names = 1:10,
+                  oanda = TRUE, instrument = "INS", price = "B", timestamp = "test")
+  expect_type(look(df), "list")
+  expect_length(look(df), 3)
 })

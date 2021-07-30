@@ -36,15 +36,16 @@ Install the released version of ichimoku from CRAN:
 install.packages("ichimoku")
 ```
 
-Or install the latest development version of ichimoku:
+Or the latest development version from rOpenSci R-universe binaries:
 
 ``` r
-# From the Github source:
-devtools::install_github("shikokuchuo/ichimoku")
+install.packages("ichimoku", repos = "https://shikokuchuo.r-universe.dev")
+```
 
-# Or using rOpenSci R-universe binaries:
-options(repos = c(shikokuchuo = "https://shikokuchuo.r-universe.dev", CRAN = "https://cloud.r-project.org"))
-install.packages("ichimoku")
+Or the latest development version from the Github source:
+
+``` r
+devtools::install_github("shikokuchuo/ichimoku")
 ```
 
 ## Example

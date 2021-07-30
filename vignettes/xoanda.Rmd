@@ -15,8 +15,7 @@ knitr::opts_chunk$set(
   comment = "#>",
   fig.width = 7, fig.height = 5
 )
-library(httptest)
-start_vignette("oanda")
+
 ```
 
 ## About OANDA fxTrade
@@ -64,9 +63,21 @@ The arguments to the function are phrased identically to that of the API itself 
 - `server` [default "practice"] select either the "practice" or "live" server depending on the account type held with OANDA
 - `apikey` (optional) string containing the OANDA fxTrade API key (personal access token). This argument is designed for specifying a function that returns such a string rather than the string itself, which could be potentially unsecure. This allows other packages that provide secure storage of secrets to be used if preferred over 'keyring'
 
-```{r oanda}
+```{r oanda, eval=FALSE}
 library(ichimoku)
-oanda("USD_JPY", count = 3, from = "2010-11-01", price = "B", apikey = NULL)
+oanda("USD_JPY", count = 3, from = "2010-11-01", price = "B")
+```
+```{r oanda2, echo=FALSE}
+data.frame(
+        time = c("2010-11-01 21:00:00",
+                 "2010-11-02 21:00:00","2010-11-03 21:00:00"),
+        open = c(80.275, 80.504, 80.632),
+        high = c(81.504, 80.956, 81.585),
+         low = c(80.225, 80.46, 80.594),
+       close = c(80.501, 80.617, 81.069),
+      volume = c(22291L, 13795L, 22204L),
+    complete = c(TRUE, TRUE, TRUE)
+)
 ```
 
 The returned object is a dataframe with the following columns:
@@ -139,124 +150,91 @@ The list of financial instruments below serves as a reference only and may not b
 
 The list of financial instruments available for your account may be retrieved by `oanda_instruments()`. The available instruments are also automatically populated as an input in `oanda_studio()`.
 
-
 ```{r instruments, echo=FALSE}
 data.frame(
-               stringsAsFactors = FALSE,
-  name.....type.....displayName = c("AU200_AUD      CFD   Australia 200",
-                                    "AUD_CAD CURRENCY         AUD/CAD",
-                                    "AUD_CHF CURRENCY         AUD/CHF",
-                                    "AUD_HKD CURRENCY         AUD/HKD","AUD_JPY CURRENCY         AUD/JPY",
-                                    "AUD_NZD CURRENCY         AUD/NZD",
-                                    "AUD_SGD CURRENCY         AUD/SGD",
-                                    "AUD_USD CURRENCY         AUD/USD",
-                                    "BCO_USD      CFD Brent Crude Oil",
-                                    "CAD_CHF CURRENCY         CAD/CHF","CAD_HKD CURRENCY         CAD/HKD",
-                                    "CAD_JPY CURRENCY         CAD/JPY",
-                                    "CAD_SGD CURRENCY         CAD/SGD",
-                                    "CHF_HKD CURRENCY         CHF/HKD",
-                                    "CHF_JPY CURRENCY         CHF/JPY","CHF_ZAR CURRENCY         CHF/ZAR",
-                                    "CN50_USD      CFD       China A50",
-                                    "CORN_USD      CFD            Corn",
-                                    "DE10YB_EUR      CFD            Bund",
-                                    "DE30_EUR      CFD      Germany 30",
-                                    "EU50_EUR      CFD       Europe 50",
-                                    "EUR_AUD CURRENCY         EUR/AUD","EUR_CAD CURRENCY         EUR/CAD",
-                                    "EUR_CHF CURRENCY         EUR/CHF",
-                                    "EUR_CZK CURRENCY         EUR/CZK",
-                                    "EUR_DKK CURRENCY         EUR/DKK",
-                                    "EUR_GBP CURRENCY         EUR/GBP","EUR_HKD CURRENCY         EUR/HKD",
-                                    "EUR_HUF CURRENCY         EUR/HUF",
-                                    "EUR_JPY CURRENCY         EUR/JPY",
-                                    "EUR_NOK CURRENCY         EUR/NOK",
-                                    "EUR_NZD CURRENCY         EUR/NZD",
-                                    "EUR_PLN CURRENCY         EUR/PLN","EUR_SEK CURRENCY         EUR/SEK",
-                                    "EUR_SGD CURRENCY         EUR/SGD",
-                                    "EUR_TRY CURRENCY         EUR/TRY",
-                                    "EUR_USD CURRENCY         EUR/USD",
-                                    "EUR_ZAR CURRENCY         EUR/ZAR","FR40_EUR      CFD       France 40",
-                                    "GBP_AUD CURRENCY         GBP/AUD",
-                                    "GBP_CAD CURRENCY         GBP/CAD",
-                                    "GBP_CHF CURRENCY         GBP/CHF",
-                                    "GBP_HKD CURRENCY         GBP/HKD",
-                                    "GBP_JPY CURRENCY         GBP/JPY","GBP_NZD CURRENCY         GBP/NZD",
-                                    "GBP_PLN CURRENCY         GBP/PLN",
-                                    "GBP_SGD CURRENCY         GBP/SGD",
-                                    "GBP_USD CURRENCY         GBP/USD",
-                                    "GBP_ZAR CURRENCY         GBP/ZAR","HK33_HKD      CFD    Hong Kong 33",
-                                    "HKD_JPY CURRENCY         HKD/JPY",
-                                    "IN50_USD      CFD        India 50",
-                                    "JP225_USD      CFD       Japan 225",
-                                    "NAS100_USD      CFD      US Nas 100",
-                                    "NATGAS_USD      CFD     Natural Gas",
-                                    "NL25_EUR      CFD  Netherlands 25","NZD_CAD CURRENCY         NZD/CAD",
-                                    "NZD_CHF CURRENCY         NZD/CHF",
-                                    "NZD_HKD CURRENCY         NZD/HKD",
-                                    "NZD_JPY CURRENCY         NZD/JPY",
-                                    "NZD_SGD CURRENCY         NZD/SGD",
-                                    "NZD_USD CURRENCY         NZD/USD","SG30_SGD      CFD    Singapore 30",
-                                    "SGD_CHF CURRENCY         SGD/CHF",
-                                    "SGD_JPY CURRENCY         SGD/JPY",
-                                    "SOYBN_USD      CFD        Soybeans",
-                                    "SPX500_USD      CFD      US SPX 500",
-                                    "SUGAR_USD      CFD           Sugar","TRY_JPY CURRENCY         TRY/JPY",
-                                    "TWIX_USD      CFD    Taiwan Index",
-                                    "UK100_GBP      CFD          UK 100",
-                                    "UK10YB_GBP      CFD     UK 10Y Gilt",
-                                    "US2000_USD      CFD    US Russ 2000",
-                                    "US30_USD      CFD   US Wall St 30",
-                                    "USB02Y_USD      CFD    US 2Y T-Note",
-                                    "USB05Y_USD      CFD    US 5Y T-Note","USB10Y_USD      CFD   US 10Y T-Note",
-                                    "USB30Y_USD      CFD       US T-Bond",
-                                    "USD_CAD CURRENCY         USD/CAD",
-                                    "USD_CHF CURRENCY         USD/CHF",
-                                    "USD_CNH CURRENCY         USD/CNH",
-                                    "USD_CZK CURRENCY         USD/CZK","USD_DKK CURRENCY         USD/DKK",
-                                    "USD_HKD CURRENCY         USD/HKD",
-                                    "USD_HUF CURRENCY         USD/HUF",
-                                    "USD_INR CURRENCY         USD/INR",
-                                    "USD_JPY CURRENCY         USD/JPY","USD_MXN CURRENCY         USD/MXN",
-                                    "USD_NOK CURRENCY         USD/NOK",
-                                    "USD_PLN CURRENCY         USD/PLN",
-                                    "USD_SEK CURRENCY         USD/SEK",
-                                    "USD_SGD CURRENCY         USD/SGD",
-                                    "USD_THB CURRENCY         USD/THB","USD_TRY CURRENCY         USD/TRY",
-                                    "USD_ZAR CURRENCY         USD/ZAR",
-                                    "WHEAT_USD      CFD           Wheat",
-                                    "WTICO_USD      CFD  West Texas Oil",
-                                    "XAG_AUD    METAL      Silver/AUD",
-                                    "XAG_CAD    METAL      Silver/CAD","XAG_CHF    METAL      Silver/CHF",
-                                    "XAG_EUR    METAL      Silver/EUR",
-                                    "XAG_GBP    METAL      Silver/GBP",
-                                    "XAG_HKD    METAL      Silver/HKD",
-                                    "XAG_JPY    METAL      Silver/JPY","XAG_NZD    METAL      Silver/NZD",
-                                    "XAG_SGD    METAL      Silver/SGD",
-                                    "XAG_USD    METAL          Silver",
-                                    "XAU_AUD    METAL        Gold/AUD",
-                                    "XAU_CAD    METAL        Gold/CAD",
-                                    "XAU_CHF    METAL        Gold/CHF","XAU_EUR    METAL        Gold/EUR",
-                                    "XAU_GBP    METAL        Gold/GBP",
-                                    "XAU_HKD    METAL        Gold/HKD",
-                                    "XAU_JPY    METAL        Gold/JPY",
-                                    "XAU_NZD    METAL        Gold/NZD","XAU_SGD    METAL        Gold/SGD",
-                                    "XAU_USD    METAL            Gold",
-                                    "XAU_XAG    METAL     Gold/Silver",
-                                    "XCU_USD      CFD          Copper",
-                                    "XPD_USD    METAL       Palladium",
-                                    "XPT_USD    METAL        Platinum","ZAR_JPY CURRENCY         ZAR/JPY")
+  stringsAsFactors = FALSE,
+              name = c("AU200_AUD","AUD_CAD",
+                       "AUD_CHF","AUD_HKD","AUD_JPY","AUD_NZD","AUD_SGD","AUD_USD",
+                       "BCO_USD","CAD_CHF","CAD_HKD","CAD_JPY","CAD_SGD",
+                       "CHF_HKD","CHF_JPY","CHF_ZAR","CN50_USD","CORN_USD",
+                       "DE10YB_EUR","DE30_EUR","EU50_EUR","EUR_AUD",
+                       "EUR_CAD","EUR_CHF","EUR_CZK","EUR_DKK","EUR_GBP","EUR_HKD",
+                       "EUR_HUF","EUR_JPY","EUR_NOK","EUR_NZD","EUR_PLN",
+                       "EUR_SEK","EUR_SGD","EUR_TRY","EUR_USD","EUR_ZAR",
+                       "FR40_EUR","GBP_AUD","GBP_CAD","GBP_CHF","GBP_HKD",
+                       "GBP_JPY","GBP_NZD","GBP_PLN","GBP_SGD","GBP_USD",
+                       "GBP_ZAR","HK33_HKD","HKD_JPY","IN50_USD","JP225_USD",
+                       "NAS100_USD","NATGAS_USD","NL25_EUR","NZD_CAD","NZD_CHF",
+                       "NZD_HKD","NZD_JPY","NZD_SGD","NZD_USD","SG30_SGD",
+                       "SGD_CHF","SGD_JPY","SOYBN_USD","SPX500_USD",
+                       "SUGAR_USD","TRY_JPY","TWIX_USD","UK100_GBP","UK10YB_GBP",
+                       "US2000_USD","US30_USD","USB02Y_USD","USB05Y_USD",
+                       "USB10Y_USD","USB30Y_USD","USD_CAD","USD_CHF","USD_CNH",
+                       "USD_CZK","USD_DKK","USD_HKD","USD_HUF","USD_INR",
+                       "USD_JPY","USD_MXN","USD_NOK","USD_PLN","USD_SEK",
+                       "USD_SGD","USD_THB","USD_TRY","USD_ZAR","WHEAT_USD",
+                       "WTICO_USD","XAG_AUD","XAG_CAD","XAG_CHF","XAG_EUR",
+                       "XAG_GBP","XAG_HKD","XAG_JPY","XAG_NZD","XAG_SGD",
+                       "XAG_USD","XAU_AUD","XAU_CAD","XAU_CHF","XAU_EUR","XAU_GBP",
+                       "XAU_HKD","XAU_JPY","XAU_NZD","XAU_SGD","XAU_USD",
+                       "XAU_XAG","XCU_USD","XPD_USD","XPT_USD","ZAR_JPY"),
+              type = c("CFD","CURRENCY","CURRENCY",
+                       "CURRENCY","CURRENCY","CURRENCY","CURRENCY",
+                       "CURRENCY","CFD","CURRENCY","CURRENCY","CURRENCY","CURRENCY",
+                       "CURRENCY","CURRENCY","CURRENCY","CFD","CFD","CFD",
+                       "CFD","CFD","CURRENCY","CURRENCY","CURRENCY",
+                       "CURRENCY","CURRENCY","CURRENCY","CURRENCY","CURRENCY",
+                       "CURRENCY","CURRENCY","CURRENCY","CURRENCY","CURRENCY",
+                       "CURRENCY","CURRENCY","CURRENCY","CURRENCY","CFD",
+                       "CURRENCY","CURRENCY","CURRENCY","CURRENCY","CURRENCY",
+                       "CURRENCY","CURRENCY","CURRENCY","CURRENCY",
+                       "CURRENCY","CFD","CURRENCY","CFD","CFD","CFD","CFD","CFD",
+                       "CURRENCY","CURRENCY","CURRENCY","CURRENCY",
+                       "CURRENCY","CURRENCY","CFD","CURRENCY","CURRENCY","CFD",
+                       "CFD","CFD","CURRENCY","CFD","CFD","CFD","CFD","CFD",
+                       "CFD","CFD","CFD","CFD","CURRENCY","CURRENCY",
+                       "CURRENCY","CURRENCY","CURRENCY","CURRENCY","CURRENCY",
+                       "CURRENCY","CURRENCY","CURRENCY","CURRENCY","CURRENCY",
+                       "CURRENCY","CURRENCY","CURRENCY","CURRENCY",
+                       "CURRENCY","CFD","CFD","METAL","METAL","METAL","METAL",
+                       "METAL","METAL","METAL","METAL","METAL","METAL",
+                       "METAL","METAL","METAL","METAL","METAL","METAL","METAL",
+                       "METAL","METAL","METAL","METAL","CFD","METAL",
+                       "METAL","CURRENCY"),
+       displayName = c("Australia 200","AUD/CAD",
+                       "AUD/CHF","AUD/HKD","AUD/JPY","AUD/NZD","AUD/SGD",
+                       "AUD/USD","Brent Crude Oil","CAD/CHF","CAD/HKD","CAD/JPY",
+                       "CAD/SGD","CHF/HKD","CHF/JPY","CHF/ZAR","China A50",
+                       "Corn","Bund","Germany 30","Europe 50","EUR/AUD",
+                       "EUR/CAD","EUR/CHF","EUR/CZK","EUR/DKK","EUR/GBP",
+                       "EUR/HKD","EUR/HUF","EUR/JPY","EUR/NOK","EUR/NZD",
+                       "EUR/PLN","EUR/SEK","EUR/SGD","EUR/TRY","EUR/USD",
+                       "EUR/ZAR","France 40","GBP/AUD","GBP/CAD","GBP/CHF",
+                       "GBP/HKD","GBP/JPY","GBP/NZD","GBP/PLN","GBP/SGD","GBP/USD",
+                       "GBP/ZAR","Hong Kong 33","HKD/JPY","India 50",
+                       "Japan 225","US Nas 100","Natural Gas","Netherlands 25",
+                       "NZD/CAD","NZD/CHF","NZD/HKD","NZD/JPY","NZD/SGD",
+                       "NZD/USD","Singapore 30","SGD/CHF","SGD/JPY","Soybeans",
+                       "US SPX 500","Sugar","TRY/JPY","Taiwan Index","UK 100",
+                       "UK 10Y Gilt","US Russ 2000","US Wall St 30",
+                       "US 2Y T-Note","US 5Y T-Note","US 10Y T-Note","US T-Bond",
+                       "USD/CAD","USD/CHF","USD/CNH","USD/CZK","USD/DKK",
+                       "USD/HKD","USD/HUF","USD/INR","USD/JPY","USD/MXN",
+                       "USD/NOK","USD/PLN","USD/SEK","USD/SGD","USD/THB",
+                       "USD/TRY","USD/ZAR","Wheat","West Texas Oil","Silver/AUD",
+                       "Silver/CAD","Silver/CHF","Silver/EUR","Silver/GBP",
+                       "Silver/HKD","Silver/JPY","Silver/NZD","Silver/SGD",
+                       "Silver","Gold/AUD","Gold/CAD","Gold/CHF","Gold/EUR",
+                       "Gold/GBP","Gold/HKD","Gold/JPY","Gold/NZD","Gold/SGD",
+                       "Gold","Gold/Silver","Copper","Palladium","Platinum",
+                       "ZAR/JPY")
 )
 ```
-
-
 
 ## Further Resources
 
 Package website: https://shikokuchuo.net/ichimoku/
 
 The most recent version of the package may be found at https://github.com/shikokuchuo/ichimoku/
-
-```{r, include=FALSE}
-end_vignette()
-```
 
 ---

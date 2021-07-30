@@ -70,7 +70,7 @@ oanda <- function(instrument,
                                   "H12", "H8", "H6", "H4", "H3", "H2", "H1",
                                   "M30", "M15", "M10", "M5", "M4", "M2", "M1",
                                   "S30", "S15", "S10", "S5"),
-                  count = NULL, from = NULL, to = NULL,
+                  count, from, to,
                   price = c("M", "B", "A"),
                   server = c("practice", "live"), apikey,
                   ..., .validate) {
@@ -80,40 +80,45 @@ oanda <- function(instrument,
   price <- match.arg(price)
   server <- match.arg(server)
   if (missing(apikey)) apikey <- oanda_get_key()
-  url <- switch(server,
-                practice = paste0("https://api-fxpractice.oanda.com/v3/instruments/",
-                                  instrument, "/candles"),
-                live = paste0("https://api-fxtrade.oanda.com/v3/instruments/",
-                              instrument, "/candles"))
-  resp <- GET(url = url,
-              add_headers(Authorization = paste0("Bearer ", apikey),
-                          `Accept-Datetime-Format` = "RFC3339"),
-              user_agent(ichimoku_user_agent),
-              query = list(granularity = granularity, price = price,
-                           count = count, from = from, to = to))
-  data <- fromJSON(rawToChar(resp$content))
-  if (resp$status_code != 200) stop("code ", resp$status_code, " - ", data$errorMessage, call. = FALSE)
+  url <- paste0("https://api-fx", switch(server, practice = "practice", live = "trade"),
+                ".oanda.com/v3/instruments/", instrument, "/candles?granularity=",
+                granularity, "&price=", price,
+                if (!missing(count)) paste0("&count=", count),
+                if (!missing(from)) paste0("&from=", from),
+                if (!missing(to)) paste0("&to=", to))
+  h <- new_handle()
+  handle_setheaders(h,
+                    "Authorization" = paste0("Bearer ", apikey),
+                    "Accept-Datetime-Formatl" = "RFC3339",
+                    "User-Agent" = ichimoku_user_agent)
+  resp <- curl_fetch_memory(url, handle = h)
+  if (resp$status_code != 200L) stop("code ", resp$status_code, " - ",
+                                     fparse(resp$content), call. = FALSE)
+  headers <- rawToChar(resp$headers)
+  hdate <- strsplit(headers, "date: | GMT", perl = TRUE)[[1]][2]
+  timestamp <- as.POSIXct.POSIXlt(strptime(hdate, format = "%a, %d %b %Y %H:%M:%S", tz = "GMT"))
+  data <- fparse(resp$content)
   cdata <- data$candles
-  time <- strptime(cdata[, 3L], format = "%Y-%m-%dT%H:%M:%S")
+  ohlc <- do.call(rbind, cdata[ ,4L])
+  time <- strptime(cdata[, 3L], format = "%Y-%m-%dT%H:%M:%S", tz = "GMT")
   if (!missing(.validate) && .validate == FALSE) {
     time <- as.POSIXct.POSIXlt(time)
   } else {
     if (granularity == "M") {
       time <- as.POSIXlt.POSIXct(time + 86400)
-      time$mon <- time$mon + 1
+      time$mon <- time$mon + 1L
     } else if (granularity == "D") {
-        keep <- time$wday %in% 0:4
-        if (missing(.validate)) {
-          keep[time$mon == 11 & time$mday == 31 | (time$mon == 11 & time$mday == 24)] <- FALSE
-        }
-        cdata <- cdata[keep, ]
-        time <- time[keep, ]
+      keep <- time$wday %in% 0:4
+      if (missing(.validate)) {
+        keep[time$mon == 11L & time$mday == 31L | (time$mon == 11L & time$mday == 24L)] <- FALSE
+      }
+      cdata <- cdata[keep, ]
+      time <- time[keep, ]
     } else if (missing(.validate)){
-      cut <- time$wday == 6 | (time$wday == 0 & time$hour < 21)
+      cut <- (time$wday == 5L & time$hour > 20L) | time$wday == 6L | (time$wday == 0L & time$hour < 21L)
       cdata <- cdata[!cut, ]
       time <- time[!cut, ]
     }
-
     periodicity <- switch(granularity,
                           M = -86400, W = 604800, D = 86400, H12 = 43200, H8 = 28800,
                           H6 = 21600, H4 = 14400, H3 = 10800, H2 = 7200, H1 = 3600,
@@ -123,18 +128,19 @@ oanda <- function(instrument,
   }
 
   structure(list(time = time,
-                 open = as.numeric(cdata[, 4L][[1L]]),
-                 high = as.numeric(cdata[, 4L][[2L]]),
-                 low = as.numeric(cdata[, 4L][[3L]]),
-                 close = as.numeric(cdata[, 4L][[4L]]),
+                 open = as.numeric(ohlc[, 1L]),
+                 high = as.numeric(ohlc[, 2L]),
+                 low = as.numeric(ohlc[, 3L]),
+                 close = as.numeric(ohlc[, 4L]),
                  volume = cdata[, 2L],
                  complete = cdata[, 1L]),
             class = "data.frame",
             row.names = seq_len(dim(cdata)[1L]),
             instrument = instrument,
             price = price,
-            timestamp = resp$date,
+            timestamp = timestamp,
             oanda = TRUE)
+
 }
 
 #' Stream Live OANDA Price Data
@@ -183,26 +189,25 @@ oanda_stream <- function(instrument, server = c("practice", "live"), apikey) {
   if (missing(instrument)) stop("Argument 'instrument' must be specified", call. = FALSE)
   if (missing(apikey)) apikey <- oanda_get_key()
   server <- match.arg(server)
-  url <- switch(server,
-                practice = paste0("https://stream-fxpractice.oanda.com/v3/accounts/",
-                                  oanda_accounts()[[1L]], "/pricing/stream"),
-                live = paste0("https://stream-fxtrade.oanda.com/v3/accounts",
-                              oanda_accounts()[[1L]], "/pricing/stream"))
+  url <- paste0("https://stream-fx", switch(server, practice = "practice", live = "trade"),
+                ".oanda.com/v3/accounts/", oanda_accounts()[[1L]],
+                "/pricing/stream?instruments=", instrument)
   message("Streaming data... Press 'Esc' to return")
-  GET(url = url,
-      add_headers(Authorization = paste0("Bearer ", apikey),
-                  `Accept-Datetime-Format` = "RFC3339"),
-      user_agent(ichimoku_user_agent),
-      query = list(instruments = instrument),
-      write_stream(function(x) {
-        stream <- sub("close", "\033[49m\033[39m\nclose",
-                      sub("asks:", "\033[49m\033[39m asks: \033[90m\033[42m",
-                          sub("bids:", "\nbids: \033[37m\033[44m",
-                              gsub(",", "  ",
-                                   gsub('"|{|}|\\[|\\]', "", rawToChar(x), perl = TRUE),
-                                   fixed = TRUE), fixed = TRUE), fixed = TRUE), fixed = TRUE)
-        cat(stream)
-      }))
+  h <- new_handle()
+  handle_setheaders(h,
+                    "Authorization" = paste0("Bearer ", apikey),
+                    "Accept-Datetime-Formatl" = "RFC3339",
+                    "User-Agent" = ichimoku_user_agent)
+  curl_fetch_stream(url, handle = h, fun = function(x) {
+    stream <- sub("close", "\033[49m\033[39m\nclose",
+                  sub("asks:", "\033[49m\033[39m asks: \033[90m\033[42m",
+                      sub("bids:", "\nbids: \033[37m\033[44m",
+                          gsub(",", "  ",
+                               gsub('"|{|}|\\[|\\]', "", rawToChar(x), perl = TRUE),
+                               fixed = TRUE), fixed = TRUE), fixed = TRUE), fixed = TRUE)
+    cat(stream)
+  })
+
 }
 
 #' Live Ichimoku Cloud Charts from OANDA Data
@@ -211,9 +216,10 @@ oanda_stream <- function(instrument, server = c("practice", "live"), apikey) {
 #'
 #' @inheritParams oanda
 #' @inheritParams ichimoku
-#' @param refresh [default 5] data refresh interval in seconds, with a minimum of 1.
+#' @param refresh [default 5] data refresh interval in seconds, with a minimum
+#'     of 1.
 #' @param count [default 250] the number of periods to return. The API supports
-#'     a maximum of 5000. Note that 78 fewer periods are actually shown on the
+#'     a maximum of 5000. Note that fewer periods are actually shown on the
 #'     chart to ensure a full cloud is always displayed.
 #' @param theme [default 'original'] chart theme with alternative choices of
 #'     'dark', 'solarized' or 'mono'.
@@ -267,8 +273,8 @@ oanda_chart <- function(instrument,
             call. = FALSE)
     periods <- c(9L, 26L, 52L)
   }
-  p2 <- periods[2]
-  minlen <- p2 + periods[3]
+  p2 <- periods[2L]
+  minlen <- p2 + periods[3L]
   if (!is.numeric(count) || count <= minlen) {
     message("Invalid count specified - using default of 250 instead")
     count <- 250
@@ -302,7 +308,7 @@ oanda_chart <- function(instrument,
                      price = price, server = server, apikey = apikey)
     data <- df_append(new = newdata, old = data)
     dlen <- dim(data)[1L]
-    if (dlen > xlen) data <- data[(dlen - xlen + 1):dlen, ]
+    if (dlen > xlen) data <- data[(dlen - xlen + 1L):dlen, ]
   }
 }
 
@@ -334,18 +340,17 @@ oanda_instruments <- function(server = c("practice", "live"), apikey) {
 
   if (missing(apikey)) apikey <- oanda_get_key()
   server <- match.arg(server)
-  url <- switch(server,
-                practice = paste0("https://api-fxpractice.oanda.com/v3/accounts/",
-                                  oanda_accounts()[[1L]], "/instruments"),
-                live = paste0("https://api-fxtrade.oanda.com/v3/accounts/",
-                              oanda_accounts()[[1L]], "/instruments"))
-  resp <- GET(url = url,
-              add_headers(Authorization = paste0("Bearer ", apikey)),
-              user_agent(ichimoku_user_agent))
-  data <- fromJSON(rawToChar(resp$content))
-  if (resp$status_code != 200) stop("code ", resp$status_code, " - ", data$errorMessage, call. = FALSE)
-  df <- data$instruments[order(data$instruments[, 1]), 1:3]
-  df
+  url <- paste0("https://api-fx", switch(server, practice = "practice", live = "trade"),
+                ".oanda.com/v3/accounts/", oanda_accounts()[[1L]], "/instruments")
+  h <- new_handle()
+  handle_setheaders(h,
+                    "Authorization" = paste0("Bearer ", apikey),
+                    "User-Agent" = ichimoku_user_agent)
+  resp <- curl_fetch_memory(url, handle = h)
+  if (resp$status_code != 200L) stop("code ", resp$status_code, " - ",
+                                     fparse(resp$content), call. = FALSE)
+  data <- fparse(resp$content)
+  data$instruments[order(data$instruments[, 1L]), 1:3]
 }
 
 #' Accounts for an OANDA fxTrade API Key
@@ -380,13 +385,15 @@ oanda_accounts <- function(server = c("practice", "live"), apikey) {
   url <- switch(server,
                 practice = "https://api-fxpractice.oanda.com/v3/accounts",
                 live = "https://api-fxtrade.oanda.com/v3/accounts")
-  resp <- GET(url = url,
-              add_headers(Authorization = paste0("Bearer ", apikey)),
-              user_agent(ichimoku_user_agent))
-  data <- fromJSON(rawToChar(resp$content))
-  if (resp$status_code != 200) stop("code ", resp$status_code, " - ", data$errorMessage, call. = FALSE)
-  df <- data$accounts
-  df
+  h <- new_handle()
+  handle_setheaders(h,
+                    "Authorization" = paste0("Bearer ", apikey),
+                    "User-Agent" = ichimoku_user_agent)
+  resp <- curl_fetch_memory(url, handle = h)
+  if (resp$status_code != 200L) stop("code ", resp$status_code, " - ",
+                                     fparse(resp$content), call. = FALSE)
+  data <- fparse(resp$content)
+  data$accounts
 }
 
 #' Set OANDA fxTrade API Key
@@ -468,8 +475,8 @@ oanda_get_key <- function() {
 #'     quote currency delimited by a '_'. Use the \code{\link{oanda_instruments}}
 #'     function to return a list of all valid instruments.
 #' @param count [default 300] the number of periods to return, from 100 to 800.
-#'     Note that 78 fewer periods are actually shown on the chart to ensure a
-#'     full cloud is always displayed.
+#'     Note that fewer periods are actually shown on the chart to ensure a full
+#'     cloud is always displayed.
 #' @param ... additional arguments passed along to \code{\link{ichimoku}} for
 #'     calculating the ichimoku cloud, \code{\link{autoplot}} to set chart
 #'     parameters, or the 'options' argument of \code{shiny::shinyApp()}.
@@ -516,13 +523,17 @@ oanda_studio <- function(instrument = "USD_JPY",
     price <- match.arg(price)
     theme <- match.arg(theme)
     srv <- match.arg(server)
-    if (!is.numeric(periods) || !length(periods) == 3 || !all(periods > 0)) {
+    if (!is.numeric(periods) || !length(periods) == 3L || !all(periods > 0)) {
       warning("Specified cloud periods invalid - using defaults c(9L, 26L, 52L) instead",
               call. = FALSE)
       periods <- c(9L, 26L, 52L)
     }
-    p2 <- periods[2]
-    minlen <- p2 + periods[3]
+    p2 <- periods[2L]
+    minlen <- p2 + periods[3L]
+    if (!is.numeric(count) || count <= minlen) {
+      message("Invalid count specified - using default of 300 instead")
+      count <- 300
+    }
     ins <- oanda_instruments(server = server, apikey = apikey)
 
     ui <- shiny::fluidPage(
@@ -647,7 +658,7 @@ oanda_studio <- function(instrument = "USD_JPY",
       })
       output$hover_y <- shiny::renderUI({
         shiny::req(input$plot_hover)
-        drawGuide(label = signif(input$plot_hover$y, digits = 5), left = 75, top = top_px() + 11)
+        drawGuide(label = signif(input$plot_hover$y, digits = 5L), left = 75, top = top_px() + 11)
       })
       output$infotip <- shiny::renderUI({
         shiny::req(input$infotip, input$plot_hover, posi_x() > 0, posi_x() <= dim(pdata())[1L])

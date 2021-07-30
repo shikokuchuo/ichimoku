@@ -213,16 +213,16 @@ df_merge <- function(...) {
 #'     will overwrite the data in 'old' rather than create duplicates.
 #'
 #' @examples
-#' data1 <- sample_ohlc_data[7:10, ]
+#' data1 <- sample_ohlc_data[1:8, ]
 #' data1
-#' data2 <- sample_ohlc_data[1:8, ]
+#' data2 <- sample_ohlc_data[7:10, ]
 #' data2
-#' df_append(data1, data2)
+#' df_append(data2, data1)
 #'
 #' @export
 #'
 df_append <- function(new, old) {
-  structure(rbind(old[!old$time %in% new$time, ], new),
+  structure(rbind.data.frame(old[!old$time %in% new$time, ], new),
             timestamp = attr(new, "timestamp"))
 }
 

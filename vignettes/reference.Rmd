@@ -290,8 +290,8 @@ The dependency on other packages is designed to be minimised to the extent possi
 
 - Rcpp  - allows the use of C++ code for fast rolling window calculations
 - ggplot2 - the widely-used R graphics system for visualization
-- httr - for interfacing with external APIs
-- jsonlite - for processing data retrieved from external APIs
+- curl - for interfacing with external APIs
+- RcppSimdJson - for processing data retrieved from external APIs
 - rlang - R language requirement arising from the use of 'ggplot2'
 - xts - ichimoku shares the 'xts' format for time series
 - zoo - 'xts' is built on top of 'zoo'

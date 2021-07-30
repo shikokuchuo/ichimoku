@@ -60,14 +60,14 @@ mlgrid <- function(x, y = c("logret", "ret"), dir = c("long", "short"),
   type <- match.arg(type)
   xlen <- dim(x)[1L]
   p2 <- attr(x, "periods")[2L]
-  y <- c(diff(log(coredata(x$open)))[2:(xlen - 1)], NA, NA)
+  y <- c(diff(log(coredata(x$open)))[2:(xlen - 1L)], NA, NA)
   if (dir == "short") y <- -y
   if (target == "ret") y <- exp(y) - 1
   cols <- c("chikou", "close", "high", "low", "tenkan", "kijun",
             "senkouA", "senkouB", "cloudTop", "cloudBase")
   comb <- as.matrix(expand.grid(cols, cols, KEEP.OUT.ATTRS = FALSE, stringsAsFactors = FALSE)
                     )[-grid_dup(length(cols), omit.id = TRUE), ]
-  pairs <- comb[-c(10L, 11L, 18L, 41:45), ]
+  pairs <- comb[-c(10L, 11L, 18L, 41L, 42L, 43L, 44L, 45L), ]
   matrix <- writeMatrix(x, pairs = pairs, p2 = p2, xlen = xlen, type = type)
   if (!isTRUE(unique)) {
     pairs <- cbind(pairs[, 2L], pairs[, 1L])

@@ -93,10 +93,10 @@ strat <- function(x,
   xlen <- dim(x)[1L]
   p2 <- attr(x, "periods")[2L]
   end <- xlen - p2 - 1L
+  offset <- p2 * (c1 == "chikou" || c2 == "chikou")
 
   if (missing(c3) || missing(c4) || (identical(c1, c3) && identical(c2, c4))) {
     strategy <- paste0(c1, " > ", c2)
-    offset <- p2 * (c1 == "chikou" || c2 == "chikou")
     x$cond <- c(rep(NA, offset), (x[, c1] > x[, c2])[1:(xlen - offset)])
     x$posn <- c(NA, x[1:(end - 1L), "cond"], rep(NA, p2 + 1L))
 
@@ -104,11 +104,11 @@ strat <- function(x,
     c3 <- match.arg(c3)
     c4 <- match.arg(c4)
     strategy <- paste0(c1, " > ", c2, " & ", c3, " > ", c4)
-    offset <- p2 * (c1 == "chikou" || c2 == "chikou")
+
     s1cond <- c(rep(NA, offset), (x[, c1] > x[, c2])[1:(xlen - offset)])
     s1posn <- c(NA, s1cond[1:(end - 1L)], rep(NA, p2 + 1L))
-    offset <- p2 * (c3 == "chikou" || c4 == "chikou")
-    s2cond <- c(rep(NA, offset), (x[, c3] > x[, c4])[1:(xlen - offset)])
+    offset2 <- p2 * (c3 == "chikou" || c4 == "chikou")
+    s2cond <- c(rep(NA, offset2), (x[, c3] > x[, c4])[1:(xlen - offset2)])
     s2posn <- c(NA, s2cond[1:(end - 1L)], rep(NA, p2 + 1L))
     x$cond <- s1cond * s2cond
     x$posn <- s1posn * s2posn
@@ -118,14 +118,13 @@ strat <- function(x,
     c4 <- match.arg(c4)
     strategy <- paste0(c1, " > ", c2, " x ", c3, " > ", c4)
 
-    offset <- p2 * (c1 == "chikou" || c2 == "chikou")
     s1cond <- c(rep(NA, offset), (x[, c1] > x[, c2])[1:(xlen - offset)])
     s1posn <- c(NA, s1cond[1:(end - 1L)], rep(NA, p2 + 1L))
     s1txn <- c(NA, diff(s1posn))
     s1txn[s1posn == 1 & is.na(s1txn)] <- 1
     if (s1posn[end] == 1) s1txn[end + 1L] <- -1
-    offset <- p2 * (c3 == "chikou" || c4 == "chikou")
-    s2cond <- c(rep(NA, offset), (x[, c3] > x[, c4])[1:(xlen - offset)])
+    offset2 <- p2 * (c3 == "chikou" || c4 == "chikou")
+    s2cond <- c(rep(NA, offset2), (x[, c3] > x[, c4])[1:(xlen - offset2)])
     s2posn <- c(NA, s2cond[1:(end - 1L)], rep(NA, p2 + 1L))
     s2txn <- c(NA, diff(s2posn))
     s2txn[s2posn == 1 & is.na(s2txn)] <- 1
@@ -133,13 +132,13 @@ strat <- function(x,
 
     s1entry <- which(s1txn == 1)
     s2exit <- which(s2txn == 1)
-    s2exit <- s2exit[s2exit > s1entry[1]]
+    s2exit <- s2exit[s2exit > s1entry[1L]]
     position <- integer(xlen)
     position[is.na(s1posn)] <- NA
     while (length(s1entry) > 0 && length(s2exit) > 0) {
-      position[s1entry[1]:(s2exit[1] - 1L)] <- 1
-      s1entry <- s1entry[s1entry > s2exit[1]]
-      s2exit <- s2exit[s2exit > s1entry[1]]
+      position[s1entry[1L]:(s2exit[1L] - 1L)] <- 1L
+      s1entry <- s1entry[s1entry > s2exit[1L]]
+      s2exit <- s2exit[s2exit > s1entry[1L]]
     }
     x$cond <- s1cond
     x$posn <- position
@@ -358,20 +357,20 @@ autostrat <- function(x, n = 8, dir = c("long", "short"), level = 1) {
                      mapply(function(a, b) {
                        xlen <- dim(lgrid)[1L]
                        s1posn <- lgrid[, a]
-                       s1txn <- c(if (s1posn[1] == 1) 1 else 0,
-                                  diff(s1posn)[-1],
+                       s1txn <- c(if (s1posn[1L] == 1) 1 else 0,
+                                  diff(s1posn)[-1L],
                                   if (s1posn[xlen] == 1) -1 else 0)
                        s2posn <- lgrid[, b]
                        s2txn <- c(0,
-                                  diff(s2posn)[-1],
+                                  diff(s2posn)[-1L],
                                   if (s2posn[xlen] == 1) -1 else 0)
                        s1entry <- which(s1txn == 1)
                        s2exit <- which(s2txn == 1)
                        position <- integer(xlen)
                        while (length(s1entry) > 0 && length(s2exit) > 0) {
-                         position[s1entry[1]:(s2exit[1] - 1L)] <- 1
-                         s1entry <- s1entry[s1entry > s2exit[1]]
-                         s2exit <- s2exit[s2exit > s1entry[1]]
+                         position[s1entry[1L]:(s2exit[1L] - 1L)] <- 1L
+                         s1entry <- s1entry[s1entry > s2exit[1L]]
+                         s2exit <- s2exit[s2exit > s1entry[1L]]
                        }
                        position
                      },

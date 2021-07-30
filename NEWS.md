@@ -1,7 +1,8 @@
-# ichimoku 0.3.1.2
+# ichimoku 0.3.2
 
 * **Updates:**
 
+* Backends for the OANDA fxTrade API interface switched to 'curl' and 'RcppSimdJson' from 'httr' and 'jsonlite' for better performance. Package dependency changes: 'curl' already a dependency of 'httr' so not an issue, whilst 'RcppSimdJson' is a new package that is considered best in class.
 * `oanda_studio()` subsets the plot window so as to always show a full cloud, consistent with the behaviour of `oanda_chart()`.
 * `oanda_chart()` and `oanda_studio()` add explicit support for the 'periods' argument passed to `ichimoku()`.
 * Documentation updates.

@@ -33,9 +33,13 @@ test_that("matrix_df ok", {
 })
 
 test_that("df_merge ok", {
-  expect_equal(dim(df_merge(sample_ohlc_data[1:6, ], sample_ohlc_data[4:10, ]))[1L], 10)
+  merge <- df_merge(sample_ohlc_data[1:6, ], sample_ohlc_data[4:10, ])
+  expect_equal(dim(merge)[1L], 10)
+  attr(merge, "oanda") <- TRUE
+  merge$complete <- FALSE
+  expect_warning(df_merge(merge, merge), regexp = "Incomplete periods")
 })
 
 test_that("df_append ok", {
-  expect_equal(dim(df_append(sample_ohlc_data[1:6, ], sample_ohlc_data[4:10, ]))[1L], 10)
+  expect_equal(dim(df_append(sample_ohlc_data[4:10, ], sample_ohlc_data[1:6, ]))[1L], 10)
 })

@@ -42,7 +42,8 @@ test_that("iplot Shiny functions ok", {
   expect_s3_class(iplot(cloud, theme = "dark"), "shiny.appobj")
   expect_error(iplot(sample_ohlc_data), regexp = "ichimoku object")
   shiny::testServer(iplot(cloud), {
-    session$setInputs(plot_hover = list(x = 2, y = 125, coords_css = list(x = 200, y = 200)))
+    session$setInputs(plot_hover = list(x = 2, y = 125, coords_css = list(x = 200, y = 200)),
+                      infotip = TRUE)
     expect_s3_class(pdata(), "ichimoku")
   })
   expect_s3_class(drawInfotip(sdata = cloud[100,], left_px = 100, top_px = 100), "shiny.tag")

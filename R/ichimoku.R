@@ -109,7 +109,7 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), ...) {
   if (anyNA(c(colh, coll, colc))) {
     stop("Clearly-defined high/low/close columns not found within the dataset", call. = FALSE)
   }
-  if (!is.numeric(periods) || !length(periods) == 3 || !all(periods > 0)) {
+  if (!is.numeric(periods) || !length(periods) == 3L || !all(periods > 0)) {
     warning("Specified cloud periods invalid - using defaults c(9L, 26L, 52L) instead",
             call. = FALSE)
     periods <- c(9L, 26L, 52L)
@@ -130,7 +130,7 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), ...) {
   } else {
     warning("Opening prices not found - using previous closing prices as substitute",
             "\nThis affects the candles but not the calculation of the cloud", call. = FALSE)
-    open <- c(NA, close[1:(xlen - 1)])
+    open <- c(NA, close[1:(xlen - 1L)])
   }
   cd <- rep(0, xlen)
   cd[open < close] <- 1
@@ -139,19 +139,19 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), ...) {
   kijun <- (maxOver(high, p2) + minOver(low, p2)) / 2
   senkouA <- (tenkan + kijun) / 2
   senkouB <- (maxOver(high, p3) + minOver(low, p3)) / 2
-  chikou <- c(close[(p2 + 1):xlen], rep(NA, p2))
+  chikou <- c(close[(p2 + 1L):xlen], rep(NA, p2))
   cloudTop <- pmax.int(senkouA, senkouB)
   cloudBase <- pmin.int(senkouA, senkouB)
 
   periodicity <- min(diff.POSIXt(index[1:4]))
-  extra <- switch(attr(periodicity, "units"),
-                  days = {
-                    extra <- seq.POSIXt(from = index[length(index)], by = periodicity,
-                                        length.out = p2 + p2)[-1]
-                    extra[tradingDays(extra, ...)][1:p2]
-                    },
-                  seq.POSIXt(from = index[length(index)], by = periodicity,
-                             length.out = p2 + 1)[-1])
+  future <- switch(attr(periodicity, "units"),
+                   days = {
+                     seq <- seq.POSIXt(from = index[length(index)], by = periodicity,
+                                       length.out = p2 + p2)[-1L]
+                     seq[tradingDays(seq, ...)][1:p2]
+                     },
+                   seq.POSIXt(from = index[length(index)], by = periodicity,
+                              length.out = p2 + 1L)[-1L])
 
   cloud <- xts(cbind(
     open = c(open, rep(NA, p2)),
@@ -166,7 +166,7 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), ...) {
     chikou = c(chikou, rep(NA, p2)),
     cloudTop = c(rep(NA, p2), cloudTop),
     cloudBase = c(rep(NA, p2), cloudBase)
-  ), order.by = c(index, extra))
+  ), order.by = c(index, future))
 
   structure(cloud,
             class = c("ichimoku", "xts", "zoo"),
@@ -515,7 +515,7 @@ iplot <- function(x, ticker, theme = c("original", "dark", "solarized", "mono"),
                                                           attr(x, "strat")["Strategy", ]$Strategy)
     }
     tformat <- if (attr(x, "periodicity") > 80000) "%F" else "%F %T"
-    start <- index(x)[1]
+    start <- index(x)[1L]
     end <- index(x)[dim(x)[1L]]
     xadj <- if (nchar(as.character(start)) > 10) -17 else 5
 
@@ -575,7 +575,7 @@ iplot <- function(x, ticker, theme = c("original", "dark", "solarized", "mono"),
       })
       output$hover_y <- shiny::renderUI({
         shiny::req(input$plot_hover)
-        drawGuide(label = signif(input$plot_hover$y, digits = 5), left = 75, top = top_px() + 11)
+        drawGuide(label = signif(input$plot_hover$y, digits = 5L), left = 75, top = top_px() + 11)
       })
       output$infotip <- shiny::renderUI({
         shiny::req(input$infotip, input$plot_hover, posi_x() > 0, posi_x() <= dim(pdata())[1L])
@@ -617,18 +617,18 @@ drawInfotip <- function(sdata, left_px, top_px) {
                        else "&rarr;<br />",
                        index(sdata),
                        "</div><div style='text-align:center; margin:2px 0 0 0; padding:0'>H: ",
-                       signif(sdata$high, digits = 5),
+                       signif(sdata$high, digits = 5L),
                        "</div><div style='margin:0; padding:0'>O: ",
-                       signif(sdata$open, digits = 5),
-                       "&nbsp;&nbsp;C: ", signif(sdata$close, digits = 5),
+                       signif(sdata$open, digits = 5L),
+                       "&nbsp;&nbsp;C: ", signif(sdata$close, digits = 5L),
                        "</div><div style='text-align:center; margin:0; padding:0'>L: ",
-                       signif(sdata$low, digits = 5),
+                       signif(sdata$low, digits = 5L),
                        "</div><div style='margin:2px 0 0 0; padding:0'>Tenkan: ",
-                       signif(sdata$tenkan, digits = 5),
-                       "<br />Kijun: ", signif(sdata$kijun, digits = 5),
-                       "<br />Senkou A: ", signif(sdata$senkouA, digits = 5),
-                       "<br />Senkou B: ", signif(sdata$senkouB, digits = 5),
-                       "<br />Chikou: ", signif(sdata$chikou, digits = 5), "</div>"))
+                       signif(sdata$tenkan, digits = 5L),
+                       "<br />Kijun: ", signif(sdata$kijun, digits = 5L),
+                       "<br />Senkou A: ", signif(sdata$senkouA, digits = 5L),
+                       "<br />Senkou B: ", signif(sdata$senkouB, digits = 5L),
+                       "<br />Chikou: ", signif(sdata$chikou, digits = 5L), "</div>"))
   )
 }
 
