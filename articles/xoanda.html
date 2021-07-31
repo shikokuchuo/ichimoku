@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2.1</span>
       </span>
     </div>
 
@@ -352,6 +352,17 @@
 #&gt; 120    XPD_USD    METAL       Palladium
 #&gt; 121    XPT_USD    METAL        Platinum
 #&gt; 122    ZAR_JPY CURRENCY         ZAR/JPY</code></pre>
+</div>
+<div id="caching-implementation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#caching-implementation" class="anchor"></a>Caching Implementation</h2>
+<p>The package retrieves the following once only during a single R session (the first time they are used) and caches the variables for further use througout the session:</p>
+<ul>
+<li>OANDA fxTrade API key</li>
+<li>OANDA fxTrade accounts associated with an fxTrade API key</li>
+<li>OANDA list of available instruments</li>
+</ul>
+<p>If for any reason these become invalid or outdated, please restart your R session to enable these variables to be refreshed.</p>
 </div>
 <div id="further-resources" class="section level2">
 <h2 class="hasAnchor">
