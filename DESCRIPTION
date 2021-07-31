@@ -1,7 +1,7 @@
 Package: ichimoku
 Type: Package
 Title: Visualization and Tools for Ichimoku Kinko Hyo Strategies
-Version: 0.3.2
+Version: 0.3.2.1
 Description: An implementation of 'Ichimoku Kinko Hyo', also commonly known as
     'cloud charts'. Static and interactive visualizations with tools for
     creating, backtesting and development of quantitative 'ichimoku' strategies.
@@ -31,10 +31,10 @@ Imports:
     Rcpp,
     ggplot2,
     curl,
-    RcppSimdJson,
     rlang,
     xts,
-    zoo
+    zoo,
+    RcppSimdJson
 LinkingTo: 
     Rcpp
 Suggests:

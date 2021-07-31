@@ -338,19 +338,25 @@ oanda_chart <- function(instrument,
 #'
 oanda_instruments <- function(server = c("practice", "live"), apikey) {
 
-  if (missing(apikey)) apikey <- oanda_get_key()
-  server <- match.arg(server)
-  url <- paste0("https://api-fx", switch(server, practice = "practice", live = "trade"),
-                ".oanda.com/v3/accounts/", oanda_accounts()[[1L]], "/instruments")
-  h <- new_handle()
-  handle_setheaders(h,
-                    "Authorization" = paste0("Bearer ", apikey),
-                    "User-Agent" = ichimoku_user_agent)
-  resp <- curl_fetch_memory(url, handle = h)
-  if (resp$status_code != 200L) stop("code ", resp$status_code, " - ",
-                                     fparse(resp$content), call. = FALSE)
-  data <- fparse(resp$content)
-  data$instruments[order(data$instruments[, 1L]), 1:3]
+  instrumentlist <- NULL
+  function(server = c("practice", "live"), apikey) {
+    if (is.null(instrumentlist)) {
+      if (missing(apikey)) apikey <- oanda_get_key()
+      server <- match.arg(server)
+      url <- paste0("https://api-fx", switch(server, practice = "practice", live = "trade"),
+                    ".oanda.com/v3/accounts/", oanda_accounts()[[1L]], "/instruments")
+      h <- new_handle()
+      handle_setheaders(h,
+                        "Authorization" = paste0("Bearer ", apikey),
+                        "User-Agent" = ichimoku_user_agent)
+      resp <- curl_fetch_memory(url, handle = h)
+      if (resp$status_code != 200L) stop("code ", resp$status_code, " - ",
+                                         fparse(resp$content), call. = FALSE)
+      data <- fparse(resp$content)
+      instrumentlist <<- data$instruments[order(data$instruments[, 1L]), 1:3]
+    }
+    instrumentlist
+  }
 }
 
 #' Accounts for an OANDA fxTrade API Key
@@ -379,21 +385,26 @@ oanda_instruments <- function(server = c("practice", "live"), apikey) {
 #' @export
 #'
 oanda_accounts <- function(server = c("practice", "live"), apikey) {
-
-  if (missing(apikey)) apikey <- oanda_get_key()
-  server <- match.arg(server)
-  url <- switch(server,
-                practice = "https://api-fxpractice.oanda.com/v3/accounts",
-                live = "https://api-fxtrade.oanda.com/v3/accounts")
-  h <- new_handle()
-  handle_setheaders(h,
-                    "Authorization" = paste0("Bearer ", apikey),
-                    "User-Agent" = ichimoku_user_agent)
-  resp <- curl_fetch_memory(url, handle = h)
-  if (resp$status_code != 200L) stop("code ", resp$status_code, " - ",
-                                     fparse(resp$content), call. = FALSE)
-  data <- fparse(resp$content)
-  data$accounts
+  accountstable <- NULL
+  function(server = c("practice", "live"), apikey) {
+    if (is.null(accountstable)) {
+      if (missing(apikey)) apikey <- oanda_get_key()
+      server <- match.arg(server)
+      url <- switch(server,
+                    practice = "https://api-fxpractice.oanda.com/v3/accounts",
+                    live = "https://api-fxtrade.oanda.com/v3/accounts")
+      h <- new_handle()
+      handle_setheaders(h,
+                        "Authorization" = paste0("Bearer ", apikey),
+                        "User-Agent" = ichimoku_user_agent)
+      resp <- curl_fetch_memory(url, handle = h)
+      if (resp$status_code != 200L) stop("code ", resp$status_code, " - ",
+                                         fparse(resp$content), call. = FALSE)
+      data <- fparse(resp$content)
+      accountstable <<- data$accounts
+    }
+    accountstable
+  }
 }
 
 #' Set OANDA fxTrade API Key
@@ -433,9 +444,9 @@ oanda_set_key <- function() {
 #' Return OANDA fxTrade API key (personal access token) stored in the keyring,
 #'     or else prompts the user to provide a key interactively.
 #'
-#' @return A character string, respresenting the key stored in the default
-#'     keyring under the service name 'OANDA_API_KEY' if present, otherwise the
-#'     key supplied by the user interactively.
+#' @return A temporarily invisible character string, respresenting the key stored
+#'     in the default keyring under the service name 'OANDA_API_KEY' if present,
+#'     otherwise the key supplied by the user interactively.
 #'
 #' @details For retrieving the key from the keyring, this function has a dependency
 #'     on the 'keyring' package, otherwise it can be used to read a key supplied
@@ -453,15 +464,21 @@ oanda_set_key <- function() {
 #' @export
 #'
 oanda_get_key <- function() {
-  if (requireNamespace("keyring", quietly = TRUE)) {
-    apikey <- tryCatch(keyring::key_get(service = "OANDA_API_KEY"), error = function(e) {
-      message("Note: oanda_set_key() can be used to store your API key for automatic retrieval")
-      readline("Please enter OANDA API key: ")
-    })
-  } else {
-    apikey <- readline("Please enter OANDA API key: ")
+  keystore <- NULL
+  function() {
+    if (is.null(keystore)) {
+      if (requireNamespace("keyring", quietly = TRUE)) {
+        apikey <- tryCatch(keyring::key_get(service = "OANDA_API_KEY"), error = function(e) {
+          message("Note: oanda_set_key() can be used to store your API key for automatic retrieval")
+          readline("Please enter OANDA API key: ")
+          })
+        } else {
+          apikey <- readline("Please enter OANDA API key: ")
+          }
+      keystore <<- apikey
+      }
+    invisible(keystore)
   }
-  apikey
 }
 
 #' Interactive Live Analysis Environment for OANDA Data

@@ -231,6 +231,16 @@ data.frame(
 )
 ```
 
+## Caching Implementation
+
+The package retrieves the following once only during a single R session (the first time they are used) and caches the variables for further use througout the session:
+
+- OANDA fxTrade API key
+- OANDA fxTrade accounts associated with an fxTrade API key
+- OANDA list of available instruments
+
+If for any reason these become invalid or outdated, please restart your R session to enable these variables to be refreshed.
+
 ## Further Resources
 
 Package website: https://shikokuchuo.net/ichimoku/

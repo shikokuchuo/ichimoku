@@ -61,13 +61,21 @@
 #'     scale_color_manual scale_fill_manual guides scale_x_datetime
 #'     scale_x_continuous scale_y_continuous labs theme_light theme element_rect
 #'     element_line element_text
-#' @importFrom curl curl_fetch_memory curl_fetch_stream new_handle handle_setheaders
-#' @importFrom RcppSimdJson fparse
+#' @importFrom curl curl_fetch_memory curl_fetch_stream new_handle
+#'     handle_setheaders
 #' @importFrom rlang .data
 #' @importFrom xts xts
 #' @importFrom zoo index coredata
+#' @importFrom RcppSimdJson fparse
 #'
 #' @docType package
 #' @name ichimoku-package
 NULL
+
+.onLoad <- function(libname, pkgname) {
+  oanda_get_key <<- oanda_get_key()
+  oanda_accounts <<- oanda_accounts()
+  oanda_instruments <<- oanda_instruments()
+  invisible()
+}
 
