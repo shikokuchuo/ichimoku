@@ -61,11 +61,11 @@
 #'     scale_color_manual scale_fill_manual guides scale_x_datetime
 #'     scale_x_continuous scale_y_continuous labs theme_light theme element_rect
 #'     element_line element_text
-#' @importFrom curl curl_fetch_memory curl_fetch_stream new_handle
-#'     handle_setheaders
 #' @importFrom rlang .data
 #' @importFrom xts xts
 #' @importFrom zoo index coredata
+#' @importFrom curl curl_fetch_memory curl_fetch_stream new_handle
+#'     handle_setheaders
 #' @importFrom RcppSimdJson fparse
 #'
 #' @docType package

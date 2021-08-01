@@ -63,7 +63,7 @@ tradingDays <- function(x, holidays, ...) {
 grid_dup <- function(n, omit.id = FALSE) {
   vec <- do.call(c, lapply(seq_len(n - 1), function(x) x * n + 1:x))
   if (isTRUE(omit.id)) {
-    vec <- c(vec, do.call(c, lapply(seq_len(n), function(x) x + n * (x -1))))
+    vec <- c(vec, do.call(c, lapply(seq_len(n), function(x) x + n * (x - 1))))
   }
   vec
 }
@@ -113,11 +113,12 @@ df_trim <- function(x) {
 #' @export
 #'
 xts_df <- function(x) {
-  core <- coredata(x)
-  structure(c(list(index(x)), lapply(seq_len(dim(core)[2L]), function(i) core[, i])),
+  cdata <- coredata(x)
+  dims <- dim(cdata)
+  structure(c(list(index(x)), lapply(seq_len(dims[2L]), function(i) cdata[, i])),
             class = "data.frame",
-            names = c("index", colnames(core)),
-            row.names = seq_len(dim(x)[1L]))
+            names = c("index", dimnames(cdata)[[2L]]),
+            row.names = seq_len(dims[1L]))
 }
 
 #' Convert matrix to data.frame
@@ -148,11 +149,12 @@ xts_df <- function(x) {
 #' @export
 #'
 matrix_df <- function(x) {
-  y <- unname(x)
-  structure(lapply(seq_len(dim(y)[2L]), function(i) y[, i]),
+  mat <- unname(x)
+  dnames <- dimnames(x)
+  structure(lapply(seq_len(dim(mat)[2L]), function(i) mat[, i]),
             class = "data.frame",
-            names = colnames(x),
-            row.names = rownames(x))
+            names = dnames[[2L]],
+            row.names = dnames[[1L]])
 }
 
 #' Merge Dataframes

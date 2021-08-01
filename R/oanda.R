@@ -87,11 +87,11 @@ oanda <- function(instrument,
                 if (!missing(from)) paste0("&from=", from),
                 if (!missing(to)) paste0("&to=", to))
   h <- new_handle()
-  handle_setheaders(h,
+  handle_setheaders(handle = h,
                     "Authorization" = paste0("Bearer ", apikey),
                     "Accept-Datetime-Formatl" = "RFC3339",
                     "User-Agent" = ichimoku_user_agent)
-  resp <- curl_fetch_memory(url, handle = h)
+  resp <- curl_fetch_memory(url = url, handle = h)
   if (resp$status_code != 200L) stop("code ", resp$status_code, " - ",
                                      fparse(resp$content), call. = FALSE)
   headers <- rawToChar(resp$headers)
@@ -99,7 +99,6 @@ oanda <- function(instrument,
   timestamp <- as.POSIXct.POSIXlt(strptime(hdate, format = "%a, %d %b %Y %H:%M:%S", tz = "GMT"))
   data <- fparse(resp$content)
   cdata <- data$candles
-  ohlc <- do.call(rbind, cdata[ ,4L])
   time <- strptime(cdata[, 3L], format = "%Y-%m-%dT%H:%M:%S", tz = "GMT")
   if (!missing(.validate) && .validate == FALSE) {
     time <- as.POSIXct.POSIXlt(time)
@@ -126,6 +125,7 @@ oanda <- function(instrument,
                           M2 = 120, M1 = 60, S30 = 30, S15 = 15, S10 = 10, S5 = 5)
     time <- time + periodicity
   }
+  ohlc <- do.call(rbind, cdata[ ,4L])
 
   structure(list(time = time,
                  open = as.numeric(ohlc[, 1L]),
@@ -135,7 +135,7 @@ oanda <- function(instrument,
                  volume = cdata[, 2L],
                  complete = cdata[, 1L]),
             class = "data.frame",
-            row.names = seq_len(dim(cdata)[1L]),
+            row.names = seq_len(dim(ohlc)[1L]),
             instrument = instrument,
             price = price,
             timestamp = timestamp,
@@ -194,11 +194,11 @@ oanda_stream <- function(instrument, server = c("practice", "live"), apikey) {
                 "/pricing/stream?instruments=", instrument)
   message("Streaming data... Press 'Esc' to return")
   h <- new_handle()
-  handle_setheaders(h,
+  handle_setheaders(handle = h,
                     "Authorization" = paste0("Bearer ", apikey),
                     "Accept-Datetime-Formatl" = "RFC3339",
                     "User-Agent" = ichimoku_user_agent)
-  curl_fetch_stream(url, handle = h, fun = function(x) {
+  curl_fetch_stream(url = url, handle = h, fun = function(x) {
     stream <- sub("close", "\033[49m\033[39m\nclose",
                   sub("asks:", "\033[49m\033[39m asks: \033[90m\033[42m",
                       sub("bids:", "\nbids: \033[37m\033[44m",
@@ -207,7 +207,6 @@ oanda_stream <- function(instrument, server = c("practice", "live"), apikey) {
                                fixed = TRUE), fixed = TRUE), fixed = TRUE), fixed = TRUE)
     cat(stream)
   })
-
 }
 
 #' Live Ichimoku Cloud Charts from OANDA Data
@@ -268,8 +267,10 @@ oanda_chart <- function(instrument,
     message("Invalid refresh interval '", refresh, "' secs specified - using default of 5 secs instead")
     refresh <- 5
   }
-  if (!is.numeric(periods) || !length(periods) == 3 || !all(periods > 0)) {
-    warning("Invalid cloud periods specified - using defaults c(9L, 26L, 52L) instead",
+  if (is.numeric(periods) && length(periods) == 3L && all(periods >= 1)) {
+    periods <- as.integer(periods)
+  } else {
+    warning("Specified cloud periods invalid - using defaults c(9L, 26L, 52L) instead",
             call. = FALSE)
     periods <- c(9L, 26L, 52L)
   }
@@ -338,24 +339,24 @@ oanda_chart <- function(instrument,
 #'
 oanda_instruments <- function(server = c("practice", "live"), apikey) {
 
-  instrumentlist <- NULL
+  cache <- NULL
   function(server = c("practice", "live"), apikey) {
-    if (is.null(instrumentlist)) {
+    if (is.null(cache)) {
       if (missing(apikey)) apikey <- oanda_get_key()
       server <- match.arg(server)
       url <- paste0("https://api-fx", switch(server, practice = "practice", live = "trade"),
                     ".oanda.com/v3/accounts/", oanda_accounts()[[1L]], "/instruments")
       h <- new_handle()
-      handle_setheaders(h,
+      handle_setheaders(handle = h,
                         "Authorization" = paste0("Bearer ", apikey),
                         "User-Agent" = ichimoku_user_agent)
-      resp <- curl_fetch_memory(url, handle = h)
+      resp <- curl_fetch_memory(url = url, handle = h)
       if (resp$status_code != 200L) stop("code ", resp$status_code, " - ",
                                          fparse(resp$content), call. = FALSE)
       data <- fparse(resp$content)
-      instrumentlist <<- data$instruments[order(data$instruments[, 1L]), 1:3]
+      cache <<- data$instruments[order(data$instruments[, 1L]), 1:3]
     }
-    instrumentlist
+    cache
   }
 }
 
@@ -385,25 +386,25 @@ oanda_instruments <- function(server = c("practice", "live"), apikey) {
 #' @export
 #'
 oanda_accounts <- function(server = c("practice", "live"), apikey) {
-  accountstable <- NULL
+  cache <- NULL
   function(server = c("practice", "live"), apikey) {
-    if (is.null(accountstable)) {
+    if (is.null(cache)) {
       if (missing(apikey)) apikey <- oanda_get_key()
       server <- match.arg(server)
       url <- switch(server,
                     practice = "https://api-fxpractice.oanda.com/v3/accounts",
                     live = "https://api-fxtrade.oanda.com/v3/accounts")
       h <- new_handle()
-      handle_setheaders(h,
+      handle_setheaders(handle = h,
                         "Authorization" = paste0("Bearer ", apikey),
                         "User-Agent" = ichimoku_user_agent)
-      resp <- curl_fetch_memory(url, handle = h)
+      resp <- curl_fetch_memory(url = url, handle = h)
       if (resp$status_code != 200L) stop("code ", resp$status_code, " - ",
                                          fparse(resp$content), call. = FALSE)
       data <- fparse(resp$content)
-      accountstable <<- data$accounts
+      cache <<- data$accounts
     }
-    accountstable
+    cache
   }
 }
 
@@ -540,7 +541,9 @@ oanda_studio <- function(instrument = "USD_JPY",
     price <- match.arg(price)
     theme <- match.arg(theme)
     srv <- match.arg(server)
-    if (!is.numeric(periods) || !length(periods) == 3L || !all(periods > 0)) {
+    if (is.numeric(periods) && length(periods) == 3L && all(periods >= 1)) {
+      periods <- as.integer(periods)
+    } else {
       warning("Specified cloud periods invalid - using defaults c(9L, 26L, 52L) instead",
               call. = FALSE)
       periods <- c(9L, 26L, 52L)

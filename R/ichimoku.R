@@ -91,40 +91,43 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), ...) {
 
   if (missing(ticker)) ticker <- deparse(substitute(x))
 
-  coli <- grep("index|date|time", names(x), ignore.case = TRUE, perl = TRUE)[1L]
+  cnames <- attr(x, "names")
+  coli <- grep("index|date|time", cnames, ignore.case = TRUE, perl = TRUE)[1L]
   if (!is.na(coli)) {
     index <- tryCatch(as.POSIXct(x[, coli]), error = function(e) {
       stop("Index/date/time column not convertible to a POSIXct date-time format",
            call. = FALSE)
       })
   } else {
-    index <- tryCatch(as.POSIXct(rownames(x)), error = function(e) {
+    index <- tryCatch(as.POSIXct(attr(x, "row.names")), error = function(e) {
       stop("Valid date-time index not found within the dataset",
            call. = FALSE)
     })
   }
-  colh <- grep("high", names(x), ignore.case = TRUE, perl = TRUE)[1L]
-  coll <- grep("low", names(x), ignore.case = TRUE, perl = TRUE)[1L]
-  colc <- grep("close", names(x), ignore.case = TRUE, perl = TRUE)[1L]
+  colh <- grep("high", cnames, ignore.case = TRUE, perl = TRUE)[1L]
+  coll <- grep("low", cnames, ignore.case = TRUE, perl = TRUE)[1L]
+  colc <- grep("close", cnames, ignore.case = TRUE, perl = TRUE)[1L]
   if (anyNA(c(colh, coll, colc))) {
     stop("Clearly-defined high/low/close columns not found within the dataset", call. = FALSE)
   }
-  if (!is.numeric(periods) || !length(periods) == 3L || !all(periods > 0)) {
+  if (is.numeric(periods) && length(periods) == 3L && all(periods >= 1)) {
+    periods <- as.integer(periods)
+  } else {
     warning("Specified cloud periods invalid - using defaults c(9L, 26L, 52L) instead",
             call. = FALSE)
     periods <- c(9L, 26L, 52L)
   }
-  p1 <- as.integer(periods[1L])
-  p2 <- as.integer(periods[2L])
-  p3 <- as.integer(periods[3L])
+  p1 <- periods[1L]
+  p2 <- periods[2L]
+  p3 <- periods[3L]
   xlen <- dim(x)[1L]
   if (p2 >= xlen) stop("Dataset must be longer than the medium cloud period '",
-                     p2, "'", call. = FALSE)
+                       p2, "'", call. = FALSE)
 
   high <- x[, colh]
   low <- x[, coll]
   close <- x[, colc]
-  colo <- grep("open", names(x), ignore.case = TRUE, perl = TRUE)[1L]
+  colo <- grep("open", cnames, ignore.case = TRUE, perl = TRUE)[1L]
   if (!is.na(colo)) {
     open <- x[, colo]
   } else {
@@ -132,7 +135,7 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), ...) {
             "\nThis affects the candles but not the calculation of the cloud", call. = FALSE)
     open <- c(NA, close[1:(xlen - 1L)])
   }
-  cd <- rep(0, xlen)
+  cd <- numeric(xlen)
   cd[open < close] <- 1
   cd[open > close] <- -1
   tenkan <- (maxOver(high, p1) + minOver(low, p1)) / 2
@@ -170,9 +173,10 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), ...) {
 
   structure(cloud,
             class = c("ichimoku", "xts", "zoo"),
-            periods = c(p1, p2, p3),
+            periods = periods,
             periodicity = as.numeric(periodicity, units = "secs"),
             ticker = ticker)
+
 }
 
 #' @rdname ichimoku

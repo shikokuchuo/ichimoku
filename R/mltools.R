@@ -77,7 +77,7 @@ mlgrid <- function(x, y = c("logret", "ret"), dir = c("long", "short"),
   mat <- unname(matrix)
   grid <- structure(c(list(y), lapply(seq_len(dim(mat)[2L]), function(i) mat[, i])),
                     class = "data.frame",
-                    names = c("y", colnames(matrix)),
+                    names = c("y", dimnames(matrix)[[2L]]),
                     row.names = as.character(index(x)),
                     y = target,
                     direction = dir,
@@ -107,9 +107,9 @@ writeMatrix <- function(x, pairs, p2, xlen, type) {
            boolean = as.integer(c(rep(NA, offset), (x[, c1] > x[, c2])[1:(xlen - offset)])),
            numeric = c(rep(NA, offset), (x[, c1] - x[, c2])[1:(xlen - offset)]))
   }, c1 = pairs[, 2L], c2 = pairs[, 1L], SIMPLIFY = FALSE, USE.NAMES = FALSE))
-  colnames(matrix) <- do.call(c, mapply(function(c1, c2) paste0(c1, "_", c2),
-                                        c1 = pairs[, 2L], c2 = pairs[, 1L],
-                                        SIMPLIFY = FALSE, USE.NAMES = FALSE))
+  dimnames(matrix)[[2L]] <- do.call(c, mapply(function(c1, c2) paste0(c1, "_", c2),
+                                              c1 = pairs[, 2L], c2 = pairs[, 1L],
+                                              SIMPLIFY = FALSE, USE.NAMES = FALSE))
   matrix
 }
 

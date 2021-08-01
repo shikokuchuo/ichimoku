@@ -338,10 +338,10 @@ autostrat <- function(x, n = 8, dir = c("long", "short"), level = 1) {
                      mapply(function(a, b) lgrid[, a] * lgrid[, b],
                             a = pairs[, 1L], b = pairs[, 2L],
                             SIMPLIFY = FALSE, USE.NAMES = FALSE))
-    colnames(mgrid) <- do.call(c,
-                               mapply(function(a, b) paste0(names(lgrid)[a], "&", names(lgrid)[b]),
-                                      a = pairs[, 1L], b = pairs[, 2L],
-                                      SIMPLIFY = FALSE, USE.NAMES = FALSE))
+    dimnames(mgrid)[[2L]] <- do.call(c,
+                                     mapply(function(a, b) paste0(names(lgrid)[a], "&", names(lgrid)[b]),
+                                            a = pairs[, 1L], b = pairs[, 2L],
+                                            SIMPLIFY = FALSE, USE.NAMES = FALSE))
     matrix <- grid[, 1L] * mgrid
     logret <- sort(colSums(matrix), decreasing = TRUE)
     returns <- logret[!logret == 0]
@@ -376,10 +376,10 @@ autostrat <- function(x, n = 8, dir = c("long", "short"), level = 1) {
                      },
                      a = pairs[, 1L], b = pairs[, 2L],
                      SIMPLIFY = FALSE, USE.NAMES = FALSE))
-    colnames(mgrid) <- do.call(c,
-                               mapply(function(a, b) paste0(names(lgrid)[a], "x", names(lgrid)[b]),
-                                      a = pairs[, 1L], b = pairs[, 2L],
-                                      SIMPLIFY = FALSE, USE.NAMES = FALSE))
+    dimnames(mgrid)[[2L]] <- do.call(c,
+                                     mapply(function(a, b) paste0(names(lgrid)[a], "x", names(lgrid)[b]),
+                                            a = pairs[, 1L], b = pairs[, 2L],
+                                            SIMPLIFY = FALSE, USE.NAMES = FALSE))
     matrix <- grid[, 1L] * mgrid
     logret <- sort(colSums(matrix), decreasing = TRUE)
     returns <- logret[!logret == 0]
