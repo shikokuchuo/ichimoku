@@ -10,7 +10,7 @@
 #'     base.
 #'
 #' @param x a data.frame or other compatible object, which includes xts,
-#'     data.table, tibble, and matrix.
+#'     data.table, tibble, matrix, and Arrow tabular formats.
 #' @param ticker (optional) specify a ticker to identify the instrument,
 #'     otherwise this is set to the name of the input object 'x'.
 #' @param periods [default c(9L, 26L, 52L)] a vector defining the length of
@@ -57,10 +57,13 @@ ichimoku <- function(x, ...) UseMethod("ichimoku")
 #' @export
 #'
 ichimoku.ichimoku <- function(x, ticker, periods = c(9L, 26L, 52L), ...) {
+
   if (missing(ticker)) ticker <- attr(x, "ticker")
   x <- xts_df(x)
   x <- x[!is.na(x$close), ]
+
   ichimoku.data.frame(x, ticker = ticker, periods = periods, ...)
+
 }
 
 #' @rdname ichimoku
@@ -68,19 +71,25 @@ ichimoku.ichimoku <- function(x, ticker, periods = c(9L, 26L, 52L), ...) {
 #' @export
 #'
 ichimoku.xts <- function(x, ticker, periods = c(9L, 26L, 52L), ...) {
+
   if (missing(ticker)) ticker <- deparse(substitute(x))
   x <- xts_df(x)
+
   ichimoku.data.frame(x, ticker = ticker, periods = periods, ...)
+
 }
 
 #' @rdname ichimoku
-#' @method ichimoku matrix
+#' @method ichimoku ArrowTabular
 #' @export
 #'
-ichimoku.matrix <- function(x, ticker, periods = c(9L, 26L, 52L), ...) {
+ichimoku.ArrowTabular <- function(x, ticker, periods = c(9L, 26L, 52L), ...) {
+
   if (missing(ticker)) ticker <- deparse(substitute(x))
-  x <- matrix_df(x)
+  x <- x$to_data_frame()
+
   ichimoku.data.frame(x, ticker = ticker, periods = periods, ...)
+
 }
 
 #' @rdname ichimoku
@@ -94,7 +103,7 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), ...) {
   cnames <- attr(x, "names")
   coli <- grep("index|date|time", cnames, ignore.case = TRUE, perl = TRUE)[1L]
   if (!is.na(coli)) {
-    index <- tryCatch(as.POSIXct(x[, coli]), error = function(e) {
+    index <- tryCatch(as.POSIXct(x[, coli, drop = TRUE]), error = function(e) {
       stop("Index/date/time column not convertible to a POSIXct date-time format",
            call. = FALSE)
       })
@@ -124,12 +133,12 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), ...) {
   if (p2 >= xlen) stop("Dataset must be longer than the medium cloud period '",
                        p2, "'", call. = FALSE)
 
-  high <- x[, colh]
-  low <- x[, coll]
-  close <- x[, colc]
+  high <- as.numeric(x[, colh, drop = TRUE])
+  low <- as.numeric(x[, coll, drop = TRUE])
+  close <- as.numeric(x[, colc, drop = TRUE])
   colo <- grep("open", cnames, ignore.case = TRUE, perl = TRUE)[1L]
   if (!is.na(colo)) {
-    open <- x[, colo]
+    open <- as.numeric(x[, colo, drop = TRUE])
   } else {
     warning("Opening prices not found - using previous closing prices as substitute",
             "\nThis affects the candles but not the calculation of the cloud", call. = FALSE)
@@ -174,8 +183,21 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), ...) {
   structure(cloud,
             class = c("ichimoku", "xts", "zoo"),
             periods = periods,
-            periodicity = as.numeric(periodicity, units = "secs"),
+            periodicity = as.double.difftime(periodicity, units = "secs"),
             ticker = ticker)
+
+}
+
+#' @rdname ichimoku
+#' @method ichimoku matrix
+#' @export
+#'
+ichimoku.matrix <- function(x, ticker, periods = c(9L, 26L, 52L), ...) {
+
+  if (missing(ticker)) ticker <- deparse(substitute(x))
+  x <- matrix_df(x)
+
+  ichimoku.data.frame(x, ticker = ticker, periods = periods, ...)
 
 }
 
@@ -184,13 +206,16 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), ...) {
 #' @export
 #'
 ichimoku.default <- function(x, ticker, periods = c(9L, 26L, 52L), ...) {
+
   if (missing(x)) stop("No object specified for ichimoku()", call. = FALSE)
   tryExists <- tryCatch(exists(x), error = function(e) {
     stop("Cannot create an ichimoku object from a '", class(x)[1L], "' object", call. = FALSE)
   })
+
   if (!tryExists) stop("object '", x, "' not found")
   else if (missing(ticker)) ichimoku(get(x), ticker = x, periods = periods, ...)
   else ichimoku(get(x), ticker = ticker, periods = periods, ...)
+
 }
 
 #' Print Ichimoku Objects
@@ -222,11 +247,13 @@ ichimoku.default <- function(x, ticker, periods = c(9L, 26L, 52L), ...) {
 #' @export
 #'
 print.ichimoku <- function(x, plot = TRUE, ...) {
+
   if (isTRUE(plot)) tryCatch(plot.ichimoku(x, ...),
                              error = function(e) invisible(),
                              warning = function(w) invisible())
   NextMethod(print)
   invisible(x)
+
 }
 
 ##' @importFrom ggplot2 autoplot
@@ -276,9 +303,13 @@ NULL
 #' @method autoplot ichimoku
 #' @export
 #'
-autoplot.ichimoku <- function(object, window, ticker, message,
+autoplot.ichimoku <- function(object,
+                              window,
+                              ticker,
+                              message,
                               theme = c("original", "dark", "solarized", "mono"),
-                              strat = TRUE, ...) {
+                              strat = TRUE,
+                              ...) {
 
   theme <- match.arg(theme)
   pal <- ichimoku_themes[, theme]
@@ -286,8 +317,9 @@ autoplot.ichimoku <- function(object, window, ticker, message,
   if (missing(ticker)) ticker <- attr(object, "ticker")
   if (missing(message)) {
     message <- if (hasStrat(object) && isTRUE(strat)) paste0("Strategy: ",
-                                                             attr(object, "strat")["Strategy", ]$Strategy)
+                                                             attr(object, "strat")["Strategy", ][[1]])
   }
+
   if (!missing(window)) object <- object[window]
   xlen <- dim(object)[1L]
   data <- xts_df(object)
@@ -374,12 +406,17 @@ autoplot.ichimoku <- function(object, window, ticker, message,
 #' @method plot ichimoku
 #' @export
 #'
-plot.ichimoku <- function(x, window, ticker, message,
+plot.ichimoku <- function(x,
+                          window,
+                          ticker,
+                          message,
                           theme = c("original", "dark", "solarized", "mono"),
-                          strat = TRUE, ...) {
+                          strat = TRUE,
+                          ...) {
 
   print(autoplot.ichimoku(x, window = window, ticker = ticker, message = message,
                           theme = theme, strat = strat), ...)
+
 }
 
 #' is.ichimoku
@@ -419,15 +456,19 @@ is.ichimoku <- function(x) inherits(x, "ichimoku")
 #'
 #' @export
 #'
-gplot <- function(object, window, ticker, message,
-                  theme = c("original", "dark", "solarized", "mono"), ...) {
+gplot <- function(object,
+                  window,
+                  ticker,
+                  message,
+                  theme = c("original", "dark", "solarized", "mono"),
+                  ...) {
 
   theme <- match.arg(theme)
   pal <- ichimoku_themes[, theme]
   periodicity <- attr(object, "periodicity")
   if (missing(ticker)) ticker <- attr(object, "ticker")
-  if (!missing(window)) object <- object[window]
 
+  if (!missing(window)) object <- object[window]
   data <- xts_df(object)
   data$cd <- as.character(data$cd)
 
@@ -470,7 +511,9 @@ gplot <- function(object, window, ticker, message,
                         axis.ticks = element_line(colour = "#eee8d5")),
            theme(legend.position = "none"))
   )
+
   ggplot(data = data, aes(x = .data$index)) + layers
+
 }
 
 #' iplot Interactive Ichimoku Cloud Plot
@@ -506,8 +549,13 @@ gplot <- function(object, window, ticker, message,
 #'
 #' @export
 #'
-iplot <- function(x, ticker, theme = c("original", "dark", "solarized", "mono"),
-                  message, strat = TRUE, ..., launch.browser = TRUE) {
+iplot <- function(x,
+                  ticker,
+                  theme = c("original", "dark", "solarized", "mono"),
+                  message,
+                  strat = TRUE,
+                  ...,
+                  launch.browser = TRUE) {
 
   if (requireNamespace("shiny", quietly = TRUE)) {
 
@@ -516,14 +564,21 @@ iplot <- function(x, ticker, theme = c("original", "dark", "solarized", "mono"),
     if (missing(ticker)) ticker <- attr(x, "ticker")
     if (missing(message)) {
       message <- if (hasStrat(x) && isTRUE(strat)) paste0("Strategy: ",
-                                                          attr(x, "strat")["Strategy", ]$Strategy)
+                                                          attr(x, "strat")["Strategy", ][[1]])
     }
+
     tformat <- if (attr(x, "periodicity") > 80000) "%F" else "%F %T"
     start <- index(x)[1L]
     end <- index(x)[dim(x)[1L]]
     xadj <- if (nchar(as.character(start)) > 10) -17 else 5
 
+    ichimoku_stheme <- if (requireNamespace("bslib", quietly = TRUE)) {
+      bslib::bs_theme(version = 4, bootswatch = "solar", bg = "#ffffff", fg = "#002b36",
+                      primary = "#073642", font_scale = 0.85)
+    }
+
     ui <- shiny::fluidPage(
+      theme = ichimoku_stheme,
       shiny::fillPage(
         padding = 20,
         shiny::tags$style(type = "text/css", "#chart {height: calc(100vh - 190px) !important;}"),
@@ -562,12 +617,21 @@ iplot <- function(x, ticker, theme = c("original", "dark", "solarized", "mono"),
     )
 
     server <- function(input, output, session) {
+
       window <- shiny::reactive(paste0(input$dates[1L], "/", input$dates[2L]))
       left_px <- shiny::reactive(input$plot_hover$coords_css$x)
       top_px <- shiny::reactive(input$plot_hover$coords_css$y)
       posi_x <- shiny::reactive(round(input$plot_hover$x, digits = 0))
 
       pdata <- shiny::reactive(x[window()])
+
+      if (requireNamespace("bslib", quietly = TRUE)) {
+        shiny::observe({
+          session$setCurrentTheme(
+            bslib::bs_theme_update(ichimoku_stheme,
+                                   bootswatch = switch(input$theme, dark = "solar", NULL)))
+        })
+      }
 
       output$chart <- shiny::renderPlot(
         autoplot.ichimoku(pdata(), ticker = input$ticker, message = input$message,
@@ -616,9 +680,9 @@ drawInfotip <- function(sdata, left_px, top_px) {
                    "left:", left_px + 50, "px; top:", top_px + 40, "px; ",
                    "font-size: 0.8em; padding: 1px 5px 5px 5px;"),
     shiny::HTML(paste0("<div style='margin:0; padding:0; font-weight:bold'>",
-                       if (isTRUE(sdata$cd == 1)) "&uarr;<br />"
-                       else if (isTRUE(sdata$cd == -1)) "&darr;<br />"
-                       else "&rarr;<br />",
+                       if (isTRUE(sdata$cd == 1)) "&#9651;<br />"
+                       else if (isTRUE(sdata$cd == -1)) "&#9660;<br />"
+                       else "&#8212;<br />",
                        index(sdata),
                        "</div><div style='text-align:center; margin:2px 0 0 0; padding:0'>H: ",
                        signif(sdata$high, digits = 5L),

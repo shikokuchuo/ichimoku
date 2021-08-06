@@ -12,8 +12,8 @@ A temporarily invisible character string, respresenting the key stored
     otherwise the key supplied by the user interactively.
 }
 \description{
-Return OANDA fxTrade API key (personal access token) stored in the keyring,
-    or else prompts the user to provide a key interactively.
+Return OANDA fxTrade API key (personal access token) saved in the system
+    credential store, or else prompts the user to provide a key interactively.
 }
 \details{
 For retrieving the key from the keyring, this function has a dependency

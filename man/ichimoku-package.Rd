@@ -28,6 +28,8 @@ Data
     API.}
     \item{\code{\link{oanda_stream}}} {to stream a live data feed from the
     OANDA fxTrade API.}
+    \item{\code{\link{ichimoku_write}} and \code{\link{ichimoku_read}}} {for
+    archival of ichimoku objects in the Apache Arrow IPC file format.}
 }
 Visualization
 \itemize{

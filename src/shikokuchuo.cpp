@@ -1,4 +1,5 @@
-// This file is modified from the original with the following license:
+// ichimoku - Window Functions: using an algorithm with the following license:
+
 /*
  Based on http://opensource.org/licenses/MIT
  Copyright (c) 2015, Andrew Uhl
@@ -21,9 +22,10 @@
  */
 
 #include <deque>
-#include <utility>
-#include <Rcpp.h>
-using namespace Rcpp;
+#include <cpp11.hpp>
+
+using namespace cpp11;
+namespace writable = cpp11::writable;
 
 // types of calculations
 enum CalcType {MIN, MAX};
@@ -35,10 +37,10 @@ struct Args {
 };
 
 // calculates rolling window for {minimum, maximum}
-NumericVector roll_minmax(const NumericVector& x, Args a) {
+doubles roll_minmax(const doubles& x, Args a) {
 
-  int n  = x.length();
-  NumericVector rollx(n);
+  int n  = x.size();
+  writable::doubles rollx(n);
 
   std::deque< std::pair<long double, int> > deck;
   for (int i = 0; i < x.size(); ++i) {
@@ -64,46 +66,16 @@ NumericVector roll_minmax(const NumericVector& x, Args a) {
   return rollx;
 }
 
-//' Maximum Over a Rolling Window
-//'
-//' Used by \link{ichimoku} to calculate the maximum over a rolling window.
-//'
-//' @param x a vector.
-//' @param window size of the rolling window.
-//'
-//' @return A vector of the same length as 'x' with elements 1 to
-//'     (length(window) - 1) containing NAs.
-//'
-//' @details Fast implementation with no error checking or NA handling.
-//'
-//' @examples
-//' maxOver(sample_ohlc_data$close[1:10], 3L)
-//'
-//' @export
-// [[Rcpp::export]]
-NumericVector maxOver(const SEXP& x, int window) {
+
+[[cpp11::register]]
+doubles maxOver(const doubles& x, int window) {
   Args a; a.window = window; a.ctype = MAX;
   return roll_minmax(x, a);
 }
 
-//' Minimum Over a Rolling Window
-//'
-//' Used by \link{ichimoku} to calculate the minimum over a rolling window.
-//'
-//' @param x a vector.
-//' @param window size of the rolling window.
-//'
-//' @return A vector of the same length as 'x' with elements 1 to
-//'     (length(window) - 1) containing NAs.
-//'
-//' @details Fast implementation with no error checking or NA handling.
-//'
-//' @examples
-//' minOver(sample_ohlc_data$close[1:10], 3L)
-//'
-//' @export
-// [[Rcpp::export]]
-NumericVector minOver(const SEXP& x, int window) {
+[[cpp11::register]]
+doubles minOver(const doubles& x, int window) {
   Args a; a.window = window; a.ctype = MIN;
   return roll_minmax(x, a);
 }
+

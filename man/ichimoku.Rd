@@ -4,8 +4,9 @@
 \alias{ichimoku}
 \alias{ichimoku.ichimoku}
 \alias{ichimoku.xts}
-\alias{ichimoku.matrix}
+\alias{ichimoku.ArrowTabular}
 \alias{ichimoku.data.frame}
+\alias{ichimoku.matrix}
 \alias{ichimoku.default}
 \title{ichimoku}
 \usage{
@@ -15,15 +16,17 @@ ichimoku(x, ...)
 
 \method{ichimoku}{xts}(x, ticker, periods = c(9L, 26L, 52L), ...)
 
-\method{ichimoku}{matrix}(x, ticker, periods = c(9L, 26L, 52L), ...)
+\method{ichimoku}{ArrowTabular}(x, ticker, periods = c(9L, 26L, 52L), ...)
 
 \method{ichimoku}{data.frame}(x, ticker, periods = c(9L, 26L, 52L), ...)
+
+\method{ichimoku}{matrix}(x, ticker, periods = c(9L, 26L, 52L), ...)
 
 \method{ichimoku}{default}(x, ticker, periods = c(9L, 26L, 52L), ...)
 }
 \arguments{
 \item{x}{a data.frame or other compatible object, which includes xts,
-data.table, tibble, and matrix.}
+data.table, tibble, matrix, and Arrow tabular formats.}
 
 \item{...}{additional arguments, for instance 'holidays', passed along to
 \code{\link{tradingDays}} for calculating the future cloud on daily data.}

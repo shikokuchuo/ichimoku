@@ -149,12 +149,13 @@ xts_df <- function(x) {
 #' @export
 #'
 matrix_df <- function(x) {
-  mat <- unname(x)
   dnames <- dimnames(x)
-  structure(lapply(seq_len(dim(mat)[2L]), function(i) mat[, i]),
+  mat <- unname(x)
+  dims <- dim(mat)
+  structure(lapply(seq_len(dims[2L]), function(i) mat[, i]),
             class = "data.frame",
             names = dnames[[2L]],
-            row.names = dnames[[1L]])
+            row.names = if (is.null(dnames[[1L]])) seq_len(dims[1L]) else dnames[[1L]])
 }
 
 #' Merge Dataframes
@@ -189,9 +190,16 @@ matrix_df <- function(x) {
 df_merge <- function(...) {
   dots <- list(...)
   merge <- Reduce(function(x, y) merge.data.frame(x, y, all = TRUE), dots)
-  if (isTRUE(attr(dots[[1]], "oanda")) && FALSE %in% merge$complete) {
-    warning("Incomplete periods in merged dataframe, please check for possible duplicates",
-            call. = FALSE)
+  if (isTRUE(attr(dots[[1]], "oanda"))) {
+    merge <- structure(merge,
+                       instrument = attr(dots[[1]], "instrument"),
+                       price = attr(dots[[1]], "price"),
+                       timestamp = do.call(max, lapply(dots, attr, "timestamp")),
+                       oanda = TRUE)
+    if (FALSE %in% merge$complete) {
+      warning("Incomplete periods in merged dataframe, please check for possible duplicates",
+              call. = FALSE)
+    }
   }
   merge
 }

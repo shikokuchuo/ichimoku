@@ -50,7 +50,8 @@ specified if already stored by oanda_set_key(). Can also be entered
 interactively if not specified.}
 
 \item{...}{additional arguments passed along to \code{\link{ichimoku}} for
-calculating the ichimoku cloud.}
+calculating the ichimoku cloud or \code{\link{autoplot}} to set chart
+parameters.}
 
 \item{periods}{[default c(9L, 26L, 52L)] a vector defining the length of
 periods used for the cloud. This parameter shoud not normally be modified
@@ -60,7 +61,7 @@ Ichimoku analysis.}
 \value{
 Does not return a value, however a plot of the ichimoku chart for the
     price data requested is output to the graphical device at each refresh
-    interval as a side effect. Note that returned times are represented in UTC.
+    interval as a side effect. Note that all times are represented in UTC.
 }
 \description{
 Live updating Ichimoku Kinko Hyo cloud charts using OANDA fxTrade API data.

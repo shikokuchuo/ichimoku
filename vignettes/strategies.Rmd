@@ -30,7 +30,9 @@ However if a more methodical approach is required, for instance to test hypothes
 
 The 'strategy layer' of the ichimoku package aims to prepare the data in a standardized format for easy analysis in R packages such as 'PerformanceAnalytics'. Short strategy summaries are generated automatically, but are designed to serve as a quick reference rather than a replacement for a full backtest.
 
-The `autostrat()` function is used to further facilitate idea and strategy generation, and leverages the computational abilities of R to simultaneously test all valid indicator combinations. Whilst not all strategies returned may make intuitive sense, they will at a minimum serve to provide another benchmark. Again, the results generated are meant to be fed through a full backtest, with all the implications analysed. Past results do not imply future performance, and the results obtained should not be relied upon on the basis of the results alone.
+The `autostrat()` function is used to further facilitate idea and strategy generation, and leverages the computational abilities of R to simultaneously test all valid indicator combinations. Whilst not all strategies returned may make intuitive sense, they will at a minimum serve to provide another benchmark. To reiterate, the results generated should be fed through a full backtest, with all the implications of that analysed.
+
+Past results do not imply future performance, and the results obtained should not be relied upon on the basis of the results alone.
 
 ## Working with Strategies
 
@@ -50,14 +52,14 @@ To test a simple strategy with an indicator condition of the form 'long (or shor
 
 Here 'c1' and 'c2' are the quoted column names of the ichimoku object representing either candlestick values e.g. 'close' or cloud values e.g. 'tenkan'.
 
-Note: the indicator condition is c1 > c2 even for short trades. Hence please take care for example when inverting 'long while close > tenkan' to 'short while close < tenkan', this should be formulated as 'short while tenkan > close'.
+Note: the indicator condition remains of the form c1 > c2 even for short trades. Hence please take care when inverting, for example, 'long while close > tenkan' to 'short while close < tenkan', this should be formulated as 'short while tenkan > close'.
 
 ```{r strat}
 strat <- strat(cloud, c1 = "close", c2 = "tenkan")
 print(strat[100:105], plot = FALSE)
 ```
 
-The use of strat() returns an augmented ichimoku object. The printout above of a slice of the object (rows 100 to 105) shows that the following columns are appended:
+The use of `strat()` returns an augmented ichimoku object. The printout above of a slice of the object (rows 100 to 105) shows that the following columns are appended:
 
 - **cond**: '1' if the indicator condition is met at the close of the the time period (note: if the indicator condition involves chikou span, the comparison will be of past periods)
 - **posn**: '1' represents that a position is held during this time period (i.e. from the 'open' to the 'close')
@@ -67,7 +69,17 @@ The use of strat() returns an augmented ichimoku object. The printout above of a
 - **ret**: the discrete returns from the 'open' price of the period to the 'open' price of the next period. For the avoidance of doubt, this is calculated as e raised to the power of 'logret' minus 1
 - **sret**: the discrete returns for the strategy. It is simply ret * posn, i.e. the returns where a position is held
 
-Note: the assumption applies to all strategies that confirmation of whether a condition is satisfied is received at the 'close' of a particular period, and a transaction is initiated at the immediately following 'open'. It is assumed that all transactions are conducted at opening prices. All events are aligned to their correct time periods, which are taken to be from the 'open' to the 'close' inclusive of that period. Hence 'cond' refers to if the condition is satisfied at the 'close' of the period, 'posn' also refers to whether a position is held at the 'close' of the period, and 'txn' refers to if there has been a transaction during that period (in this case occurring at the 'open').
+Note: the following assumptions apply to all strategies:
+
+- confirmation of whether a condition is satisfied is received at the 'close' of a particular period
+- a transaction is initiated at the immediately following 'open'
+- all transactions are conducted at opening prices
+
+All events are aligned to their correct time periods, which are taken to be from the 'open' to the 'close' inclusive of that period:
+
+- 'cond' refers to if the condition is satisfied at the 'close' of the period
+- 'posn' also refers to whether a position is held at the 'close' of the period
+- 'txn' refers to if there has been a transaction during that period (in this case occurring at the 'open')
 
 ### 2b. Complex strategies using `strat()` 
 

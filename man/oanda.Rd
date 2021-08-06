@@ -8,14 +8,12 @@ oanda(
   instrument,
   granularity = c("D", "W", "M", "H12", "H8", "H6", "H4", "H3", "H2", "H1", "M30",
     "M15", "M10", "M5", "M4", "M2", "M1", "S30", "S15", "S10", "S5"),
-  count,
-  from,
-  to,
+  count = NULL,
+  from = NULL,
+  to = NULL,
   price = c("M", "B", "A"),
   server = c("practice", "live"),
-  apikey,
-  ...,
-  .validate
+  apikey
 )
 }
 \arguments{
@@ -30,9 +28,9 @@ one of "M", "W", "D", "H12", "H8", "H6", "H4", "H3", "H2", "H1", "M30",
 
 \item{count}{(optional) the number of periods to return. The API supports a
 maximum of 5000 for each individual request, and defaults to 500 if not
-specified. 'count' should not be specified if both 'from' and 'to'
-arguments are provided, as the time range combined with 'granularity'
-will determine the number of periods to return.}
+specified. If both 'from' and 'to' are specified, 'count' is ignored, as
+the time range combined with 'granularity' will determine the number of
+periods to return.}
 
 \item{from}{(optional) the start of the time range for which to fetch price
 data, for example "2020-02-01".}
@@ -50,11 +48,6 @@ depending on the account type held with OANDA.}
 access token), or function that returns this string. Does not need to be
 specified if already stored by oanda_set_key(). Can also be entered
 interactively if not specified.}
-
-\item{...}{additional parameters not used by this function.}
-
-\item{.validate}{(optional) only used internally by other functions. Do not
-set this parameter.}
 }
 \value{
 A data.frame containing the price data requested. Note that returned
@@ -73,9 +66,9 @@ This function queries the OANDA fxTrade API.
     Manage API Access). From there, a personal access token to use with the
     OANDA API can be generated, as well as revoked.
 
-    The \code{\link{oanda_set_key}} function can be used to store the API key
-    in the default keyring so that it is automatically recognised in future
-    (requires the 'keyring' package to be installed).
+    The \code{\link{oanda_set_key}} function can be used to save the API key
+    in the system credential store so that it is automatically recognised in
+    future (requires the 'keyring' package to be installed).
 
     For further details please refer to the OANDA fxTrade API vignette by
     running: \code{vignette("xoanda", package = "ichimoku")}.

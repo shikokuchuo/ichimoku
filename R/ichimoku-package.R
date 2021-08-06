@@ -22,6 +22,8 @@
 #'     API.}
 #'     \item{\code{\link{oanda_stream}}} {to stream a live data feed from the
 #'     OANDA fxTrade API.}
+#'     \item{\code{\link{ichimoku_write}} and \code{\link{ichimoku_read}}} {for
+#'     archival of ichimoku objects in the Apache Arrow IPC file format.}
 #' }
 #' Visualization
 #' \itemize{
@@ -56,7 +58,6 @@
 #'     \url{https://github.com/shikokuchuo/ichimoku/}
 #'
 #' @useDynLib ichimoku, .registration = TRUE
-#' @importFrom Rcpp sourceCpp
 #' @importFrom ggplot2 ggplot aes geom_ribbon geom_line geom_segment geom_rect
 #'     scale_color_manual scale_fill_manual guides scale_x_datetime
 #'     scale_x_continuous scale_y_continuous labs theme_light theme element_rect
@@ -74,7 +75,7 @@ NULL
 
 .onLoad <- function(libname, pkgname) {
   oanda_get_key <<- oanda_get_key()
-  oanda_accounts <<- oanda_accounts()
+  oandaAccount <<- oandaAccount()
   oanda_instruments <<- oanda_instruments()
   invisible()
 }

@@ -6,11 +6,6 @@ test_that("tradingDays ok", {
   expect_warning(tradingDays(sample_ohlc_data$time[4], holidays = 0))
 })
 
-test_that("window functions ok", {
-  expect_vector(maxOver(sample_ohlc_data$close[1:10], 3), ptype = numeric(), size = 10)
-  expect_vector(minOver(sample_ohlc_data$close[1:10], 3), ptype = numeric(), size = 10)
-})
-
 test_that("df_trim ok", {
   expect_equal(dim(df_trim(data.frame(c(1:4, NA), c(NA, 2:5)))), c(3L, 2L))
 })

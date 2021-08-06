@@ -142,9 +142,8 @@ strat <- function(x,
     }
     x$cond <- s1cond
     x$posn <- position
-  } else {
-    stop("Invalid type specified", call. = FALSE)
-  }
+
+  } else stop("Invalid type specified", call. = FALSE)
 
   writeStrat(x = x, strategy = strategy, dir = dir, xlen = xlen, p2 = p2, end = end)
 
@@ -206,6 +205,7 @@ writeStrat <- function(x, strategy, dir, xlen, p2, end) {
     End = index(x)[end],
     Ticker = attr(x, "ticker")
     )))
+
 }
 
 #' Combine Ichimoku Strategies
@@ -249,12 +249,13 @@ stratcombine <- function(s1, s2) {
   if (!identical(coredata(s1[, 1:4]), coredata(s2[, 1:4]))) {
     stop("Strategies must be for the same data", call. = FALSE)
   }
-  dir <- attr(s1, "strat")["Direction", ]$Direction
-  if (!identical(dir, attr(s2, "strat")["Direction", ]$Direction)) {
+  dir <- attr(s1, "strat")["Direction", ][[1]]
+  if (!identical(dir, attr(s2, "strat")["Direction", ][[1]])) {
     stop("Trade direction must be the same for all strategies", call. = FALSE)
   }
-  strat1 <- attr(s1, "strat")["Strategy", ]$Strategy
-  strat2 <- attr(s2, "strat")["Strategy", ]$Strategy
+
+  strat1 <- attr(s1, "strat")["Strategy", ][[1]]
+  strat2 <- attr(s2, "strat")["Strategy", ][[1]]
   if (identical(strat1, strat2)) return(s1)
 
   strategy <- paste0(strat1, " & ", strat2)
@@ -311,7 +312,10 @@ stratcombine <- function(s1, s2) {
 #'
 #' @export
 #'
-autostrat <- function(x, n = 8, dir = c("long", "short"), level = 1) {
+autostrat <- function(x,
+                      n = 8,
+                      dir = c("long", "short"),
+                      level = 1) {
 
   if (!is.ichimoku(x)) stop("autostrat() only works on ichimoku objects", call. = FALSE)
   dir <- match.arg(dir)
@@ -319,6 +323,7 @@ autostrat <- function(x, n = 8, dir = c("long", "short"), level = 1) {
     warning("Invalid level specified, using default level of 1", call. = FALSE)
     level <- 1
   }
+
   grid <- mlgrid(x, y = "logret", dir = dir, type = "boolean", unique = FALSE)
 
   if (level == 1) {
@@ -329,8 +334,8 @@ autostrat <- function(x, n = 8, dir = c("long", "short"), level = 1) {
     list <- mapply(strat, c1 = args[, 1L], c2 = args[, 2L],
                    MoreArgs = list(x = x, dir = dir),
                    SIMPLIFY = FALSE, USE.NAMES = FALSE)
-  }
-  else if (level == 2) {
+
+  } else if (level == 2) {
     lgrid <- grid[, -1L]
     w <- length(lgrid)
     pairs <- expand.grid(seq_len(w), seq_len(w), KEEP.OUT.ATTRS = FALSE)[-grid_dup(w), ]
@@ -349,7 +354,8 @@ autostrat <- function(x, n = 8, dir = c("long", "short"), level = 1) {
     list <- mapply(strat, c1 = args[, 1L], c2 = args[, 2L], c3 = args[, 3L], c4 = args[, 4L],
                    MoreArgs = list(x = x, dir = dir, type = 2),
                    SIMPLIFY = FALSE, USE.NAMES = FALSE)
-  } else if (level == 3) {
+
+  } else {
     lgrid <- grid[, -1L]
     w <- length(lgrid)
     pairs <- expand.grid(seq_len(w), seq_len(w), KEEP.OUT.ATTRS = FALSE)[-grid_dup(w, omit.id = TRUE), ]
@@ -387,12 +393,14 @@ autostrat <- function(x, n = 8, dir = c("long", "short"), level = 1) {
     list <- mapply(strat, c1 = args[, 1L], c2 = args[, 2L], c3 = args[, 3L], c4 = args[, 4L],
                    MoreArgs = list(x = x, dir = dir, type = 3),
                    SIMPLIFY = FALSE, USE.NAMES = FALSE)
+
   }
 
   invisible(structure(list,
                       logret = cbind(logret),
                       summary = print(do.call(cbind, lapply(list, attr, which = "strat"))),
                       autostrat = TRUE))
+
 }
 
 #' Summary of Ichimoku Strategies
@@ -423,8 +431,10 @@ autostrat <- function(x, n = 8, dir = c("long", "short"), level = 1) {
 #' @export
 #'
 summary.ichimoku <- function(object, strat = TRUE, ...) {
+
   if (hasStrat(object) && isTRUE(strat)) attr(object, "strat")
   else NextMethod(summary)
+
 }
 
 #' hasStrat

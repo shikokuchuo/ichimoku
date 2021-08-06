@@ -10,13 +10,14 @@ oanda_set_key()
 A key is set in the default keyring under the service name 'OANDA_API_KEY'.
 }
 \description{
-Store OANDA fxTrade API key (personal access token) in the keyring.
+Save OANDA fxTrade API key (personal access token) to the system credential
+    store.
 }
 \details{
 The key is read interactively.
 
-    This function only needs to be run once to set the key, it does not need to
-    be run each session.
+    This function only needs to be run once to set the key, it does not need
+    to be run each session.
 
     This function has a dependency on the 'keyring' package.
 

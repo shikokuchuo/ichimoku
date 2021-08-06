@@ -62,14 +62,16 @@ Finally, the use originated with daily candlesticks, and the most valid interpre
 library(ichimoku)
 ```
 
-### data
+### Data
 
-ichimoku works with data frames and tabular data, and interfaces well with other R packages providing financial price data. The `ichimoku()` function is able to handle as input 'xts', 'data.frame', 'data.table', 'tibble', 'matrix' and possibly other 'data.frame' compatible objects. For further details see the section [file formats](#file-formats).
+ichimoku works with data frames and tabular data, and interfaces well with other R packages providing financial price data. The `ichimoku()` function is able to handle as input 'xts', 'data.frame', 'data.table', 'tibble', 'ArrowTabular', 'matrix', and possibly other 'data.frame' compatible objects. For further details see the section [file formats](#file-formats).
 
 ```{r loaddatanotrun, eval = FALSE}
 # ichimoku is designed to interface well with other packages, for example:
 cloud <- ichimoku(quantmod::getSymbols("C"))
 ```
+
+ichimoku also has functions to return data for major currencies, metals, commodities, government bonds and stock indices directly from the OANDA fxTrade API. Please refer to the [OANDA vignette](xoanda.html).
 
 The requirement on the input data is minimal, but it should contain an unambiguous date-time index and also at least High/Low/Close (HLC) price values for each time period. This is as the calculations of the cloud lines use variously the closing price as well as the midpoint between the highs/lows. It is not possible to calculate the ichimoku cloud correctly using just a single price per time period.
 
@@ -174,14 +176,13 @@ The 'ggplot' object can be further used to produce an interactive chart that can
 plotly::ggplotly(plot)
 ```
 
-
 #### 2. Interactive Plots
 
 Interactive plots require the 'shiny' package to be installed. If Shiny is not available, ichimoku will issue an informational message, but not install the package automatically as it is recognised that Shiny may not be available in all environments.
 
 To produce an interactive plot, use ichimoku's `iplot()` function. An R Shiny app will be launched, allowing full further customisation of the chart interactively, including selecting the time window etc.
 
-In a live analysis environment, as opposed to creating charts for reports, it is usually preferable to work with interactive plots. This is simply due to the ease of use of being able to directly manipulate the chart:
+In a live analysis environment, as opposed to creating charts for reports, it can be preferable to work with interactive plots. This is due to the ease of being able to customise the chart coupled with easy access to the data provided by the cursor Infotip.
 
 - hover over the chart to read off data values at any given date-time
 - cursor guides provide easy calibration of date-times and price levels
@@ -213,13 +214,25 @@ The following arguments for customisation are shared across `plot()` and `iplot(
 - `launch.browser` [default TRUE] If TRUE, the system's default web browser will be launched automatically after the app is started. The value of this argument can also be a function to call with the application's URL. To use the default Shiny viewer in RStudio, please specify
 `getOption("shiny.launch.browser")`.
 
+### Archiving
+
+After completing an analysis, the resulting ichimoku objects can be stored directly to disk. The functions `ichimoku_write()` and `ichimoku_read()` provide direct tranlsation between the ichimoku objects in an R session with binary files stored in the Apache Arrow IPC file format.
+
+`ichimoku_write()` takes 2 arguments, the ichimoku object to be written, and the file path/name of the object to be stored. A confirmation message will be printed to the console if the write process has been succesful.
+
+`ichimoku_read()` takes a single argument, the file path/name of the file to be read. The return value of the function can be assigned to an object. Archive files restored using `ichimoku_read()` will re-create an ichimoku object (including an object containing a strategy) identical to the original.
+
+Apache Arrow provides the backend to the archive functions and requires the 'arrow' package to be installed. Apache Arrow is a high-performance, standardised, and language-independent columnar memory format. This means that the Arrow files created by ichimoku can equally be accessed by programs utilising Arrow bindings in all major languages including C, C++, Java, Python, etc.
+
+Note: the attributes of the ichimoku object are stored in the 'r' field of the Arrow schema metadata. This allows archived objects to be reconstructed faithfully, however this data is typically only read by R and ignored by other clients.
+
 ## Troubleshooting
 
 ### File formats
 
-`ichimoku()` is a generic function that provides S3 methods for objects of class 'xts', 'data.frame' and 'matrix'. Other popular formats such as 'data.table' and 'tibble' that also inherit the class 'data.frame' should also work with `ichimoku()`.
+`ichimoku()` is a generic function that provides S3 methods for objects of class 'xts', 'data.frame', 'ArrowTabular' and 'matrix'. Other popular formats such as 'data.table' and 'tibble' that also inherit the class 'data.frame' should also work with `ichimoku()`.
 
-ichimoku has been designed to be fully pipeable and interfaces well with other R packages that return financial data. As an example, the `getSymbols()` function from the 'quantmod' package currently exhibit non-standard R behaviour which assigns the data into an object but returns a text string containing the name of the object. ichimoku is able to handle this automatically such that a chart can be created without the need to save intermediate objects:
+ichimoku has been designed to be fully pipeable and interfaces well with other R packages that return financial data. As an example, the `quantmod::getSymbols()` function from the 'quantmod' package currently exhibit non-standard R behaviour which assigns the data into an object but returns a text string containing the name of the object. ichimoku is able to handle this automatically such that a chart can be created without the need to save intermediate objects:
 
 ```{r pipe, eval = FALSE}
 # Using R 4.1's new pipe operator:
@@ -228,11 +241,17 @@ quantmod::getSymbols("C") |> ichimoku() |> plot()
 quantmod::getSymbols("C") %>% ichimoku() %>% plot()
 ```
 
-For reading external raw data into R, if the file uses a form of custom delimited format, the `fread()` function from the 'data.table' package on default settings is often successful.
+### Reading external data into R
 
-Alternatively, the 'datapasta' package allows data copied from website tables or in spreadsheets etc. to be pasted into R as a data frame.
+For reading data in the 'json' format, which is commonly returned by web APIs, the `fparse()` function from the 'RcppSimdJson' package is extremely performant. The function takes json strings as well as raw vectors directly. 'RcppSimdJson' is a dependency of ichimoku.
 
-After importing data, please check that the date-time index is in an unambiguous format (ideally POSIXct), and that the price data is of type 'numeric' and not coerced to type 'character'.
+If an external data file employs a custom delimited format, the 'data.table' package contains the `fread()` function, which is often successful on default settings. Otherwise, `read_delim_arrow()` from the 'arrow' package may provide an even more performant alternative.
+
+For csv files, `read_csv_arrow()` from the 'arrow' package can be a more performant choice than using `fread()` from 'data.table'.
+
+The 'arrow' package also contains the `read_feather()` and `read_parquet()` functions for reading in Apache Arrow IPC and Parquet file formats as either a 'data.frame' or Arrow Table, either of which can be handled directly by `ichimoku()`.
+
+Alternatively, the 'datapasta' package allows data copied from tables on webpages or in spreadsheets etc. to be pasted into R as a dataframe or tibble.
 
 ### Data validation
 
@@ -240,7 +259,7 @@ ichimoku performs the following data validation steps before attempting to compu
 
 1. Searches column names of the data object for the first column containing 'index', 'date' or 'time' (not case-dependent). If such a column is found but the data is not convertible into POSIXct format, an error is returned
 
-  + *If not found:* searches in row names of the data object if present. If the row names do not contain data that is convertible into POSIXct format, an error is returned. Note: 'xts' objects are always indexed by a valid time-stamp and ichimoku handles this automatically
+  + *If not found:* searches in row names of the data object if present. If the row names do not contain data that is convertible into POSIXct format, an error is returned. Note: 'xts' objects are always indexed by a valid timestamp and ichimoku handles this automatically
 
 2. Searches for HLC price data in columns with names containing 'high', 'low' and 'close' (not case-dependent) respectively
 
@@ -260,11 +279,15 @@ There may however still be other issues with the input data that prevent cloud v
 
 - HLC price data is contained in headerless columns or in columns labelled, for example, 'Op', 'Hi', 'Lo', 'Cl'. Please rename the columns 'open', 'high', 'low' and 'close' in such cases
 
-- Imported price data is stored as type 'character' rather than 'numeric'. Please convert the price data to 'numeric' in such cases
-
 - There are NA values within the price data. This will affect the algorithm calculating the cloud lines in the window immediately following such NA values. Please check the data and manually correct NA values before invoking `ichimoku()`
 
-### Function modifications since version 0.2
+### Interface changes from previous versions
+
+#### Since version 0.3
+
+- The following functions are no longer exported: `maxOver()`, `minOver()`, `oanda_accounts()`.
+
+#### Since version 0.2
 
 - `iplot()` now uses an R Shiny backend rather than plotly, as it is performant and scalable for large datasets and offers similar/enhanced functionality. To continue working with plotly, simply pass the 'ggplot' object created by plot() to `plotly::ggplotly()`
 
@@ -272,7 +295,7 @@ There may however still be other issues with the input data that prevent cloud v
 
 - `ichimoku()` validation changes mean it will now take a column named 'index', 'date' or 'time' in precedence to a row index.
 
-### Function modifications since version 0.1
+#### Since version 0.1
 
 - 'ichimoku' objects now inherit 'xts' and 'zoo' classes instead of 'data.frame'. This means that columns extracted from 'ichimoku' objects are able to work seamlessly in packages expecting 'xts' indexed time series. Conversely for use with packages that only accept data frames then 'ichimoku' objects must first be wrapped in `as.data.frame()` or translated using the included `xts_df()` utility.
 
@@ -288,18 +311,20 @@ There may however still be other issues with the input data that prevent cloud v
 
 The dependency on other packages is designed to be minimised to the extent possible. ichimoku currently has the following package dependencies:
 
-- Rcpp  - allows the use of C++ code for fast rolling window calculations
 - ggplot2 - the widely-used R graphics system for visualization
-- curl - for interfacing with external APIs
-- RcppSimdJson - for processing data retrieved from external APIs
 - rlang - R language requirement arising from the use of 'ggplot2'
 - xts - ichimoku shares the 'xts' format for time series
 - zoo - 'xts' is built on top of 'zoo'
+- curl - for interfacing with external APIs
+- RcppSimdJson - for processing data retrieved from external APIs
 
 Optional:
 
-- shiny - for interactive visualizations
-- keyring - for storing external API credentials
+- shiny, bslib - for interactive visualizations
+- arrow - for archiving ichimoku objects as Apache Arrow files
+- keyring - for saving API keys in the system credential store
+
+The 'cpp11' package provides the C++ interface for the fast window functions, but the headers used are 'vendored' within ichimoku to ensure stability (as is permitted by 'cpp11') so there is no ongoing dependency.
 
 ## Further Resources
 

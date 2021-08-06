@@ -1,11 +1,23 @@
-# ichimoku 0.3.2.2
+# ichimoku 0.3.5
+
+* **New features:**
+
+* New `ichimoku_write()` and `ichimoku_read()` functions allow for archiving of ichimoku objects to files stored in the Apache Arrow IPC file format.
+* `ichimoku()` gains a new S3 method for the `ArrowTabular` class for working with Arrow Tables.
+* `oanda()` gains the capability to download over 5000 data periods in multiple (rate-limited) requests when both the 'from' and 'to' arguments are specified.
 
 * **Updates:**
 
 * Implemented caching of certain OANDA variables so they are retrieved once and then used throughout a session.
-* Backends for the OANDA fxTrade API interface switched to 'curl' and 'RcppSimdJson' from 'httr' and 'jsonlite' for better performance. Package dependency changes: 'curl' already a dependency of 'httr' so not an issue, whilst 'RcppSimdJson' is a new package that is considered best in class.
+* `iplot()` and `oanda_studio()` now use 'bslib' (a Shiny dependency) to enable theming of the entire UI rather than just the chart. Infotip candle direction symbols updated for greater clarity.
+* `oanda()` arguments 'from' and 'to' can now take any date-time format convertible to POSIXct.
 * `oanda_studio()` subsets the plot window so as to always show a full cloud, consistent with the behaviour of `oanda_chart()`.
 * `oanda_chart()` and `oanda_studio()` add explicit support for the 'periods' argument passed to `ichimoku()`.
+* `oanda_chart()` now passes on additional parameters to `autoplot()`.
+* `ichimoku()` now enforces data types on the price data for higher certainty of success, and has more robust handling of matrices and 'data.frame' compatible formats such as 'tibble'.
+* Package dependencies switched to 'curl' and 'RcppSimdJson' from 'httr' and 'jsonlite', providing performance gains in the OANDA fxTrade API interface.
+* ichimoku now employs a vendored version of 'cpp11' 0.3.1 headers which allows for enhanced stability and faster package compilation. Removed dependency on the 'Rcpp' package.
+* The following functions are no longer exported to keep the package tidy: `maxOver()`, `minOver()`, `oanda_accounts()`.
 * Miscellaneous performance optimisations.
 * Documentation updates.
 

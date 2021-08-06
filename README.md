@@ -108,6 +108,12 @@ autostrat(cloud, n = 3)
 -   [`oanda_stream()`](https://shikokuchuo.net/ichimoku/reference/oanda_stream.html) -
     to stream a live data feed from the OANDA fxTrade API.
 
+-   [`ichimoku_write()`](https://shikokuchuo.net/ichimoku/reference/ichimoku_write.html)
+    and
+    [`ichimoku_read()`](https://shikokuchuo.net/ichimoku/reference/ichimoku_read.html) -
+    for archival of ichimoku objects in the Apache Arrow IPC file
+    format.
+
 #### Visualization
 
 -   [`plot()`](https://shikokuchuo.net/ichimoku/reference/plot.ichimoku.html) -
