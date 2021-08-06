@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.5</span>
       </span>
     </div>
 
@@ -145,14 +145,12 @@
   <span class='va'>instrument</span>,
   granularity <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"D"</span>, <span class='st'>"W"</span>, <span class='st'>"M"</span>, <span class='st'>"H12"</span>, <span class='st'>"H8"</span>, <span class='st'>"H6"</span>, <span class='st'>"H4"</span>, <span class='st'>"H3"</span>, <span class='st'>"H2"</span>, <span class='st'>"H1"</span>, <span class='st'>"M30"</span>,
     <span class='st'>"M15"</span>, <span class='st'>"M10"</span>, <span class='st'>"M5"</span>, <span class='st'>"M4"</span>, <span class='st'>"M2"</span>, <span class='st'>"M1"</span>, <span class='st'>"S30"</span>, <span class='st'>"S15"</span>, <span class='st'>"S10"</span>, <span class='st'>"S5"</span><span class='op'>)</span>,
-  <span class='va'>count</span>,
-  <span class='va'>from</span>,
-  <span class='va'>to</span>,
+  count <span class='op'>=</span> <span class='cn'>NULL</span>,
+  from <span class='op'>=</span> <span class='cn'>NULL</span>,
+  to <span class='op'>=</span> <span class='cn'>NULL</span>,
   price <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"M"</span>, <span class='st'>"B"</span>, <span class='st'>"A"</span><span class='op'>)</span>,
   server <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"practice"</span>, <span class='st'>"live"</span><span class='op'>)</span>,
-  <span class='va'>apikey</span>,
-  <span class='va'>...</span>,
-  <span class='va'>.validate</span>
+  <span class='va'>apikey</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -175,9 +173,9 @@ one of "M", "W", "D", "H12", "H8", "H6", "H4", "H3", "H2", "H1", "M30",
       <th>count</th>
       <td><p>(optional) the number of periods to return. The API supports a
 maximum of 5000 for each individual request, and defaults to 500 if not
-specified. 'count' should not be specified if both 'from' and 'to'
-arguments are provided, as the time range combined with 'granularity'
-will determine the number of periods to return.</p></td>
+specified. If both 'from' and 'to' are specified, 'count' is ignored, as
+the time range combined with 'granularity' will determine the number of
+periods to return.</p></td>
     </tr>
     <tr>
       <th>from</th>
@@ -206,15 +204,6 @@ access token), or function that returns this string. Does not need to be
 specified if already stored by oanda_set_key(). Can also be entered
 interactively if not specified.</p></td>
     </tr>
-    <tr>
-      <th>...</th>
-      <td><p>additional parameters not used by this function.</p></td>
-    </tr>
-    <tr>
-      <th>.validate</th>
-      <td><p>(optional) only used internally by other functions. Do not
-set this parameter.</p></td>
-    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -230,9 +219,9 @@ set this parameter.</p></td>
     account profile page 'Manage API Access' (My Account -&gt; My Services -&gt;
     Manage API Access). From there, a personal access token to use with the
     OANDA API can be generated, as well as revoked.</p>
-<p>The <code><a href='oanda_set_key.html'>oanda_set_key</a></code> function can be used to store the API key
-    in the default keyring so that it is automatically recognised in future
-    (requires the 'keyring' package to be installed).</p>
+<p>The <code><a href='oanda_set_key.html'>oanda_set_key</a></code> function can be used to save the API key
+    in the system credential store so that it is automatically recognised in
+    future (requires the 'keyring' package to be installed).</p>
 <p>For further details please refer to the OANDA fxTrade API vignette by
     running: <code><a href='../articles/xoanda.html'>vignette("xoanda", package = "ichimoku")</a></code>.</p>
 <p>'OANDA' and 'fxTrade' are trademarks owned by OANDA Corporation, an

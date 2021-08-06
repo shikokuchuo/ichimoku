@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.5</span>
       </span>
     </div>
 
@@ -139,11 +139,12 @@
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://shikokuchuo.net/ichimoku/">ichimoku</a></span><span class="op">)</span></code></pre></div>
 <div id="data" class="section level3">
 <h3 class="hasAnchor">
-<a href="#data" class="anchor"></a>data</h3>
-<p>ichimoku works with data frames and tabular data, and interfaces well with other R packages providing financial price data. The <code><a href="../reference/ichimoku.html">ichimoku()</a></code> function is able to handle as input ‘xts’, ‘data.frame’, ‘data.table’, ‘tibble’, ‘matrix’ and possibly other ‘data.frame’ compatible objects. For further details see the section <a href="#file-formats">file formats</a>.</p>
+<a href="#data" class="anchor"></a>Data</h3>
+<p>ichimoku works with data frames and tabular data, and interfaces well with other R packages providing financial price data. The <code><a href="../reference/ichimoku.html">ichimoku()</a></code> function is able to handle as input ‘xts’, ‘data.frame’, ‘data.table’, ‘tibble’, ‘ArrowTabular’, ‘matrix’, and possibly other ‘data.frame’ compatible objects. For further details see the section <a href="#file-formats">file formats</a>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># ichimoku is designed to interface well with other packages, for example:</span>
 <span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="fu">quantmod</span><span class="fu">::</span><span class="fu">getSymbols</span><span class="op">(</span><span class="st">"C"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p>ichimoku also has functions to return data for major currencies, metals, commodities, government bonds and stock indices directly from the OANDA fxTrade API. Please refer to the <a href="xoanda.html">OANDA vignette</a>.</p>
 <p>The requirement on the input data is minimal, but it should contain an unambiguous date-time index and also at least High/Low/Close (HLC) price values for each time period. This is as the calculations of the cloud lines use variously the closing price as well as the midpoint between the highs/lows. It is not possible to calculate the ichimoku cloud correctly using just a single price per time period.</p>
 <p>Full Open/High/Low/Close (OHLC) data should be used where available as this also allows accurate plotting of the candlesticks. If only HLC price data is available, ichimoku will take the opening price to be the closing price of the previous period, which may or may not be a good assumption depending on the type of security.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -272,7 +273,7 @@
 <a href="#interactive-plots" class="anchor"></a>2. Interactive Plots</h4>
 <p>Interactive plots require the ‘shiny’ package to be installed. If Shiny is not available, ichimoku will issue an informational message, but not install the package automatically as it is recognised that Shiny may not be available in all environments.</p>
 <p>To produce an interactive plot, use ichimoku’s <code><a href="../reference/iplot.html">iplot()</a></code> function. An R Shiny app will be launched, allowing full further customisation of the chart interactively, including selecting the time window etc.</p>
-<p>In a live analysis environment, as opposed to creating charts for reports, it is usually preferable to work with interactive plots. This is simply due to the ease of use of being able to directly manipulate the chart:</p>
+<p>In a live analysis environment, as opposed to creating charts for reports, it can be preferable to work with interactive plots. This is due to the ease of being able to customise the chart coupled with easy access to the data provided by the cursor Infotip.</p>
 <ul>
 <li>hover over the chart to read off data values at any given date-time</li>
 <li>cursor guides provide easy calibration of date-times and price levels</li>
@@ -313,6 +314,15 @@
 </ul>
 </div>
 </div>
+<div id="archiving" class="section level3">
+<h3 class="hasAnchor">
+<a href="#archiving" class="anchor"></a>Archiving</h3>
+<p>After completing an analysis, the resulting ichimoku objects can be stored directly to disk. The functions <code><a href="../reference/ichimoku_write.html">ichimoku_write()</a></code> and <code><a href="../reference/ichimoku_read.html">ichimoku_read()</a></code> provide direct tranlsation between the ichimoku objects in an R session with binary files stored in the Apache Arrow IPC file format.</p>
+<p><code><a href="../reference/ichimoku_write.html">ichimoku_write()</a></code> takes 2 arguments, the ichimoku object to be written, and the file path/name of the object to be stored. A confirmation message will be printed to the console if the write process has been succesful.</p>
+<p><code><a href="../reference/ichimoku_read.html">ichimoku_read()</a></code> takes a single argument, the file path/name of the file to be read. The return value of the function can be assigned to an object. Archive files restored using <code><a href="../reference/ichimoku_read.html">ichimoku_read()</a></code> will re-create an ichimoku object (including an object containing a strategy) identical to the original.</p>
+<p>Apache Arrow provides the backend to the archive functions and requires the ‘arrow’ package to be installed. Apache Arrow is a high-performance, standardised, and language-independent columnar memory format. This means that the Arrow files created by ichimoku can equally be accessed by programs utilising Arrow bindings in all major languages including C, C++, Java, Python, etc.</p>
+<p>Note: the attributes of the ichimoku object are stored in the ‘r’ field of the Arrow schema metadata. This allows archived objects to be reconstructed faithfully, however this data is typically only read by R and ignored by other clients.</p>
+</div>
 </div>
 <div id="troubleshooting" class="section level2">
 <h2 class="hasAnchor">
@@ -320,16 +330,22 @@
 <div id="file-formats" class="section level3">
 <h3 class="hasAnchor">
 <a href="#file-formats" class="anchor"></a>File formats</h3>
-<p><code><a href="../reference/ichimoku.html">ichimoku()</a></code> is a generic function that provides S3 methods for objects of class ‘xts’, ‘data.frame’ and ‘matrix’. Other popular formats such as ‘data.table’ and ‘tibble’ that also inherit the class ‘data.frame’ should also work with <code><a href="../reference/ichimoku.html">ichimoku()</a></code>.</p>
-<p>ichimoku has been designed to be fully pipeable and interfaces well with other R packages that return financial data. As an example, the <code>getSymbols()</code> function from the ‘quantmod’ package currently exhibit non-standard R behaviour which assigns the data into an object but returns a text string containing the name of the object. ichimoku is able to handle this automatically such that a chart can be created without the need to save intermediate objects:</p>
+<p><code><a href="../reference/ichimoku.html">ichimoku()</a></code> is a generic function that provides S3 methods for objects of class ‘xts’, ‘data.frame’, ‘ArrowTabular’ and ‘matrix’. Other popular formats such as ‘data.table’ and ‘tibble’ that also inherit the class ‘data.frame’ should also work with <code><a href="../reference/ichimoku.html">ichimoku()</a></code>.</p>
+<p>ichimoku has been designed to be fully pipeable and interfaces well with other R packages that return financial data. As an example, the <code>quantmod::getSymbols()</code> function from the ‘quantmod’ package currently exhibit non-standard R behaviour which assigns the data into an object but returns a text string containing the name of the object. ichimoku is able to handle this automatically such that a chart can be created without the need to save intermediate objects:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Using R 4.1's new pipe operator:</span>
 <span class="fu">quantmod</span><span class="fu">::</span><span class="fu">getSymbols</span><span class="op">(</span><span class="st">"C"</span><span class="op">)</span> |&gt; <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co"># Or equally using the 'magrittr' pipe:</span>
 <span class="fu">quantmod</span><span class="fu">::</span><span class="fu">getSymbols</span><span class="op">(</span><span class="st">"C"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p>For reading external raw data into R, if the file uses a form of custom delimited format, the <code>fread()</code> function from the ‘data.table’ package on default settings is often successful.</p>
-<p>Alternatively, the ‘datapasta’ package allows data copied from website tables or in spreadsheets etc. to be pasted into R as a data frame.</p>
-<p>After importing data, please check that the date-time index is in an unambiguous format (ideally POSIXct), and that the price data is of type ‘numeric’ and not coerced to type ‘character’.</p>
+</div>
+<div id="reading-external-data-into-r" class="section level3">
+<h3 class="hasAnchor">
+<a href="#reading-external-data-into-r" class="anchor"></a>Reading external data into R</h3>
+<p>For reading data in the ‘json’ format, which is commonly returned by web APIs, the <code>fparse()</code> function from the ‘RcppSimdJson’ package is extremely performant. The function takes json strings as well as raw vectors directly. ‘RcppSimdJson’ is a dependency of ichimoku.</p>
+<p>If an external data file employs a custom delimited format, the ‘data.table’ package contains the <code>fread()</code> function, which is often successful on default settings. Otherwise, <code>read_delim_arrow()</code> from the ‘arrow’ package may provide an even more performant alternative.</p>
+<p>For csv files, <code>read_csv_arrow()</code> from the ‘arrow’ package can be a more performant choice than using <code>fread()</code> from ‘data.table’.</p>
+<p>The ‘arrow’ package also contains the <code>read_feather()</code> and <code>read_parquet()</code> functions for reading in Apache Arrow IPC and Parquet file formats as either a ‘data.frame’ or Arrow Table, either of which can be handled directly by <code><a href="../reference/ichimoku.html">ichimoku()</a></code>.</p>
+<p>Alternatively, the ‘datapasta’ package allows data copied from tables on webpages or in spreadsheets etc. to be pasted into R as a dataframe or tibble.</p>
 </div>
 <div id="data-validation" class="section level3">
 <h3 class="hasAnchor">
@@ -340,7 +356,7 @@
 </ol>
 <ul>
 <li>
-<em>If not found:</em> searches in row names of the data object if present. If the row names do not contain data that is convertible into POSIXct format, an error is returned. Note: ‘xts’ objects are always indexed by a valid time-stamp and ichimoku handles this automatically</li>
+<em>If not found:</em> searches in row names of the data object if present. If the row names do not contain data that is convertible into POSIXct format, an error is returned. Note: ‘xts’ objects are always indexed by a valid timestamp and ichimoku handles this automatically</li>
 </ul>
 <ol start="2" style="list-style-type: decimal">
 <li><p>Searches for HLC price data in columns with names containing ‘high’, ‘low’ and ‘close’ (not case-dependent) respectively</p></li>
@@ -357,22 +373,31 @@
 <li><p>The correct date-time index is in the rownames, or index of an ‘xts’ object, but there are also columns that contains the word ‘index’, ‘date’ or ‘time’. Please rename the columns that do not serve as the date-time index so that the correct date-time index can be detected</p></li>
 <li><p>There is more than one column that contains the word ‘index’, ‘date’ or ‘time’. Please either rename the columns that do not serve as the date-time index, or move the correct date-time column ahead of the other columns so that it is picked up first</p></li>
 <li><p>HLC price data is contained in headerless columns or in columns labelled, for example, ‘Op’, ‘Hi’, ‘Lo’, ‘Cl’. Please rename the columns ‘open’, ‘high’, ‘low’ and ‘close’ in such cases</p></li>
-<li><p>Imported price data is stored as type ‘character’ rather than ‘numeric’. Please convert the price data to ‘numeric’ in such cases</p></li>
 <li><p>There are NA values within the price data. This will affect the algorithm calculating the cloud lines in the window immediately following such NA values. Please check the data and manually correct NA values before invoking <code><a href="../reference/ichimoku.html">ichimoku()</a></code></p></li>
 </ul>
 </div>
-<div id="function-modifications-since-version-0-2" class="section level3">
+<div id="interface-changes-from-previous-versions" class="section level3">
 <h3 class="hasAnchor">
-<a href="#function-modifications-since-version-0-2" class="anchor"></a>Function modifications since version 0.2</h3>
+<a href="#interface-changes-from-previous-versions" class="anchor"></a>Interface changes from previous versions</h3>
+<div id="since-version-0-3" class="section level4">
+<h4 class="hasAnchor">
+<a href="#since-version-0-3" class="anchor"></a>Since version 0.3</h4>
+<ul>
+<li>The following functions are no longer exported: <code>maxOver()</code>, <code>minOver()</code>, <code>oanda_accounts()</code>.</li>
+</ul>
+</div>
+<div id="since-version-0-2" class="section level4">
+<h4 class="hasAnchor">
+<a href="#since-version-0-2" class="anchor"></a>Since version 0.2</h4>
 <ul>
 <li><p><code><a href="../reference/iplot.html">iplot()</a></code> now uses an R Shiny backend rather than plotly, as it is performant and scalable for large datasets and offers similar/enhanced functionality. To continue working with plotly, simply pass the ‘ggplot’ object created by plot() to <code>plotly::ggplotly()</code></p></li>
 <li><p>Argument ‘gaps’ to the plot functions is deprecated. As a convenience, the functionality has been moved to a <code><a href="../reference/gplot.html">gplot()</a></code> function which will remain in the package until at least version 0.4.</p></li>
 <li><p><code><a href="../reference/ichimoku.html">ichimoku()</a></code> validation changes mean it will now take a column named ‘index’, ‘date’ or ‘time’ in precedence to a row index.</p></li>
 </ul>
 </div>
-<div id="function-modifications-since-version-0-1" class="section level3">
-<h3 class="hasAnchor">
-<a href="#function-modifications-since-version-0-1" class="anchor"></a>Function modifications since version 0.1</h3>
+<div id="since-version-0-1" class="section level4">
+<h4 class="hasAnchor">
+<a href="#since-version-0-1" class="anchor"></a>Since version 0.1</h4>
 <ul>
 <li><p>‘ichimoku’ objects now inherit ‘xts’ and ‘zoo’ classes instead of ‘data.frame’. This means that columns extracted from ‘ichimoku’ objects are able to work seamlessly in packages expecting ‘xts’ indexed time series. Conversely for use with packages that only accept data frames then ‘ichimoku’ objects must first be wrapped in <code><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame()</a></code> or translated using the included <code><a href="../reference/xts_df.html">xts_df()</a></code> utility.</p></li>
 <li><p>For candle direction, the column has been renamed from ‘candle’ to ‘cd’ and is now stored as numeric values -1 for ‘down’, 0 for ‘flat’, and 1 for ‘up’, rather than as a factor</p></li>
@@ -382,24 +407,26 @@
 </ul>
 </div>
 </div>
+</div>
 <div id="dependencies" class="section level2">
 <h2 class="hasAnchor">
 <a href="#dependencies" class="anchor"></a>Dependencies</h2>
 <p>The dependency on other packages is designed to be minimised to the extent possible. ichimoku currently has the following package dependencies:</p>
 <ul>
-<li>Rcpp - allows the use of C++ code for fast rolling window calculations</li>
 <li>ggplot2 - the widely-used R graphics system for visualization</li>
-<li>curl - for interfacing with external APIs</li>
-<li>RcppSimdJson - for processing data retrieved from external APIs</li>
 <li>rlang - R language requirement arising from the use of ‘ggplot2’</li>
 <li>xts - ichimoku shares the ‘xts’ format for time series</li>
 <li>zoo - ‘xts’ is built on top of ‘zoo’</li>
+<li>curl - for interfacing with external APIs</li>
+<li>RcppSimdJson - for processing data retrieved from external APIs</li>
 </ul>
 <p>Optional:</p>
 <ul>
-<li>shiny - for interactive visualizations</li>
-<li>keyring - for storing external API credentials</li>
+<li>shiny, bslib - for interactive visualizations</li>
+<li>arrow - for archiving ichimoku objects as Apache Arrow files</li>
+<li>keyring - for saving API keys in the system credential store</li>
 </ul>
+<p>The ‘cpp11’ package provides the C++ interface for the fast window functions, but the headers used are ‘vendored’ within ichimoku to ensure stability (as is permitted by ‘cpp11’) so there is no ongoing dependency.</p>
 </div>
 <div id="further-resources" class="section level2">
 <h2 class="hasAnchor">

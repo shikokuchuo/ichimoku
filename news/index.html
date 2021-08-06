@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.5</span>
       </span>
     </div>
 
@@ -135,16 +135,26 @@
       <small>Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="ichimoku-0322" class="section level1">
-<h1 class="page-header" data-toc-text="0.3.2.2">
-<a href="#ichimoku-0322" class="anchor"></a>ichimoku 0.3.2.2<small> Unreleased </small>
+    <div id="ichimoku-035" class="section level1">
+<h1 class="page-header" data-toc-text="0.3.5">
+<a href="#ichimoku-035" class="anchor"></a>ichimoku 0.3.5<small> Unreleased </small>
 </h1>
 <ul>
+<li><p><strong>New features:</strong></p></li>
+<li><p>New <code><a href="../reference/ichimoku_write.html">ichimoku_write()</a></code> and <code><a href="../reference/ichimoku_read.html">ichimoku_read()</a></code> functions allow for archiving of ichimoku objects to files stored in the Apache Arrow IPC file format.</p></li>
+<li><p><code><a href="../reference/ichimoku.html">ichimoku()</a></code> gains a new S3 method for the <code>ArrowTabular</code> class for working with Arrow Tables.</p></li>
+<li><p><code><a href="../reference/oanda.html">oanda()</a></code> gains the capability to download over 5000 data periods in multiple (rate-limited) requests when both the ‘from’ and ‘to’ arguments are specified.</p></li>
 <li><p><strong>Updates:</strong></p></li>
 <li><p>Implemented caching of certain OANDA variables so they are retrieved once and then used throughout a session.</p></li>
-<li><p>Backends for the OANDA fxTrade API interface switched to ‘curl’ and ‘RcppSimdJson’ from ‘httr’ and ‘jsonlite’ for better performance. Package dependency changes: ‘curl’ already a dependency of ‘httr’ so not an issue, whilst ‘RcppSimdJson’ is a new package that is considered best in class.</p></li>
+<li><p><code><a href="../reference/iplot.html">iplot()</a></code> and <code><a href="../reference/oanda_studio.html">oanda_studio()</a></code> now use ‘bslib’ (a Shiny dependency) to enable theming of the entire UI rather than just the chart. Infotip candle direction symbols updated for greater clarity.</p></li>
+<li><p><code><a href="../reference/oanda.html">oanda()</a></code> arguments ‘from’ and ‘to’ can now take any date-time format convertible to POSIXct.</p></li>
 <li><p><code><a href="../reference/oanda_studio.html">oanda_studio()</a></code> subsets the plot window so as to always show a full cloud, consistent with the behaviour of <code><a href="../reference/oanda_chart.html">oanda_chart()</a></code>.</p></li>
 <li><p><code><a href="../reference/oanda_chart.html">oanda_chart()</a></code> and <code><a href="../reference/oanda_studio.html">oanda_studio()</a></code> add explicit support for the ‘periods’ argument passed to <code><a href="../reference/ichimoku.html">ichimoku()</a></code>.</p></li>
+<li><p><code><a href="../reference/oanda_chart.html">oanda_chart()</a></code> now passes on additional parameters to <code><a href="../reference/autoplot.html">autoplot()</a></code>.</p></li>
+<li><p><code><a href="../reference/ichimoku.html">ichimoku()</a></code> now enforces data types on the price data for higher certainty of success, and has more robust handling of matrices and ‘data.frame’ compatible formats such as ‘tibble’.</p></li>
+<li><p>Package dependencies switched to ‘curl’ and ‘RcppSimdJson’ from ‘httr’ and ‘jsonlite’, providing performance gains in the OANDA fxTrade API interface.</p></li>
+<li><p>ichimoku now employs a vendored version of ‘cpp11’ 0.3.1 headers which allows for enhanced stability and faster package compilation. Removed dependency on the ‘Rcpp’ package.</p></li>
+<li><p>The following functions are no longer exported to keep the package tidy: <code>maxOver()</code>, <code>minOver()</code>, <code>oanda_accounts()</code>.</p></li>
 <li><p>Miscellaneous performance optimisations.</p></li>
 <li><p>Documentation updates.</p></li>
 </ul>
@@ -191,7 +201,7 @@
 <li><p><strong>Updates:</strong></p></li>
 <li><p>Ichimoku object specification updated - this is breaking but can be fixed by re-running <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on previous objects.</p></li>
 <li><p>Ichimoku objects now inherit ‘xts’ and ‘zoo’ classes for better integration with other econometrics and analytics packages.</p></li>
-<li><p>Package now depends on ‘Rcpp’ and requires compilation - added more performant rolling window functions <code><a href="../reference/minOver.html">minOver()</a></code> and <code><a href="../reference/maxOver.html">maxOver()</a></code> using customised C++ algorithm.</p></li>
+<li><p>Package now depends on ‘Rcpp’ and requires compilation - added more performant rolling window functions <code>minOver()</code> and <code>maxOver()</code> using customised C++ algorithm.</p></li>
 <li><p>‘RcppRoll’ and ‘timeDate’ package dependencies retired.</p></li>
 <li><p><code>sample_ohlc_data</code> updated to better demonstrate new features.</p></li>
 <li><p>Updated with CRAN release status.</p></li>

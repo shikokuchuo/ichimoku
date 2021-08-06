@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.5</span>
       </span>
     </div>
 
@@ -120,7 +120,7 @@
 <div id="setting-your-oanda-api-key" class="section level2">
 <h2 class="hasAnchor">
 <a href="#setting-your-oanda-api-key" class="anchor"></a>Setting your OANDA API Key</h2>
-<p>If the ‘keyring’ package is available on your machine, the OANDA API key (personal access token) can be set once and stored in your system keyring by using <code><a href="../reference/oanda_set_key.html">oanda_set_key()</a></code>. This will enable it to be retrieved automatically for all subsequent sessions.</p>
+<p>If the ‘keyring’ package is available on your machine, the OANDA API key (personal access token) can be set once and saved in your system credential store by using <code><a href="../reference/oanda_set_key.html">oanda_set_key()</a></code>. This will enable it to be retrieved automatically for all subsequent sessions.</p>
 <p>If an access token is revoked and re-generated, please remember to set the API key again through the <code><a href="../reference/oanda_set_key.html">oanda_set_key()</a></code> function.</p>
 </div>
 <div id="the-oanda-functions" class="section level2">
@@ -139,7 +139,7 @@
 <li>
 <code>granularity</code> [default “D”] the granularity of the price data to fetch, one of “M”, “W”, “D”, “H12”, “H8”, “H6”, “H4”, “H3”, “H2”, “H1”, “M30”, “M15”, “M10”, “M5”, “M4”, “M2”, “M1”, “S30”, “S15”, “S10”, “S5”</li>
 <li>
-<code>count</code> (optional) the number of periods to return. The API supports a maximum of 5000 for each individual request, and defaults to 500 if not specified. ‘count’ should not be specified if both ‘from’ and ‘to’ arguments are provided, as the time range combined with ‘granularity’ will determine the number of periods to return</li>
+<code>count</code> (optional) the number of periods to return. The API supports a maximum of 5000 for each individual request, and defaults to 500 if not specified. If both ‘from’ and ‘to’ are specified, ‘count’ is ignored, as the time range combined with ‘granularity’ will determine the number of periods to return</li>
 <li>
 <code>from</code> (optional) the start of the time range for which to fetch price data, for example “2020-02-01”</li>
 <li>
@@ -151,6 +151,7 @@
 <li>
 <code>apikey</code> (optional) string containing the OANDA fxTrade API key (personal access token). This argument is designed for specifying a function that returns such a string rather than the string itself, which could be potentially unsecure. This allows other packages that provide secure storage of secrets to be used if preferred over ‘keyring’</li>
 </ul>
+<p>Note: if both <code>from</code> and <code>to</code> are specified and the request would result in over 5000 periods being returned, the function automatically prompts the user if multiple requests should be submitted, with a default choice of “no”. If “y” or “yes”, the data will be downloaded with rate limiting in place as per API best practices, and merged together into a single dataframe.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://shikokuchuo.net/ichimoku/">ichimoku</a></span><span class="op">)</span>
 <span class="fu"><a href="../reference/oanda.html">oanda</a></span><span class="op">(</span><span class="st">"USD_JPY"</span>, count <span class="op">=</span> <span class="fl">3</span>, from <span class="op">=</span> <span class="st">"2010-11-01"</span>, price <span class="op">=</span> <span class="st">"B"</span><span class="op">)</span></code></pre></div>
@@ -168,7 +169,6 @@
 <li><p>Incorporates automatic adjustment of the timestamps to end of period, as is customary for financial data. This means that, for example, today’s pricing data (incomplete trading period) will have today’s date as would be expected. In contrast, the raw data from the API has a timestamp of the start of the period</p></li>
 <li><p>The API data sometimes includes data for non-trading days with very low volumes. This is more common for older data and less so with more recent data. These may represent OTC trades that occurred over the OANDA platform, but nevertheless do not reflect market rates. These are automatically excluded from the data returned as they would otherwise produce spurious results if used with <code><a href="../reference/ichimoku.html">ichimoku()</a></code></p></li>
 </ul>
-<p>For diagnostic purposes only, the parameter <code>.validate = FALSE</code> may be set to view the original data retrieved from the API without the automatic validation adjustments above. This parameter should not otherwise be set.</p>
 </div>
 <div id="oanda_stream" class="section level3">
 <h3 class="hasAnchor">
@@ -197,7 +197,7 @@
 <li>
 <code>refresh</code> set the refresh rate of the chart in seconds, with a minimum of 1</li>
 <li>
-<code>...</code> additional parameters passed onto <code><a href="../reference/ichimoku.html">ichimoku()</a></code> for calculating the ichimoku cloud</li>
+<code>...</code> additional parameters passed onto <code><a href="../reference/ichimoku.html">ichimoku()</a></code> for calculating the ichimoku cloud or <code><a href="../reference/autoplot.html">autoplot()</a></code> to set chart parameters</li>
 <li>
 <code>periods</code> [default c(9L, 26L, 52L)] a vector defining the length of periods used for the cloud. This parameter shoud not normally be modified as using other values would be invalid in the context of traditional Ichimoku analysis</li>
 </ul>
@@ -359,7 +359,7 @@
 <p>The package retrieves the following once only during a single R session (the first time they are used) and caches the variables for further use througout the session:</p>
 <ul>
 <li>OANDA fxTrade API key</li>
-<li>OANDA fxTrade accounts associated with an fxTrade API key</li>
+<li>OANDA fxTrade account associated with an fxTrade API key</li>
 <li>OANDA list of available instruments</li>
 </ul>
 <p>If for any reason these become invalid or outdated, please restart your R session to enable these variables to be refreshed.</p>

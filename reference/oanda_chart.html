@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.5</span>
       </span>
     </div>
 
@@ -207,7 +207,8 @@ interactively if not specified.</p></td>
     <tr>
       <th>...</th>
       <td><p>additional arguments passed along to <code><a href='ichimoku.html'>ichimoku</a></code> for
-calculating the ichimoku cloud.</p></td>
+calculating the ichimoku cloud or <code><a href='autoplot.html'>autoplot</a></code> to set chart
+parameters.</p></td>
     </tr>
     <tr>
       <th>periods</th>
@@ -222,7 +223,7 @@ Ichimoku analysis.</p></td>
 
     <p>Does not return a value, however a plot of the ichimoku chart for the
     price data requested is output to the graphical device at each refresh
-    interval as a side effect. Note that returned times are represented in UTC.</p>
+    interval as a side effect. Note that all times are represented in UTC.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>This function polls the OANDA fxTrade API for the latest live prices

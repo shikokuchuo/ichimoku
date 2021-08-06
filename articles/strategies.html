@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.5</span>
       </span>
     </div>
 
@@ -110,7 +110,8 @@
 <p>First and foremost is visually, and the functions for visualization are described in the <a href="reference.html">reference vignette</a>.</p>
 <p>However if a more methodical approach is required, for instance to test hypotheses about the price action of a particular security under certain scenarios, it is necessary to perform analysis on the data directly. Here, complications of the ichimoku system can become apparent. The Chikou span in particular poses a challenge as the position of this indicator needs to be mapped in relation to the chart elements 26 periods previously, however this then affects trading decisions at the present point in time.</p>
 <p>The ‘strategy layer’ of the ichimoku package aims to prepare the data in a standardized format for easy analysis in R packages such as ‘PerformanceAnalytics’. Short strategy summaries are generated automatically, but are designed to serve as a quick reference rather than a replacement for a full backtest.</p>
-<p>The <code><a href="../reference/autostrat.html">autostrat()</a></code> function is used to further facilitate idea and strategy generation, and leverages the computational abilities of R to simultaneously test all valid indicator combinations. Whilst not all strategies returned may make intuitive sense, they will at a minimum serve to provide another benchmark. Again, the results generated are meant to be fed through a full backtest, with all the implications analysed. Past results do not imply future performance, and the results obtained should not be relied upon on the basis of the results alone.</p>
+<p>The <code><a href="../reference/autostrat.html">autostrat()</a></code> function is used to further facilitate idea and strategy generation, and leverages the computational abilities of R to simultaneously test all valid indicator combinations. Whilst not all strategies returned may make intuitive sense, they will at a minimum serve to provide another benchmark. To reiterate, the results generated should be fed through a full backtest, with all the implications of that analysed.</p>
+<p>Past results do not imply future performance, and the results obtained should not be relied upon on the basis of the results alone.</p>
 </div>
 <div id="working-with-strategies" class="section level2">
 <h2 class="hasAnchor">
@@ -131,7 +132,7 @@
 </h3>
 <p>To test a simple strategy with an indicator condition of the form ‘long (or short) while c1 &gt; c2’.</p>
 <p>Here ‘c1’ and ‘c2’ are the quoted column names of the ichimoku object representing either candlestick values e.g. ‘close’ or cloud values e.g. ‘tenkan’.</p>
-<p>Note: the indicator condition is c1 &gt; c2 even for short trades. Hence please take care for example when inverting ‘long while close &gt; tenkan’ to ‘short while close &lt; tenkan’, this should be formulated as ‘short while tenkan &gt; close’.</p>
+<p>Note: the indicator condition remains of the form c1 &gt; c2 even for short trades. Hence please take care when inverting, for example, ‘long while close &gt; tenkan’ to ‘short while close &lt; tenkan’, this should be formulated as ‘short while tenkan &gt; close’.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">strat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/strat.html">strat</a></span><span class="op">(</span><span class="va">cloud</span>, c1 <span class="op">=</span> <span class="st">"close"</span>, c2 <span class="op">=</span> <span class="st">"tenkan"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">strat</span><span class="op">[</span><span class="fl">100</span><span class="op">:</span><span class="fl">105</span><span class="op">]</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
@@ -156,7 +157,7 @@
 <span class="co">#&gt; 2020-04-29 23:00:00  0.0072727593  0.007299270  0.007299270</span>
 <span class="co">#&gt; 2020-04-30 23:00:00 -0.0008054773 -0.000805153 -0.000805153</span>
 <span class="co">#&gt; 2020-05-02 23:00:00 -0.0016129036 -0.001611604 -0.001611604</span></code></pre></div>
-<p>The use of strat() returns an augmented ichimoku object. The printout above of a slice of the object (rows 100 to 105) shows that the following columns are appended:</p>
+<p>The use of <code><a href="../reference/strat.html">strat()</a></code> returns an augmented ichimoku object. The printout above of a slice of the object (rows 100 to 105) shows that the following columns are appended:</p>
 <ul>
 <li>
 <strong>cond</strong>: ‘1’ if the indicator condition is met at the close of the the time period (note: if the indicator condition involves chikou span, the comparison will be of past periods)</li>
@@ -173,7 +174,18 @@
 <li>
 <strong>sret</strong>: the discrete returns for the strategy. It is simply ret * posn, i.e. the returns where a position is held</li>
 </ul>
-<p>Note: the assumption applies to all strategies that confirmation of whether a condition is satisfied is received at the ‘close’ of a particular period, and a transaction is initiated at the immediately following ‘open’. It is assumed that all transactions are conducted at opening prices. All events are aligned to their correct time periods, which are taken to be from the ‘open’ to the ‘close’ inclusive of that period. Hence ‘cond’ refers to if the condition is satisfied at the ‘close’ of the period, ‘posn’ also refers to whether a position is held at the ‘close’ of the period, and ‘txn’ refers to if there has been a transaction during that period (in this case occurring at the ‘open’).</p>
+<p>Note: the following assumptions apply to all strategies:</p>
+<ul>
+<li>confirmation of whether a condition is satisfied is received at the ‘close’ of a particular period</li>
+<li>a transaction is initiated at the immediately following ‘open’</li>
+<li>all transactions are conducted at opening prices</li>
+</ul>
+<p>All events are aligned to their correct time periods, which are taken to be from the ‘open’ to the ‘close’ inclusive of that period:</p>
+<ul>
+<li>‘cond’ refers to if the condition is satisfied at the ‘close’ of the period</li>
+<li>‘posn’ also refers to whether a position is held at the ‘close’ of the period</li>
+<li>‘txn’ refers to if there has been a transaction during that period (in this case occurring at the ‘open’)</li>
+</ul>
 </div>
 <div id="b--complex-strategies-using-strat" class="section level3">
 <h3 class="hasAnchor">

@@ -25,6 +25,9 @@
     <loc>https://shikokuchuo.net/ichimoku/reference/drawInfotip.html</loc>
   </url>
   <url>
+    <loc>https://shikokuchuo.net/ichimoku/reference/getPrices.html</loc>
+  </url>
+  <url>
     <loc>https://shikokuchuo.net/ichimoku/reference/gplot.html</loc>
   </url>
   <url>
@@ -40,6 +43,12 @@
     <loc>https://shikokuchuo.net/ichimoku/reference/ichimoku.html</loc>
   </url>
   <url>
+    <loc>https://shikokuchuo.net/ichimoku/reference/ichimoku_read.html</loc>
+  </url>
+  <url>
+    <loc>https://shikokuchuo.net/ichimoku/reference/ichimoku_write.html</loc>
+  </url>
+  <url>
     <loc>https://shikokuchuo.net/ichimoku/reference/iplot.html</loc>
   </url>
   <url>
@@ -52,19 +61,13 @@
     <loc>https://shikokuchuo.net/ichimoku/reference/matrix_df.html</loc>
   </url>
   <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/maxOver.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/minOver.html</loc>
-  </url>
-  <url>
     <loc>https://shikokuchuo.net/ichimoku/reference/mlgrid.html</loc>
   </url>
   <url>
     <loc>https://shikokuchuo.net/ichimoku/reference/oanda.html</loc>
   </url>
   <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/oanda_accounts.html</loc>
+    <loc>https://shikokuchuo.net/ichimoku/reference/oandaAccount.html</loc>
   </url>
   <url>
     <loc>https://shikokuchuo.net/ichimoku/reference/oanda_chart.html</loc>
