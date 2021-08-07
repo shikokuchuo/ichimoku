@@ -73,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.51</span>
       </span>
     </div>
 
@@ -173,10 +173,10 @@ system (SubTreeFileSystem).</p></td>
 
 <span class='va'>filename</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span><span class='op'>(</span><span class='op'>)</span>
 <span class='fu'>ichimoku_write</span><span class='op'>(</span><span class='va'>cloud</span>, <span class='va'>filename</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>ichimoku object 'cloud' written to: /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpagW4AR/file16604d7f8881</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>ichimoku object 'cloud' written to: /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp6IM8Fi/file17877f39ac60</span></div><div class='input'>
 <span class='va'>restored</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ichimoku_read.html'>ichimoku_read</a></span><span class='op'>(</span><span class='va'>filename</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span><span class='op'>(</span><span class='va'>cloud</span>, <span class='va'>restored</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "Attributes: &lt; Component “index”: Attributes: &lt; Component “tzone”: 1 string mismatch &gt; &gt;"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/unlink.html'>unlink</a></span><span class='op'>(</span><span class='va'>filename</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span><span class='op'>(</span><span class='va'>cloud</span>, <span class='va'>restored</span>, check.attributes <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/unlink.html'>unlink</a></span><span class='op'>(</span><span class='va'>filename</span><span class='op'>)</span>
 
 </div></pre>
   </div>

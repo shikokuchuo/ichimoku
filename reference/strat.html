@@ -76,7 +76,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.51</span>
       </span>
     </div>
 
@@ -152,12 +152,12 @@
     <pre class="usage"><span class='fu'>strat</span><span class='op'>(</span>
   <span class='va'>x</span>,
   c1 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"close"</span>, <span class='st'>"chikou"</span>, <span class='st'>"open"</span>, <span class='st'>"high"</span>, <span class='st'>"low"</span>, <span class='st'>"tenkan"</span>, <span class='st'>"kijun"</span>, <span class='st'>"senkouA"</span>,
-    <span class='st'>"senkouB"</span>, <span class='st'>"cloudTop"</span>, <span class='st'>"cloudBase"</span><span class='op'>)</span>,
-  c2 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"tenkan"</span>, <span class='st'>"kijun"</span>, <span class='st'>"senkouA"</span>, <span class='st'>"senkouB"</span>, <span class='st'>"cloudTop"</span>, <span class='st'>"cloudBase"</span>, <span class='st'>"chikou"</span>,
+    <span class='st'>"senkouB"</span>, <span class='st'>"cloudT"</span>, <span class='st'>"cloudB"</span><span class='op'>)</span>,
+  c2 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"tenkan"</span>, <span class='st'>"kijun"</span>, <span class='st'>"senkouA"</span>, <span class='st'>"senkouB"</span>, <span class='st'>"cloudT"</span>, <span class='st'>"cloudB"</span>, <span class='st'>"chikou"</span>,
     <span class='st'>"close"</span>, <span class='st'>"open"</span>, <span class='st'>"high"</span>, <span class='st'>"low"</span><span class='op'>)</span>,
   c3 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"close"</span>, <span class='st'>"chikou"</span>, <span class='st'>"open"</span>, <span class='st'>"high"</span>, <span class='st'>"low"</span>, <span class='st'>"tenkan"</span>, <span class='st'>"kijun"</span>, <span class='st'>"senkouA"</span>,
-    <span class='st'>"senkouB"</span>, <span class='st'>"cloudTop"</span>, <span class='st'>"cloudBase"</span><span class='op'>)</span>,
-  c4 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"tenkan"</span>, <span class='st'>"kijun"</span>, <span class='st'>"senkouA"</span>, <span class='st'>"senkouB"</span>, <span class='st'>"cloudTop"</span>, <span class='st'>"cloudBase"</span>, <span class='st'>"chikou"</span>,
+    <span class='st'>"senkouB"</span>, <span class='st'>"cloudT"</span>, <span class='st'>"cloudB"</span><span class='op'>)</span>,
+  c4 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"tenkan"</span>, <span class='st'>"kijun"</span>, <span class='st'>"senkouA"</span>, <span class='st'>"senkouB"</span>, <span class='st'>"cloudT"</span>, <span class='st'>"cloudB"</span>, <span class='st'>"chikou"</span>,
     <span class='st'>"close"</span>, <span class='st'>"open"</span>, <span class='st'>"high"</span>, <span class='st'>"low"</span><span class='op'>)</span>,
   dir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"long"</span>, <span class='st'>"short"</span><span class='op'>)</span>,
   type <span class='op'>=</span> <span class='fl'>2</span>
@@ -248,25 +248,25 @@ asymmetric strategy 'c1 &gt; c2 x c3 &gt; c4'.</p></td>
     <pre class="examples"><div class='input'><span class='va'>cloud</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ichimoku.html'>ichimoku</a></span><span class='op'>(</span><span class='va'>sample_ohlc_data</span>, ticker <span class='op'>=</span> <span class='st'>"TKR"</span><span class='op'>)</span>
 <span class='va'>strat</span> <span class='op'>&lt;-</span> <span class='fu'>strat</span><span class='op'>(</span><span class='va'>cloud</span>, c1 <span class='op'>=</span> <span class='st'>"close"</span>, c2 <span class='op'>=</span> <span class='st'>"tenkan"</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>strat</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                        [,1]               
-#&gt; Strategy               "close &gt; tenkan"   
-#&gt; ---------------------  "----------"       
-#&gt; Strategy cuml return % 5.01               
-#&gt; Per period mean ret %  0.0218             
-#&gt; Periods in market      119                
-#&gt; Total trades           18                 
-#&gt; Average trade length   6.61               
-#&gt; Trade success %        27.78              
-#&gt; Worst trade ret %      -2.54              
-#&gt; ---------------------  "----------"       
-#&gt; Benchmark cuml ret %   3.38               
-#&gt; Per period mean ret %  0.0148             
-#&gt; Periods in market      224                
-#&gt; ---------------------  "----------"       
-#&gt; Direction              "long"             
-#&gt; Start                  2020-01-13         
-#&gt; End                    2020-09-28 23:00:00
-#&gt; Ticker                 "TKR"              </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>strat</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;                        [,1]            
+#&gt; Strategy               "close &gt; tenkan"
+#&gt; ---------------------  "----------"    
+#&gt; Strategy cuml return % 8.57            
+#&gt; Per period mean ret %  0.0334          
+#&gt; Periods in market      138             
+#&gt; Total trades           20              
+#&gt; Average trade length   6.9             
+#&gt; Trade success %        35              
+#&gt; Worst trade ret %      -2.54           
+#&gt; ---------------------  "----------"    
+#&gt; Benchmark cuml ret %   9               
+#&gt; Per period mean ret %  0.035           
+#&gt; Periods in market      246             
+#&gt; ---------------------  "----------"    
+#&gt; Direction              "long"          
+#&gt; Start                  2020-01-13      
+#&gt; End                    2020-10-29      
+#&gt; Ticker                 "TKR"           </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>strat</span><span class='op'>)</span>
 </div><div class='img'><img src='strat-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>

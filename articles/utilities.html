@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.51</span>
       </span>
     </div>
 
@@ -187,20 +187,20 @@
 <code class="sourceCode R"><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">sample_ohlc_data</span><span class="op">)</span>
 <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/xts_df.html">xts_df</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>
-<span class="co">#&gt; 'data.frame':    260 obs. of  13 variables:</span>
-<span class="co">#&gt;  $ index    : POSIXct, format: "2020-01-02 00:00:00" "2020-01-03 00:00:00" ...</span>
-<span class="co">#&gt;  $ open     : num  123 123 123 123 124 ...</span>
-<span class="co">#&gt;  $ high     : num  123 123 123 124 125 ...</span>
-<span class="co">#&gt;  $ low      : num  122 123 122 123 124 ...</span>
-<span class="co">#&gt;  $ close    : num  123 123 123 124 125 ...</span>
-<span class="co">#&gt;  $ cd       : num  -1 1 1 1 1 1 -1 0 -1 -1 ...</span>
-<span class="co">#&gt;  $ tenkan   : num  NA NA NA NA NA ...</span>
-<span class="co">#&gt;  $ kijun    : num  NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;  $ senkouA  : num  NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;  $ senkouB  : num  NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;  $ chikou   : num  123 123 124 124 122 ...</span>
-<span class="co">#&gt;  $ cloudTop : num  NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;  $ cloudBase: num  NA NA NA NA NA NA NA NA NA NA ...</span></code></pre></div>
+<span class="co">#&gt; 'data.frame':    281 obs. of  13 variables:</span>
+<span class="co">#&gt;  $ index  : POSIXct, format: "2020-01-02 00:00:00" "2020-01-03 00:00:00" ...</span>
+<span class="co">#&gt;  $ open   : num  123 123 123 123 124 ...</span>
+<span class="co">#&gt;  $ high   : num  123 123 123 124 125 ...</span>
+<span class="co">#&gt;  $ low    : num  122 123 122 123 124 ...</span>
+<span class="co">#&gt;  $ close  : num  123 123 123 124 125 ...</span>
+<span class="co">#&gt;  $ cd     : num  -1 1 1 1 1 1 -1 0 -1 -1 ...</span>
+<span class="co">#&gt;  $ tenkan : num  NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ kijun  : num  NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ senkouA: num  NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ senkouB: num  NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ chikou : num  123 123 123 124 124 ...</span>
+<span class="co">#&gt;  $ cloudT : num  NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ cloudB : num  NA NA NA NA NA NA NA NA NA NA ...</span></code></pre></div>
 </div>
 <div id="matrix_df" class="section level4">
 <h4 class="hasAnchor">
@@ -216,21 +216,21 @@
 <span class="va">mcloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span>
 <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/matrix_df.html">matrix_df</a></span><span class="op">(</span><span class="va">mcloud</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>
-<span class="co">#&gt; 'data.frame':    260 obs. of  12 variables:</span>
-<span class="co">#&gt;  $ open     : num  123 123 123 123 124 ...</span>
-<span class="co">#&gt;  $ high     : num  123 123 123 124 125 ...</span>
-<span class="co">#&gt;  $ low      : num  122 123 122 123 124 ...</span>
-<span class="co">#&gt;  $ close    : num  123 123 123 124 125 ...</span>
-<span class="co">#&gt;  $ cd       : num  -1 1 1 1 1 1 -1 0 -1 -1 ...</span>
-<span class="co">#&gt;  $ tenkan   : num  NA NA NA NA NA ...</span>
-<span class="co">#&gt;  $ kijun    : num  NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;  $ senkouA  : num  NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;  $ senkouB  : num  NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;  $ chikou   : num  123 123 124 124 122 ...</span>
-<span class="co">#&gt;  $ cloudTop : num  NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;  $ cloudBase: num  NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt; 'data.frame':    281 obs. of  12 variables:</span>
+<span class="co">#&gt;  $ open   : num  123 123 123 123 124 ...</span>
+<span class="co">#&gt;  $ high   : num  123 123 123 124 125 ...</span>
+<span class="co">#&gt;  $ low    : num  122 123 122 123 124 ...</span>
+<span class="co">#&gt;  $ close  : num  123 123 123 124 125 ...</span>
+<span class="co">#&gt;  $ cd     : num  -1 1 1 1 1 1 -1 0 -1 -1 ...</span>
+<span class="co">#&gt;  $ tenkan : num  NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ kijun  : num  NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ senkouA: num  NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ senkouB: num  NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ chikou : num  123 123 123 124 124 ...</span>
+<span class="co">#&gt;  $ cloudT : num  NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ cloudB : num  NA NA NA NA NA NA NA NA NA NA ...</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/row.names.html">row.names</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt;  chr [1:260] "2020-01-02 00:00:00" "2020-01-03 00:00:00" ...</span></code></pre></div>
+<span class="co">#&gt;  chr [1:281] "2020-01-02 00:00:00" "2020-01-03 00:00:00" ...</span></code></pre></div>
 </div>
 </div>
 <div id="dataframe-manipulation-functions" class="section level3">
@@ -349,11 +349,10 @@
 </div>
 </div>
 </div>
-<div id="further-resources" class="section level2">
+<div id="references" class="section level2">
 <h2 class="hasAnchor">
-<a href="#further-resources" class="anchor"></a>Further Resources</h2>
-<p>Package website: <a href="https://shikokuchuo.net/ichimoku/" class="uri">https://shikokuchuo.net/ichimoku/</a></p>
-<p>The most recent version of the package may be found at <a href="https://github.com/shikokuchuo/ichimoku/" class="uri">https://github.com/shikokuchuo/ichimoku/</a></p>
+<a href="#references" class="anchor"></a>References</h2>
+<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 0.3.51. <a href="https://shikokuchuo.net/ichimoku/" class="uri">https://shikokuchuo.net/ichimoku/</a> CRAN page: <a href="https://CRAN.R-project.org/package=ichimoku" class="uri">https://CRAN.R-project.org/package=ichimoku</a></p>
 <hr>
 </div>
   </div>

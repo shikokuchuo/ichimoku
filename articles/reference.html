@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.51</span>
       </span>
     </div>
 
@@ -106,13 +106,13 @@
 <a href="#ichimoku-kinko-hyo" class="anchor"></a>Ichimoku Kinko Hyo</h2>
 <p>The system consists of the following chart lines added to a candlestick chart:</p>
 <ol style="list-style-type: decimal">
-<li><p><strong>Tenkan-sen</strong>: [conversion line] the mid-point of the highest high and lowest low for the past 9 periods</p></li>
-<li><p><strong>Kijun-sen</strong>: [base line] the mid-point of the highest high and lowest low for the past 26 periods</p></li>
-<li><p><strong>Senkou span A</strong>: [leading span A] the mid-point of Tenkan-sen and Kijun-sen plotted ahead 26 periods</p></li>
-<li><p><strong>Senkou span B</strong>: [leading span B] the mid-point of the highest high and lowest low for the past 52 periods, plotted ahead 26 periods</p></li>
-<li><p><strong>Chikou span</strong>: [lagging span] the current closing price plotted 26 periods behind</p></li>
+<li><p>転換線 <strong>Tenkan-sen</strong> [conversion line]: the mid-point of the highest high and lowest low for the past 9 periods <em>(including the current period)</em></p></li>
+<li><p>基準線 <strong>Kijun-sen</strong> [base line]: the mid-point of the highest high and lowest low for the past 26 periods <em>(including the current period)</em></p></li>
+<li><p>先行スパン1 <strong>Senkou span A</strong> [leading span A]: the mid-point of Tenkan-sen and Kijun-sen plotted ahead 26 periods <em>(including the current period)</em></p></li>
+<li><p>先行スパン2 <strong>Senkou span B</strong> [leading span B]: the mid-point of the highest high and lowest low for the past 52 periods <em>(including the current period)</em>, plotted ahead 26 periods <em>(including the current period)</em></p></li>
+<li><p>遅行スパン <strong>Chikou span</strong> [lagging span]: the current period closing price plotted behind 26 periods <em>(including the current period)</em></p></li>
 </ol>
-<p>The <strong>kumo</strong> [cloud] is the area between Senkou span A and Senkou span B (usually shaded on a chart).</p>
+<p>The 雲 <strong>kumo</strong> [cloud] is the area bounded by Senkou span A and Senkou span B (usually shaded on a chart).</p>
 <div id="interpretation" class="section level3">
 <h3 class="hasAnchor">
 <a href="#interpretation" class="anchor"></a>Interpretation</h3>
@@ -174,57 +174,82 @@
 <li>
 <code>...</code> additional arguments, for instance ‘holidays’, passed along to <code><a href="../reference/tradingDays.html">tradingDays()</a></code> for calculating the future cloud on daily data</li>
 </ul>
-<p>The returned object has the following specification:</p>
+<p>The returned ichimoku object has the following specification:</p>
 <ul>
-<li>Index
+<li>Index:
 <ul>
-<li>date-time index of class ‘POSIXct’</li>
+<li>
+<code>index(object)</code> - date-time index [POSIXct]</li>
 </ul>
 </li>
-<li>Numeric matrix of 12 columns:
+<li>Columns [numeric]:
 <ul>
-<li>open, high, low, close (candlestick values)</li>
-<li>cd (candle direction -1 = down, 0 = flat, 1 = up)</li>
-<li>tenkan, kijun, senkouA, senkouB, chikou (ichimoku cloud values)</li>
-<li>cloudTop, cloudBase (note: these are simply the respective max and min of SenkouA and SenkouB at each point in time)</li>
+<li>
+<code>object$open</code> - opening price</li>
+<li>
+<code>$high</code> - high price</li>
+<li>
+<code>$low</code> - low price</li>
+<li>
+<code>$close</code> - closing price</li>
+<li>
+<code>$cd</code> - candle direction (-1 = down, 0 = flat, 1 = up)</li>
+<li>
+<code>$tenkan</code> - Tenkan-sen</li>
+<li>
+<code>$kijun</code> - Kijun-sen</li>
+<li>
+<code>$senkouA</code> - Senkou span A</li>
+<li>
+<code>$senkouB</code> - Senkou span B</li>
+<li>
+<code>$chikou</code> - Chikou span</li>
+<li>
+<code>$cloudT</code> - cloud Top (max of senkouA, senkouB)</li>
+<li>
+<code>$cloudB</code> - cloud (min of senkouA, senkouB)</li>
 </ul>
 </li>
 <li>Attributes:
 <ul>
-<li>periods (vector of periods used for calculating the cloud values)</li>
-<li>periodicity (periodicity of the data in seconds)</li>
-<li>ticker (identifier set by default to the input object name or overridden by specifying the ‘ticker’ argument to <code><a href="../reference/ichimoku.html">ichimoku()</a></code>)</li>
+<li>
+<code>attributes(object)$periods</code> - parameters used to calculate the cloud [integer vector of length 3]</li>
+<li>
+<code>$periodicity</code> - periodicity of the data in seconds [numeric]</li>
+<li>
+<code>$ticker</code> - instrument identifier [character]</li>
 </ul>
 </li>
 </ul>
+<p>The ticker is set by default to the input object name or can be overridden by specifying the ‘ticker’ argument to <code><a href="../reference/ichimoku.html">ichimoku()</a></code>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">[</span><span class="fl">100</span><span class="op">:</span><span class="fl">110</span>,<span class="op">]</span>, plot <span class="op">=</span> <span class="cn">FALSE</span>, digits <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
 <span class="co">#&gt;                      open  high   low close cd tenkan kijun senkouA senkouB</span>
-<span class="co">#&gt; 2020-04-26 23:00:00 122.7 122.7 121.8 122.4 -1  120.5 123.3   125.6   124.8</span>
-<span class="co">#&gt; 2020-04-27 23:00:00 122.4 122.6 121.1 121.9 -1  120.5 123.3   125.7   124.8</span>
-<span class="co">#&gt; 2020-04-28 23:00:00 121.9 123.7 121.7 123.3  1  120.8 123.2   125.7   124.8</span>
-<span class="co">#&gt; 2020-04-29 23:00:00 123.3 124.0 123.0 124.0  1  121.0 123.2   125.7   124.8</span>
-<span class="co">#&gt; 2020-04-30 23:00:00 124.2 124.3 124.0 124.1 -1  121.4 123.1   125.7   124.8</span>
-<span class="co">#&gt; 2020-05-02 23:00:00 124.1 124.1 123.4 123.9 -1  122.2 123.1   126.0   124.8</span>
-<span class="co">#&gt; 2020-05-03 23:00:00 123.9 124.7 123.7 124.5  1  122.9 123.1   126.5   124.8</span>
-<span class="co">#&gt; 2020-05-04 23:00:00 124.5 124.7 123.9 124.2 -1  122.9 123.0   126.6   124.8</span>
-<span class="co">#&gt; 2020-05-05 23:00:00 124.2 125.2 124.0 124.7  1  123.2 123.0   126.2   124.8</span>
-<span class="co">#&gt; 2020-05-06 23:00:00 124.7 129.8 124.7 129.6  1  125.5 123.9   126.1   124.8</span>
-<span class="co">#&gt; 2020-05-07 23:00:00 129.9 130.6 129.9 130.2  1  126.2 124.3   125.7   124.8</span>
-<span class="co">#&gt;                     chikou cloudTop cloudBase</span>
-<span class="co">#&gt; 2020-04-26 23:00:00  135.6    125.6     124.8</span>
-<span class="co">#&gt; 2020-04-27 23:00:00  134.5    125.7     124.8</span>
-<span class="co">#&gt; 2020-04-28 23:00:00  134.3    125.7     124.8</span>
-<span class="co">#&gt; 2020-04-29 23:00:00  135.9    125.7     124.8</span>
-<span class="co">#&gt; 2020-04-30 23:00:00  135.2    125.7     124.8</span>
-<span class="co">#&gt; 2020-05-02 23:00:00  135.7    126.0     124.8</span>
-<span class="co">#&gt; 2020-05-03 23:00:00  135.4    126.5     124.8</span>
-<span class="co">#&gt; 2020-05-04 23:00:00  135.7    126.6     124.8</span>
-<span class="co">#&gt; 2020-05-05 23:00:00  135.6    126.2     124.8</span>
-<span class="co">#&gt; 2020-05-06 23:00:00  136.2    126.1     124.8</span>
-<span class="co">#&gt; 2020-05-07 23:00:00  136.5    125.7     124.8</span></code></pre></div>
+<span class="co">#&gt; 2020-04-26 23:00:00 122.7 122.7 121.8 122.4 -1  121.0 123.9   125.7   124.8</span>
+<span class="co">#&gt; 2020-04-27 23:00:00 122.4 122.6 121.1 121.9 -1  121.0 123.9   125.7   124.8</span>
+<span class="co">#&gt; 2020-04-28 23:00:00 121.9 123.7 121.7 123.3  1  121.4 123.8   125.7   124.8</span>
+<span class="co">#&gt; 2020-04-29 23:00:00 123.3 124.0 123.0 124.0  1  121.5 123.8   125.7   124.8</span>
+<span class="co">#&gt; 2020-04-30 23:00:00 124.2 124.3 124.0 124.1 -1  121.8 123.6   126.0   124.8</span>
+<span class="co">#&gt; 2020-05-02 23:00:00 124.1 124.1 123.4 123.9 -1  122.2 123.6   126.5   124.8</span>
+<span class="co">#&gt; 2020-05-03 23:00:00 123.9 124.7 123.7 124.5  1  122.9 123.6   126.6   124.8</span>
+<span class="co">#&gt; 2020-05-04 23:00:00 124.5 124.7 123.9 124.2 -1  122.9 123.6   126.2   124.8</span>
+<span class="co">#&gt; 2020-05-05 23:00:00 124.2 125.2 124.0 124.7  1  123.2 123.6   126.1   124.8</span>
+<span class="co">#&gt; 2020-05-06 23:00:00 124.7 129.8 124.7 129.6  1  125.5 124.5   125.7   124.8</span>
+<span class="co">#&gt; 2020-05-07 23:00:00 129.9 130.6 129.9 130.2  1  126.2 124.8   125.6   124.8</span>
+<span class="co">#&gt;                     chikou cloudT cloudB</span>
+<span class="co">#&gt; 2020-04-26 23:00:00  135.1  125.7  124.8</span>
+<span class="co">#&gt; 2020-04-27 23:00:00  135.6  125.7  124.8</span>
+<span class="co">#&gt; 2020-04-28 23:00:00  134.5  125.7  124.8</span>
+<span class="co">#&gt; 2020-04-29 23:00:00  134.3  125.7  124.8</span>
+<span class="co">#&gt; 2020-04-30 23:00:00  135.9  126.0  124.8</span>
+<span class="co">#&gt; 2020-05-02 23:00:00  135.2  126.5  124.8</span>
+<span class="co">#&gt; 2020-05-03 23:00:00  135.7  126.6  124.8</span>
+<span class="co">#&gt; 2020-05-04 23:00:00  135.4  126.2  124.8</span>
+<span class="co">#&gt; 2020-05-05 23:00:00  135.7  126.1  124.8</span>
+<span class="co">#&gt; 2020-05-06 23:00:00  135.6  125.7  124.8</span>
+<span class="co">#&gt; 2020-05-07 23:00:00  136.2  125.6  124.8</span></code></pre></div>
 <p>A section (rows 100 to 110) of the cloud object is shown above. Note that print is called setting ‘plot = FALSE’ to return the data frame without the plot.</p>
 <p>ichimoku objects employ a custom S3 print method which by default plots the cloud chart in the graphical device as well as returning the data frame to the console.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -341,7 +366,7 @@
 <div id="reading-external-data-into-r" class="section level3">
 <h3 class="hasAnchor">
 <a href="#reading-external-data-into-r" class="anchor"></a>Reading external data into R</h3>
-<p>For reading data in the ‘json’ format, which is commonly returned by web APIs, the <code>fparse()</code> function from the ‘RcppSimdJson’ package is extremely performant. The function takes json strings as well as raw vectors directly. ‘RcppSimdJson’ is a dependency of ichimoku.</p>
+<p>For reading data in the ‘json’ format, which is commonly returned by web APIs, the <code>fromJSON()</code> function from the ‘jsonlite’ package is fairly ubiquitous. The function takes json strings so any raw vectors should first be wrapped in <code><a href="https://rdrr.io/r/base/rawConversion.html">rawToChar()</a></code>. ‘jsonlite’ is a dependency of ichimoku.</p>
 <p>If an external data file employs a custom delimited format, the ‘data.table’ package contains the <code>fread()</code> function, which is often successful on default settings. Otherwise, <code>read_delim_arrow()</code> from the ‘arrow’ package may provide an even more performant alternative.</p>
 <p>For csv files, <code>read_csv_arrow()</code> from the ‘arrow’ package can be a more performant choice than using <code>fread()</code> from ‘data.table’.</p>
 <p>The ‘arrow’ package also contains the <code>read_feather()</code> and <code>read_parquet()</code> functions for reading in Apache Arrow IPC and Parquet file formats as either a ‘data.frame’ or Arrow Table, either of which can be handled directly by <code><a href="../reference/ichimoku.html">ichimoku()</a></code>.</p>
@@ -383,6 +408,7 @@
 <h4 class="hasAnchor">
 <a href="#since-version-0-3" class="anchor"></a>Since version 0.3</h4>
 <ul>
+<li>The ichimoku object specification has been updated in version 0.3.6. ichimoku objects created in versions prior to 0.3.6 will no longer work correctly with newer versions of the package. Please run <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on all old objects to re-create the object according to the new specification (all data is preserved)</li>
 <li>The following functions are no longer exported: <code>maxOver()</code>, <code>minOver()</code>, <code>oanda_accounts()</code>.</li>
 </ul>
 </div>
@@ -415,24 +441,25 @@
 <ul>
 <li>ggplot2 - the widely-used R graphics system for visualization</li>
 <li>rlang - R language requirement arising from the use of ‘ggplot2’</li>
-<li>xts - ichimoku shares the ‘xts’ format for time series</li>
-<li>zoo - ‘xts’ is built on top of ‘zoo’</li>
+<li>xts - ichimoku object specification is based on the ‘xts’ format for time series</li>
+<li>zoo - ‘xts’ is built on ‘zoo’ technology</li>
 <li>curl - for interfacing with external APIs</li>
-<li>RcppSimdJson - for processing data retrieved from external APIs</li>
+<li>jsonlite - for parsing data retrieved from external APIs</li>
 </ul>
 <p>Optional:</p>
 <ul>
-<li>shiny, bslib - for interactive visualizations</li>
-<li>arrow - for archiving ichimoku objects as Apache Arrow files</li>
+<li>shiny - a reactive framework for interactive visualizations</li>
+<li>bslib - for visual customisation of ‘shiny’ applications</li>
+<li>arrow - allows archiving of ichimoku objects as Apache Arrow files</li>
 <li>keyring - for saving API keys in the system credential store</li>
 </ul>
 <p>The ‘cpp11’ package provides the C++ interface for the fast window functions, but the headers used are ‘vendored’ within ichimoku to ensure stability (as is permitted by ‘cpp11’) so there is no ongoing dependency.</p>
 </div>
-<div id="further-resources" class="section level2">
+<div id="references" class="section level2">
 <h2 class="hasAnchor">
-<a href="#further-resources" class="anchor"></a>Further Resources</h2>
-<p>Package website: <a href="https://shikokuchuo.net/ichimoku/" class="uri">https://shikokuchuo.net/ichimoku/</a></p>
-<p>The most recent version of the package may be found at <a href="https://github.com/shikokuchuo/ichimoku/" class="uri">https://github.com/shikokuchuo/ichimoku/</a></p>
+<a href="#references" class="anchor"></a>References</h2>
+<p>Sasaki, H. 佐々木 英信 (1996), <em>一目均衡表の研究 [ichimoku kinkouhyou no kenkyuu]</em>. Tokyo, Japan: Toushi Radar.</p>
+<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 0.3.51. <a href="https://shikokuchuo.net/ichimoku/" class="uri">https://shikokuchuo.net/ichimoku/</a> CRAN page: <a href="https://CRAN.R-project.org/package=ichimoku" class="uri">https://CRAN.R-project.org/package=ichimoku</a></p>
 <hr>
 </div>
   </div>

@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.51</span>
       </span>
     </div>
 
@@ -137,19 +137,19 @@
 <code class="sourceCode R"><span class="va">strat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/strat.html">strat</a></span><span class="op">(</span><span class="va">cloud</span>, c1 <span class="op">=</span> <span class="st">"close"</span>, c2 <span class="op">=</span> <span class="st">"tenkan"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">strat</span><span class="op">[</span><span class="fl">100</span><span class="op">:</span><span class="fl">105</span><span class="op">]</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="co">#&gt;                      open  high   low close cd tenkan  kijun senkouA senkouB</span>
-<span class="co">#&gt; 2020-04-26 23:00:00 122.7 122.7 121.8 122.4 -1 120.50 123.35 125.625  124.85</span>
-<span class="co">#&gt; 2020-04-27 23:00:00 122.4 122.6 121.1 121.9 -1 120.50 123.35 125.675  124.85</span>
-<span class="co">#&gt; 2020-04-28 23:00:00 121.9 123.7 121.7 123.3  1 120.85 123.25 125.675  124.85</span>
-<span class="co">#&gt; 2020-04-29 23:00:00 123.3 124.0 123.0 124.0  1 121.00 123.25 125.675  124.85</span>
-<span class="co">#&gt; 2020-04-30 23:00:00 124.2 124.3 124.0 124.1 -1 121.40 123.10 125.675  124.85</span>
-<span class="co">#&gt; 2020-05-02 23:00:00 124.1 124.1 123.4 123.9 -1 122.25 123.10 125.975  124.85</span>
-<span class="co">#&gt;                     chikou cloudTop cloudBase cond posn txn        logret</span>
-<span class="co">#&gt; 2020-04-26 23:00:00  135.6  125.625    124.85    1    1   0 -0.0024479816</span>
-<span class="co">#&gt; 2020-04-27 23:00:00  134.5  125.675    124.85    1    1   0 -0.0040933336</span>
-<span class="co">#&gt; 2020-04-28 23:00:00  134.3  125.675    124.85    1    1   0  0.0114193737</span>
-<span class="co">#&gt; 2020-04-29 23:00:00  135.9  125.675    124.85    1    1   0  0.0072727593</span>
-<span class="co">#&gt; 2020-04-30 23:00:00  135.2  125.675    124.85    1    1   0 -0.0008054773</span>
-<span class="co">#&gt; 2020-05-02 23:00:00  135.7  125.975    124.85    1    1   0 -0.0016129036</span>
+<span class="co">#&gt; 2020-04-26 23:00:00 122.7 122.7 121.8 122.4 -1 121.05 123.90 125.675  124.85</span>
+<span class="co">#&gt; 2020-04-27 23:00:00 122.4 122.6 121.1 121.9 -1 121.05 123.90 125.675  124.85</span>
+<span class="co">#&gt; 2020-04-28 23:00:00 121.9 123.7 121.7 123.3  1 121.40 123.80 125.675  124.85</span>
+<span class="co">#&gt; 2020-04-29 23:00:00 123.3 124.0 123.0 124.0  1 121.55 123.80 125.675  124.85</span>
+<span class="co">#&gt; 2020-04-30 23:00:00 124.2 124.3 124.0 124.1 -1 121.75 123.65 125.975  124.85</span>
+<span class="co">#&gt; 2020-05-02 23:00:00 124.1 124.1 123.4 123.9 -1 122.25 123.65 126.475  124.85</span>
+<span class="co">#&gt;                     chikou  cloudT cloudB cond posn txn        logret</span>
+<span class="co">#&gt; 2020-04-26 23:00:00  135.1 125.675 124.85    1    1   0 -0.0024479816</span>
+<span class="co">#&gt; 2020-04-27 23:00:00  135.6 125.675 124.85    1    1   0 -0.0040933336</span>
+<span class="co">#&gt; 2020-04-28 23:00:00  134.5 125.675 124.85    1    1   0  0.0114193737</span>
+<span class="co">#&gt; 2020-04-29 23:00:00  134.3 125.675 124.85    1    1   0  0.0072727593</span>
+<span class="co">#&gt; 2020-04-30 23:00:00  135.9 125.975 124.85    1    1   0 -0.0008054773</span>
+<span class="co">#&gt; 2020-05-02 23:00:00  135.2 126.475 124.85    1    1   0 -0.0016129036</span>
 <span class="co">#&gt;                           slogret          ret         sret</span>
 <span class="co">#&gt; 2020-04-26 23:00:00 -0.0024479816 -0.002444988 -0.002444988</span>
 <span class="co">#&gt; 2020-04-27 23:00:00 -0.0040933336 -0.004084967 -0.004084967</span>
@@ -205,26 +205,26 @@
 <p>A summary of the strategy is saved as an attribute to the ichimoku object and can be accessed by the <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> function.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">strat</span><span class="op">)</span>
-<span class="co">#&gt;                        [,1]               </span>
-<span class="co">#&gt; Strategy               "close &gt; tenkan"   </span>
-<span class="co">#&gt; ---------------------  "----------"       </span>
-<span class="co">#&gt; Strategy cuml return % 5.01               </span>
-<span class="co">#&gt; Per period mean ret %  0.0218             </span>
-<span class="co">#&gt; Periods in market      119                </span>
-<span class="co">#&gt; Total trades           18                 </span>
-<span class="co">#&gt; Average trade length   6.61               </span>
-<span class="co">#&gt; Trade success %        27.78              </span>
-<span class="co">#&gt; Worst trade ret %      -2.54              </span>
-<span class="co">#&gt; ---------------------  "----------"       </span>
-<span class="co">#&gt; Benchmark cuml ret %   3.38               </span>
-<span class="co">#&gt; Per period mean ret %  0.0148             </span>
-<span class="co">#&gt; Periods in market      224                </span>
-<span class="co">#&gt; ---------------------  "----------"       </span>
-<span class="co">#&gt; Direction              "long"             </span>
-<span class="co">#&gt; Start                  2020-01-13         </span>
-<span class="co">#&gt; End                    2020-09-28 23:00:00</span>
+<span class="co">#&gt;                        [,1]            </span>
+<span class="co">#&gt; Strategy               "close &gt; tenkan"</span>
+<span class="co">#&gt; ---------------------  "----------"    </span>
+<span class="co">#&gt; Strategy cuml return % 8.57            </span>
+<span class="co">#&gt; Per period mean ret %  0.0334          </span>
+<span class="co">#&gt; Periods in market      138             </span>
+<span class="co">#&gt; Total trades           20              </span>
+<span class="co">#&gt; Average trade length   6.9             </span>
+<span class="co">#&gt; Trade success %        35              </span>
+<span class="co">#&gt; Worst trade ret %      -2.54           </span>
+<span class="co">#&gt; ---------------------  "----------"    </span>
+<span class="co">#&gt; Benchmark cuml ret %   9               </span>
+<span class="co">#&gt; Per period mean ret %  0.035           </span>
+<span class="co">#&gt; Periods in market      246             </span>
+<span class="co">#&gt; ---------------------  "----------"    </span>
+<span class="co">#&gt; Direction              "long"          </span>
+<span class="co">#&gt; Start                  2020-01-13      </span>
+<span class="co">#&gt; End                    2020-10-29      </span>
 <span class="co">#&gt; Ticker                 "TKR"</span></code></pre></div>
-<p>The summary is meant to provide a quick overview of whether a strategy is effective / desirable:</p>
+<p>The summary is designed to provide a quick overview of whether a strategy is effective / desirable:</p>
 <ul>
 <li>Strategy returns are compared with the benchmark, which is simply being in the market the entire time</li>
 <li>Comparing returns combined with total periods in the market can help determine if the strategy is substantially different from just taking market risk</li>
@@ -249,28 +249,28 @@
 </h3>
 <p><code><a href="../reference/stratcombine.html">stratcombine()</a></code> can be used to create custom combined strategies from existing strategies contained in ‘s1’ and ‘s2’ to form ‘s1 &amp; s2’.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">strat2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/strat.html">strat</a></span><span class="op">(</span><span class="va">cloud</span>, <span class="st">"cloudBase"</span>, <span class="st">"kijun"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">strat2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/strat.html">strat</a></span><span class="op">(</span><span class="va">cloud</span>, <span class="st">"cloudB"</span>, <span class="st">"kijun"</span><span class="op">)</span>
 
 <span class="va">newstrat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/stratcombine.html">stratcombine</a></span><span class="op">(</span><span class="va">strat</span>, <span class="va">strat2</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">newstrat</span><span class="op">)</span>
-<span class="co">#&gt;                        [,1]                                </span>
-<span class="co">#&gt; Strategy               "close &gt; tenkan &amp; cloudBase &gt; kijun"</span>
-<span class="co">#&gt; ---------------------  "----------"                        </span>
-<span class="co">#&gt; Strategy cuml return % 10.64                               </span>
-<span class="co">#&gt; Per period mean ret %  0.0653                              </span>
-<span class="co">#&gt; Periods in market      32                                  </span>
-<span class="co">#&gt; Total trades           3                                   </span>
-<span class="co">#&gt; Average trade length   10.67                               </span>
-<span class="co">#&gt; Trade success %        66.67                               </span>
-<span class="co">#&gt; Worst trade ret %      -1.4                                </span>
-<span class="co">#&gt; ---------------------  "----------"                        </span>
-<span class="co">#&gt; Benchmark cuml ret %   0.94                                </span>
-<span class="co">#&gt; Per period mean ret %  0.006                               </span>
-<span class="co">#&gt; Periods in market      155                                 </span>
-<span class="co">#&gt; ---------------------  "----------"                        </span>
-<span class="co">#&gt; Direction              "long"                              </span>
-<span class="co">#&gt; Start                  2020-04-01 23:00:00                 </span>
-<span class="co">#&gt; End                    2020-09-28 23:00:00                 </span>
+<span class="co">#&gt;                        [,1]                             </span>
+<span class="co">#&gt; Strategy               "close &gt; tenkan &amp; cloudB &gt; kijun"</span>
+<span class="co">#&gt; ---------------------  "----------"                     </span>
+<span class="co">#&gt; Strategy cuml return % 11.79                            </span>
+<span class="co">#&gt; Per period mean ret %  0.0627                           </span>
+<span class="co">#&gt; Periods in market      39                               </span>
+<span class="co">#&gt; Total trades           5                                </span>
+<span class="co">#&gt; Average trade length   7.8                              </span>
+<span class="co">#&gt; Trade success %        60                               </span>
+<span class="co">#&gt; Worst trade ret %      -1.4                             </span>
+<span class="co">#&gt; ---------------------  "----------"                     </span>
+<span class="co">#&gt; Benchmark cuml ret %   5.53                             </span>
+<span class="co">#&gt; Per period mean ret %  0.0302                           </span>
+<span class="co">#&gt; Periods in market      178                              </span>
+<span class="co">#&gt; ---------------------  "----------"                     </span>
+<span class="co">#&gt; Direction              "long"                           </span>
+<span class="co">#&gt; Start                  2020-03-31 23:00:00              </span>
+<span class="co">#&gt; End                    2020-10-29                       </span>
 <span class="co">#&gt; Ticker                 "TKR"</span></code></pre></div>
 <p>Note: rather than combining simple strategies using <code><a href="../reference/stratcombine.html">stratcombine()</a></code>, it is preferable to supply all 4 arguments <code>c1</code>, <code>c2</code>, <code>c3</code>, and <code>c4</code> directly to <code><a href="../reference/strat.html">strat()</a></code> to generate a strategy of ‘c1 &gt; c2 &amp; c3 &gt; c4’.</p>
 </div>
@@ -307,42 +307,42 @@
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/autostrat.html">autostrat</a></span><span class="op">(</span><span class="va">cloud</span>, n <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="co">#&gt;                        [,1]                [,2]               </span>
-<span class="co">#&gt; Strategy               "senkouB &gt; tenkan"  "cloudBase &gt; kijun"</span>
+<span class="co">#&gt; Strategy               "senkouB &gt; tenkan"  "cloudB &gt; tenkan"  </span>
 <span class="co">#&gt; ---------------------  "----------"        "----------"       </span>
-<span class="co">#&gt; Strategy cuml return % 14.72               11.96              </span>
-<span class="co">#&gt; Per period mean ret %  0.0886              0.0729             </span>
-<span class="co">#&gt; Periods in market      57                  38                 </span>
+<span class="co">#&gt; Strategy cuml return % 17.49               16.08              </span>
+<span class="co">#&gt; Per period mean ret %  0.0906              0.0838             </span>
+<span class="co">#&gt; Periods in market      63                  51                 </span>
 <span class="co">#&gt; Total trades           3                   3                  </span>
-<span class="co">#&gt; Average trade length   19                  12.67              </span>
-<span class="co">#&gt; Trade success %        66.67               66.67              </span>
-<span class="co">#&gt; Worst trade ret %      -0.31               -0.31              </span>
+<span class="co">#&gt; Average trade length   21                  17                 </span>
+<span class="co">#&gt; Trade success %        100                 100                </span>
+<span class="co">#&gt; Worst trade ret %      3.64                3.16               </span>
 <span class="co">#&gt; ---------------------  "----------"        "----------"       </span>
-<span class="co">#&gt; Benchmark cuml ret %   0.94                0.94               </span>
-<span class="co">#&gt; Per period mean ret %  0.006               0.006              </span>
-<span class="co">#&gt; Periods in market      155                 155                </span>
+<span class="co">#&gt; Benchmark cuml ret %   5.53                5.53               </span>
+<span class="co">#&gt; Per period mean ret %  0.0302              0.0302             </span>
+<span class="co">#&gt; Periods in market      178                 178                </span>
 <span class="co">#&gt; ---------------------  "----------"        "----------"       </span>
 <span class="co">#&gt; Direction              "long"              "long"             </span>
-<span class="co">#&gt; Start                  2020-04-01 23:00:00 2020-04-01 23:00:00</span>
-<span class="co">#&gt; End                    2020-09-28 23:00:00 2020-09-28 23:00:00</span>
+<span class="co">#&gt; Start                  2020-03-31 23:00:00 2020-03-31 23:00:00</span>
+<span class="co">#&gt; End                    2020-10-29          2020-10-29         </span>
 <span class="co">#&gt; Ticker                 "TKR"               "TKR"              </span>
 <span class="co">#&gt;                        [,3]               </span>
 <span class="co">#&gt; Strategy               "senkouB &gt; kijun"  </span>
 <span class="co">#&gt; ---------------------  "----------"       </span>
-<span class="co">#&gt; Strategy cuml return % 11.7               </span>
-<span class="co">#&gt; Per period mean ret %  0.0714             </span>
-<span class="co">#&gt; Periods in market      57                 </span>
+<span class="co">#&gt; Strategy cuml return % 14.1               </span>
+<span class="co">#&gt; Per period mean ret %  0.0741             </span>
+<span class="co">#&gt; Periods in market      64                 </span>
 <span class="co">#&gt; Total trades           3                  </span>
-<span class="co">#&gt; Average trade length   19                 </span>
-<span class="co">#&gt; Trade success %        66.67              </span>
-<span class="co">#&gt; Worst trade ret %      -0.31              </span>
+<span class="co">#&gt; Average trade length   21.33              </span>
+<span class="co">#&gt; Trade success %        100                </span>
+<span class="co">#&gt; Worst trade ret %      3.49               </span>
 <span class="co">#&gt; ---------------------  "----------"       </span>
-<span class="co">#&gt; Benchmark cuml ret %   0.94               </span>
-<span class="co">#&gt; Per period mean ret %  0.006              </span>
-<span class="co">#&gt; Periods in market      155                </span>
+<span class="co">#&gt; Benchmark cuml ret %   5.53               </span>
+<span class="co">#&gt; Per period mean ret %  0.0302             </span>
+<span class="co">#&gt; Periods in market      178                </span>
 <span class="co">#&gt; ---------------------  "----------"       </span>
 <span class="co">#&gt; Direction              "long"             </span>
-<span class="co">#&gt; Start                  2020-04-01 23:00:00</span>
-<span class="co">#&gt; End                    2020-09-28 23:00:00</span>
+<span class="co">#&gt; Start                  2020-03-31 23:00:00</span>
+<span class="co">#&gt; End                    2020-10-29         </span>
 <span class="co">#&gt; Ticker                 "TKR"</span></code></pre></div>
 <p>The output of <code><a href="../reference/autostrat.html">autostrat()</a></code> is a list of ichimoku objects. Each object can be accessed by its individual item number e.g. [[1]] for the first object, or by using look() specifying the parameter ‘which’.</p>
 <p>The metadata is also saved as attributes to the list and can be accessed by the function <code><a href="../reference/look.html">look()</a></code>:</p>
@@ -351,7 +351,7 @@
 <li><p><strong>logret</strong>: the log returns of all combinations computed by autostrat</p></li>
 </ul>
 <p>Note: the strategies returned may not be in perfect order of strategy returns. This is due to the fact that the implementation via <code><a href="../reference/mlgrid.html">mlgrid()</a></code> simultaneously tests all strategies using the same time interval for comparability. However individual strategies are then run on the top ‘n’ strategies using all of the available data for those indicators, which may be more than that used during comparison.</p>
-<p>Note: as SenkouA, SenkouB, cloudTop and cloudBase are used in conjunction with other indicators, it is possible to get a series of similar returns with cloudBase &gt; c2, senkouB &gt; c2 etc. Although these strategies may at times be equivalent or considered equivalent, this is not always the case and ichimoku presents all such results.</p>
+<p>Note: as SenkouA, SenkouB, cloudT and cloudB are used in conjunction with other indicators, it is possible to get a series of similar returns with cloudB &gt; c2, senkouB &gt; c2 etc. Although these strategies may at times be equivalent or considered equivalent, this is not always the case and ichimoku presents all such results.</p>
 </div>
 <div id="autostrat-levels-2-and-3" class="section level3">
 <h3 class="hasAnchor">
@@ -359,85 +359,85 @@
 <p>Set the argument <code>level = 2</code> to <code><a href="../reference/autostrat.html">autostrat()</a></code> to test all strategies with a combination of up to 2 indicator conditions, i.e. strat() with type = 2.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/autostrat.html">autostrat</a></span><span class="op">(</span><span class="va">cloud</span>, n <span class="op">=</span> <span class="fl">2</span>, dir <span class="op">=</span> <span class="st">"short"</span>, level <span class="op">=</span> <span class="st">"2"</span><span class="op">)</span>
-<span class="co">#&gt;                        [,1]                              </span>
+<span class="co">#&gt;                        [,1]                               </span>
+<span class="co">#&gt; Strategy               "close &gt; chikou &amp; tenkan &gt; senkouB"</span>
+<span class="co">#&gt; ---------------------  "----------"                       </span>
+<span class="co">#&gt; Strategy cuml return % 11.21                              </span>
+<span class="co">#&gt; Per period mean ret %  0.0597                             </span>
+<span class="co">#&gt; Periods in market      20                                 </span>
+<span class="co">#&gt; Total trades           4                                  </span>
+<span class="co">#&gt; Average trade length   5                                  </span>
+<span class="co">#&gt; Trade success %        25                                 </span>
+<span class="co">#&gt; Worst trade ret %      -7.68                              </span>
+<span class="co">#&gt; ---------------------  "----------"                       </span>
+<span class="co">#&gt; Benchmark cuml ret %   -5.24                              </span>
+<span class="co">#&gt; Per period mean ret %  -0.0302                            </span>
+<span class="co">#&gt; Periods in market      178                                </span>
+<span class="co">#&gt; ---------------------  "----------"                       </span>
+<span class="co">#&gt; Direction              "short"                            </span>
+<span class="co">#&gt; Start                  2020-03-31 23:00:00                </span>
+<span class="co">#&gt; End                    2020-10-29                         </span>
+<span class="co">#&gt; Ticker                 "TKR"                              </span>
+<span class="co">#&gt;                        [,2]                              </span>
 <span class="co">#&gt; Strategy               "high &gt; chikou &amp; tenkan &gt; senkouB"</span>
 <span class="co">#&gt; ---------------------  "----------"                      </span>
-<span class="co">#&gt; Strategy cuml return % 13.38                             </span>
-<span class="co">#&gt; Per period mean ret %  0.0811                            </span>
-<span class="co">#&gt; Periods in market      18                                </span>
-<span class="co">#&gt; Total trades           3                                 </span>
-<span class="co">#&gt; Average trade length   6                                 </span>
+<span class="co">#&gt; Strategy cuml return % 11.05                             </span>
+<span class="co">#&gt; Per period mean ret %  0.0589                            </span>
+<span class="co">#&gt; Periods in market      22                                </span>
+<span class="co">#&gt; Total trades           4                                 </span>
+<span class="co">#&gt; Average trade length   5.5                               </span>
 <span class="co">#&gt; Trade success %        0                                 </span>
-<span class="co">#&gt; Worst trade ret %      -7.68                             </span>
+<span class="co">#&gt; Worst trade ret %      -7.13                             </span>
 <span class="co">#&gt; ---------------------  "----------"                      </span>
-<span class="co">#&gt; Benchmark cuml ret %   -0.93                             </span>
-<span class="co">#&gt; Per period mean ret %  -0.006                            </span>
-<span class="co">#&gt; Periods in market      155                               </span>
+<span class="co">#&gt; Benchmark cuml ret %   -5.24                             </span>
+<span class="co">#&gt; Per period mean ret %  -0.0302                           </span>
+<span class="co">#&gt; Periods in market      178                               </span>
 <span class="co">#&gt; ---------------------  "----------"                      </span>
 <span class="co">#&gt; Direction              "short"                           </span>
-<span class="co">#&gt; Start                  2020-04-01 23:00:00               </span>
-<span class="co">#&gt; End                    2020-09-28 23:00:00               </span>
-<span class="co">#&gt; Ticker                 "TKR"                             </span>
-<span class="co">#&gt;                        [,2]                                </span>
-<span class="co">#&gt; Strategy               "high &gt; chikou &amp; tenkan &gt; cloudBase"</span>
-<span class="co">#&gt; ---------------------  "----------"                        </span>
-<span class="co">#&gt; Strategy cuml return % 12.86                               </span>
-<span class="co">#&gt; Per period mean ret %  0.0781                              </span>
-<span class="co">#&gt; Periods in market      22                                  </span>
-<span class="co">#&gt; Total trades           3                                   </span>
-<span class="co">#&gt; Average trade length   7.33                                </span>
-<span class="co">#&gt; Trade success %        0                                   </span>
-<span class="co">#&gt; Worst trade ret %      -7.68                               </span>
-<span class="co">#&gt; ---------------------  "----------"                        </span>
-<span class="co">#&gt; Benchmark cuml ret %   -0.93                               </span>
-<span class="co">#&gt; Per period mean ret %  -0.006                              </span>
-<span class="co">#&gt; Periods in market      155                                 </span>
-<span class="co">#&gt; ---------------------  "----------"                        </span>
-<span class="co">#&gt; Direction              "short"                             </span>
-<span class="co">#&gt; Start                  2020-04-01 23:00:00                 </span>
-<span class="co">#&gt; End                    2020-09-28 23:00:00                 </span>
+<span class="co">#&gt; Start                  2020-03-31 23:00:00               </span>
+<span class="co">#&gt; End                    2020-10-29                        </span>
 <span class="co">#&gt; Ticker                 "TKR"</span></code></pre></div>
 <p>Set the argument <code>level = 3</code> to <code><a href="../reference/autostrat.html">autostrat()</a></code> to test all strategies using an asymmetric combination of up to 2 indicator conditions, i.e. strat() with type = 3.</p>
 <p>Please note that level 3 autostrat is considered experimental as the results are likely to have a higher sensitivity to the data and therefore be less robust.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/autostrat.html">autostrat</a></span><span class="op">(</span><span class="va">cloud</span>, n <span class="op">=</span> <span class="fl">2</span>, dir <span class="op">=</span> <span class="st">"long"</span>, level <span class="op">=</span> <span class="st">"3"</span><span class="op">)</span>
-<span class="co">#&gt;                        [,1]                               </span>
-<span class="co">#&gt; Strategy               "senkouB &gt; high x cloudTop &gt; close"</span>
-<span class="co">#&gt; ---------------------  "----------"                       </span>
-<span class="co">#&gt; Strategy cuml return % 15.26                              </span>
-<span class="co">#&gt; Per period mean ret %  0.0917                             </span>
-<span class="co">#&gt; Periods in market      113                                </span>
-<span class="co">#&gt; Total trades           3                                  </span>
-<span class="co">#&gt; Average trade length   37.67                              </span>
-<span class="co">#&gt; Trade success %        66.67                              </span>
-<span class="co">#&gt; Worst trade ret %      -0.38                              </span>
-<span class="co">#&gt; ---------------------  "----------"                       </span>
-<span class="co">#&gt; Benchmark cuml ret %   0.94                               </span>
-<span class="co">#&gt; Per period mean ret %  0.006                              </span>
-<span class="co">#&gt; Periods in market      155                                </span>
-<span class="co">#&gt; ---------------------  "----------"                       </span>
-<span class="co">#&gt; Direction              "long"                             </span>
-<span class="co">#&gt; Start                  2020-04-01 23:00:00                </span>
-<span class="co">#&gt; End                    2020-09-28 23:00:00                </span>
-<span class="co">#&gt; Ticker                 "TKR"                              </span>
-<span class="co">#&gt;                        [,2]                             </span>
-<span class="co">#&gt; Strategy               "tenkan &gt; low x cloudTop &gt; close"</span>
+<span class="co">#&gt;                        [,1]                             </span>
+<span class="co">#&gt; Strategy               "senkouB &gt; senkouA x kijun &gt; low"</span>
 <span class="co">#&gt; ---------------------  "----------"                     </span>
-<span class="co">#&gt; Strategy cuml return % 3.92                             </span>
-<span class="co">#&gt; Per period mean ret %  0.0171                           </span>
-<span class="co">#&gt; Periods in market      160                              </span>
+<span class="co">#&gt; Strategy cuml return % 2.49                             </span>
+<span class="co">#&gt; Per period mean ret %  0.0138                           </span>
+<span class="co">#&gt; Periods in market      59                               </span>
 <span class="co">#&gt; Total trades           3                                </span>
-<span class="co">#&gt; Average trade length   53.33                            </span>
+<span class="co">#&gt; Average trade length   19.67                            </span>
 <span class="co">#&gt; Trade success %        66.67                            </span>
-<span class="co">#&gt; Worst trade ret %      -1.53                            </span>
+<span class="co">#&gt; Worst trade ret %      -2.49                            </span>
 <span class="co">#&gt; ---------------------  "----------"                     </span>
-<span class="co">#&gt; Benchmark cuml ret %   3.38                             </span>
-<span class="co">#&gt; Per period mean ret %  0.0148                           </span>
-<span class="co">#&gt; Periods in market      224                              </span>
+<span class="co">#&gt; Benchmark cuml ret %   5.53                             </span>
+<span class="co">#&gt; Per period mean ret %  0.0302                           </span>
+<span class="co">#&gt; Periods in market      178                              </span>
 <span class="co">#&gt; ---------------------  "----------"                     </span>
 <span class="co">#&gt; Direction              "long"                           </span>
-<span class="co">#&gt; Start                  2020-01-13                       </span>
-<span class="co">#&gt; End                    2020-09-28 23:00:00              </span>
+<span class="co">#&gt; Start                  2020-03-31 23:00:00              </span>
+<span class="co">#&gt; End                    2020-10-29                       </span>
+<span class="co">#&gt; Ticker                 "TKR"                            </span>
+<span class="co">#&gt;                        [,2]                                </span>
+<span class="co">#&gt; Strategy               "senkouB &gt; senkouA x tenkan &gt; kijun"</span>
+<span class="co">#&gt; ---------------------  "----------"                        </span>
+<span class="co">#&gt; Strategy cuml return % 6.98                                </span>
+<span class="co">#&gt; Per period mean ret %  0.0379                              </span>
+<span class="co">#&gt; Periods in market      82                                  </span>
+<span class="co">#&gt; Total trades           3                                   </span>
+<span class="co">#&gt; Average trade length   27.33                               </span>
+<span class="co">#&gt; Trade success %        100                                 </span>
+<span class="co">#&gt; Worst trade ret %      1.09                                </span>
+<span class="co">#&gt; ---------------------  "----------"                        </span>
+<span class="co">#&gt; Benchmark cuml ret %   5.53                                </span>
+<span class="co">#&gt; Per period mean ret %  0.0302                              </span>
+<span class="co">#&gt; Periods in market      178                                 </span>
+<span class="co">#&gt; ---------------------  "----------"                        </span>
+<span class="co">#&gt; Direction              "long"                              </span>
+<span class="co">#&gt; Start                  2020-03-31 23:00:00                 </span>
+<span class="co">#&gt; End                    2020-10-29                          </span>
 <span class="co">#&gt; Ticker                 "TKR"</span></code></pre></div>
 </div>
 </div>
@@ -477,22 +477,22 @@
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/mlgrid.html">mlgrid</a></span><span class="op">(</span><span class="va">cloud</span>, y <span class="op">=</span> <span class="st">"logret"</span>, dir <span class="op">=</span> <span class="st">"long"</span>, type <span class="op">=</span> <span class="st">"boolean"</span>, unique <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">[</span><span class="fl">100</span><span class="op">:</span><span class="fl">105</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>
 <span class="co">#&gt;                                 y chikou_close chikou_high chikou_low</span>
+<span class="co">#&gt; 2020-08-22 23:00:00  0.0083050685            1           1          1</span>
+<span class="co">#&gt; 2020-08-23 23:00:00  0.0015026299            1           1          1</span>
 <span class="co">#&gt; 2020-08-24 23:00:00  0.0022497197            1           1          1</span>
 <span class="co">#&gt; 2020-08-25 23:00:00 -0.0014992507            1           1          1</span>
 <span class="co">#&gt; 2020-08-26 23:00:00 -0.0007504691            1           1          1</span>
-<span class="co">#&gt; 2020-08-27 23:00:00  0.0037467260            1           1          1</span>
-<span class="co">#&gt; 2020-08-29 23:00:00  0.0000000000            1           1          1</span>
-<span class="co">#&gt; 2020-08-30 23:00:00  0.0059657149            1           1          1</span></code></pre></div>
+<span class="co">#&gt; 2020-08-27 23:00:00  0.0037467260            1           1          1</span></code></pre></div>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/mlgrid.html">mlgrid</a></span><span class="op">(</span><span class="va">cloud</span>, y <span class="op">=</span> <span class="st">"ret"</span>, dir <span class="op">=</span> <span class="st">"short"</span>, type <span class="op">=</span> <span class="st">"numeric"</span>, unique <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">[</span><span class="fl">100</span><span class="op">:</span><span class="fl">105</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>
 <span class="co">#&gt;                                 y chikou_close chikou_high chikou_low</span>
-<span class="co">#&gt; 2020-08-24 23:00:00 -0.0022471910          5.5         4.8        6.2</span>
-<span class="co">#&gt; 2020-08-25 23:00:00  0.0015003751          3.8         3.2        5.9</span>
-<span class="co">#&gt; 2020-08-26 23:00:00  0.0007507508          4.7         3.4        6.1</span>
-<span class="co">#&gt; 2020-08-27 23:00:00 -0.0037397158          5.1         4.0        6.0</span>
-<span class="co">#&gt; 2020-08-29 23:00:00  0.0000000000          7.2         5.5        7.6</span>
-<span class="co">#&gt; 2020-08-30 23:00:00 -0.0059479554          7.7         7.0        7.9</span></code></pre></div>
-<p>Note: only valid combinations are included within the grid. This means excluding any combination involving ‘open’ as it is in effect a lagged indicator and not contemporaneous. The following trivial or highly-collinear pairs are also excluded: {high, close} ,{low, close}, {low, high}, {cloudTop, Senkou A}, {cloudBase, senkou A}, {cloudTop, senkouB}, {cloudBase, senkouB}, {cloudBase, cloudTop}.</p>
+<span class="co">#&gt; 2020-08-22 23:00:00 -0.0082706767          3.9         3.8        4.4</span>
+<span class="co">#&gt; 2020-08-23 23:00:00 -0.0015015015          5.3         4.6        6.0</span>
+<span class="co">#&gt; 2020-08-24 23:00:00 -0.0022471910          3.5         2.9        5.6</span>
+<span class="co">#&gt; 2020-08-25 23:00:00  0.0015003751          5.0         3.7        6.4</span>
+<span class="co">#&gt; 2020-08-26 23:00:00  0.0007507508          5.1         4.0        6.0</span>
+<span class="co">#&gt; 2020-08-27 23:00:00 -0.0037397158          6.7         5.0        7.1</span></code></pre></div>
+<p>Note: only valid combinations are included within the grid. This means excluding any combination involving ‘open’ as it is in effect a lagged indicator and not contemporaneous. The following trivial or highly-collinear pairs are also excluded: {high, close} ,{low, close}, {low, high}, {cloudT, senkouA}, {cloudB, senkouA}, {cloudT, senkouB}, {cloudB, senkouB}, {cloudB, cloudT}.</p>
 </div>
 <div id="look" class="section level3">
 <h3 class="hasAnchor">
@@ -521,32 +521,32 @@
 <span class="co">#&gt; [1] "TKR"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $strat</span>
-<span class="co">#&gt;                        [,1]               </span>
-<span class="co">#&gt; Strategy               "close &gt; tenkan"   </span>
-<span class="co">#&gt; ---------------------  "----------"       </span>
-<span class="co">#&gt; Strategy cuml return % 5.01               </span>
-<span class="co">#&gt; Per period mean ret %  0.0218             </span>
-<span class="co">#&gt; Periods in market      119                </span>
-<span class="co">#&gt; Total trades           18                 </span>
-<span class="co">#&gt; Average trade length   6.61               </span>
-<span class="co">#&gt; Trade success %        27.78              </span>
-<span class="co">#&gt; Worst trade ret %      -2.54              </span>
-<span class="co">#&gt; ---------------------  "----------"       </span>
-<span class="co">#&gt; Benchmark cuml ret %   3.38               </span>
-<span class="co">#&gt; Per period mean ret %  0.0148             </span>
-<span class="co">#&gt; Periods in market      224                </span>
-<span class="co">#&gt; ---------------------  "----------"       </span>
-<span class="co">#&gt; Direction              "long"             </span>
-<span class="co">#&gt; Start                  2020-01-13         </span>
-<span class="co">#&gt; End                    2020-09-28 23:00:00</span>
+<span class="co">#&gt;                        [,1]            </span>
+<span class="co">#&gt; Strategy               "close &gt; tenkan"</span>
+<span class="co">#&gt; ---------------------  "----------"    </span>
+<span class="co">#&gt; Strategy cuml return % 8.57            </span>
+<span class="co">#&gt; Per period mean ret %  0.0334          </span>
+<span class="co">#&gt; Periods in market      138             </span>
+<span class="co">#&gt; Total trades           20              </span>
+<span class="co">#&gt; Average trade length   6.9             </span>
+<span class="co">#&gt; Trade success %        35              </span>
+<span class="co">#&gt; Worst trade ret %      -2.54           </span>
+<span class="co">#&gt; ---------------------  "----------"    </span>
+<span class="co">#&gt; Benchmark cuml ret %   9               </span>
+<span class="co">#&gt; Per period mean ret %  0.035           </span>
+<span class="co">#&gt; Periods in market      246             </span>
+<span class="co">#&gt; ---------------------  "----------"    </span>
+<span class="co">#&gt; Direction              "long"          </span>
+<span class="co">#&gt; Start                  2020-01-13      </span>
+<span class="co">#&gt; End                    2020-10-29      </span>
 <span class="co">#&gt; Ticker                 "TKR"</span></code></pre></div>
 </div>
 </div>
-<div id="further-resources" class="section level2">
+<div id="references" class="section level2">
 <h2 class="hasAnchor">
-<a href="#further-resources" class="anchor"></a>Further Resources</h2>
-<p>Package website: <a href="https://shikokuchuo.net/ichimoku/" class="uri">https://shikokuchuo.net/ichimoku/</a></p>
-<p>The most recent version of the package may be found at <a href="https://github.com/shikokuchuo/ichimoku/" class="uri">https://github.com/shikokuchuo/ichimoku/</a></p>
+<a href="#references" class="anchor"></a>References</h2>
+<p>Sasaki, H. 佐々木 英信 (1996), <em>一目均衡表の研究 [ichimoku kinkouhyou no kenkyuu]</em>. Tokyo, Japan: Toushi Radar.</p>
+<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 0.3.51. <a href="https://shikokuchuo.net/ichimoku/" class="uri">https://shikokuchuo.net/ichimoku/</a> CRAN page: <a href="https://CRAN.R-project.org/package=ichimoku" class="uri">https://CRAN.R-project.org/package=ichimoku</a></p>
 <hr>
 </div>
   </div>
