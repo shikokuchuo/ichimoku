@@ -76,13 +76,13 @@
 #'
 strat <- function(x,
                   c1 = c("close", "chikou", "open", "high", "low", "tenkan",
-                         "kijun", "senkouA", "senkouB", "cloudTop", "cloudBase"),
-                  c2 = c("tenkan", "kijun", "senkouA", "senkouB", "cloudTop",
-                         "cloudBase", "chikou", "close", "open", "high", "low"),
+                         "kijun", "senkouA", "senkouB", "cloudT", "cloudB"),
+                  c2 = c("tenkan", "kijun", "senkouA", "senkouB", "cloudT",
+                         "cloudB", "chikou", "close", "open", "high", "low"),
                   c3 = c("close", "chikou", "open", "high", "low", "tenkan",
-                         "kijun", "senkouA", "senkouB", "cloudTop", "cloudBase"),
-                  c4 = c("tenkan", "kijun", "senkouA", "senkouB", "cloudTop",
-                         "cloudBase", "chikou", "close", "open", "high", "low"),
+                         "kijun", "senkouA", "senkouB", "cloudT", "cloudB"),
+                  c4 = c("tenkan", "kijun", "senkouA", "senkouB", "cloudT",
+                         "cloudB", "chikou", "close", "open", "high", "low"),
                   dir = c("long", "short"),
                   type = 2) {
 
@@ -90,42 +90,45 @@ strat <- function(x,
   c1 <- match.arg(c1)
   c2 <- match.arg(c2)
   dir <- match.arg(dir)
-  xlen <- dim(x)[1L]
   p2 <- attr(x, "periods")[2L]
-  end <- xlen - p2 - 1L
-  offset <- p2 * (c1 == "chikou" || c2 == "chikou")
+
+  core <- coredata(x)
+  xlen <- dim(core)[1L]
+  end <- xlen - p2
+  offset <- (p2 - 1L) * (c1 == "chikou" || c2 == "chikou")
 
   if (missing(c3) || missing(c4) || (identical(c1, c3) && identical(c2, c4))) {
     strategy <- paste0(c1, " > ", c2)
-    x$cond <- c(rep(NA, offset), (x[, c1] > x[, c2])[1:(xlen - offset)])
-    x$posn <- c(NA, x[1:(end - 1L), "cond"], rep(NA, p2 + 1L))
+    cond <- c(rep(NA, offset), (core[, c1] > core[, c2])[1:(xlen - offset)])
+    posn <- c(NA, cond[1:(end - 1L)], rep(NA, p2))
 
   } else if (type == 2) {
     c3 <- match.arg(c3)
     c4 <- match.arg(c4)
     strategy <- paste0(c1, " > ", c2, " & ", c3, " > ", c4)
 
-    s1cond <- c(rep(NA, offset), (x[, c1] > x[, c2])[1:(xlen - offset)])
-    s1posn <- c(NA, s1cond[1:(end - 1L)], rep(NA, p2 + 1L))
+    s1cond <- c(rep(NA, offset), (core[, c1] > core[, c2])[1:(xlen - offset)])
+    s1posn <- c(NA, s1cond[1:(end - 1L)], rep(NA, p2))
     offset2 <- p2 * (c3 == "chikou" || c4 == "chikou")
-    s2cond <- c(rep(NA, offset2), (x[, c3] > x[, c4])[1:(xlen - offset2)])
-    s2posn <- c(NA, s2cond[1:(end - 1L)], rep(NA, p2 + 1L))
-    x$cond <- s1cond * s2cond
-    x$posn <- s1posn * s2posn
+    s2cond <- c(rep(NA, offset2), (core[, c3] > core[, c4])[1:(xlen - offset2)])
+    s2posn <- c(NA, s2cond[1:(end - 1L)], rep(NA, p2))
+    cond <- s1cond * s2cond
+    posn <- s1posn * s2posn
 
   } else if (type == 3) {
     c3 <- match.arg(c3)
     c4 <- match.arg(c4)
     strategy <- paste0(c1, " > ", c2, " x ", c3, " > ", c4)
 
-    s1cond <- c(rep(NA, offset), (x[, c1] > x[, c2])[1:(xlen - offset)])
-    s1posn <- c(NA, s1cond[1:(end - 1L)], rep(NA, p2 + 1L))
+    cond <- c(rep(NA, offset), (core[, c1] > core[, c2])[1:(xlen - offset)])
+    s1posn <- c(NA, cond[1:(end - 1L)], rep(NA, p2))
     s1txn <- c(NA, diff(s1posn))
     s1txn[s1posn == 1 & is.na(s1txn)] <- 1
     if (s1posn[end] == 1) s1txn[end + 1L] <- -1
-    offset2 <- p2 * (c3 == "chikou" || c4 == "chikou")
-    s2cond <- c(rep(NA, offset2), (x[, c3] > x[, c4])[1:(xlen - offset2)])
-    s2posn <- c(NA, s2cond[1:(end - 1L)], rep(NA, p2 + 1L))
+
+    offset2 <- (p2 - 1L) * (c3 == "chikou" || c4 == "chikou")
+    s2cond <- c(rep(NA, offset2), (core[, c3] > core[, c4])[1:(xlen - offset2)])
+    s2posn <- c(NA, s2cond[1:(end - 1L)], rep(NA, p2))
     s2txn <- c(NA, diff(s2posn))
     s2txn[s2posn == 1 & is.na(s2txn)] <- 1
     if (s2posn[end] == 1) s2txn[end + 1L] <- -1
@@ -133,19 +136,37 @@ strat <- function(x,
     s1entry <- which(s1txn == 1)
     s2exit <- which(s2txn == 1)
     s2exit <- s2exit[s2exit > s1entry[1L]]
-    position <- integer(xlen)
-    position[is.na(s1posn)] <- NA
+
+    posn <- integer(xlen)
+    posn[is.na(s1posn)] <- NA
     while (length(s1entry) > 0 && length(s2exit) > 0) {
-      position[s1entry[1L]:(s2exit[1L] - 1L)] <- 1L
+      posn[s1entry[1L]:(s2exit[1L] - 1L)] <- 1L
       s1entry <- s1entry[s1entry > s2exit[1L]]
       s2exit <- s2exit[s2exit > s1entry[1L]]
     }
-    x$cond <- s1cond
-    x$posn <- position
 
   } else stop("Invalid type specified", call. = FALSE)
 
-  writeStrat(x = x, strategy = strategy, dir = dir, xlen = xlen, p2 = p2, end = end)
+  txn <- c(NA, diff(posn))
+  txn[posn == 1 & is.na(txn)] <- 1
+  if (posn[end] == 1) txn[end + 1L] <- -1
+  if (!sum(txn, na.rm = TRUE) == 0) stop("Calculation error - please check validity of data",
+                                         call. = FALSE)
+
+  logret <- c(diff(log(core[, "open"])), NA)
+  if (dir == "short") logret <- -logret
+  logret[is.na(posn)] <- NA
+  slogret <- logret * posn
+
+  x$cond <- cond
+  x$posn <- posn
+  x$txn <- txn
+  x$logret <- logret
+  x$slogret <- slogret
+  x$ret <- exp(logret) - 1
+  x$sret <- exp(slogret) - 1
+
+  writeStrat(x = x, strategy = strategy, dir = dir)
 
 }
 
@@ -154,12 +175,9 @@ strat <- function(x,
 #' Internal function used by ichimoku to write strategy summaries to ichimoku
 #'     objects.
 #'
-#' @param x an ichimoku object.
+#' @param x an ichimoku object augmented with strategy columns.
 #' @param strategy string describing strategy rule.
 #' @param dir trade direction, either 'long' or 'short'.
-#' @param xlen integer number of rows of 'x'.
-#' @param p2 integer medium cloud period.
-#' @param end integer position of end date in index.
 #'
 #' @return An ichimoku object with the strategy summary set as the attribute
 #'     'strat'.
@@ -169,18 +187,15 @@ strat <- function(x,
 #'
 #' @keywords internal
 #'
-writeStrat <- function(x, strategy, dir, xlen, p2, end) {
+writeStrat <- function(x, strategy, dir) {
 
-  x$txn <- diff(x$posn)
-  x[x$posn == 1 & is.na(x$txn), "txn"] <- 1
-  if (x[end, "posn"] == 1) x[end + 1L, "txn"] <- -1
-  x$logret <- c(diff(log(coredata(x$open))), NA)
-  if (dir == "short") x$logret <- -x$logret
-  x$logret[is.na(x$posn)] <- NA
-  x$slogret <- x$logret * x$posn
-  x$ret <- exp(x$logret) - 1
-  x$sret <- exp(x$slogret) - 1
-  start <- xlen - length(x[!is.na(x$posn), "posn"]) - p2
+  p2 <- attr(x, "periods")[2L]
+  index <- index(x)
+  core <- coredata(x)
+  xlen <- dim(core)[1L]
+  start <- xlen - sum(!is.na(core[, "posn"])) - p2 + 1L
+  end <- xlen - p2
+
   trades <- (coredata(x[x$txn == -1, "open"]) - coredata(x[x$txn == 1, "open"])) /
     coredata(x[x$txn == 1, "open"])
   tlen <- length(trades)
@@ -188,21 +203,21 @@ writeStrat <- function(x, strategy, dir, xlen, p2, end) {
   structure(x, strat = cbind(list(
     Strategy = strategy,
     `---------------------` = "----------",
-    `Strategy cuml return %` = round((exp(sum(x[start:end, "slogret"])) - 1) * 100, 2),
-    `Per period mean ret %` = round((exp(mean(x[start:end, "slogret"])) - 1) * 100, 4),
-    `Periods in market` = sum(x[start:end, "posn"]),
+    `Strategy cuml return %` = round((exp(sum(core[start:end, "slogret"])) - 1) * 100, 2),
+    `Per period mean ret %` = round((exp(mean(core[start:end, "slogret"])) - 1) * 100, 4),
+    `Periods in market` = sum(core[start:end, "posn"]),
     `Total trades` = tlen,
-    `Average trade length` = round(sum(x[start:end, "posn"]) / tlen, 2),
+    `Average trade length` = round(sum(core[start:end, "posn"]) / tlen, 2),
     `Trade success %` = round(length(trades[trades > 0]) / tlen * 100, 2),
     `Worst trade ret %` = round(min(trades) * 100, 2),
     `---------------------` = "----------",
-    `Benchmark cuml ret %` = round((exp(sum(x[start:end, "logret"])) - 1) * 100, 2),
-    `Per period mean ret %` =  round((exp(mean(x[start:end, "logret"])) - 1) * 100, 4),
+    `Benchmark cuml ret %` = round((exp(sum(core[start:end, "logret"])) - 1) * 100, 2),
+    `Per period mean ret %` =  round((exp(mean(core[start:end, "logret"])) - 1) * 100, 4),
     `Periods in market` = end - start + 1L,
     `---------------------` = "----------",
     Direction = dir,
-    Start = index(x)[start],
-    End = index(x)[end],
+    Start = index[start],
+    End = index[end],
     Ticker = attr(x, "ticker")
     )))
 
@@ -234,7 +249,7 @@ writeStrat <- function(x, strategy, dir, xlen, p2, end) {
 #' @examples
 #' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 #' strat1 <- strat(cloud, c1 = "close", c2 = "kijun")
-#' strat2 <- strat(cloud, c1 = "cloudBase", c2 = "tenkan")
+#' strat2 <- strat(cloud, c1 = "cloudB", c2 = "tenkan")
 #' cstrat <- stratcombine(strat1, strat2)
 #' summary(cstrat)
 #' plot(cstrat)
@@ -246,26 +261,39 @@ stratcombine <- function(s1, s2) {
   if (!is.ichimoku(s1) || !is.ichimoku(s2) || !hasStrat(s1) || !hasStrat(s2)) {
     stop("stratcombine() only works on ichimoku objects containing strategies", call. = FALSE)
   }
-  if (!identical(coredata(s1[, 1:4]), coredata(s2[, 1:4]))) {
+  core1 <- coredata(s1)
+  core2 <- coredata(s2)
+  if (!identical(core1[, 1:4], core2[, 1:4])) {
     stop("Strategies must be for the same data", call. = FALSE)
   }
   dir <- attr(s1, "strat")["Direction", ][[1]]
   if (!identical(dir, attr(s2, "strat")["Direction", ][[1]])) {
     stop("Trade direction must be the same for all strategies", call. = FALSE)
   }
-
   strat1 <- attr(s1, "strat")["Strategy", ][[1]]
   strat2 <- attr(s2, "strat")["Strategy", ][[1]]
   if (identical(strat1, strat2)) return(s1)
 
   strategy <- paste0(strat1, " & ", strat2)
-  xlen <- dim(s1)[1L]
   p2 <- attr(s1, "periods")[2L]
-  end <- xlen - p2 - 1L
-  s1$cond <- s1$cond * s2$cond
-  s1$posn <- s1$posn * s2$posn
+  xlen <- dim(core1)[1L]
+  end <- xlen - p2
 
-  writeStrat(x = s1, strategy = strategy, dir = dir, xlen = xlen, p2 = p2, end = end)
+  cond <- core1[, "cond"] * core2[, "cond"]
+  posn <- core1[, "posn"] * core2[, "posn"]
+  txn <- c(NA, diff(posn))
+  txn[posn == 1 & is.na(txn)] <- 1
+  if (posn[end] == 1) txn[end + 1L] <- -1
+  if (!sum(txn, na.rm = TRUE) == 0) stop("Calculation error - please check validity of data",
+                                         call. = FALSE)
+
+  s1$cond <- cond
+  s1$posn <- posn
+  s1$txn <- txn
+  s1$slogret <- s1$logret * posn
+  s1$sret <- exp(s1$slogret) - 1
+
+  writeStrat(x = s1, strategy = strategy, dir = dir)
 
 }
 

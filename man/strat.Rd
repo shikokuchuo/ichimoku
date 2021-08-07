@@ -7,12 +7,12 @@
 strat(
   x,
   c1 = c("close", "chikou", "open", "high", "low", "tenkan", "kijun", "senkouA",
-    "senkouB", "cloudTop", "cloudBase"),
-  c2 = c("tenkan", "kijun", "senkouA", "senkouB", "cloudTop", "cloudBase", "chikou",
+    "senkouB", "cloudT", "cloudB"),
+  c2 = c("tenkan", "kijun", "senkouA", "senkouB", "cloudT", "cloudB", "chikou",
     "close", "open", "high", "low"),
   c3 = c("close", "chikou", "open", "high", "low", "tenkan", "kijun", "senkouA",
-    "senkouB", "cloudTop", "cloudBase"),
-  c4 = c("tenkan", "kijun", "senkouA", "senkouB", "cloudTop", "cloudBase", "chikou",
+    "senkouB", "cloudT", "cloudB"),
+  c4 = c("tenkan", "kijun", "senkouA", "senkouB", "cloudT", "cloudB", "chikou",
     "close", "open", "high", "low"),
   dir = c("long", "short"),
   type = 2

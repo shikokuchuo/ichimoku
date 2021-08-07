@@ -31,7 +31,7 @@ filename <- tempfile()
 ichimoku_write(cloud, filename)
 
 restored <- ichimoku_read(filename)
-all.equal(cloud, restored)
+all.equal(cloud, restored, check.attributes = FALSE)
 unlink(filename)
 
 }

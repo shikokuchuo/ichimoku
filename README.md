@@ -48,6 +48,9 @@ Or the latest development version from the Github source:
 devtools::install_github("shikokuchuo/ichimoku")
 ```
 
+**Note:** ichimoku object specification (v1) released 2021-08-08 -
+please install build 0.3.51 or above to ensure compatibility.
+
 ## Example
 
 Load package and sample price data:
@@ -74,25 +77,25 @@ strategies:
 
 ``` r
 autostrat(cloud, n = 3)
-#>                        [,1]               [,2]                [,3]             
-#> Strategy               "senkouB > tenkan" "cloudBase > kijun" "senkouB > kijun"
-#> ---------------------  "----------"       "----------"        "----------"     
-#> Strategy cuml return % 14.72              11.96               11.7             
-#> Per period mean ret %  0.0886             0.0729              0.0714           
-#> Periods in market      57                 38                  57               
-#> Total trades           3                  3                   3                
-#> Average trade length   19                 12.67               19               
-#> Trade success %        66.67              66.67               66.67            
-#> Worst trade ret %      -0.31              -0.31               -0.31            
-#> ---------------------  "----------"       "----------"        "----------"     
-#> Benchmark cuml ret %   0.94               0.94                0.94             
-#> Per period mean ret %  0.006              0.006               0.006            
-#> Periods in market      155                155                 155              
-#> ---------------------  "----------"       "----------"        "----------"     
-#> Direction              "long"             "long"              "long"           
-#> Start                  2020-04-02         2020-04-02          2020-04-02       
-#> End                    2020-09-29         2020-09-29          2020-09-29       
-#> Ticker                 "TKR"              "TKR"               "TKR"
+#>                        [,1]               [,2]              [,3]             
+#> Strategy               "senkouB > tenkan" "cloudB > tenkan" "senkouB > kijun"
+#> ---------------------  "----------"       "----------"      "----------"     
+#> Strategy cuml return % 17.49              16.08             14.1             
+#> Per period mean ret %  0.0906             0.0838            0.0741           
+#> Periods in market      63                 51                64               
+#> Total trades           3                  3                 3                
+#> Average trade length   21                 17                21.33            
+#> Trade success %        100                100               100              
+#> Worst trade ret %      3.64               3.16              3.49             
+#> ---------------------  "----------"       "----------"      "----------"     
+#> Benchmark cuml ret %   5.53               5.53              5.53             
+#> Per period mean ret %  0.0302             0.0302            0.0302           
+#> Periods in market      178                178               178              
+#> ---------------------  "----------"       "----------"      "----------"     
+#> Direction              "long"             "long"            "long"           
+#> Start                  2020-04-01         2020-04-01        2020-04-01       
+#> End                    2020-10-29         2020-10-29        2020-10-29       
+#> Ticker                 "TKR"              "TKR"             "TKR"
 ```
 
 ## Principal ichimoku functions
@@ -147,11 +150,15 @@ autostrat(cloud, n = 3)
 
 ## References
 
+Sasaki, H. 佐々木 英信 (1996), *一目均衡表の研究 [ichimoku kinkouhyou
+no kenkyuu]*. Tokyo, Japan: Toushi Radar.
+
 ‘OANDA’ and ‘fxTrade’ are trademarks owned by OANDA Corporation, an
 entity unaffiliated with the ichimoku package.
 
-R package site: <https://shikokuchuo.net/ichimoku/>
-
-CRAN page: <https://CRAN.R-project.org/package=ichimoku>
+Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko
+Hyo Strategies*. R package version 0.3.51.
+<https://shikokuchuo.net/ichimoku/> CRAN page:
+<https://CRAN.R-project.org/package=ichimoku>
 
 Listed CRAN Finance Task View: <https://CRAN.R-project.org/view=Finance>

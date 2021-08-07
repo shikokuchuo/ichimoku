@@ -146,10 +146,8 @@ data2
 df_append(data1, data2)
 ```
 
-## Further Resources
+## References
 
-Package website: https://shikokuchuo.net/ichimoku/
-
-The most recent version of the package may be found at https://github.com/shikokuchuo/ichimoku/
+Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 0.3.51. https://shikokuchuo.net/ichimoku/ CRAN page: https://CRAN.R-project.org/package=ichimoku
 
 ---

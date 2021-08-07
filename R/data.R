@@ -3,13 +3,13 @@
 #' Simulated prices for a hypothetical financial asset. Created for the purpose
 #'     of demonstrating package functions in examples and vignettes only.
 #'
-#' @format A data frame with 234 observations of 5 variables:
+#' @format A data frame with 256 observations of 5 variables:
 #' \itemize{
-#'   \item{time}{ - timestamp of observation}
-#'   \item{open}{ - opening price}
-#'   \item{low}{ - low price}
-#'   \item{high}{ - high price}
-#'   \item{close}{ - closing price}
+#'   \item{time}{ - timestamp of observation [POSIXct]}
+#'   \item{open}{ - opening price [numeric]}
+#'   \item{low}{ - low price [numeric]}
+#'   \item{high}{ - high price [numeric]}
+#'   \item{close}{ - closing price [numeric]}
 #' }
 #'
 #' @usage sample_ohlc_data

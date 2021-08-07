@@ -7,7 +7,7 @@
 writeMatrix(x, pairs, p2, xlen, type)
 }
 \arguments{
-\item{x}{an ichimoku object.}
+\item{x}{an ichimoku object or coredata matrix of an ichimoku object.}
 
 \item{pairs}{a 2-column matrix of pairs of column names.}
 

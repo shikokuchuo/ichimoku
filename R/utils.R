@@ -113,11 +113,11 @@ df_trim <- function(x) {
 #' @export
 #'
 xts_df <- function(x) {
-  cdata <- coredata(x)
-  dims <- dim(cdata)
-  structure(c(list(index(x)), lapply(seq_len(dims[2L]), function(i) cdata[, i])),
+  core <- coredata(x)
+  dims <- dim(core)
+  structure(c(list(index(x)), lapply(seq_len(dims[2L]), function(i) core[, i])),
             class = "data.frame",
-            names = c("index", dimnames(cdata)[[2L]]),
+            names = c("index", dimnames(core)[[2L]]),
             row.names = seq_len(dims[1L]))
 }
 

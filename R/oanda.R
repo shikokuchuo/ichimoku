@@ -192,11 +192,11 @@ getPrices <- function(instrument, granularity, count, from, to, price,
   resp <- curl_fetch_memory(url = url, handle = h)
 
   if (resp$status_code != 200L) stop("code ", resp$status_code, " - ",
-                                     fparse(resp$content), call. = FALSE)
+                                     fromJSON(rawToChar(resp$content)), call. = FALSE)
   headers <- rawToChar(resp$headers)
   hdate <- strsplit(headers, "date: | GMT", perl = TRUE)[[1]][2]
   timestamp <- as.POSIXct.POSIXlt(strptime(hdate, format = "%a, %d %b %Y %H:%M:%S", tz = "GMT"))
-  data <- fparse(resp$content, query = "/candles")
+  data <- fromJSON(rawToChar(resp$content))$candles
 
   time <- strptime(data[, 3L], format = "%Y-%m-%dT%H:%M:%S", tz = "GMT")
   if (!missing(.validate) && .validate == FALSE) {
@@ -225,7 +225,7 @@ getPrices <- function(instrument, granularity, count, from, to, price,
     time <- time + periodicity
   }
 
-  ohlc <- matrix(as.numeric(unlist(data[, 4L], use.names = FALSE)), ncol = 4L, byrow = TRUE)
+  ohlc <- data[, 4L]
 
   structure(list(time = time,
                  open = ohlc[, 1L],
@@ -406,7 +406,7 @@ oanda_chart <- function(instrument,
 
   message("Chart updating every ", refresh, " secs in graphical device... Press 'Esc' to return")
   while (TRUE) {
-    pdata <- ichimoku.data.frame(data, periods = periods, ...)[minlen:(xlen + p2), ]
+    pdata <- ichimoku.data.frame(data, periods = periods, ...)[minlen:(xlen + p2 - 1L), ]
     message <- paste(instrument, ptype, "price [",
                      data$close[xlen], "] at", attr(data, "timestamp"),
                      "| Chart:", ctype, "| Cmplt:", data$complete[xlen])
@@ -461,8 +461,8 @@ oanda_instruments <- function(server = c("practice", "live"), apikey) {
                         "User-Agent" = ichimoku_user_agent)
       resp <- curl_fetch_memory(url = url, handle = h)
       if (resp$status_code != 200L) stop("code ", resp$status_code, " - ",
-                                         fparse(resp$content), call. = FALSE)
-      data <- fparse(resp$content, query = "/instruments")
+                                         fromJSON(rawToChar(resp$content)), call. = FALSE)
+      data <- fromJSON(rawToChar(resp$content))$instruments
       cache <<- data[order(data[, 1L]), 1:3]
     }
     cache
@@ -497,8 +497,8 @@ oandaAccount <- function(server = c("practice", "live"), apikey) {
                         "User-Agent" = ichimoku_user_agent)
       resp <- curl_fetch_memory(url = url, handle = h)
       if (resp$status_code != 200L) stop("code ", resp$status_code, " - ",
-                                         fparse(resp$content), call. = FALSE)
-      data <- fparse(resp$content, query = "/accounts")
+                                         fromJSON(rawToChar(resp$content)), call. = FALSE)
+      data <- fromJSON(rawToChar(resp$content))$accounts
       cache <<- unlist(data, use.names = FALSE)[[1]]
     }
     cache
@@ -783,7 +783,7 @@ oanda_studio <- function(instrument = "USD_JPY",
         else idata()
       })
       xlen <- shiny::reactive(dim(data())[1L])
-      pdata <- shiny::reactive(ichimoku(data(), periods = periods, ...)[minlen:(xlen() + p2), ])
+      pdata <- shiny::reactive(ichimoku(data(), periods = periods, ...)[minlen:(xlen() + p2 - 1L), ])
       ticker <- shiny::reactive(paste(dispname(), "  |", input$instrument, ptype(), "price [",
                                       data()$close[xlen()], "] at", attr(data(), "timestamp"),
                                       "| Chart:", ctype(), "| Cmplt:", data()$complete[xlen()]))

@@ -21,17 +21,17 @@ knitr::opts_chunk$set(
 
 The system consists of the following chart lines added to a candlestick chart:
 
-1. **Tenkan-sen**: [conversion line] the mid-point of the highest high and lowest low for the past 9 periods
+1. 転換線 **Tenkan-sen** [conversion line]: the mid-point of the highest high and lowest low for the past 9 periods *(including the current period)*
 
-2. **Kijun-sen**: [base line] the mid-point of the highest high and lowest low for the past 26 periods
+2. 基準線 **Kijun-sen** [base line]: the mid-point of the highest high and lowest low for the past 26 periods *(including the current period)*
 
-3. **Senkou span A**: [leading span A] the mid-point of Tenkan-sen and Kijun-sen plotted ahead 26 periods
+3. 先行スパン1 **Senkou span A** [leading span A]: the mid-point of Tenkan-sen and Kijun-sen plotted ahead 26 periods *(including the current period)*
 
-4. **Senkou span B**: [leading span B] the mid-point of the highest high and lowest low for the past 52 periods, plotted ahead 26 periods
+4. 先行スパン2 **Senkou span B** [leading span B]: the mid-point of the highest high and lowest low for the past 52 periods *(including the current period)*, plotted ahead 26 periods *(including the current period)*
 
-5. **Chikou span**: [lagging span] the current closing price plotted 26 periods behind
+5. 遅行スパン **Chikou span** [lagging span]: the current period closing price plotted behind 26 periods *(including the current period)*
 
-The **kumo** [cloud] is the area between Senkou span A and Senkou span B (usually shaded on a chart).
+The 雲 **kumo** [cloud] is the area bounded by Senkou span A and Senkou span B (usually shaded on a chart).
 
 ### Interpretation
 
@@ -97,21 +97,31 @@ Optional arguments:
 - `periods` [default c(9, 26, 52)] a vector defining the length of periods used for the cloud. This parameter should not normally be modified as using other values would be invalid in the context of traditional Ichimoku analysis
 - `...` additional arguments, for instance 'holidays', passed along to `tradingDays()` for calculating the future cloud on daily data
 
-The returned object has the following specification:
+The returned ichimoku object has the following specification:
 
-- Index
-  + date-time index of class 'POSIXct'
+- Index:
+  + `index(object)` - date-time index [POSIXct]
 
-- Numeric matrix of 12 columns:
-  + open, high, low, close (candlestick values)
-  + cd (candle direction -1 = down, 0 = flat, 1 = up)
-  + tenkan, kijun, senkouA, senkouB, chikou (ichimoku cloud values)
-  + cloudTop, cloudBase (note: these are simply the respective max and min of SenkouA and SenkouB at each point in time)
+- Columns [numeric]:
+  + `object$open` - opening price
+  + `$high` - high price
+  + `$low` - low price
+  + `$close` - closing price
+  + `$cd` - candle direction (-1 = down, 0 = flat, 1 = up)
+  + `$tenkan` - Tenkan-sen
+  + `$kijun` - Kijun-sen
+  + `$senkouA` - Senkou span A
+  + `$senkouB` - Senkou span B
+  + `$chikou` - Chikou span
+  + `$cloudT` - cloud Top (max of senkouA, senkouB)
+  + `$cloudB` - cloud (min of senkouA, senkouB)
 
 - Attributes:
-  + periods (vector of periods used for calculating the cloud values)
-  + periodicity (periodicity of the data in seconds)
-  + ticker (identifier set by default to the input object name or overridden by specifying the 'ticker' argument to `ichimoku()`)
+  + `attributes(object)$periods` - parameters used to calculate the cloud [integer vector of length 3]
+  + `$periodicity` - periodicity of the data in seconds [numeric]
+  + `$ticker` - instrument identifier [character]
+  
+The ticker is set by default to the input object name or can be overridden by specifying the 'ticker' argument to `ichimoku()`.
 
 ```{r ichimoku}
 cloud <- ichimoku(TKR)
@@ -243,7 +253,7 @@ quantmod::getSymbols("C") %>% ichimoku() %>% plot()
 
 ### Reading external data into R
 
-For reading data in the 'json' format, which is commonly returned by web APIs, the `fparse()` function from the 'RcppSimdJson' package is extremely performant. The function takes json strings as well as raw vectors directly. 'RcppSimdJson' is a dependency of ichimoku.
+For reading data in the 'json' format, which is commonly returned by web APIs, the `fromJSON()` function from the 'jsonlite' package is fairly ubiquitous. The function takes json strings so any raw vectors should first be wrapped in `rawToChar()`. 'jsonlite' is a dependency of ichimoku.
 
 If an external data file employs a custom delimited format, the 'data.table' package contains the `fread()` function, which is often successful on default settings. Otherwise, `read_delim_arrow()` from the 'arrow' package may provide an even more performant alternative.
 
@@ -285,6 +295,7 @@ There may however still be other issues with the input data that prevent cloud v
 
 #### Since version 0.3
 
+- The ichimoku object specification has been updated in version 0.3.6. ichimoku objects created in versions prior to 0.3.6 will no longer work correctly with newer versions of the package. Please run `ichimoku()` on all old objects to re-create the object according to the new specification (all data is preserved)
 - The following functions are no longer exported: `maxOver()`, `minOver()`, `oanda_accounts()`.
 
 #### Since version 0.2
@@ -313,23 +324,24 @@ The dependency on other packages is designed to be minimised to the extent possi
 
 - ggplot2 - the widely-used R graphics system for visualization
 - rlang - R language requirement arising from the use of 'ggplot2'
-- xts - ichimoku shares the 'xts' format for time series
-- zoo - 'xts' is built on top of 'zoo'
+- xts - ichimoku object specification is based on the 'xts' format for time series
+- zoo - 'xts' is built on 'zoo' technology
 - curl - for interfacing with external APIs
-- RcppSimdJson - for processing data retrieved from external APIs
+- jsonlite - for parsing data retrieved from external APIs
 
 Optional:
 
-- shiny, bslib - for interactive visualizations
-- arrow - for archiving ichimoku objects as Apache Arrow files
+- shiny - a reactive framework for interactive visualizations
+- bslib - for visual customisation of 'shiny' applications
+- arrow - allows archiving of ichimoku objects as Apache Arrow files
 - keyring - for saving API keys in the system credential store
 
 The 'cpp11' package provides the C++ interface for the fast window functions, but the headers used are 'vendored' within ichimoku to ensure stability (as is permitted by 'cpp11') so there is no ongoing dependency.
 
-## Further Resources
+## References
 
-Package website: https://shikokuchuo.net/ichimoku/
+Sasaki, H. 佐々木 英信 (1996), *一目均衡表の研究 [ichimoku kinkouhyou no kenkyuu]*. Tokyo, Japan: Toushi Radar.
 
-The most recent version of the package may be found at https://github.com/shikokuchuo/ichimoku/
+Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 0.3.51. https://shikokuchuo.net/ichimoku/ CRAN page: https://CRAN.R-project.org/package=ichimoku
 
 ---

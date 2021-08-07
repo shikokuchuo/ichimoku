@@ -42,19 +42,14 @@ Ichimoku analysis.}
 \value{
 An ichimoku object is returned with S3 classes of 'ichimoku', 'xts'
     and 'zoo'.
-
-    This object contains a date-time index, OHLC pricing data, candle
-    direction, the computed ichimoku cloud values, and cloud top and base
-    values, with ticker, periods, and periodicity parameters set as
-    attributes.
 }
 \description{
 Create an ichimoku object containing the values for all components of the
-    Ichimoku Kinko Hyo cloud chart, ready for visualization and quantitative
-    analysis. The object includes a date-time index, OHLC pricing data,
+    Ichimoku Kinko Hyo cloud chart for visualization and further quantitative
+    analysis. The object encapsulates a date-time index, OHLC pricing data,
     candle direction, the cloud lines Tenkan-sen, Kijun-sen, Senkou span A,
     Senkou span B and Chikou span, as well as values for the cloud top and
-    base.
+    cloud base.
 }
 \details{
 Calling an ichimoku object automatically invokes its print method,
@@ -68,6 +63,38 @@ Calling an ichimoku object automatically invokes its print method,
     Where an ichimoku object is passed to ichimoku(), the ichimoku object is
     re-calculated using the OHLC pricing data contained within.
 }
+\section{Object Specification}{
+
+
+    Index:
+    \itemize{
+        \item{\code{index(object)}:} {date-time index [POSIXct]}
+        }
+    Columns [numeric]:
+    \itemize{
+        \item{\code{object$open}:} {opening price}
+        \item{\code{$high}:} {high price}
+        \item{\code{$low}:} {low price}
+        \item{\code{$close}:} {closing price}
+        \item{\code{$cd}:} {candle direction (-1 = down, 0 = flat, 1 = up)}
+        \item{\code{$tenkan}:} {Tenkan-sen}
+        \item{\code{$kijun}:} {Kijun-sen}
+        \item{\code{$senkouA}:} {Senkou span A}
+        \item{\code{$senkouB}:} {Senkou span B}
+        \item{\code{$chikou}:} {Chikou span}
+        \item{\code{$cloudT}:} {cloud Top (max of senkouA, senkouB)}
+        \item{\code{$cloudB}:} {cloud Base (min of senkouA, senkouB)}
+        }
+    Attributes:
+    \itemize{
+        \item{\code{attributes(object)$periods}:} { parameters used to
+        calculate the cloud [integer vector of length 3]}
+        \item{\code{$periodicity}:} { periodicity of the
+        data in seconds [numeric]}
+        \item{\code{$ticker}:} { instrument identifier [character]}
+        }
+}
+
 \section{Further Details}{
 
     Please refer to the reference vignette by running:

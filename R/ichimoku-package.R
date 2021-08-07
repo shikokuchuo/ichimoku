@@ -46,28 +46,30 @@
 #'     \item{\code{\link{mlgrid}}} {to generate a numeric representation of the
 #'     relationship between ichimoku cloud chart elements.}
 #' }
-#'
+#' @encoding UTF-8
 #' @author Charlie Gao <\email{charlie.gao@@shikokuchuo.net}>
-#' @references 'OANDA' and 'fxTrade' are trademarks owned by OANDA Corporation,
-#'     an entity unaffiliated with the ichimoku package.
+#' @references Sasaki, H. 佐々木 英信 (1996), \emph{一目均衡表の研究
+#'     [ichimoku kinkouhyou no kenkyuu]}. Tokyo, Japan: Toushi Radar.
 #'
-#'     Package website:
-#'     \url{https://shikokuchuo.net/ichimoku/}
+#'     OANDA' and 'fxTrade' are trademarks owned by OANDA Corporation, an entity
+#'     unaffiliated with the ichimoku package.
 #'
-#'     The most recent version of the package may be found at
-#'     \url{https://github.com/shikokuchuo/ichimoku/}
+#'     Gao, C. (2021), \emph{ichimoku: Visualization and Tools for Ichimoku
+#'     Kinko Hyo Strategies}. R package version 0.3.51.
+#'     \url{https://shikokuchuo.net/ichimoku/} CRAN page:
+#'     \url{https://CRAN.R-project.org/package=ichimoku}
 #'
 #' @useDynLib ichimoku, .registration = TRUE
+#' @importFrom xts xts
+#' @importFrom zoo index coredata
 #' @importFrom ggplot2 ggplot aes geom_ribbon geom_line geom_segment geom_rect
 #'     scale_color_manual scale_fill_manual guides scale_x_datetime
 #'     scale_x_continuous scale_y_continuous labs theme_light theme element_rect
 #'     element_line element_text
 #' @importFrom rlang .data
-#' @importFrom xts xts
-#' @importFrom zoo index coredata
 #' @importFrom curl curl_fetch_memory curl_fetch_stream new_handle
 #'     handle_setheaders
-#' @importFrom RcppSimdJson fparse
+#' @importFrom jsonlite fromJSON
 #'
 #' @docType package
 #' @name ichimoku-package

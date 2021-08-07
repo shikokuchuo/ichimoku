@@ -5,13 +5,13 @@
 \alias{sample_ohlc_data}
 \title{Sample OHLC Price Data}
 \format{
-A data frame with 234 observations of 5 variables:
+A data frame with 256 observations of 5 variables:
 \itemize{
-  \item{time}{ - timestamp of observation}
-  \item{open}{ - opening price}
-  \item{low}{ - low price}
-  \item{high}{ - high price}
-  \item{close}{ - closing price}
+  \item{time}{ - timestamp of observation [POSIXct]}
+  \item{open}{ - opening price [numeric]}
+  \item{low}{ - low price [numeric]}
+  \item{high}{ - high price [numeric]}
+  \item{close}{ - closing price [numeric]}
 }
 }
 \source{

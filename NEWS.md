@@ -1,3 +1,10 @@
+# ichimoku 0.3.51
+
+* **ichimoku object specification release (v1): **
+* Please upgrade to the latest version of ichimoku.
+* ichimoku objects created in versions prior to 0.3.51 will no longer work correctly with newer versions of the package.
+* `ichimoku()` can be called on previous objects to re-create the objects according to the v1 specification.
+
 # ichimoku 0.3.5
 
 * **New features:**
@@ -15,9 +22,10 @@
 * `oanda_chart()` and `oanda_studio()` add explicit support for the 'periods' argument passed to `ichimoku()`.
 * `oanda_chart()` now passes on additional parameters to `autoplot()`.
 * `ichimoku()` now enforces data types on the price data for higher certainty of success, and has more robust handling of matrices and 'data.frame' compatible formats such as 'tibble'.
-* Package dependencies switched to 'curl' and 'RcppSimdJson' from 'httr' and 'jsonlite', providing performance gains in the OANDA fxTrade API interface.
+* Package dependency 'httr' switched to 'curl' providing performance gains in the OANDA fxTrade API interface.
 * ichimoku now employs a vendored version of 'cpp11' 0.3.1 headers which allows for enhanced stability and faster package compilation. Removed dependency on the 'Rcpp' package.
 * The following functions are no longer exported to keep the package tidy: `maxOver()`, `minOver()`, `oanda_accounts()`.
+* `sample_ohlc_data` slightly lengthened to better demonstrate strat features.
 * Miscellaneous performance optimisations.
 * Documentation updates.
 

@@ -99,7 +99,7 @@ A summary of the strategy is saved as an attribute to the ichimoku object and ca
 summary(strat)
 ```
 
-The summary is meant to provide a quick overview of whether a strategy is effective / desirable:
+The summary is designed to provide a quick overview of whether a strategy is effective / desirable:
 
 - Strategy returns are compared with the benchmark, which is simply being in the market the entire time
 - Comparing returns combined with total periods in the market can help determine if the strategy is substantially different from just taking market risk
@@ -124,7 +124,7 @@ To view the original chart without the strategy, simply pass the argument `strat
 `stratcombine()` can be used to create custom combined strategies from existing strategies contained in 's1' and 's2' to form 's1 & s2'.
 
 ```{r combine}
-strat2 <- strat(cloud, "cloudBase", "kijun")
+strat2 <- strat(cloud, "cloudB", "kijun")
 
 newstrat <- stratcombine(strat, strat2)
 summary(newstrat)
@@ -172,7 +172,7 @@ The metadata is also saved as attributes to the list and can be accessed by the 
 
 Note: the strategies returned may not be in perfect order of strategy returns. This is due to the fact that the implementation via `mlgrid()` simultaneously tests all strategies using the same time interval for comparability. However individual strategies are then run on the top 'n' strategies using all of the available data for those indicators, which may be more than that used during comparison.
 
-Note: as SenkouA, SenkouB, cloudTop and cloudBase are used in conjunction with other indicators, it is possible to get a series of similar returns with cloudBase > c2, senkouB > c2 etc. Although these strategies may at times be equivalent or considered equivalent, this is not always the case and ichimoku presents all such results.
+Note: as SenkouA, SenkouB, cloudT and cloudB are used in conjunction with other indicators, it is possible to get a series of similar returns with cloudB > c2, senkouB > c2 etc. Although these strategies may at times be equivalent or considered equivalent, this is not always the case and ichimoku presents all such results.
 
 ### `autostrat()` Levels 2 and 3
 
@@ -248,7 +248,7 @@ mlgrid(cloud, y = "logret", dir = "long", type = "boolean", unique = TRUE)[100:1
 mlgrid(cloud, y = "ret", dir = "short", type = "numeric", unique = FALSE)[100:105, 1:4]
 ```
 
-Note: only valid combinations are included within the grid. This means excluding any combination involving 'open' as it is in effect a lagged indicator and not contemporaneous. The following trivial or highly-collinear pairs are also excluded: {high, close} ,{low, close}, {low, high}, {cloudTop, Senkou A}, {cloudBase, senkou A}, {cloudTop, senkouB}, {cloudBase, senkouB}, {cloudBase, cloudTop}.
+Note: only valid combinations are included within the grid. This means excluding any combination involving 'open' as it is in effect a lagged indicator and not contemporaneous. The following trivial or highly-collinear pairs are also excluded: {high, close} ,{low, close}, {low, high}, {cloudT, senkouA}, {cloudB, senkouA}, {cloudT, senkouB}, {cloudB, senkouB}, {cloudB, cloudT}.
 
 ### `look()`
 
@@ -260,10 +260,10 @@ look(cloud)
 look(strat)
 ```
 
-## Further Resources
+## References
 
-Package website: https://shikokuchuo.net/ichimoku/
+Sasaki, H. 佐々木 英信 (1996), *一目均衡表の研究 [ichimoku kinkouhyou no kenkyuu]*. Tokyo, Japan: Toushi Radar.
 
-The most recent version of the package may be found at https://github.com/shikokuchuo/ichimoku/
+Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 0.3.51. https://shikokuchuo.net/ichimoku/ CRAN page: https://CRAN.R-project.org/package=ichimoku
 
 ---

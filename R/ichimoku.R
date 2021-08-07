@@ -3,11 +3,11 @@
 #' ichimoku
 #'
 #' Create an ichimoku object containing the values for all components of the
-#'     Ichimoku Kinko Hyo cloud chart, ready for visualization and quantitative
-#'     analysis. The object includes a date-time index, OHLC pricing data,
+#'     Ichimoku Kinko Hyo cloud chart for visualization and further quantitative
+#'     analysis. The object encapsulates a date-time index, OHLC pricing data,
 #'     candle direction, the cloud lines Tenkan-sen, Kijun-sen, Senkou span A,
 #'     Senkou span B and Chikou span, as well as values for the cloud top and
-#'     base.
+#'     cloud base.
 #'
 #' @param x a data.frame or other compatible object, which includes xts,
 #'     data.table, tibble, matrix, and Arrow tabular formats.
@@ -23,10 +23,35 @@
 #' @return An ichimoku object is returned with S3 classes of 'ichimoku', 'xts'
 #'     and 'zoo'.
 #'
-#'     This object contains a date-time index, OHLC pricing data, candle
-#'     direction, the computed ichimoku cloud values, and cloud top and base
-#'     values, with ticker, periods, and periodicity parameters set as
-#'     attributes.
+#' @section Object Specification:
+#'
+#'     Index:
+#'     \itemize{
+#'         \item{\code{index(object)}:} {date-time index [POSIXct]}
+#'         }
+#'     Columns [numeric]:
+#'     \itemize{
+#'         \item{\code{object$open}:} {opening price}
+#'         \item{\code{$high}:} {high price}
+#'         \item{\code{$low}:} {low price}
+#'         \item{\code{$close}:} {closing price}
+#'         \item{\code{$cd}:} {candle direction (-1 = down, 0 = flat, 1 = up)}
+#'         \item{\code{$tenkan}:} {Tenkan-sen}
+#'         \item{\code{$kijun}:} {Kijun-sen}
+#'         \item{\code{$senkouA}:} {Senkou span A}
+#'         \item{\code{$senkouB}:} {Senkou span B}
+#'         \item{\code{$chikou}:} {Chikou span}
+#'         \item{\code{$cloudT}:} {cloud Top (max of senkouA, senkouB)}
+#'         \item{\code{$cloudB}:} {cloud Base (min of senkouA, senkouB)}
+#'         }
+#'     Attributes:
+#'     \itemize{
+#'         \item{\code{attributes(object)$periods}:} { parameters used to
+#'         calculate the cloud [integer vector of length 3]}
+#'         \item{\code{$periodicity}:} { periodicity of the
+#'         data in seconds [numeric]}
+#'         \item{\code{$ticker}:} { instrument identifier [character]}
+#'         }
 #'
 #' @details Calling an ichimoku object automatically invokes its print method,
 #'     which will by default produce a printout of the data to the console as
@@ -147,37 +172,38 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), ...) {
   cd <- numeric(xlen)
   cd[open < close] <- 1
   cd[open > close] <- -1
+
   tenkan <- (maxOver(high, p1) + minOver(low, p1)) / 2
   kijun <- (maxOver(high, p2) + minOver(low, p2)) / 2
   senkouA <- (tenkan + kijun) / 2
   senkouB <- (maxOver(high, p3) + minOver(low, p3)) / 2
-  chikou <- c(close[(p2 + 1L):xlen], rep(NA, p2))
-  cloudTop <- pmax.int(senkouA, senkouB)
-  cloudBase <- pmin.int(senkouA, senkouB)
+  chikou <- c(close[p2:xlen], rep(NA, p2 - 1L))
+  cloudT <- pmax.int(senkouA, senkouB)
+  cloudB <- pmin.int(senkouA, senkouB)
 
   periodicity <- min(diff.POSIXt(index[1:4]))
   future <- switch(attr(periodicity, "units"),
                    days = {
                      seq <- seq.POSIXt(from = index[length(index)], by = periodicity,
                                        length.out = p2 + p2)[-1L]
-                     seq[tradingDays(seq, ...)][1:p2]
+                     seq[tradingDays(seq, ...)][1:(p2 - 1L)]
                      },
                    seq.POSIXt(from = index[length(index)], by = periodicity,
-                              length.out = p2 + 1L)[-1L])
+                              length.out = p2)[-1L])
 
   cloud <- xts(cbind(
-    open = c(open, rep(NA, p2)),
-    high = c(high, rep(NA, p2)),
-    low = c(low, rep(NA, p2)),
-    close = c(close, rep(NA, p2)),
-    cd = c(cd, rep(NA, p2)),
-    tenkan = c(tenkan, rep(NA, p2)),
-    kijun = c(kijun, rep(NA, p2)),
-    senkouA = c(rep(NA, p2), senkouA),
-    senkouB = c(rep(NA, p2), senkouB),
-    chikou = c(chikou, rep(NA, p2)),
-    cloudTop = c(rep(NA, p2), cloudTop),
-    cloudBase = c(rep(NA, p2), cloudBase)
+    open = c(open, rep(NA, p2 - 1L)),
+    high = c(high, rep(NA, p2 - 1L)),
+    low = c(low, rep(NA, p2 - 1L)),
+    close = c(close, rep(NA, p2 - 1L)),
+    cd = c(cd, rep(NA, p2 - 1L)),
+    tenkan = c(tenkan, rep(NA, p2 - 1L)),
+    kijun = c(kijun, rep(NA, p2 - 1L)),
+    senkouA = c(rep(NA, p2 - 1L), senkouA),
+    senkouB = c(rep(NA, p2 - 1L), senkouB),
+    chikou = c(chikou, rep(NA, p2 - 1L)),
+    cloudT = c(rep(NA, p2 - 1L), cloudT),
+    cloudB = c(rep(NA, p2 - 1L), cloudB)
   ), order.by = c(index, future))
 
   structure(cloud,
@@ -332,8 +358,8 @@ autoplot.ichimoku <- function(object,
                     xmax = .data$posn * (.data$idx + 0.5),
                     ymin = -Inf, ymax = Inf), fill = pal[1L], alpha = 0.2, na.rm = TRUE)
     },
-    if (!all(is.na(data$cloudTop))) {
-      geom_ribbon(aes(ymax = .data$cloudTop, ymin = .data$cloudBase),
+    if (!all(is.na(data$senkouB))) {
+      geom_ribbon(aes(ymax = .data$senkouA, ymin = .data$senkouB),
                   fill = pal[1L], alpha = 0.6, na.rm = TRUE)
     },
     geom_line(aes(y = .data$senkouA), col = pal[2L], alpha = 0.6, na.rm = TRUE),
@@ -473,8 +499,8 @@ gplot <- function(object,
   data$cd <- as.character(data$cd)
 
   layers <- list(
-    if (!all(is.na(data$cloudTop))) {
-      geom_ribbon(aes(ymax = .data$cloudTop, ymin = .data$cloudBase),
+    if (!all(is.na(data$senkouB))) {
+      geom_ribbon(aes(ymax = .data$senkouA, ymin = .data$senkouB),
                   fill = pal[1L], alpha = 0.6, na.rm = TRUE)
     },
     geom_line(aes(y = .data$senkouA), col = pal[2L], alpha = 0.6, na.rm = TRUE),

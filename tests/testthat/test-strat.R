@@ -1,6 +1,6 @@
 cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
-strat <- strat(cloud, c1 = "chikou", c2 = "cloudTop", dir = "long")
-strat2 <- strat(cloud, c1 = "chikou", c2 = "cloudTop", c3 = "chikou", c4 = "cloudTop", dir = "long")
+strat <- strat(cloud, c1 = "chikou", c2 = "cloudT", dir = "long")
+strat2 <- strat(cloud, c1 = "chikou", c2 = "cloudT", c3 = "chikou", c4 = "cloudT", dir = "long")
 stratlist <- autostrat(cloud, n = 2, dir = "short", level = 2)
 grid <- mlgrid(strat, y = "ret", type = "numeric")
 

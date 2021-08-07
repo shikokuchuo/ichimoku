@@ -4,20 +4,14 @@
 \alias{writeStrat}
 \title{writeStrat}
 \usage{
-writeStrat(x, strategy, dir, xlen, p2, end)
+writeStrat(x, strategy, dir)
 }
 \arguments{
-\item{x}{an ichimoku object.}
+\item{x}{an ichimoku object augmented with strategy columns.}
 
 \item{strategy}{string describing strategy rule.}
 
 \item{dir}{trade direction, either 'long' or 'short'.}
-
-\item{xlen}{integer number of rows of 'x'.}
-
-\item{p2}{integer medium cloud period.}
-
-\item{end}{integer position of end date in index.}
 }
 \value{
 An ichimoku object with the strategy summary set as the attribute

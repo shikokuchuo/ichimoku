@@ -4,7 +4,7 @@ test_that("arrow archive functions ok", {
   filename <- tempfile()
   ichimoku_write(cloud, filename)
   restored <- ichimoku_read(filename)
-  expect_s3_class(restored, "ichimoku")
+  expect_equal(restored, cloud, ignore_attr = TRUE)
   expect_error(ichimoku_write(), "No object specified")
   expect_error(ichimoku_write(cloud), "must be specified")
   expect_error(ichimoku_write(sample_ohlc_data, filename), "ichimoku objects")

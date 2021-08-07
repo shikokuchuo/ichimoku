@@ -62,22 +62,23 @@ mlgrid <- function(x,
   dir <- match.arg(dir)
   type <- match.arg(type)
 
-  xlen <- dim(x)[1L]
+  core <- coredata(x)
+  xlen <- dim(core)[1L]
   p2 <- attr(x, "periods")[2L]
-  y <- c(diff(log(coredata(x$open)))[2:(xlen - 1L)], NA, NA)
+  y <- c(diff(log(core[, "open"]))[2:(xlen - 1L)], NA, NA)
   if (dir == "short") y <- -y
   if (target == "ret") y <- exp(y) - 1
 
   cols <- c("chikou", "close", "high", "low", "tenkan", "kijun",
-            "senkouA", "senkouB", "cloudTop", "cloudBase")
+            "senkouA", "senkouB", "cloudT", "cloudB")
   comb <- as.matrix(expand.grid(cols, cols, KEEP.OUT.ATTRS = FALSE, stringsAsFactors = FALSE)
                     )[-grid_dup(length(cols), omit.id = TRUE), ]
   pairs <- comb[-c(10L, 11L, 18L, 41L, 42L, 43L, 44L, 45L), ]
-  matrix <- writeMatrix(x, pairs = pairs, p2 = p2, xlen = xlen, type = type)
+  matrix <- writeMatrix(x = core, pairs = pairs, p2 = p2, xlen = xlen, type = type)
 
   if (!isTRUE(unique)) {
     pairs <- cbind(pairs[, 2L], pairs[, 1L])
-    matrixf <- writeMatrix(x, pairs = pairs, p2 = p2, xlen = xlen, type = type)
+    matrixf <- writeMatrix(x = core, pairs = pairs, p2 = p2, xlen = xlen, type = type)
     matrix <- cbind(matrix, matrixf)
   }
 
@@ -98,7 +99,7 @@ mlgrid <- function(x,
 #'
 #' Internal function used by mlgrid to create matrices of ichimoku representations.
 #'
-#' @param x an ichimoku object.
+#' @param x an ichimoku object or coredata matrix of an ichimoku object.
 #' @param pairs a 2-column matrix of pairs of column names.
 #' @param p2 length of second ichimoku period.
 #' @param xlen number of rows of 'x'.
@@ -111,7 +112,7 @@ mlgrid <- function(x,
 writeMatrix <- function(x, pairs, p2, xlen, type) {
 
   matrix <- do.call(cbind, mapply(function(c1, c2) {
-    offset <- p2 * (c1 == "chikou" | c2 == "chikou")
+    offset <- (p2 - 1L) * (c1 == "chikou" | c2 == "chikou")
     switch(type,
            boolean = as.integer(c(rep(NA, offset), (x[, c1] > x[, c2])[1:(xlen - offset)])),
            numeric = c(rep(NA, offset), (x[, c1] - x[, c2])[1:(xlen - offset)]))

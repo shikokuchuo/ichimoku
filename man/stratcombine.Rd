@@ -37,7 +37,7 @@ The combined strategy 's1 & s2' means indicator conditions in 's1'
 \examples{
 cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 strat1 <- strat(cloud, c1 = "close", c2 = "kijun")
-strat2 <- strat(cloud, c1 = "cloudBase", c2 = "tenkan")
+strat2 <- strat(cloud, c1 = "cloudB", c2 = "tenkan")
 cstrat <- stratcombine(strat1, strat2)
 summary(cstrat)
 plot(cstrat)
