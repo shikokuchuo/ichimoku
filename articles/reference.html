@@ -104,15 +104,19 @@
 <div id="ichimoku-kinko-hyo" class="section level2">
 <h2 class="hasAnchor">
 <a href="#ichimoku-kinko-hyo" class="anchor"></a>Ichimoku Kinko Hyo</h2>
-<p>The system consists of the following chart lines added to a candlestick chart:</p>
+<div id="definition" class="section level3">
+<h3 class="hasAnchor">
+<a href="#definition" class="anchor"></a>Definition</h3>
+<p>The 一目均衡表 <strong>Ichimoku Kinko Hyo</strong> [cloud chart] consists of the following chart lines added to a candlestick chart:</p>
 <ol style="list-style-type: decimal">
 <li><p>転換線 <strong>Tenkan-sen</strong> [conversion line]: the mid-point of the highest high and lowest low for the past 9 periods <em>(including the current period)</em></p></li>
 <li><p>基準線 <strong>Kijun-sen</strong> [base line]: the mid-point of the highest high and lowest low for the past 26 periods <em>(including the current period)</em></p></li>
-<li><p>先行スパン1 <strong>Senkou span A</strong> [leading span A]: the mid-point of Tenkan-sen and Kijun-sen plotted ahead 26 periods <em>(including the current period)</em></p></li>
-<li><p>先行スパン2 <strong>Senkou span B</strong> [leading span B]: the mid-point of the highest high and lowest low for the past 52 periods <em>(including the current period)</em>, plotted ahead 26 periods <em>(including the current period)</em></p></li>
+<li><p>先行スパン 1 <strong>Senkou span A</strong> [leading span A]: the mid-point of Tenkan-sen and Kijun-sen plotted ahead 26 periods <em>(including the current period)</em></p></li>
+<li><p>先行スパン 2 <strong>Senkou span B</strong> [leading span B]: the mid-point of the highest high and lowest low for the past 52 periods <em>(including the current period)</em>, plotted ahead 26 periods <em>(including the current period)</em></p></li>
 <li><p>遅行スパン <strong>Chikou span</strong> [lagging span]: the current period closing price plotted behind 26 periods <em>(including the current period)</em></p></li>
 </ol>
 <p>The 雲 <strong>kumo</strong> [cloud] is the area bounded by Senkou span A and Senkou span B (usually shaded on a chart).</p>
+</div>
 <div id="interpretation" class="section level3">
 <h3 class="hasAnchor">
 <a href="#interpretation" class="anchor"></a>Interpretation</h3>
@@ -207,7 +211,7 @@
 <li>
 <code>$cloudT</code> - cloud Top (max of senkouA, senkouB)</li>
 <li>
-<code>$cloudB</code> - cloud (min of senkouA, senkouB)</li>
+<code>$cloudB</code> - cloud Base (min of senkouA, senkouB)</li>
 </ul>
 </li>
 <li>Attributes:
@@ -408,7 +412,7 @@
 <h4 class="hasAnchor">
 <a href="#since-version-0-3" class="anchor"></a>Since version 0.3</h4>
 <ul>
-<li>The ichimoku object specification has been updated in version 0.3.6. ichimoku objects created in versions prior to 0.3.6 will no longer work correctly with newer versions of the package. Please run <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on all old objects to re-create the object according to the new specification (all data is preserved)</li>
+<li>The ichimoku object specification has been updated in version 0.3.51. ichimoku objects created in versions prior to 0.3.51 will no longer work correctly with newer versions of the package. Please run <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on all old objects to re-create the object according to the new specification (all data is preserved)</li>
 <li>The following functions are no longer exported: <code>maxOver()</code>, <code>minOver()</code>, <code>oanda_accounts()</code>.</li>
 </ul>
 </div>
