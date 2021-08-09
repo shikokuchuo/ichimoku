@@ -48,8 +48,8 @@ Or the latest development version from the Github source:
 devtools::install_github("shikokuchuo/ichimoku")
 ```
 
-**Note:** ichimoku object specification (v1) released 2021-08-08 -
-please install build 0.3.51 or above to ensure compatibility.
+**Note:** ichimoku object specification released 2021-08-08 - *please
+install build 0.3.51 or above to ensure compatibility.*
 
 ## Example
 
@@ -105,17 +105,15 @@ autostrat(cloud, n = 3)
 -   [`ichimoku()`](https://shikokuchuo.net/ichimoku/reference/ichimoku.html) -
     to create an ichimoku object from price data.
 
+-   [`archive()`](https://shikokuchuo.net/ichimoku/reference/archive.html) -
+    for reading and writing ichimoku objects to/from Apache Arrow
+    archives.
+
 -   [`oanda()`](https://shikokuchuo.net/ichimoku/reference/oanda.html) -
     to retrieve price data from the OANDA fxTrade API.
 
 -   [`oanda_stream()`](https://shikokuchuo.net/ichimoku/reference/oanda_stream.html) -
     to stream a live data feed from the OANDA fxTrade API.
-
--   [`ichimoku_write()`](https://shikokuchuo.net/ichimoku/reference/ichimoku_write.html)
-    and
-    [`ichimoku_read()`](https://shikokuchuo.net/ichimoku/reference/ichimoku_read.html) -
-    for archival of ichimoku objects in the Apache Arrow IPC file
-    format.
 
 #### Visualization
 

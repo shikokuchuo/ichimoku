@@ -69,7 +69,7 @@ Calling an ichimoku object automatically invokes its print method,
     Index:
     \itemize{
         \item{\code{index(object)}:} {date-time index [POSIXct]}
-        }
+     }
     Columns [numeric]:
     \itemize{
         \item{\code{object$open}:} {opening price}
@@ -84,7 +84,7 @@ Calling an ichimoku object automatically invokes its print method,
         \item{\code{$chikou}:} {Chikou span}
         \item{\code{$cloudT}:} {cloud Top (max of senkouA, senkouB)}
         \item{\code{$cloudB}:} {cloud Base (min of senkouA, senkouB)}
-        }
+     }
     Attributes:
     \itemize{
         \item{\code{attributes(object)$periods}:} { parameters used to
@@ -92,7 +92,22 @@ Calling an ichimoku object automatically invokes its print method,
         \item{\code{$periodicity}:} { periodicity of the
         data in seconds [numeric]}
         \item{\code{$ticker}:} { instrument identifier [character]}
-        }
+     }
+}
+
+\section{Working with ichimoku objects}{
+
+    An ichimoku object inherits the 'xts' and 'zoo' classes. For convenience,
+    the following functions are re-exported by ichimoku:
+     \itemize{
+        \item{\code{index()}:} {\emph{from 'zoo'} - to extract the index of
+        an ichimoku object}
+        \item{\code{coredata()}:} {\emph{from 'zoo'} - to extract the columns
+        of an ichimoku object as a numeric matrix}
+        \item{\code{xts()}:} {\emph{from 'xts'} - to re-create an 'xts'
+        object from data and a date-time index use \code{xts(data, index)}}
+     }
+     Additional methods are available by loading the 'xts' package.
 }
 
 \section{Further Details}{

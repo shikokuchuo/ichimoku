@@ -1,50 +1,68 @@
 # Ichimoku - Apache Arrow Translation Layer ------------------------------------
 
-#' Write ichimoku objects to Arrow Archive
+#' Read/write ichimoku objects <> Arrow Archive
 #'
-#' Used to write ichimoku objects to archive storage in the Apache Arrow IPC
-#'     file format.
+#' Used to read and write ichimoku objects to/from archival storage in the
+#'     Apache Arrow IPC file format.
 #'
-#' @param object an ichimoku object.
-#' @param file A string file path, URI, or OutputStream, or path in a file
+#' @param ... additional parameters not used by this function.
+#' @param object (for write operations) an ichimoku object.
+#' @param filename string file path, URI, or OutputStream, or path in a file
 #'     system (SubTreeFileSystem).
 #'
-#' @return Invisible NULL. 'object' is written to 'file' as a side effect.
+#' @return For read operations: the ichimoku object originally archived.
 #'
-#' @details If the file write operation has been successful, a confirmation will
-#'     be printed to the console. Use \code{\link{ichimoku_read}} to read
-#'     ichimoku objects archived using this function.
+#'     For write operations: invisible NULL. 'object' is written to
+#'     'filename' as a side effect.
+#'
+#' @details For read operations, please specify only 'filename'. 'filename' is
+#'     read and the return value may be assigned to an object.
+#'
+#'     For write operations: please specify both 'object' and 'filename'.
+#'     'object' will be written to 'filename'. Confirmation is printed to the
+#'     console if the file write operation has been successful.
 #'
 #' @examples
 #' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 #'
 #' filename <- tempfile()
-#' ichimoku_write(cloud, filename)
+#' archive(cloud, filename)
 #'
-#' restored <- ichimoku_read(filename)
-#' all.equal(cloud, restored, check.attributes = FALSE)
+#' restored <- archive(filename)
+#' all.equal(cloud, restored)
 #' unlink(filename)
 #'
 #' @export
 #'
-ichimoku_write <- function(object, file) {
+archive <- function(..., object, filename) {
 
   if (requireNamespace("arrow", quietly = TRUE)) {
 
-    objectname <- deparse(substitute(object))
-    if (missing(object)) stop("No object specified for ichimoku_write()", call. = FALSE)
-    if (missing(file)) stop("Argument 'file' must be specified", call. = FALSE)
-    if (!is.ichimoku(object)) stop("ichimoku_write() only works with ichimoku objects", call. = FALSE)
-    df <- xts_df(object)
-    df <- structure(df,
-                    ichimoku = TRUE,
-                    periods = attr(object, "periods"),
-                    periodicity = attr(object, "periodicity"),
-                    ticker = attr(object, "ticker"),
-                    strat = attr(object, "strat"))
+    if (missing(object) && missing(filename)) {
+      dots <- list(...)
 
-    arrow::write_feather(df, file)
-    message("ichimoku object '", objectname, "' written to: ", file)
+      if (length(dots) == 1L) {
+        filename <- dots[[1L]]
+        readArchive(filename = filename)
+
+      } else if (length(dots) == 2L) {
+        object <- dots[[1L]]
+        filename <- dots[[2L]]
+        writeArchive(object = object, filename = filename)
+
+      } else if (length(dots) > 2L) {
+        stop("Too many arguments passed to archive()",
+             "\nFor read operations please specify 'filename' only",
+             "\nFor write operations please specify both 'object' and 'filename'", call. = FALSE)
+      } else {
+        stop("archive() is used to read/write ichimoku objects from/to Arrow archives",
+             "\nFor read operations please specify 'filename' only",
+             "\nFor write operations please specify both 'object' and 'filename'", call. = FALSE)
+      }
+
+    } else if (missing(object)) readArchive(filename = filename)
+
+    else writeArchive(object = object, filename = filename)
 
   } else {
     message("Note: please install the 'arrow' package to enable archiving of ichimoku objects",
@@ -52,52 +70,71 @@ ichimoku_write <- function(object, file) {
   }
 }
 
+#' Write ichimoku objects to Arrow Archive
+#'
+#' Used to write ichimoku objects to archive storage in the Apache Arrow IPC
+#'     file format.
+#'
+#' @param object an ichimoku object.
+#' @param filename string file path, URI, or OutputStream, or path in a file
+#'     system (SubTreeFileSystem).
+#'
+#' @return Invisible NULL. 'object' is written to 'file' as a side effect.
+#'
+#' @keywords internal
+#'
+writeArchive <- function(object, filename) {
+
+  if (!is.character(filename)) {
+    stop("in archive(object, filename): 'filename' must be supplied as a string. ",
+         "\nDid you omit the surrounding quotes \"\"?", call. = FALSE)
+  }
+  if (!is.ichimoku(object)) {
+    stop("object is of class '", class(object)[1L],
+         "', archive() only writes ichimoku objects", call. = FALSE)
+  }
+
+  df <- xts_df(object)
+  df <- structure(df,
+                  ichimoku = TRUE,
+                  periods = attr(object, "periods"),
+                  periodicity = attr(object, "periodicity"),
+                  ticker = attr(object, "ticker"),
+                  strat = attr(object, "strat"))
+
+  arrow::write_feather(df, filename)
+  message("Archive created: ", filename)
+}
+
 #' Read ichimoku objects from Arrow Archive
 #'
 #' Used to read ichimoku objects from archive storage in the Apache Arrow IPC
 #'     file format.
 #'
-#' @param file A character file name or URI, raw vector, an Arrow input stream,
-#'     or a FileSystem with path (SubTreeFileSystem). If a file name or URI, an
-#'     Arrow InputStream will be opened and closed when finished. If an input
-#'     stream is provided, it will be left open.
+#' @param filename string file path, URI, or OutputStream, or path in a file
+#'     system (SubTreeFileSystem).
 #'
 #' @return The ichimoku object that was originally archived.
 #'
-#' @details Used to read ichimoku objects archived using the
-#'     \code{\link{ichimoku_write}} function.
+#' @keywords internal
 #'
-#' @examples
-#' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
-#'
-#' filename <- tempfile()
-#' ichimoku_write(cloud, filename)
-#'
-#' restored <- ichimoku_read(filename)
-#' all.equal(cloud, restored, check.attributes = FALSE)
-#' unlink(filename)
-#'
-#' @export
-#'
-ichimoku_read <- function(file) {
+readArchive <- function(filename) {
 
-  if (requireNamespace("arrow", quietly = TRUE)) {
-
-    if (missing(file)) stop("No file specified for ichimoku_read()", call. = FALSE)
-    df <- arrow::read_feather(file)
-    if (!isTRUE(attr(df, "ichimoku"))) stop("ichimoku_read() reads only ichimoku objects",
-                                            call. = FALSE)
-
-    structure(xts(df[, -1], order.by = df[, 1]),
-              class = c("ichimoku", "xts", "zoo"),
-              periods = attr(df, "periods"),
-              periodicity = attr(df, "periodicity"),
-              ticker = attr(df, "ticker"),
-              strat = attr(df, "strat"))
-
-  } else {
-    message("Note: please install the 'arrow' package to read archived ichimoku objects",
-            "\nArchives utilise the Apache Arrow IPC file format")
+  if (!is.character(filename)) {
+    stop("in archive(filename): 'filename' must be supplied as a string. ",
+         "\nDid you omit the surrounding quotes \"\"?", call. = FALSE)
   }
+
+  df <- arrow::read_feather(filename)
+  if (!isTRUE(attr(df, "ichimoku"))) {
+    stop("'", paste0(filename), "' is not an archived ichimoku object", call. = FALSE)
+  }
+
+  structure(xts(df[, -1], order.by = df[, 1]),
+            class = c("ichimoku", "xts", "zoo"),
+            periods = attr(df, "periods"),
+            periodicity = attr(df, "periodicity"),
+            ticker = attr(df, "ticker"),
+            strat = attr(df, "strat"))
 }
 

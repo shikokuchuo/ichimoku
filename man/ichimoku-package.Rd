@@ -25,12 +25,12 @@ Data
 \itemize{
     \item{\code{\link{ichimoku}}} {to create an ichimoku object from price
     data.}
+    \item{\code{\link{archive}}} {for reading and writing ichimoku objects
+    to/from Apache Arrow archive files.}
     \item{\code{\link{oanda}}} {to retrieve price data from the OANDA fxTrade
     API.}
     \item{\code{\link{oanda_stream}}} {to stream a live data feed from the
     OANDA fxTrade API.}
-    \item{\code{\link{ichimoku_write}} and \code{\link{ichimoku_read}}} {for
-    archival of ichimoku objects in the Apache Arrow IPC file format.}
 }
 Visualization
 \itemize{

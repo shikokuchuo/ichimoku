@@ -23,12 +23,23 @@
 #' @return An ichimoku object is returned with S3 classes of 'ichimoku', 'xts'
 #'     and 'zoo'.
 #'
+#' @details Calling an ichimoku object automatically invokes its print method,
+#'     which will by default produce a printout of the data to the console as
+#'     well as a static plot of the cloud chart to the graphical device.
+#'
+#'     For further options, please use plot() on the returned ichimoku object to
+#'     pass further arguments for customising the chart. Use iplot() for
+#'     interactive charting.
+#'
+#'     Where an ichimoku object is passed to ichimoku(), the ichimoku object is
+#'     re-calculated using the OHLC pricing data contained within.
+#'
 #' @section Object Specification:
 #'
 #'     Index:
 #'     \itemize{
 #'         \item{\code{index(object)}:} {date-time index [POSIXct]}
-#'         }
+#'      }
 #'     Columns [numeric]:
 #'     \itemize{
 #'         \item{\code{object$open}:} {opening price}
@@ -43,7 +54,7 @@
 #'         \item{\code{$chikou}:} {Chikou span}
 #'         \item{\code{$cloudT}:} {cloud Top (max of senkouA, senkouB)}
 #'         \item{\code{$cloudB}:} {cloud Base (min of senkouA, senkouB)}
-#'         }
+#'      }
 #'     Attributes:
 #'     \itemize{
 #'         \item{\code{attributes(object)$periods}:} { parameters used to
@@ -51,18 +62,20 @@
 #'         \item{\code{$periodicity}:} { periodicity of the
 #'         data in seconds [numeric]}
 #'         \item{\code{$ticker}:} { instrument identifier [character]}
-#'         }
+#'      }
 #'
-#' @details Calling an ichimoku object automatically invokes its print method,
-#'     which will by default produce a printout of the data to the console as
-#'     well as a static plot of the cloud chart to the graphical device.
-#'
-#'     For further options, please use plot() on the returned ichimoku object to
-#'     pass further arguments for customising the chart. Use iplot() for
-#'     interactive charting.
-#'
-#'     Where an ichimoku object is passed to ichimoku(), the ichimoku object is
-#'     re-calculated using the OHLC pricing data contained within.
+#' @section Working with ichimoku objects:
+#'     An ichimoku object inherits the 'xts' and 'zoo' classes. For convenience,
+#'     the following functions are re-exported by ichimoku:
+#'      \itemize{
+#'         \item{\code{index()}:} {\emph{from 'zoo'} - to extract the index of
+#'         an ichimoku object}
+#'         \item{\code{coredata()}:} {\emph{from 'zoo'} - to extract the columns
+#'         of an ichimoku object as a numeric matrix}
+#'         \item{\code{xts()}:} {\emph{from 'xts'} - to re-create an 'xts'
+#'         object from data and a date-time index use \code{xts(data, index)}}
+#'      }
+#'      Additional methods are available by loading the 'xts' package.
 #'
 #' @section Further Details:
 #'     Please refer to the reference vignette by running:
@@ -589,8 +602,9 @@ iplot <- function(x,
     theme <- match.arg(theme)
     if (missing(ticker)) ticker <- attr(x, "ticker")
     if (missing(message)) {
-      message <- if (hasStrat(x) && isTRUE(strat)) paste0("Strategy: ",
-                                                          attr(x, "strat")["Strategy", ][[1]])
+      message <- if (hasStrat(x) && isTRUE(strat)) {
+        paste0("Strategy: ", attr(x, "strat")["Strategy", ][[1]])
+      }
     }
 
     tformat <- if (attr(x, "periodicity") > 80000) "%F" else "%F %T"
