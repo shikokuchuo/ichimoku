@@ -77,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.51</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.51.1</span>
       </span>
     </div>
 
@@ -218,7 +218,7 @@ Ichimoku analysis.</p></td>
 
 
 <p>Index:</p><ul>
-<li><p><code>index(object)</code>: date-time index [POSIXct]</p></li>
+<li><p><code><a href='https://rdrr.io/pkg/zoo/man/index.html'>index(object)</a></code>: date-time index [POSIXct]</p></li>
 </ul><p>Columns [numeric]:</p><ul>
 <li><p><code>object$open</code>: opening price</p></li>
 <li><p><code>$high</code>: high price</p></li>
@@ -240,6 +240,19 @@ Ichimoku analysis.</p></td>
 <li><p><code>$ticker</code>:  instrument identifier [character]</p></li>
 </ul>
 
+    <h2 class="hasAnchor" id="working-with-ichimoku-objects"><a class="anchor" href="#working-with-ichimoku-objects"></a>Working with ichimoku objects</h2>
+
+    
+
+<p>An ichimoku object inherits the 'xts' and 'zoo' classes. For convenience,
+    the following functions are re-exported by ichimoku:</p><ul>
+<li><p><code><a href='https://rdrr.io/pkg/zoo/man/index.html'>index()</a></code>: <em>from 'zoo'</em> - to extract the index of
+        an ichimoku object</p></li>
+<li><p><code><a href='https://rdrr.io/pkg/zoo/man/coredata.html'>coredata()</a></code>: <em>from 'zoo'</em> - to extract the columns
+        of an ichimoku object as a numeric matrix</p></li>
+<li><p><code><a href='https://rdrr.io/pkg/xts/man/xts.html'>xts()</a></code>: <em>from 'xts'</em> - to re-create an 'xts'
+        object from data and a date-time index use <code><a href='https://rdrr.io/pkg/xts/man/xts.html'>xts(data, index)</a></code></p></li>
+</ul><p>Additional methods are available by loading the 'xts' package.</p>
     <h2 class="hasAnchor" id="further-details"><a class="anchor" href="#further-details"></a>Further Details</h2>
 
     

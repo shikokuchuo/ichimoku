@@ -4,6 +4,9 @@
     <loc>https://shikokuchuo.net/ichimoku/index.html</loc>
   </url>
   <url>
+    <loc>https://shikokuchuo.net/ichimoku/reference/archive.html</loc>
+  </url>
+  <url>
     <loc>https://shikokuchuo.net/ichimoku/reference/autoplot.ichimoku.html</loc>
   </url>
   <url>
@@ -41,12 +44,6 @@
   </url>
   <url>
     <loc>https://shikokuchuo.net/ichimoku/reference/ichimoku.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/ichimoku_read.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/ichimoku_write.html</loc>
   </url>
   <url>
     <loc>https://shikokuchuo.net/ichimoku/reference/iplot.html</loc>
@@ -94,6 +91,12 @@
     <loc>https://shikokuchuo.net/ichimoku/reference/print.ichimoku.html</loc>
   </url>
   <url>
+    <loc>https://shikokuchuo.net/ichimoku/reference/readArchive.html</loc>
+  </url>
+  <url>
+    <loc>https://shikokuchuo.net/ichimoku/reference/reexports.html</loc>
+  </url>
+  <url>
     <loc>https://shikokuchuo.net/ichimoku/reference/sample_ohlc_data.html</loc>
   </url>
   <url>
@@ -107,6 +110,9 @@
   </url>
   <url>
     <loc>https://shikokuchuo.net/ichimoku/reference/tradingDays.html</loc>
+  </url>
+  <url>
+    <loc>https://shikokuchuo.net/ichimoku/reference/writeArchive.html</loc>
   </url>
   <url>
     <loc>https://shikokuchuo.net/ichimoku/reference/writeMatrix.html</loc>
