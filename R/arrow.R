@@ -29,7 +29,8 @@
 #' archive(cloud, filename)
 #'
 #' restored <- archive(filename)
-#' all.equal(cloud, restored)
+#' identical(cloud, restored)
+#'
 #' unlink(filename)
 #'
 #' @export
@@ -54,15 +55,19 @@ archive <- function(..., object, filename) {
         stop("Too many arguments passed to archive()",
              "\nFor read operations please specify 'filename' only",
              "\nFor write operations please specify both 'object' and 'filename'", call. = FALSE)
+
       } else {
         stop("archive() is used to read/write ichimoku objects from/to Arrow archives",
              "\nFor read operations please specify 'filename' only",
              "\nFor write operations please specify both 'object' and 'filename'", call. = FALSE)
       }
 
-    } else if (missing(object)) readArchive(filename = filename)
+    } else if (!missing(filename)) {
 
-    else writeArchive(object = object, filename = filename)
+      if (missing(object)) readArchive(filename = filename)
+      else writeArchive(object = object, filename = filename)
+
+    } else stop("in archive(object, filename): 'object' specified without 'filename'", call. = FALSE)
 
   } else {
     message("Note: please install the 'arrow' package to enable archiving of ichimoku objects",
@@ -130,7 +135,9 @@ readArchive <- function(filename) {
     stop("'", paste0(filename), "' is not an archived ichimoku object", call. = FALSE)
   }
 
-  structure(xts(df[, -1], order.by = df[, 1]),
+  tzone <- if (is.null(attr(df$index, "tzone"))) "" else attr(df$index, "tzone")
+
+  structure(xts(df[, -1], order.by = df[, 1], tzone = tzone),
             class = c("ichimoku", "xts", "zoo"),
             periods = attr(df, "periods"),
             periodicity = attr(df, "periodicity"),

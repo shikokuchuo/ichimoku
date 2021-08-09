@@ -39,7 +39,8 @@ filename <- tempfile()
 archive(cloud, filename)
 
 restored <- archive(filename)
-all.equal(cloud, restored)
+identical(cloud, restored)
+
 unlink(filename)
 
 }

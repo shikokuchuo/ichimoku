@@ -1,7 +1,7 @@
-# ichimoku 0.3.51.1
+# ichimoku 0.3.51.2
 
 * Re-export functions for working with ichimoku objects: from the 'zoo' package `index()`, `coredata()`, and from the 'xts' package `xts()`.
-* New function `archive()` merges functionality of `ichimoku_write()` and `ichimoku_read()`.
+* `archive()` merges functionality of `ichimoku_write()` and `ichimoku_read()`. Fixed cases of the timezone of restored objects not matching the original.
 * Linking to 'cpp11' package, removed vendored code.
 
 # ichimoku 0.3.51
