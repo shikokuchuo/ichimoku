@@ -73,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.51.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.51.2</span>
       </span>
     </div>
 
@@ -181,10 +181,11 @@ system (SubTreeFileSystem).</p></td>
 
 <span class='va'>filename</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span><span class='op'>(</span><span class='op'>)</span>
 <span class='fu'>archive</span><span class='op'>(</span><span class='va'>cloud</span>, <span class='va'>filename</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Archive created: /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpwvN6iz/file6b24870dda1</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>Archive created: /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmpg0EXEK/file6182a189cd3</span></div><div class='input'>
 <span class='va'>restored</span> <span class='op'>&lt;-</span> <span class='fu'>archive</span><span class='op'>(</span><span class='va'>filename</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span><span class='op'>(</span><span class='va'>cloud</span>, <span class='va'>restored</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "Attributes: &lt; Component “index”: Attributes: &lt; Component “tzone”: 1 string mismatch &gt; &gt;"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/unlink.html'>unlink</a></span><span class='op'>(</span><span class='va'>filename</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/identical.html'>identical</a></span><span class='op'>(</span><span class='va'>cloud</span>, <span class='va'>restored</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/unlink.html'>unlink</a></span><span class='op'>(</span><span class='va'>filename</span><span class='op'>)</span>
 
 </div></pre>
   </div>
