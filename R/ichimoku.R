@@ -2,12 +2,11 @@
 
 #' ichimoku
 #'
-#' Create an ichimoku object containing the values for all components of the
-#'     Ichimoku Kinko Hyo cloud chart for visualization and further quantitative
-#'     analysis. The object encapsulates a date-time index, OHLC pricing data,
-#'     candle direction, the cloud lines Tenkan-sen, Kijun-sen, Senkou span A,
-#'     Senkou span B and Chikou span, as well as values for the cloud top and
-#'     cloud base.
+#' Create an ichimoku object containing all components of the Ichimoku Kinko Hyo
+#'     cloud chart for visualization and quantitative analysis. The object
+#'     encapsulates a date-time index, OHLC pricing data, candle direction, the
+#'     cloud lines Tenkan-sen, Kijun-sen, Senkou span A, Senkou span B and
+#'     Chikou span, as well as values for the cloud top and cloud base.
 #'
 #' @param x a data.frame or other compatible object, which includes xts,
 #'     data.table, tibble, matrix, and Arrow tabular formats.
@@ -67,14 +66,20 @@
 #' @section Working with ichimoku objects:
 #'     An ichimoku object inherits the 'xts' and 'zoo' classes. For convenience,
 #'     the following functions are re-exported by ichimoku:
+#'
+#'     \emph{from 'zoo':}
 #'      \itemize{
-#'         \item{\code{index()}:} {\emph{from 'zoo'} - to extract the index of
-#'         an ichimoku object}
-#'         \item{\code{coredata()}:} {\emph{from 'zoo'} - to extract the columns
-#'         of an ichimoku object as a numeric matrix}
-#'         \item{\code{xts()}:} {\emph{from 'xts'} - to re-create an 'xts'
-#'         object from data and a date-time index use \code{xts(data, index)}}
+#'         \item{\code{index()}:} { to extract the index of an ichimoku object}
+#'         \item{\code{coredata()}:} { to extract the columns of an ichimoku
+#'         object as a numeric matrix}
 #'      }
+#'
+#'      \emph{from 'xts':}
+#'      \itemize{
+#'         \item{\code{xts()}:} { to create an 'xts' object from data and a
+#'         date-time index use \code{xts(data, index)}}
+#'      }
+#'
 #'      Additional methods are available by loading the 'xts' package.
 #'
 #' @section Further Details:
@@ -194,7 +199,7 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), ...) {
   cloudT <- pmax.int(senkouA, senkouB)
   cloudB <- pmin.int(senkouA, senkouB)
 
-  periodicity <- min(diff.POSIXt(index[1:4]))
+  periodicity <- min(index[2:4] - index[1:3])
   future <- switch(attr(periodicity, "units"),
                    days = {
                      seq <- seq.POSIXt(from = index[length(index)], by = periodicity,
@@ -387,12 +392,31 @@ autoplot.ichimoku <- function(object,
               size = 0.3, na.rm = TRUE),
     geom_line(aes(y = .data$chikou), col = pal[6L], na.rm = TRUE),
     scale_x_continuous(breaks = function(x) {
-      x <- pretty.default(data$idx, n = 9L) + 1
-      if (x[length(x)] > xlen) x <- x[-length(x)]
-      x
+      if (periodicity > 80000) {
+        len <- length(endpoints(object, on = "months"))
+        if (len < 100L) {
+          k <- ceiling(len / 13)
+          breaks <- endpoints(object, on = "months", k = k) + 1L
+        } else {
+          k <- ceiling(len / 156)
+          breaks <- endpoints(object, on = "years", k = k) + 1L
+        }
+        if (len > 4L) {
+        cond <- {breaks[length(breaks)] - breaks[(length(breaks) - 1L)]} < 0.7 * {breaks[3L] - breaks[2L]}
+        cond2 <- {breaks[2L] - breaks[1L]} < 0.7 * {breaks[3L] - breaks[2L]}
+        if (cond) breaks <- breaks[-length(breaks)]
+        if (cond2) breaks <- breaks[-1L]
+        }
+        if (breaks[length(breaks)] > xlen) breaks[length(breaks)] <- breaks[length(breaks)] - 1L
+      } else {
+        breaks <- pretty.default(data$idx, n = 9L) + 1
+        if (breaks[length(breaks)] > xlen) breaks <- breaks[-length(breaks)]
+      }
+      breaks
     }, labels = function(x) {
-      if (periodicity > 80000) format(data$index[x], paste("%d-%b", "%Y", sep = "\n"))
-      else format(data$index[x], paste("%H:%M", "%d-%b", "%Y", sep = "\n"))
+      labels <- data$index[x]
+      if (periodicity > 80000) format(labels, paste("%d-%b", "%Y", sep = "\n"))
+      else format(labels, paste("%H:%M", "%d-%b", "%Y", sep = "\n"))
     }),
     scale_y_continuous(breaks = function(x) pretty.default(x, n = 9L)),
     scale_color_manual(values = c("1" = pal[7L], "-1" = pal[8L], "0" = pal[9L])),
@@ -478,83 +502,6 @@ plot.ichimoku <- function(x,
 #'
 is.ichimoku <- function(x) inherits(x, "ichimoku")
 
-
-#' gplot Plot Ichimoku Cloud Chart with Weekend Gaps
-#'
-#' Deprecated plot method for Ichimoku Kinko Hyo cloud charts with weekend gaps
-#'     for non-trading days. This feature is deprecated and this function is
-#'     included as a convenience only.
-#'
-#' @inheritParams autoplot
-#'
-#' @return Returns a ggplot2 object with S3 classes 'gg' and 'ggplot'.
-#'
-#' @examples
-#' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
-#' gplot(cloud)
-#'
-#' @export
-#'
-gplot <- function(object,
-                  window,
-                  ticker,
-                  message,
-                  theme = c("original", "dark", "solarized", "mono"),
-                  ...) {
-
-  theme <- match.arg(theme)
-  pal <- ichimoku_themes[, theme]
-  periodicity <- attr(object, "periodicity")
-  if (missing(ticker)) ticker <- attr(object, "ticker")
-
-  if (!missing(window)) object <- object[window]
-  data <- xts_df(object)
-  data$cd <- as.character(data$cd)
-
-  layers <- list(
-    if (!all(is.na(data$senkouB))) {
-      geom_ribbon(aes(ymax = .data$senkouA, ymin = .data$senkouB),
-                  fill = pal[1L], alpha = 0.6, na.rm = TRUE)
-    },
-    geom_line(aes(y = .data$senkouA), col = pal[2L], alpha = 0.6, na.rm = TRUE),
-    geom_line(aes(y = .data$senkouB), col = pal[3L], alpha = 0.6, na.rm = TRUE),
-    geom_line(aes(y = .data$tenkan), col = pal[4L], na.rm = TRUE),
-    geom_line(aes(y = .data$kijun), col = pal[5L], na.rm = TRUE),
-    geom_segment(aes(xend = .data$index, y = .data$high, yend = .data$low, colour = .data$cd),
-                 size = 0.3, na.rm = TRUE),
-    geom_rect(aes(xmin = .data$index - periodicity * 0.4, xmax = .data$index + periodicity * 0.4,
-                  ymin = .data$open, ymax = .data$close,
-                  colour = .data$cd, fill = .data$cd),
-              size = 0.3, na.rm = TRUE),
-    geom_line(aes(y = .data$chikou), col = pal[6L], na.rm = TRUE),
-    scale_x_datetime(breaks = function(x) pretty(x, n = 9L),
-                     labels = function(x) {
-                       if (periodicity > 80000) format(x, paste("%d-%b", "%Y", sep = "\n"))
-                       else format(x, paste("%H:%M", "%d-%b", "%Y", sep = "\n"))
-                     }),
-    scale_y_continuous(breaks = function(x) pretty.default(x, n = 9L)),
-    scale_color_manual(values = c("1" = pal[7L], "-1" = pal[8L], "0" = pal[9L])),
-    scale_fill_manual(values = c("1" = pal[10L], "-1" = pal[11L], "0" = pal[12L])),
-    labs(x = "Date | Time", y = "Price", title = paste0("Ichimoku Kinko Hyo : : ", ticker),
-         subtitle = if(!missing(message)) message),
-    theme_light(),
-    switch(theme,
-           dark = theme(legend.position = "none",
-                        plot.title = element_text(colour = "#eee8d5"),
-                        plot.subtitle = element_text(colour = "#eee8d5"),
-                        plot.background = element_rect(fill = "#586e75", colour = NA),
-                        panel.background = element_rect(fill = "#002b36", colour = NA),
-                        panel.grid = element_line(colour = "#073642"),
-                        axis.title = element_text(colour = "#eee8d5"),
-                        axis.text = element_text(colour = "#eee8d5"),
-                        axis.ticks = element_line(colour = "#eee8d5")),
-           theme(legend.position = "none"))
-  )
-
-  ggplot(data = data, aes(x = .data$index)) + layers
-
-}
-
 #' iplot Interactive Ichimoku Cloud Plot
 #'
 #' Plot Ichimoku Kinko Hyo cloud charts from ichimoku objects in a Shiny app,
@@ -608,8 +555,9 @@ iplot <- function(x,
     }
 
     tformat <- if (attr(x, "periodicity") > 80000) "%F" else "%F %T"
-    start <- index(x)[1L]
-    end <- index(x)[dim(x)[1L]]
+    index <- index(x)
+    start <- index[1L]
+    end <- index[dim(x)[1L]]
     xadj <- if (nchar(as.character(start)) > 10) -17 else 5
 
     ichimoku_stheme <- if (requireNamespace("bslib", quietly = TRUE)) {

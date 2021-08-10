@@ -22,7 +22,7 @@ interactively if not specified.}
 }
 \value{
 Does not return a value, however the streaming data is output to the
-    console as a side effect. Note that returned times are represented in UTC.
+    console as a side effect.
 }
 \description{
 Retrieve live price and liquidity data from the OANDA fxTrade Streaming API.

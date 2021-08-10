@@ -29,8 +29,7 @@
 #'     specified if already stored by oanda_set_key(). Can also be entered
 #'     interactively if not specified.
 #'
-#' @return A data.frame containing the price data requested. Note that returned
-#'     times are represented in UTC.
+#' @return A data.frame containing the price data requested.
 #'
 #' @details This function queries the OANDA fxTrade API.
 #'
@@ -170,8 +169,7 @@ oanda <- function(instrument,
 #' @param .validate (optional) only used internally by other functions. Do not
 #'     set this parameter.
 #'
-#' @return A data.frame containing the price data requested. Note that returned
-#'     times are represented in UTC.
+#' @return A data.frame containing the price data requested.
 #'
 #' @keywords internal
 #'
@@ -198,13 +196,15 @@ getPrices <- function(instrument, granularity, count, from, to, price,
   timestamp <- as.POSIXct.POSIXlt(strptime(hdate, format = "%a, %d %b %Y %H:%M:%S", tz = "GMT"))
   data <- fromJSON(rawToChar(resp$content))$candles
 
-  time <- strptime(data[, 3L], format = "%Y-%m-%dT%H:%M:%S", tz = "GMT")
+  time <- strptime(data[, 3L], format = "%Y-%m-%dT%H:%M:%S", tz = "UTC")
   if (!missing(.validate) && .validate == FALSE) {
     time <- as.POSIXct.POSIXlt(time)
   } else {
     if (granularity == "M") {
       time <- as.POSIXlt.POSIXct(time + 86400)
       time$mon <- time$mon + 1L
+    } else if (granularity == "W") {
+      time <- as.POSIXct.POSIXlt(time)
     } else if (granularity == "D") {
       keep <- time$wday %in% 0:4
       if (missing(.validate)) {
@@ -227,7 +227,7 @@ getPrices <- function(instrument, granularity, count, from, to, price,
 
   ohlc <- data[, 4L]
 
-  structure(list(time = time,
+  structure(list(time = .POSIXct(time),
                  open = ohlc[, 1L],
                  high = ohlc[, 2L],
                  low = ohlc[, 3L],
@@ -238,7 +238,7 @@ getPrices <- function(instrument, granularity, count, from, to, price,
             row.names = seq_len(dim(ohlc)[1L]),
             instrument = instrument,
             price = price,
-            timestamp = timestamp,
+            timestamp = .POSIXct(timestamp),
             oanda = TRUE)
 
 }
@@ -256,7 +256,7 @@ getPrices <- function(instrument, granularity, count, from, to, price,
 #'     running: \code{vignette("xoanda", package = "ichimoku")}.
 #'
 #' @return Does not return a value, however the streaming data is output to the
-#'     console as a side effect. Note that returned times are represented in UTC.
+#'     console as a side effect.
 #'
 #' @section Streaming Data:
 #'
@@ -329,7 +329,7 @@ oanda_stream <- function(instrument, server = c("practice", "live"), apikey) {
 #'
 #' @return Does not return a value, however a plot of the ichimoku chart for the
 #'     price data requested is output to the graphical device at each refresh
-#'     interval as a side effect. Note that all times are represented in UTC.
+#'     interval as a side effect.
 #'
 #' @details This function polls the OANDA fxTrade API for the latest live prices
 #'     and updates the plot in the graphical device at each refresh interval.
@@ -597,8 +597,7 @@ oanda_get_key <- function() {
 #'     calculating the ichimoku cloud, \code{\link{autoplot}} to set chart
 #'     parameters, or the 'options' argument of \code{shiny::shinyApp()}.
 #'
-#' @return Returns a Shiny app object with class 'shiny.appobj'. Note that
-#'     returned times within the app are represented in UTC.
+#' @return Returns a Shiny app object with class 'shiny.appobj'.
 #'
 #' @details This function polls the OANDA fxTrade API for the latest prices and
 #'     updates a customisable reactive Shiny app at each refresh interval.

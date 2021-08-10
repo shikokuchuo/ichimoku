@@ -47,8 +47,7 @@ access token), or function that returns this string.}
 set this parameter.}
 }
 \value{
-A data.frame containing the price data requested. Note that returned
-    times are represented in UTC.
+A data.frame containing the price data requested.
 }
 \description{
 Internal function used by ichimoku to retrieve price candles from the OANDA

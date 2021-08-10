@@ -65,8 +65,7 @@ as using other values would be invalid in the context of traditional
 Ichimoku analysis.}
 }
 \value{
-Returns a Shiny app object with class 'shiny.appobj'. Note that
-    returned times within the app are represented in UTC.
+Returns a Shiny app object with class 'shiny.appobj'.
 }
 \description{
 Dynamically-generated Ichimoku Kinko Hyo cloud charts using OANDA fxTrade API

@@ -60,7 +60,8 @@
 #'     \url{https://CRAN.R-project.org/package=ichimoku}
 #'
 #' @useDynLib ichimoku, .registration = TRUE
-#' @importFrom xts xts
+#' @importFrom stats na.omit
+#' @importFrom xts xts endpoints
 #' @importFrom zoo index coredata
 #' @importFrom ggplot2 ggplot aes geom_ribbon geom_line geom_segment geom_rect
 #'     scale_color_manual scale_fill_manual guides scale_x_datetime

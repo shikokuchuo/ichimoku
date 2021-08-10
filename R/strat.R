@@ -196,8 +196,11 @@ writeStrat <- function(x, strategy, dir) {
   start <- xlen - sum(!is.na(core[, "posn"])) - p2 + 1L
   end <- xlen - p2
 
-  trades <- (coredata(x[x$txn == -1, "open"]) - coredata(x[x$txn == 1, "open"])) /
-    coredata(x[x$txn == 1, "open"])
+  openvec <- na.omit(core[core[, "txn"] == 1, "open"])
+  closevec <- na.omit(core[core[, "txn"] == -1, "open"])
+  trades <- switch(dir,
+                   long = (closevec - openvec) / openvec,
+                   short = (openvec - closevec) / openvec)
   tlen <- length(trades)
 
   structure(x, strat = cbind(list(

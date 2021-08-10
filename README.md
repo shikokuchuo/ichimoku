@@ -36,7 +36,7 @@ Install the released version of ichimoku from CRAN:
 install.packages("ichimoku")
 ```
 
-Or the latest development version from rOpenSci R-universe binaries:
+Or the latest development version from rOpenSci R-universe:
 
 ``` r
 install.packages("ichimoku", repos = "https://shikokuchuo.r-universe.dev")
@@ -45,7 +45,7 @@ install.packages("ichimoku", repos = "https://shikokuchuo.r-universe.dev")
 Or the latest development version from the Github source:
 
 ``` r
-devtools::install_github("shikokuchuo/ichimoku")
+remotes::install_github("shikokuchuo/ichimoku")
 ```
 
 **Note:** ichimoku object specification released 2021-08-08 - *please

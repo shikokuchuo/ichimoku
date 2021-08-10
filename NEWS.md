@@ -1,15 +1,24 @@
-# ichimoku 0.3.51.2
+# ichimoku 0.3.51.3
 
-* Re-export functions for working with ichimoku objects: from the 'zoo' package `index()`, `coredata()`, and from the 'xts' package `xts()`.
-* `archive()` merges functionality of `ichimoku_write()` and `ichimoku_read()`. Fixed cases of the timezone of restored objects not matching the original.
+* **New features:**
+* `archive()` replaces `ichimoku_write()` and `ichimoku_read()` by merging their functionality.
+* Re-export functions for working with ichimoku objects: `index()`, `coredata()` from 'zoo', and `xts()` from the 'xts' package.
+
+* **Updates:**
+* Charts of daily or lower frequency now have prettier and more usefully-aligned breaks using custom algorithm.
+* Improved handling of timezones. OANDA data and charts will now show correctly in the user timezone.
+* Fixed cases of the timezone of restored objects from Arrow archives not matching the original.
+* Fixed bug which caused `oanda()` not to return weekly data in certain cases.
+* Fixed bug in trade success statistics for short strategies returned by `strat()`.
 * Linking to 'cpp11' package, removed vendored code.
+* Added 'stats' R core package dependency for improved performance in strat functions.
 
 # ichimoku 0.3.51
 
 * **ichimoku object specification release (version 1):**
 * Please upgrade to the latest version of ichimoku.
 * ichimoku objects created in versions prior to 0.3.51 will no longer work correctly with newer versions of the package.
-* `ichimoku()` can be called on previous objects to re-create the objects according to the v1 specification.
+* `ichimoku()` can be called on previously-created objects to re-create the objects according to the v1 specification.
 
 # ichimoku 0.3.5
 

@@ -2,7 +2,8 @@ cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 strat <- strat(cloud, c1 = "chikou", c2 = "cloudT", dir = "long")
 strat2 <- strat(cloud, c1 = "chikou", c2 = "cloudT", c3 = "chikou", c4 = "cloudT", dir = "long")
 stratlist <- autostrat(cloud, n = 2, dir = "short", level = 2)
-grid <- mlgrid(strat, y = "ret", type = "numeric")
+grid <- mlgrid(strat, y = "logret", type = "numeric")
+grid2 <- mlgrid(strat2, y = "ret", type = "boolean", dir = "short", unique = FALSE)
 
 test_that("strat ok", {
   expect_s3_class(strat, "ichimoku")
@@ -45,6 +46,13 @@ test_that("mlgrid ok", {
   expect_s3_class(grid, "data.frame")
   expect_true(dim(grid)[2L] == 38)
   expect_true(attr(grid, "mlgrid"))
+  expect_identical(attr(grid, "y"), "logret")
+  expect_identical(attr(grid, "direction"), "long")
+  expect_s3_class(grid2, "data.frame")
+  expect_true(dim(grid2)[2L] == 75)
+  expect_true(attr(grid2, "mlgrid"))
+  expect_identical(attr(grid2, "y"), "ret")
+  expect_identical(attr(grid2, "direction"), "short")
   expect_error(mlgrid(sample_ohlc_data), regexp = "ichimoku object")
 })
 

@@ -50,8 +50,7 @@ specified if already stored by oanda_set_key(). Can also be entered
 interactively if not specified.}
 }
 \value{
-A data.frame containing the price data requested. Note that returned
-    times are represented in UTC.
+A data.frame containing the price data requested.
 }
 \description{
 Retrieve price data from the OANDA fxTrade API.

@@ -31,6 +31,7 @@ test_that("df_merge ok", {
   merge <- df_merge(sample_ohlc_data[1:6, ], sample_ohlc_data[4:10, ])
   expect_equal(dim(merge)[1L], 10)
   attr(merge, "oanda") <- TRUE
+  attr(merge, "timestamp") <- as.POSIXct("2020-01-01")
   merge$complete <- FALSE
   expect_warning(df_merge(merge, merge), regexp = "Incomplete periods")
 })

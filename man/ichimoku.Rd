@@ -44,12 +44,11 @@ An ichimoku object is returned with S3 classes of 'ichimoku', 'xts'
     and 'zoo'.
 }
 \description{
-Create an ichimoku object containing the values for all components of the
-    Ichimoku Kinko Hyo cloud chart for visualization and further quantitative
-    analysis. The object encapsulates a date-time index, OHLC pricing data,
-    candle direction, the cloud lines Tenkan-sen, Kijun-sen, Senkou span A,
-    Senkou span B and Chikou span, as well as values for the cloud top and
-    cloud base.
+Create an ichimoku object containing all components of the Ichimoku Kinko Hyo
+    cloud chart for visualization and quantitative analysis. The object
+    encapsulates a date-time index, OHLC pricing data, candle direction, the
+    cloud lines Tenkan-sen, Kijun-sen, Senkou span A, Senkou span B and
+    Chikou span, as well as values for the cloud top and cloud base.
 }
 \details{
 Calling an ichimoku object automatically invokes its print method,
@@ -99,14 +98,20 @@ Calling an ichimoku object automatically invokes its print method,
 
     An ichimoku object inherits the 'xts' and 'zoo' classes. For convenience,
     the following functions are re-exported by ichimoku:
+
+    \emph{from 'zoo':}
      \itemize{
-        \item{\code{index()}:} {\emph{from 'zoo'} - to extract the index of
-        an ichimoku object}
-        \item{\code{coredata()}:} {\emph{from 'zoo'} - to extract the columns
-        of an ichimoku object as a numeric matrix}
-        \item{\code{xts()}:} {\emph{from 'xts'} - to re-create an 'xts'
-        object from data and a date-time index use \code{xts(data, index)}}
+        \item{\code{index()}:} { to extract the index of an ichimoku object}
+        \item{\code{coredata()}:} { to extract the columns of an ichimoku
+        object as a numeric matrix}
      }
+
+     \emph{from 'xts':}
+     \itemize{
+        \item{\code{xts()}:} { to create an 'xts' object from data and a
+        date-time index use \code{xts(data, index)}}
+     }
+
      Additional methods are available by loading the 'xts' package.
 }
 

@@ -1,9 +1,16 @@
 cloud <- ichimoku(sample_ohlc_data, ticker = "TKR", periods = c(9, 26, 52))
 
-test_that("ichimoku object classes correct", {
+test_that("ichimoku object specification correct", {
   expect_s3_class(cloud, "ichimoku")
   expect_s3_class(cloud, "xts")
   expect_s3_class(cloud, "zoo")
+  dims <- dim(cloud)
+  expect_true(dims[1L] == 281L)
+  expect_true(dims[2L] == 12L)
+  names <- c("open", "high", "low", "close", "cd", "tenkan", "kijun", "senkouA",
+             "senkouB", "chikou", "cloudT", "cloudB")
+  expect_identical(names, dimnames(cloud)[[2L]])
+  expect_s3_class(index(cloud), "POSIXct")
 })
 
 test_that("ichimoku methods correct", {
@@ -16,8 +23,13 @@ test_that("ichimoku methods correct", {
   expect_s3_class(ichimoku(arrow::Table$create(sample_ohlc_data)), "ichimoku")
 })
 
-test_that("ichimoku object specification ok", {
-  expect_true(dim(cloud)[2L] == 12)
+test_that("ichimoku handles higher frequency data", {
+  data <- sample_ohlc_data
+  data$time <- seq.POSIXt(from = as.POSIXct("2020-01-01"), by = "1 hour", length.out = 256)
+  kumo <- ichimoku(data)
+  plot <- autoplot(kumo, ticker = "TKR", theme = "mono")
+  expect_s3_class(kumo, "ichimoku")
+  expect_s3_class(plot, "ggplot")
 })
 
 test_that("ichimoku error handling ok", {
@@ -35,8 +47,7 @@ test_that("ichimoku error handling ok", {
 
 test_that("ichimoku plot functions ok", {
   expect_s3_class(autoplot(cloud, ticker = "TKR Co.", theme = "solarized"), "ggplot")
-  expect_s3_class(plot(strat(cloud), window = "2020-06"), "ggplot")
-  expect_s3_class(gplot(cloud, window = "2020-06", message = "m", theme = "mono"), "ggplot")
+  expect_s3_class(plot(strat(cloud), window = "2020-06", message = "message"), "ggplot")
 })
 
 test_that("iplot Shiny functions ok", {
