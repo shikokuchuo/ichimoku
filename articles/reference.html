@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.51.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.51.3</span>
       </span>
     </div>
 
@@ -263,15 +263,21 @@
 <div id="working-with-ichimoku-objects" class="section level4">
 <h4 class="hasAnchor">
 <a href="#working-with-ichimoku-objects" class="anchor"></a>Working with ichimoku objects</h4>
-<p>As an ichimoku object inherits the ‘xts’ and ‘zoo’ classes, all the existing methods for these classes should work seamlessly. For convenience, the following functions used by ichimoku are re-exported:</p>
+<p>As an ichimoku object inherits the ‘xts’ and ‘zoo’ classes, all the existing methods for these classes should work seamlessly. For convenience, the following functions are re-exported by ichimoku:</p>
+<p><em>from ‘zoo’:</em></p>
 <ul>
 <li>
-<code><a href="https://rdrr.io/pkg/zoo/man/index.html">index()</a></code> <em>from ‘zoo’</em> - to extract the index of an ichimoku object</li>
+<code><a href="https://rdrr.io/pkg/zoo/man/index.html">index()</a></code> to extract the index of an ichimoku object</li>
 <li>
-<code><a href="https://rdrr.io/pkg/zoo/man/coredata.html">coredata()</a></code> <em>from ‘zoo’</em> - to extract the columns of an ichimoku object as a numeric matrix (without the date index)</li>
-<li>
-<code><a href="https://rdrr.io/pkg/xts/man/xts.html">xts()</a></code> <em>from ‘xts’</em> - to re-create an ‘xts’ object from data and a date-time index, use <code><a href="https://rdrr.io/pkg/xts/man/xts.html">xts(data, index)</a></code>. Once created, call <code><a href="../reference/ichimoku.html">ichimoku()</a></code> to convert into an ichimoku object.</li>
+<code><a href="https://rdrr.io/pkg/zoo/man/coredata.html">coredata()</a></code> to extract the columns of an ichimoku object as a numeric matrix (without the date index)</li>
 </ul>
+<p><em>from ‘xts’:</em></p>
+<ul>
+<li>
+<code><a href="https://rdrr.io/pkg/xts/man/xts.html">xts()</a></code> to create an ‘xts’ object from data and a date-time index, use <code><a href="https://rdrr.io/pkg/xts/man/xts.html">xts(data, index)</a></code>
+</li>
+</ul>
+<p>If modifications have been made, call <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on the modified object to re-create the ichimoku object according to the correct specification.</p>
 <p>For additional functionality, you may consider loading the ‘xts’ package to access a wide range of methods available for ‘xts’ objects, for example changing the periodicity of the data.</p>
 </div>
 <div id="defining-custom-holidays" class="section level4">
@@ -418,16 +424,14 @@
 <li><p>There are NA values within the price data. This will affect the algorithm calculating the cloud lines in the window immediately following such NA values. Please check the data and manually correct NA values before invoking <code><a href="../reference/ichimoku.html">ichimoku()</a></code></p></li>
 </ul>
 </div>
-<div id="interface-changes-from-previous-versions" class="section level3">
+<div id="api-modifications" class="section level3">
 <h3 class="hasAnchor">
-<a href="#interface-changes-from-previous-versions" class="anchor"></a>Interface changes from previous versions</h3>
+<a href="#api-modifications" class="anchor"></a>API modifications</h3>
 <div id="since-version-0-3" class="section level4">
 <h4 class="hasAnchor">
 <a href="#since-version-0-3" class="anchor"></a>Since version 0.3</h4>
 <ul>
-<li>The ichimoku object specification has been updated in version 0.3.51. ichimoku objects created in versions prior to 0.3.51 will no longer work correctly with newer versions of the package. Please run <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on all old objects to re-create the object according to the new specification (all data is preserved)</li>
-<li>The following functions are re-exported to allow manipulation of ichimoku objects, from the ‘zoo’ package: <code><a href="https://rdrr.io/pkg/zoo/man/index.html">index()</a></code>, <code><a href="https://rdrr.io/pkg/zoo/man/coredata.html">coredata()</a></code>, from the ‘xts’ package: <code><a href="https://rdrr.io/pkg/xts/man/xts.html">xts()</a></code>
-</li>
+<li>The ichimoku object specification was released in version 0.3.51. ichimoku objects created in versions prior to 0.3.51 will no longer work correctly with newer versions of the package. Please run <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on previously-created objects to re-create the object according to the new specification (data is preserved)</li>
 <li>The following functions are no longer exported: <code>maxOver()</code>, <code>minOver()</code>, <code>oanda_accounts()</code>.</li>
 </ul>
 </div>
@@ -436,7 +440,7 @@
 <a href="#since-version-0-2" class="anchor"></a>Since version 0.2</h4>
 <ul>
 <li><p><code><a href="../reference/iplot.html">iplot()</a></code> now uses an R Shiny backend rather than plotly, as it is performant and scalable for large datasets and offers similar/enhanced functionality. To continue working with plotly, simply pass the ‘ggplot’ object created by plot() to <code>plotly::ggplotly()</code></p></li>
-<li><p>Argument ‘gaps’ to the plot functions is deprecated. As a convenience, the functionality has been moved to a <code><a href="../reference/gplot.html">gplot()</a></code> function which will remain in the package until at least version 0.4.</p></li>
+<li><p>Argument ‘gaps’ to the plot functions is deprecated. As a convenience, the functionality has been moved to a <code>gplot()</code> function which will remain in the package until at least version 0.4.</p></li>
 <li><p><code><a href="../reference/ichimoku.html">ichimoku()</a></code> validation changes mean it will now take a column named ‘index’, ‘date’ or ‘time’ in precedence to a row index.</p></li>
 </ul>
 </div>
@@ -456,7 +460,7 @@
 <div id="dependencies" class="section level2">
 <h2 class="hasAnchor">
 <a href="#dependencies" class="anchor"></a>Dependencies</h2>
-<p>The dependency on other packages is designed to be minimised to the extent possible. ichimoku currently has the following package dependencies:</p>
+<p>The dependency on other packages is designed to be minimised to the extent possible. ichimoku currently has the following external package dependencies:</p>
 <ul>
 <li>xts - ichimoku object specification is based on the ‘xts’ format for time series</li>
 <li>zoo - ‘xts’ is built on ‘zoo’ technology</li>
@@ -464,7 +468,10 @@
 <li>rlang - R language requirement arising from the use of ‘ggplot2’</li>
 <li>curl - for interfacing with external APIs</li>
 <li>jsonlite - for parsing data retrieved from external APIs</li>
-<li>cpp11 - provides the C++ headers for fast window functions used by ichimoku (required when compiling package from source)</li>
+</ul>
+<p>Compile time:</p>
+<ul>
+<li>cpp11 - provides the C++ headers for fast window functions used by ichimoku</li>
 </ul>
 <p>Optional:</p>
 <ul>

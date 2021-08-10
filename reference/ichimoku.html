@@ -40,12 +40,11 @@
 
 
 <meta property="og:title" content="ichimoku — ichimoku" />
-<meta property="og:description" content="Create an ichimoku object containing the values for all components of the
-    Ichimoku Kinko Hyo cloud chart for visualization and further quantitative
-    analysis. The object encapsulates a date-time index, OHLC pricing data,
-    candle direction, the cloud lines Tenkan-sen, Kijun-sen, Senkou span A,
-    Senkou span B and Chikou span, as well as values for the cloud top and
-    cloud base." />
+<meta property="og:description" content="Create an ichimoku object containing all components of the Ichimoku Kinko Hyo
+    cloud chart for visualization and quantitative analysis. The object
+    encapsulates a date-time index, OHLC pricing data, candle direction, the
+    cloud lines Tenkan-sen, Kijun-sen, Senkou span A, Senkou span B and
+    Chikou span, as well as values for the cloud top and cloud base." />
 
 
 
@@ -77,7 +76,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.51.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.51.3</span>
       </span>
     </div>
 
@@ -143,12 +142,11 @@
     </div>
 
     <div class="ref-description">
-    <p>Create an ichimoku object containing the values for all components of the
-    Ichimoku Kinko Hyo cloud chart for visualization and further quantitative
-    analysis. The object encapsulates a date-time index, OHLC pricing data,
-    candle direction, the cloud lines Tenkan-sen, Kijun-sen, Senkou span A,
-    Senkou span B and Chikou span, as well as values for the cloud top and
-    cloud base.</p>
+    <p>Create an ichimoku object containing all components of the Ichimoku Kinko Hyo
+    cloud chart for visualization and quantitative analysis. The object
+    encapsulates a date-time index, OHLC pricing data, candle direction, the
+    cloud lines Tenkan-sen, Kijun-sen, Senkou span A, Senkou span B and
+    Chikou span, as well as values for the cloud top and cloud base.</p>
     </div>
 
     <pre class="usage"><span class='fu'>ichimoku</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
@@ -245,14 +243,19 @@ Ichimoku analysis.</p></td>
     
 
 <p>An ichimoku object inherits the 'xts' and 'zoo' classes. For convenience,
-    the following functions are re-exported by ichimoku:</p><ul>
-<li><p><code><a href='https://rdrr.io/pkg/zoo/man/index.html'>index()</a></code>: <em>from 'zoo'</em> - to extract the index of
-        an ichimoku object</p></li>
-<li><p><code><a href='https://rdrr.io/pkg/zoo/man/coredata.html'>coredata()</a></code>: <em>from 'zoo'</em> - to extract the columns
-        of an ichimoku object as a numeric matrix</p></li>
-<li><p><code><a href='https://rdrr.io/pkg/xts/man/xts.html'>xts()</a></code>: <em>from 'xts'</em> - to re-create an 'xts'
-        object from data and a date-time index use <code><a href='https://rdrr.io/pkg/xts/man/xts.html'>xts(data, index)</a></code></p></li>
-</ul><p>Additional methods are available by loading the 'xts' package.</p>
+    the following functions are re-exported by ichimoku:</p>
+<p><em>from 'zoo':</em></p><ul>
+<li><p><code><a href='https://rdrr.io/pkg/zoo/man/index.html'>index()</a></code>:  to extract the index of an ichimoku object</p></li>
+<li><p><code><a href='https://rdrr.io/pkg/zoo/man/coredata.html'>coredata()</a></code>:  to extract the columns of an ichimoku
+        object as a numeric matrix</p></li>
+</ul>
+
+<p><em>from 'xts':</em></p><ul>
+<li><p><code><a href='https://rdrr.io/pkg/xts/man/xts.html'>xts()</a></code>:  to create an 'xts' object from data and a
+        date-time index use <code><a href='https://rdrr.io/pkg/xts/man/xts.html'>xts(data, index)</a></code></p></li>
+</ul>
+
+<p>Additional methods are available by loading the 'xts' package.</p>
     <h2 class="hasAnchor" id="further-details"><a class="anchor" href="#further-details"></a>Further Details</h2>
 
     

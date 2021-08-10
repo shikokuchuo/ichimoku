@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.51.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.51.3</span>
       </span>
     </div>
 
@@ -135,15 +135,22 @@
       <small>Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="ichimoku-03512" class="section level1">
-<h1 class="page-header" data-toc-text="0.3.51.2">
-<a href="#ichimoku-03512" class="anchor"></a>ichimoku 0.3.51.2<small> Unreleased </small>
+    <div id="ichimoku-03513" class="section level1">
+<h1 class="page-header" data-toc-text="0.3.51.3">
+<a href="#ichimoku-03513" class="anchor"></a>ichimoku 0.3.51.3<small> Unreleased </small>
 </h1>
 <ul>
-<li>Re-export functions for working with ichimoku objects: from the ‘zoo’ package <code><a href="https://rdrr.io/pkg/zoo/man/index.html">index()</a></code>, <code><a href="https://rdrr.io/pkg/zoo/man/coredata.html">coredata()</a></code>, and from the ‘xts’ package <code><a href="https://rdrr.io/pkg/xts/man/xts.html">xts()</a></code>.</li>
-<li>
-<code><a href="../reference/archive.html">archive()</a></code> merges functionality of <code>ichimoku_write()</code> and <code>ichimoku_read()</code>. Fixed cases of the timezone of restored objects not matching the original.</li>
-<li>Linking to ‘cpp11’ package, removed vendored code.</li>
+<li><p><strong>New features:</strong></p></li>
+<li><p><code><a href="../reference/archive.html">archive()</a></code> replaces <code>ichimoku_write()</code> and <code>ichimoku_read()</code> by merging their functionality.</p></li>
+<li><p>Re-export functions for working with ichimoku objects: <code><a href="https://rdrr.io/pkg/zoo/man/index.html">index()</a></code>, <code><a href="https://rdrr.io/pkg/zoo/man/coredata.html">coredata()</a></code> from ‘zoo’, and <code><a href="https://rdrr.io/pkg/xts/man/xts.html">xts()</a></code> from the ‘xts’ package.</p></li>
+<li><p><strong>Updates:</strong></p></li>
+<li><p>Charts of daily or lower frequency now have prettier and more usefully-aligned breaks using custom algorithm.</p></li>
+<li><p>Improved handling of timezones. OANDA data and charts will now show correctly in the user timezone.</p></li>
+<li><p>Fixed cases of the timezone of restored objects from Arrow archives not matching the original.</p></li>
+<li><p>Fixed bug which caused <code><a href="../reference/oanda.html">oanda()</a></code> not to return weekly data in certain cases.</p></li>
+<li><p>Fixed bug in trade success statistics for short strategies returned by <code><a href="../reference/strat.html">strat()</a></code>.</p></li>
+<li><p>Linking to ‘cpp11’ package, removed vendored code.</p></li>
+<li><p>Added ‘stats’ R core package dependency for improved performance in strat functions.</p></li>
 </ul>
 </div>
     <div id="ichimoku-0351" class="section level1">
@@ -155,7 +162,7 @@
 <li>Please upgrade to the latest version of ichimoku.</li>
 <li>ichimoku objects created in versions prior to 0.3.51 will no longer work correctly with newer versions of the package.</li>
 <li>
-<code><a href="../reference/ichimoku.html">ichimoku()</a></code> can be called on previous objects to re-create the objects according to the v1 specification.</li>
+<code><a href="../reference/ichimoku.html">ichimoku()</a></code> can be called on previously-created objects to re-create the objects according to the v1 specification.</li>
 </ul>
 </div>
     <div id="ichimoku-035" class="section level1">
@@ -198,7 +205,7 @@
 <li><p>New dependencies on the ‘httr’ and ‘jsonlite’ packages, required for the OANDA fxTrade API interface.</p></li>
 <li><p><code><a href="../reference/strat.html">strat()</a></code> now takes optional ‘c3’ and ‘c4’ arguments to provide parameters for complex strategies. This allows a combined strategy to be specified directly using one <code><a href="../reference/strat.html">strat()</a></code> call rather than 2 separate <code><a href="../reference/strat.html">strat()</a></code> calls and a call to <code><a href="../reference/stratcombine.html">stratcombine()</a></code>.</p></li>
 <li><p>Plotly charts have been retired as they are simply not scalable to large datasets. <code><a href="../reference/iplot.html">iplot()</a></code> now uses a Shiny backend providing similar/enhanced features. To contiune working with plotly, please use <code>plotly::ggplotly()</code> on plot objects created by <code><a href="../reference/plot.ichimoku.html">plot.ichimoku()</a></code>.</p></li>
-<li><p>Argument ‘gaps’ for the plot functions is deprecated but remains available through the <code><a href="../reference/gplot.html">gplot()</a></code> function until at least version 0.4.</p></li>
+<li><p>Argument ‘gaps’ for the plot functions is deprecated but remains available through the <code>gplot()</code> function until at least version 0.4.</p></li>
 <li><p>Chikou span now the top layer in plots so visible over the candlesticks.</p></li>
 <li><p>Performance enhancements for principal functions, including optimised data validation and error handling code.</p></li>
 <li><p>Certain helper functions renamed for consistency.</p></li>
