@@ -73,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.51.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.51.4</span>
       </span>
     </div>
 
@@ -115,8 +115,14 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
+  <a href="https://shikokuchuo.net/">
+    <span class="fa fa-cube"></span>
+     
+  </a>
+</li>
+<li>
   <a href="https://github.com/shikokuchuo/ichimoku/">
-    <span class="fab fa-github fa-lg"></span>
+    <span class="fa fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -134,7 +140,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Read/write ichimoku objects &lt;&gt; Arrow Archive</h1>
-    <small class="dont-index">Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/R/arrow.R'><code>R/arrow.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/R/archive.R'><code>R/archive.R</code></a></small>
     <div class="hidden name"><code>archive.Rd</code></div>
     </div>
 
@@ -150,7 +156,8 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>...</th>
-      <td><p>additional parameters not used by this function.</p></td>
+      <td><p>unnamed arguments will be parsed as 'filename' if there is only
+one argument, 'object' and 'filename' if there are two arguments.</p></td>
     </tr>
     <tr>
       <th>object</th>
@@ -181,7 +188,7 @@ system (SubTreeFileSystem).</p></td>
 
 <span class='va'>filename</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span><span class='op'>(</span><span class='op'>)</span>
 <span class='fu'>archive</span><span class='op'>(</span><span class='va'>cloud</span>, <span class='va'>filename</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Archive created: /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmpdwafzh/file6372dc68df2</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>Archive created: /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpMMDVhR/file75af49fc66</span></div><div class='input'>
 <span class='va'>restored</span> <span class='op'>&lt;-</span> <span class='fu'>archive</span><span class='op'>(</span><span class='va'>filename</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/identical.html'>identical</a></span><span class='op'>(</span><span class='va'>cloud</span>, <span class='va'>restored</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
