@@ -4,6 +4,7 @@ test_that("arrow archive functions ok", {
   filename <- tempfile()
   archive(cloud, filename)
   restored <- archive(filename)
+  unlink(filename)
   expect_identical(restored, cloud)
   expect_error(archive(), "is used to")
   expect_error(archive(cloud, cloud, cloud), "Too many arguments")
@@ -13,5 +14,4 @@ test_that("arrow archive functions ok", {
   arrow::write_feather(sample_ohlc_data, filename)
   expect_error(archive(filename = filename), "not an archived ichimoku")
   expect_error(archive(object = cloud), "specified without")
-  unlink(filename)
 })

@@ -1,4 +1,138 @@
-# Ichimoku - ML Layer ----------------------------------------------------------
+# Ichimoku - Strategy + ML Layer -----------------------------------------------
+
+#' Automated Ichimoku Strategies
+#'
+#' Generate a list of the top performing ichimoku cloud strategies based on
+#'     simple indicator conditions of the form 'c1 > c2' (level 1), complex
+#'     combined strategies of the form 'c1 > c2 & c3 > c4' (level 2), or complex
+#'     asymmetric strategies of the form 'c1 > c2 x c3 > c4' (level 3).
+#'
+#' @inheritParams strat
+#' @param n [default 8] select top n number of strategies to return.
+#' @param level [default 1] to return simple strategies. For complex strategies,
+#'     set level to 2 to return strategies of the form 's1 & s2' or level to 3
+#'     to return strategies of the form 's1 x s2'
+#'
+#' @return A list of 'n' ichimoku objects containing strategies. The
+#'     cumulative log returns for all strategies as well as the summaries for
+#'     the 'n' top strategies are saved as attributes to the list. The strategy
+#'     summaries are printed to the console as a side effect.
+#'
+#' @details Ichimoku objects for each strategy are returned as a list. The
+#'     cumulative log returns for all strategies as well as the summaries for
+#'     the 'n' top strategies are saved as attributes to the list. This
+#'     information may be retrieved by using look() on the returned list.
+#'
+#'     Each individual ichimoku object may be accessed via its position in the
+#'     list, e.g. [[1]] for the 1st item, or by using \code{\link{look}}
+#'     specifying the parameter 'which'.
+#'
+#' @section Further Details:
+#'     Please refer to the strategies vignette by running:
+#'     \code{vignette("strategies", package = "ichimoku")}
+#'
+#' @examples
+#' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
+#'
+#' stratlist <- autostrat(cloud, n = 3)
+#' look(stratlist)
+#' summary(look(stratlist, which = 1))
+#'
+#' autostrat(cloud, n = 1, dir = "short", level = 2)
+#' autostrat(cloud, n = 1, dir = "long", level = 3)
+#'
+#' @export
+#'
+autostrat <- function(x,
+                      n = 8,
+                      dir = c("long", "short"),
+                      level = 1) {
+
+  if (!is.ichimoku(x)) stop("autostrat() only works on ichimoku objects", call. = FALSE)
+  dir <- match.arg(dir)
+  if (!level %in% 1:3) {
+    warning("Invalid level specified, using default level of 1", call. = FALSE)
+    level <- 1
+  }
+
+  grid <- mlgrid(x, y = "logret", dir = dir, type = "boolean", unique = FALSE)
+
+  if (level == 1) {
+    matrix <- grid[, 1L] * grid[, -1L]
+    logret <- sort(colSums(matrix), decreasing = TRUE)
+    returns <- logret[!logret == 0]
+    args <- do.call(rbind, strsplit(names(returns[1:n]), "_", fixed = TRUE))
+    list <- mapply(strat, c1 = args[, 1L], c2 = args[, 2L],
+                   MoreArgs = list(x = x, dir = dir),
+                   SIMPLIFY = FALSE, USE.NAMES = FALSE)
+
+  } else if (level == 2) {
+    lgrid <- grid[, -1L]
+    w <- length(lgrid)
+    pairs <- expand.grid(seq_len(w), seq_len(w), KEEP.OUT.ATTRS = FALSE)[-grid_dup(w), ]
+    mgrid <- do.call(cbind,
+                     mapply(function(a, b) lgrid[, a] * lgrid[, b],
+                            a = pairs[, 1L], b = pairs[, 2L],
+                            SIMPLIFY = FALSE, USE.NAMES = FALSE))
+    dimnames(mgrid)[[2L]] <- do.call(c,
+                                     mapply(function(a, b) paste0(names(lgrid)[a], "&", names(lgrid)[b]),
+                                            a = pairs[, 1L], b = pairs[, 2L],
+                                            SIMPLIFY = FALSE, USE.NAMES = FALSE))
+    matrix <- grid[, 1L] * mgrid
+    logret <- sort(colSums(matrix), decreasing = TRUE)
+    returns <- logret[!logret == 0]
+    args <- do.call(rbind, strsplit(names(returns[1:n]), "&|_"))
+    list <- mapply(strat, c1 = args[, 1L], c2 = args[, 2L], c3 = args[, 3L], c4 = args[, 4L],
+                   MoreArgs = list(x = x, dir = dir, type = 2),
+                   SIMPLIFY = FALSE, USE.NAMES = FALSE)
+
+  } else {
+    lgrid <- grid[, -1L]
+    w <- length(lgrid)
+    pairs <- expand.grid(seq_len(w), seq_len(w), KEEP.OUT.ATTRS = FALSE)[-grid_dup(w, omit.id = TRUE), ]
+    mgrid <- do.call(cbind,
+                     mapply(function(a, b) {
+                       xlen <- dim(lgrid)[1L]
+                       s1posn <- lgrid[, a]
+                       s1txn <- c(if (s1posn[1L] == 1) 1 else 0,
+                                  diff(s1posn)[-1L],
+                                  if (s1posn[xlen] == 1) -1 else 0)
+                       s2posn <- lgrid[, b]
+                       s2txn <- c(0,
+                                  diff(s2posn)[-1L],
+                                  if (s2posn[xlen] == 1) -1 else 0)
+                       s1entry <- which(s1txn == 1)
+                       s2exit <- which(s2txn == 1)
+                       position <- integer(xlen)
+                       while (length(s1entry) > 0 && length(s2exit) > 0) {
+                         position[s1entry[1L]:(s2exit[1L] - 1L)] <- 1L
+                         s1entry <- s1entry[s1entry > s2exit[1L]]
+                         s2exit <- s2exit[s2exit > s1entry[1L]]
+                       }
+                       position
+                     },
+                     a = pairs[, 1L], b = pairs[, 2L],
+                     SIMPLIFY = FALSE, USE.NAMES = FALSE))
+    dimnames(mgrid)[[2L]] <- do.call(c,
+                                     mapply(function(a, b) paste0(names(lgrid)[a], "x", names(lgrid)[b]),
+                                            a = pairs[, 1L], b = pairs[, 2L],
+                                            SIMPLIFY = FALSE, USE.NAMES = FALSE))
+    matrix <- grid[, 1L] * mgrid
+    logret <- sort(colSums(matrix), decreasing = TRUE)
+    returns <- logret[!logret == 0]
+    args <- do.call(rbind, strsplit(names(returns[1:n]), "x|_"))
+    list <- mapply(strat, c1 = args[, 1L], c2 = args[, 2L], c3 = args[, 3L], c4 = args[, 4L],
+                   MoreArgs = list(x = x, dir = dir, type = 3),
+                   SIMPLIFY = FALSE, USE.NAMES = FALSE)
+
+  }
+
+  invisible(structure(list,
+                      logret = cbind(logret),
+                      summary = print(do.call(cbind, lapply(list, attr, which = "strat"))),
+                      autostrat = TRUE))
+
+}
 
 #' mlgrid Numeric Representation
 #'
@@ -72,7 +206,7 @@ mlgrid <- function(x,
   cols <- c("chikou", "close", "high", "low", "tenkan", "kijun",
             "senkouA", "senkouB", "cloudT", "cloudB")
   comb <- as.matrix(expand.grid(cols, cols, KEEP.OUT.ATTRS = FALSE, stringsAsFactors = FALSE)
-                    )[-grid_dup(length(cols), omit.id = TRUE), ]
+  )[-grid_dup(length(cols), omit.id = TRUE), ]
   pairs <- comb[-c(10L, 11L, 18L, 41L, 42L, 43L, 44L, 45L), ]
   matrix <- writeMatrix(x = core, pairs = pairs, p2 = p2, xlen = xlen, type = type)
 
@@ -122,75 +256,6 @@ writeMatrix <- function(x, pairs, p2, xlen, type) {
                                               c1 = pairs[, 2L], c2 = pairs[, 1L],
                                               SIMPLIFY = FALSE, USE.NAMES = FALSE))
   matrix
-
-}
-
-#' Look at Ichimoku Objects
-#'
-#' Inspect the informational attributes of objects created by the 'ichimoku'
-#'     package. Can also be used to extract ichimoku objects from lists returned
-#'     by \code{\link{autostrat}}.
-#'
-#' @param x an ichimoku object or an object returned by \code{\link{autostrat}},
-#'     \code{\link{mlgrid}} or \code{\link{oanda}}.
-#' @param which (optional) integer value of strategy to return from an autostrat
-#'     list.
-#'
-#' @return List of attribute values, or if 'which' is specified on an autostrat
-#'     list, an ichimoku object containing a strategy.
-#'
-#' @details Note: for a level 2 autostrat object, if the object fails to print
-#'     correctly due to its length, please access the list items directly using
-#'     \code{look(x)$summary} and \code{look(x)$logret}, possibly in conjunction
-#'     with head() or by setting the 'max' argument in print().
-#'
-#' @examples
-#' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
-#' look(cloud)
-#'
-#' stratlist <- autostrat(cloud, n = 3)
-#' look(stratlist)
-#'
-#' strat <- look(stratlist, which = 1)
-#' look(strat)
-#'
-#' grid <- mlgrid(cloud)
-#' look(grid)
-#'
-#' \dontrun{
-#' # OANDA API key required to run this example
-#' prices <- oanda("USD_JPY")
-#' look(prices)
-#' }
-#'
-#' @export
-#'
-look <- function(x, which) {
-
-  name <- deparse(substitute(x))
-
-  if (is.ichimoku(x)) {
-    if (hasStrat(x)) list(periods = attr(x, "periods"), periodicity = attr(x, "periodicity"),
-                          ticker = attr(x, "ticker"), strat = attr(x, "strat"))
-    else list(periods = attr(x, "periods"), periodicity = attr(x, "periodicity"),
-              ticker = attr(x, "ticker"))
-
-  } else if (isTRUE(attr(x, "autostrat"))) {
-    if (missing(which)) list(logret = attr(x, "logret"), summary = attr(x, "summary"))
-    else tryCatch(x[[which]], error = function(e) {
-      stop("Value '", which, "' for 'which' is invalid\n'which' must be an integer ",
-           "specifying one of the strategies contained in '", name, "'", call. = FALSE)
-      })
-
-  } else if (isTRUE(attr(x, "mlgrid"))) {
-    list(y = attr(x, "y"), direction = attr(x, "direction"), ticker = attr(x, "ticker"))
-
-  } else if (isTRUE(attr(x, "oanda"))) {
-    list(instrument = attr(x, "instrument"), price = attr(x, "price"),
-         timestamp = attr(x, "timestamp"))
-
-  } else stop("look() only works with certain object types created with the ichimoku package",
-              call. = FALSE)
 
 }
 

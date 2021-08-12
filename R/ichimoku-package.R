@@ -55,9 +55,8 @@
 #'     unaffiliated with the ichimoku package.
 #'
 #'     Gao, C. (2021), \emph{ichimoku: Visualization and Tools for Ichimoku
-#'     Kinko Hyo Strategies}. R package version 0.3.51.
-#'     \url{https://shikokuchuo.net/ichimoku/} CRAN page:
-#'     \url{https://CRAN.R-project.org/package=ichimoku}
+#'     Kinko Hyo Strategies}. R package version 0.3.51,
+#'     \url{https://CRAN.R-project.org/package=ichimoku}.
 #'
 #' @useDynLib ichimoku, .registration = TRUE
 #' @importFrom stats na.omit

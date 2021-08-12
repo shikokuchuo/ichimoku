@@ -1,10 +1,12 @@
-# ichimoku 0.3.51.3
+# ichimoku 0.3.51.4
 
-* **New features:**
+#### New features:
+
 * `archive()` replaces `ichimoku_write()` and `ichimoku_read()` by merging their functionality.
 * Re-export functions for working with ichimoku objects: `index()`, `coredata()` from 'zoo', and `xts()` from the 'xts' package.
 
-* **Updates:**
+#### Updates:
+
 * Charts of daily or lower frequency now have prettier and more usefully-aligned breaks using custom algorithm.
 * Improved handling of timezones. OANDA data and charts will now show correctly in the user timezone.
 * Fixed cases of the timezone of restored objects from Arrow archives not matching the original.
@@ -15,20 +17,21 @@
 
 # ichimoku 0.3.51
 
-* **ichimoku object specification release (version 1):**
+#### *ichimoku object specification release (version 1)*
+
 * Please upgrade to the latest version of ichimoku.
 * ichimoku objects created in versions prior to 0.3.51 will no longer work correctly with newer versions of the package.
 * `ichimoku()` can be called on previously-created objects to re-create the objects according to the v1 specification.
 
 # ichimoku 0.3.5
 
-* **New features:**
+#### New features:
 
 * New `ichimoku_write()` and `ichimoku_read()` functions allow for archiving of ichimoku objects to files stored in the Apache Arrow IPC file format.
 * `ichimoku()` gains a new S3 method for the `ArrowTabular` class for working with Arrow Tables.
 * `oanda()` gains the capability to download over 5000 data periods in multiple (rate-limited) requests when both the 'from' and 'to' arguments are specified.
 
-* **Updates:**
+#### Updates:
 
 * Implemented caching of certain OANDA variables so they are retrieved once and then used throughout a session.
 * `iplot()` and `oanda_studio()` now use 'bslib' (a Shiny dependency) to enable theming of the entire UI rather than just the chart. Infotip candle direction symbols updated for greater clarity.
@@ -42,11 +45,10 @@
 * The following functions are no longer exported to keep the package tidy: `maxOver()`, `minOver()`, `oanda_accounts()`.
 * `sample_ohlc_data` slightly lengthened to better demonstrate strat features.
 * Miscellaneous performance optimisations.
-* Documentation updates.
 
 # ichimoku 0.3.0
 
-* **New features:**
+#### New features:
 
 * OANDA fxTrade API interface for retrieving price data: new `oanda()`, `oanda_stream()` and `oanda_chart()` functions.
 * `oanda_studio()` is a complete live analysis envrionment using OANDA data in an R Shiny app.
@@ -54,7 +56,7 @@
 * `look()` function for viewing informational attributes of objects created by the package, and for extracting ichimoku objects from lists returned by `autostrat()`.
 * `strat()` and `autostrat()` gain a new type/level 3 for asymmetric strategies using different indicators for position entry and exit. 
 
-* **Updates:**
+#### Updates:
 
 * New dependencies on the 'httr' and 'jsonlite' packages, required for the OANDA fxTrade API interface.
 * `strat()` now takes optional 'c3' and 'c4' arguments to provide parameters for complex strategies. This allows a combined strategy to be specified directly using one `strat()` call rather than 2 separate `strat()` calls and a call to `stratcombine()`.
@@ -67,7 +69,7 @@
 
 # ichimoku 0.2.0
 
-* **New features:**
+#### New features:
 
 * ichimoku now has the following capabilities:
   - Visualization layer: compute and plot ichimoku cloud charts.
@@ -77,7 +79,7 @@
 * New all-greyscale 'mono' theme.
 * `tradingDays()` helper function to allow customisation of holidays when calculating the future cloud.
 
-* **Updates:**
+#### Updates:
 
 * Ichimoku object specification updated - this is breaking but can be fixed by re-running `ichimoku()` on previous objects.
 * Ichimoku objects now inherit 'xts' and 'zoo' classes for better integration with other econometrics and analytics packages.

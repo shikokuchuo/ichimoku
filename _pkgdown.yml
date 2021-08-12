@@ -1,1 +1,7 @@
 url: https://shikokuchuo.net/ichimoku
+navbar:
+  right:
+  - icon: fa-cube
+    href: https://shikokuchuo.net/
+  - icon: fa-github fa-lg
+    href: https://github.com/shikokuchuo/ichimoku/

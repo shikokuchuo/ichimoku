@@ -222,7 +222,7 @@ writeStrat <- function(x, strategy, dir) {
     Start = index[start],
     End = index[end],
     Ticker = attr(x, "ticker")
-    )))
+  )))
 
 }
 
@@ -289,182 +289,15 @@ stratcombine <- function(s1, s2) {
   if (posn[end] == 1) txn[end + 1L] <- -1
   if (!sum(txn, na.rm = TRUE) == 0) stop("Calculation error - please check validity of data",
                                          call. = FALSE)
+  slogret <- s1[, "logret"] * posn
 
   s1$cond <- cond
   s1$posn <- posn
   s1$txn <- txn
-  s1$slogret <- s1$logret * posn
-  s1$sret <- exp(s1$slogret) - 1
+  s1$slogret <- slogret
+  s1$sret <- exp(slogret) - 1
 
   writeStrat(x = s1, strategy = strategy, dir = dir)
-
-}
-
-#' Automated Ichimoku Strategies
-#'
-#' Generate a list of the top performing ichimoku cloud strategies based on
-#'     simple indicator conditions of the form 'c1 > c2' (level 1), complex
-#'     combined strategies of the form 'c1 > c2 & c3 > c4' (level 2), or complex
-#'     asymmetric strategies of the form 'c1 > c2 x c3 > c4' (level 3).
-#'
-#' @inheritParams strat
-#' @param n [default 8] select top n number of strategies to return.
-#' @param level [default 1] to return simple strategies. For complex strategies,
-#'     set level to 2 to return strategies of the form 's1 & s2' or level to 3
-#'     to return strategies of the form 's1 x s2'
-#'
-#' @return A list of 'n' ichimoku objects containing strategies. The
-#'     cumulative log returns for all strategies as well as the summaries for
-#'     the 'n' top strategies are saved as attributes to the list. The strategy
-#'     summaries are printed to the console as a side effect.
-#'
-#' @details Ichimoku objects for each strategy are returned as a list. The
-#'     cumulative log returns for all strategies as well as the summaries for
-#'     the 'n' top strategies are saved as attributes to the list. This
-#'     information may be retrieved by using look() on the returned list.
-#'
-#'     Each individual ichimoku object may be accessed via its position in the
-#'     list, e.g. [[1]] for the 1st item, or by using \code{\link{look}}
-#'     specifying the parameter 'which'.
-#'
-#' @section Further Details:
-#'     Please refer to the strategies vignette by running:
-#'     \code{vignette("strategies", package = "ichimoku")}
-#'
-#' @examples
-#' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
-#'
-#' stratlist <- autostrat(cloud, n = 3)
-#' look(stratlist)
-#' summary(look(stratlist, which = 1))
-#'
-#' autostrat(cloud, n = 1, dir = "short", level = 2)
-#' autostrat(cloud, n = 1, dir = "long", level = 3)
-#'
-#' @export
-#'
-autostrat <- function(x,
-                      n = 8,
-                      dir = c("long", "short"),
-                      level = 1) {
-
-  if (!is.ichimoku(x)) stop("autostrat() only works on ichimoku objects", call. = FALSE)
-  dir <- match.arg(dir)
-  if (!level %in% 1:3) {
-    warning("Invalid level specified, using default level of 1", call. = FALSE)
-    level <- 1
-  }
-
-  grid <- mlgrid(x, y = "logret", dir = dir, type = "boolean", unique = FALSE)
-
-  if (level == 1) {
-    matrix <- grid[, 1L] * grid[, -1L]
-    logret <- sort(colSums(matrix), decreasing = TRUE)
-    returns <- logret[!logret == 0]
-    args <- do.call(rbind, strsplit(names(returns[1:n]), "_", fixed = TRUE))
-    list <- mapply(strat, c1 = args[, 1L], c2 = args[, 2L],
-                   MoreArgs = list(x = x, dir = dir),
-                   SIMPLIFY = FALSE, USE.NAMES = FALSE)
-
-  } else if (level == 2) {
-    lgrid <- grid[, -1L]
-    w <- length(lgrid)
-    pairs <- expand.grid(seq_len(w), seq_len(w), KEEP.OUT.ATTRS = FALSE)[-grid_dup(w), ]
-    mgrid <- do.call(cbind,
-                     mapply(function(a, b) lgrid[, a] * lgrid[, b],
-                            a = pairs[, 1L], b = pairs[, 2L],
-                            SIMPLIFY = FALSE, USE.NAMES = FALSE))
-    dimnames(mgrid)[[2L]] <- do.call(c,
-                                     mapply(function(a, b) paste0(names(lgrid)[a], "&", names(lgrid)[b]),
-                                            a = pairs[, 1L], b = pairs[, 2L],
-                                            SIMPLIFY = FALSE, USE.NAMES = FALSE))
-    matrix <- grid[, 1L] * mgrid
-    logret <- sort(colSums(matrix), decreasing = TRUE)
-    returns <- logret[!logret == 0]
-    args <- do.call(rbind, strsplit(names(returns[1:n]), "&|_"))
-    list <- mapply(strat, c1 = args[, 1L], c2 = args[, 2L], c3 = args[, 3L], c4 = args[, 4L],
-                   MoreArgs = list(x = x, dir = dir, type = 2),
-                   SIMPLIFY = FALSE, USE.NAMES = FALSE)
-
-  } else {
-    lgrid <- grid[, -1L]
-    w <- length(lgrid)
-    pairs <- expand.grid(seq_len(w), seq_len(w), KEEP.OUT.ATTRS = FALSE)[-grid_dup(w, omit.id = TRUE), ]
-    mgrid <- do.call(cbind,
-                     mapply(function(a, b) {
-                       xlen <- dim(lgrid)[1L]
-                       s1posn <- lgrid[, a]
-                       s1txn <- c(if (s1posn[1L] == 1) 1 else 0,
-                                  diff(s1posn)[-1L],
-                                  if (s1posn[xlen] == 1) -1 else 0)
-                       s2posn <- lgrid[, b]
-                       s2txn <- c(0,
-                                  diff(s2posn)[-1L],
-                                  if (s2posn[xlen] == 1) -1 else 0)
-                       s1entry <- which(s1txn == 1)
-                       s2exit <- which(s2txn == 1)
-                       position <- integer(xlen)
-                       while (length(s1entry) > 0 && length(s2exit) > 0) {
-                         position[s1entry[1L]:(s2exit[1L] - 1L)] <- 1L
-                         s1entry <- s1entry[s1entry > s2exit[1L]]
-                         s2exit <- s2exit[s2exit > s1entry[1L]]
-                       }
-                       position
-                     },
-                     a = pairs[, 1L], b = pairs[, 2L],
-                     SIMPLIFY = FALSE, USE.NAMES = FALSE))
-    dimnames(mgrid)[[2L]] <- do.call(c,
-                                     mapply(function(a, b) paste0(names(lgrid)[a], "x", names(lgrid)[b]),
-                                            a = pairs[, 1L], b = pairs[, 2L],
-                                            SIMPLIFY = FALSE, USE.NAMES = FALSE))
-    matrix <- grid[, 1L] * mgrid
-    logret <- sort(colSums(matrix), decreasing = TRUE)
-    returns <- logret[!logret == 0]
-    args <- do.call(rbind, strsplit(names(returns[1:n]), "x|_"))
-    list <- mapply(strat, c1 = args[, 1L], c2 = args[, 2L], c3 = args[, 3L], c4 = args[, 4L],
-                   MoreArgs = list(x = x, dir = dir, type = 3),
-                   SIMPLIFY = FALSE, USE.NAMES = FALSE)
-
-  }
-
-  invisible(structure(list,
-                      logret = cbind(logret),
-                      summary = print(do.call(cbind, lapply(list, attr, which = "strat"))),
-                      autostrat = TRUE))
-
-}
-
-#' Summary of Ichimoku Strategies
-#'
-#' Custom summary method for ichimoku objects for viewing strategies.
-#'
-#' @param object an object of class 'ichimoku'.
-#' @param strat [default TRUE] to show the strategy summary if present. Set to
-#'     FALSE to show the data summary instead.
-#' @param ... additional arguments to be passed along.
-#'
-#' @return A matrix containing the strategy summary if present, otherwise a table
-#'     containing the data summary.
-#'
-#' @details This function is an S3 method for the generic function summary() for
-#'     class 'ichimoku'. It can be invoked by calling summary(x) on an object 'x'
-#'     of class 'ichimoku'.
-#'
-#' @section Further Details:
-#'     Please refer to the strategies vignette by running:
-#'     \code{vignette("strategies", package = "ichimoku")}
-#'
-#' @examples
-#' strat <- strat(ichimoku(sample_ohlc_data, ticker = "TKR"))
-#' summary(strat)
-#'
-#' @method summary ichimoku
-#' @export
-#'
-summary.ichimoku <- function(object, strat = TRUE, ...) {
-
-  if (hasStrat(object) && isTRUE(strat)) attr(object, "strat")
-  else NextMethod(summary)
 
 }
 

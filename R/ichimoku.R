@@ -1,4 +1,4 @@
-# Ichimoku - Visualization Layer -----------------------------------------------
+# Ichimoku - Core Functions ----------------------------------------------------
 
 #' ichimoku
 #'
@@ -209,22 +209,19 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), ...) {
                    seq.POSIXt(from = index[length(index)], by = periodicity,
                               length.out = p2)[-1L])
 
-  cloud <- xts(cbind(
-    open = c(open, rep(NA, p2 - 1L)),
-    high = c(high, rep(NA, p2 - 1L)),
-    low = c(low, rep(NA, p2 - 1L)),
-    close = c(close, rep(NA, p2 - 1L)),
-    cd = c(cd, rep(NA, p2 - 1L)),
-    tenkan = c(tenkan, rep(NA, p2 - 1L)),
-    kijun = c(kijun, rep(NA, p2 - 1L)),
-    senkouA = c(rep(NA, p2 - 1L), senkouA),
-    senkouB = c(rep(NA, p2 - 1L), senkouB),
-    chikou = c(chikou, rep(NA, p2 - 1L)),
-    cloudT = c(rep(NA, p2 - 1L), cloudT),
-    cloudB = c(rep(NA, p2 - 1L), cloudB)
-  ), order.by = c(index, future))
-
-  structure(cloud,
+  structure(xts(cbind(open = c(open, rep(NA, p2 - 1L)),
+                      high = c(high, rep(NA, p2 - 1L)),
+                      low = c(low, rep(NA, p2 - 1L)),
+                      close = c(close, rep(NA, p2 - 1L)),
+                      cd = c(cd, rep(NA, p2 - 1L)),
+                      tenkan = c(tenkan, rep(NA, p2 - 1L)),
+                      kijun = c(kijun, rep(NA, p2 - 1L)),
+                      senkouA = c(rep(NA, p2 - 1L), senkouA),
+                      senkouB = c(rep(NA, p2 - 1L), senkouB),
+                      chikou = c(chikou, rep(NA, p2 - 1L)),
+                      cloudT = c(rep(NA, p2 - 1L), cloudT),
+                      cloudB = c(rep(NA, p2 - 1L), cloudB)),
+                order.by = c(index, future)),
             class = c("ichimoku", "xts", "zoo"),
             periods = periods,
             periodicity = as.double.difftime(periodicity, units = "secs"),
@@ -259,44 +256,6 @@ ichimoku.default <- function(x, ticker, periods = c(9L, 26L, 52L), ...) {
   if (!tryExists) stop("object '", x, "' not found")
   else if (missing(ticker)) ichimoku(get(x), ticker = x, periods = periods, ...)
   else ichimoku(get(x), ticker = ticker, periods = periods, ...)
-
-}
-
-#' Print Ichimoku Objects
-#'
-#' Custom print method for ichimoku objects.
-#'
-#' @param x an object of class 'ichimoku'.
-#' @param plot [default TRUE] set to FALSE to prevent automatic plotting of
-#'     the ichimoku cloud chart.
-#' @param ... additional arguments passed along to print and plot functions.
-#'
-#' @return The ichimoku object 'x' passed as parameter.
-#'
-#' @details This function is an S3 method for the generic function print() for
-#'     class 'ichimoku'. It can be invoked by calling print(x) on an object 'x'
-#'     of class 'ichimoku'.
-#'
-#' @section Further Details:
-#'     Please refer to the reference vignette by running:
-#'     \code{vignette("reference", package = "ichimoku")}
-#'
-#' @examples
-#' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
-#'
-#' print(cloud, max = 110, digits = 4)
-#' print(cloud[100:110,], plot = FALSE, digits = 4)
-#'
-#' @method print ichimoku
-#' @export
-#'
-print.ichimoku <- function(x, plot = TRUE, ...) {
-
-  if (isTRUE(plot)) tryCatch(plot.ichimoku(x, ...),
-                             error = function(e) invisible(),
-                             warning = function(w) invisible())
-  NextMethod(print)
-  invisible(x)
 
 }
 
@@ -402,10 +361,10 @@ autoplot.ichimoku <- function(object,
           breaks <- endpoints(object, on = "years", k = k) + 1L
         }
         if (len > 4L) {
-        cond <- {breaks[length(breaks)] - breaks[(length(breaks) - 1L)]} < 0.7 * {breaks[3L] - breaks[2L]}
-        cond2 <- {breaks[2L] - breaks[1L]} < 0.7 * {breaks[3L] - breaks[2L]}
-        if (cond) breaks <- breaks[-length(breaks)]
-        if (cond2) breaks <- breaks[-1L]
+          cond <- {breaks[length(breaks)] - breaks[(length(breaks) - 1L)]} < 0.7 * {breaks[3L] - breaks[2L]}
+          cond2 <- {breaks[2L] - breaks[1L]} < 0.7 * {breaks[3L] - breaks[2L]}
+          if (cond) breaks <- breaks[-length(breaks)]
+          if (cond2) breaks <- breaks[-1L]
         }
         if (breaks[length(breaks)] > xlen) breaks[length(breaks)] <- breaks[length(breaks)] - 1L
       } else {
@@ -482,6 +441,78 @@ plot.ichimoku <- function(x,
 
 }
 
+#' Print Ichimoku Objects
+#'
+#' Custom print method for ichimoku objects.
+#'
+#' @param x an object of class 'ichimoku'.
+#' @param plot [default TRUE] set to FALSE to prevent automatic plotting of
+#'     the ichimoku cloud chart.
+#' @param ... additional arguments passed along to print and plot functions.
+#'
+#' @return The ichimoku object 'x' passed as parameter.
+#'
+#' @details This function is an S3 method for the generic function print() for
+#'     class 'ichimoku'. It can be invoked by calling print(x) on an object 'x'
+#'     of class 'ichimoku'.
+#'
+#' @section Further Details:
+#'     Please refer to the reference vignette by running:
+#'     \code{vignette("reference", package = "ichimoku")}
+#'
+#' @examples
+#' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
+#'
+#' print(cloud, max = 110, digits = 4)
+#' print(cloud[100:110,], plot = FALSE, digits = 4)
+#'
+#' @method print ichimoku
+#' @export
+#'
+print.ichimoku <- function(x, plot = TRUE, ...) {
+
+  if (isTRUE(plot)) tryCatch(plot.ichimoku(x, ...),
+                             error = function(e) invisible(),
+                             warning = function(w) invisible())
+  NextMethod(print)
+  invisible(x)
+
+}
+
+#' Summary of Ichimoku Strategies
+#'
+#' Custom summary method for ichimoku objects for viewing strategies.
+#'
+#' @param object an object of class 'ichimoku'.
+#' @param strat [default TRUE] to show the strategy summary if present. Set to
+#'     FALSE to show the data summary instead.
+#' @param ... additional arguments to be passed along.
+#'
+#' @return A matrix containing the strategy summary if present, otherwise a table
+#'     containing the data summary.
+#'
+#' @details This function is an S3 method for the generic function summary() for
+#'     class 'ichimoku'. It can be invoked by calling summary(x) on an object 'x'
+#'     of class 'ichimoku'.
+#'
+#' @section Further Details:
+#'     Please refer to the strategies vignette by running:
+#'     \code{vignette("strategies", package = "ichimoku")}
+#'
+#' @examples
+#' strat <- strat(ichimoku(sample_ohlc_data, ticker = "TKR"))
+#' summary(strat)
+#'
+#' @method summary ichimoku
+#' @export
+#'
+summary.ichimoku <- function(object, strat = TRUE, ...) {
+
+  if (hasStrat(object) && isTRUE(strat)) attr(object, "strat")
+  else NextMethod(summary)
+
+}
+
 #' is.ichimoku
 #'
 #' A function for checking if an object is an ichimoku object.
@@ -501,211 +532,4 @@ plot.ichimoku <- function(x,
 #' @export
 #'
 is.ichimoku <- function(x) inherits(x, "ichimoku")
-
-#' iplot Interactive Ichimoku Cloud Plot
-#'
-#' Plot Ichimoku Kinko Hyo cloud charts from ichimoku objects in a Shiny app,
-#'     allowing full customisation of chart elements in an interactive environment.
-#'     Intuitive cursor infotip allows ready access to the data directly from the
-#'     chart.
-#'
-#' @param x an object of class 'ichimoku'.
-#' @inheritParams autoplot
-#' @param ... additional parameters passed along to the 'options' argument of
-#'     \code{shiny::shinyApp()}.
-#' @param launch.browser [default TRUE] If TRUE, the system's default web
-#'     browser will be launched automatically after the app is started. The value
-#'     of this argument can also be a function to call with the application's URL.
-#'     To use the default Shiny viewer in RStudio, please specify
-#'     \code{getOption("shiny.launch.browser")}.
-#'
-#' @return Returns a Shiny app object with class 'shiny.appobj'.
-#'
-#' @details This function has a dependency on the 'shiny' package.
-#'
-#' @examples
-#' if (interactive()) {
-#' # Only run examples in interactive R sessions
-#' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
-#' iplot(cloud)
-#'
-#' # To open in RStudio viewer instead of default browser
-#' iplot(cloud, launch.browser = getOption("shiny.launch.browser"))
-#' }
-#'
-#' @export
-#'
-iplot <- function(x,
-                  ticker,
-                  theme = c("original", "dark", "solarized", "mono"),
-                  message,
-                  strat = TRUE,
-                  ...,
-                  launch.browser = TRUE) {
-
-  if (requireNamespace("shiny", quietly = TRUE)) {
-
-    if (!is.ichimoku(x)) stop("iplot() only works with ichimoku objects", call. = FALSE)
-    theme <- match.arg(theme)
-    if (missing(ticker)) ticker <- attr(x, "ticker")
-    if (missing(message)) {
-      message <- if (hasStrat(x) && isTRUE(strat)) {
-        paste0("Strategy: ", attr(x, "strat")["Strategy", ][[1]])
-      }
-    }
-
-    tformat <- if (attr(x, "periodicity") > 80000) "%F" else "%F %T"
-    index <- index(x)
-    start <- index[1L]
-    end <- index[dim(x)[1L]]
-    xadj <- if (nchar(as.character(start)) > 10) -17 else 5
-
-    ichimoku_stheme <- if (requireNamespace("bslib", quietly = TRUE)) {
-      bslib::bs_theme(version = 4, bootswatch = "solar", bg = "#ffffff", fg = "#002b36",
-                      primary = "#073642", font_scale = 0.85)
-    }
-
-    ui <- shiny::fluidPage(
-      theme = ichimoku_stheme,
-      shiny::fillPage(
-        padding = 20,
-        shiny::tags$style(type = "text/css", "#chart {height: calc(100vh - 190px) !important;}"),
-        shiny::plotOutput("chart", width = "100%",
-                          hover = shiny::hoverOpts(id = "plot_hover",
-                                                   delay = 80, delayType = "throttle")),
-        shiny::uiOutput("hover_x"), shiny::uiOutput("hover_y"), shiny::uiOutput("infotip")
-        ),
-      shiny::fluidRow(
-        shiny::column(width = 10, offset = 1,
-                      shiny::sliderInput("dates", label = NULL,
-                                         min = start, max = end,
-                                         value = c(start, end),
-                                         width = "100%", timeFormat = tformat))
-        ),
-      shiny::fluidRow(
-        shiny::column(width = 2, offset = 1,
-                      shiny::selectInput("theme", label = "Theme",
-                                         choices = c("original", "dark", "solarized", "mono"),
-                                         selected = theme,
-                                         selectize = FALSE)),
-        shiny::column(width = 2,
-                      shiny::textInput("ticker", label = "Ticker",
-                                       value = ticker, width = "100%")),
-        shiny::column(width = 2,
-                      shiny::textInput("message", label = "Message",
-                                       value = message, width = "100%")),
-        shiny::column(width = 1,
-                      shiny::HTML("<label class='control-label'>Show</label>"),
-                      shiny::checkboxInput("infotip", "Infotip", value = TRUE)),
-        shiny::column(width = 1,
-                      shiny::HTML("<label class='control-label'>&nbsp;</label>"),
-                      if (hasStrat(x)) shiny::checkboxInput("strat", "Strategy",
-                                                            value = isTRUE(strat)))
-        )
-    )
-
-    server <- function(input, output, session) {
-
-      window <- shiny::reactive(paste0(input$dates[1L], "/", input$dates[2L]))
-      left_px <- shiny::reactive(input$plot_hover$coords_css$x)
-      top_px <- shiny::reactive(input$plot_hover$coords_css$y)
-      posi_x <- shiny::reactive(round(input$plot_hover$x, digits = 0))
-
-      pdata <- shiny::reactive(x[window()])
-
-      if (requireNamespace("bslib", quietly = TRUE)) {
-        shiny::observe({
-          session$setCurrentTheme(
-            bslib::bs_theme_update(ichimoku_stheme,
-                                   bootswatch = switch(input$theme, dark = "solar", NULL)))
-        })
-      }
-
-      output$chart <- shiny::renderPlot(
-        autoplot.ichimoku(pdata(), ticker = input$ticker, message = input$message,
-                          theme = input$theme, strat = input$strat)
-      )
-      output$hover_x <- shiny::renderUI({
-        shiny::req(input$plot_hover, posi_x() > 0, posi_x() <= dim(pdata())[1L])
-        drawGuide(label = index(pdata())[posi_x()], left = left_px() + xadj, top = 60)
-      })
-      output$hover_y <- shiny::renderUI({
-        shiny::req(input$plot_hover)
-        drawGuide(label = signif(input$plot_hover$y, digits = 5L), left = 75, top = top_px() + 11)
-      })
-      output$infotip <- shiny::renderUI({
-        shiny::req(input$infotip, input$plot_hover, posi_x() > 0, posi_x() <= dim(pdata())[1L])
-        drawInfotip(sdata = pdata()[posi_x(), ], left_px = left_px(), top_px = top_px())
-      })
-
-      session$onSessionEnded(function() shiny::stopApp())
-    }
-
-    shiny::shinyApp(ui, server, options = list(launch.browser = launch.browser, ...))
-
-  } else {
-    message("Note: please install the 'shiny' package to enable interactive charting",
-            "\nAlternatively use plot() for static charts")
-  }
-}
-
-#' drawInfotip
-#'
-#' Internal function used by ichimoku to draw the infotip for interactive Shiny
-#'     plots.
-#'
-#' @param sdata the selected data frame row.
-#' @param left_px the horizontal cursor position in pixels.
-#' @param top_px the vertical cursor position in pixels.
-#'
-#' @return An object of class 'shiny.tag' comprising the HTML to be rendered.
-#'
-#' @keywords internal
-#'
-drawInfotip <- function(sdata, left_px, top_px) {
-  shiny::wellPanel(
-    style = paste0("position:absolute; z-index:100; background-color: rgba(245, 245, 245, 0.85); ",
-                   "left:", left_px + 50, "px; top:", top_px + 40, "px; ",
-                   "font-size: 0.8em; padding: 1px 5px 5px 5px;"),
-    shiny::HTML(paste0("<div style='margin:0; padding:0; font-weight:bold'>",
-                       if (isTRUE(sdata$cd == 1)) "&#9651;<br />"
-                       else if (isTRUE(sdata$cd == -1)) "&#9660;<br />"
-                       else "&#8212;<br />",
-                       index(sdata),
-                       "</div><div style='text-align:center; margin:2px 0 0 0; padding:0'>H: ",
-                       signif(sdata$high, digits = 5L),
-                       "</div><div style='margin:0; padding:0'>O: ",
-                       signif(sdata$open, digits = 5L),
-                       "&nbsp;&nbsp;C: ", signif(sdata$close, digits = 5L),
-                       "</div><div style='text-align:center; margin:0; padding:0'>L: ",
-                       signif(sdata$low, digits = 5L),
-                       "</div><div style='margin:2px 0 0 0; padding:0'>Tenkan: ",
-                       signif(sdata$tenkan, digits = 5L),
-                       "<br />Kijun: ", signif(sdata$kijun, digits = 5L),
-                       "<br />Senkou A: ", signif(sdata$senkouA, digits = 5L),
-                       "<br />Senkou B: ", signif(sdata$senkouB, digits = 5L),
-                       "<br />Chikou: ", signif(sdata$chikou, digits = 5L), "</div>"))
-  )
-}
-
-#' drawGuide
-#'
-#' Internal function used by ichimoku to draw the axis guides for interactive
-#'     Shiny plots.
-#'
-#' @param label a function returning the character string to be shown.
-#' @param left the horizontal position of the guide in pixels.
-#' @param top the vertical position of the guide in pixels.
-#'
-#' @return An object of class 'shiny.tag' comprising the HTML to be rendered.
-#'
-#' @keywords internal
-#'
-drawGuide <- function(label, left, top) {
-  shiny::wellPanel(
-    style = paste0("position:absolute; z-index:100; background-color: rgba(245, 245, 245, 0.85); left:",
-                   left, "px; top:", top, "px; font-size: 0.8em; padding:0;"),
-    shiny::HTML(paste(label))
-  )
-}
 

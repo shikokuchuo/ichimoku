@@ -1,4 +1,5 @@
 cloud <- ichimoku(sample_ohlc_data, ticker = "TKR", periods = c(9, 26, 52))
+strat <- strat(cloud)
 
 test_that("ichimoku object specification correct", {
   expect_s3_class(cloud, "ichimoku")
@@ -27,9 +28,8 @@ test_that("ichimoku handles higher frequency data", {
   data <- sample_ohlc_data
   data$time <- seq.POSIXt(from = as.POSIXct("2020-01-01"), by = "1 hour", length.out = 256)
   kumo <- ichimoku(data)
-  plot <- autoplot(kumo, ticker = "TKR", theme = "mono")
   expect_s3_class(kumo, "ichimoku")
-  expect_s3_class(plot, "ggplot")
+  expect_s3_class(autoplot(kumo, ticker = "TKR", theme = "mono"), "ggplot")
 })
 
 test_that("ichimoku error handling ok", {
@@ -47,12 +47,12 @@ test_that("ichimoku error handling ok", {
 
 test_that("ichimoku plot functions ok", {
   expect_s3_class(autoplot(cloud, ticker = "TKR Co.", theme = "solarized"), "ggplot")
-  expect_s3_class(plot(strat(cloud), window = "2020-06", message = "message"), "ggplot")
+  expect_s3_class(plot(strat, window = "2020-06", message = "message"), "ggplot")
 })
 
 test_that("iplot Shiny functions ok", {
   skip_if_not_installed("shiny")
-  expect_s3_class(iplot(cloud, theme = "dark"), "shiny.appobj")
+  expect_s3_class(iplot(strat, theme = "dark"), "shiny.appobj")
   expect_error(iplot(sample_ohlc_data), regexp = "ichimoku object")
   shiny::testServer(iplot(cloud), {
     session$setInputs(plot_hover = list(x = 2, y = 125, coords_css = list(x = 200, y = 200)),

@@ -1,11 +1,12 @@
-# Ichimoku - Apache Arrow Translation Layer ------------------------------------
+# Ichimoku - Data Layer --------------------------------------------------------
 
 #' Read/write ichimoku objects <> Arrow Archive
 #'
 #' Used to read and write ichimoku objects to/from archival storage in the
 #'     Apache Arrow IPC file format.
 #'
-#' @param ... additional parameters not used by this function.
+#' @param ... unnamed arguments will be parsed as 'filename' if there is only
+#'     one argument, 'object' and 'filename' if there are two arguments.
 #' @param object (for write operations) an ichimoku object.
 #' @param filename string file path, URI, or OutputStream, or path in a file
 #'     system (SubTreeFileSystem).
@@ -77,8 +78,8 @@ archive <- function(..., object, filename) {
 
 #' Write ichimoku objects to Arrow Archive
 #'
-#' Used to write ichimoku objects to archive storage in the Apache Arrow IPC
-#'     file format.
+#' Internal function used to write ichimoku objects to archive storage in the
+#'     Apache Arrow IPC file format.
 #'
 #' @param object an ichimoku object.
 #' @param filename string file path, URI, or OutputStream, or path in a file
@@ -113,8 +114,8 @@ writeArchive <- function(object, filename) {
 
 #' Read ichimoku objects from Arrow Archive
 #'
-#' Used to read ichimoku objects from archive storage in the Apache Arrow IPC
-#'     file format.
+#' Internal function used to read ichimoku objects from archive storage in the
+#'     Apache Arrow IPC file format.
 #'
 #' @param filename string file path, URI, or OutputStream, or path in a file
 #'     system (SubTreeFileSystem).

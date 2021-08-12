@@ -193,7 +193,7 @@ getPrices <- function(instrument, granularity, count, from, to, price,
                                      fromJSON(rawToChar(resp$content)), call. = FALSE)
   headers <- rawToChar(resp$headers)
   hdate <- strsplit(headers, "date: | GMT", perl = TRUE)[[1]][2]
-  timestamp <- as.POSIXct.POSIXlt(strptime(hdate, format = "%a, %d %b %Y %H:%M:%S", tz = "GMT"))
+  timestamp <- as.POSIXct.POSIXlt(strptime(hdate, format = "%a, %d %b %Y %H:%M:%S", tz = "UTC"))
   data <- fromJSON(rawToChar(resp$content))$candles
 
   time <- strptime(data[, 3L], format = "%Y-%m-%dT%H:%M:%S", tz = "UTC")
@@ -256,7 +256,8 @@ getPrices <- function(instrument, granularity, count, from, to, price,
 #'     running: \code{vignette("xoanda", package = "ichimoku")}.
 #'
 #' @return Does not return a value, however the streaming data is output to the
-#'     console as a side effect.
+#'     console as a side effect. Note that as this is a raw stream, returned
+#'     times are in UTC.
 #'
 #' @section Streaming Data:
 #'
@@ -420,163 +421,6 @@ oanda_chart <- function(instrument,
     data <- df_append(new = newdata, old = data)
     dlen <- dim(data)[1L]
     if (dlen > xlen) data <- data[(dlen - xlen + 1L):dlen, ]
-  }
-}
-
-#' Get OANDA Instruments
-#'
-#' Return list of instruments including major currencies, metals, commodities,
-#'     government bonds and stock indices for which pricing data is available
-#'     from the OANDA fxTrade API.
-#'
-#' @inheritParams oanda
-#'
-#' @return A data.frame containing the instrument name, type, and full display name.
-#'
-#' @details This function returns a data.frame listing the instrument names
-#'     available for an account associated with the supplied OANDA fxTrade API key.
-#'
-#'     For further details please refer to the OANDA fxTrade API vignette by
-#'     running: \code{vignette("xoanda", package = "ichimoku")}.
-#'
-#' @examples
-#' \dontrun{
-#' # OANDA fxTrade API key required to run this example
-#' oanda_instruments()
-#' }
-#'
-#' @export
-#'
-oanda_instruments <- function(server = c("practice", "live"), apikey) {
-  cache <- NULL
-  function(server = c("practice", "live"), apikey) {
-    if (is.null(cache)) {
-      if (missing(apikey)) apikey <- oanda_get_key()
-      server <- match.arg(server)
-      url <- paste0("https://api-fx", switch(server, practice = "practice", live = "trade"),
-                    ".oanda.com/v3/accounts/", oandaAccount(), "/instruments")
-      h <- new_handle()
-      handle_setheaders(handle = h,
-                        "Authorization" = paste0("Bearer ", apikey),
-                        "User-Agent" = ichimoku_user_agent)
-      resp <- curl_fetch_memory(url = url, handle = h)
-      if (resp$status_code != 200L) stop("code ", resp$status_code, " - ",
-                                         fromJSON(rawToChar(resp$content)), call. = FALSE)
-      data <- fromJSON(rawToChar(resp$content))$instruments
-      cache <<- data[order(data[, 1L]), 1:3]
-    }
-    cache
-  }
-}
-
-#' Account associated with an OANDA fxTrade API Key
-#'
-#' Return an account authorised to be accessed by an OANDA fxTrade API key
-#'     (personal access token). Used by other OANDA functions to access API
-#'     endpoints that require an account ID.
-#'
-#' @inheritParams oanda
-#'
-#' @return A character string of the first listed account the authorization
-#'     bearer token is authorized to access.
-#'
-#' @keywords internal
-#'
-oandaAccount <- function(server = c("practice", "live"), apikey) {
-  cache <- NULL
-  function(server = c("practice", "live"), apikey) {
-    if (is.null(cache)) {
-      if (missing(apikey)) apikey <- oanda_get_key()
-      server <- match.arg(server)
-      url <- switch(server,
-                    practice = "https://api-fxpractice.oanda.com/v3/accounts",
-                    live = "https://api-fxtrade.oanda.com/v3/accounts")
-      h <- new_handle()
-      handle_setheaders(handle = h,
-                        "Authorization" = paste0("Bearer ", apikey),
-                        "User-Agent" = ichimoku_user_agent)
-      resp <- curl_fetch_memory(url = url, handle = h)
-      if (resp$status_code != 200L) stop("code ", resp$status_code, " - ",
-                                         fromJSON(rawToChar(resp$content)), call. = FALSE)
-      data <- fromJSON(rawToChar(resp$content))$accounts
-      cache <<- unlist(data, use.names = FALSE)[[1]]
-    }
-    cache
-  }
-}
-
-#' Set OANDA fxTrade API Key
-#'
-#' Save OANDA fxTrade API key (personal access token) to the system credential
-#'     store.
-#'
-#' @return A key is set in the default keyring under the service name 'OANDA_API_KEY'.
-#'
-#' @details The key is read interactively.
-#'
-#'     This function only needs to be run once to set the key, it does not need
-#'     to be run each session.
-#'
-#'     This function has a dependency on the 'keyring' package.
-#'
-#'     For further details please refer to the OANDA fxTrade API vignette by
-#'     running: \code{vignette("xoanda", package = "ichimoku")}.
-#'
-#' @examples
-#' if (interactive()) {
-#' # Only run example in interactive R sessions
-#' oanda_set_key()
-#' }
-#'
-#' @export
-#'
-oanda_set_key <- function() {
-  if (requireNamespace("keyring", quietly = TRUE)) {
-    keyring::key_set(service = "OANDA_API_KEY")
-  } else {
-    message("Note: please install the 'keyring' package in order to store your OANDA API key")
-  }
-}
-
-#' Get OANDA fxTrade API Key
-#'
-#' Return OANDA fxTrade API key (personal access token) saved in the system
-#'     credential store, or else prompts the user to provide a key interactively.
-#'
-#' @return A temporarily invisible character string, respresenting the key stored
-#'     in the default keyring under the service name 'OANDA_API_KEY' if present,
-#'     otherwise the key supplied by the user interactively.
-#'
-#' @details For retrieving the key from the keyring, this function has a dependency
-#'     on the 'keyring' package, otherwise it can be used to read a key supplied
-#'     interactively.
-#'
-#'     For further details please refer to the OANDA fxTrade API vignette by
-#'     running: \code{vignette("xoanda", package = "ichimoku")}.
-#'
-#' @examples
-#' if (interactive()) {
-#' # Only run example in interactive R sessions
-#' oanda_get_key()
-#' }
-#'
-#' @export
-#'
-oanda_get_key <- function() {
-  keystore <- NULL
-  function() {
-    if (is.null(keystore)) {
-      if (requireNamespace("keyring", quietly = TRUE)) {
-        apikey <- tryCatch(keyring::key_get(service = "OANDA_API_KEY"), error = function(e) {
-          message("Note: oanda_set_key() can be used to store your API key for automatic retrieval")
-          readline("Please enter OANDA API key: ")
-          })
-        } else {
-          apikey <- readline("Please enter OANDA API key: ")
-          }
-      keystore <<- apikey
-      }
-    invisible(keystore)
   }
 }
 
@@ -744,7 +588,7 @@ oanda_studio <- function(instrument = "USD_JPY",
                H1 = "1 Hour", M30 = "30 Mins", M15 = "15 Mins", M10 = "10 Mins",
                M5 = "5 Mins", M4 = "4 Mins", M2 = "1 Mins", M1 = "1 Min",
                S30 = "30 Secs", S15 = "15 Secs", S10 = "10 Secs", S5 = "5 Secs")
-        )
+      )
       ptype <- shiny::reactive(switch(input$price, M = "mid", B = "bid", A = "ask"))
       dispname <- shiny::reactive(ins$displayName[ins$name %in% input$instrument])
 
@@ -818,6 +662,163 @@ oanda_studio <- function(instrument = "USD_JPY",
 
   } else {
     message("Note: please install the 'shiny' package to enable oanda_studio()")
+  }
+}
+
+#' Get OANDA Instruments
+#'
+#' Return list of instruments including major currencies, metals, commodities,
+#'     government bonds and stock indices for which pricing data is available
+#'     from the OANDA fxTrade API.
+#'
+#' @inheritParams oanda
+#'
+#' @return A data.frame containing the instrument name, type, and full display name.
+#'
+#' @details This function returns a data.frame listing the instrument names
+#'     available for an account associated with the supplied OANDA fxTrade API key.
+#'
+#'     For further details please refer to the OANDA fxTrade API vignette by
+#'     running: \code{vignette("xoanda", package = "ichimoku")}.
+#'
+#' @examples
+#' \dontrun{
+#' # OANDA fxTrade API key required to run this example
+#' oanda_instruments()
+#' }
+#'
+#' @export
+#'
+oanda_instruments <- function(server = c("practice", "live"), apikey) {
+  cache <- NULL
+  function(server = c("practice", "live"), apikey) {
+    if (is.null(cache)) {
+      if (missing(apikey)) apikey <- oanda_get_key()
+      server <- match.arg(server)
+      url <- paste0("https://api-fx", switch(server, practice = "practice", live = "trade"),
+                    ".oanda.com/v3/accounts/", oandaAccount(), "/instruments")
+      h <- new_handle()
+      handle_setheaders(handle = h,
+                        "Authorization" = paste0("Bearer ", apikey),
+                        "User-Agent" = ichimoku_user_agent)
+      resp <- curl_fetch_memory(url = url, handle = h)
+      if (resp$status_code != 200L) stop("code ", resp$status_code, " - ",
+                                         fromJSON(rawToChar(resp$content)), call. = FALSE)
+      data <- fromJSON(rawToChar(resp$content))$instruments
+      cache <<- data[order(data[, 1L]), 1:3]
+    }
+    cache
+  }
+}
+
+#' Account associated with an OANDA fxTrade API Key
+#'
+#' Return an account authorised to be accessed by an OANDA fxTrade API key
+#'     (personal access token). Used by other OANDA functions to access API
+#'     endpoints that require an account ID.
+#'
+#' @inheritParams oanda
+#'
+#' @return A character string of the first listed account the authorization
+#'     bearer token is authorized to access.
+#'
+#' @keywords internal
+#'
+oandaAccount <- function(server = c("practice", "live"), apikey) {
+  cache <- NULL
+  function(server = c("practice", "live"), apikey) {
+    if (is.null(cache)) {
+      if (missing(apikey)) apikey <- oanda_get_key()
+      server <- match.arg(server)
+      url <- switch(server,
+                    practice = "https://api-fxpractice.oanda.com/v3/accounts",
+                    live = "https://api-fxtrade.oanda.com/v3/accounts")
+      h <- new_handle()
+      handle_setheaders(handle = h,
+                        "Authorization" = paste0("Bearer ", apikey),
+                        "User-Agent" = ichimoku_user_agent)
+      resp <- curl_fetch_memory(url = url, handle = h)
+      if (resp$status_code != 200L) stop("code ", resp$status_code, " - ",
+                                         fromJSON(rawToChar(resp$content)), call. = FALSE)
+      data <- fromJSON(rawToChar(resp$content))$accounts
+      cache <<- unlist(data, use.names = FALSE)[[1]]
+    }
+    cache
+  }
+}
+
+#' Set OANDA fxTrade API Key
+#'
+#' Save OANDA fxTrade API key (personal access token) to the system credential
+#'     store.
+#'
+#' @return A key is set in the default keyring under the service name 'OANDA_API_KEY'.
+#'
+#' @details The key is read interactively.
+#'
+#'     This function only needs to be run once to set the key, it does not need
+#'     to be run each session.
+#'
+#'     This function has a dependency on the 'keyring' package.
+#'
+#'     For further details please refer to the OANDA fxTrade API vignette by
+#'     running: \code{vignette("xoanda", package = "ichimoku")}.
+#'
+#' @examples
+#' if (interactive()) {
+#' # Only run example in interactive R sessions
+#' oanda_set_key()
+#' }
+#'
+#' @export
+#'
+oanda_set_key <- function() {
+  if (requireNamespace("keyring", quietly = TRUE)) {
+    keyring::key_set(service = "OANDA_API_KEY")
+  } else {
+    message("Note: please install the 'keyring' package in order to store your OANDA API key")
+  }
+}
+
+#' Get OANDA fxTrade API Key
+#'
+#' Return OANDA fxTrade API key (personal access token) saved in the system
+#'     credential store, or else prompts the user to provide a key interactively.
+#'
+#' @return A temporarily invisible character string, respresenting the key stored
+#'     in the default keyring under the service name 'OANDA_API_KEY' if present,
+#'     otherwise the key supplied by the user interactively.
+#'
+#' @details For retrieving the key from the keyring, this function has a dependency
+#'     on the 'keyring' package, otherwise it can be used to read a key supplied
+#'     interactively.
+#'
+#'     For further details please refer to the OANDA fxTrade API vignette by
+#'     running: \code{vignette("xoanda", package = "ichimoku")}.
+#'
+#' @examples
+#' if (interactive()) {
+#' # Only run example in interactive R sessions
+#' oanda_get_key()
+#' }
+#'
+#' @export
+#'
+oanda_get_key <- function() {
+  keystore <- NULL
+  function() {
+    if (is.null(keystore)) {
+      if (requireNamespace("keyring", quietly = TRUE)) {
+        apikey <- tryCatch(keyring::key_get(service = "OANDA_API_KEY"), error = function(e) {
+          message("Note: oanda_set_key() can be used to store your API key for automatic retrieval")
+          readline("Please enter OANDA API key: ")
+        })
+      } else {
+        apikey <- readline("Please enter OANDA API key: ")
+      }
+      keystore <<- apikey
+    }
+    invisible(keystore)
   }
 }
 
