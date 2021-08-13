@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.51.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.51.5</span>
       </span>
     </div>
 
@@ -73,14 +73,14 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://shikokuchuo.net/">
-    <span class="fa fa-cube"></span>
+  <a href="https://github.com/shikokuchuo/ichimoku/">
+    <span class="fa fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://github.com/shikokuchuo/ichimoku/">
-    <span class="fa fa-github fa-lg"></span>
+  <a href="https://shikokuchuo.net/">
+    <span class="fa fa-cube"></span>
      
   </a>
 </li>
@@ -184,7 +184,42 @@
 <li>
 <code>...</code> additional arguments, for instance ‘holidays’, passed along to <code><a href="../reference/tradingDays.html">tradingDays()</a></code> for calculating the future cloud on daily data</li>
 </ul>
-<p>The returned ichimoku object has the following specification:</p>
+<p>An ichimoku object is returned by calling <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on the data:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">[</span><span class="fl">100</span><span class="op">:</span><span class="fl">110</span>,<span class="op">]</span>, plot <span class="op">=</span> <span class="cn">FALSE</span>, digits <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
+<span class="co">#&gt;                      open  high   low close cd tenkan kijun senkouA senkouB</span>
+<span class="co">#&gt; 2020-04-26 23:00:00 122.7 122.7 121.8 122.4 -1  121.0 123.9   125.7   124.8</span>
+<span class="co">#&gt; 2020-04-27 23:00:00 122.4 122.6 121.1 121.9 -1  121.0 123.9   125.7   124.8</span>
+<span class="co">#&gt; 2020-04-28 23:00:00 121.9 123.7 121.7 123.3  1  121.4 123.8   125.7   124.8</span>
+<span class="co">#&gt; 2020-04-29 23:00:00 123.3 124.0 123.0 124.0  1  121.5 123.8   125.7   124.8</span>
+<span class="co">#&gt; 2020-04-30 23:00:00 124.2 124.3 124.0 124.1 -1  121.8 123.6   126.0   124.8</span>
+<span class="co">#&gt; 2020-05-02 23:00:00 124.1 124.1 123.4 123.9 -1  122.2 123.6   126.5   124.8</span>
+<span class="co">#&gt; 2020-05-03 23:00:00 123.9 124.7 123.7 124.5  1  122.9 123.6   126.6   124.8</span>
+<span class="co">#&gt; 2020-05-04 23:00:00 124.5 124.7 123.9 124.2 -1  122.9 123.6   126.2   124.8</span>
+<span class="co">#&gt; 2020-05-05 23:00:00 124.2 125.2 124.0 124.7  1  123.2 123.6   126.1   124.8</span>
+<span class="co">#&gt; 2020-05-06 23:00:00 124.7 129.8 124.7 129.6  1  125.5 124.5   125.7   124.8</span>
+<span class="co">#&gt; 2020-05-07 23:00:00 129.9 130.6 129.9 130.2  1  126.2 124.8   125.6   124.8</span>
+<span class="co">#&gt;                     chikou cloudT cloudB</span>
+<span class="co">#&gt; 2020-04-26 23:00:00  135.1  125.7  124.8</span>
+<span class="co">#&gt; 2020-04-27 23:00:00  135.6  125.7  124.8</span>
+<span class="co">#&gt; 2020-04-28 23:00:00  134.5  125.7  124.8</span>
+<span class="co">#&gt; 2020-04-29 23:00:00  134.3  125.7  124.8</span>
+<span class="co">#&gt; 2020-04-30 23:00:00  135.9  126.0  124.8</span>
+<span class="co">#&gt; 2020-05-02 23:00:00  135.2  126.5  124.8</span>
+<span class="co">#&gt; 2020-05-03 23:00:00  135.7  126.6  124.8</span>
+<span class="co">#&gt; 2020-05-04 23:00:00  135.4  126.2  124.8</span>
+<span class="co">#&gt; 2020-05-05 23:00:00  135.7  126.1  124.8</span>
+<span class="co">#&gt; 2020-05-06 23:00:00  135.6  125.7  124.8</span>
+<span class="co">#&gt; 2020-05-07 23:00:00  136.2  125.6  124.8</span></code></pre></div>
+<p>A section (rows 100 to 110) of the ichimoku object is shown above. Note that print is called setting ‘plot = FALSE’ to return the data only. ichimoku objects employ a custom S3 print method which by default plots the cloud chart in the graphical device as well as returning the data to the console.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># to view chart as well as data, simply issue:</span>
+<span class="va">cloud</span></code></pre></div>
+<div id="the-ichimoku-object-specification" class="section level4">
+<h4 class="hasAnchor">
+<a href="#the-ichimoku-object-specification" class="anchor"></a>The ichimoku object specification</h4>
 <ul>
 <li>Index:
 <ul>
@@ -232,40 +267,13 @@
 </li>
 </ul>
 <p>The ticker is set by default to the input object name or can be overridden by specifying the ‘ticker’ argument to <code><a href="../reference/ichimoku.html">ichimoku()</a></code>.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">[</span><span class="fl">100</span><span class="op">:</span><span class="fl">110</span>,<span class="op">]</span>, plot <span class="op">=</span> <span class="cn">FALSE</span>, digits <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
-<span class="co">#&gt;                      open  high   low close cd tenkan kijun senkouA senkouB</span>
-<span class="co">#&gt; 2020-04-26 23:00:00 122.7 122.7 121.8 122.4 -1  121.0 123.9   125.7   124.8</span>
-<span class="co">#&gt; 2020-04-27 23:00:00 122.4 122.6 121.1 121.9 -1  121.0 123.9   125.7   124.8</span>
-<span class="co">#&gt; 2020-04-28 23:00:00 121.9 123.7 121.7 123.3  1  121.4 123.8   125.7   124.8</span>
-<span class="co">#&gt; 2020-04-29 23:00:00 123.3 124.0 123.0 124.0  1  121.5 123.8   125.7   124.8</span>
-<span class="co">#&gt; 2020-04-30 23:00:00 124.2 124.3 124.0 124.1 -1  121.8 123.6   126.0   124.8</span>
-<span class="co">#&gt; 2020-05-02 23:00:00 124.1 124.1 123.4 123.9 -1  122.2 123.6   126.5   124.8</span>
-<span class="co">#&gt; 2020-05-03 23:00:00 123.9 124.7 123.7 124.5  1  122.9 123.6   126.6   124.8</span>
-<span class="co">#&gt; 2020-05-04 23:00:00 124.5 124.7 123.9 124.2 -1  122.9 123.6   126.2   124.8</span>
-<span class="co">#&gt; 2020-05-05 23:00:00 124.2 125.2 124.0 124.7  1  123.2 123.6   126.1   124.8</span>
-<span class="co">#&gt; 2020-05-06 23:00:00 124.7 129.8 124.7 129.6  1  125.5 124.5   125.7   124.8</span>
-<span class="co">#&gt; 2020-05-07 23:00:00 129.9 130.6 129.9 130.2  1  126.2 124.8   125.6   124.8</span>
-<span class="co">#&gt;                     chikou cloudT cloudB</span>
-<span class="co">#&gt; 2020-04-26 23:00:00  135.1  125.7  124.8</span>
-<span class="co">#&gt; 2020-04-27 23:00:00  135.6  125.7  124.8</span>
-<span class="co">#&gt; 2020-04-28 23:00:00  134.5  125.7  124.8</span>
-<span class="co">#&gt; 2020-04-29 23:00:00  134.3  125.7  124.8</span>
-<span class="co">#&gt; 2020-04-30 23:00:00  135.9  126.0  124.8</span>
-<span class="co">#&gt; 2020-05-02 23:00:00  135.2  126.5  124.8</span>
-<span class="co">#&gt; 2020-05-03 23:00:00  135.7  126.6  124.8</span>
-<span class="co">#&gt; 2020-05-04 23:00:00  135.4  126.2  124.8</span>
-<span class="co">#&gt; 2020-05-05 23:00:00  135.7  126.1  124.8</span>
-<span class="co">#&gt; 2020-05-06 23:00:00  135.6  125.7  124.8</span>
-<span class="co">#&gt; 2020-05-07 23:00:00  136.2  125.6  124.8</span></code></pre></div>
-<p>A section (rows 100 to 110) of the cloud object is shown above. Note that print is called setting ‘plot = FALSE’ to return the data frame without the plot.</p>
-<p>ichimoku objects employ a custom S3 print method which by default plots the cloud chart in the graphical device as well as returning the data frame to the console.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># to view chart as well as data, simply issue:</span>
-<span class="va">cloud</span></code></pre></div>
-<p><code><a href="../reference/ichimoku.html">ichimoku()</a></code> may also be used on an ichimoku object to re-calculate the cloud values using the price data contained within. If ‘ticker’ is specified as an argument, this will overwrite the ticker stored in the original ichimoku object. Running <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on an ichimoku object containing a strategy will return the ichimoku object to its original state without the strategy. See the <a href="strategies.html">strategies vignette</a> for information on strategies.</p>
+</div>
+<div id="ichimoku-ichimoku" class="section level4">
+<h4 class="hasAnchor">
+<a href="#ichimoku-ichimoku" class="anchor"></a>ichimoku.ichimoku()</h4>
+<p><code><a href="../reference/ichimoku.html">ichimoku()</a></code> may be used on an ichimoku object to re-calculate the cloud values using the price data contained within. If ‘ticker’ is specified as an argument, this will overwrite the ticker stored in the original ichimoku object.</p>
+<p>Calling <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on an ichimoku object containing a strategy will return the ichimoku object to its original state without the strategy. See the <a href="strategies.html">strategies vignette</a> for information on strategies.</p>
+</div>
 <div id="working-with-ichimoku-objects" class="section level4">
 <h4 class="hasAnchor">
 <a href="#working-with-ichimoku-objects" class="anchor"></a>Working with ichimoku objects</h4>
@@ -372,10 +380,27 @@
 <h3 class="hasAnchor">
 <a href="#archiving" class="anchor"></a>Archiving</h3>
 <p>After completing an analysis, the resulting ichimoku objects can be stored directly to disk. The function <code><a href="../reference/archive.html">archive()</a></code> provides direct tranlsation between the ichimoku objects in an R session with binary files stored in the Apache Arrow IPC file format.</p>
-<p><code><a href="../reference/archive.html">archive()</a></code> for write operations will take 2 arguments: the ichimoku object to be written, and the file path/name of the object to be stored. A confirmation message will be printed to the console if the write process has been succesful.</p>
-<p><code><a href="../reference/archive.html">archive()</a></code> for read operations takes a single argument: the file path/name of the file to be read. The return value of the function can be assigned to an object. The restored ichimoku object will be identical to the original.</p>
+<div id="writing" class="section level4">
+<h4 class="hasAnchor">
+<a href="#writing" class="anchor"></a>Writing</h4>
+<p><code><a href="../reference/archive.html">archive()</a></code> for write operations will take 2 arguments: the ichimoku object to be written, and the file path/name of the object to be stored. A confirmation is printed to the console once the file has been written.</p>
+</div>
+<div id="reading" class="section level4">
+<h4 class="hasAnchor">
+<a href="#reading" class="anchor"></a>Reading</h4>
+<p><code><a href="../reference/archive.html">archive()</a></code> for read operations takes a single argument: the file path/name of the file to be read. The return value of the function can be assigned to an object. A confirmation is printed to the console once the file has been read.</p>
+</div>
+<div id="data-integrity-validation" class="section level4">
+<h4 class="hasAnchor">
+<a href="#data-integrity-validation" class="anchor"></a>Data Integrity Validation</h4>
+<p>Data integrity validation is performed by the sha256 hashing algorithm from the ‘openssl’ package. If ‘openssl’ is not available, the archive function still works in all respects but without the additional validation. When an archive is read back, if the sha256 hash of the restored object matches the hash of the original that is stored in the archive, a ‘data verified’ message is printed to the console along with the matching sha256 hash. This allows full transparency and auditing - to manually verify the hash, call <code><a href="https://rdrr.io/pkg/openssl/man/hash.html">openssl::sha256(as.raw(object))</a></code>.</p>
+</div>
+<div id="about-apache-arrow" class="section level4">
+<h4 class="hasAnchor">
+<a href="#about-apache-arrow" class="anchor"></a>About Apache Arrow</h4>
 <p>Apache Arrow provides the backend to the archive functions and requires the ‘arrow’ package to be installed. Apache Arrow is a high-performance, standardised, and language-independent columnar memory format. This means that the Arrow files created by ichimoku can equally be accessed by programs utilising Arrow bindings in all major languages including C, C++, Java, Python, etc.</p>
 <p>Note: the attributes of the ichimoku object are stored in the ‘r’ field of the Arrow schema metadata. This allows archived objects to be reconstructed faithfully, however this data is typically only read by R and ignored by other clients.</p>
+</div>
 </div>
 </div>
 <div id="troubleshooting" class="section level2">
@@ -437,7 +462,7 @@
 <h4 class="hasAnchor">
 <a href="#since-version-0-3" class="anchor"></a>Since version 0.3</h4>
 <ul>
-<li>The ichimoku object specification was released in version 0.3.51. ichimoku objects created in versions prior to 0.3.51 will no longer work correctly with newer versions of the package. Please run <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on previously-created objects to re-create the object according to the new specification (data is preserved)</li>
+<li>The ichimoku object specification (version 1) was released in version 0.3.51. ichimoku objects created in versions prior to 0.3.51 will no longer work correctly with newer versions of the package. Please run <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on previously-created objects to re-create the object according to the new specification (data is preserved)</li>
 <li>The following functions are no longer exported: <code>maxOver()</code>, <code>minOver()</code>, <code>oanda_accounts()</code>.</li>
 </ul>
 </div>
@@ -454,9 +479,9 @@
 <h4 class="hasAnchor">
 <a href="#since-version-0-1" class="anchor"></a>Since version 0.1</h4>
 <ul>
-<li><p>‘ichimoku’ objects now inherit ‘xts’ and ‘zoo’ classes instead of ‘data.frame’. This means that columns extracted from ‘ichimoku’ objects are able to work seamlessly in packages expecting ‘xts’ indexed time series. Conversely for use with packages that only accept data frames then ‘ichimoku’ objects must first be wrapped in <code><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame()</a></code> or translated using the included <code><a href="../reference/xts_df.html">xts_df()</a></code> utility.</p></li>
+<li><p>‘ichimoku’ objects now inherit ‘xts’ and ‘zoo’ classes instead of ‘data.frame’. This means that columns extracted from ‘ichimoku’ objects are able to work seamlessly in packages expecting ‘xts’ indexed time series. Conversely for use with packages that only accept data frames then ‘ichimoku’ objects must first be wrapped in <code><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame()</a></code> or the included <code><a href="../reference/xts_df.html">xts_df()</a></code> utility.</p></li>
 <li><p>For candle direction, the column has been renamed from ‘candle’ to ‘cd’ and is now stored as numeric values -1 for ‘down’, 0 for ‘flat’, and 1 for ‘up’, rather than as a factor</p></li>
-<li><p><code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> now references the new ‘cd’ column as well as new ‘cloudTop’ and ‘cloudBase’ columns to eliminate potential artefacts when drawing the cloud. This means that using <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> on an ichimoku object created in version 0.1.* will no longer work. The solution is to run <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on the old object to re-create the object according to the new specification (all data is preserved)</p></li>
+<li><p>Due to the change in ichimoku object specification, using <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> on an ichimoku object created in version 0.1.* will no longer work. The solution is to run <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on the old object to re-create the object according to the new specification (all data is preserved)</p></li>
 <li><p>The ‘i = TRUE’ argument has been retired from <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> so that both <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> and <code><a href="../reference/iplot.html">iplot()</a></code> now take exactly the same sequence of arguments for ease of use. Use <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> for static charting, <code><a href="../reference/iplot.html">iplot()</a></code> for interactive charting</p></li>
 <li><p>The ‘from’ and ‘to’ arguments of the <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> and <code><a href="../reference/iplot.html">iplot()</a></code> functions have been replaced by a single argument ‘window’ which takes an ISO-8601 compatible range string and is much more flexible in use, taking full advantage of ichimoku’s switch to the ‘xts’ format</p></li>
 </ul>
@@ -484,6 +509,7 @@
 <li>shiny - a reactive framework for interactive visualizations</li>
 <li>bslib - for visual customisation of ‘shiny’ applications</li>
 <li>arrow - allows archiving of ichimoku objects as Apache Arrow files</li>
+<li>openssl - for data integrity verification of archived objects</li>
 <li>keyring - for saving API keys in the system credential store</li>
 </ul>
 </div>
