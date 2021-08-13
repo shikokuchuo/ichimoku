@@ -1,8 +1,9 @@
-# ichimoku 0.3.51.4
+# ichimoku 0.3.51.5
 
 #### New features:
 
 * `archive()` replaces `ichimoku_write()` and `ichimoku_read()` by merging their functionality.
+* `archive()` employs sha256 to ensure data integrity of archives. Adds optional dependency on `openssl` package.
 * Re-export functions for working with ichimoku objects: `index()`, `coredata()` from 'zoo', and `xts()` from the 'xts' package.
 
 #### Updates:
@@ -17,7 +18,7 @@
 
 # ichimoku 0.3.51
 
-#### *ichimoku object specification release (version 1)*
+#### *ichimoku object specification v1 release*
 
 * Please upgrade to the latest version of ichimoku.
 * ichimoku objects created in versions prior to 0.3.51 will no longer work correctly with newer versions of the package.

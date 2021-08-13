@@ -661,7 +661,7 @@ oanda_studio <- function(instrument = "USD_JPY",
     shiny::shinyApp(ui = ui, server = server, options = list(launch.browser = launch.browser, ...))
 
   } else {
-    message("Note: please install the 'shiny' package to enable oanda_studio()")
+    message("Please install the 'shiny' package to enable oanda_studio()")
   }
 }
 
@@ -776,7 +776,7 @@ oanda_set_key <- function() {
   if (requireNamespace("keyring", quietly = TRUE)) {
     keyring::key_set(service = "OANDA_API_KEY")
   } else {
-    message("Note: please install the 'keyring' package in order to store your OANDA API key")
+    message("Please install the 'keyring' package in order to store your OANDA API key")
   }
 }
 

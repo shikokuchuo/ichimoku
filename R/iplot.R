@@ -142,7 +142,7 @@ iplot <- function(x,
     shiny::shinyApp(ui, server, options = list(launch.browser = launch.browser, ...))
 
   } else {
-    message("Note: please install the 'shiny' package to enable interactive charting",
+    message("Please install the 'shiny' package to enable interactive charting",
             "\nAlternatively use plot() for static charts")
   }
 }

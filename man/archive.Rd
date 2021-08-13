@@ -18,8 +18,8 @@ system (SubTreeFileSystem).}
 \value{
 For read operations: the ichimoku object originally archived.
 
-    For write operations: invisible NULL. 'object' is written to
-    'filename' as a side effect.
+    For write operations: invisible NULL. 'object' is written to 'filename'
+    as a side effect.
 }
 \description{
 Used to read and write ichimoku objects to/from archival storage in the
@@ -33,14 +33,23 @@ For read operations, please specify only 'filename'. 'filename' is
     'object' will be written to 'filename'. Confirmation is printed to the
     console if the file write operation has been successful.
 }
+\section{Further Details}{
+
+
+    This function requires the 'arrow' package to be installed.
+
+    If the 'openssl' package is available, a sha256 hash of the original
+    object is written to the archive. This allows the data integrity of the
+    restored object to be verified when the archive is read back.
+}
+
 \examples{
 cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
-
 filename <- tempfile()
+
 archive(cloud, filename)
 
 restored <- archive(filename)
-identical(cloud, restored)
 
 unlink(filename)
 
