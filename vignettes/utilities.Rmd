@@ -45,20 +45,28 @@ tradingDays(dates, holidays = c("2020-01-01", "2020-01-02"))
 
 ```
 
-#### grid_dup()
+#### look()
 
-Create a vector of element positions of duplicates in the output of expand.grid on 2 identical vectors. A faster method of creating combinations for 2 variabes than `utils::combn()`.
+Can be used to inspect the informational attributes of objects created by the ichimoku package. This includes ichimoku objects or objects returned by `autostrat()`, `mlgrid()` or `oanda()`.
 
-Takes 2 arguments:
+```{r look}
+cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
+look(cloud)
 
-- `n`  the length of vector passed to `expand.grid()`.
-- `omit.id`  [default FALSE] to not select the elements where the 2 items are identical. Set to TRUE to also select these. The output of expand.grid, subset to remove duplicates with 'omit.id' set to TRUE would be the equivalent of `utils::combn(n, 2)`.
+grid <- mlgrid(cloud)
+look(grid)
 
-```{r griddup}
-n <- 3
-expand.grid(1:n, 1:n)
-expand.grid(1:n, 1:n)[-grid_dup(n), ]
-expand.grid(1:n, 1:n)[-grid_dup(n, omit.id = TRUE), ]
+```
+
+Can also be used to extract ichimoku objects from lists returned by `autostrat()`. Specify the argument 'which', to return the corresponding element of the list created by `autostrat()`.
+
+```{r look2}
+stratlist <- autostrat(cloud, n = 3)
+
+# Extract the ichimoku object which is the second element of 'stratlist':
+strat <- look(stratlist, which = 2)
+is.ichimoku(strat) && hasStrat(strat)
+
 ```
 
 ### Performant Dataframe Constructors

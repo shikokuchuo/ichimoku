@@ -1,17 +1,18 @@
 # Ichimoku - Data Layer --------------------------------------------------------
 
-#' Read/write ichimoku objects <> Arrow Archive
+#' Read/write objects <> Arrow Archive
 #'
-#' Used to read and write ichimoku objects to/from archival storage in the
-#'     Apache Arrow IPC file format.
+#' Used to read and write ichimoku, data.frame and ArrowTabular objects to/from
+#'     archival storage in the Apache Arrow IPC file format.
 #'
 #' @param ... unnamed arguments will be parsed as 'filename' if there is only
 #'     one argument, 'object' and 'filename' if there are two arguments.
-#' @param object (for write operations) an ichimoku object.
+#' @param object (for write operations) an 'ichimoku', 'data.frame' or
+#'     'ArrowTabular' object.
 #' @param filename string file path, URI, or OutputStream, or path in a file
 #'     system (SubTreeFileSystem).
 #'
-#' @return For read operations: the ichimoku object originally archived.
+#' @return For read operations: the object originally archived.
 #'
 #'     For write operations: invisible NULL. 'object' is written to 'filename'
 #'     as a side effect.
@@ -83,12 +84,12 @@ archive <- function(..., object, filename) {
   }
 }
 
-#' Write ichimoku objects to Arrow Archive
+#' Write objects to Arrow Archive
 #'
-#' Internal function used to write ichimoku objects to archive storage in the
-#'     Apache Arrow IPC file format.
+#' Internal function used to write ichimoku, data.frame and ArrowTabular objects
+#'     to archive storage in the Apache Arrow IPC file format.
 #'
-#' @param object an ichimoku object.
+#' @param object an 'ichimoku', 'data.frame' or 'ArrowTabular' object.
 #' @param filename string file path, URI, or OutputStream, or path in a file
 #'     system (SubTreeFileSystem).
 #'
@@ -102,10 +103,6 @@ writeArchive <- function(object, filename) {
     stop("in archive(object, filename): 'filename' must be supplied as a string. ",
          "\nDid you omit the surrounding quotes \"\"?", call. = FALSE)
   }
-  if (!is.ichimoku(object)) {
-    stop("object is of class '", class(object)[1L],
-         "', archive() only writes ichimoku objects", call. = FALSE)
-  }
 
   if (file.exists(filename)) {
     continue <- readline(prompt = paste0("The file '", filename,
@@ -116,21 +113,27 @@ writeArchive <- function(object, filename) {
     }
   }
 
+  if (inherits(object, "ArrowTabular")) object <- as.data.frame(object)
+
   if (requireNamespace("openssl", quietly = TRUE)) {
-    sha256 <- suppressWarnings(openssl::sha256(as.raw(object)))
+
+    charrep <- c(as.character(object), as.character(attributes(object)),
+                 as.character(names(attributes(object)))
+    )
+    rawvec <- do.call(c, lapply(charrep, charToRaw))
+    sha256 <- openssl::sha256(rawvec)
+
   } else {
     message("sha256 hash not written to archive as 'openssl' package not available - ",
             "\nthis means the integrity of objects cannot be verified when read back")
     sha256 <- NULL
   }
-  df <- xts_df(object)
-  df <- structure(df,
-                  periods = attr(object, "periods"),
-                  periodicity = attr(object, "periodicity"),
-                  ticker = attr(object, "ticker"),
-                  strat = attr(object, "strat"),
-                  ichimoku351 = TRUE,
-                  sha256 = sha256)
+
+  df <- if (is.ichimoku(object)) {
+    structure(xts_df(object, preserve.attrs = TRUE), ichimoku351 = TRUE, sha256351 = sha256)
+  } else {
+    structure(object, sha256351 = sha256)
+  }
 
   arrow::write_feather(df, filename)
   message("Archive written to '", filename, "'", sep = "")
@@ -139,13 +142,13 @@ writeArchive <- function(object, filename) {
 
 #' Read ichimoku objects from Arrow Archive
 #'
-#' Internal function used to read ichimoku objects from archive storage in the
-#'     Apache Arrow IPC file format.
+#' Internal function used to read ichimoku, data.frame and ArrowTabular objects
+#'     from archive storage in the Apache Arrow IPC file format.
 #'
 #' @param filename string file path, URI, or OutputStream, or path in a file
 #'     system (SubTreeFileSystem).
 #'
-#' @return The ichimoku object that was originally archived.
+#' @return The object that was originally archived.
 #'
 #' @keywords internal
 #'
@@ -157,32 +160,50 @@ readArchive <- function(filename) {
   }
 
   df <- arrow::read_feather(filename)
-  if (!isTRUE(attr(df, "ichimoku351"))) {
-    stop("'", paste0(filename), "' is not an archived ichimoku object", call. = FALSE)
-  }
 
+  if (isTRUE(attr(df, "ichimoku351"))) {
+
+  origsha256 <- attr(df, "sha256351")
   tzone <- if (is.null(attr(df$index, "tzone"))) "" else attr(df$index, "tzone")
+  orig <- attributes(df)
+  attrs <- list(names = orig$names, class = orig$class, row.names = orig$row.names)
+  orig$names <- orig$class <- orig$row.names <- orig$ichimoku351 <- orig$sha256351 <- NULL
+  attributes(df) <- c(attrs, orig)
 
   object <- structure(xts(df[, -1], order.by = df[, 1], tzone = tzone),
-                      class = c("ichimoku", "xts", "zoo"),
-                      periods = attr(df, "periods"),
-                      periodicity = attr(df, "periodicity"),
-                      ticker = attr(df, "ticker"),
-                      strat = attr(df, "strat"))
+                      class = c("ichimoku", "xts", "zoo"))
+  attrs <- attributes(object)
+  attributes(object) <- c(attrs, orig)
 
-  if (is.null(attr(df, "sha256"))) {
+  } else {
+
+    origsha256 <- attr(df, "sha256351")
+    orig <- attributes(df)
+    attrs <- list(names = orig$names, class = orig$class, row.names = orig$row.names)
+    orig$names <- orig$class <- orig$row.names <- orig$sha256351 <- NULL
+    attributes(df) <- c(attrs, orig)
+    object <- df
+  }
+
+  if (is.null(origsha256)) {
     message("Archive read from '", filename,
-            "'\nIntegrity of restored object cannot be verified as archive does not contain a sha256 hash")
+            "'\nIntegrity of restored object cannot be verified - sha256 hash not found")
 
   } else if (requireNamespace("openssl", quietly = TRUE)) {
-    sha256 <- suppressWarnings(openssl::sha256(as.raw(object)))
-    if (identical(sha256, attr(df, "sha256"))) {
+
+      charrep <- c(as.character(object), as.character(attributes(object)),
+                   as.character(names(attributes(object)))
+                   )
+      rawvec <- do.call(c, lapply(charrep, charToRaw))
+      sha256 <- openssl::sha256(rawvec)
+
+    if (identical(sha256, origsha256)) {
       message("Archive read from '", filename,
               "'\nData verified by sha256: ", sha256)
     } else {
       message("Archive read from '", filename, "'")
       warning("sha256 of restored object\n", sha256,
-              " does not match the original\n", attr(df, "sha256"), call. = FALSE)
+              " does not match the original\n", origsha256, call. = FALSE)
     }
   } else {
     message("Archive read from '", filename,

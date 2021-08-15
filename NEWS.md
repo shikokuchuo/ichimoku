@@ -1,13 +1,15 @@
-# ichimoku 0.3.51.5
+# ichimoku 0.3.51.6
 
 #### New features:
 
-* `archive()` replaces `ichimoku_write()` and `ichimoku_read()` by merging their functionality.
-* `archive()` employs sha256 to ensure data integrity of archives. Adds optional dependency on `openssl` package.
+* `archive()` replaces `ichimoku_write()` and `ichimoku_read()` by merging their functionality, and adding support for 'data.frame' and 'ArrowTabular' objects. This allows, for example, storage of data retrieved by `oanda()`.
+* `archive()` employs sha256 hashing to ensure data integrity of archives. Adds optional dependency on `openssl` package.
 * Re-export functions for working with ichimoku objects: `index()`, `coredata()` from 'zoo', and `xts()` from the 'xts' package.
 
 #### Updates:
 
+* `look()` can now inspect any R object.
+* `xts_df()` and `matrix_df()` dataframe constructors gain a 'preserve.attrs' argument. If set to TRUE, the returned dataframe will retain the additional attributes of the original objects.
 * Charts of daily or lower frequency now have prettier and more usefully-aligned breaks using custom algorithm.
 * Improved handling of timezones. OANDA data and charts will now show correctly in the user timezone.
 * Fixed cases of the timezone of restored objects from Arrow archives not matching the original.
@@ -15,6 +17,7 @@
 * Fixed bug in trade success statistics for short strategies returned by `strat()`.
 * Linking to 'cpp11' package, removed vendored code.
 * Added 'stats' R core package dependency for improved performance in strat functions.
+* The `grid_dup()` function is no longer exported to keep the package tidy.
 
 # ichimoku 0.3.51
 

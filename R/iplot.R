@@ -187,9 +187,7 @@ drawInfotip <- function(sdata, left_px, top_px) {
                    "left:", left_px + 50, "px; top:", top_px + 40, "px; ",
                    "font-size: 0.8em; padding: 1px 5px 5px 5px;"),
     shiny::HTML(paste0("<div style='margin:0; padding:0; font-weight:bold'>",
-                       if (isTRUE(sdata$cd == 1)) "&#9651;<br />"
-                       else if (isTRUE(sdata$cd == -1)) "&#9660;<br />"
-                       else "&#8212;<br />",
+                       if (isTRUE(sdata$cd == 1)) "&#9651;<br />" else if (isTRUE(sdata$cd == -1)) "&#9660;<br />" else "&#8212;<br />",
                        index(sdata),
                        "</div><div style='text-align:center; margin:2px 0 0 0; padding:0'>H: ",
                        signif(sdata$high, digits = 5L),

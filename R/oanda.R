@@ -622,8 +622,9 @@ oanda_studio <- function(instrument = "USD_JPY",
       })
 
       data <- shiny::reactive({
-        if (unclass(attr(datastore(), "timestamp")) > unclass(attr(idata(), "timestamp"))) datastore()
-        else idata()
+        if (unclass(attr(datastore(), "timestamp")) > unclass(attr(idata(), "timestamp"))) {
+          datastore()
+        } else idata()
       })
       xlen <- shiny::reactive(dim(data())[1L])
       pdata <- shiny::reactive(ichimoku(data(), periods = periods, ...)[minlen:(xlen() + p2 - 1L), ])

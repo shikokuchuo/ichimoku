@@ -10,8 +10,8 @@ hasStrat(x)
 \item{x}{an object.}
 }
 \value{
-A logical value of TRUE if 'x' has a 'strat' attribute set that is
-    not NULL, otherwise FALSE.
+A logical value of TRUE if the 'strat' attribute of 'x' is set,
+    otherwise FALSE.
 }
 \description{
 A function for checking if an object contains a strategy.

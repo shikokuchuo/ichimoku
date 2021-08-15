@@ -52,13 +52,7 @@ tradingDays <- function(x, holidays, ...) {
 #'
 #' @return A numeric vector.
 #'
-#' @examples
-#' n <- 3
-#' expand.grid(1:n, 1:n)
-#' expand.grid(1:n, 1:n)[-grid_dup(n), ]
-#' expand.grid(1:n, 1:n)[-grid_dup(n, omit.id = TRUE), ]
-#'
-#' @export
+#' @keywords internal
 #'
 grid_dup <- function(n, omit.id = FALSE) {
   vec <- do.call(c, lapply(seq_len(n - 1), function(x) x * n + 1:x))
@@ -101,6 +95,8 @@ df_trim <- function(x) {
 #'     checking.
 #'
 #' @param x an 'xts' object.
+#' @param preserve.attrs (optional) if set to TRUE, will preserve any additional
+#'     attributes set on the original object.
 #'
 #' @return A 'data.frame' object. The 'xts' index is preserved as the first
 #'     column with header 'index'.
@@ -112,13 +108,19 @@ df_trim <- function(x) {
 #'
 #' @export
 #'
-xts_df <- function(x) {
+xts_df <- function(x, preserve.attrs) {
   core <- coredata(x)
   dims <- dim(core)
-  structure(c(list(index(x)), lapply(seq_len(dims[2L]), function(i) core[, i])),
-            class = "data.frame",
-            names = c("index", dimnames(core)[[2L]]),
-            row.names = seq_len(dims[1L]))
+  df <- structure(c(list(index(x)), lapply(seq_len(dims[2L]), function(i) core[, i])),
+                  names = c("index", dimnames(core)[[2L]]),
+                  class = "data.frame",
+                  row.names = seq_len(dims[1L]))
+  if (!missing(preserve.attrs) && isTRUE(preserve.attrs)) {
+    lk <- look(x)
+    attrs <- attributes(df)
+    attributes(df) <- c(attrs, lk)
+  }
+  df
 }
 
 #' Convert matrix to data.frame
@@ -127,17 +129,12 @@ xts_df <- function(x) {
 #'     checking.
 #'
 #' @param x a matrix.
+#' @param preserve.attrs (optional) if set to TRUE, will preserve any additional
+#'     attributes set on the original object.
 #'
-#' @return A 'data.frame' object.
-#'
-#' @details Designed for working with time series data where the date-time index
-#'     is contained in the row names of the matrix.
-#'
-#'     Note: the function only works with matrices containing row names, as these
-#'     are preserved in the data frame. If the row names are null, the 'data.frame'
-#'     object is still created but will display as having zero rows. This can be
-#'     fixed by appending an index value to the row names of the resultant object:
-#'     \code{row.names(x) <- 1:nrow(x)}.
+#' @return A 'data.frame' object. If the matrix has row names, these are retained
+#'     in the dataframe, otherwise the row names of the dataframe will be an
+#'     integer sequence.
 #'
 #' @examples
 #' cloud <- ichimoku(sample_ohlc_data)
@@ -148,14 +145,20 @@ xts_df <- function(x) {
 #'
 #' @export
 #'
-matrix_df <- function(x) {
+matrix_df <- function(x, preserve.attrs) {
   dnames <- dimnames(x)
   mat <- unname(x)
   dims <- dim(mat)
-  structure(lapply(seq_len(dims[2L]), function(i) mat[, i]),
-            class = "data.frame",
+  df <- structure(lapply(seq_len(dims[2L]), function(i) mat[, i]),
             names = dnames[[2L]],
+            class = "data.frame",
             row.names = if (is.null(dnames[[1L]])) seq_len(dims[1L]) else dnames[[1L]])
+  if (!missing(preserve.attrs) && isTRUE(preserve.attrs)) {
+    lk <- look(x)
+    attrs <- attributes(df)
+    attributes(df) <- c(attrs, lk)
+  }
+  df
 }
 
 #' Merge Dataframes

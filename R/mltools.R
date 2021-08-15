@@ -218,8 +218,8 @@ mlgrid <- function(x,
 
   mat <- unname(matrix)
   grid <- structure(c(list(y), lapply(seq_len(dim(mat)[2L]), function(i) mat[, i])),
-                    class = "data.frame",
                     names = c("y", dimnames(matrix)[[2L]]),
+                    class = "data.frame",
                     row.names = as.character(index(x)),
                     y = target,
                     direction = dir,

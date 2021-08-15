@@ -247,16 +247,20 @@ The following arguments for customisation are shared across `plot()` and `iplot(
 
 ### Archiving
 
-After completing an analysis, the resulting ichimoku objects can be stored directly to disk. The function `archive()` provides direct tranlsation between the ichimoku objects in an R session with binary files stored in the Apache Arrow IPC file format.
+After completing an analysis, the resulting ichimoku objects can be stored directly to disk. The function `archive()` provides direct tranlsation between objects in an R session with binary files stored in the Apache Arrow IPC file format.
+
+This function was created specifically for seamless archiving of ichimoku objects, and dataframes returned by `oanda()`.
 
 #### Writing
-`archive()` for write operations will take 2 arguments: the ichimoku object to be written, and the file path/name of the object to be stored. A confirmation is printed to the console once the file has been written.
+`archive()` for write operations will take 2 arguments: the object to be written, and the file path/name of the object to be stored. A confirmation is printed to the console once the file has been written.
 
 #### Reading
 `archive()` for read operations takes a single argument: the file path/name of the file to be read. The return value of the function can be assigned to an object. A confirmation is printed to the console once the file has been read.
 
 #### Data Integrity Validation
-Data integrity validation is performed by the sha256 hashing algorithm from the 'openssl' package. If 'openssl' is not available, the archive function still works in all respects but without the additional validation. When an archive is read back, if the sha256 hash of the restored object matches the hash of the original that is stored in the archive, a 'data verified' message is printed to the console along with the matching sha256 hash. This allows full transparency and auditing - to manually verify the hash, call `openssl::sha256(as.raw(object))`.
+Data integrity validation is performed by the sha256 hashing algorithm from the 'openssl' package. If 'openssl' is not available, the archive function still works in all respects but without the additional validation. When an archive is read back, if the sha256 hash of the restored object matches the hash of the original that is stored in the archive, a 'data verified' message is printed to the console along with the matching sha256 hash. For reference, this hash value is of the raw vector of the character representation of the object including its attributes.
+
+Note: ichimoku objects and dataframes retuned by `oanda()` can be expected to be restored exactly. For 'data.frame' objects in general, exact replication of attributes in restored objects vs. the original cannot be guaranteed in all cases due to current limitations in the R/Arrow API.
 
 #### About Apache Arrow
 Apache Arrow provides the backend to the archive functions and requires the 'arrow' package to be installed. Apache Arrow is a high-performance, standardised, and language-independent columnar memory format. This means that the Arrow files created by ichimoku can equally be accessed by programs utilising Arrow bindings in all major languages including C, C++, Java, Python, etc.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/archive.R
 \name{archive}
 \alias{archive}
-\title{Read/write ichimoku objects <> Arrow Archive}
+\title{Read/write objects <> Arrow Archive}
 \usage{
 archive(..., object, filename)
 }
@@ -10,20 +10,21 @@ archive(..., object, filename)
 \item{...}{unnamed arguments will be parsed as 'filename' if there is only
 one argument, 'object' and 'filename' if there are two arguments.}
 
-\item{object}{(for write operations) an ichimoku object.}
+\item{object}{(for write operations) an 'ichimoku', 'data.frame' or
+'ArrowTabular' object.}
 
 \item{filename}{string file path, URI, or OutputStream, or path in a file
 system (SubTreeFileSystem).}
 }
 \value{
-For read operations: the ichimoku object originally archived.
+For read operations: the object originally archived.
 
     For write operations: invisible NULL. 'object' is written to 'filename'
     as a side effect.
 }
 \description{
-Used to read and write ichimoku objects to/from archival storage in the
-    Apache Arrow IPC file format.
+Used to read and write ichimoku, data.frame and ArrowTabular objects to/from
+    archival storage in the Apache Arrow IPC file format.
 }
 \details{
 For read operations, please specify only 'filename'. 'filename' is

@@ -307,8 +307,8 @@ stratcombine <- function(s1, s2) {
 #'
 #' @param x an object.
 #'
-#' @return A logical value of TRUE if 'x' has a 'strat' attribute set that is
-#'     not NULL, otherwise FALSE.
+#' @return A logical value of TRUE if the 'strat' attribute of 'x' is set,
+#'     otherwise FALSE.
 #'
 #' @details  Designed to be used by ichimoku functions that are either S3
 #'     methods for class 'ichimoku' or after validation that 'x' is an ichimoku

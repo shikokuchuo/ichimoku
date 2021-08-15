@@ -106,8 +106,7 @@ autostrat(cloud, n = 3)
     to create an ichimoku object from price data.
 
 -   [`archive()`](https://shikokuchuo.net/ichimoku/reference/archive.html) -
-    for reading and writing ichimoku objects to/from Apache Arrow
-    archives.
+    for reading and writing objects to/from Apache Arrow archives.
 
 -   [`oanda()`](https://shikokuchuo.net/ichimoku/reference/oanda.html) -
     to retrieve price data from the OANDA fxTrade API.

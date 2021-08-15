@@ -2,20 +2,23 @@
 % Please edit documentation in R/look.R
 \name{look}
 \alias{look}
-\title{Look at Ichimoku Objects}
+\title{Look at Informational Attributes}
 \usage{
 look(x, which)
 }
 \arguments{
-\item{x}{an ichimoku object or an object returned by \code{\link{autostrat}},
-\code{\link{mlgrid}} or \code{\link{oanda}}.}
+\item{x}{an object (created by the ichimoku package).}
 
 \item{which}{(optional) integer value of strategy to return from an autostrat
 list.}
 }
 \value{
-List of attribute values, or if 'which' is specified on an autostrat
+For objects created by the ichimoku package, a list of attribute values
+    specific to that data type, or if 'which' is specified on an autostrat
     list, an ichimoku object containing a strategy.
+
+    For other objects, a list of attributes that are non-standard for 'matrix',
+    'data.frame', or 'xts' objects, or else invisible NULL if none are present.
 }
 \description{
 Inspect the informational attributes of objects created by the 'ichimoku'

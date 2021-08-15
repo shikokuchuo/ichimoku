@@ -6,25 +6,26 @@ test_that("tradingDays ok", {
   expect_warning(tradingDays(sample_ohlc_data$time[4], holidays = 0))
 })
 
-test_that("df_trim ok", {
-  expect_equal(dim(df_trim(data.frame(c(1:4, NA), c(NA, 2:5)))), c(3L, 2L))
-})
-
-test_that("grid_dup ok", {
-  expect_equal(grid_dup(3), c(4, 7, 8))
-  expect_equal(grid_dup(3, omit.id = TRUE), c(4, 7, 8, 1 , 5, 9))
-})
-
 test_that("xts_df ok", {
   df <- xts_df(xtsobject)
   expect_s3_class(df, "data.frame")
   expect_identical(dim(df), c(10L, 13L))
+  xts <- structure(xtsobject, special = "set")
+  dfmod <- xts_df(xts, preserve.attrs = TRUE)
+  expect_equal(attr(dfmod, "special"), "set")
 })
 
 test_that("matrix_df ok", {
   df <- matrix_df(as.matrix(xtsobject))
   expect_s3_class(df, "data.frame")
   expect_identical(dim(df), c(10L, 12L))
+  mat <- structure(as.matrix(xtsobject), special = "set")
+  dfmod <- matrix_df(mat, preserve.attrs = TRUE)
+  expect_equal(attr(dfmod, "special"), "set")
+})
+
+test_that("df_trim ok", {
+  expect_equal(dim(df_trim(data.frame(c(1:4, NA), c(NA, 2:5)))), c(3L, 2L))
 })
 
 test_that("df_merge ok", {

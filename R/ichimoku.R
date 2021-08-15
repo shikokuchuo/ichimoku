@@ -253,9 +253,13 @@ ichimoku.default <- function(x, ticker, periods = c(9L, 26L, 52L), ...) {
     stop("Cannot create an ichimoku object from a '", class(x)[1L], "' object", call. = FALSE)
   })
 
-  if (!tryExists) stop("object '", x, "' not found")
-  else if (missing(ticker)) ichimoku(get(x), ticker = x, periods = periods, ...)
-  else ichimoku(get(x), ticker = ticker, periods = periods, ...)
+  if (!tryExists) {
+    stop("object '", x, "' not found")
+  } else if (missing(ticker)) {
+    ichimoku(get(x), ticker = x, periods = periods, ...)
+  } else {
+    ichimoku(get(x), ticker = ticker, periods = periods, ...)
+  }
 
 }
 
@@ -361,8 +365,8 @@ autoplot.ichimoku <- function(object,
           breaks <- endpoints(object, on = "years", k = k) + 1L
         }
         if (len > 4L) {
-          cond <- {breaks[length(breaks)] - breaks[(length(breaks) - 1L)]} < 0.7 * {breaks[3L] - breaks[2L]}
-          cond2 <- {breaks[2L] - breaks[1L]} < 0.7 * {breaks[3L] - breaks[2L]}
+          cond <- (breaks[length(breaks)] - breaks[(length(breaks) - 1L)]) < 0.7 * (breaks[3L] - breaks[2L])
+          cond2 <- (breaks[2L] - breaks[1L]) < 0.7 * (breaks[3L] - breaks[2L])
           if (cond) breaks <- breaks[-length(breaks)]
           if (cond2) breaks <- breaks[-1L]
         }
@@ -374,8 +378,11 @@ autoplot.ichimoku <- function(object,
       breaks
     }, labels = function(x) {
       labels <- data$index[x]
-      if (periodicity > 80000) format(labels, paste("%d-%b", "%Y", sep = "\n"))
-      else format(labels, paste("%H:%M", "%d-%b", "%Y", sep = "\n"))
+      if (periodicity > 80000) {
+        format(labels, paste("%d-%b", "%Y", sep = "\n"))
+      } else {
+        format(labels, paste("%H:%M", "%d-%b", "%Y", sep = "\n"))
+      }
     }),
     scale_y_continuous(breaks = function(x) pretty.default(x, n = 9L)),
     scale_color_manual(values = c("1" = pal[7L], "-1" = pal[8L], "0" = pal[9L])),
@@ -508,8 +515,7 @@ print.ichimoku <- function(x, plot = TRUE, ...) {
 #'
 summary.ichimoku <- function(object, strat = TRUE, ...) {
 
-  if (hasStrat(object) && isTRUE(strat)) attr(object, "strat")
-  else NextMethod(summary)
+  if (hasStrat(object) && isTRUE(strat)) attr(object, "strat") else NextMethod(summary)
 
 }
 

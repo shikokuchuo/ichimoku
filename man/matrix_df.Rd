@@ -4,27 +4,22 @@
 \alias{matrix_df}
 \title{Convert matrix to data.frame}
 \usage{
-matrix_df(x)
+matrix_df(x, preserve.attrs)
 }
 \arguments{
 \item{x}{a matrix.}
+
+\item{preserve.attrs}{(optional) if set to TRUE, will preserve any additional
+attributes set on the original object.}
 }
 \value{
-A 'data.frame' object.
+A 'data.frame' object. If the matrix has row names, these are retained
+    in the dataframe, otherwise the row names of the dataframe will be an
+    integer sequence.
 }
 \description{
 A performant 'matrix' to 'data.frame' constructor with no data validation or
     checking.
-}
-\details{
-Designed for working with time series data where the date-time index
-    is contained in the row names of the matrix.
-
-    Note: the function only works with matrices containing row names, as these
-    are preserved in the data frame. If the row names are null, the 'data.frame'
-    object is still created but will display as having zero rows. This can be
-    fixed by appending an index value to the row names of the resultant object:
-    \code{row.names(x) <- 1:nrow(x)}.
 }
 \examples{
 cloud <- ichimoku(sample_ohlc_data)

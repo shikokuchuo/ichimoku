@@ -1,18 +1,21 @@
 # Ichimoku - Look Utility ------------------------------------------------------
 
-#' Look at Ichimoku Objects
+#' Look at Informational Attributes
 #'
 #' Inspect the informational attributes of objects created by the 'ichimoku'
 #'     package. Can also be used to extract ichimoku objects from lists returned
 #'     by \code{\link{autostrat}}.
 #'
-#' @param x an ichimoku object or an object returned by \code{\link{autostrat}},
-#'     \code{\link{mlgrid}} or \code{\link{oanda}}.
+#' @param x an object (created by the ichimoku package).
 #' @param which (optional) integer value of strategy to return from an autostrat
 #'     list.
 #'
-#' @return List of attribute values, or if 'which' is specified on an autostrat
+#' @return For objects created by the ichimoku package, a list of attribute values
+#'     specific to that data type, or if 'which' is specified on an autostrat
 #'     list, an ichimoku object containing a strategy.
+#'
+#'     For other objects, a list of attributes that are non-standard for 'matrix',
+#'     'data.frame', or 'xts' objects, or else invisible NULL if none are present.
 #'
 #' @details Note: for a level 2 autostrat object, if the object fails to print
 #'     correctly due to its length, please access the list items directly using
@@ -42,30 +45,21 @@
 #'
 look <- function(x, which) {
 
-  name <- deparse(substitute(x))
+  if (isTRUE(attr(x, "autostrat"))) {
+    if (missing(which)) {
+      lk <- attributes(x)
+      lk$autostrat <- NULL
+      lk
+    } else tryCatch(x[[which]], error = function(e) {
+      stop("'", which, "' is not a valid value for 'which'\n'which' should be an integer ",
+           "value specifying one of the strategies 1 to ", length(x), call. = FALSE)
+    })
 
-  if (is.ichimoku(x)) {
-    if (hasStrat(x)) list(periods = attr(x, "periods"), periodicity = attr(x, "periodicity"),
-                          ticker = attr(x, "ticker"), strat = attr(x, "strat"))
-    else list(periods = attr(x, "periods"), periodicity = attr(x, "periodicity"),
-              ticker = attr(x, "ticker"))
-
-  } else if (isTRUE(attr(x, "autostrat"))) {
-    if (missing(which)) list(logret = attr(x, "logret"), summary = attr(x, "summary"))
-    else tryCatch(x[[which]], error = function(e) {
-      stop("Value '", which, "' for 'which' is invalid\n'which' must be an integer ",
-           "specifying one of the strategies contained in '", name, "'", call. = FALSE)
-      })
-
-  } else if (isTRUE(attr(x, "mlgrid"))) {
-    list(y = attr(x, "y"), direction = attr(x, "direction"), ticker = attr(x, "ticker"))
-
-  } else if (isTRUE(attr(x, "oanda"))) {
-    list(instrument = attr(x, "instrument"), price = attr(x, "price"),
-         timestamp = attr(x, "timestamp"))
-
-  } else stop("look() only works with certain object types created with the ichimoku package",
-              call. = FALSE)
+  } else {
+    lk <- attributes(x)
+    lk$dim <- lk$dimnames <- lk$names <- lk$row.names <- lk$index <- lk$class <- lk$mlgrid <- lk$oanda <- NULL
+    if (length(lk) == 0L) invisible() else lk
+  }
 
 }
 

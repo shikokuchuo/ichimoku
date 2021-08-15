@@ -4,10 +4,13 @@
 \alias{xts_df}
 \title{Convert xts to data.frame}
 \usage{
-xts_df(x)
+xts_df(x, preserve.attrs)
 }
 \arguments{
 \item{x}{an 'xts' object.}
+
+\item{preserve.attrs}{(optional) if set to TRUE, will preserve any additional
+attributes set on the original object.}
 }
 \value{
 A 'data.frame' object. The 'xts' index is preserved as the first
