@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Write ichimoku objects to Arrow Archive — writeArchive • ichimoku</title>
+<title>Write objects to Arrow Archive — writeArchive • ichimoku</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,9 @@
 
 
 
-<meta property="og:title" content="Write ichimoku objects to Arrow Archive — writeArchive" />
-<meta property="og:description" content="Internal function used to write ichimoku objects to archive storage in the
-    Apache Arrow IPC file format." />
+<meta property="og:title" content="Write objects to Arrow Archive — writeArchive" />
+<meta property="og:description" content="Internal function used to write ichimoku, data.frame and ArrowTabular objects
+    to archive storage in the Apache Arrow IPC file format." />
 
 
 
@@ -73,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.51.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.51.6</span>
       </span>
     </div>
 
@@ -139,14 +139,14 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Write ichimoku objects to Arrow Archive</h1>
+    <h1>Write objects to Arrow Archive</h1>
     <small class="dont-index">Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/R/archive.R'><code>R/archive.R</code></a></small>
     <div class="hidden name"><code>writeArchive.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Internal function used to write ichimoku objects to archive storage in the
-    Apache Arrow IPC file format.</p>
+    <p>Internal function used to write ichimoku, data.frame and ArrowTabular objects
+    to archive storage in the Apache Arrow IPC file format.</p>
     </div>
 
     <pre class="usage"><span class='fu'>writeArchive</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>filename</span><span class='op'>)</span></pre>
@@ -156,7 +156,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p>an ichimoku object.</p></td>
+      <td><p>an 'ichimoku', 'data.frame' or 'ArrowTabular' object.</p></td>
     </tr>
     <tr>
       <th>filename</th>

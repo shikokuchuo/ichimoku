@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.51.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.51.6</span>
       </span>
     </div>
 
@@ -294,9 +294,9 @@
 <span class="fu">table.Drawdowns</span><span class="op">(</span><span class="va">strat</span><span class="op">[</span>, <span class="st">"sret"</span><span class="op">]</span><span class="op">)</span></code></pre></div>
 </div>
 </div>
-<div id="advanced-strategies" class="section level2">
+<div id="advanced-strategies-and-ml" class="section level2">
 <h2 class="hasAnchor">
-<a href="#advanced-strategies" class="anchor"></a>Advanced Strategies</h2>
+<a href="#advanced-strategies-and-ml" class="anchor"></a>Advanced Strategies and ML</h2>
 <div id="autostrat" class="section level3">
 <h3 class="hasAnchor">
 <a href="#autostrat" class="anchor"></a><code>autostrat()</code>
@@ -404,7 +404,7 @@
 <span class="co">#&gt; End                    2020-10-29                        </span>
 <span class="co">#&gt; Ticker                 "TKR"</span></code></pre></div>
 <p>Set the argument <code>level = 3</code> to <code><a href="../reference/autostrat.html">autostrat()</a></code> to test all strategies using an asymmetric combination of up to 2 indicator conditions, i.e. strat() with type = 3.</p>
-<p>Please note that level 3 autostrat is considered experimental as the results are likely to have a higher sensitivity to the data and therefore be less robust.</p>
+<p>Please note that level 3 autostrat is considered somewhat experimental as the results tend to have higher sensitivity to the data and results are therefore less robust.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/autostrat.html">autostrat</a></span><span class="op">(</span><span class="va">cloud</span>, n <span class="op">=</span> <span class="fl">2</span>, dir <span class="op">=</span> <span class="st">"long"</span>, level <span class="op">=</span> <span class="st">"3"</span><span class="op">)</span>
 <span class="co">#&gt;                        [,1]                             </span>
@@ -446,35 +446,11 @@
 <span class="co">#&gt; End                    2020-10-29                          </span>
 <span class="co">#&gt; Ticker                 "TKR"</span></code></pre></div>
 </div>
-</div>
-<div id="strategy-summary-specification" class="section level2">
-<h2 class="hasAnchor">
-<a href="#strategy-summary-specification" class="anchor"></a>Strategy Summary Specification</h2>
-<p><code>---</code></p>
-<p><strong>Strategy cuml return %</strong>: The (discrete) percentage return achieved by pursuing the strategy, assuming all returns are compounded. This measure is equivalent to the sum of log returns converted back into a discrete return</p>
-<p><strong>Per period mean ret %</strong>: The percentage return (above) divided by the periods in market (below)</p>
-<p><strong>Periods in market</strong>: The number of periods (days, or whatever the periodicity of the data is) in the market</p>
-<p><strong>Total trades</strong>: Total number of trades to implement the strategy. Note that each trade requires 2 transactions, one to enter the trade and one to close out of it. Note: the benchmark would imply one trade</p>
-<p><strong>Average trade length</strong>: Periods in Market (above) divided by total trades (above)</p>
-<p><strong>Trade success %</strong>: Number of trades where the return is strictly greater than zero divided by the total number of trades</p>
-<p><strong>Worst trade ret %</strong>: The (discrete) percentage return of the worst-performing trade</p>
-<p><code>---</code></p>
-<p><strong>Benchmark cuml return %</strong>: The (discrete) percentage return achieved using a ‘buy and hold’ strategy</p>
-<p><strong>Per period mean ret %</strong>: The percentage return (above) divided by the periods in market (below)</p>
-<p><strong>Periods in market</strong>: The number of periods (days, or whatever the periodicity of the data is) from the ‘start’ to ‘end’ dates</p>
-<p><code>---</code></p>
-<p><strong>Ticker</strong>: The ticker saved in the ichimoku object</p>
-<p><strong>Start/end</strong>: The start and end dates of this backtest. These dates will differ for different cloud lines depending on how many periods it takes to calculate them, or if involving the chikou, shifting back a number of periods</p>
-<p><strong>Direction</strong>: ‘long’ or ‘short’ trade direction as can be set via the argument ‘dir’ to strat(). Only single direction strategies are considered</p>
-</div>
-<div id="ichimoku-ml-layer" class="section level2">
-<h2 class="hasAnchor">
-<a href="#ichimoku-ml-layer" class="anchor"></a>ichimoku ML Layer</h2>
-<p>The ML layer provides tools for further developing quantitative ichimoku solutions.</p>
 <div id="mlgrid" class="section level3">
 <h3 class="hasAnchor">
 <a href="#mlgrid" class="anchor"></a><code>mlgrid()</code>
 </h3>
+<p>The ML layer provides tools for further developing quantitative ichimoku solutions.</p>
 <p><code><a href="../reference/mlgrid.html">mlgrid()</a></code> generates a numeric representation of the relationship between ichimoku cloud chart elements. Its purpose is to provide a base grid which can then be manipulated as required before being fed into machine learning workflows.</p>
 <p><code><a href="../reference/mlgrid.html">mlgrid()</a></code> is used to power ichimoku’s <code><a href="../reference/autostrat.html">autostrat()</a></code> function.</p>
 <p>The object returned by the function is a data.frame in a ‘tidy’ format with one observation per row and one feature per column with the target ‘y’ as the first column. This is a format that is compatible with many machine learning packages.</p>
@@ -500,53 +476,26 @@
 <span class="co">#&gt; 2020-08-27 23:00:00 -0.0037397158          6.7         5.0        7.1</span></code></pre></div>
 <p>Note: only valid combinations are included within the grid. This means excluding any combination involving ‘open’ as it is in effect a lagged indicator and not contemporaneous. The following trivial or highly-collinear pairs are also excluded: {high, close} ,{low, close}, {low, high}, {cloudT, senkouA}, {cloudB, senkouA}, {cloudT, senkouB}, {cloudB, senkouB}, {cloudB, cloudT}.</p>
 </div>
-<div id="look" class="section level3">
-<h3 class="hasAnchor">
-<a href="#look" class="anchor"></a><code>look()</code>
-</h3>
-<p>A core utility function has been included in the form of <code><a href="../reference/look.html">look()</a></code>. This is used to inspect the informational attributes of an ichimoku object or an object returned by <code><a href="../reference/autostrat.html">autostrat()</a></code>, <code><a href="../reference/mlgrid.html">mlgrid()</a></code> or <code><a href="../reference/oanda.html">oanda()</a></code>.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/look.html">look</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span>
-<span class="co">#&gt; $periods</span>
-<span class="co">#&gt; [1]  9 26 52</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $periodicity</span>
-<span class="co">#&gt; [1] 86400</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $ticker</span>
-<span class="co">#&gt; [1] "TKR"</span>
-
-<span class="fu"><a href="../reference/look.html">look</a></span><span class="op">(</span><span class="va">strat</span><span class="op">)</span>
-<span class="co">#&gt; $periods</span>
-<span class="co">#&gt; [1]  9 26 52</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $periodicity</span>
-<span class="co">#&gt; [1] 86400</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $ticker</span>
-<span class="co">#&gt; [1] "TKR"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $strat</span>
-<span class="co">#&gt;                        [,1]            </span>
-<span class="co">#&gt; Strategy               "close &gt; tenkan"</span>
-<span class="co">#&gt; ---------------------  "----------"    </span>
-<span class="co">#&gt; Strategy cuml return % 8.57            </span>
-<span class="co">#&gt; Per period mean ret %  0.0334          </span>
-<span class="co">#&gt; Periods in market      138             </span>
-<span class="co">#&gt; Total trades           20              </span>
-<span class="co">#&gt; Average trade length   6.9             </span>
-<span class="co">#&gt; Trade success %        35              </span>
-<span class="co">#&gt; Worst trade ret %      -2.54           </span>
-<span class="co">#&gt; ---------------------  "----------"    </span>
-<span class="co">#&gt; Benchmark cuml ret %   9               </span>
-<span class="co">#&gt; Per period mean ret %  0.035           </span>
-<span class="co">#&gt; Periods in market      246             </span>
-<span class="co">#&gt; ---------------------  "----------"    </span>
-<span class="co">#&gt; Direction              "long"          </span>
-<span class="co">#&gt; Start                  2020-01-13      </span>
-<span class="co">#&gt; End                    2020-10-29      </span>
-<span class="co">#&gt; Ticker                 "TKR"</span></code></pre></div>
 </div>
+<div id="strategy-summary-specification" class="section level2">
+<h2 class="hasAnchor">
+<a href="#strategy-summary-specification" class="anchor"></a>Strategy Summary Specification</h2>
+<p><code>---</code></p>
+<p><strong>Strategy cuml return %</strong>: The (discrete) percentage return achieved by pursuing the strategy, assuming all returns are compounded. This measure is equivalent to the sum of log returns converted back into a discrete return</p>
+<p><strong>Per period mean ret %</strong>: The percentage return (above) divided by the periods in market (below)</p>
+<p><strong>Periods in market</strong>: The number of periods (days, or whatever the periodicity of the data is) in the market</p>
+<p><strong>Total trades</strong>: Total number of trades to implement the strategy. Note that each trade requires 2 transactions, one to enter the trade and one to close out of it. Note: the benchmark would imply one trade</p>
+<p><strong>Average trade length</strong>: Periods in Market (above) divided by total trades (above)</p>
+<p><strong>Trade success %</strong>: Number of trades where the return is strictly greater than zero divided by the total number of trades</p>
+<p><strong>Worst trade ret %</strong>: The (discrete) percentage return of the worst-performing trade</p>
+<p><code>---</code></p>
+<p><strong>Benchmark cuml return %</strong>: The (discrete) percentage return achieved using a ‘buy and hold’ strategy</p>
+<p><strong>Per period mean ret %</strong>: The percentage return (above) divided by the periods in market (below)</p>
+<p><strong>Periods in market</strong>: The number of periods (days, or whatever the periodicity of the data is) from the ‘start’ to ‘end’ dates</p>
+<p><code>---</code></p>
+<p><strong>Ticker</strong>: The ticker saved in the ichimoku object</p>
+<p><strong>Start/end</strong>: The start and end dates of this backtest. These dates will differ for different cloud lines depending on how many periods it takes to calculate them, or if involving the chikou, shifting back a number of periods</p>
+<p><strong>Direction</strong>: ‘long’ or ‘short’ trade direction as can be set via the argument ‘dir’ to strat(). Only single direction strategies are considered</p>
 </div>
 <div id="references" class="section level2">
 <h2 class="hasAnchor">

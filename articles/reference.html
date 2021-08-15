@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.51.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.51.6</span>
       </span>
     </div>
 
@@ -379,11 +379,12 @@
 <div id="archiving" class="section level3">
 <h3 class="hasAnchor">
 <a href="#archiving" class="anchor"></a>Archiving</h3>
-<p>After completing an analysis, the resulting ichimoku objects can be stored directly to disk. The function <code><a href="../reference/archive.html">archive()</a></code> provides direct tranlsation between the ichimoku objects in an R session with binary files stored in the Apache Arrow IPC file format.</p>
+<p>After completing an analysis, the resulting ichimoku objects can be stored directly to disk. The function <code><a href="../reference/archive.html">archive()</a></code> provides direct tranlsation between objects in an R session with binary files stored in the Apache Arrow IPC file format.</p>
+<p>This function was created specifically for seamless archiving of ichimoku objects, and dataframes returned by <code><a href="../reference/oanda.html">oanda()</a></code>.</p>
 <div id="writing" class="section level4">
 <h4 class="hasAnchor">
 <a href="#writing" class="anchor"></a>Writing</h4>
-<p><code><a href="../reference/archive.html">archive()</a></code> for write operations will take 2 arguments: the ichimoku object to be written, and the file path/name of the object to be stored. A confirmation is printed to the console once the file has been written.</p>
+<p><code><a href="../reference/archive.html">archive()</a></code> for write operations will take 2 arguments: the object to be written, and the file path/name of the object to be stored. A confirmation is printed to the console once the file has been written.</p>
 </div>
 <div id="reading" class="section level4">
 <h4 class="hasAnchor">
@@ -393,7 +394,8 @@
 <div id="data-integrity-validation" class="section level4">
 <h4 class="hasAnchor">
 <a href="#data-integrity-validation" class="anchor"></a>Data Integrity Validation</h4>
-<p>Data integrity validation is performed by the sha256 hashing algorithm from the ‘openssl’ package. If ‘openssl’ is not available, the archive function still works in all respects but without the additional validation. When an archive is read back, if the sha256 hash of the restored object matches the hash of the original that is stored in the archive, a ‘data verified’ message is printed to the console along with the matching sha256 hash. This allows full transparency and auditing - to manually verify the hash, call <code><a href="https://rdrr.io/pkg/openssl/man/hash.html">openssl::sha256(as.raw(object))</a></code>.</p>
+<p>Data integrity validation is performed by the sha256 hashing algorithm from the ‘openssl’ package. If ‘openssl’ is not available, the archive function still works in all respects but without the additional validation. When an archive is read back, if the sha256 hash of the restored object matches the hash of the original that is stored in the archive, a ‘data verified’ message is printed to the console along with the matching sha256 hash. For reference, this hash value is of the raw vector of the character representation of the object including its attributes.</p>
+<p>Note: ichimoku objects and dataframes retuned by <code><a href="../reference/oanda.html">oanda()</a></code> can be expected to be restored exactly. For ‘data.frame’ objects in general, exact replication of attributes in restored objects vs. the original cannot be guaranteed in all cases due to current limitations in the R/Arrow API.</p>
 </div>
 <div id="about-apache-arrow" class="section level4">
 <h4 class="hasAnchor">

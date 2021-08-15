@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.51.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.51.6</span>
       </span>
     </div>
 
@@ -141,18 +141,18 @@
       <small>Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="ichimoku-03515" class="section level1">
-<h1 class="page-header" data-toc-text="0.3.51.5">
-<a href="#ichimoku-03515" class="anchor"></a>ichimoku 0.3.51.5<small> Unreleased </small>
+    <div id="ichimoku-03516" class="section level1">
+<h1 class="page-header" data-toc-text="0.3.51.6">
+<a href="#ichimoku-03516" class="anchor"></a>ichimoku 0.3.51.6<small> Unreleased </small>
 </h1>
 <div id="new-features" class="section level4">
 <h4 class="hasAnchor">
 <a href="#new-features" class="anchor"></a>New features:</h4>
 <ul>
 <li>
-<code><a href="../reference/archive.html">archive()</a></code> replaces <code>ichimoku_write()</code> and <code>ichimoku_read()</code> by merging their functionality.</li>
+<code><a href="../reference/archive.html">archive()</a></code> replaces <code>ichimoku_write()</code> and <code>ichimoku_read()</code> by merging their functionality, and adding support for ‘data.frame’ and ‘ArrowTabular’ objects. This allows, for example, storage of data retrieved by <code><a href="../reference/oanda.html">oanda()</a></code>.</li>
 <li>
-<code><a href="../reference/archive.html">archive()</a></code> employs sha256 to ensure data integrity of archives. Adds optional dependency on <code>openssl</code> package.</li>
+<code><a href="../reference/archive.html">archive()</a></code> employs sha256 hashing to ensure data integrity of archives. Adds optional dependency on <code>openssl</code> package.</li>
 <li>Re-export functions for working with ichimoku objects: <code><a href="https://rdrr.io/pkg/zoo/man/index.html">index()</a></code>, <code><a href="https://rdrr.io/pkg/zoo/man/coredata.html">coredata()</a></code> from ‘zoo’, and <code><a href="https://rdrr.io/pkg/xts/man/xts.html">xts()</a></code> from the ‘xts’ package.</li>
 </ul>
 </div>
@@ -160,6 +160,10 @@
 <h4 class="hasAnchor">
 <a href="#updates" class="anchor"></a>Updates:</h4>
 <ul>
+<li>
+<code><a href="../reference/look.html">look()</a></code> can now inspect any R object.</li>
+<li>
+<code><a href="../reference/xts_df.html">xts_df()</a></code> and <code><a href="../reference/matrix_df.html">matrix_df()</a></code> dataframe constructors gain a ‘preserve.attrs’ argument. If set to TRUE, the returned dataframe will retain the additional attributes of the original objects.</li>
 <li>Charts of daily or lower frequency now have prettier and more usefully-aligned breaks using custom algorithm.</li>
 <li>Improved handling of timezones. OANDA data and charts will now show correctly in the user timezone.</li>
 <li>Fixed cases of the timezone of restored objects from Arrow archives not matching the original.</li>
@@ -167,6 +171,7 @@
 <li>Fixed bug in trade success statistics for short strategies returned by <code><a href="../reference/strat.html">strat()</a></code>.</li>
 <li>Linking to ‘cpp11’ package, removed vendored code.</li>
 <li>Added ‘stats’ R core package dependency for improved performance in strat functions.</li>
+<li>The <code><a href="../reference/grid_dup.html">grid_dup()</a></code> function is no longer exported to keep the package tidy.</li>
 </ul>
 </div>
 </div>
