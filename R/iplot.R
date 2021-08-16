@@ -2,10 +2,10 @@
 
 #' iplot Interactive Ichimoku Cloud Plot
 #'
-#' Plot Ichimoku Kinko Hyo cloud charts from ichimoku objects in a Shiny app,
-#'     allowing full customisation of chart elements in an interactive environment.
-#'     Intuitive cursor infotip allows ready access to the data directly from the
-#'     chart.
+#' Plot Ichimoku Kinko Hyo cloud charts from ichimoku objects in R Shiny,
+#'     allowing full customisation of chart elements in an interactive
+#'     environment. Intuitive cursor infotip provides ready access to the data
+#'     directly from the chart.
 #'
 #' @param x an object of class 'ichimoku'.
 #' @inheritParams autoplot

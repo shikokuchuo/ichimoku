@@ -53,7 +53,8 @@ interactively if not specified.}
 A data.frame containing the price data requested.
 }
 \description{
-Retrieve price data from the OANDA fxTrade API.
+Retrieve price data for major currencies, metals, commodities, government
+    bonds and stock indices from the OANDA fxTrade API.
 }
 \details{
 This function queries the OANDA fxTrade API.

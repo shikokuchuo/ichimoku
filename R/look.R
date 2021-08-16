@@ -2,9 +2,8 @@
 
 #' Look at Informational Attributes
 #'
-#' Inspect the informational attributes of objects created by the 'ichimoku'
-#'     package. Can also be used to extract ichimoku objects from lists returned
-#'     by \code{\link{autostrat}}.
+#' Inspect the informational attributes of objects, or extract ichimoku objects
+#'     from lists returned by \code{\link{autostrat}}.
 #'
 #' @param x an object (created by the ichimoku package).
 #' @param which (optional) integer value of strategy to return from an autostrat

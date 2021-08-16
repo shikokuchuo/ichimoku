@@ -1,14 +1,14 @@
-# ichimoku 0.3.51.6
+# ichimoku 0.3.51.7
 
 #### New features:
 
-* `archive()` replaces `ichimoku_write()` and `ichimoku_read()` by merging their functionality, and adding support for 'data.frame' and 'ArrowTabular' objects. This allows, for example, storage of data retrieved by `oanda()`.
-* `archive()` employs sha256 hashing to ensure data integrity of archives. Adds optional dependency on `openssl` package.
+* `archive()` replaces `ichimoku_write()` and `ichimoku_read()` by merging their functionality. Also uses sha256 hashing to ensure data integrity of archives - adds (optional) dependency on `openssl` package.
 * Re-export functions for working with ichimoku objects: `index()`, `coredata()` from 'zoo', and `xts()` from the 'xts' package.
 
 #### Updates:
 
 * `look()` can now inspect any R object.
+* `tradingDays()` gets a 'noholidays' argument for use in markets that trade 24/7 with no non-trading days.
 * `xts_df()` and `matrix_df()` dataframe constructors gain a 'preserve.attrs' argument. If set to TRUE, the returned dataframe will retain the additional attributes of the original objects.
 * Charts of daily or lower frequency now have prettier and more usefully-aligned breaks using custom algorithm.
 * Improved handling of timezones. OANDA data and charts will now show correctly in the user timezone.
@@ -21,11 +21,10 @@
 
 # ichimoku 0.3.51
 
-#### *ichimoku object specification v1 release*
+#### *First ichimoku object specification release*
 
-* Please upgrade to the latest version of ichimoku.
 * ichimoku objects created in versions prior to 0.3.51 will no longer work correctly with newer versions of the package.
-* `ichimoku()` can be called on previously-created objects to re-create the objects according to the v1 specification.
+* Please upgrade to the latest package version and run `ichimoku()` on previously-created objects to re-create them according to the new specification (data is preserved)
 
 # ichimoku 0.3.5
 

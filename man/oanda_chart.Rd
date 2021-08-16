@@ -64,7 +64,9 @@ Does not return a value, however a plot of the ichimoku chart for the
     interval as a side effect.
 }
 \description{
-Live updating Ichimoku Kinko Hyo cloud charts using OANDA fxTrade API data.
+Live updating Ichimoku Kinko Hyo cloud charts for major currencies, metals,
+    commodities, government bonds and stock indices using OANDA fxTrade API
+    data.
 }
 \details{
 This function polls the OANDA fxTrade API for the latest live prices

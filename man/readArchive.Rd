@@ -11,10 +11,10 @@ readArchive(filename)
 system (SubTreeFileSystem).}
 }
 \value{
-The object that was originally archived.
+The ichimoku object that was originally archived.
 }
 \description{
-Internal function used to read ichimoku, data.frame and ArrowTabular objects
-    from archive storage in the Apache Arrow IPC file format.
+Internal function used to read ichimoku objects from archive storage in the
+    Apache Arrow IPC file format.
 }
 \keyword{internal}

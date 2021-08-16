@@ -2,7 +2,8 @@
 
 #' Get OANDA Price Data
 #'
-#' Retrieve price data from the OANDA fxTrade API.
+#' Retrieve price data for major currencies, metals, commodities, government
+#'     bonds and stock indices from the OANDA fxTrade API.
 #'
 #' @param instrument string containing the base currency and quote currency
 #'     delimited by a '_' (for example "USD_JPY"). Use the
@@ -245,7 +246,9 @@ getPrices <- function(instrument, granularity, count, from, to, price,
 
 #' Stream Live OANDA Price Data
 #'
-#' Retrieve live price and liquidity data from the OANDA fxTrade Streaming API.
+#' Retrieve live price and liquidity data for major currencies, metals,
+#'     commodities, government bonds and stock indices from the OANDA fxTrade
+#'     Streaming API.
 #'
 #' @inheritParams oanda
 #'
@@ -313,7 +316,9 @@ oanda_stream <- function(instrument, server = c("practice", "live"), apikey) {
 
 #' Live Ichimoku Cloud Charts from OANDA Data
 #'
-#' Live updating Ichimoku Kinko Hyo cloud charts using OANDA fxTrade API data.
+#' Live updating Ichimoku Kinko Hyo cloud charts for major currencies, metals,
+#'     commodities, government bonds and stock indices using OANDA fxTrade API
+#'     data.
 #'
 #' @inheritParams oanda
 #' @inheritParams ichimoku
@@ -381,7 +386,7 @@ oanda_chart <- function(instrument,
   }
   p2 <- periods[2L]
   minlen <- p2 + periods[3L]
-  if (!is.numeric(count) || count <= minlen) {
+  if (!is.numeric(count) || count < minlen) {
     message("Invalid count specified - using default of 250 instead")
     count <- 250
   }
@@ -426,8 +431,11 @@ oanda_chart <- function(instrument,
 
 #' Interactive Live Analysis Environment for OANDA Data
 #'
-#' Dynamically-generated Ichimoku Kinko Hyo cloud charts using OANDA fxTrade API
-#'     data in a completely customisable Shiny environment.
+#' Dynamically-generated Ichimoku Kinko Hyo cloud charts for major currencies,
+#'     metals, commodities, government bonds and stock indices using OANDA
+#'     fxTrade API data in a fully-customisable and interactive R Shiny
+#'     environment. Intuitive cursor infotip provides ready access to the data
+#'     directly from the chart.
 #'
 #' @inheritParams oanda_chart
 #' @inheritParams iplot

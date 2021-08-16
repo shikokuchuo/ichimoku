@@ -2,11 +2,11 @@
 
 #' ichimoku
 #'
-#' Create an ichimoku object containing all components of the Ichimoku Kinko Hyo
-#'     cloud chart for visualization and quantitative analysis. The object
-#'     encapsulates a date-time index, OHLC pricing data, candle direction, the
-#'     cloud lines Tenkan-sen, Kijun-sen, Senkou span A, Senkou span B and
-#'     Chikou span, as well as values for the cloud top and cloud base.
+#' Create an ichimoku object containing values for all components of the
+#'     Ichimoku Kinko Hyo cloud chart. The object encapsulates a date-time
+#'     index, OHLC pricing data, candle direction, the cloud lines Tenkan-sen,
+#'     Kijun-sen, Senkou span A, Senkou span B and Chikou span, as well as
+#'     values for the cloud top and cloud base.
 #'
 #' @param x a data.frame or other compatible object, which includes xts,
 #'     data.table, tibble, matrix, and Arrow tabular formats.
@@ -271,7 +271,7 @@ NULL
 
 #' autoplot.ichimoku
 #'
-#' Plot static Ichimoku Kinko Hyo cloud charts from ichimoku objects.
+#' Plot Ichimoku Kinko Hyo cloud charts from ichimoku objects.
 #'
 #' @param object an object of class 'ichimoku'.
 #' @param window (optional) a date-time window to subset the plot, in ISO-8601

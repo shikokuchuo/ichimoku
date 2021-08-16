@@ -2,12 +2,12 @@
 % Please edit documentation in R/archive.R
 \name{writeArchive}
 \alias{writeArchive}
-\title{Write objects to Arrow Archive}
+\title{Write ichimoku objects to Arrow Archive}
 \usage{
 writeArchive(object, filename)
 }
 \arguments{
-\item{object}{an 'ichimoku', 'data.frame' or 'ArrowTabular' object.}
+\item{object}{an ichimoku object or dataframe returned by \code{\link{oanda}}.}
 
 \item{filename}{string file path, URI, or OutputStream, or path in a file
 system (SubTreeFileSystem).}
@@ -16,7 +16,7 @@ system (SubTreeFileSystem).}
 Invisible NULL. 'object' is written to 'file' as a side effect.
 }
 \description{
-Internal function used to write ichimoku, data.frame and ArrowTabular objects
-    to archive storage in the Apache Arrow IPC file format.
+Internal function used to write ichimoku objects to archive storage in the
+    Apache Arrow IPC file format.
 }
 \keyword{internal}

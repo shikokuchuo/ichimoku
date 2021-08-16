@@ -26,7 +26,9 @@ Does not return a value, however the streaming data is output to the
     times are in UTC.
 }
 \description{
-Retrieve live price and liquidity data from the OANDA fxTrade Streaming API.
+Retrieve live price and liquidity data for major currencies, metals,
+    commodities, government bonds and stock indices from the OANDA fxTrade
+    Streaming API.
 }
 \details{
 This function connects to the OANDA fxTrade Streaming API. Use the

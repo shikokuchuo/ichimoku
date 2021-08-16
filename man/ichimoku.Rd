@@ -44,11 +44,11 @@ An ichimoku object is returned with S3 classes of 'ichimoku', 'xts'
     and 'zoo'.
 }
 \description{
-Create an ichimoku object containing all components of the Ichimoku Kinko Hyo
-    cloud chart for visualization and quantitative analysis. The object
-    encapsulates a date-time index, OHLC pricing data, candle direction, the
-    cloud lines Tenkan-sen, Kijun-sen, Senkou span A, Senkou span B and
-    Chikou span, as well as values for the cloud top and cloud base.
+Create an ichimoku object containing values for all components of the
+    Ichimoku Kinko Hyo cloud chart. The object encapsulates a date-time
+    index, OHLC pricing data, candle direction, the cloud lines Tenkan-sen,
+    Kijun-sen, Senkou span A, Senkou span B and Chikou span, as well as
+    values for the cloud top and cloud base.
 }
 \details{
 Calling an ichimoku object automatically invokes its print method,

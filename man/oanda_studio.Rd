@@ -68,8 +68,11 @@ Ichimoku analysis.}
 Returns a Shiny app object with class 'shiny.appobj'.
 }
 \description{
-Dynamically-generated Ichimoku Kinko Hyo cloud charts using OANDA fxTrade API
-    data in a completely customisable Shiny environment.
+Dynamically-generated Ichimoku Kinko Hyo cloud charts for major currencies,
+    metals, commodities, government bonds and stock indices using OANDA
+    fxTrade API data in a fully-customisable and interactive R Shiny
+    environment. Intuitive cursor infotip provides ready access to the data
+    directly from the chart.
 }
 \details{
 This function polls the OANDA fxTrade API for the latest prices and

@@ -42,7 +42,7 @@ specified). Set to FALSE to turn off this behaviour.}
 Returns a ggplot2 object with S3 classes 'gg' and 'ggplot'.
 }
 \description{
-Plot static Ichimoku Kinko Hyo cloud charts from ichimoku objects.
+Plot Ichimoku Kinko Hyo cloud charts from ichimoku objects.
 }
 \details{
 This function is an S3 method for the generic function autoplot()

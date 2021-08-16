@@ -48,9 +48,6 @@ Or the latest development version from the Github source:
 remotes::install_github("shikokuchuo/ichimoku")
 ```
 
-**Note:** ichimoku object specification released 2021-08-08 - *please
-install build 0.3.51 or above to ensure compatibility.*
-
 ## Example
 
 Load package and sample price data:
@@ -106,7 +103,8 @@ autostrat(cloud, n = 3)
     to create an ichimoku object from price data.
 
 -   [`archive()`](https://shikokuchuo.net/ichimoku/reference/archive.html) -
-    for reading and writing objects to/from Apache Arrow archives.
+    for reading and writing ichimoku objects to/from Apache Arrow
+    archives.
 
 -   [`oanda()`](https://shikokuchuo.net/ichimoku/reference/oanda.html) -
     to retrieve price data from the OANDA fxTrade API.

@@ -21,9 +21,8 @@ For objects created by the ichimoku package, a list of attribute values
     'data.frame', or 'xts' objects, or else invisible NULL if none are present.
 }
 \description{
-Inspect the informational attributes of objects created by the 'ichimoku'
-    package. Can also be used to extract ichimoku objects from lists returned
-    by \code{\link{autostrat}}.
+Inspect the informational attributes of objects, or extract ichimoku objects
+    from lists returned by \code{\link{autostrat}}.
 }
 \details{
 Note: for a level 2 autostrat object, if the object fails to print

@@ -8,9 +8,14 @@
 #' @param holidays (optional) a vector, or function which outputs a
 #'     vector, of dates defined as holidays.
 #' @param ... other arguments not used by this function.
+#' @param noholidays (optional) if set, bypasses the function logic and allows
+#'     all dates in 'x'.
 #'
 #' @return A vector of logical values: TRUE if the corresponding element of 'x'
 #'     is a weekday and not a holiday, FALSE otherwise.
+#'
+#'     Or, if the parameter 'noholidays' is set (for example to TRUE or NA),
+#'     a vector of TRUE values of the same length as 'x'.
 #'
 #' @details New Year's Day (01/01) and Christmas Day (25/12) are defined as
 #'     holidays by default regardless of the values supplied by 'holidays'.
@@ -20,10 +25,12 @@
 #' dates
 #' tradingDays(dates)
 #' tradingDays(dates, holidays = c("2020-01-02", "2020-01-03"))
+#' tradingDays(dates, noholidays = TRUE)
 #'
 #' @export
 #'
-tradingDays <- function(x, holidays, ...) {
+tradingDays <- function(x, holidays, ..., noholidays) {
+  if (!missing(noholidays)) return(rep(TRUE, length(x)))
   posixlt <- as.POSIXlt.POSIXct(x)
   vec <- posixlt$wday %in% 1:5
   vec[(posixlt$mon == 0 & posixlt$mday == 1) | (posixlt$mon == 11 & posixlt$mday == 25) ] <- FALSE
