@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.51.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.51.7</span>
       </span>
     </div>
 
@@ -141,18 +141,16 @@
       <small>Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="ichimoku-03516" class="section level1">
-<h1 class="page-header" data-toc-text="0.3.51.6">
-<a href="#ichimoku-03516" class="anchor"></a>ichimoku 0.3.51.6<small> Unreleased </small>
+    <div id="ichimoku-03517" class="section level1">
+<h1 class="page-header" data-toc-text="0.3.51.7">
+<a href="#ichimoku-03517" class="anchor"></a>ichimoku 0.3.51.7<small> Unreleased </small>
 </h1>
 <div id="new-features" class="section level4">
 <h4 class="hasAnchor">
 <a href="#new-features" class="anchor"></a>New features:</h4>
 <ul>
 <li>
-<code><a href="../reference/archive.html">archive()</a></code> replaces <code>ichimoku_write()</code> and <code>ichimoku_read()</code> by merging their functionality, and adding support for ‘data.frame’ and ‘ArrowTabular’ objects. This allows, for example, storage of data retrieved by <code><a href="../reference/oanda.html">oanda()</a></code>.</li>
-<li>
-<code><a href="../reference/archive.html">archive()</a></code> employs sha256 hashing to ensure data integrity of archives. Adds optional dependency on <code>openssl</code> package.</li>
+<code><a href="../reference/archive.html">archive()</a></code> replaces <code>ichimoku_write()</code> and <code>ichimoku_read()</code> by merging their functionality. Also uses sha256 hashing to ensure data integrity of archives - adds (optional) dependency on <code>openssl</code> package.</li>
 <li>Re-export functions for working with ichimoku objects: <code><a href="https://rdrr.io/pkg/zoo/man/index.html">index()</a></code>, <code><a href="https://rdrr.io/pkg/zoo/man/coredata.html">coredata()</a></code> from ‘zoo’, and <code><a href="https://rdrr.io/pkg/xts/man/xts.html">xts()</a></code> from the ‘xts’ package.</li>
 </ul>
 </div>
@@ -162,6 +160,8 @@
 <ul>
 <li>
 <code><a href="../reference/look.html">look()</a></code> can now inspect any R object.</li>
+<li>
+<code><a href="../reference/tradingDays.html">tradingDays()</a></code> gets a ‘noholidays’ argument for use in markets that trade 24/7 with no non-trading days.</li>
 <li>
 <code><a href="../reference/xts_df.html">xts_df()</a></code> and <code><a href="../reference/matrix_df.html">matrix_df()</a></code> dataframe constructors gain a ‘preserve.attrs’ argument. If set to TRUE, the returned dataframe will retain the additional attributes of the original objects.</li>
 <li>Charts of daily or lower frequency now have prettier and more usefully-aligned breaks using custom algorithm.</li>
@@ -179,15 +179,13 @@
 <h1 class="page-header" data-toc-text="0.3.51">
 <a href="#ichimoku-0351" class="anchor"></a>ichimoku 0.3.51<small> Unreleased </small>
 </h1>
-<div id="ichimoku-object-specification-v1-release" class="section level4">
+<div id="first-ichimoku-object-specification-release" class="section level4">
 <h4 class="hasAnchor">
-<a href="#ichimoku-object-specification-v1-release" class="anchor"></a><em>ichimoku object specification v1 release</em>
+<a href="#first-ichimoku-object-specification-release" class="anchor"></a><em>First ichimoku object specification release</em>
 </h4>
 <ul>
-<li>Please upgrade to the latest version of ichimoku.</li>
 <li>ichimoku objects created in versions prior to 0.3.51 will no longer work correctly with newer versions of the package.</li>
-<li>
-<code><a href="../reference/ichimoku.html">ichimoku()</a></code> can be called on previously-created objects to re-create the objects according to the v1 specification.</li>
+<li>Please upgrade to the latest package version and run <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on previously-created objects to re-create them according to the new specification (data is preserved)</li>
 </ul>
 </div>
 </div>

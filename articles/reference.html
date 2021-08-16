@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.51.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.51.7</span>
       </span>
     </div>
 
@@ -299,13 +299,17 @@
 <a href="#defining-custom-holidays" class="anchor"></a>Defining custom holidays</h4>
 <p>When calculating the future cloud, <code><a href="../reference/ichimoku.html">ichimoku()</a></code> makes a call to the <code><a href="../reference/tradingDays.html">tradingDays()</a></code> helper function to ensure that future dates fall on trading days (i.e. not weekends or holidays). By default, New Year’s and Christmas day are defined as holidays as these are for all purposes universal across markets. These defaults should be acceptable for general use.</p>
 <p>However, if a particular strategy relies on the specific timing of the future cloud, and for the market under consideration other holidays are non-trading days, additional custom holidays may be defined via a ‘holidays’ argument to <code><a href="../reference/ichimoku.html">ichimoku()</a></code> which is then passed on to the <code><a href="../reference/tradingDays.html">tradingDays()</a></code> function.</p>
+<p>If the relevant market trades on a 24/7 basis with no non-trading days, the parameter <code>noholidays</code> can specified. This will bypass the logic of <code><a href="../reference/tradingDays.html">tradingDays()</a></code> and include all dates for calculating the future cloud.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Holidays can be specified directly via a vector of dates:</span>
 <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span>, holidays <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2020-01-13"</span>, <span class="st">"2020-02-11"</span>, <span class="st">"2020-02-24"</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># Or via a functions that returns a vector of dates (e.g. from the 'timeDate' package):</span>
 <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span>, holidays <span class="op">=</span> <span class="fu">timeDate</span><span class="fu">::</span><span class="fu">holidayLONDON</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span>, holidays <span class="op">=</span> <span class="fu">timeDate</span><span class="fu">::</span><span class="fu">holidayNYSE</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span>, holidays <span class="op">=</span> <span class="fu">timeDate</span><span class="fu">::</span><span class="fu">holidayNYSE</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+
+<span class="co"># For a market that trades 24/7:</span>
+<span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span>, noholidays <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 </div>
 </div>
 <div id="plot" class="section level3">
@@ -316,7 +320,7 @@
 <h4 class="hasAnchor">
 <a href="#static-plots" class="anchor"></a>1. Static Plots</h4>
 <p>The default plot function produces static plots, which have the advantage of being easily exportable to pdf or image formats in high resolution.</p>
-<p>ichimoku implements a custom S3 method for ggplot2’s <code><a href="../reference/autoplot.html">autoplot()</a></code> function for objects of class ‘ichimoku’. Although autoplot can be called directly on an ichimoku object, it is preferable to call <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> instead, as not only is it more convenient to type but also able to mute the verbose messaging that is otherwise output.</p>
+<p>ichimoku implements a custom S3 method for ggplot2’s <code><a href="../reference/autoplot.html">autoplot()</a></code> function for objects of class ‘ichimoku’. Although autoplot can be called directly on an ichimoku object, it is more convenient to call <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> instead, which prints the output of autoplot.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span></code></pre></div>
 <p><img src="reference_files/figure-html/plot-1.png" width="672"></p>
@@ -335,7 +339,7 @@
 <a href="#interactive-plots" class="anchor"></a>2. Interactive Plots</h4>
 <p>Interactive plots require the ‘shiny’ package to be installed. If Shiny is not available, ichimoku will issue an informational message, but not install the package automatically as it is recognised that Shiny may not be available in all environments.</p>
 <p>To produce an interactive plot, use ichimoku’s <code><a href="../reference/iplot.html">iplot()</a></code> function. An R Shiny app will be launched, allowing full further customisation of the chart interactively, including selecting the time window etc.</p>
-<p>In a live analysis environment, as opposed to creating charts for reports, it can be preferable to work with interactive plots. This is due to the ease of being able to customise the chart coupled with easy access to the data provided by the cursor Infotip.</p>
+<p>In a live analysis environment, as opposed to creating charts for reports, it can be preferable to work with interactive plots. This is due to the ease of being able to customise the chart coupled with easy access to the data provided by the cursor infotip.</p>
 <ul>
 <li>hover over the chart to read off data values at any given date-time</li>
 <li>cursor guides provide easy calibration of date-times and price levels</li>
@@ -379,12 +383,11 @@
 <div id="archiving" class="section level3">
 <h3 class="hasAnchor">
 <a href="#archiving" class="anchor"></a>Archiving</h3>
-<p>After completing an analysis, the resulting ichimoku objects can be stored directly to disk. The function <code><a href="../reference/archive.html">archive()</a></code> provides direct tranlsation between objects in an R session with binary files stored in the Apache Arrow IPC file format.</p>
-<p>This function was created specifically for seamless archiving of ichimoku objects, and dataframes returned by <code><a href="../reference/oanda.html">oanda()</a></code>.</p>
+<p>After completing an analysis, the resulting objects can be stored directly to disk. The function <code><a href="../reference/archive.html">archive()</a></code> provides seamless translation between ichimoku objects in an R session with binary files stored in the Apache Arrow IPC file format.</p>
 <div id="writing" class="section level4">
 <h4 class="hasAnchor">
 <a href="#writing" class="anchor"></a>Writing</h4>
-<p><code><a href="../reference/archive.html">archive()</a></code> for write operations will take 2 arguments: the object to be written, and the file path/name of the object to be stored. A confirmation is printed to the console once the file has been written.</p>
+<p><code><a href="../reference/archive.html">archive()</a></code> for write operations will take 2 arguments: the ichimoku object to be written, and the file path/name of the file to be stored. A confirmation is printed to the console that the file has been written.</p>
 </div>
 <div id="reading" class="section level4">
 <h4 class="hasAnchor">
@@ -394,8 +397,9 @@
 <div id="data-integrity-validation" class="section level4">
 <h4 class="hasAnchor">
 <a href="#data-integrity-validation" class="anchor"></a>Data Integrity Validation</h4>
-<p>Data integrity validation is performed by the sha256 hashing algorithm from the ‘openssl’ package. If ‘openssl’ is not available, the archive function still works in all respects but without the additional validation. When an archive is read back, if the sha256 hash of the restored object matches the hash of the original that is stored in the archive, a ‘data verified’ message is printed to the console along with the matching sha256 hash. For reference, this hash value is of the raw vector of the character representation of the object including its attributes.</p>
-<p>Note: ichimoku objects and dataframes retuned by <code><a href="../reference/oanda.html">oanda()</a></code> can be expected to be restored exactly. For ‘data.frame’ objects in general, exact replication of attributes in restored objects vs. the original cannot be guaranteed in all cases due to current limitations in the R/Arrow API.</p>
+<p>Data integrity validation is performed by the cryptographic-grade sha256 hashing algorithm from the ‘openssl’ package. If ‘openssl’ is not available, the archive function still works in all respects but without the validation capability.</p>
+<p>When an archive is written, a representation of the ichimoku object is hashed and stored in the archive. The sha256 hash value is printed to the console as confirmation.</p>
+<p>When an archive is read back, the sha256 hash of the restored object is checked against the hash of the original stored in the archive. If identical, a ‘data verified’ message is printed to the console along with the matching sha256 hash.</p>
 </div>
 <div id="about-apache-arrow" class="section level4">
 <h4 class="hasAnchor">
@@ -451,7 +455,7 @@
 <p>There may however still be other issues with the input data that prevent cloud values from being computed, not handled explicitly by <code><a href="../reference/ichimoku.html">ichimoku()</a></code>. For example, if:</p>
 <ul>
 <li><p>The date-time index is in a headerless column, or in a column where the name does not contain ‘index’, ‘date’ or ‘time’ (not case-dependent). Please rename the column to ‘index’ in such cases</p></li>
-<li><p>The correct date-time index is in the rownames, or index of an ‘xts’ object, but there are also columns that contains the word ‘index’, ‘date’ or ‘time’. Please rename the columns that do not serve as the date-time index so that the correct date-time index can be detected</p></li>
+<li><p>The correct date-time index is in the row names, or index of an ‘xts’ object, but there are also columns that contains the word ‘index’, ‘date’ or ‘time’. Please rename the columns that do not serve as the date-time index so that the correct date-time index can be detected</p></li>
 <li><p>There is more than one column that contains the word ‘index’, ‘date’ or ‘time’. Please either rename the columns that do not serve as the date-time index, or move the correct date-time column ahead of the other columns so that it is picked up first</p></li>
 <li><p>HLC price data is contained in headerless columns or in columns labelled, for example, ‘Op’, ‘Hi’, ‘Lo’, ‘Cl’. Please rename the columns ‘open’, ‘high’, ‘low’ and ‘close’ in such cases</p></li>
 <li><p>There are NA values within the price data. This will affect the algorithm calculating the cloud lines in the window immediately following such NA values. Please check the data and manually correct NA values before invoking <code><a href="../reference/ichimoku.html">ichimoku()</a></code></p></li>
@@ -460,32 +464,12 @@
 <div id="api-modifications" class="section level3">
 <h3 class="hasAnchor">
 <a href="#api-modifications" class="anchor"></a>API modifications</h3>
-<div id="since-version-0-3" class="section level4">
+<div id="since-version-0-x" class="section level4">
 <h4 class="hasAnchor">
-<a href="#since-version-0-3" class="anchor"></a>Since version 0.3</h4>
+<a href="#since-version-0-x" class="anchor"></a>Since version 0.x</h4>
 <ul>
-<li>The ichimoku object specification (version 1) was released in version 0.3.51. ichimoku objects created in versions prior to 0.3.51 will no longer work correctly with newer versions of the package. Please run <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on previously-created objects to re-create the object according to the new specification (data is preserved)</li>
-<li>The following functions are no longer exported: <code>maxOver()</code>, <code>minOver()</code>, <code>oanda_accounts()</code>.</li>
-</ul>
-</div>
-<div id="since-version-0-2" class="section level4">
-<h4 class="hasAnchor">
-<a href="#since-version-0-2" class="anchor"></a>Since version 0.2</h4>
-<ul>
-<li><p><code><a href="../reference/iplot.html">iplot()</a></code> now uses an R Shiny backend rather than plotly, as it is performant and scalable for large datasets and offers similar/enhanced functionality. To continue working with plotly, simply pass the ‘ggplot’ object created by plot() to <code>plotly::ggplotly()</code></p></li>
-<li><p>Argument ‘gaps’ to the plot functions is deprecated. As a convenience, the functionality has been moved to a <code>gplot()</code> function which will remain in the package until at least version 0.4.</p></li>
-<li><p><code><a href="../reference/ichimoku.html">ichimoku()</a></code> validation changes mean it will now take a column named ‘index’, ‘date’ or ‘time’ in precedence to a row index.</p></li>
-</ul>
-</div>
-<div id="since-version-0-1" class="section level4">
-<h4 class="hasAnchor">
-<a href="#since-version-0-1" class="anchor"></a>Since version 0.1</h4>
-<ul>
-<li><p>‘ichimoku’ objects now inherit ‘xts’ and ‘zoo’ classes instead of ‘data.frame’. This means that columns extracted from ‘ichimoku’ objects are able to work seamlessly in packages expecting ‘xts’ indexed time series. Conversely for use with packages that only accept data frames then ‘ichimoku’ objects must first be wrapped in <code><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame()</a></code> or the included <code><a href="../reference/xts_df.html">xts_df()</a></code> utility.</p></li>
-<li><p>For candle direction, the column has been renamed from ‘candle’ to ‘cd’ and is now stored as numeric values -1 for ‘down’, 0 for ‘flat’, and 1 for ‘up’, rather than as a factor</p></li>
-<li><p>Due to the change in ichimoku object specification, using <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> on an ichimoku object created in version 0.1.* will no longer work. The solution is to run <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on the old object to re-create the object according to the new specification (all data is preserved)</p></li>
-<li><p>The ‘i = TRUE’ argument has been retired from <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> so that both <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> and <code><a href="../reference/iplot.html">iplot()</a></code> now take exactly the same sequence of arguments for ease of use. Use <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> for static charting, <code><a href="../reference/iplot.html">iplot()</a></code> for interactive charting</p></li>
-<li><p>The ‘from’ and ‘to’ arguments of the <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> and <code><a href="../reference/iplot.html">iplot()</a></code> functions have been replaced by a single argument ‘window’ which takes an ISO-8601 compatible range string and is much more flexible in use, taking full advantage of ichimoku’s switch to the ‘xts’ format</p></li>
+<li>The first ichimoku object specification was released in version 0.3.51 - ichimoku objects created in versions prior to 0.3.51 will no longer work correctly with newer versions of the package</li>
+<li>Please upgrade to the latest package version and run <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on previously-created objects to re-create them according to the new specification (data is preserved)</li>
 </ul>
 </div>
 </div>
@@ -511,7 +495,7 @@
 <li>shiny - a reactive framework for interactive visualizations</li>
 <li>bslib - for visual customisation of ‘shiny’ applications</li>
 <li>arrow - allows archiving of ichimoku objects as Apache Arrow files</li>
-<li>openssl - for data integrity verification of archived objects</li>
+<li>openssl - for verification of the data integrity of archived objects</li>
 <li>keyring - for saving API keys in the system credential store</li>
 </ul>
 </div>

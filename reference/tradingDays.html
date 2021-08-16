@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.51.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.51.7</span>
       </span>
     </div>
 
@@ -147,7 +147,7 @@
     <p>Used by <code><a href='ichimoku.html'>ichimoku</a></code> to subset a vector of dates to trading days.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>tradingDays</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>holidays</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>tradingDays</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>holidays</span>, <span class='va'>...</span>, <span class='va'>noholidays</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -165,12 +165,19 @@ vector, of dates defined as holidays.</p></td>
       <th>...</th>
       <td><p>other arguments not used by this function.</p></td>
     </tr>
+    <tr>
+      <th>noholidays</th>
+      <td><p>(optional) if set, bypasses the function logic and allows
+all dates in 'x'.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A vector of logical values: TRUE if the corresponding element of 'x'
     is a weekday and not a holiday, FALSE otherwise.</p>
+<p>Or, if the parameter 'noholidays' is set (for example to TRUE or NA),
+    a vector of TRUE values of the same length as 'x'.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>New Year's Day (01/01) and Christmas Day (25/12) are defined as
@@ -182,7 +189,8 @@ vector, of dates defined as holidays.</p></td>
 </div><div class='output co'>#&gt; [1] "2020-01-01 UTC" "2020-01-02 UTC" "2020-01-03 UTC" "2020-01-04 UTC"
 #&gt; [5] "2020-01-05 UTC" "2020-01-06 UTC" "2020-01-07 UTC"</div><div class='input'><span class='fu'>tradingDays</span><span class='op'>(</span><span class='va'>dates</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] FALSE  TRUE  TRUE FALSE FALSE  TRUE  TRUE</div><div class='input'><span class='fu'>tradingDays</span><span class='op'>(</span><span class='va'>dates</span>, holidays <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"2020-01-02"</span>, <span class='st'>"2020-01-03"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE</div><div class='input'>
+</div><div class='output co'>#&gt; [1] FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE</div><div class='input'><span class='fu'>tradingDays</span><span class='op'>(</span><span class='va'>dates</span>, noholidays <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

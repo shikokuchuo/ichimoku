@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.51.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.51.7</span>
       </span>
     </div>
 
@@ -364,7 +364,7 @@
 <a href="#autostrat-levels-2-and-3" class="anchor"></a><code>autostrat()</code> Levels 2 and 3</h3>
 <p>Set the argument <code>level = 2</code> to <code><a href="../reference/autostrat.html">autostrat()</a></code> to test all strategies with a combination of up to 2 indicator conditions, i.e. strat() with type = 2.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/autostrat.html">autostrat</a></span><span class="op">(</span><span class="va">cloud</span>, n <span class="op">=</span> <span class="fl">2</span>, dir <span class="op">=</span> <span class="st">"short"</span>, level <span class="op">=</span> <span class="st">"2"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="../reference/autostrat.html">autostrat</a></span><span class="op">(</span><span class="va">cloud</span>, n <span class="op">=</span> <span class="fl">3</span>, dir <span class="op">=</span> <span class="st">"short"</span>, level <span class="op">=</span> <span class="st">"2"</span><span class="op">)</span>
 <span class="co">#&gt;                        [,1]                               </span>
 <span class="co">#&gt; Strategy               "close &gt; chikou &amp; tenkan &gt; senkouB"</span>
 <span class="co">#&gt; ---------------------  "----------"                       </span>
@@ -402,11 +402,30 @@
 <span class="co">#&gt; Direction              "short"                           </span>
 <span class="co">#&gt; Start                  2020-03-31 23:00:00               </span>
 <span class="co">#&gt; End                    2020-10-29                        </span>
+<span class="co">#&gt; Ticker                 "TKR"                             </span>
+<span class="co">#&gt;                        [,3]                              </span>
+<span class="co">#&gt; Strategy               "close &gt; chikou &amp; tenkan &gt; cloudB"</span>
+<span class="co">#&gt; ---------------------  "----------"                      </span>
+<span class="co">#&gt; Strategy cuml return % 10.69                             </span>
+<span class="co">#&gt; Per period mean ret %  0.0571                            </span>
+<span class="co">#&gt; Periods in market      24                                </span>
+<span class="co">#&gt; Total trades           4                                 </span>
+<span class="co">#&gt; Average trade length   6                                 </span>
+<span class="co">#&gt; Trade success %        75                                </span>
+<span class="co">#&gt; Worst trade ret %      -0.44                             </span>
+<span class="co">#&gt; ---------------------  "----------"                      </span>
+<span class="co">#&gt; Benchmark cuml ret %   -5.24                             </span>
+<span class="co">#&gt; Per period mean ret %  -0.0302                           </span>
+<span class="co">#&gt; Periods in market      178                               </span>
+<span class="co">#&gt; ---------------------  "----------"                      </span>
+<span class="co">#&gt; Direction              "short"                           </span>
+<span class="co">#&gt; Start                  2020-03-31 23:00:00               </span>
+<span class="co">#&gt; End                    2020-10-29                        </span>
 <span class="co">#&gt; Ticker                 "TKR"</span></code></pre></div>
 <p>Set the argument <code>level = 3</code> to <code><a href="../reference/autostrat.html">autostrat()</a></code> to test all strategies using an asymmetric combination of up to 2 indicator conditions, i.e. strat() with type = 3.</p>
 <p>Please note that level 3 autostrat is considered somewhat experimental as the results tend to have higher sensitivity to the data and results are therefore less robust.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/autostrat.html">autostrat</a></span><span class="op">(</span><span class="va">cloud</span>, n <span class="op">=</span> <span class="fl">2</span>, dir <span class="op">=</span> <span class="st">"long"</span>, level <span class="op">=</span> <span class="st">"3"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="../reference/autostrat.html">autostrat</a></span><span class="op">(</span><span class="va">cloud</span>, n <span class="op">=</span> <span class="fl">3</span>, dir <span class="op">=</span> <span class="st">"long"</span>, level <span class="op">=</span> <span class="st">"3"</span><span class="op">)</span>
 <span class="co">#&gt;                        [,1]                             </span>
 <span class="co">#&gt; Strategy               "senkouB &gt; senkouA x kijun &gt; low"</span>
 <span class="co">#&gt; ---------------------  "----------"                     </span>
@@ -444,6 +463,25 @@
 <span class="co">#&gt; Direction              "long"                              </span>
 <span class="co">#&gt; Start                  2020-03-31 23:00:00                 </span>
 <span class="co">#&gt; End                    2020-10-29                          </span>
+<span class="co">#&gt; Ticker                 "TKR"                               </span>
+<span class="co">#&gt;                        [,3]                             </span>
+<span class="co">#&gt; Strategy               "senkouB &gt; high x cloudT &gt; close"</span>
+<span class="co">#&gt; ---------------------  "----------"                     </span>
+<span class="co">#&gt; Strategy cuml return % 15.15                            </span>
+<span class="co">#&gt; Per period mean ret %  0.0793                           </span>
+<span class="co">#&gt; Periods in market      98                               </span>
+<span class="co">#&gt; Total trades           3                                </span>
+<span class="co">#&gt; Average trade length   32.67                            </span>
+<span class="co">#&gt; Trade success %        66.67                            </span>
+<span class="co">#&gt; Worst trade ret %      -0.38                            </span>
+<span class="co">#&gt; ---------------------  "----------"                     </span>
+<span class="co">#&gt; Benchmark cuml ret %   5.53                             </span>
+<span class="co">#&gt; Per period mean ret %  0.0302                           </span>
+<span class="co">#&gt; Periods in market      178                              </span>
+<span class="co">#&gt; ---------------------  "----------"                     </span>
+<span class="co">#&gt; Direction              "long"                           </span>
+<span class="co">#&gt; Start                  2020-03-31 23:00:00              </span>
+<span class="co">#&gt; End                    2020-10-29                       </span>
 <span class="co">#&gt; Ticker                 "TKR"</span></code></pre></div>
 </div>
 <div id="mlgrid" class="section level3">
@@ -454,7 +492,7 @@
 <p><code><a href="../reference/mlgrid.html">mlgrid()</a></code> generates a numeric representation of the relationship between ichimoku cloud chart elements. Its purpose is to provide a base grid which can then be manipulated as required before being fed into machine learning workflows.</p>
 <p><code><a href="../reference/mlgrid.html">mlgrid()</a></code> is used to power ichimoku’s <code><a href="../reference/autostrat.html">autostrat()</a></code> function.</p>
 <p>The object returned by the function is a data.frame in a ‘tidy’ format with one observation per row and one feature per column with the target ‘y’ as the first column. This is a format that is compatible with many machine learning packages.</p>
-<p>Below are shown the 2 basic types of grid: ‘boolean’ and ‘numeric’, where boolean produces a ‘1’ or ‘0’ depending on whether the condition c1_c2 (read c1 &gt; c2) is met, whereas ‘numeric’ will produce the numeric difference of c1 - c2.</p>
+<p>Below are shown the 2 basic types of grid: ‘boolean’ and ‘numeric’, where ‘boolean’ produces a ‘1’ or ‘0’ depending on whether the condition c1_c2 (read c1 &gt; c2) is met, whereas ‘numeric’ will produce the numeric difference of c1 - c2.</p>
 <p>The ‘y’ column can be switched between log and discrete returns. The date-time index corresponds to when the condition is met at the close for that period. The return is the single-period return achieved by transacting at the immediately following opening price until the next opening price. In this sense, the time periods do not strictly match, but are nevertheless correctly paired.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/mlgrid.html">mlgrid</a></span><span class="op">(</span><span class="va">cloud</span>, y <span class="op">=</span> <span class="st">"logret"</span>, dir <span class="op">=</span> <span class="st">"long"</span>, type <span class="op">=</span> <span class="st">"boolean"</span>, unique <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">[</span><span class="fl">100</span><span class="op">:</span><span class="fl">105</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>

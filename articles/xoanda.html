@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.51.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.51.7</span>
       </span>
     </div>
 
@@ -205,11 +205,11 @@
 <li>
 <code>...</code> additional parameters passed onto <code><a href="../reference/ichimoku.html">ichimoku()</a></code> for calculating the ichimoku cloud or <code><a href="../reference/autoplot.html">autoplot()</a></code> to set chart parameters</li>
 <li>
-<code>periods</code> [default c(9L, 26L, 52L)] a vector defining the length of periods used for the cloud. This parameter shoud not normally be modified as using other values would be invalid in the context of traditional Ichimoku analysis</li>
+<code>periods</code> [default c(9L, 26L, 52L)] a vector defining the length of periods used for the cloud. This parameter should not normally be modified as using other values would be invalid in the context of traditional Ichimoku analysis</li>
 </ul>
 <p>The arguments ‘from’ and ‘to’ are excluded as they are not relevant in this context.</p>
 <p>If focus is not initially on the plot pane (in RStudio), please switch to it to view the chart.</p>
-<p>Note also that the periods displayed on the chart will be fewer than the ‘count’ specified. This is by design to ensure a full cloud is always displayed (i.e. there are no missing values for certain cloud lines at the start of the data). If using the default cloud periods, the first 78 datapoints will be excluded from the chart. Please take this into account when setting the ‘count’ parameter.</p>
+<p>Note also that the periods displayed on the chart will be fewer than the ‘count’ specified. This is by design to ensure a full cloud is always displayed (i.e. there are no missing values for certain cloud lines at the start of the data). If using the default cloud periods, the first 77 datapoints will be excluded from the chart. Please take this into account when setting the ‘count’ parameter.</p>
 </div>
 <div id="oanda_studio" class="section level3">
 <h3 class="hasAnchor">
@@ -361,7 +361,7 @@
 <div id="caching-implementation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#caching-implementation" class="anchor"></a>Caching Implementation</h2>
-<p>The package retrieves the following once only during a single R session (the first time they are used) and caches the variables for further use througout the session:</p>
+<p>The package retrieves the following once only during a single R session (the first time they are used) and caches the variables for further use throughout the session:</p>
 <ul>
 <li>OANDA fxTrade API key</li>
 <li>OANDA fxTrade account associated with an fxTrade API key</li>
