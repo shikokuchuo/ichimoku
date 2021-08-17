@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.51.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.51.8</span>
       </span>
     </div>
 
@@ -189,7 +189,7 @@ to return strategies of the form 's1 x s2'</p></td>
     <p>Ichimoku objects for each strategy are returned as a list. The
     cumulative log returns for all strategies as well as the summaries for
     the 'n' top strategies are saved as attributes to the list. This
-    information may be retrieved by using look() on the returned list.</p>
+    information may be retrieved by using <code><a href='look.html'>look</a></code> on the returned list.</p>
 <p>Each individual ichimoku object may be accessed via its position in the
     list, e.g. [[1]] for the 1st item, or by using <code><a href='look.html'>look</a></code>
     specifying the parameter 'which'.</p>
@@ -358,7 +358,8 @@ to return strategies of the form 's1 x s2'</p></td>
 #&gt; Start                  2020-03-31 23:00:00
 #&gt; End                    2020-10-29         
 #&gt; Ticker                 "TKR"              
-#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='fu'><a href='look.html'>look</a></span><span class='op'>(</span><span class='va'>stratlist</span>, which <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
+#&gt; </div><div class='input'><span class='va'>strat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='look.html'>look</a></span><span class='op'>(</span><span class='va'>stratlist</span>, which <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>strat</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;                        [,1]               
 #&gt; Strategy               "senkouB &gt; tenkan" 
 #&gt; ---------------------  "----------"       

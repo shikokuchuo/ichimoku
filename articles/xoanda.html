@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.51.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.51.8</span>
       </span>
     </div>
 
@@ -112,13 +112,13 @@
 <a href="#about-oanda-fxtrade" class="anchor"></a>About OANDA fxTrade</h2>
 <p>ichimoku contains an interface to the OANDA fxTrade API, creating a binding for the R language.</p>
 <p>OANDA is an authoritative source of foreign exchange data used by governments and global corporations alike. The API can be used for retrieving historical and live streaming price data for major currencies, metals, commodities, government bonds and stock indices.</p>
-<p>It is considered a rich source of financial data with excellent availability, for instance daily OHLC pricing data for major forex pairs from the start of 2005, and data granularity ranging from 5 seconds to monthly. For the total list of over 120 covered instruments please refer to the <a href="#available-instruments">Available Instruments</a> section below.</p>
-<p>Please note that ‘OANDA’ and ‘fxTrade’ are trademarks owned by OANDA Corporation, an entity which is entirely unaffiliated with the ichimoku package.</p>
+<p>It is considered a rich source of financial data with excellent availability. As an example, daily OHLC pricing data is available for major forex pairs from the start of 2005, with data granularity ranging from 5 seconds to monthly. For the total list of over 120 covered instruments please refer to the <a href="#available-instruments">Available Instruments</a> section below.</p>
+<p>Please note that ‘OANDA’ and ‘fxTrade’ are trademarks owned by OANDA Corporation, an entity unaffiliated with the ichimoku package.</p>
 </div>
 <div id="registering-with-oanda" class="section level2">
 <h2 class="hasAnchor">
 <a href="#registering-with-oanda" class="anchor"></a>Registering with OANDA</h2>
-<p>The OANDA fxTrade API, as distinct to other OANDA data sources such as its rates for business, is based upon their retail and professional trading offering of the same name. As such, access to the API requires an fxTrade account with OANDA and agreement to their API terms of use.</p>
+<p>The OANDA fxTrade API, as distinct to other OANDA data sources, is based upon its retail and professional trading offering of the same name. As such, access to the API requires an fxTrade account with OANDA and agreement to their API terms of use.</p>
 <p>Registering for a ‘demo’ or ‘practice’ account is entirely free at the time of writing and provides full access to the API. For registering an account, the following URL may be used: <a href="https://www.oanda.com/forex-trading/" class="uri">https://www.oanda.com/forex-trading/</a>.</p>
 <p>After successful registration, a link can be found on your OANDA fxTrade account profile page ‘Manage API Access’ (My Account -&gt; My Services -&gt; Manage API Access). From there, a personal access token to use with the OANDA API can be generated, as well as revoked. This access token will enable all the OANDA functions in this package.</p>
 <p>Note: this package only contains functions for retrieving available instruments and price data. It does not contain any code which implements any trading capability whatsoever. Hence using your access token with this package should be safe even for live accounts. However, the access token can be used (outside of this package) for all operations on your account including placing orders and trades. It is recommended therefore, for maximum security, that you sign up for a demo/practice account and use the access token for that account even if you hold an existing live account with OANDA.</p>
@@ -137,7 +137,7 @@
 <h3 class="hasAnchor">
 <a href="#oanda" class="anchor"></a><code>oanda()</code>
 </h3>
-<p>Retrieve historical pricing data from the OANDA fxTrade API.</p>
+<p>Retrieve pricing data from the OANDA fxTrade API.</p>
 <p>The arguments to the function are phrased identically to that of the API itself where relevant:</p>
 <ul>
 <li>
@@ -188,8 +188,7 @@
 <ul>
 <li>Get a stream of Account Prices starting from when the request is made</li>
 <li>This pricing stream does not include every single price created for the Account, but instead will provide at most 4 prices per second (every 250 milliseconds) for each instrument being requested</li>
-<li>If more than one price is created for an instrument during the 250 millisecond window, only the price in effect at the end of the window is sent</li>
-<li>This means that during periods of rapid price movement, subscribers to this stream will not be sent every price</li>
+<li>If more than one price is created for an instrument during the 250 millisecond window, only the price in effect at the end of the window is sent. This means that during periods of rapid price movement, subscribers to this stream will not be sent every price</li>
 <li>Pricing windows for different connections to the price stream are not all aligned in the same way (i.e. they are not all aligned to the top of the second). This means that during periods of rapid price movement, different subscribers may observe different prices depending on their alignment</li>
 </ul>
 </div>
@@ -197,7 +196,7 @@
 <h3 class="hasAnchor">
 <a href="#oanda_chart" class="anchor"></a><code>oanda_chart()</code>
 </h3>
-<p>Create a live updating Ichimoku Kinko Hyo (cloud chart). The refresh rate can be set for the chart to be updated down to every second. A plot of the ichimoku chart for the price data requested is output to the graphical device at each refresh interval.</p>
+<p>Create an updating real-time Ichimoku cloud chart. The refresh rate can be set for the chart to be updated down to every second. A plot of the ichimoku chart for the price data requested is output to the graphical device at each refresh interval.</p>
 <p>The arguments are identical to <code><a href="../reference/oanda.html">oanda()</a></code> above with the addition of:</p>
 <ul>
 <li>
@@ -215,10 +214,9 @@
 <h3 class="hasAnchor">
 <a href="#oanda_studio" class="anchor"></a><code>oanda_studio()</code>
 </h3>
-<p>Create an interactive session in an R Shiny app for working with dynamically-generated Ichimoku Kinko Hyo (cloud charts).</p>
-<p>As all parameters may be set interactively in-app, the function can be launched as <code><a href="../reference/oanda_studio.html">oanda_studio()</a></code> without specifying any arguments. Otherwise, parameters may be set beforehand in the same way as <code><a href="../reference/oanda_chart.html">oanda_chart()</a></code>.</p>
-<p>The use of this function provides a live analysis environment where parameters may be set interactively as required. The infotip provides ready access to the underlying data in a convenient manner.</p>
-<p>The following additional parameters can be used to customise the behaviour of the Shiny app:</p>
+<p>Create an interactive session in an R Shiny app for working with real-time Ichimoku cloud charts. Provides a live analysis environment where parameters may be set interactively as required. The cursor infotip provides ready access to the data directly from the chart.</p>
+<p>As all parameters can be set interactively in-app, the function may simply be launched as <code><a href="../reference/oanda_studio.html">oanda_studio()</a></code> without specifying any arguments. Otherwise, parameters may be set beforehand in the same way as <code><a href="../reference/oanda_chart.html">oanda_chart()</a></code>.</p>
+<p>The following additional parameters can be used to customise the behaviour of the Shiny environment:</p>
 <ul>
 <li>
 <code>...</code> additional arguments passed to <code><a href="../reference/ichimoku.html">ichimoku()</a></code> for calculating the ichimoku cloud, <code><a href="../reference/autoplot.html">autoplot()</a></code> to set chart parameters, or the ‘options’ argument of <code><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html">shiny::shinyApp()</a></code>

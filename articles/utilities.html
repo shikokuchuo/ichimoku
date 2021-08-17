@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.51.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.51.8</span>
       </span>
     </div>
 
@@ -120,13 +120,17 @@
 <div id="tradingdays" class="section level4">
 <h4 class="hasAnchor">
 <a href="#tradingdays" class="anchor"></a>tradingDays()</h4>
-<p>Used to subset a vector of dates to trading days. Note, if the argument ‘holidays’ is passed to <code><a href="../reference/ichimoku.html">ichimoku()</a></code>, this is passed through to this function when calculating the dates that the future cloud will fall on.</p>
-<p>Takes 2 arguments:</p>
+<p>Used to subset a vector of dates to trading days. Note: if the argument ‘holidays’ (or ‘noholidays’) is passed to <code><a href="../reference/ichimoku.html">ichimoku()</a></code>, this is passed through to this function when calculating the dates for the future cloud.</p>
+<p>Takes the following arguments:</p>
 <ul>
 <li>
-<code>x</code> a vector of POSIXct date objects.</li>
+<code>x</code> a vector of POSIXct dates.</li>
 <li>
 <code>holidays</code> (optional) a vector, or function which outputs a vector, of dates defined as holidays. If not specified, New Year’s and Christmas day are defined as holidays by default.</li>
+<li>
+<code>...</code> not used.</li>
+<li>
+<code>noholidays</code> (optional) if set, bypasses the function logic and selects all dates in ‘x’.</li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html">as.POSIXct</a></span><span class="op">(</span><span class="st">"2020-01-01"</span><span class="op">)</span>, by <span class="op">=</span> <span class="st">"1 day"</span>, length.out <span class="op">=</span> <span class="fl">7</span><span class="op">)</span>
@@ -136,7 +140,9 @@
 <span class="fu"><a href="../reference/tradingDays.html">tradingDays</a></span><span class="op">(</span><span class="va">dates</span><span class="op">)</span>
 <span class="co">#&gt; [1] FALSE  TRUE  TRUE FALSE FALSE  TRUE  TRUE</span>
 <span class="fu"><a href="../reference/tradingDays.html">tradingDays</a></span><span class="op">(</span><span class="va">dates</span>, holidays <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2020-01-01"</span>, <span class="st">"2020-01-02"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] FALSE FALSE  TRUE FALSE FALSE  TRUE  TRUE</span></code></pre></div>
+<span class="co">#&gt; [1] FALSE FALSE  TRUE FALSE FALSE  TRUE  TRUE</span>
+<span class="fu"><a href="../reference/tradingDays.html">tradingDays</a></span><span class="op">(</span><span class="va">dates</span>, noholidays <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="co">#&gt; [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE</span></code></pre></div>
 </div>
 <div id="look" class="section level4">
 <h4 class="hasAnchor">
@@ -208,8 +214,37 @@
 
 <span class="co"># Extract the ichimoku object which is the second element of 'stratlist':</span>
 <span class="va">strat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/look.html">look</a></span><span class="op">(</span><span class="va">stratlist</span>, which <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
-<span class="fu"><a href="../reference/is.ichimoku.html">is.ichimoku</a></span><span class="op">(</span><span class="va">strat</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="fu"><a href="../reference/hasStrat.html">hasStrat</a></span><span class="op">(</span><span class="va">strat</span><span class="op">)</span>
-<span class="co">#&gt; [1] TRUE</span></code></pre></div>
+<span class="co"># Inspect ichimoku object:</span>
+<span class="fu"><a href="../reference/look.html">look</a></span><span class="op">(</span><span class="va">strat</span><span class="op">)</span>
+<span class="co">#&gt; $periods</span>
+<span class="co">#&gt; [1]  9 26 52</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $periodicity</span>
+<span class="co">#&gt; [1] 86400</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $ticker</span>
+<span class="co">#&gt; [1] "TKR"</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $strat</span>
+<span class="co">#&gt;                        [,1]               </span>
+<span class="co">#&gt; Strategy               "cloudB &gt; tenkan"  </span>
+<span class="co">#&gt; ---------------------  "----------"       </span>
+<span class="co">#&gt; Strategy cuml return % 16.08              </span>
+<span class="co">#&gt; Per period mean ret %  0.0838             </span>
+<span class="co">#&gt; Periods in market      51                 </span>
+<span class="co">#&gt; Total trades           3                  </span>
+<span class="co">#&gt; Average trade length   17                 </span>
+<span class="co">#&gt; Trade success %        100                </span>
+<span class="co">#&gt; Worst trade ret %      3.16               </span>
+<span class="co">#&gt; ---------------------  "----------"       </span>
+<span class="co">#&gt; Benchmark cuml ret %   5.53               </span>
+<span class="co">#&gt; Per period mean ret %  0.0302             </span>
+<span class="co">#&gt; Periods in market      178                </span>
+<span class="co">#&gt; ---------------------  "----------"       </span>
+<span class="co">#&gt; Direction              "long"             </span>
+<span class="co">#&gt; Start                  2020-03-31 23:00:00</span>
+<span class="co">#&gt; End                    2020-10-29         </span>
+<span class="co">#&gt; Ticker                 "TKR"</span></code></pre></div>
 </div>
 </div>
 <div id="performant-dataframe-constructors" class="section level3">
@@ -219,10 +254,12 @@
 <h4 class="hasAnchor">
 <a href="#xts_df" class="anchor"></a>xts_df()</h4>
 <p>Convert an ‘xts’ object to ‘data.frame’. This function can be an order of magnitude faster than <code>as.data.frame</code> for an ‘xts’ object.</p>
-<p>Takes a single argument:</p>
+<p>Takes the following arguments:</p>
 <ul>
 <li>
 <code>x</code> the ‘xts’ object to convert to ‘data.frame’.</li>
+<li>
+<code>keep.attrs</code> (optional) if set to TRUE, will preserve any custom attributes set on the original object.</li>
 </ul>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">sample_ohlc_data</span><span class="op">)</span>
@@ -241,16 +278,39 @@
 <span class="co">#&gt;  $ senkouB: num  NA NA NA NA NA NA NA NA NA NA ...</span>
 <span class="co">#&gt;  $ chikou : num  123 123 123 124 124 ...</span>
 <span class="co">#&gt;  $ cloudT : num  NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;  $ cloudB : num  NA NA NA NA NA NA NA NA NA NA ...</span></code></pre></div>
+<span class="co">#&gt;  $ cloudB : num  NA NA NA NA NA NA NA NA NA NA ...</span>
+
+<span class="co"># Preserving custom attributes:</span>
+<span class="va">df2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/xts_df.html">xts_df</a></span><span class="op">(</span><span class="va">cloud</span>, keep.attrs <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">df2</span><span class="op">)</span>
+<span class="co">#&gt; 'data.frame':    281 obs. of  13 variables:</span>
+<span class="co">#&gt;  $ index  : POSIXct, format: "2020-01-02 00:00:00" "2020-01-03 00:00:00" ...</span>
+<span class="co">#&gt;  $ open   : num  123 123 123 123 124 ...</span>
+<span class="co">#&gt;  $ high   : num  123 123 123 124 125 ...</span>
+<span class="co">#&gt;  $ low    : num  122 123 122 123 124 ...</span>
+<span class="co">#&gt;  $ close  : num  123 123 123 124 125 ...</span>
+<span class="co">#&gt;  $ cd     : num  -1 1 1 1 1 1 -1 0 -1 -1 ...</span>
+<span class="co">#&gt;  $ tenkan : num  NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ kijun  : num  NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ senkouA: num  NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ senkouB: num  NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ chikou : num  123 123 123 124 124 ...</span>
+<span class="co">#&gt;  $ cloudT : num  NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ cloudB : num  NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  - attr(*, "periods")= int [1:3] 9 26 52</span>
+<span class="co">#&gt;  - attr(*, "periodicity")= num 86400</span>
+<span class="co">#&gt;  - attr(*, "ticker")= chr "sample_ohlc_data"</span></code></pre></div>
 </div>
 <div id="matrix_df" class="section level4">
 <h4 class="hasAnchor">
 <a href="#matrix_df" class="anchor"></a>matrix_df()</h4>
-<p>Convert a matrix to ‘data.frame’. This function is slightly faster than <code><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame()</a></code> for a matrix.</p>
-<p>Takes a single argument:</p>
+<p>Convert a matrix to ‘data.frame’. This function can be twice as fast as <code><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame()</a></code> for a matrix.</p>
+<p>Takes the following arguments:</p>
 <ul>
 <li>
 <code>x</code> the matrix to convert to ‘data.frame’.</li>
+<li>
+<code>keep.attrs</code> (optional) if set to TRUE, will preserve any custom attributes set on the original object.</li>
 </ul>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">sample_ohlc_data</span><span class="op">)</span>

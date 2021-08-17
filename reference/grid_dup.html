@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.51.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.51.8</span>
       </span>
     </div>
 
@@ -151,7 +151,7 @@
     variabes than <code><a href='https://rdrr.io/r/utils/combn.html'>utils::combn()</a></code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>grid_dup</span><span class='op'>(</span><span class='va'>n</span>, omit.id <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>grid_dup</span><span class='op'>(</span><span class='va'>n</span>, <span class='va'>omit.id</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -162,10 +162,10 @@
     </tr>
     <tr>
       <th>omit.id</th>
-      <td><p>[default FALSE] to not select the elements where the 2 items
-are identical. Set to TRUE to also select these. The output of expand.grid,
-subset to remove duplicates with 'omit.id' set to TRUE would be the
-equivalent of <code><a href='https://rdrr.io/r/utils/combn.html'>utils::combn(n, 2)</a></code>.</p></td>
+      <td><p>(optional) set to TRUE to also select the elements where the 2
+items are identical. The output of expand.grid, subset to remove
+duplicates with 'omit.id' set to TRUE would be the equivalent of
+<code><a href='https://rdrr.io/r/utils/combn.html'>utils::combn(n, 2)</a></code>.</p></td>
     </tr>
     </table>
 
