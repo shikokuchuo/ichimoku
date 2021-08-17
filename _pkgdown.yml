@@ -1,7 +1,10 @@
 url: https://shikokuchuo.net/ichimoku
+template:
+  params:
+    bootswatch: simplex
 navbar:
   right:
-  - icon: fa-github fa-lg
+  - icon: fa-github
     href: https://github.com/shikokuchuo/ichimoku/
-  - icon: fa-cube fa-lg
+  - icon: fa-cube
     href: https://shikokuchuo.net/

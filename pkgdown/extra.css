@@ -1,0 +1,21 @@
+/* shikokuchuo{net} custom css for pkgdown bootswatch simplex theme */
+
+body {
+  color:#000000
+}
+
+.navbar-default .navbar-link {
+ color:#000000
+}
+
+.navbar-default .navbar-nav>li>a {
+ color:#000000;
+}
+
+.dropdown-menu>li>a {
+ color:#000000
+}
+
+footer {
+  color: #000000
+}

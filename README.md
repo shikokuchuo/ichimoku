@@ -64,7 +64,7 @@ cloud <- ichimoku(TKR)
 plot(cloud, window = "2020-04/")
 ```
 
-<img src="man/figures/README-ichimoku-1.png" width="672" height="480" />
+<img src="man/figures/README-ichimoku-1.png" />
 
 `autostrat()` to automatically evaluate and rank top-performing
 strategies:
