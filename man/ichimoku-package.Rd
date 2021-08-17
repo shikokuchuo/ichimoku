@@ -56,14 +56,14 @@ Strategies & ML
 }
 
 \references{
-Sasaki, H. 佐々木 英信 (1996), \emph{一目均衡表の研究
-    [ichimoku kinkouhyou no kenkyuu]}. Tokyo, Japan: Toushi Radar.
+Sasaki, H. (1996), \emph{ichimoku kinkouhyou no kenkyuu}. Tokyo,
+    Japan: Toushi Radar.
 
     OANDA' and 'fxTrade' are trademarks owned by OANDA Corporation, an entity
     unaffiliated with the ichimoku package.
 
     Gao, C. (2021), \emph{ichimoku: Visualization and Tools for Ichimoku
-    Kinko Hyo Strategies}. R package version 0.3.51,
+    Kinko Hyo Strategies}. R package version 1.0.0,
     \url{https://CRAN.R-project.org/package=ichimoku}.
 }
 \author{

@@ -1,54 +1,40 @@
-# ichimoku 0.3.51.8
+# ichimoku 1.0.0
 
-#### New features:
-
-* `archive()` replaces `ichimoku_write()` and `ichimoku_read()` by merging their functionality. Also uses sha256 hashing to ensure data integrity of archives - adds (optional) dependency on `openssl` package.
-* Re-export functions for working with ichimoku objects: `index()`, `coredata()` from 'zoo', and `xts()` from the 'xts' package.
-
-#### Updates:
-
-* `look()` can now inspect any R object.
-* `tradingDays()` gets a 'noholidays' argument for use in markets that trade 24/7 with no non-trading days.
-* `xts_df()` and `matrix_df()` dataframe constructors gain a 'preserve.attrs' argument. If set to TRUE, the returned dataframe will retain the custom attributes of the original objects.
-* Charts of daily or lower frequency now have prettier and more usefully-aligned breaks using custom algorithm.
-* Improved handling of timezones. OANDA data and charts will now show correctly in the user timezone.
-* Fixed cases of the timezone of restored objects from Arrow archives not matching the original.
-* Fixed bug which caused `oanda()` not to return weekly data in certain cases.
-* Fixed bug in trade success statistics for short strategies returned by `strat()`.
-* Linking to 'cpp11' package, removed vendored code.
-* Added 'stats' R core package dependency for improved performance in strat functions.
-* The `grid_dup()` function is no longer exported to keep the package tidy.
-* Documentation refresh.
-
-# ichimoku 0.3.51
-
-#### *First ichimoku object specification release*
+#### ichimoku object specification release:
 
 * ichimoku objects created in versions prior to 0.3.51 will no longer work correctly with newer versions of the package.
 * Please upgrade to the latest package version and run `ichimoku()` on previously-created objects to re-create them according to the new specification (data is preserved)
 
-# ichimoku 0.3.5
-
 #### New features:
 
-* New `ichimoku_write()` and `ichimoku_read()` functions allow for archiving of ichimoku objects to files stored in the Apache Arrow IPC file format.
+* New `archive()` function allows for archiving of ichimoku objects to files stored in the Apache Arrow IPC file format. Also uses sha256 hashing to ensure data integrity of archives - adds optional dependency on `openssl` package.
 * `ichimoku()` gains a new S3 method for the `ArrowTabular` class for working with Arrow Tables.
 * `oanda()` gains the capability to download over 5000 data periods in multiple (rate-limited) requests when both the 'from' and 'to' arguments are specified.
+* `look()` can now inspect any R object.
+* `tradingDays()` gets a 'noholidays' argument for use in markets that trade 24/7 with no non-trading days.
+* `iplot()` and `oanda_studio()` now use 'bslib' (a Shiny dependency) to enable theming of the entire UI rather than just the chart. Infotip candle direction symbols updated for greater clarity.
+* `xts_df()` and `matrix_df()` dataframe constructors gain a 'keep.attrs' argument. If set to TRUE, the returned dataframe will retain the custom attributes of the original object.
+* Re-export functions for working with ichimoku objects: `index()`, `coredata()` from 'zoo', and `xts()` from the 'xts' package.
 
 #### Updates:
 
 * Implemented caching of certain OANDA variables so they are retrieved once and then used throughout a session.
-* `iplot()` and `oanda_studio()` now use 'bslib' (a Shiny dependency) to enable theming of the entire UI rather than just the chart. Infotip candle direction symbols updated for greater clarity.
+* Charts of daily or lower frequency now have prettier and more usefully-aligned breaks using custom algorithm.
+* Improved handling of timezones. OANDA data and charts will now show correctly in the user timezone.
 * `oanda()` arguments 'from' and 'to' can now take any date-time format convertible to POSIXct.
 * `oanda_studio()` subsets the plot window so as to always show a full cloud, consistent with the behaviour of `oanda_chart()`.
 * `oanda_chart()` and `oanda_studio()` add explicit support for the 'periods' argument passed to `ichimoku()`.
 * `oanda_chart()` now passes on additional parameters to `autoplot()`.
 * `ichimoku()` now enforces data types on the price data for higher certainty of success, and has more robust handling of matrices and 'data.frame' compatible formats such as 'tibble'.
-* Package dependency 'httr' switched to 'curl' providing performance gains in the OANDA fxTrade API interface.
-* ichimoku now employs a vendored version of 'cpp11' 0.3.1 headers which allows for enhanced stability and faster package compilation. Removed dependency on the 'Rcpp' package.
-* The following functions are no longer exported to keep the package tidy: `maxOver()`, `minOver()`, `oanda_accounts()`.
+* Fixed bug which caused `oanda()` not to return weekly data in certain cases.
+* Fixed bug in trade success statistics for short strategies returned by `strat()`.
+* The following functions are no longer exported to keep the package tidy: `grid_dup()`, `maxOver()`, `minOver()`, `oanda_accounts()`.
 * `sample_ohlc_data` slightly lengthened to better demonstrate strat features.
+* Added 'stats' R core package dependency for improved performance in strat functions.
+* Package now links to 'cpp11' headers allowing for faster compile times. Removed dependency on the 'Rcpp' package.
+* Package dependency 'httr' switched to 'curl' providing performance gains in the OANDA fxTrade API interface.
 * Miscellaneous performance optimisations.
+* Documentation refresh.
 
 # ichimoku 0.3.0
 

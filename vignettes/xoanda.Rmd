@@ -63,7 +63,7 @@ The arguments to the function are phrased identically to that of the API itself 
 - `server` [default "practice"] select either the "practice" or "live" server depending on the account type held with OANDA
 - `apikey` (optional) string containing the OANDA fxTrade API key (personal access token). This argument is designed for specifying a function that returns such a string rather than the string itself, which could be potentially unsecure. This allows other packages that provide secure storage of secrets to be used if preferred over 'keyring'
 
-Note: if both `from` and `to` are specified and the request would result in over 5000 periods being returned, the function automatically prompts the user if multiple requests should be submitted, with a default choice of "no". If "y" or "yes", the data will be downloaded with rate limiting in place as per API best practices, and merged together into a single dataframe.
+Note: if both `from` and `to` are specified and the request would result in over 5000 periods being returned, the function automatically prompts the user to confirm if multiple requests should be submitted. Unless the user response is "n" or "no", the data will proceed to be downloaded with rate limiting in place as per API best practices, and merged together into a single dataframe.
 
 ```{r oanda, eval=FALSE}
 library(ichimoku)
@@ -242,6 +242,6 @@ If for any reason these become invalid or outdated, please restart your R sessio
 
 OANDA fxTrade API developer website: <https://developer.oanda.com/>.
 
-Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 0.3.51, <https://CRAN.R-project.org/package=ichimoku>.
+Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.0.0, <https://CRAN.R-project.org/package=ichimoku>.
 
 ---

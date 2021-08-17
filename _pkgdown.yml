@@ -3,5 +3,5 @@ navbar:
   right:
   - icon: fa-github fa-lg
     href: https://github.com/shikokuchuo/ichimoku/
-  - icon: fa-cube
+  - icon: fa-cube fa-lg
     href: https://shikokuchuo.net/

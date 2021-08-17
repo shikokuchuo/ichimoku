@@ -105,8 +105,8 @@ oanda <- function(instrument,
       first <- bounds[1:requests]
       second <- bounds[2:(requests + 1)]
       continue <- readline(prompt = paste0("Max of 5000 data periods per request. ",
-                                           requests, " requests will be made. Continue? [y/N] "))
-      if (!continue %in% c("y", "Y", "yes", "YES")) stop("Request cancelled by user", call. = FALSE)
+                                           requests, " requests will be made. Continue? [Y/n] "))
+      if (continue %in% c("n", "N", "no", "NO")) stop("Request cancelled by user", call. = FALSE)
       message("Request started with rate limiting in place >>>")
       list <- lapply(1:requests, function(i) {
         data <- getPrices(instrument = instrument, granularity = granularity,
