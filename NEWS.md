@@ -1,4 +1,4 @@
-# ichimoku 0.3.51.7
+# ichimoku 0.3.51.8
 
 #### New features:
 
@@ -9,7 +9,7 @@
 
 * `look()` can now inspect any R object.
 * `tradingDays()` gets a 'noholidays' argument for use in markets that trade 24/7 with no non-trading days.
-* `xts_df()` and `matrix_df()` dataframe constructors gain a 'preserve.attrs' argument. If set to TRUE, the returned dataframe will retain the additional attributes of the original objects.
+* `xts_df()` and `matrix_df()` dataframe constructors gain a 'preserve.attrs' argument. If set to TRUE, the returned dataframe will retain the custom attributes of the original objects.
 * Charts of daily or lower frequency now have prettier and more usefully-aligned breaks using custom algorithm.
 * Improved handling of timezones. OANDA data and charts will now show correctly in the user timezone.
 * Fixed cases of the timezone of restored objects from Arrow archives not matching the original.
@@ -18,6 +18,7 @@
 * Linking to 'cpp11' package, removed vendored code.
 * Added 'stats' R core package dependency for improved performance in strat functions.
 * The `grid_dup()` function is no longer exported to keep the package tidy.
+* Documentation refresh.
 
 # ichimoku 0.3.51
 

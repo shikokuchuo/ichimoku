@@ -67,6 +67,6 @@ The date-time index corresponds to when the indicator condition is
 \examples{
 cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 grid <- mlgrid(cloud, y = "ret", dir = "short", type = "numeric")
-look(grid)
+str(grid)
 
 }

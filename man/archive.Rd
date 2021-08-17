@@ -22,25 +22,32 @@ For read operations: the ichimoku object originally archived.
     as a side effect.
 }
 \description{
-Used to read and write ichimoku objects to/from archival storage in the
-    Apache Arrow IPC file format.
+Read and write ichimoku objects to/from archival storage in the Apache Arrow
+    IPC file format.
 }
 \details{
-For read operations, please specify only 'filename'. 'filename' is
-    read and the return value may be assigned to an object.
+For read operations: specify only 'filename'. 'filename' is read and
+    the return value may be assigned to an object. A confirmation message is
+    issued if the file read operation has been successful.
 
-    For write operations: please specify both 'object' and 'filename'.
-    'object' will be written to 'filename'. Confirmation is printed to the
-    console if the file write operation has been successful.
+    For write operations: specify both 'object' and 'filename'. 'object' will
+    be written to 'filename'. A confirmation message is issued if the file
+    write operation has been successful.
+
+    Note: this function requires the 'arrow' package to be installed.
 }
-\section{Further Details}{
+\section{Data Validation}{
 
-
-    This function requires the 'arrow' package to be installed.
 
     If the 'openssl' package is available, a sha256 hash of the original
     object is written to the archive. This allows the data integrity of the
     restored object to be verified when the archive is read back.
+
+    For write operations: confirmation of the sha256 hash is displayed if
+    this has been successfully written to file.
+
+    For read operations: a 'data verified' message is issued if a correct
+    sha256 hash is found in the data file.
 }
 
 \examples{

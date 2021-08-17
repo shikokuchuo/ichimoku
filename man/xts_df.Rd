@@ -4,12 +4,12 @@
 \alias{xts_df}
 \title{Convert xts to data.frame}
 \usage{
-xts_df(x, preserve.attrs)
+xts_df(x, keep.attrs)
 }
 \arguments{
 \item{x}{an 'xts' object.}
 
-\item{preserve.attrs}{(optional) if set to TRUE, will preserve any additional
+\item{keep.attrs}{(optional) if set to TRUE, will preserve any custom
 attributes set on the original object.}
 }
 \value{
@@ -24,5 +24,8 @@ A performant 'xts' to 'data.frame' constructor with no data validation or
 cloud <- ichimoku(sample_ohlc_data)
 df <- xts_df(cloud)
 str(df)
+
+df2 <- xts_df(cloud, keep.attrs = TRUE)
+str(df2)
 
 }

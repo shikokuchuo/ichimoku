@@ -231,7 +231,7 @@ In a live analysis environment, as opposed to creating charts for reports, it ca
 A plot with default parameters is shown above, but the plot functions contain built-in customisations to allow for most envisioned use cases. The example below demonstrates the arguments that can be supplied to customise the plot.
 
 ```{r plot2}
-plot(cloud, window = "2020-05-01/2020-11-01", ticker = "TKR Co.", theme = "dark")
+plot(cloud, window = "2020-05-01/2020-11-02", ticker = "TKR Co.", message = "一目均衡表", theme = "dark")
 ```
 
 The following arguments for customisation are shared across `plot()` and `iplot()`:
@@ -257,12 +257,15 @@ The following arguments for customisation are shared across `plot()` and `iplot(
 After completing an analysis, the resulting objects can be stored directly to disk. The function `archive()` provides seamless translation between ichimoku objects in an R session with binary files stored in the Apache Arrow IPC file format.
 
 #### Writing
+
 `archive()` for write operations will take 2 arguments: the ichimoku object to be written, and the file path/name of the file to be stored. A confirmation is printed to the console that the file has been written.
 
 #### Reading
+
 `archive()` for read operations takes a single argument: the file path/name of the file to be read. The return value of the function can be assigned to an object. A confirmation is printed to the console once the file has been read.
 
 #### Data Integrity Validation
+
 Data integrity validation is performed by the cryptographic-grade sha256 hashing algorithm from the 'openssl' package. If 'openssl' is not available, the archive function still works in all respects but without the validation capability.
 
 When an archive is written, a representation of the ichimoku object is hashed and stored in the archive. The sha256 hash value is printed to the console as confirmation.
@@ -270,6 +273,7 @@ When an archive is written, a representation of the ichimoku object is hashed an
 When an archive is read back, the sha256 hash of the restored object is checked against the hash of the original stored in the archive. If identical, a 'data verified' message is printed to the console along with the matching sha256 hash.
 
 #### About Apache Arrow
+
 Apache Arrow provides the backend to the archive functions and requires the 'arrow' package to be installed. Apache Arrow is a high-performance, standardised, and language-independent columnar memory format. This means that the Arrow files created by ichimoku can equally be accessed by programs utilising Arrow bindings in all major languages including C, C++, Java, Python, etc.
 
 Note: the attributes of the ichimoku object are stored in the 'r' field of the Arrow schema metadata. This allows archived objects to be reconstructed faithfully, however this data is typically only read by R and ignored by other clients.

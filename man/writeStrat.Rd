@@ -23,6 +23,6 @@ Internal function used by ichimoku to write strategy summaries to ichimoku
 }
 \details{
 The stategy summary may subsequently be accessed by the summary()
-    function or via look().
+    function or via \code{\link{look}}.
 }
 \keyword{internal}

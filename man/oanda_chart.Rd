@@ -2,7 +2,7 @@
 % Please edit documentation in R/oanda.R
 \name{oanda_chart}
 \alias{oanda_chart}
-\title{Live Ichimoku Cloud Charts from OANDA Data}
+\title{OANDA Real-time Cloud Charts}
 \usage{
 oanda_chart(
   instrument,
@@ -64,7 +64,7 @@ Does not return a value, however a plot of the ichimoku chart for the
     interval as a side effect.
 }
 \description{
-Live updating Ichimoku Kinko Hyo cloud charts for major currencies, metals,
+Plot real-time Ichimoku Kinko Hyo cloud charts for major currencies, metals,
     commodities, government bonds and stock indices using OANDA fxTrade API
     data.
 }

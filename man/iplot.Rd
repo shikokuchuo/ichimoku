@@ -2,7 +2,7 @@
 % Please edit documentation in R/iplot.R
 \name{iplot}
 \alias{iplot}
-\title{iplot Interactive Ichimoku Cloud Plot}
+\title{Interactive Ichimoku Cloud Plot}
 \usage{
 iplot(
   x,

@@ -4,12 +4,12 @@
 \alias{matrix_df}
 \title{Convert matrix to data.frame}
 \usage{
-matrix_df(x, preserve.attrs)
+matrix_df(x, keep.attrs)
 }
 \arguments{
 \item{x}{a matrix.}
 
-\item{preserve.attrs}{(optional) if set to TRUE, will preserve any additional
+\item{keep.attrs}{(optional) if set to TRUE, will preserve any custom
 attributes set on the original object.}
 }
 \value{

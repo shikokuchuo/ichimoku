@@ -2,7 +2,7 @@ test_that("archive functions ok", {
   skip_if_not_installed("arrow")
   skip_if_not_installed("openssl")
   cloud <- ichimoku(sample_ohlc_data)
-  df <- xts_df(cloud, preserve.attrs = TRUE)
+  df <- xts_df(cloud, keep.attrs = TRUE)
   archive(cloud, filename <- tempfile())
   restored <- archive(filename)
   unlink(filename)

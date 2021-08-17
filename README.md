@@ -61,13 +61,10 @@ Simply `ichimoku()` and `plot()`:
 
 ``` r
 cloud <- ichimoku(TKR)
-```
-
-``` r
 plot(cloud, window = "2020-04/")
 ```
 
-![](man/figures/README-plot-1.png)
+<img src="man/figures/README-ichimoku-1.png" width="672" height="480" />
 
 `autostrat()` to automatically evaluate and rank top-performing
 strategies:
@@ -104,7 +101,7 @@ autostrat(cloud, n = 3)
 
 -   [`archive()`](https://shikokuchuo.net/ichimoku/reference/archive.html) -
     for reading and writing ichimoku objects to/from Apache Arrow
-    archives.
+    storage.
 
 -   [`oanda()`](https://shikokuchuo.net/ichimoku/reference/oanda.html) -
     to retrieve price data from the OANDA fxTrade API.
@@ -121,7 +118,7 @@ autostrat(cloud, n = 3)
     to plot an interactive cloud chart from an ichimoku object.
 
 -   [`oanda_chart()`](https://shikokuchuo.net/ichimoku/reference/oanda_chart.html) -
-    to create live updating ichimoku cloud charts using OANDA data.
+    to plot real-time ichimoku cloud charts using OANDA data.
 
 -   [`oanda_studio()`](https://shikokuchuo.net/ichimoku/reference/oanda_studio.html) -
     a complete live analysis environment using OANDA data implemented in
@@ -130,8 +127,8 @@ autostrat(cloud, n = 3)
 #### Strategies & ML
 
 -   [`strat()`](https://shikokuchuo.net/ichimoku/reference/strat.html) -
-    to augment an ichimoku object with a strategy, including complex
-    combined and asymmetric strategies.
+    to augment an ichimoku object with a strategy, including combined
+    and asymmetric complex strategies.
 
 -   [`stratcombine()`](https://shikokuchuo.net/ichimoku/reference/stratcombine.html) -
     to create custom combined strategies.

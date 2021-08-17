@@ -59,6 +59,8 @@ This function is an S3 method for the generic function plot() for
 cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 
 plot(cloud)
-plot(cloud, window = "2020-05-15/2020-10-30", theme = "mono")
+plot(cloud, window = "2020-05-01/2020-11-02", theme = "dark")
+plot(cloud, window = "2020-04/", ticker = "TKR Co.", theme = "solarized")
+plot(cloud, window = "/2020-11-05", message = "Sample Price Data", theme = "mono")
 
 }

@@ -2,8 +2,8 @@
 
 #' Read/write ichimoku objects <> Arrow Archive
 #'
-#' Used to read and write ichimoku objects to/from archival storage in the
-#'     Apache Arrow IPC file format.
+#' Read and write ichimoku objects to/from archival storage in the Apache Arrow
+#'     IPC file format.
 #'
 #' @param ... unnamed arguments will be parsed as 'filename' if there is only
 #'     one argument, 'object' and 'filename' if there are two arguments.
@@ -16,20 +16,27 @@
 #'     For write operations: invisible NULL. 'object' is written to 'filename'
 #'     as a side effect.
 #'
-#' @details For read operations, please specify only 'filename'. 'filename' is
-#'     read and the return value may be assigned to an object.
+#' @details For read operations: specify only 'filename'. 'filename' is read and
+#'     the return value may be assigned to an object. A confirmation message is
+#'     issued if the file read operation has been successful.
 #'
-#'     For write operations: please specify both 'object' and 'filename'.
-#'     'object' will be written to 'filename'. Confirmation is printed to the
-#'     console if the file write operation has been successful.
+#'     For write operations: specify both 'object' and 'filename'. 'object' will
+#'     be written to 'filename'. A confirmation message is issued if the file
+#'     write operation has been successful.
 #'
-#' @section Further Details:
+#'     Note: this function requires the 'arrow' package to be installed.
 #'
-#'     This function requires the 'arrow' package to be installed.
+#' @section Data Validation:
 #'
 #'     If the 'openssl' package is available, a sha256 hash of the original
 #'     object is written to the archive. This allows the data integrity of the
 #'     restored object to be verified when the archive is read back.
+#'
+#'     For write operations: confirmation of the sha256 hash is displayed if
+#'     this has been successfully written to file.
+#'
+#'     For read operations: a 'data verified' message is issued if a correct
+#'     sha256 hash is found in the data file.
 #'
 #' @examples
 #' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
@@ -132,7 +139,7 @@ writeArchive <- function(object, filename) {
     sha256 <- NA
   }
 
-  df <- structure(xts_df(object, preserve.attrs = TRUE), ichimoku351 = sha256)
+  df <- structure(xts_df(object, keep.attrs = TRUE), ichimoku351 = sha256)
 
   arrow::write_feather(df, filename)
   message("Archive written to '", filename, "'\nsha256: ", sha256)

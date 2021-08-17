@@ -303,8 +303,9 @@ NULL
 #' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 #'
 #' autoplot(cloud)
-#' autoplot(cloud, window = "2020-05-15/2020-10-30", theme = "dark")
-#' autoplot(cloud, ticker = "TKR Co.", theme = "solarized")
+#' autoplot(cloud, window = "2020-05-01/2020-11-02", theme = "dark")
+#' autoplot(cloud, window = "2020-04/", ticker = "TKR Co.", theme = "solarized")
+#' autoplot(cloud, window = "/2020-11-05", message = "Sample Price Data", theme = "mono")
 #'
 #' @rdname autoplot.ichimoku
 #' @method autoplot ichimoku
@@ -430,7 +431,9 @@ autoplot.ichimoku <- function(object,
 #' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 #'
 #' plot(cloud)
-#' plot(cloud, window = "2020-05-15/2020-10-30", theme = "mono")
+#' plot(cloud, window = "2020-05-01/2020-11-02", theme = "dark")
+#' plot(cloud, window = "2020-04/", ticker = "TKR Co.", theme = "solarized")
+#' plot(cloud, window = "/2020-11-05", message = "Sample Price Data", theme = "mono")
 #'
 #' @method plot ichimoku
 #' @export

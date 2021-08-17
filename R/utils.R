@@ -8,7 +8,7 @@
 #' @param holidays (optional) a vector, or function which outputs a
 #'     vector, of dates defined as holidays.
 #' @param ... other arguments not used by this function.
-#' @param noholidays (optional) if set, bypasses the function logic and allows
+#' @param noholidays (optional) if set, bypasses the function logic and selects
 #'     all dates in 'x'.
 #'
 #' @return A vector of logical values: TRUE if the corresponding element of 'x'
@@ -52,18 +52,18 @@ tradingDays <- function(x, holidays, ..., noholidays) {
 #'     variabes than \code{utils::combn()}.
 #'
 #' @param n the length of vector passed to \code{expand.grid()}.
-#' @param omit.id [default FALSE] to not select the elements where the 2 items
-#'     are identical. Set to TRUE to also select these. The output of expand.grid,
-#'     subset to remove duplicates with 'omit.id' set to TRUE would be the
-#'     equivalent of \code{utils::combn(n, 2)}.
+#' @param omit.id (optional) set to TRUE to also select the elements where the 2
+#'     items are identical. The output of expand.grid, subset to remove
+#'     duplicates with 'omit.id' set to TRUE would be the equivalent of
+#'     \code{utils::combn(n, 2)}.
 #'
 #' @return A numeric vector.
 #'
 #' @keywords internal
 #'
-grid_dup <- function(n, omit.id = FALSE) {
+grid_dup <- function(n, omit.id) {
   vec <- do.call(c, lapply(seq_len(n - 1), function(x) x * n + 1:x))
-  if (isTRUE(omit.id)) {
+  if (!missing(omit.id) && isTRUE(omit.id)) {
     vec <- c(vec, do.call(c, lapply(seq_len(n), function(x) x + n * (x - 1))))
   }
   vec
@@ -102,7 +102,7 @@ df_trim <- function(x) {
 #'     checking.
 #'
 #' @param x an 'xts' object.
-#' @param preserve.attrs (optional) if set to TRUE, will preserve any additional
+#' @param keep.attrs (optional) if set to TRUE, will preserve any custom
 #'     attributes set on the original object.
 #'
 #' @return A 'data.frame' object. The 'xts' index is preserved as the first
@@ -113,16 +113,19 @@ df_trim <- function(x) {
 #' df <- xts_df(cloud)
 #' str(df)
 #'
+#' df2 <- xts_df(cloud, keep.attrs = TRUE)
+#' str(df2)
+#'
 #' @export
 #'
-xts_df <- function(x, preserve.attrs) {
+xts_df <- function(x, keep.attrs) {
   core <- coredata(x)
   dims <- dim(core)
   df <- structure(c(list(index(x)), lapply(seq_len(dims[2L]), function(i) core[, i])),
                   names = c("index", dimnames(core)[[2L]]),
                   class = "data.frame",
                   row.names = seq_len(dims[1L]))
-  if (!missing(preserve.attrs) && isTRUE(preserve.attrs)) {
+  if (!missing(keep.attrs) && isTRUE(keep.attrs)) {
     lk <- look(x)
     attrs <- attributes(df)
     attributes(df) <- c(attrs, lk)
@@ -136,7 +139,7 @@ xts_df <- function(x, preserve.attrs) {
 #'     checking.
 #'
 #' @param x a matrix.
-#' @param preserve.attrs (optional) if set to TRUE, will preserve any additional
+#' @param keep.attrs (optional) if set to TRUE, will preserve any custom
 #'     attributes set on the original object.
 #'
 #' @return A 'data.frame' object. If the matrix has row names, these are retained
@@ -152,7 +155,7 @@ xts_df <- function(x, preserve.attrs) {
 #'
 #' @export
 #'
-matrix_df <- function(x, preserve.attrs) {
+matrix_df <- function(x, keep.attrs) {
   dnames <- dimnames(x)
   mat <- unname(x)
   dims <- dim(mat)
@@ -160,7 +163,7 @@ matrix_df <- function(x, preserve.attrs) {
             names = dnames[[2L]],
             class = "data.frame",
             row.names = if (is.null(dnames[[1L]])) seq_len(dims[1L]) else dnames[[1L]])
-  if (!missing(preserve.attrs) && isTRUE(preserve.attrs)) {
+  if (!missing(keep.attrs) && isTRUE(keep.attrs)) {
     lk <- look(x)
     attrs <- attributes(df)
     attributes(df) <- c(attrs, lk)
@@ -226,6 +229,8 @@ df_merge <- function(...) {
 #' @return A data.frame of the existing data appended with the new data. If the
 #'     data in 'new' contains data with the same value for 'time' as 'old',
 #'     the data in 'new' will overwrite the data in 'old'.
+#'
+#'     If the 'timestamp' attribute has been set in 'new', this will be retained.
 #'
 #' @details Can be used to update price dataframes retrieved by \code{\link{oanda}}.
 #'     The function is designed to update existing data with new values as they

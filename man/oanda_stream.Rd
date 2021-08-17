@@ -2,7 +2,7 @@
 % Please edit documentation in R/oanda.R
 \name{oanda_stream}
 \alias{oanda_stream}
-\title{Stream Live OANDA Price Data}
+\title{OANDA Streaming Data}
 \usage{
 oanda_stream(instrument, server = c("practice", "live"), apikey)
 }
@@ -22,11 +22,10 @@ interactively if not specified.}
 }
 \value{
 Does not return a value, however the streaming data is output to the
-    console as a side effect. Note that as this is a raw stream, returned
-    times are in UTC.
+    console as a side effect.
 }
 \description{
-Retrieve live price and liquidity data for major currencies, metals,
+Stream live price and liquidity data for major currencies, metals,
     commodities, government bonds and stock indices from the OANDA fxTrade
     Streaming API.
 }
@@ -54,7 +53,8 @@ This function connects to the OANDA fxTrade Streaming API. Use the
     different prices depending on their alignment.
 
     The streamed data is formatted for easier reading, but otherwise
-    represents the raw feed without omission.
+    represents the raw feed without omission. Note that as this is a raw
+    stream, returned times are in UTC.
 }
 
 \examples{

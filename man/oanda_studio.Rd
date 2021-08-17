@@ -2,7 +2,7 @@
 % Please edit documentation in R/oanda.R
 \name{oanda_studio}
 \alias{oanda_studio}
-\title{Interactive Live Analysis Environment for OANDA Data}
+\title{OANDA Studio Interactive Live Analysis}
 \usage{
 oanda_studio(
   instrument = "USD_JPY",
@@ -68,11 +68,10 @@ Ichimoku analysis.}
 Returns a Shiny app object with class 'shiny.appobj'.
 }
 \description{
-Dynamically-generated Ichimoku Kinko Hyo cloud charts for major currencies,
-    metals, commodities, government bonds and stock indices using OANDA
-    fxTrade API data in a fully-customisable and interactive R Shiny
-    environment. Intuitive cursor infotip provides ready access to the data
-    directly from the chart.
+Interactive and fully-customisable R Shiny environment providing real-time
+    Ichimoku Kinko Hyo cloud charts for major currencies, metals, commodities,
+    government bonds and stock indices using OANDA fxTrade API data. Intuitive
+    cursor infotip provides ready access to the data directly from the chart.
 }
 \details{
 This function polls the OANDA fxTrade API for the latest prices and

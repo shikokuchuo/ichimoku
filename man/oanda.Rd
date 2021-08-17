@@ -2,7 +2,7 @@
 % Please edit documentation in R/oanda.R
 \name{oanda}
 \alias{oanda}
-\title{Get OANDA Price Data}
+\title{OANDA Price Data}
 \usage{
 oanda(
   instrument,

@@ -14,7 +14,7 @@ vector, of dates defined as holidays.}
 
 \item{...}{other arguments not used by this function.}
 
-\item{noholidays}{(optional) if set, bypasses the function logic and allows
+\item{noholidays}{(optional) if set, bypasses the function logic and selects
 all dates in 'x'.}
 }
 \value{

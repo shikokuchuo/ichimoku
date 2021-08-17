@@ -15,6 +15,8 @@ df_append(new, old)
 A data.frame of the existing data appended with the new data. If the
     data in 'new' contains data with the same value for 'time' as 'old',
     the data in 'new' will overwrite the data in 'old'.
+
+    If the 'timestamp' attribute has been set in 'new', this will be retained.
 }
 \description{
 Update a 'data.frame' object with new data. Can be used to append new updated

@@ -24,13 +24,13 @@ ichimoku contains an interface to the OANDA fxTrade API, creating a binding for 
 
 OANDA is an authoritative source of foreign exchange data used by governments and global corporations alike. The API can be used for retrieving historical and live streaming price data for major currencies, metals, commodities, government bonds and stock indices.
 
-It is considered a rich source of financial data with excellent availability, for instance daily OHLC pricing data for major forex pairs from the start of 2005, and data granularity ranging from 5 seconds to monthly. For the total list of over 120 covered instruments please refer to the [Available Instruments](#available-instruments) section below.
+It is considered a rich source of financial data with excellent availability. As an example, daily OHLC pricing data is available for major forex pairs from the start of 2005, with data granularity ranging from 5 seconds to monthly. For the total list of over 120 covered instruments please refer to the [Available Instruments](#available-instruments) section below.
 
-Please note that 'OANDA' and 'fxTrade' are trademarks owned by OANDA Corporation, an entity which is entirely unaffiliated with the ichimoku package.
+Please note that 'OANDA' and 'fxTrade' are trademarks owned by OANDA Corporation, an entity unaffiliated with the ichimoku package.
 
 ## Registering with OANDA
 
-The OANDA fxTrade API, as distinct to other OANDA data sources such as its rates for business, is based upon their retail and professional trading offering of the same name. As such, access to the API requires an fxTrade account with OANDA and agreement to their API terms of use. 
+The OANDA fxTrade API, as distinct to other OANDA data sources, is based upon its retail and professional trading offering of the same name. As such, access to the API requires an fxTrade account with OANDA and agreement to their API terms of use. 
 
 Registering for a 'demo' or 'practice' account is entirely free at the time of writing and provides full access to the API. For registering an account, the following URL may be used: <https://www.oanda.com/forex-trading/>.
 
@@ -50,7 +50,7 @@ All of the OANDA functions in the package are prefixed by 'oanda' for clarity an
 
 ### `oanda()`
 
-Retrieve historical pricing data from the OANDA fxTrade API.
+Retrieve pricing data from the OANDA fxTrade API.
 
 The arguments to the function are phrased identically to that of the API itself where relevant:
 
@@ -109,13 +109,12 @@ The following should be noted from the streaming API documentation:
 
 - Get a stream of Account Prices starting from when the request is made
 - This pricing stream does not include every single price created for the Account, but instead will provide at most 4 prices per second (every 250 milliseconds) for each instrument being requested
-- If more than one price is created for an instrument during the 250 millisecond window, only the price in effect at the end of the window is sent
-- This means that during periods of rapid price movement, subscribers to this stream will not be sent every price
+- If more than one price is created for an instrument during the 250 millisecond window, only the price in effect at the end of the window is sent. This means that during periods of rapid price movement, subscribers to this stream will not be sent every price
 - Pricing windows for different connections to the price stream are not all aligned in the same way (i.e. they are not all aligned to the top of the second). This means that during periods of rapid price movement, different subscribers may observe different prices depending on their alignment
 
 ### `oanda_chart()`
 
-Create a live updating Ichimoku Kinko Hyo (cloud chart). The refresh rate can be set for the chart to be updated down to every second. A plot of the ichimoku chart for the price data requested is output to the graphical device at each refresh interval.
+Create an updating real-time Ichimoku cloud chart. The refresh rate can be set for the chart to be updated down to every second. A plot of the ichimoku chart for the price data requested is output to the graphical device at each refresh interval.
 
 The arguments are identical to `oanda()` above with the addition of:
 
@@ -131,13 +130,11 @@ Note also that the periods displayed on the chart will be fewer than the 'count'
 
 ### `oanda_studio()`
 
-Create an interactive session in an R Shiny app for working with dynamically-generated Ichimoku Kinko Hyo (cloud charts).
+Create an interactive session in an R Shiny app for working with real-time Ichimoku cloud charts. Provides a live analysis environment where parameters may be set interactively as required. The cursor infotip provides ready access to the data directly from the chart.
 
-As all parameters may be set interactively in-app, the function can be launched as `oanda_studio()` without specifying any arguments. Otherwise, parameters may be set beforehand in the same way as `oanda_chart()`.
+As all parameters can be set interactively in-app, the function may simply be launched as `oanda_studio()` without specifying any arguments. Otherwise, parameters may be set beforehand in the same way as `oanda_chart()`.
 
-The use of this function provides a live analysis environment where parameters may be set interactively as required. The infotip provides ready access to the underlying data in a convenient manner.
-
-The following additional parameters can be used to customise the behaviour of the Shiny app:
+The following additional parameters can be used to customise the behaviour of the Shiny environment:
 
 - `...` additional arguments passed to `ichimoku()` for calculating the ichimoku cloud, `autoplot()` to set chart parameters, or the 'options' argument of `shiny::shinyApp()`
 - `launch.browser` [default TRUE] If TRUE, the system’s default web browser will be launched automatically after the app is started. The value of this argument can also be a function to call with the application’s URL. To use the default Shiny viewer in RStudio, please specify `getOption("shiny.launch.browser")`

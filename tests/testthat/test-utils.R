@@ -14,7 +14,7 @@ test_that("xts_df ok", {
   expect_s3_class(df, "data.frame")
   expect_identical(dim(df), c(10L, 13L))
   xts <- structure(xtsobject, special = "set")
-  dfmod <- xts_df(xts, preserve.attrs = TRUE)
+  dfmod <- xts_df(xts, keep.attrs = TRUE)
   expect_equal(attr(dfmod, "special"), "set")
 })
 
@@ -23,7 +23,7 @@ test_that("matrix_df ok", {
   expect_s3_class(df, "data.frame")
   expect_identical(dim(df), c(10L, 12L))
   mat <- structure(as.matrix(xtsobject), special = "set")
-  dfmod <- matrix_df(mat, preserve.attrs = TRUE)
+  dfmod <- matrix_df(mat, keep.attrs = TRUE)
   expect_equal(attr(dfmod, "special"), "set")
 })
 

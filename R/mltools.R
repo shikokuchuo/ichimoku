@@ -21,7 +21,7 @@
 #' @details Ichimoku objects for each strategy are returned as a list. The
 #'     cumulative log returns for all strategies as well as the summaries for
 #'     the 'n' top strategies are saved as attributes to the list. This
-#'     information may be retrieved by using look() on the returned list.
+#'     information may be retrieved by using \code{\link{look}} on the returned list.
 #'
 #'     Each individual ichimoku object may be accessed via its position in the
 #'     list, e.g. [[1]] for the 1st item, or by using \code{\link{look}}
@@ -36,7 +36,8 @@
 #'
 #' stratlist <- autostrat(cloud, n = 3)
 #' look(stratlist)
-#' summary(look(stratlist, which = 1))
+#' strat <- look(stratlist, which = 1)
+#' summary(strat)
 #'
 #' autostrat(cloud, n = 1, dir = "short", level = 2)
 #' autostrat(cloud, n = 1, dir = "long", level = 3)
@@ -181,7 +182,7 @@ autostrat <- function(x,
 #' @examples
 #' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 #' grid <- mlgrid(cloud, y = "ret", dir = "short", type = "numeric")
-#' look(grid)
+#' str(grid)
 #'
 #' @export
 #'

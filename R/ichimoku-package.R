@@ -19,7 +19,7 @@
 #'     \item{\code{\link{ichimoku}}} {to create an ichimoku object from price
 #'     data.}
 #'     \item{\code{\link{archive}}} {for reading and writing ichimoku objects
-#'     to/from Apache Arrow archive files.}
+#'     to/from Apache Arrow storage.}
 #'     \item{\code{\link{oanda}}} {to retrieve price data from the OANDA fxTrade
 #'     API.}
 #'     \item{\code{\link{oanda_stream}}} {to stream a live data feed from the
@@ -31,7 +31,7 @@
 #'     ichimoku object.}
 #'     \item{\code{\link{iplot}}} {to plot an interactive cloud chart from an
 #'     ichimoku object.}
-#'     \item{\code{\link{oanda_chart}}} {to create live updating ichimoku cloud
+#'     \item{\code{\link{oanda_chart}}} {to plot real-time ichimoku cloud
 #'     charts using OANDA data.}
 #'     \item{\code{\link{oanda_studio}}} {a complete live analysis environment
 #'     using OANDA data implemented in R Shiny.}
@@ -39,7 +39,7 @@
 #' Strategies & ML
 #' \itemize{
 #'     \item{\code{\link{strat}}} {to augment an ichimoku object with a strategy,
-#'     including complex combined and asymmetric strategies.}
+#'     including combined and asymmetric complex strategies.}
 #'     \item{\code{\link{stratcombine}}} {to create custom combined strategies.}
 #'     \item{\code{\link{autostrat}}} {to automatically evaluate and rank
 #'     top-performing strategies.}

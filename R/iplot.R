@@ -1,6 +1,6 @@
 # Ichimoku - Visualization Layer -----------------------------------------------
 
-#' iplot Interactive Ichimoku Cloud Plot
+#' Interactive Ichimoku Cloud Plot
 #'
 #' Plot Ichimoku Kinko Hyo cloud charts from ichimoku objects in R Shiny,
 #'     allowing full customisation of chart elements in an interactive

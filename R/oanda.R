@@ -1,6 +1,6 @@
 # Ichimoku - OANDA fxTrade API Interface ---------------------------------------
 
-#' Get OANDA Price Data
+#' OANDA Price Data
 #'
 #' Retrieve price data for major currencies, metals, commodities, government
 #'     bonds and stock indices from the OANDA fxTrade API.
@@ -244,9 +244,9 @@ getPrices <- function(instrument, granularity, count, from, to, price,
 
 }
 
-#' Stream Live OANDA Price Data
+#' OANDA Streaming Data
 #'
-#' Retrieve live price and liquidity data for major currencies, metals,
+#' Stream live price and liquidity data for major currencies, metals,
 #'     commodities, government bonds and stock indices from the OANDA fxTrade
 #'     Streaming API.
 #'
@@ -259,8 +259,7 @@ getPrices <- function(instrument, granularity, count, from, to, price,
 #'     running: \code{vignette("xoanda", package = "ichimoku")}.
 #'
 #' @return Does not return a value, however the streaming data is output to the
-#'     console as a side effect. Note that as this is a raw stream, returned
-#'     times are in UTC.
+#'     console as a side effect.
 #'
 #' @section Streaming Data:
 #'
@@ -278,7 +277,8 @@ getPrices <- function(instrument, granularity, count, from, to, price,
 #'     different prices depending on their alignment.
 #'
 #'     The streamed data is formatted for easier reading, but otherwise
-#'     represents the raw feed without omission.
+#'     represents the raw feed without omission. Note that as this is a raw
+#'     stream, returned times are in UTC.
 #'
 #' @examples
 #' \dontrun{
@@ -314,9 +314,9 @@ oanda_stream <- function(instrument, server = c("practice", "live"), apikey) {
   })
 }
 
-#' Live Ichimoku Cloud Charts from OANDA Data
+#' OANDA Real-time Cloud Charts
 #'
-#' Live updating Ichimoku Kinko Hyo cloud charts for major currencies, metals,
+#' Plot real-time Ichimoku Kinko Hyo cloud charts for major currencies, metals,
 #'     commodities, government bonds and stock indices using OANDA fxTrade API
 #'     data.
 #'
@@ -429,13 +429,12 @@ oanda_chart <- function(instrument,
   }
 }
 
-#' Interactive Live Analysis Environment for OANDA Data
+#' OANDA Studio Interactive Live Analysis
 #'
-#' Dynamically-generated Ichimoku Kinko Hyo cloud charts for major currencies,
-#'     metals, commodities, government bonds and stock indices using OANDA
-#'     fxTrade API data in a fully-customisable and interactive R Shiny
-#'     environment. Intuitive cursor infotip provides ready access to the data
-#'     directly from the chart.
+#' Interactive and fully-customisable R Shiny environment providing real-time
+#'     Ichimoku Kinko Hyo cloud charts for major currencies, metals, commodities,
+#'     government bonds and stock indices using OANDA fxTrade API data. Intuitive
+#'     cursor infotip provides ready access to the data directly from the chart.
 #'
 #' @inheritParams oanda_chart
 #' @inheritParams iplot
@@ -674,7 +673,7 @@ oanda_studio <- function(instrument = "USD_JPY",
   }
 }
 
-#' Get OANDA Instruments
+#' List Available OANDA Instruments
 #'
 #' Return list of instruments including major currencies, metals, commodities,
 #'     government bonds and stock indices for which pricing data is available

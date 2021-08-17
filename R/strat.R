@@ -22,45 +22,52 @@
 #'
 #' @details The following assumption applies to all strategies: confirmation of
 #'     whether a condition is satisfied is received at the 'close' of a particular
-#'     period, and a transaction is initiated at the next 'open'. All transactions
-#'     happen at the 'open'.
-#'
-#'     The original ichimoku object 'x' is augmented with the following
-#'     additional columns used to calculate the strategy:
-#'
-#'     'cond', a boolean vector if the indicator condition is met, 'posn', a
-#'     boolean vector indicating if a position is held, and 'txn', a vector
-#'     representing the transactions to implement the position.
-#'
-#'     logret' is a column of log returns, 'slogret' is a column of log returns
-#'     for the strategy.
-#'
-#'     ret' is a column of discrete returns, and 'sret' is a column of discrete
-#'     returns for the strategy.
-#'
-#'     The strategy summary is saved as an object attribute and may be accessed
-#'     by the summary() function or via look().
+#'     period, and a transaction is initiated at the immediately following 'open'.
+#'     All transactions occur at the 'open'.
 #'
 #'     By default, the periods in which the strategy results in a position is
 #'     shaded on the ichimoku cloud chart and the strategy is printed as the
 #'     chart message (if not otherwise specified). To turn off this behaviour,
-#'     pass the 'strat = FALSE' argument to plot() or iplot().
+#'     pass the \code{strat = FALSE} argument to plot() or iplot().
+#'
+#' @section Ichimoku Object Specification for Strategies:
+#'
+#'     The ichimoku object is augmented with the following additional elements:
+#'
+#'     Columns [numeric]:
+#'     \itemize{
+#'         \item{\code{$cond}:} {a boolean vector if the indicator condition is met}
+#'         \item{\code{$posn}:} {a boolean vector indicating if a position is held}
+#'         \item{\code{$txn}:} {a vector representing the transactions to implement
+#'         the position (1 = enter position, -1 = exit position)}
+#'         \item{\code{$logret}:} {a vector of log returns}
+#'         \item{\code{$slogret}:} {a vector of log returns for the strategy}
+#'         \item{\code{$ret}:} {a vector of discrete returns}
+#'         \item{\code{$sret}:} {a vector of of discrete returns for the strategy}
+#'      }
+#'
+#'     Attributes:
+#'     \itemize{
+#'         \item{\code{$strat}:} {the strategy summary [matrix]}
+#'      }
+#'
+#'     The strategy summary may be accessed by the summary() function or via
+#'     \code{\link{look}}.
 #'
 #' @section Complex Strategies:
-#'     For complex strategies, let 's1' denote the strategy 'c1 > c2' and 's2'
-#'     denote the strategy 'c3 > c4'.
+#'     For complex strategies: 's1' denotes the strategy 'c1 > c2' and 's2'
+#'     denotes the strategy 'c3 > c4'.
 #'
-#'     The combined strategy 's1 & s2' means indicator conditions in 's1'
-#'     and 's2' have to be met simulateneously for a trade position to be taken.
-#'
-#'     The asymmetric strategy 's1 x s2' means the indicator condition in 's1'
-#'     has to be met to enter a trade position, and the indicator condition in
-#'     's2' has to be met to exit a trade position. These rules are applied
-#'     recursively over the length of the data.
-#'
-#'     The boolean values showing whether these conditions are met are stored in
-#'     the 'cond' column. For a strategy of type 's1 x s2', the 'cond' column
-#'     will show when the indicator condition is met in s1.
+#'     \itemize{
+#'         \item{Combined strategy 's1 & s2':} {indicator conditions in 's1' and
+#'         's2' have to be met simulateneously for a position to be taken. The
+#'         column \code{$cond} will show when both conditions are met.}
+#'         \item{Asymmetric strategy 's1 x s2':} {indicator condition in 's1' has
+#'         to be met to enter a position, and indicator condition in 's2' to exit
+#'         a position. These rules are applied recursively over the length of the
+#'         data. The column \code{$cond} will show when the indicator condition
+#'         is met in 's1'}
+#'      }
 #'
 #' @section Further Details:
 #'     Please refer to the strategies vignette by running:
@@ -68,9 +75,14 @@
 #'
 #' @examples
 #' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
-#' strat <- strat(cloud, c1 = "close", c2 = "tenkan")
+#'
+#' strat <- strat(cloud, c1 = "tenkan", c2 = "cloudB", dir = "short")
 #' summary(strat)
 #' plot(strat)
+#'
+#' strat2 <- strat(cloud, c1 = "cloudT", c2 = "kijun", c3 = "cloudT", c4 = "close")
+#' summary(strat2)
+#' plot(strat2)
 #'
 #' @export
 #'
@@ -183,7 +195,7 @@ strat <- function(x,
 #'     'strat'.
 #'
 #' @details The stategy summary may subsequently be accessed by the summary()
-#'     function or via look().
+#'     function or via \code{\link{look}}.
 #'
 #' @keywords internal
 #'
@@ -228,7 +240,7 @@ writeStrat <- function(x, strategy, dir) {
 
 #' Combine Ichimoku Strategies
 #'
-#' Create custom combined strategies from existing strategies contained in 's1'
+#' Create custom strategies from combining existing strategies contained in 's1'
 #'     and 's2' to form 's1 & s2'.
 #'
 #' @param s1 an ichimoku object containing a strategy.
@@ -243,7 +255,7 @@ writeStrat <- function(x, strategy, dir) {
 #'     the 'cond' column.
 #'
 #'     The stategy summary may be accessed by the summary() function or via
-#'     look().
+#'     \code{\link{look}}.
 #'
 #' @section Further Details:
 #'     Please refer to the strategies vignette by running:
