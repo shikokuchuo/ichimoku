@@ -1,21 +1,58 @@
 /* shikokuchuo{net} custom css for pkgdown bootswatch simplex theme */
 
 body {
-  color:#000000
-}
-
-.navbar-default .navbar-link {
- color:#000000
-}
-
-.navbar-default .navbar-nav>li>a {
- color:#000000;
-}
-
-.dropdown-menu>li>a {
- color:#000000
+  color:#02141c
 }
 
 footer {
-  color: #000000
+  color: #02141c
+}
+
+.navbar-default .navbar-link {
+ color:#02141c
+}
+
+.navbar-default .navbar-nav>li>a {
+ color:#02141c;
+}
+
+.dropdown-menu>li>a {
+ color:#02141c
+}
+
+a {
+ color:#fb856b;
+ text-decoration:none
+}
+
+.navbar-default .navbar-nav>li>a:hover,
+.navbar-default .navbar-nav>li>a:focus {
+ color:#fb856b;
+ background-color:transparent
+}
+.navbar-default .navbar-nav>.active>a,
+.navbar-default .navbar-nav>.active>a:hover,
+.navbar-default .navbar-nav>.active>a:focus {
+ color:#fb856b;
+ background-color:transparent
+}
+
+.dropdown-menu>li>a:hover,
+.dropdown-menu>li>a:focus {
+ color:#ffffff;
+ text-decoration:none;
+ background-color:#fb856b
+}
+
+.dropdown-menu>.active>a,
+.dropdown-menu>.active>a:hover,
+.dropdown-menu>.active>a:focus {
+ color:#ffffff;
+ text-decoration:none;
+ background-color:#fb856b;
+ outline:0
+}
+
+.label-default {
+ background-color:#02141c
 }

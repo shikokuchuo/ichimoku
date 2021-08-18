@@ -31,7 +31,7 @@
 * The following functions are no longer exported to keep the package tidy: `grid_dup()`, `maxOver()`, `minOver()`, `oanda_accounts()`.
 * `sample_ohlc_data` slightly lengthened to better demonstrate strat features.
 * Added 'stats' R core package dependency for improved performance in strat functions.
-* Package now links to 'cpp11' headers allowing for faster compile times. Removed dependency on the 'Rcpp' package.
+* Package now links to 'cpp11' headers, retiring 'Rcpp' dependency.
 * Package dependency 'httr' switched to 'curl' providing performance gains in the OANDA fxTrade API interface.
 * Miscellaneous performance optimisations.
 * Documentation refresh.
