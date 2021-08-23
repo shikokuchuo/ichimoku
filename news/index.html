@@ -73,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -143,6 +143,17 @@
       <small>Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="ichimoku-110" class="section level1">
+<h1 class="page-header" data-toc-text="1.1.0">
+<a href="#ichimoku-110" class="anchor"></a>ichimoku 1.1.0<small> 2021-08-23 </small>
+</h1>
+<ul>
+<li>
+<code><a href="../reference/archive.html">archive()</a></code> moves to using the native RData format, enabling any R object to be stored perfectly with sha256 verfication. ‘ArrowTabular’ method for <code><a href="../reference/ichimoku.html">ichimoku()</a></code> removed. ‘arrow’ optional dependency is retired.</li>
+<li>Fixes data types bug present in v1.0.0 for dataframes returned by <code><a href="../reference/oanda.html">oanda()</a></code>.</li>
+<li>Fixes critical issues affecting the Solaris platform.</li>
+</ul>
+</div>
     <div id="ichimoku-100" class="section level1">
 <h1 class="page-header" data-toc-text="1.0.0">
 <a href="#ichimoku-100" class="anchor"></a>ichimoku 1.0.0<small> 2021-08-17 </small>
@@ -161,11 +172,11 @@
 <ul>
 <li>New <code><a href="../reference/archive.html">archive()</a></code> function allows for archiving of ichimoku objects to files stored in the Apache Arrow IPC file format. Also uses sha256 hashing to ensure data integrity of archives - adds optional dependency on <code>openssl</code> package.</li>
 <li>
-<code><a href="../reference/ichimoku.html">ichimoku()</a></code> gains a new S3 method for the <code>ArrowTabular</code> class for working with Arrow Tables.</li>
-<li>
 <code><a href="../reference/oanda.html">oanda()</a></code> gains the capability to download over 5000 data periods in multiple (rate-limited) requests when both the ‘from’ and ‘to’ arguments are specified.</li>
 <li>
 <code><a href="../reference/look.html">look()</a></code> can now inspect any R object.</li>
+<li>
+<code><a href="../reference/ichimoku.html">ichimoku()</a></code> gains a new S3 method for the <code>ArrowTabular</code> class for working with Arrow Tables.</li>
 <li>
 <code><a href="../reference/tradingDays.html">tradingDays()</a></code> gets a ‘noholidays’ argument for use in markets that trade 24/7 with no non-trading days.</li>
 <li>
@@ -179,7 +190,7 @@
 <h4 class="hasAnchor">
 <a href="#updates" class="anchor"></a>Updates:</h4>
 <ul>
-<li>Implemented caching of certain OANDA variables so they are retrieved once and then used throughout a session.</li>
+<li>Implements caching of certain OANDA variables so that they are retrieved once and then used throughout a session.</li>
 <li>Charts of daily or lower frequency now have prettier and more usefully-aligned breaks using custom algorithm.</li>
 <li>Improved handling of timezones. OANDA data and charts will now show correctly in the user timezone.</li>
 <li>
@@ -192,14 +203,14 @@
 <code><a href="../reference/oanda_chart.html">oanda_chart()</a></code> now passes on additional parameters to <code><a href="../reference/autoplot.html">autoplot()</a></code>.</li>
 <li>
 <code><a href="../reference/ichimoku.html">ichimoku()</a></code> now enforces data types on the price data for higher certainty of success, and has more robust handling of matrices and ‘data.frame’ compatible formats such as ‘tibble’.</li>
-<li>Fixed bug which caused <code><a href="../reference/oanda.html">oanda()</a></code> not to return weekly data in certain cases.</li>
-<li>Fixed bug in trade success statistics for short strategies returned by <code><a href="../reference/strat.html">strat()</a></code>.</li>
+<li>Fixes bug which caused <code><a href="../reference/oanda.html">oanda()</a></code> not to return weekly data in certain cases.</li>
+<li>Corrects trade success statistics for short strategies returned by <code><a href="../reference/strat.html">strat()</a></code>.</li>
 <li>The following functions are no longer exported to keep the package tidy: <code><a href="../reference/grid_dup.html">grid_dup()</a></code>, <code>maxOver()</code>, <code>minOver()</code>, <code>oanda_accounts()</code>.</li>
 <li>
 <code>sample_ohlc_data</code> slightly lengthened to better demonstrate strat features.</li>
-<li>Added ‘stats’ R core package dependency for improved performance in strat functions.</li>
-<li>Package now links to ‘cpp11’ headers, retiring ‘Rcpp’ dependency.</li>
-<li>Package dependency ‘httr’ switched to ‘curl’ providing performance gains in the OANDA fxTrade API interface.</li>
+<li>Adds ‘stats’ R core package dependency.</li>
+<li>Package now links to ‘cpp11’ headers, retiring ‘Rcpp’ package dependency.</li>
+<li>Package dependency ‘httr’ switched to ‘curl’.</li>
 <li>Miscellaneous performance optimisations.</li>
 <li>Documentation refresh.</li>
 </ul>
@@ -228,15 +239,16 @@
 <h4 class="hasAnchor">
 <a href="#updates-1" class="anchor"></a>Updates:</h4>
 <ul>
-<li>New dependencies on the ‘httr’ and ‘jsonlite’ packages, required for the OANDA fxTrade API interface.</li>
+<li>New dependencies on ‘httr’ and ‘jsonlite’ packages, required for the OANDA fxTrade API interface.</li>
 <li>
-<code><a href="../reference/strat.html">strat()</a></code> now takes optional ‘c3’ and ‘c4’ arguments to provide parameters for complex strategies. This allows a combined strategy to be specified directly using one <code><a href="../reference/strat.html">strat()</a></code> call rather than 2 separate <code><a href="../reference/strat.html">strat()</a></code> calls and a call to <code><a href="../reference/stratcombine.html">stratcombine()</a></code>.</li>
-<li>Plotly charts have been retired as they are simply not scalable to large datasets. <code><a href="../reference/iplot.html">iplot()</a></code> now uses a Shiny backend providing similar/enhanced features. To contiune working with plotly, please use <code>plotly::ggplotly()</code> on plot objects created by <code><a href="../reference/plot.ichimoku.html">plot.ichimoku()</a></code>.</li>
-<li>Argument ‘gaps’ for the plot functions is deprecated but remains available through the <code>gplot()</code> function until at least version 0.4.</li>
-<li>Chikou span now the top layer in plots so visible over the candlesticks.</li>
+<code><a href="../reference/strat.html">strat()</a></code> now takes optional ‘c3’ and ‘c4’ arguments to provide parameters for complex strategies. This allows a combined strategy to be specified using a single <code><a href="../reference/strat.html">strat()</a></code> call.</li>
+<li>
+<code><a href="../reference/iplot.html">iplot()</a></code> now uses a Shiny backend. Plotly charts have been retired.</li>
+<li>Argument ‘gaps’ for the plot functions is deprecated but remains available through <code>gplot()</code> for the time being.</li>
+<li>Chikou span is now the top layer in plots so visible over the candlesticks.</li>
 <li>Performance enhancements for principal functions, including optimised data validation and error handling code.</li>
 <li>Certain helper functions renamed for consistency.</li>
-<li>Documentation and README refresh.</li>
+<li>Documentation refresh.</li>
 </ul>
 </div>
 </div>
@@ -255,7 +267,6 @@
 <li>ML layer: tools for further developing quantitative ichimoku solutions.</li>
 </ul>
 </li>
-<li>Create and backtest ichimoku strategies.</li>
 <li>New all-greyscale ‘mono’ theme.</li>
 <li>
 <code><a href="../reference/tradingDays.html">tradingDays()</a></code> helper function to allow customisation of holidays when calculating the future cloud.</li>
@@ -265,9 +276,9 @@
 <h4 class="hasAnchor">
 <a href="#updates-2" class="anchor"></a>Updates:</h4>
 <ul>
-<li>Ichimoku object specification updated - this is breaking but can be fixed by re-running <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on previous objects.</li>
+<li>Ichimoku object specification updated.</li>
 <li>Ichimoku objects now inherit ‘xts’ and ‘zoo’ classes for better integration with other econometrics and analytics packages.</li>
-<li>Package now depends on ‘Rcpp’ and requires compilation - added more performant rolling window functions <code>minOver()</code> and <code>maxOver()</code> using customised C++ algorithm.</li>
+<li>Package now requires compilation and adds ‘Rcpp’ dependency due to rolling window functions <code>minOver()</code> and <code>maxOver()</code> using custom C++ algorithm.</li>
 <li>‘RcppRoll’ and ‘timeDate’ package dependencies retired.</li>
 <li>
 <code>sample_ohlc_data</code> updated to better demonstrate new features.</li>

@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -113,12 +113,12 @@
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h2>
-<p>There are multiple ways to work with Ichimoku Kinko Hyo strategies using the ‘ichimoku’ package in R.</p>
+<p>There are multiple ways to work with Ichimoku Kinko Hyo strategies using the ichimoku R package.</p>
 <p>First and foremost is visually, and the functions for visualization are described in the <a href="reference.html">reference vignette</a>.</p>
-<p>However if a more methodical approach is required, for instance to test hypotheses about the price action of a particular security under certain scenarios, it is necessary to perform analysis on the data directly. Here, complications of the ichimoku system can become apparent. The Chikou span in particular poses a challenge as the position of this indicator needs to be mapped in relation to the chart elements 26 periods previously, however this then affects trading decisions at the present point in time.</p>
-<p>The ‘strategy layer’ of the ichimoku package aims to prepare the data in a standardized format for easy analysis in R packages such as ‘PerformanceAnalytics’. Short strategy summaries are generated automatically, but are designed to serve as a quick reference rather than a replacement for a full backtest.</p>
-<p>The <code><a href="../reference/autostrat.html">autostrat()</a></code> function is used to further facilitate idea and strategy generation, and leverages the computational abilities of R to simultaneously test all valid indicator combinations. Whilst not all strategies returned may make intuitive sense, they will at a minimum serve to provide another benchmark. To reiterate, the results generated should be fed through a full backtest, with all the implications of that analysed.</p>
-<p>Past results do not imply future performance, and the results obtained should not be relied upon on the basis of the results alone.</p>
+<p>However, it is often necessary to perform analysis on the data directly, for instance to test hypotheses about the price action of a particular security under certain scenarios. Here, complications of the ichimoku system can become apparent. The Chikou span in particular poses a challenge as the position of this indicator needs to be mapped in relation to the chart elements 26 periods previously, however this then affects trading decisions at the present point in time.</p>
+<p>The ‘strategy layer’ of the ichimoku package aims to prepare the data in a standardized format for easy analysis in other R packages such as ‘PerformanceAnalytics’. Short strategy summaries are generated automatically, but are designed to serve as a quick reference rather than a replacement for a full backtest.</p>
+<p>The <code><a href="../reference/autostrat.html">autostrat()</a></code> function is used to further facilitate idea generation, and leverages the computational capability of R to simultaneously test all valid indicator combinations. Whilst not all returned strategies may make intuitive sense, they will at a minimum serve to provide another benchmark. To reiterate, the results generated should be fed through a full backtest, with all the implications of that analysed.</p>
+<p>Past results do not imply future performance, and any results obtained should not be relied upon on the basis of the results alone.</p>
 </div>
 <div id="working-with-strategies" class="section level2">
 <h2 class="hasAnchor">
@@ -351,13 +351,13 @@
 <span class="co">#&gt; Start                  2020-03-31 23:00:00</span>
 <span class="co">#&gt; End                    2020-10-29         </span>
 <span class="co">#&gt; Ticker                 "TKR"</span></code></pre></div>
-<p>The output of <code><a href="../reference/autostrat.html">autostrat()</a></code> is a list of ichimoku objects. Each object can be accessed by its individual item number e.g. <code>[[1]]</code> for the first object, or by using <code><a href="../reference/look.html">look()</a></code> specifying the parameter ‘which’.</p>
+<p>The output of <code><a href="../reference/autostrat.html">autostrat()</a></code> is a list of ichimoku objects. Each object can be accessed by its position in the list e.g. <code>[[1]]</code> for the first object, or by using <code><a href="../reference/look.html">look()</a></code> specifying the parameter ‘which’.</p>
 <p>The metadata is also saved as attributes to the list and can be accessed by the function <code><a href="../reference/look.html">look()</a></code>:</p>
 <ul>
 <li><p><strong>logret</strong>: the log returns of all combinations computed by autostrat</p></li>
 <li><p><strong>summary</strong>: the strategy summaries</p></li>
 </ul>
-<p>Note: the strategies returned may not be in perfect order of strategy returns. This is due to the fact that the implementation via <code><a href="../reference/mlgrid.html">mlgrid()</a></code> simultaneously tests all strategies using the same time interval for comparability. However individual strategies are then run on the top ‘n’ strategies using all of the available data for those indicators, which may be more than that used during comparison.</p>
+<p>Note: the strategies returned may not be in order of strategy returns as displayed in the strategy summaries. This is due to the fact that the implementation via <code><a href="../reference/mlgrid.html">mlgrid()</a></code> simultaneously tests all strategies using the same time interval for comparability. However individual strategies are then run on the top ‘n’ strategies using all of the available data for those indicators, which may be more than that used during comparison.</p>
 <p>Note: as SenkouA, SenkouB, cloudT and cloudB are used in conjunction with other indicators, it is possible to get a series of similar returns with cloudB &gt; c2, senkouB &gt; c2 etc. Although these strategies may at times be equivalent or considered equivalent, this is not always the case and ichimoku presents all such results.</p>
 </div>
 <div id="autostrat-levels-2-and-3" class="section level3">
@@ -541,7 +541,7 @@
 <h2 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h2>
 <p>Sasaki, H. 佐々木 英信 (1996), <em>一目均衡表の研究 [ichimoku kinkouhyou no kenkyuu]</em>. Tokyo, Japan: Toushi Radar.</p>
-<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.0.0, <a href="https://CRAN.R-project.org/package=ichimoku" class="uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
+<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.1.0, <a href="https://CRAN.R-project.org/package=ichimoku" class="uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
 <hr>
 </div>
   </div>

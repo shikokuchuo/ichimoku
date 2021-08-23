@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Read ichimoku objects from Arrow Archive — readArchive • ichimoku</title>
+<title>Read Objects from Archive — readArchive • ichimoku</title>
 
 
 <!-- jquery -->
@@ -41,9 +41,9 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Read ichimoku objects from Arrow Archive — readArchive" />
-<meta property="og:description" content="Internal function used to read ichimoku objects from archive storage in the
-    Apache Arrow IPC file format." />
+<meta property="og:title" content="Read Objects from Archive — readArchive" />
+<meta property="og:description" content="Internal function used to read objects from native RData files with stored
+    sha256 hash values." />
 
 
 
@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -141,31 +141,31 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Read ichimoku objects from Arrow Archive</h1>
+    <h1>Read Objects from Archive</h1>
     <small class="dont-index">Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/R/archive.R'><code>R/archive.R</code></a></small>
     <div class="hidden name"><code>readArchive.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Internal function used to read ichimoku objects from archive storage in the
-    Apache Arrow IPC file format.</p>
+    <p>Internal function used to read objects from native RData files with stored
+    sha256 hash values.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>readArchive</span><span class='op'>(</span><span class='va'>filename</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>readArchive</span><span class='op'>(</span><span class='va'>file</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>filename</th>
-      <td><p>string file path, URI, or OutputStream, or path in a file
-system (SubTreeFileSystem).</p></td>
+      <th>file</th>
+      <td><p>the name of the file or a connection where the object is saved to
+or read from.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The ichimoku object that was originally archived.</p>
+    <p>The object that was originally archived.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
