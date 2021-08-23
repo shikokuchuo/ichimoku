@@ -25,8 +25,8 @@ Data
 \itemize{
     \item{\code{\link{ichimoku}}} {to create an ichimoku object from price
     data.}
-    \item{\code{\link{archive}}} {for reading and writing ichimoku objects
-    to/from Apache Arrow storage.}
+    \item{\code{\link{archive}}} {for reading/writing objects to/from archive
+    files with data verification.}
     \item{\code{\link{oanda}}} {to retrieve price data from the OANDA fxTrade
     API.}
     \item{\code{\link{oanda_stream}}} {to stream a live data feed from the
@@ -63,7 +63,7 @@ Sasaki, H. (1996), \emph{ichimoku kinkouhyou no kenkyuu}. Tokyo,
     unaffiliated with the ichimoku package.
 
     Gao, C. (2021), \emph{ichimoku: Visualization and Tools for Ichimoku
-    Kinko Hyo Strategies}. R package version 1.0.0,
+    Kinko Hyo Strategies}. R package version 1.1.0,
     \url{https://CRAN.R-project.org/package=ichimoku}.
 }
 \author{

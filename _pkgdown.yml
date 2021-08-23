@@ -8,3 +8,6 @@ navbar:
     href: https://github.com/shikokuchuo/ichimoku/
   - icon: fa-cube
     href: https://shikokuchuo.net/
+reference:
+- contents:
+  - matches("^[a-zA-Z]*")

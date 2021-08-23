@@ -7,10 +7,10 @@
 
 [![CRAN
 Status](https://www.r-pkg.org/badges/version/ichimoku)](https://CRAN.R-project.org/package=ichimoku)
+[![r-universe](https://shikokuchuo.r-universe.dev/badges/ichimoku)](https://shikokuchuo.r-universe.dev/)
 [![R-CMD-check](https://github.com/shikokuchuo/ichimoku/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/shikokuchuo/ichimoku/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/shikokuchuo/ichimoku/branch/main/graph/badge.svg)](https://codecov.io/gh/shikokuchuo/ichimoku?branch=main)
-[![r-universe](https://shikokuchuo.r-universe.dev/badges/ichimoku)](https://shikokuchuo.r-universe.dev/)
 <!-- badges: end -->
 
 Visualization and Tools for Ichimoku Kinko Hyo Strategies
@@ -100,8 +100,8 @@ autostrat(cloud, n = 3)
     to create an ichimoku object from price data.
 
 -   [`archive()`](https://shikokuchuo.net/ichimoku/reference/archive.html) -
-    for reading and writing ichimoku objects to/from Apache Arrow
-    storage.
+    for reading/writing objects to/from archive files with data
+    verification.
 
 -   [`oanda()`](https://shikokuchuo.net/ichimoku/reference/oanda.html) -
     to retrieve price data from the OANDA fxTrade API.
@@ -149,7 +149,7 @@ no kenkyuu]*. Tokyo, Japan: Toushi Radar.
 entity unaffiliated with the ichimoku package.
 
 Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko
-Hyo Strategies*. R package version 1.0.0,
+Hyo Strategies*. R package version 1.1.0,
 <https://CRAN.R-project.org/package=ichimoku>.
 
 –

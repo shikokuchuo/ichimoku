@@ -2,41 +2,39 @@
 % Please edit documentation in R/archive.R
 \name{archive}
 \alias{archive}
-\title{Read/write ichimoku objects <> Arrow Archive}
+\title{Read/write Objects <> Archive Files with Data Verification}
 \usage{
-archive(..., object, filename)
+archive(..., object, file)
 }
 \arguments{
-\item{...}{unnamed arguments will be parsed as 'filename' if there is only
-one argument, 'object' and 'filename' if there are two arguments.}
+\item{...}{unnamed arguments will be parsed as 'file' if there is only one
+argument, 'object' and 'file' if there are two arguments.}
 
-\item{object}{(for write operations) an ichimoku object.}
+\item{object}{(for write operations) an object.}
 
-\item{filename}{string file path, URI, or OutputStream, or path in a file
-system (SubTreeFileSystem).}
+\item{file}{the name of the file or a connection where the object is saved to
+or read from.}
 }
 \value{
-For read operations: the ichimoku object originally archived.
+For read operations: the object originally archived.
 
-    For write operations: invisible NULL. 'object' is written to 'filename'
-    as a side effect.
+    For write operations: invisible NULL. 'object' is written to 'file' as a
+    side effect.
 }
 \description{
-Read and write ichimoku objects to/from archival storage in the Apache Arrow
-    IPC file format.
+Read and write objects to/from archival storage in the native RData format,
+    with verification of data integrity.
 }
 \details{
-For read operations: specify only 'filename'. 'filename' is read and
-    the return value may be assigned to an object. A confirmation message is
+For read operations: specify only 'file'. 'file' is read and the
+    return value may be assigned to an object. A confirmation message is
     issued if the file read operation has been successful.
 
-    For write operations: specify both 'object' and 'filename'. 'object' will
-    be written to 'filename'. A confirmation message is issued if the file
-    write operation has been successful.
-
-    Note: this function requires the 'arrow' package to be installed.
+    For write operations: specify both 'object' and 'file'. 'object' will be
+    written to 'file'. A confirmation message is issued if the file write
+    operation has been successful.
 }
-\section{Data Validation}{
+\section{Data Verification}{
 
 
     If the 'openssl' package is available, a sha256 hash of the original
@@ -46,18 +44,18 @@ For read operations: specify only 'filename'. 'filename' is read and
     For write operations: confirmation of the sha256 hash is displayed if
     this has been successfully written to file.
 
-    For read operations: a 'data verified' message is issued if a correct
-    sha256 hash is found in the data file.
+    For read operations: a 'data verified' message is issued if the sha256
+    hash found within the data file has been authenticated.
 }
 
 \examples{
 cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
-filename <- tempfile()
+file <- tempfile()
 
-archive(cloud, filename)
+archive(cloud, file)
 
-restored <- archive(filename)
+restored <- archive(file)
 
-unlink(filename)
+unlink(file)
 
 }

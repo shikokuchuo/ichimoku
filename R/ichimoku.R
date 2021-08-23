@@ -9,7 +9,7 @@
 #'     values for the cloud top and cloud base.
 #'
 #' @param x a data.frame or other compatible object, which includes xts,
-#'     data.table, tibble, matrix, and Arrow tabular formats.
+#'     data.table, tibble, and matrix formats.
 #' @param ticker (optional) specify a ticker to identify the instrument,
 #'     otherwise this is set to the name of the input object 'x'.
 #' @param periods [default c(9L, 26L, 52L)] a vector defining the length of
@@ -117,19 +117,6 @@ ichimoku.xts <- function(x, ticker, periods = c(9L, 26L, 52L), ...) {
 
   if (missing(ticker)) ticker <- deparse(substitute(x))
   x <- xts_df(x)
-
-  ichimoku.data.frame(x, ticker = ticker, periods = periods, ...)
-
-}
-
-#' @rdname ichimoku
-#' @method ichimoku ArrowTabular
-#' @export
-#'
-ichimoku.ArrowTabular <- function(x, ticker, periods = c(9L, 26L, 52L), ...) {
-
-  if (missing(ticker)) ticker <- deparse(substitute(x))
-  x <- x$to_data_frame()
 
   ichimoku.data.frame(x, ticker = ticker, periods = periods, ...)
 

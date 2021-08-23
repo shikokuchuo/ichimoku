@@ -2,19 +2,19 @@
 % Please edit documentation in R/archive.R
 \name{readArchive}
 \alias{readArchive}
-\title{Read ichimoku objects from Arrow Archive}
+\title{Read Objects from Archive}
 \usage{
-readArchive(filename)
+readArchive(file)
 }
 \arguments{
-\item{filename}{string file path, URI, or OutputStream, or path in a file
-system (SubTreeFileSystem).}
+\item{file}{the name of the file or a connection where the object is saved to
+or read from.}
 }
 \value{
-The ichimoku object that was originally archived.
+The object that was originally archived.
 }
 \description{
-Internal function used to read ichimoku objects from archive storage in the
-    Apache Arrow IPC file format.
+Internal function used to read objects from native RData files with stored
+    sha256 hash values.
 }
 \keyword{internal}

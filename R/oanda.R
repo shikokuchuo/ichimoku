@@ -187,7 +187,7 @@ getPrices <- function(instrument, granularity, count, from, to, price,
   handle_setheaders(handle = h,
                     "Authorization" = paste0("Bearer ", apikey),
                     "Accept-Datetime-Format" = "RFC3339",
-                    "User-Agent" = ichimoku_user_agent)
+                    "User-Agent" = x_user_agent)
   resp <- curl_fetch_memory(url = url, handle = h)
 
   if (resp$status_code != 200L) stop("code ", resp$status_code, " - ",
@@ -229,10 +229,10 @@ getPrices <- function(instrument, granularity, count, from, to, price,
   ohlc <- data[, 4L]
 
   structure(list(time = .POSIXct(time),
-                 open = ohlc[, 1L],
-                 high = ohlc[, 2L],
-                 low = ohlc[, 3L],
-                 close = ohlc[, 4L],
+                 open = as.numeric(ohlc[, 1L]),
+                 high = as.numeric(ohlc[, 2L]),
+                 low = as.numeric(ohlc[, 3L]),
+                 close = as.numeric(ohlc[, 4L]),
                  volume = data[, 2L],
                  complete = data[, 1L]),
             class = "data.frame",
@@ -300,7 +300,7 @@ oanda_stream <- function(instrument, server = c("practice", "live"), apikey) {
   handle_setheaders(handle = h,
                     "Authorization" = paste0("Bearer ", apikey),
                     "Accept-Datetime-Format" = "RFC3339",
-                    "User-Agent" = ichimoku_user_agent)
+                    "User-Agent" = x_user_agent)
 
   message("Streaming data... Press 'Esc' to return")
   curl_fetch_stream(url = url, handle = h, fun = function(x) {
@@ -708,7 +708,7 @@ oanda_instruments <- function(server = c("practice", "live"), apikey) {
       h <- new_handle()
       handle_setheaders(handle = h,
                         "Authorization" = paste0("Bearer ", apikey),
-                        "User-Agent" = ichimoku_user_agent)
+                        "User-Agent" = x_user_agent)
       resp <- curl_fetch_memory(url = url, handle = h)
       if (resp$status_code != 200L) stop("code ", resp$status_code, " - ",
                                          fromJSON(rawToChar(resp$content)), call. = FALSE)
@@ -744,7 +744,7 @@ oandaAccount <- function(server = c("practice", "live"), apikey) {
       h <- new_handle()
       handle_setheaders(handle = h,
                         "Authorization" = paste0("Bearer ", apikey),
-                        "User-Agent" = ichimoku_user_agent)
+                        "User-Agent" = x_user_agent)
       resp <- curl_fetch_memory(url = url, handle = h)
       if (resp$status_code != 200L) stop("code ", resp$status_code, " - ",
                                          fromJSON(rawToChar(resp$content)), call. = FALSE)

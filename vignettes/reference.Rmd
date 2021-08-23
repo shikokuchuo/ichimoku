@@ -66,7 +66,7 @@ library(ichimoku)
 
 ### Data
 
-ichimoku works with data frames and tabular data, and interfaces well with other R packages providing financial price data. The `ichimoku()` function is able to handle as input 'xts', 'data.frame', 'data.table', 'tibble', 'ArrowTabular', 'matrix', and possibly other 'data.frame' compatible objects. For further details see the section [file formats](#file-formats).
+ichimoku works with data frames and tabular data, and interfaces well with other R packages providing financial price data. The `ichimoku()` function is able to handle as input 'xts', 'data.frame', 'data.table', 'tibble', 'matrix', and possibly other 'data.frame' compatible objects. For further details see the section [file formats](#file-formats).
 
 ```{r loaddatanotrun, eval = FALSE}
 # ichimoku is designed to interface well with other packages, for example:
@@ -87,7 +87,7 @@ head(TKR)
 
 ichimoku recognises data in columns containing "open", "high", "low" and "close", which do not have to be nicely-formatted as in the example above and could also contain other text such as the ticker name. For further details see the section [data validation](#data-validation).
 
-Note: aim to retrieve as much data as possible, or slightly further back than the period being analysed. Run `ichimoku()` on the full dataset and then subset the data window when plotting to ensure that there is a full ichimoku cloud for all of the desired period. This is preferable to first subsetting the data and then calculating the ichimoku cloud as, given the cloud lines need several values to be calculated, there will be NAs and hence no cloud at the start of the data.
+Note: it is optimal to retrieve data starting from slightly further back than the period being analysed. This is as the cloud lines require several values to be calculated and hence there will be missing values at the start of the data. Run `ichimoku()` on the full dataset and then subset the data window when plotting to ensure that there is a full cloud for the entire chart.
 
 ### ichimoku()
 
@@ -167,9 +167,9 @@ For additional functionality, you may consider loading the 'xts' package to acce
 
 When calculating the future cloud, `ichimoku()` makes a call to the `tradingDays()` helper function to ensure that future dates fall on trading days (i.e. not weekends or holidays). By default, New Year's and Christmas day are defined as holidays as these are for all purposes universal across markets. These defaults should be acceptable for general use.
 
-However, if a particular strategy relies on the specific timing of the future cloud, and for the market under consideration other holidays are non-trading days, additional custom holidays may be defined via a 'holidays' argument to `ichimoku()` which is then passed on to the `tradingDays()` function.
+If for the market under consideration other holidays are non-trading days and you wish the future cloud to take this into account, additional custom holidays may be defined via a 'holidays' argument to `ichimoku()` which is then passed on to the `tradingDays()` function.
 
-If the relevant market trades on a 24/7 basis with no non-trading days, the parameter `noholidays` can specified. This will bypass the logic of `tradingDays()` and include all dates for calculating the future cloud.
+If the relevant market trades on a 24/7 basis, the parameter `noholidays` can specified. This will bypass the logic of `tradingDays()` and include all dates for calculating the future cloud.
 
 ```{r holidays, eval = FALSE}
 # Holidays can be specified directly via a vector of dates:
@@ -183,7 +183,6 @@ ichimoku(TKR, holidays = timeDate::holidayNYSE())
 ichimoku(TKR, noholidays = TRUE)
 
 ```
-
 
 ### plot()
 
@@ -252,37 +251,33 @@ The following arguments for customisation are shared across `plot()` and `iplot(
 - `launch.browser` [default TRUE] If TRUE, the system's default web browser will be launched automatically after the app is started. The value of this argument can also be a function to call with the application's URL. To use the default Shiny viewer in RStudio, please specify
 `getOption("shiny.launch.browser")`.
 
-### Archiving
+### archive()
 
-After completing an analysis, the resulting objects can be stored directly to disk. The function `archive()` provides seamless translation between ichimoku objects in an R session with binary files stored in the Apache Arrow IPC file format.
+After completing an analysis, the resulting objects can be stored directly to disk. The function `archive()` combines R's native serialisation capability with cryptographic verification of data integrity.
+
+Archive files created by this function are stored in the native RData format for maximum portability and reliability. They may be read using the base R `load()` function on machines without 'ichimoku' installed.
 
 #### Writing
 
-`archive()` for write operations will take 2 arguments: the ichimoku object to be written, and the file path/name of the file to be stored. A confirmation is printed to the console that the file has been written.
+`archive()` for write operations will take 2 arguments: the object to be written, and the file path/name of the file to be stored. A confirmation is printed to the console that the file has been written.
 
 #### Reading
 
 `archive()` for read operations takes a single argument: the file path/name of the file to be read. The return value of the function can be assigned to an object. A confirmation is printed to the console once the file has been read.
 
-#### Data Integrity Validation
+#### Data Integrity Verification
 
-Data integrity validation is performed by the cryptographic-grade sha256 hashing algorithm from the 'openssl' package. If 'openssl' is not available, the archive function still works in all respects but without the validation capability.
+Data integrity verification is performed by the cryptographic-grade sha256 hashing algorithm from the 'openssl' package. If 'openssl' is not available, the archive function still works in all respects but without the authentication capability.
 
-When an archive is written, a representation of the ichimoku object is hashed and stored in the archive. The sha256 hash value is printed to the console as confirmation.
+When an archive is written, the serialised object is hashed and the hash is also stored in the archive. The sha256 hash value is printed to the console as confirmation.
 
-When an archive is read back, the sha256 hash of the restored object is checked against the hash of the original stored in the archive. If identical, a 'data verified' message is printed to the console along with the matching sha256 hash.
-
-#### About Apache Arrow
-
-Apache Arrow provides the backend to the archive functions and requires the 'arrow' package to be installed. Apache Arrow is a high-performance, standardised, and language-independent columnar memory format. This means that the Arrow files created by ichimoku can equally be accessed by programs utilising Arrow bindings in all major languages including C, C++, Java, Python, etc.
-
-Note: the attributes of the ichimoku object are stored in the 'r' field of the Arrow schema metadata. This allows archived objects to be reconstructed faithfully, however this data is typically only read by R and ignored by other clients.
+When an archive is read back, the sha256 hash of the restored object is checked against the hash of the original stored in the archive. If identical, a 'data verified' message is printed to the console along with the authenticated sha256 hash.
 
 ## Troubleshooting
 
 ### File formats
 
-`ichimoku()` is a generic function that provides S3 methods for objects of class 'xts', 'data.frame', 'ArrowTabular' and 'matrix'. Other popular formats such as 'data.table' and 'tibble' that also inherit the class 'data.frame' should also work with `ichimoku()`.
+`ichimoku()` is a generic function that provides S3 methods for objects of class 'xts', 'data.frame' and 'matrix'. Other popular formats such as 'data.table' and 'tibble' that also inherit the class 'data.frame' should also work with `ichimoku()`.
 
 ichimoku has been designed to be fully pipeable and interfaces well with other R packages that return financial data. As an example, the `quantmod::getSymbols()` function from the 'quantmod' package currently exhibit non-standard R behaviour which assigns the data into an object but returns a text string containing the name of the object. ichimoku is able to handle this automatically such that a chart can be created without the need to save intermediate objects:
 
@@ -295,13 +290,13 @@ quantmod::getSymbols("C") %>% ichimoku() %>% plot()
 
 ### Reading external data into R
 
-For reading data in the 'json' format, which is commonly returned by web APIs, the `fromJSON()` function from the 'jsonlite' package is fairly ubiquitous. The function takes json strings so any raw vectors should first be wrapped in `rawToChar()`. 'jsonlite' is a dependency of ichimoku.
+For reading data in the 'json' format, which is commonly returned by web APIs, the `fromJSON()` function from the 'jsonlite' package can be used. The function takes json strings so any raw vectors should first be wrapped in `rawToChar()`. 'jsonlite' is a dependency of ichimoku.
 
-If an external data file employs a custom delimited format, the 'data.table' package contains the `fread()` function, which is often successful on default settings. Otherwise, `read_delim_arrow()` from the 'arrow' package may provide an even more performant alternative.
+If an external data file employs a custom delimited format, the `fread()` function from the 'data.table' package is often successful on default settings. Otherwise, `read_delim_arrow()` from the 'arrow' package provides an alternative.
 
-For csv files, `read_csv_arrow()` from the 'arrow' package can be a more performant choice than using `fread()` from 'data.table'.
+For csv files, `read_csv_arrow()` from the 'arrow' package or `fread()` from the 'data.table' package can be used.
 
-The 'arrow' package also contains the `read_feather()` and `read_parquet()` functions for reading in Apache Arrow IPC and Parquet file formats as either a 'data.frame' or Arrow Table, either of which can be handled directly by `ichimoku()`.
+The 'arrow' package also contains the `read_feather()` and `read_parquet()` functions for reading in Apache Arrow IPC and Parquet file formats.
 
 Alternatively, the 'datapasta' package allows data copied from tables on webpages or in spreadsheets etc. to be pasted into R as a dataframe or tibble.
 
@@ -344,12 +339,12 @@ There may however still be other issues with the input data that prevent cloud v
 
 The dependency on other packages is designed to be minimised to the extent possible. ichimoku currently has the following external package dependencies:
 
+- curl - for interfacing with external APIs
+- ggplot2 - the widely-used R graphics system for visualization
+- jsonlite - for parsing data retrieved from external APIs
+- rlang - R language requirement arising from the use of 'ggplot2'
 - xts - ichimoku object specification is based on the 'xts' format for time series
 - zoo - 'xts' is built on 'zoo' technology
-- ggplot2 - the widely-used R graphics system for visualization
-- rlang - R language requirement arising from the use of 'ggplot2'
-- curl - for interfacing with external APIs
-- jsonlite - for parsing data retrieved from external APIs
 
 Compile time:
 
@@ -357,16 +352,15 @@ Compile time:
 
 Optional:
 
-- shiny - a reactive framework for interactive visualizations
 - bslib - for visual customisation of 'shiny' applications
-- arrow - allows archiving of ichimoku objects as Apache Arrow files
-- openssl - for verification of the data integrity of archived objects
 - keyring - for saving API keys in the system credential store
+- openssl - for verification of the data integrity of archived objects
+- shiny - a reactive framework for interactive visualizations
 
 ## References
 
 Sasaki, H. 佐々木 英信 (1996), *一目均衡表の研究 [ichimoku kinkouhyou no kenkyuu]*. Tokyo, Japan: Toushi Radar.
 
-Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.0.0, <https://CRAN.R-project.org/package=ichimoku>.
+Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.1.0, <https://CRAN.R-project.org/package=ichimoku>.
 
 ---

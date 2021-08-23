@@ -22,10 +22,7 @@
  */
 
 #include <deque>
-#include "cpp11.hpp"
-
-using namespace cpp11;
-namespace writable = cpp11::writable;
+#include <cpp11.hpp>
 
 // types of calculations
 enum CalcType {MIN, MAX};
@@ -37,10 +34,10 @@ struct Args {
 };
 
 // calculates rolling window for {minimum, maximum}
-doubles roll_minmax(const doubles& x, Args a) {
+cpp11::doubles roll_minmax(const cpp11::doubles& x, Args a) {
 
   int n  = x.size();
-  writable::doubles rollx(n);
+  cpp11::writable::doubles rollx(n);
 
   std::deque< std::pair<long double, int> > deck;
   for (int i = 0; i < x.size(); ++i) {
@@ -66,15 +63,14 @@ doubles roll_minmax(const doubles& x, Args a) {
   return rollx;
 }
 
-
 [[cpp11::register]]
-doubles maxOver(const doubles& x, int window) {
+cpp11::doubles maxOver(const cpp11::doubles& x, int window) {
   Args a; a.window = window; a.ctype = MAX;
   return roll_minmax(x, a);
 }
 
 [[cpp11::register]]
-doubles minOver(const doubles& x, int window) {
+cpp11::doubles minOver(const cpp11::doubles& x, int window) {
   Args a; a.window = window; a.ctype = MIN;
   return roll_minmax(x, a);
 }

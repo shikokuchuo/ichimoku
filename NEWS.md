@@ -1,3 +1,9 @@
+# ichimoku 1.1.0
+
+* `archive()` moves to using the native RData format, enabling any R object to be stored perfectly with sha256 verfication. 'ArrowTabular' method for `ichimoku()` removed. 'arrow' optional dependency is retired.
+* Fixes data types bug present in v1.0.0 for dataframes returned by `oanda()`.
+* Fixes critical issues affecting the Solaris platform.
+
 # ichimoku 1.0.0
 
 #### ichimoku object specification release:
@@ -8,9 +14,9 @@
 #### New features:
 
 * New `archive()` function allows for archiving of ichimoku objects to files stored in the Apache Arrow IPC file format. Also uses sha256 hashing to ensure data integrity of archives - adds optional dependency on `openssl` package.
-* `ichimoku()` gains a new S3 method for the `ArrowTabular` class for working with Arrow Tables.
 * `oanda()` gains the capability to download over 5000 data periods in multiple (rate-limited) requests when both the 'from' and 'to' arguments are specified.
 * `look()` can now inspect any R object.
+* `ichimoku()` gains a new S3 method for the `ArrowTabular` class for working with Arrow Tables.
 * `tradingDays()` gets a 'noholidays' argument for use in markets that trade 24/7 with no non-trading days.
 * `iplot()` and `oanda_studio()` now use 'bslib' (a Shiny dependency) to enable theming of the entire UI rather than just the chart. Infotip candle direction symbols updated for greater clarity.
 * `xts_df()` and `matrix_df()` dataframe constructors gain a 'keep.attrs' argument. If set to TRUE, the returned dataframe will retain the custom attributes of the original object.
@@ -18,7 +24,7 @@
 
 #### Updates:
 
-* Implemented caching of certain OANDA variables so they are retrieved once and then used throughout a session.
+* Implements caching of certain OANDA variables so that they are retrieved once and then used throughout a session.
 * Charts of daily or lower frequency now have prettier and more usefully-aligned breaks using custom algorithm.
 * Improved handling of timezones. OANDA data and charts will now show correctly in the user timezone.
 * `oanda()` arguments 'from' and 'to' can now take any date-time format convertible to POSIXct.
@@ -26,13 +32,13 @@
 * `oanda_chart()` and `oanda_studio()` add explicit support for the 'periods' argument passed to `ichimoku()`.
 * `oanda_chart()` now passes on additional parameters to `autoplot()`.
 * `ichimoku()` now enforces data types on the price data for higher certainty of success, and has more robust handling of matrices and 'data.frame' compatible formats such as 'tibble'.
-* Fixed bug which caused `oanda()` not to return weekly data in certain cases.
-* Fixed bug in trade success statistics for short strategies returned by `strat()`.
+* Fixes bug which caused `oanda()` not to return weekly data in certain cases.
+* Corrects trade success statistics for short strategies returned by `strat()`.
 * The following functions are no longer exported to keep the package tidy: `grid_dup()`, `maxOver()`, `minOver()`, `oanda_accounts()`.
 * `sample_ohlc_data` slightly lengthened to better demonstrate strat features.
-* Added 'stats' R core package dependency for improved performance in strat functions.
-* Package now links to 'cpp11' headers, retiring 'Rcpp' dependency.
-* Package dependency 'httr' switched to 'curl' providing performance gains in the OANDA fxTrade API interface.
+* Adds 'stats' R core package dependency.
+* Package now links to 'cpp11' headers, retiring 'Rcpp' package dependency.
+* Package dependency 'httr' switched to 'curl'.
 * Miscellaneous performance optimisations.
 * Documentation refresh.
 
@@ -48,14 +54,14 @@
 
 #### Updates:
 
-* New dependencies on the 'httr' and 'jsonlite' packages, required for the OANDA fxTrade API interface.
-* `strat()` now takes optional 'c3' and 'c4' arguments to provide parameters for complex strategies. This allows a combined strategy to be specified directly using one `strat()` call rather than 2 separate `strat()` calls and a call to `stratcombine()`.
-* Plotly charts have been retired as they are simply not scalable to large datasets. `iplot()` now uses a Shiny backend providing similar/enhanced features. To contiune working with plotly, please use `plotly::ggplotly()` on plot objects created by `plot.ichimoku()`.
-* Argument 'gaps' for the plot functions is deprecated but remains available through the `gplot()` function until at least version 0.4.
-* Chikou span now the top layer in plots so visible over the candlesticks.
+* New dependencies on 'httr' and 'jsonlite' packages, required for the OANDA fxTrade API interface.
+* `strat()` now takes optional 'c3' and 'c4' arguments to provide parameters for complex strategies. This allows a combined strategy to be specified using a single `strat()` call.
+* `iplot()` now uses a Shiny backend. Plotly charts have been retired.
+* Argument 'gaps' for the plot functions is deprecated but remains available through `gplot()` for the time being.
+* Chikou span is now the top layer in plots so visible over the candlesticks.
 * Performance enhancements for principal functions, including optimised data validation and error handling code.
 * Certain helper functions renamed for consistency.
-* Documentation and README refresh.
+* Documentation refresh.
 
 # ichimoku 0.2.0
 
@@ -65,15 +71,14 @@
   - Visualization layer: compute and plot ichimoku cloud charts.
   - Strategy layer: tools for creating and backtesting ichimoku strategies.
   - ML layer: tools for further developing quantitative ichimoku solutions.
-* Create and backtest ichimoku strategies.
 * New all-greyscale 'mono' theme.
 * `tradingDays()` helper function to allow customisation of holidays when calculating the future cloud.
 
 #### Updates:
 
-* Ichimoku object specification updated - this is breaking but can be fixed by re-running `ichimoku()` on previous objects.
+* Ichimoku object specification updated.
 * Ichimoku objects now inherit 'xts' and 'zoo' classes for better integration with other econometrics and analytics packages.
-* Package now depends on 'Rcpp' and requires compilation - added more performant rolling window functions `minOver()` and `maxOver()` using customised C++ algorithm.
+* Package now requires compilation and adds 'Rcpp' dependency due to rolling window functions `minOver()` and `maxOver()` using custom C++ algorithm.
 * 'RcppRoll' and 'timeDate' package dependencies retired.
 * `sample_ohlc_data` updated to better demonstrate new features.
 * Updated with CRAN release status.

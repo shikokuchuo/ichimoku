@@ -20,8 +20,6 @@ test_that("ichimoku methods correct", {
   expect_s3_class(ichimoku(as.matrix(xts(sample_ohlc_data[, -1],
                                        order.by = sample_ohlc_data[, 1]))), "ichimoku")
   expect_identical(cloud, ichimoku(cloud))
-  skip_if_not_installed("arrow")
-  expect_s3_class(ichimoku(arrow::Table$create(sample_ohlc_data)), "ichimoku")
 })
 
 test_that("ichimoku handles higher frequency data", {
