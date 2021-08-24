@@ -15,6 +15,7 @@ test_that("archive functions ok", {
   expect_error(archive(file = file), "was not created")
   unlink(file)
   file <- tempfile()
+  x_archive_sha256 <- NA
   save(cloud, x_archive_sha256, file = file)
   expect_message(archive(file), "unverified")
   unlink(file)

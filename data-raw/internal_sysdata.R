@@ -12,7 +12,5 @@ ichimoku_themes <- cbind(
 )
 
 x_user_agent <- "r-ichimoku/1.1.0"
-x_archive_sha256 <- NA
 
-usethis::use_data(ichimoku_themes, x_user_agent, x_archive_sha256,
-                  internal = TRUE, overwrite = TRUE)
+usethis::use_data(ichimoku_themes, x_user_agent, internal = TRUE, overwrite = TRUE)

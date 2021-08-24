@@ -39,7 +39,7 @@
 #' Strategies & ML
 #' \itemize{
 #'     \item{\code{\link{strat}}} {to augment an ichimoku object with a strategy,
-#'     including combined and asymmetric complex strategies.}
+#'     including combined and asymmetric strategies.}
 #'     \item{\code{\link{stratcombine}}} {to create custom combined strategies.}
 #'     \item{\code{\link{autostrat}}} {to automatically evaluate and rank
 #'     top-performing strategies.}

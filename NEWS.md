@@ -1,6 +1,6 @@
 # ichimoku 1.1.0
 
-* `archive()` moves to using the native RData format, enabling any R object to be stored perfectly with sha256 verfication. 'ArrowTabular' method for `ichimoku()` removed. 'arrow' optional dependency is retired.
+* `archive()` moves to using the native RData format, enabling any R object to be stored perfectly with sha256 verification. 'ArrowTabular' method for `ichimoku()` removed. 'arrow' optional dependency is retired.
 * Fixes data types bug present in v1.0.0 for dataframes returned by `oanda()`.
 * Fixes critical issues affecting the Solaris platform.
 

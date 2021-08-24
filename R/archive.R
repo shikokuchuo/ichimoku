@@ -115,13 +115,14 @@ writeArchive <- function(object, file) {
     }
   }
 
+  x_archive_sha256 <- NA
   if (requireNamespace("openssl", quietly = TRUE)) {
     x_archive_sha256 <- openssl::sha256(serialize(object = object, connection = NULL))
   }
 
   save(object, x_archive_sha256, file = file, compress = TRUE)
   message("Archive written to '", file, "'\nsha256: ", x_archive_sha256,
-          if (is.na(x_archive_sha256[1])) " ['openssl' package not installed]")
+          if (is.na(x_archive_sha256[1L])) " ['openssl' package not installed]")
   invisible()
 }
 
@@ -145,12 +146,13 @@ readArchive <- function(file) {
   }
 
   x_archive_names <- load(file)
-  object <- get(x_archive_names[1])
   if (!length(x_archive_names) == 2L || !identical(x_archive_names[2], "x_archive_sha256")) {
     stop("archive file was not created by archive()", call. = FALSE)
   }
+  object <- get(x_archive_names[1L])
+  x_archive_sha256 <- get(x_archive_names[2L])
 
-  if (is.na(x_archive_sha256[1])) {
+  if (is.na(x_archive_sha256[1L])) {
     message("Archive read from '", file, "'\nData unverified: sha256 hash not present")
 
   } else if (requireNamespace("openssl", quietly = TRUE)) {

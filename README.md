@@ -6,8 +6,8 @@
 <!-- badges: start -->
 
 [![CRAN
-Status](https://www.r-pkg.org/badges/version/ichimoku)](https://CRAN.R-project.org/package=ichimoku)
-[![r-universe](https://shikokuchuo.r-universe.dev/badges/ichimoku)](https://shikokuchuo.r-universe.dev/)
+Status](https://www.r-pkg.org/badges/version/ichimoku?color=0b800e)](https://CRAN.R-project.org/package=ichimoku)
+[![r-universe](https://shikokuchuo.r-universe.dev/badges/ichimoku?color=6bd54f)](https://shikokuchuo.r-universe.dev/)
 [![R-CMD-check](https://github.com/shikokuchuo/ichimoku/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/shikokuchuo/ichimoku/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/shikokuchuo/ichimoku/branch/main/graph/badge.svg)](https://codecov.io/gh/shikokuchuo/ichimoku?branch=main)
@@ -128,7 +128,7 @@ autostrat(cloud, n = 3)
 
 -   [`strat()`](https://shikokuchuo.net/ichimoku/reference/strat.html) -
     to augment an ichimoku object with a strategy, including combined
-    and asymmetric complex strategies.
+    and asymmetric strategies.
 
 -   [`stratcombine()`](https://shikokuchuo.net/ichimoku/reference/stratcombine.html) -
     to create custom combined strategies.
