@@ -22,15 +22,6 @@
     <loc>https://shikokuchuo.net/ichimoku/reference/df_trim.html</loc>
   </url>
   <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/drawGuide.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/drawInfotip.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/getPrices.html</loc>
-  </url>
-  <url>
     <loc>https://shikokuchuo.net/ichimoku/reference/grid_dup.html</loc>
   </url>
   <url>
@@ -61,9 +52,6 @@
     <loc>https://shikokuchuo.net/ichimoku/reference/oanda.html</loc>
   </url>
   <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/oandaAccount.html</loc>
-  </url>
-  <url>
     <loc>https://shikokuchuo.net/ichimoku/reference/oanda_chart.html</loc>
   </url>
   <url>
@@ -88,9 +76,6 @@
     <loc>https://shikokuchuo.net/ichimoku/reference/print.ichimoku.html</loc>
   </url>
   <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/readArchive.html</loc>
-  </url>
-  <url>
     <loc>https://shikokuchuo.net/ichimoku/reference/reexports.html</loc>
   </url>
   <url>
@@ -107,15 +92,6 @@
   </url>
   <url>
     <loc>https://shikokuchuo.net/ichimoku/reference/tradingDays.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/writeArchive.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/writeMatrix.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/writeStrat.html</loc>
   </url>
   <url>
     <loc>https://shikokuchuo.net/ichimoku/reference/xts_df.html</loc>

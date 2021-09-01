@@ -73,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0.2</span>
       </span>
     </div>
 
@@ -149,9 +149,10 @@
 </h1>
 <ul>
 <li>
-<code><a href="../reference/archive.html">archive()</a></code> moves to using the native RData format, enabling any R object to be stored perfectly with sha256 verification. ‘ArrowTabular’ method for <code><a href="../reference/ichimoku.html">ichimoku()</a></code> removed. ‘arrow’ optional dependency is retired.</li>
-<li>Fixes data types bug present in v1.0.0 for dataframes returned by <code><a href="../reference/oanda.html">oanda()</a></code>.</li>
-<li>Fixes critical issues affecting the Solaris platform.</li>
+<code><a href="../reference/archive.html">archive()</a></code> moves to using the native RData format, enabling any R object to be stored perfectly with sha256 verification.</li>
+<li>‘ArrowTabular’ method for <code><a href="../reference/ichimoku.html">ichimoku()</a></code> removed and ‘arrow’ optional dependency retired.</li>
+<li>Fixes data types issue affecting dataframes returned by <code><a href="../reference/oanda.html">oanda()</a></code> in v1.0.0.</li>
+<li>Fixes critical issues affecting the Solaris platform in v1.0.0.</li>
 </ul>
 </div>
     <div id="ichimoku-100" class="section level1">
@@ -191,8 +192,8 @@
 <a href="#updates" class="anchor"></a>Updates:</h4>
 <ul>
 <li>Implements caching of certain OANDA variables so that they are retrieved once and then used throughout a session.</li>
-<li>Charts of daily or lower frequency now have prettier and more usefully-aligned breaks using custom algorithm.</li>
-<li>Improved handling of timezones. OANDA data and charts will now show correctly in the user timezone.</li>
+<li>Charts of daily or lower frequency now have prettier and more usefully-aligned breaks.</li>
+<li>Improved handling of timezones: OANDA data and charts will now show correctly in the user timezone.</li>
 <li>
 <code><a href="../reference/oanda.html">oanda()</a></code> arguments ‘from’ and ‘to’ can now take any date-time format convertible to POSIXct.</li>
 <li>
@@ -203,7 +204,7 @@
 <code><a href="../reference/oanda_chart.html">oanda_chart()</a></code> now passes on additional parameters to <code><a href="../reference/autoplot.html">autoplot()</a></code>.</li>
 <li>
 <code><a href="../reference/ichimoku.html">ichimoku()</a></code> now enforces data types on the price data for higher certainty of success, and has more robust handling of matrices and ‘data.frame’ compatible formats such as ‘tibble’.</li>
-<li>Fixes bug which caused <code><a href="../reference/oanda.html">oanda()</a></code> not to return weekly data in certain cases.</li>
+<li>Fixes issue which caused <code><a href="../reference/oanda.html">oanda()</a></code> not to return weekly data in certain cases.</li>
 <li>Corrects trade success statistics for short strategies returned by <code><a href="../reference/strat.html">strat()</a></code>.</li>
 <li>The following functions are no longer exported to keep the package tidy: <code><a href="../reference/grid_dup.html">grid_dup()</a></code>, <code>maxOver()</code>, <code>minOver()</code>, <code>oanda_accounts()</code>.</li>
 <li>
