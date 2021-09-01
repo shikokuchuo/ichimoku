@@ -19,7 +19,7 @@ A numeric vector.
 }
 \description{
 Create a vector of element positions of duplicates in the output of expand.grid
-    on 2 identical vectors. A faster method of creating combinations for 2
-    variabes than \code{utils::combn()}.
+    on 2 identical vectors. An efficient method of creating combinations for
+    2 variables.
 }
 \keyword{internal}

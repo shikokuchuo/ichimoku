@@ -197,7 +197,7 @@ strat <- function(x,
 #' @details The stategy summary may subsequently be accessed by the summary()
 #'     function or via \code{\link{look}}.
 #'
-#' @keywords internal
+#' @noRd
 #'
 writeStrat <- function(x, strategy, dir) {
 
@@ -281,12 +281,12 @@ stratcombine <- function(s1, s2) {
   if (!identical(core1[, 1:4], core2[, 1:4])) {
     stop("Strategies must be for the same data", call. = FALSE)
   }
-  dir <- attr(s1, "strat")["Direction", ][[1]]
-  if (!identical(dir, attr(s2, "strat")["Direction", ][[1]])) {
+  dir <- attr(s1, "strat")["Direction", ][[1L]]
+  if (!identical(dir, attr(s2, "strat")["Direction", ][[1L]])) {
     stop("Trade direction must be the same for all strategies", call. = FALSE)
   }
-  strat1 <- attr(s1, "strat")["Strategy", ][[1]]
-  strat2 <- attr(s2, "strat")["Strategy", ][[1]]
+  strat1 <- attr(s1, "strat")["Strategy", ][[1L]]
+  strat2 <- attr(s2, "strat")["Strategy", ][[1L]]
   if (identical(strat1, strat2)) return(s1)
 
   strategy <- paste0(strat1, " & ", strat2)

@@ -1,8 +1,9 @@
 test_that("archive functions ok", {
   skip_if_not_installed("openssl")
   cloud <- ichimoku(sample_ohlc_data)
-  archive(cloud, file <- tempfile())
-  restored <- archive(file)
+  file <- tempfile()
+  archive(object = cloud, file = file)
+  restored <- archive(file = file)
   unlink(file)
   expect_identical(restored, cloud)
   expect_error(archive(), "is used to")
@@ -12,7 +13,7 @@ test_that("archive functions ok", {
   expect_error(archive(object = cloud), "specified without")
   file <- tempfile()
   save(sample_ohlc_data, file = file)
-  expect_error(archive(file = file), "was not created")
+  expect_error(archive(file), "was not created")
   unlink(file)
   file <- tempfile()
   x_archive_sha256 <- NA

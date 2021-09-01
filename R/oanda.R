@@ -149,30 +149,13 @@ oanda <- function(instrument,
 #' Internal function used by ichimoku to retrieve price candles from the OANDA
 #'     fxTrade REST API.
 #'
-#' @param instrument string containing the base currency and quote currency
-#'     delimited by a '_' (for example "USD_JPY").
-#' @param granularity the granularity of the price data to fetch,
-#'     one of "M", "W", "D", "H12", "H8", "H6", "H4", "H3", "H2", "H1", "M30",
-#'     "M15", "M10", "M5", "M4", "M2", "M1", "S30", "S15", "S10", "S5".
-#' @param count (optional) the number of periods to return. The API supports a
-#'     maximum of 5000 for each individual request, and defaults to 500 if not
-#'     specified.
-#' @param from (optional) the start of the time range for which to fetch price
-#'     data, for example "2020-02-01".
-#' @param to (optional) the end of the time range for which to fetch price data,
-#'     for example "2020-06-30".
-#' @param price pricing component, one of "M" (midpoint), "B" (bid)
-#'     or "A" (ask).
-#' @param server select either the "practice" or "live" server
-#'     depending on the account type held with OANDA.
-#' @param apikey (optional) string containing the OANDA fxTrade API key (personal
-#'     access token), or function that returns this string.
+#' @inheritParams oanda
 #' @param .validate (optional) only used internally by other functions. Do not
 #'     set this parameter.
 #'
 #' @return A data.frame containing the price data requested.
 #'
-#' @keywords internal
+#' @noRd
 #'
 getPrices <- function(instrument, granularity, count, from, to, price,
                       server, apikey, .validate) {
@@ -730,7 +713,7 @@ oanda_instruments <- function(server = c("practice", "live"), apikey) {
 #' @return A character string of the first listed account the authorization
 #'     bearer token is authorized to access.
 #'
-#' @keywords internal
+#' @noRd
 #'
 oandaAccount <- function(server = c("practice", "live"), apikey) {
   cache <- NULL

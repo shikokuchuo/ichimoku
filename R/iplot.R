@@ -48,7 +48,7 @@ iplot <- function(x,
     if (missing(ticker)) ticker <- attr(x, "ticker")
     if (missing(message)) {
       message <- if (hasStrat(x) && isTRUE(strat)) {
-        paste0("Strategy: ", attr(x, "strat")["Strategy", ][[1]])
+        paste0("Strategy: ", attr(x, "strat")["Strategy", ][[1L]])
       }
     }
 
@@ -139,7 +139,7 @@ iplot <- function(x,
       session$onSessionEnded(function() shiny::stopApp())
     }
 
-    shiny::shinyApp(ui, server, options = list(launch.browser = launch.browser, ...))
+    shiny::shinyApp(ui = ui, server = server, options = list(launch.browser = launch.browser, ...))
 
   } else {
     message("Please install the 'shiny' package to enable interactive charting",
@@ -158,7 +158,7 @@ iplot <- function(x,
 #'
 #' @return An object of class 'shiny.tag' comprising the HTML to be rendered.
 #'
-#' @keywords internal
+#' @noRd
 #'
 drawGuide <- function(label, left, top) {
   shiny::wellPanel(
@@ -179,7 +179,7 @@ drawGuide <- function(label, left, top) {
 #'
 #' @return An object of class 'shiny.tag' comprising the HTML to be rendered.
 #'
-#' @keywords internal
+#' @noRd
 #'
 drawInfotip <- function(sdata, left_px, top_px) {
   shiny::wellPanel(

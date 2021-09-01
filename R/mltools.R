@@ -242,7 +242,7 @@ mlgrid <- function(x,
 #'
 #' @return A matrix with column headings.
 #'
-#' @keywords internal
+#' @noRd
 #'
 writeMatrix <- function(x, pairs, p2, xlen, type) {
 

@@ -1,8 +1,13 @@
+# ichimoku (under development)
+
+* Prevent generation of Rd files for strictly internal functions.
+
 # ichimoku 1.1.0
 
-* `archive()` moves to using the native RData format, enabling any R object to be stored perfectly with sha256 verification. 'ArrowTabular' method for `ichimoku()` removed. 'arrow' optional dependency is retired.
-* Fixes data types bug present in v1.0.0 for dataframes returned by `oanda()`.
-* Fixes critical issues affecting the Solaris platform.
+* `archive()` moves to using the native RData format, enabling any R object to be stored perfectly with sha256 verification.
+* 'ArrowTabular' method for `ichimoku()` removed and 'arrow' optional dependency retired.
+* Fixes data types issue affecting dataframes returned by `oanda()` in v1.0.0.
+* Fixes critical issues affecting the Solaris platform in v1.0.0.
 
 # ichimoku 1.0.0
 
@@ -25,14 +30,14 @@
 #### Updates:
 
 * Implements caching of certain OANDA variables so that they are retrieved once and then used throughout a session.
-* Charts of daily or lower frequency now have prettier and more usefully-aligned breaks using custom algorithm.
-* Improved handling of timezones. OANDA data and charts will now show correctly in the user timezone.
+* Charts of daily or lower frequency now have prettier and more usefully-aligned breaks.
+* Improved handling of timezones: OANDA data and charts will now show correctly in the user timezone.
 * `oanda()` arguments 'from' and 'to' can now take any date-time format convertible to POSIXct.
 * `oanda_studio()` subsets the plot window so as to always show a full cloud, consistent with the behaviour of `oanda_chart()`.
 * `oanda_chart()` and `oanda_studio()` add explicit support for the 'periods' argument passed to `ichimoku()`.
 * `oanda_chart()` now passes on additional parameters to `autoplot()`.
 * `ichimoku()` now enforces data types on the price data for higher certainty of success, and has more robust handling of matrices and 'data.frame' compatible formats such as 'tibble'.
-* Fixes bug which caused `oanda()` not to return weekly data in certain cases.
+* Fixes issue which caused `oanda()` not to return weekly data in certain cases.
 * Corrects trade success statistics for short strategies returned by `strat()`.
 * The following functions are no longer exported to keep the package tidy: `grid_dup()`, `maxOver()`, `minOver()`, `oanda_accounts()`.
 * `sample_ohlc_data` slightly lengthened to better demonstrate strat features.

@@ -471,7 +471,7 @@ print.ichimoku <- function(x, plot = TRUE, ...) {
   if (isTRUE(plot)) tryCatch(plot.ichimoku(x, ...),
                              error = function(e) invisible(),
                              warning = function(w) invisible())
-  NextMethod(print)
+  NextMethod()
   invisible(x)
 
 }
@@ -505,7 +505,7 @@ print.ichimoku <- function(x, plot = TRUE, ...) {
 #'
 summary.ichimoku <- function(object, strat = TRUE, ...) {
 
-  if (hasStrat(object) && isTRUE(strat)) attr(object, "strat") else NextMethod(summary)
+  if (hasStrat(object) && isTRUE(strat)) attr(object, "strat") else NextMethod()
 
 }
 

@@ -33,7 +33,7 @@ tradingDays <- function(x, holidays, ..., noholidays) {
   if (!missing(noholidays)) return(rep(TRUE, length(x)))
   posixlt <- as.POSIXlt.POSIXct(x)
   vec <- posixlt$wday %in% 1:5
-  vec[(posixlt$mon == 0 & posixlt$mday == 1) | (posixlt$mon == 11 & posixlt$mday == 25) ] <- FALSE
+  vec[(posixlt$mon == 0L & posixlt$mday == 1L) | (posixlt$mon == 11L & posixlt$mday == 25L)] <- FALSE
   if (!missing(holidays)) {
     holidays <- tryCatch(as.POSIXct(holidays),
                          error = function(e) {
@@ -48,8 +48,8 @@ tradingDays <- function(x, holidays, ..., noholidays) {
 #' Duplicates of expand.grid for 2 Variables
 #'
 #' Create a vector of element positions of duplicates in the output of expand.grid
-#'     on 2 identical vectors. A faster method of creating combinations for 2
-#'     variabes than \code{utils::combn()}.
+#'     on 2 identical vectors. An efficient method of creating combinations for
+#'     2 variables.
 #'
 #' @param n the length of vector passed to \code{expand.grid()}.
 #' @param omit.id (optional) set to TRUE to also select the elements where the 2
@@ -71,7 +71,7 @@ grid_dup <- function(n, omit.id) {
 
 #' Trim Dataframe Rows with NA Values
 #'
-#' Trim rows containing NA values from a 'data.frame' object. A more performant
+#' Trim rows containing NA values from a 'data.frame' object. An efficient
 #'     version of \code{stats::na.omit()} with no data validation or checking.
 #'
 #' @param x the data.frame to trim.
@@ -203,10 +203,10 @@ matrix_df <- function(x, keep.attrs) {
 df_merge <- function(...) {
   dots <- list(...)
   merge <- Reduce(function(x, y) merge.data.frame(x, y, all = TRUE), dots)
-  if (isTRUE(attr(dots[[1]], "oanda"))) {
+  if (isTRUE(attr(dots[[1L]], "oanda"))) {
     merge <- structure(merge,
-                       instrument = attr(dots[[1]], "instrument"),
-                       price = attr(dots[[1]], "price"),
+                       instrument = attr(dots[[1L]], "instrument"),
+                       price = attr(dots[[1L]], "price"),
                        timestamp = do.call(max, lapply(dots, attr, "timestamp")),
                        oanda = TRUE)
     if (FALSE %in% merge$complete) {
@@ -230,7 +230,7 @@ df_merge <- function(...) {
 #'     data in 'new' contains data with the same value for 'time' as 'old',
 #'     the data in 'new' will overwrite the data in 'old'.
 #'
-#'     If the 'timestamp' attribute has been set in 'new', this will be retained.
+#'     If the 'timestamp' attribute exists in 'new', this will be retained.
 #'
 #' @details Can be used to update price dataframes retrieved by \code{\link{oanda}}.
 #'     The function is designed to update existing data with new values as they

@@ -97,7 +97,7 @@ archive <- function(..., object, file) {
 #'
 #' @return Invisible NULL. 'object' is written to 'file' as a side effect.
 #'
-#' @keywords internal
+#' @noRd
 #'
 writeArchive <- function(object, file) {
 
@@ -136,7 +136,7 @@ writeArchive <- function(object, file) {
 #'
 #' @return The object that was originally archived.
 #'
-#' @keywords internal
+#' @noRd
 #'
 readArchive <- function(file) {
 
@@ -146,7 +146,7 @@ readArchive <- function(file) {
   }
 
   x_archive_names <- load(file)
-  if (!length(x_archive_names) == 2L || !identical(x_archive_names[2], "x_archive_sha256")) {
+  if (!length(x_archive_names) == 2L || !identical(x_archive_names[2L], "x_archive_sha256")) {
     stop("archive file was not created by archive()", call. = FALSE)
   }
   object <- get(x_archive_names[1L])

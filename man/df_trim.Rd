@@ -13,7 +13,7 @@ df_trim(x)
 The data.frame 'x' with rows containing NA values removed.
 }
 \description{
-Trim rows containing NA values from a 'data.frame' object. A more performant
+Trim rows containing NA values from a 'data.frame' object. An efficient
     version of \code{stats::na.omit()} with no data validation or checking.
 }
 \details{
