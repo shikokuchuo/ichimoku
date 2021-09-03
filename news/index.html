@@ -73,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.1</span>
       </span>
     </div>
 
@@ -143,6 +143,17 @@
       <small>Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="ichimoku-111" class="section level1">
+<h1 class="page-header" data-toc-text="1.1.1">
+<a href="#ichimoku-111" class="anchor"></a>ichimoku 1.1.1<small> Unreleased </small>
+</h1>
+<ul>
+<li>
+<code><a href="../reference/ichimoku.html">ichimoku()</a></code> now works with single price data to create approximate cloud charts when OHLC data is not found.</li>
+<li>Fixes certain cases where calculation of the future cloud could fail for data frequency lower than daily.</li>
+<li>Ensure all dates in <code>sample_ohlc_data</code> are working days.</li>
+</ul>
+</div>
     <div id="ichimoku-110" class="section level1">
 <h1 class="page-header" data-toc-text="1.1.0">
 <a href="#ichimoku-110" class="anchor"></a>ichimoku 1.1.0<small> 2021-08-23 </small>
@@ -164,7 +175,7 @@
 <a href="#ichimoku-object-specification-release" class="anchor"></a>ichimoku object specification release:</h4>
 <ul>
 <li>ichimoku objects created in versions prior to 0.3.51 will no longer work correctly with newer versions of the package.</li>
-<li>Please upgrade to the latest package version and run <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on previously-created objects to re-create them according to the new specification (data is preserved)</li>
+<li>Upgrade to the latest package version and run <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on previously-created objects to re-create them according to the new specification (data is preserved).</li>
 </ul>
 </div>
 <div id="new-features" class="section level4">

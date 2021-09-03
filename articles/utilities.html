@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.1</span>
       </span>
     </div>
 
@@ -190,8 +190,8 @@
 <span class="co">#&gt; Periods in market      178                 178                </span>
 <span class="co">#&gt; ---------------------  "----------"        "----------"       </span>
 <span class="co">#&gt; Direction              "long"              "long"             </span>
-<span class="co">#&gt; Start                  2020-03-31 23:00:00 2020-03-31 23:00:00</span>
-<span class="co">#&gt; End                    2020-10-29          2020-10-29         </span>
+<span class="co">#&gt; Start                  2020-04-19 23:00:00 2020-04-19 23:00:00</span>
+<span class="co">#&gt; End                    2020-12-23          2020-12-23         </span>
 <span class="co">#&gt; Ticker                 "TKR"               "TKR"              </span>
 <span class="co">#&gt;                        [,3]               </span>
 <span class="co">#&gt; Strategy               "senkouB &gt; kijun"  </span>
@@ -209,8 +209,8 @@
 <span class="co">#&gt; Periods in market      178                </span>
 <span class="co">#&gt; ---------------------  "----------"       </span>
 <span class="co">#&gt; Direction              "long"             </span>
-<span class="co">#&gt; Start                  2020-03-31 23:00:00</span>
-<span class="co">#&gt; End                    2020-10-29         </span>
+<span class="co">#&gt; Start                  2020-04-19 23:00:00</span>
+<span class="co">#&gt; End                    2020-12-23         </span>
 <span class="co">#&gt; Ticker                 "TKR"</span>
 
 <span class="co"># Extract the ichimoku object which is the second element of 'stratlist':</span>
@@ -243,8 +243,8 @@
 <span class="co">#&gt; Periods in market      178                </span>
 <span class="co">#&gt; ---------------------  "----------"       </span>
 <span class="co">#&gt; Direction              "long"             </span>
-<span class="co">#&gt; Start                  2020-03-31 23:00:00</span>
-<span class="co">#&gt; End                    2020-10-29         </span>
+<span class="co">#&gt; Start                  2020-04-19 23:00:00</span>
+<span class="co">#&gt; End                    2020-12-23         </span>
 <span class="co">#&gt; Ticker                 "TKR"</span></code></pre></div>
 </div>
 </div>
@@ -378,32 +378,32 @@
 <span class="co">#&gt;         time  open  high   low close</span>
 <span class="co">#&gt; 1 2020-01-02 123.0 123.1 122.5 122.7</span>
 <span class="co">#&gt; 2 2020-01-03 122.7 122.8 122.6 122.8</span>
-<span class="co">#&gt; 3 2020-01-05 122.8 123.4 122.4 123.3</span>
-<span class="co">#&gt; 4 2020-01-06 123.3 124.3 123.3 124.1</span>
-<span class="co">#&gt; 5 2020-01-07 124.1 124.8 124.0 124.8</span>
-<span class="co">#&gt; 6 2020-01-08 124.8 125.4 124.5 125.3</span>
+<span class="co">#&gt; 3 2020-01-06 122.8 123.4 122.4 123.3</span>
+<span class="co">#&gt; 4 2020-01-07 123.3 124.3 123.3 124.1</span>
+<span class="co">#&gt; 5 2020-01-08 124.1 124.8 124.0 124.8</span>
+<span class="co">#&gt; 6 2020-01-09 124.8 125.4 124.5 125.3</span>
 <span class="va">data2</span> <span class="op">&lt;-</span> <span class="va">sample_ohlc_data</span><span class="op">[</span><span class="fl">4</span><span class="op">:</span><span class="fl">10</span>, <span class="op">]</span>
 <span class="va">data2</span>
 <span class="co">#&gt;          time  open  high   low close</span>
-<span class="co">#&gt; 4  2020-01-06 123.3 124.3 123.3 124.1</span>
-<span class="co">#&gt; 5  2020-01-07 124.1 124.8 124.0 124.8</span>
-<span class="co">#&gt; 6  2020-01-08 124.8 125.4 124.5 125.3</span>
-<span class="co">#&gt; 7  2020-01-09 125.3 125.3 124.8 125.2</span>
-<span class="co">#&gt; 8  2020-01-10 125.2 125.3 125.1 125.2</span>
-<span class="co">#&gt; 9  2020-01-12 125.2 125.2 124.3 124.4</span>
-<span class="co">#&gt; 10 2020-01-13 124.4 124.5 123.7 123.9</span>
+<span class="co">#&gt; 4  2020-01-07 123.3 124.3 123.3 124.1</span>
+<span class="co">#&gt; 5  2020-01-08 124.1 124.8 124.0 124.8</span>
+<span class="co">#&gt; 6  2020-01-09 124.8 125.4 124.5 125.3</span>
+<span class="co">#&gt; 7  2020-01-10 125.3 125.3 124.8 125.2</span>
+<span class="co">#&gt; 8  2020-01-13 125.2 125.3 125.1 125.2</span>
+<span class="co">#&gt; 9  2020-01-14 125.2 125.2 124.3 124.4</span>
+<span class="co">#&gt; 10 2020-01-15 124.4 124.5 123.7 123.9</span>
 <span class="fu"><a href="../reference/df_merge.html">df_merge</a></span><span class="op">(</span><span class="va">data1</span>, <span class="va">data2</span><span class="op">)</span>
 <span class="co">#&gt;          time  open  high   low close</span>
 <span class="co">#&gt; 1  2020-01-02 123.0 123.1 122.5 122.7</span>
 <span class="co">#&gt; 2  2020-01-03 122.7 122.8 122.6 122.8</span>
-<span class="co">#&gt; 3  2020-01-05 122.8 123.4 122.4 123.3</span>
-<span class="co">#&gt; 4  2020-01-06 123.3 124.3 123.3 124.1</span>
-<span class="co">#&gt; 5  2020-01-07 124.1 124.8 124.0 124.8</span>
-<span class="co">#&gt; 6  2020-01-08 124.8 125.4 124.5 125.3</span>
-<span class="co">#&gt; 7  2020-01-09 125.3 125.3 124.8 125.2</span>
-<span class="co">#&gt; 8  2020-01-10 125.2 125.3 125.1 125.2</span>
-<span class="co">#&gt; 9  2020-01-12 125.2 125.2 124.3 124.4</span>
-<span class="co">#&gt; 10 2020-01-13 124.4 124.5 123.7 123.9</span></code></pre></div>
+<span class="co">#&gt; 3  2020-01-06 122.8 123.4 122.4 123.3</span>
+<span class="co">#&gt; 4  2020-01-07 123.3 124.3 123.3 124.1</span>
+<span class="co">#&gt; 5  2020-01-08 124.1 124.8 124.0 124.8</span>
+<span class="co">#&gt; 6  2020-01-09 124.8 125.4 124.5 125.3</span>
+<span class="co">#&gt; 7  2020-01-10 125.3 125.3 124.8 125.2</span>
+<span class="co">#&gt; 8  2020-01-13 125.2 125.3 125.1 125.2</span>
+<span class="co">#&gt; 9  2020-01-14 125.2 125.2 124.3 124.4</span>
+<span class="co">#&gt; 10 2020-01-15 124.4 124.5 123.7 123.9</span></code></pre></div>
 </div>
 <div id="df_append" class="section level4">
 <h4 class="hasAnchor">
@@ -421,40 +421,40 @@
 <code class="sourceCode R"><span class="va">data1</span> <span class="op">&lt;-</span> <span class="va">sample_ohlc_data</span><span class="op">[</span><span class="fl">7</span><span class="op">:</span><span class="fl">10</span>, <span class="op">]</span>
 <span class="va">data1</span>
 <span class="co">#&gt;          time  open  high   low close</span>
-<span class="co">#&gt; 7  2020-01-09 125.3 125.3 124.8 125.2</span>
-<span class="co">#&gt; 8  2020-01-10 125.2 125.3 125.1 125.2</span>
-<span class="co">#&gt; 9  2020-01-12 125.2 125.2 124.3 124.4</span>
-<span class="co">#&gt; 10 2020-01-13 124.4 124.5 123.7 123.9</span>
+<span class="co">#&gt; 7  2020-01-10 125.3 125.3 124.8 125.2</span>
+<span class="co">#&gt; 8  2020-01-13 125.2 125.3 125.1 125.2</span>
+<span class="co">#&gt; 9  2020-01-14 125.2 125.2 124.3 124.4</span>
+<span class="co">#&gt; 10 2020-01-15 124.4 124.5 123.7 123.9</span>
 <span class="va">data2</span> <span class="op">&lt;-</span> <span class="va">sample_ohlc_data</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span>, <span class="op">]</span>
 <span class="va">data2</span>
 <span class="co">#&gt;         time  open  high   low close</span>
 <span class="co">#&gt; 1 2020-01-02 123.0 123.1 122.5 122.7</span>
 <span class="co">#&gt; 2 2020-01-03 122.7 122.8 122.6 122.8</span>
-<span class="co">#&gt; 3 2020-01-05 122.8 123.4 122.4 123.3</span>
-<span class="co">#&gt; 4 2020-01-06 123.3 124.3 123.3 124.1</span>
-<span class="co">#&gt; 5 2020-01-07 124.1 124.8 124.0 124.8</span>
-<span class="co">#&gt; 6 2020-01-08 124.8 125.4 124.5 125.3</span>
-<span class="co">#&gt; 7 2020-01-09 125.3 125.3 124.8 125.2</span>
-<span class="co">#&gt; 8 2020-01-10 125.2 125.3 125.1 125.2</span>
+<span class="co">#&gt; 3 2020-01-06 122.8 123.4 122.4 123.3</span>
+<span class="co">#&gt; 4 2020-01-07 123.3 124.3 123.3 124.1</span>
+<span class="co">#&gt; 5 2020-01-08 124.1 124.8 124.0 124.8</span>
+<span class="co">#&gt; 6 2020-01-09 124.8 125.4 124.5 125.3</span>
+<span class="co">#&gt; 7 2020-01-10 125.3 125.3 124.8 125.2</span>
+<span class="co">#&gt; 8 2020-01-13 125.2 125.3 125.1 125.2</span>
 <span class="fu"><a href="../reference/df_append.html">df_append</a></span><span class="op">(</span><span class="va">data1</span>, <span class="va">data2</span><span class="op">)</span>
 <span class="co">#&gt;          time  open  high   low close</span>
 <span class="co">#&gt; 1  2020-01-02 123.0 123.1 122.5 122.7</span>
 <span class="co">#&gt; 2  2020-01-03 122.7 122.8 122.6 122.8</span>
-<span class="co">#&gt; 3  2020-01-05 122.8 123.4 122.4 123.3</span>
-<span class="co">#&gt; 4  2020-01-06 123.3 124.3 123.3 124.1</span>
-<span class="co">#&gt; 5  2020-01-07 124.1 124.8 124.0 124.8</span>
-<span class="co">#&gt; 6  2020-01-08 124.8 125.4 124.5 125.3</span>
-<span class="co">#&gt; 7  2020-01-09 125.3 125.3 124.8 125.2</span>
-<span class="co">#&gt; 8  2020-01-10 125.2 125.3 125.1 125.2</span>
-<span class="co">#&gt; 9  2020-01-12 125.2 125.2 124.3 124.4</span>
-<span class="co">#&gt; 10 2020-01-13 124.4 124.5 123.7 123.9</span></code></pre></div>
+<span class="co">#&gt; 3  2020-01-06 122.8 123.4 122.4 123.3</span>
+<span class="co">#&gt; 4  2020-01-07 123.3 124.3 123.3 124.1</span>
+<span class="co">#&gt; 5  2020-01-08 124.1 124.8 124.0 124.8</span>
+<span class="co">#&gt; 6  2020-01-09 124.8 125.4 124.5 125.3</span>
+<span class="co">#&gt; 7  2020-01-10 125.3 125.3 124.8 125.2</span>
+<span class="co">#&gt; 8  2020-01-13 125.2 125.3 125.1 125.2</span>
+<span class="co">#&gt; 9  2020-01-14 125.2 125.2 124.3 124.4</span>
+<span class="co">#&gt; 10 2020-01-15 124.4 124.5 123.7 123.9</span></code></pre></div>
 </div>
 </div>
 </div>
 <div id="references" class="section level2">
 <h2 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h2>
-<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.1.0, <a href="https://CRAN.R-project.org/package=ichimoku" class="uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
+<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.1.1, <a href="https://CRAN.R-project.org/package=ichimoku" class="uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
 <hr>
 </div>
   </div>
