@@ -61,7 +61,7 @@ Simply `ichimoku()` and `plot()`:
 
 ``` r
 cloud <- ichimoku(TKR)
-plot(cloud, window = "2020-04/")
+plot(cloud, window = "2020-05/")
 ```
 
 <img src="man/figures/README-ichimoku-1.png" />
@@ -87,8 +87,8 @@ autostrat(cloud, n = 3)
 #> Periods in market      178                178               178              
 #> ---------------------  "----------"       "----------"      "----------"     
 #> Direction              "long"             "long"            "long"           
-#> Start                  2020-04-01         2020-04-01        2020-04-01       
-#> End                    2020-10-29         2020-10-29        2020-10-29       
+#> Start                  2020-04-20         2020-04-20        2020-04-20       
+#> End                    2020-12-23         2020-12-23        2020-12-23       
 #> Ticker                 "TKR"              "TKR"             "TKR"
 ```
 
@@ -149,7 +149,7 @@ no kenkyuu]*. Tokyo, Japan: Toushi Radar.
 entity unaffiliated with the ichimoku package.
 
 Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko
-Hyo Strategies*. R package version 1.1.0,
+Hyo Strategies*. R package version 1.1.1,
 <https://CRAN.R-project.org/package=ichimoku>.
 
 –

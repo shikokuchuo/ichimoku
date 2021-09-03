@@ -53,16 +53,16 @@ interactively if not specified.}
 calculating the ichimoku cloud, \code{\link{autoplot}} to set chart
 parameters, or the 'options' argument of \code{shiny::shinyApp()}.}
 
-\item{launch.browser}{[default TRUE] If TRUE, the system's default web
-browser will be launched automatically after the app is started. The value
-of this argument can also be a function to call with the application's URL.
-To use the default Shiny viewer in RStudio, please specify
+\item{launch.browser}{[default TRUE] If TRUE, the system's default web browser
+will be launched automatically after the app is started. The value of this
+argument can also be a function to call with the application's URL. To use
+the default Shiny viewer in RStudio, please specify
 \code{getOption("shiny.launch.browser")}.}
 
 \item{periods}{[default c(9L, 26L, 52L)] a vector defining the length of
 periods used for the cloud. This parameter shoud not normally be modified
 as using other values would be invalid in the context of traditional
-Ichimoku analysis.}
+ichimoku analysis.}
 }
 \value{
 Returns a Shiny app object with class 'shiny.appobj'.

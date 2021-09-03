@@ -1,6 +1,8 @@
-# ichimoku (under development)
+# ichimoku 1.1.1
 
-* Prevent generation of Rd files for strictly internal functions.
+* `ichimoku()` now works with single price data to create approximate cloud charts when OHLC data is not found.
+* Fixes certain cases where calculation of the future cloud could fail for data frequency lower than daily.
+* Ensure all dates in `sample_ohlc_data` are working days.
 
 # ichimoku 1.1.0
 
@@ -14,7 +16,7 @@
 #### ichimoku object specification release:
 
 * ichimoku objects created in versions prior to 0.3.51 will no longer work correctly with newer versions of the package.
-* Please upgrade to the latest package version and run `ichimoku()` on previously-created objects to re-create them according to the new specification (data is preserved)
+* Upgrade to the latest package version and run `ichimoku()` on previously-created objects to re-create them according to the new specification (data is preserved).
 
 #### New features:
 

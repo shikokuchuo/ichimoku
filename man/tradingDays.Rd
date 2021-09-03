@@ -9,8 +9,8 @@ tradingDays(x, holidays, ..., noholidays)
 \arguments{
 \item{x}{a vector of POSIXct date objects.}
 
-\item{holidays}{(optional) a vector, or function which outputs a
-vector, of dates defined as holidays.}
+\item{holidays}{(optional) a vector, or function which outputs a vector, of
+dates defined as holidays.}
 
 \item{...}{other arguments not used by this function.}
 
@@ -28,7 +28,7 @@ A vector of logical values: TRUE if the corresponding element of 'x'
 Used by \code{\link{ichimoku}} to subset a vector of dates to trading days.
 }
 \details{
-New Year's Day (01/01) and Christmas Day (25/12) are defined as
+New Year's Day (01-01) and Christmas Day (12-25) are defined as
     holidays by default regardless of the values supplied by 'holidays'.
 }
 \examples{

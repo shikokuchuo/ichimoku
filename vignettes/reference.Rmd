@@ -66,18 +66,21 @@ library(ichimoku)
 
 ### Data
 
-ichimoku works with data frames and tabular data, and interfaces well with other R packages providing financial price data. The `ichimoku()` function is able to handle as input 'xts', 'data.frame', 'data.table', 'tibble', 'matrix', and possibly other 'data.frame' compatible objects. For further details see the section [file formats](#file-formats).
+ichimoku works with data frames and tabular data, and interfaces with other R packages providing financial price data. The `ichimoku()` function is able to handle as input xts, data.frame, data.table, tibble, matrix, and other data.frame compatible objects. For further details see the section [compatible formats](#compatible-formats).
 
 ```{r loaddatanotrun, eval = FALSE}
 # ichimoku is designed to interface well with other packages, for example:
 cloud <- ichimoku(quantmod::getSymbols("C"))
 ```
 
-ichimoku also has functions to return data for major currencies, metals, commodities, government bonds and stock indices directly from the OANDA fxTrade API. Please refer to the [OANDA vignette](xoanda.html).
+ichimoku also incorporates an interface with the OANDA fxTrade API to return data for major currencies, metals, commodities, government bonds and stock indices. Please refer to the [OANDA vignette](xoanda.html).
 
-The requirement on the input data is minimal, but it should contain an unambiguous date-time index and also at least High/Low/Close (HLC) price values for each time period. This is as the calculations of the cloud lines use variously the closing price as well as the midpoint between the highs/lows. It is not possible to calculate the ichimoku cloud correctly using just a single price per time period.
+```{r oandadatanotrun, eval = FALSE}
+# ichimoku can create clouds directly from OANDA data, for example:
+cloud <- ichimoku(oanda("USD_JPY"))
+```
 
-Full Open/High/Low/Close (OHLC) data should be used where available as this also allows accurate plotting of the candlesticks. If only HLC price data is available, ichimoku will take the opening price to be the closing price of the previous period, which may or may not be a good assumption depending on the type of security.
+The requirement on the input data is minimal: a series of prices indexed by valid date-times. 
 
 ```{r viewdata}
 # Simulated OHLC price data is assigned to data frame 'TKR':
@@ -85,9 +88,27 @@ TKR <- sample_ohlc_data
 head(TKR)
 ```
 
-ichimoku recognises data in columns containing "open", "high", "low" and "close", which do not have to be nicely-formatted as in the example above and could also contain other text such as the ticker name. For further details see the section [data validation](#data-validation).
+**Date-time index**
 
-Note: it is optimal to retrieve data starting from slightly further back than the period being analysed. This is as the cloud lines require several values to be calculated and hence there will be missing values at the start of the data. Run `ichimoku()` on the full dataset and then subset the data window when plotting to ensure that there is a full cloud for the entire chart.
+- Should be in a format convertible to POSIXct
+
+- ichimoku recognises indexes in columns with names containing 'date', 'time' or 'index', or else the row names of the dataset
+
+**Open/High/Low/Close (OHLC) data** should always be used where available.
+
+- ichimoku recognises data in columns with names containing 'open', 'high', 'low' and 'close'. These do not have to be nicely-formatted as in the example above and could also contain other text such as the ticker name. For further details see the section [data validation](#data-validation)
+
+- If only HLC price data is available, ichimoku will take the opening price to be the closing price of the previous period. *This means that the candlesticks will not be accurate, but calculation of the cloud lines is not affected*
+
+**Single price data** can also be used for producing an *approximate* cloud chart if, for example, OHLC data is not available or because the price is a calculated price such as VWAP.
+
+- If ichimoku does not find HLC data in the dataset, it will proceed to seek for single price data in columns with names containing 'price', 'value', or 'close'
+
+- ichimoku will construct a pseudo-OHLC series from the single price. It does this by assigning the opening price to be the closing price of the previous period, and the high and low to be the max and min respectively of the opening and closing prices
+
+- As the constructed OHLC series does not contain real high/low values, *the ichimoku cloud charts calculated in this way are not accurate and serve as approximations only*
+
+**Note on data retrieval:** it is optimal to retrieve data starting from slightly further back than the period being analysed. This is as the cloud lines require several values to be calculated and hence there will be missing values at the start of the data. Run `ichimoku()` on the full dataset and then subset the data window when plotting to ensure that there is a full cloud for the entire chart.
 
 ### ichimoku()
 
@@ -165,11 +186,11 @@ For additional functionality, you may consider loading the 'xts' package to acce
 
 #### Defining custom holidays
 
-When calculating the future cloud, `ichimoku()` makes a call to the `tradingDays()` helper function to ensure that future dates fall on trading days (i.e. not weekends or holidays). By default, New Year's and Christmas day are defined as holidays as these are for all purposes universal across markets. These defaults should be acceptable for general use.
+When calculating the future cloud for daily data, `ichimoku()` makes a call to the `tradingDays()` helper function to ensure that future dates fall on trading days (i.e. not weekends or holidays). By default, New Year's and Christmas day are defined as holidays as these are for all purposes universal across markets. These defaults should be acceptable for general use.
 
-If for the market under consideration other holidays are non-trading days and you wish the future cloud to take this into account, additional custom holidays may be defined via a 'holidays' argument to `ichimoku()` which is then passed on to the `tradingDays()` function.
+If you wish to define other dates as non-trading days, additional custom holidays may be supplied via a 'holidays' argument to `ichimoku()` which is then passed on to the `tradingDays()` function.
 
-If the relevant market trades on a 24/7 basis, the parameter `noholidays` can specified. This will bypass the logic of `tradingDays()` and include all dates for calculating the future cloud.
+If the relevant market trades on a 24/7 basis, the parameter `noholidays` can be specified. This will bypass the logic of `tradingDays()` and use all dates for calculating the future cloud.
 
 ```{r holidays, eval = FALSE}
 # Holidays can be specified directly via a vector of dates:
@@ -227,10 +248,10 @@ In a live analysis environment, as opposed to creating charts for reports, it ca
 
 #### Plot customisation
 
-A plot with default parameters is shown above, but the plot functions contain built-in customisations to allow for most envisioned use cases. The example below demonstrates the arguments that can be supplied to customise the plot.
+A plot with default parameters is shown above, but the plot functions contain built-in customisations to allow for most envisioned use cases. The example below demonstrates some of the arguments that can be supplied to customise the plot.
 
 ```{r plot2}
-plot(cloud, window = "2020-05-01/2020-11-02", ticker = "TKR Co.", message = "一目均衡表", theme = "dark")
+plot(cloud, window = "2020-05-01/2020-12-01", ticker = "TKR Co.", message = "一目均衡表", theme = "dark")
 ```
 
 The following arguments for customisation are shared across `plot()` and `iplot()`:
@@ -275,11 +296,13 @@ When an archive is read back, the sha256 hash of the restored object is checked 
 
 ## Troubleshooting
 
-### File formats
+### Compatible formats
 
-`ichimoku()` is a generic function that provides S3 methods for objects of class 'xts', 'data.frame' and 'matrix'. Other popular formats such as 'data.table' and 'tibble' that also inherit the class 'data.frame' should also work with `ichimoku()`.
+`ichimoku()` is a generic function that provides S3 methods for objects of class 'xts', 'data.frame' and 'matrix'.
 
-ichimoku has been designed to be fully pipeable and interfaces well with other R packages that return financial data. As an example, the `quantmod::getSymbols()` function from the 'quantmod' package currently exhibit non-standard R behaviour which assigns the data into an object but returns a text string containing the name of the object. ichimoku is able to handle this automatically such that a chart can be created without the need to save intermediate objects:
+Other formats such as 'data.table' and 'tibble' that inherit the class 'data.frame' should also work with `ichimoku()`.
+
+ichimoku has been designed to be fully pipeable and interfaces well with other R packages that return financial data. As an example, the `getSymbols()` function from the 'quantmod' package currently exhibits non-standard R behaviour which assigns the data into an object but returns a text string containing the name of the object. ichimoku is able to handle this automatically such that a chart can be created without the need to save intermediate objects:
 
 ```{r pipe, eval = FALSE}
 # Using R 4.1's new pipe operator:
@@ -287,18 +310,6 @@ quantmod::getSymbols("C") |> ichimoku() |> plot()
 # Or equally using the 'magrittr' pipe:
 quantmod::getSymbols("C") %>% ichimoku() %>% plot()
 ```
-
-### Reading external data into R
-
-For reading data in the 'json' format, which is commonly returned by web APIs, the `fromJSON()` function from the 'jsonlite' package can be used. The function takes json strings so any raw vectors should first be wrapped in `rawToChar()`. 'jsonlite' is a dependency of ichimoku.
-
-If an external data file employs a custom delimited format, the `fread()` function from the 'data.table' package is often successful on default settings. Otherwise, `read_delim_arrow()` from the 'arrow' package provides an alternative.
-
-For csv files, `read_csv_arrow()` from the 'arrow' package or `fread()` from the 'data.table' package can be used.
-
-The 'arrow' package also contains the `read_feather()` and `read_parquet()` functions for reading in Apache Arrow IPC and Parquet file formats.
-
-Alternatively, the 'datapasta' package allows data copied from tables on webpages or in spreadsheets etc. to be pasted into R as a dataframe or tibble.
 
 ### Data validation
 
@@ -310,11 +321,11 @@ ichimoku performs the following data validation steps before attempting to compu
 
 2. Searches for HLC price data in columns with names containing 'high', 'low' and 'close' (not case-dependent) respectively
 
-4. Checks that the dataset is longer than the medium cloud period. If this is not the case then none of the cloud lines can be calculated
+  + *If found:* Searches for opening price data in a column with name containing 'open' (not case-dependent) and *if not found* sets the opening prices to be the closing prices of the previous period
 
-3. Searches for opening price data in a column with name containing 'open' (not case-dependent)
+  + *If not found:* Searches for a single price series in columns with names containing 'price', 'value' and 'close' (not case-dependent), for which a pseudo-OHLC series will be reconstructed
 
-  + *If not found:* sets the opening prices to be the closing prices of the previous period
+3. Checks that the dataset is longer than the medium cloud period. If this is not the case then none of the cloud lines can be calculated
 
 There may however still be other issues with the input data that prevent cloud values from being computed, not handled explicitly by `ichimoku()`. For example, if:
 
@@ -333,7 +344,7 @@ There may however still be other issues with the input data that prevent cloud v
 #### Since version 0.x
 
 - The first ichimoku object specification was released in version 0.3.51 - ichimoku objects created in versions prior to 0.3.51 will no longer work correctly with newer versions of the package
-- Please upgrade to the latest package version and run `ichimoku()` on previously-created objects to re-create them according to the new specification (data is preserved)
+- Upgrade to the latest package version and run `ichimoku()` on previously-created objects to re-create them according to the new specification (data is preserved)
 
 ## Dependencies
 
@@ -341,26 +352,26 @@ The dependency on other packages is designed to be minimised to the extent possi
 
 - curl - for interfacing with external APIs
 - ggplot2 - the widely-used R graphics system for visualization
-- jsonlite - for parsing data retrieved from external APIs
+- jsonlite - for parsing JSON data retrieved from external APIs
 - rlang - R language requirement arising from the use of 'ggplot2'
-- xts - ichimoku object specification is based on the 'xts' format for time series
+- xts - ichimoku objects are based on the 'xts' format for time series
 - zoo - 'xts' is built on 'zoo' technology
 
 Compile time:
 
-- cpp11 - provides the C++ headers for fast window functions used by ichimoku
+- cpp11 - provides the C++ headers for various internal functions used by ichimoku
 
-Optional:
+Optional (provides additional features):
 
-- bslib - for visual customisation of 'shiny' applications
+- bslib - for full theming of 'shiny' applications
 - keyring - for saving API keys in the system credential store
 - openssl - for verification of the data integrity of archived objects
-- shiny - a reactive framework for interactive visualizations
+- shiny - for interactive visualizations
 
 ## References
 
 Sasaki, H. 佐々木 英信 (1996), *一目均衡表の研究 [ichimoku kinkouhyou no kenkyuu]*. Tokyo, Japan: Toushi Radar.
 
-Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.1.0, <https://CRAN.R-project.org/package=ichimoku>.
+Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.1.1, <https://CRAN.R-project.org/package=ichimoku>.
 
 ---

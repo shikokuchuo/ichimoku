@@ -37,10 +37,11 @@ test_that("ichimoku error handling ok", {
   expect_error(ichimoku(), regexp = "No object")
   expect_error(ichimoku(data.frame(time = 1:10)), regexp = "not convertible")
   expect_error(ichimoku(sample_ohlc_data[-1]), regexp = "Valid date-time")
-  expect_error(ichimoku(sample_ohlc_data[, -3]), regexp = "columns not found")
-  expect_error(ichimoku(sample_ohlc_data[1,]), regexp = "longer than")
-  expect_warning(ichimoku(sample_ohlc_data, periods = c(8, 15)), regexp = "cloud periods invalid")
+  expect_error(ichimoku(sample_ohlc_data[1, ]), regexp = "longer than")
+  expect_error(ichimoku(sample_ohlc_data[, -5]), regexp = "data not found")
+  expect_warning(ichimoku(sample_ohlc_data[, -3]), regexp = "pseudo-OHLC data")
   expect_warning(ichimoku(sample_ohlc_data[, -2]), regexp = "Opening prices")
+  expect_warning(ichimoku(sample_ohlc_data, periods = c(8, 15)), regexp = "cloud periods invalid")
 })
 
 test_that("ichimoku plot functions ok", {

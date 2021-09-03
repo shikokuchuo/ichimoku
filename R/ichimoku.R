@@ -15,7 +15,7 @@
 #' @param periods [default c(9L, 26L, 52L)] a vector defining the length of
 #'     periods used for the cloud. This parameter shoud not normally be modified
 #'     as using other values would be invalid in the context of traditional
-#'     Ichimoku analysis.
+#'     ichimoku analysis.
 #' @param ... additional arguments, for instance 'holidays', passed along to
 #'     \code{\link{tradingDays}} for calculating the future cloud on daily data.
 #'
@@ -23,15 +23,15 @@
 #'     and 'zoo'.
 #'
 #' @details Calling an ichimoku object automatically invokes its print method,
-#'     which will by default produce a printout of the data to the console as
-#'     well as a static plot of the cloud chart to the graphical device.
+#'     which by default produces a printout of the data to the console as well
+#'     as a static plot of the cloud chart to the graphical device.
 #'
-#'     For further options, please use plot() on the returned ichimoku object to
-#'     pass further arguments for customising the chart. Use iplot() for
+#'     For further options, use \code{plot()} on the returned ichimoku object to
+#'     pass further arguments for customising the chart. Use \code{iplot()} for
 #'     interactive charting.
 #'
-#'     Where an ichimoku object is passed to ichimoku(), the ichimoku object is
-#'     re-calculated using the OHLC pricing data contained within.
+#'     Where an ichimoku object is passed to \code{ichimoku()}, the ichimoku
+#'     object is re-calculated using the OHLC pricing data contained within.
 #'
 #' @section Object Specification:
 #'
@@ -130,16 +130,17 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), ...) {
 
   if (missing(ticker)) ticker <- deparse(substitute(x))
 
+  xlen <- dim(x)[1L]
   cnames <- attr(x, "names")
   coli <- grep("index|date|time", cnames, ignore.case = TRUE, perl = TRUE)[1L]
   if (!is.na(coli)) {
     index <- tryCatch(as.POSIXct(x[, coli, drop = TRUE]), error = function(e) {
-      stop("Index/date/time column not convertible to a POSIXct date-time format",
+      stop("Column '", cnames[coli], "' is not convertible to a POSIXct date-time format",
            call. = FALSE)
       })
   } else {
     index <- tryCatch(as.POSIXct(attr(x, "row.names")), error = function(e) {
-      stop("Valid date-time index not found within the dataset",
+      stop("Valid date-time index not found",
            call. = FALSE)
     })
   }
@@ -147,8 +148,31 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), ...) {
   coll <- grep("low", cnames, ignore.case = TRUE, perl = TRUE)[1L]
   colc <- grep("close", cnames, ignore.case = TRUE, perl = TRUE)[1L]
   if (anyNA(c(colh, coll, colc))) {
-    stop("Clearly-defined high/low/close columns not found within the dataset", call. = FALSE)
+    colp <- grep("price|value|close", cnames, ignore.case = TRUE, perl = TRUE)[1L]
+    if (is.na(colp)) {
+      stop("Price data not found - check column names for validity", call. = FALSE)
+    }
+    close <- as.numeric(x[, colp, drop = TRUE])
+    open <- c(NA, close[1:(xlen - 1L)])
+    high <- pmax.int(open, close)
+    low <- pmin.int(open, close)
+    warning("OHLC data not found - using pseudo-OHLC data constructed from '", cnames[colp],
+            "'\nThis is not a true ichimoku cloud chart but an approximation only", call. = FALSE)
+
+  } else {
+    high <- as.numeric(x[, colh, drop = TRUE])
+    low <- as.numeric(x[, coll, drop = TRUE])
+    close <- as.numeric(x[, colc, drop = TRUE])
+    colo <- grep("open", cnames, ignore.case = TRUE, perl = TRUE)[1L]
+    if (!is.na(colo)) {
+      open <- as.numeric(x[, colo, drop = TRUE])
+    } else {
+      warning("Opening prices not found - using previous closing prices as substitute",
+              "\nThis affects the candles but not the calculation of the cloud chart", call. = FALSE)
+      open <- c(NA, close[1:(xlen - 1L)])
+    }
   }
+
   if (is.numeric(periods) && length(periods) == 3L && all(periods >= 1)) {
     periods <- as.integer(periods)
   } else {
@@ -159,21 +183,9 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), ...) {
   p1 <- periods[1L]
   p2 <- periods[2L]
   p3 <- periods[3L]
-  xlen <- dim(x)[1L]
   if (p2 >= xlen) stop("Dataset must be longer than the medium cloud period '",
                        p2, "'", call. = FALSE)
 
-  high <- as.numeric(x[, colh, drop = TRUE])
-  low <- as.numeric(x[, coll, drop = TRUE])
-  close <- as.numeric(x[, colc, drop = TRUE])
-  colo <- grep("open", cnames, ignore.case = TRUE, perl = TRUE)[1L]
-  if (!is.na(colo)) {
-    open <- as.numeric(x[, colo, drop = TRUE])
-  } else {
-    warning("Opening prices not found - using previous closing prices as substitute",
-            "\nThis affects the candles but not the calculation of the cloud", call. = FALSE)
-    open <- c(NA, close[1:(xlen - 1L)])
-  }
   cd <- numeric(xlen)
   cd[open < close] <- 1
   cd[open > close] <- -1
@@ -186,15 +198,13 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), ...) {
   cloudT <- pmax.int(senkouA, senkouB)
   cloudB <- pmin.int(senkouA, senkouB)
 
-  periodicity <- min(index[2:4] - index[1:3])
-  future <- switch(attr(periodicity, "units"),
-                   days = {
-                     seq <- seq.POSIXt(from = index[length(index)], by = periodicity,
-                                       length.out = p2 + p2)[-1L]
-                     seq[tradingDays(seq, ...)][1:(p2 - 1L)]
-                     },
-                   seq.POSIXt(from = index[length(index)], by = periodicity,
-                              length.out = p2)[-1L])
+  periodicity <- min(unclass(index[2:4]) - unclass(index[1:3]))
+  future <- if (periodicity == 86400) {
+    seq <- seq.POSIXt(from = index[xlen], by = periodicity, length.out = p2 + p2)[-1L]
+    seq[tradingDays(seq, ...)][1:(p2 - 1L)]
+  } else {
+    seq.POSIXt(from = index[xlen], by = periodicity, length.out = p2)[-1L]
+  }
 
   structure(xts(cbind(open = c(open, rep(NA, p2 - 1L)),
                       high = c(high, rep(NA, p2 - 1L)),
@@ -211,7 +221,7 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), ...) {
                 order.by = c(index, future)),
             class = c("ichimoku", "xts", "zoo"),
             periods = periods,
-            periodicity = as.double.difftime(periodicity, units = "secs"),
+            periodicity = periodicity,
             ticker = ticker)
 
 }
@@ -290,9 +300,9 @@ NULL
 #' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 #'
 #' autoplot(cloud)
-#' autoplot(cloud, window = "2020-05-01/2020-11-02", theme = "dark")
-#' autoplot(cloud, window = "2020-04/", ticker = "TKR Co.", theme = "solarized")
-#' autoplot(cloud, window = "/2020-11-05", message = "Sample Price Data", theme = "mono")
+#' autoplot(cloud, window = "2020-05-01/2020-12-01", theme = "dark")
+#' autoplot(cloud, window = "2020-05/", ticker = "TKR Co.", theme = "solarized")
+#' autoplot(cloud, window = "/2020-11-02", message = "Sample Price Data", theme = "mono")
 #'
 #' @rdname autoplot.ichimoku
 #' @method autoplot ichimoku
@@ -418,9 +428,9 @@ autoplot.ichimoku <- function(object,
 #' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 #'
 #' plot(cloud)
-#' plot(cloud, window = "2020-05-01/2020-11-02", theme = "dark")
-#' plot(cloud, window = "2020-04/", ticker = "TKR Co.", theme = "solarized")
-#' plot(cloud, window = "/2020-11-05", message = "Sample Price Data", theme = "mono")
+#' plot(cloud, window = "2020-05-01/2020-12-01", theme = "dark")
+#' plot(cloud, window = "2020-05/", ticker = "TKR Co.", theme = "solarized")
+#' plot(cloud, window = "/2020-11-02", message = "Sample Price Data", theme = "mono")
 #'
 #' @method plot ichimoku
 #' @export

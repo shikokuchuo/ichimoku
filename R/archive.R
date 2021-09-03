@@ -65,13 +65,13 @@ archive <- function(..., object, file) {
 
     } else if (length(dots) > 2L) {
       stop("Too many arguments passed to archive()",
-           "\nFor read operations please specify 'file' only",
-           "\nFor write operations please specify both 'object' and 'file'", call. = FALSE)
+           "\nFor read operations specify 'file' only",
+           "\nFor write operations specify both 'object' and 'file'", call. = FALSE)
 
     } else {
       stop("archive() is used to read/write objects to/from archive files",
-           "\nFor read operations please specify 'file' only",
-           "\nFor write operations please specify both 'object' and 'file'", call. = FALSE)
+           "\nFor read operations specify 'file' only",
+           "\nFor write operations specify both 'object' and 'file'", call. = FALSE)
     }
 
   } else if (!missing(file)) {

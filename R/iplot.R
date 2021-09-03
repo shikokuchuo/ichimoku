@@ -11,10 +11,10 @@
 #' @inheritParams autoplot
 #' @param ... additional parameters passed along to the 'options' argument of
 #'     \code{shiny::shinyApp()}.
-#' @param launch.browser [default TRUE] If TRUE, the system's default web
-#'     browser will be launched automatically after the app is started. The value
-#'     of this argument can also be a function to call with the application's URL.
-#'     To use the default Shiny viewer in RStudio, please specify
+#' @param launch.browser [default TRUE] If TRUE, the system's default web browser
+#'     will be launched automatically after the app is started. The value of this
+#'     argument can also be a function to call with the application's URL. To use
+#'     the default Shiny viewer in RStudio, please specify
 #'     \code{getOption("shiny.launch.browser")}.
 #'
 #' @return Returns a Shiny app object with class 'shiny.appobj'.

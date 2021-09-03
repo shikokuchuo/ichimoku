@@ -22,9 +22,9 @@ knitr::opts_chunk$set(
 
 ichimoku contains an interface to the OANDA fxTrade API, creating a binding for the R language.
 
-OANDA is an authoritative source of foreign exchange data used by governments and global corporations alike. The API can be used for retrieving historical and live streaming price data for major currencies, metals, commodities, government bonds and stock indices.
+OANDA is an authoritative source of foreign exchange data used by corporations and governments around the world. The API can be used for retrieving historical and live streaming price data for major currencies, metals, commodities, government bonds and stock indices.
 
-It is considered a rich source of financial data with excellent availability. As an example, daily OHLC pricing data is available for major forex pairs from the start of 2005, with data granularity ranging from 5 seconds to monthly. For the total list of over 120 covered instruments please refer to the [Available Instruments](#available-instruments) section below.
+As an example of the financial data that is available: OHLC pricing data can be obtained for major forex pairs from the start of 2005 with granularity ranging from 5 seconds to monthly. For the total list of over 120 covered instruments please refer to the [Available Instruments](#available-instruments) section below.
 
 Please note that 'OANDA' and 'fxTrade' are trademarks owned by OANDA Corporation, an entity unaffiliated with the ichimoku package.
 
@@ -36,7 +36,7 @@ Registering for a 'demo' or 'practice' account is entirely free at the time of w
 
 After successful registration, a link can be found on your OANDA fxTrade account profile page 'Manage API Access' (My Account -> My Services -> Manage API Access). From there, a personal access token to use with the OANDA API can be generated, as well as revoked. This access token will enable all the OANDA functions in this package.
 
-Note: this package only contains functions for retrieving available instruments and price data. It does not contain any code which implements any trading capability whatsoever. Hence using your access token with this package should be safe even for live accounts. However, the access token can be used (outside of this package) for all operations on your account including placing orders and trades. It is recommended therefore, for maximum security, that you sign up for a demo/practice account and use the access token for that account even if you hold an existing live account with OANDA.
+Note: this package only contains functions for retrieving available instruments and price data. It does not contain any code to implement any trading capability whatsoever. Hence using your access token with this package should be safe even for live accounts. However, the access token can be used (outside of this package) for all operations on your account including placing orders and trades. It is therefore recommended, for maximum security, that you sign up for a demo/practice account and use the access token for that account even if you hold an existing live account with OANDA.
 
 ## Setting your OANDA API Key
 
@@ -242,6 +242,6 @@ If for any reason these become invalid or outdated, please restart your R sessio
 
 OANDA fxTrade API developer website: <https://developer.oanda.com/>.
 
-Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.1.0, <https://CRAN.R-project.org/package=ichimoku>.
+Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.1.1, <https://CRAN.R-project.org/package=ichimoku>.
 
 ---

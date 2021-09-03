@@ -59,8 +59,8 @@ This function is an S3 method for the generic function autoplot()
 cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 
 autoplot(cloud)
-autoplot(cloud, window = "2020-05-01/2020-11-02", theme = "dark")
-autoplot(cloud, window = "2020-04/", ticker = "TKR Co.", theme = "solarized")
-autoplot(cloud, window = "/2020-11-05", message = "Sample Price Data", theme = "mono")
+autoplot(cloud, window = "2020-05-01/2020-12-01", theme = "dark")
+autoplot(cloud, window = "2020-05/", ticker = "TKR Co.", theme = "solarized")
+autoplot(cloud, window = "/2020-11-02", message = "Sample Price Data", theme = "mono")
 
 }

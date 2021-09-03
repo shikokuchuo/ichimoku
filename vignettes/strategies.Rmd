@@ -30,7 +30,7 @@ However, it is often necessary to perform analysis on the data directly, for ins
 
 The 'strategy layer' of the ichimoku package aims to prepare the data in a standardized format for easy analysis in other R packages such as 'PerformanceAnalytics'. Short strategy summaries are generated automatically, but are designed to serve as a quick reference rather than a replacement for a full backtest.
 
-The `autostrat()` function is used to further facilitate idea generation, and leverages the computational capability of R to simultaneously test all valid indicator combinations. Whilst not all returned strategies may make intuitive sense, they will at a minimum serve to provide another benchmark. To reiterate, the results generated should be fed through a full backtest, with all the implications of that analysed.
+The `autostrat()` function is used to further facilitate idea generation, and leverages the computational capability of R to simultaneously test all valid indicator combinations. Whilst not all returned strategies may make intuitive sense, they will at a minimum serve to provide a further benchmark. To reiterate, the results generated should be fed through a full backtest, with all the implications of that analysed.
 
 Past results do not imply future performance, and any results obtained should not be relied upon on the basis of the results alone.
 
@@ -79,7 +79,7 @@ All events are aligned to their correct time periods, which are taken to be from
 
 - 'cond' refers to if the condition is satisfied at the 'close' of the period
 - 'posn' refers to whether a position is held at the 'close' of the period
-- 'txn' refers to if there has been a transaction during that period (in this case occurring at the 'open')
+- 'txn' refers to if there has been a transaction during the period (in this case occurring at the 'open')
 
 ### 2b. Complex strategies using `strat()` 
 
@@ -89,7 +89,7 @@ To create the desired complex strategy, the argument 'type' must also be specifi
 
 If 'type' is set to 3, the strategy will be formulated as an asymmetric strategy 'c1 > c2 x c3 > c4', where 'c1 > c2' is used as a position entry indicator, and 'c3 > c4' as a position exit indicator.
  
- + Note: when the strategy is for example 'close > tenkan x tenkan > close', this is equivalent to the simple strategy 'close > tenkan' but not identical due to the strict inequality. In the former case the situation 'close = tenkan' does not trigger a position exit but in the latter it does.
+ + Note: when the strategy is, for example, 'close > tenkan x tenkan > close', this is equivalent to the simple strategy 'close > tenkan' but not identical due to the strict inequality. In the former, the situation 'close = tenkan' does not trigger a position exit but in the latter it does
 
 ### 3. View strategy summary with `summary()`
 
@@ -136,7 +136,7 @@ Note: rather than combining simple strategies using `stratcombine()`, it is pref
 
 The strategy returns are saved within the ichimoku object in the columns 'slogret' (strategy log returns) and 'sret' (strategy discrete returns).
 
-The returns (benchmark) for all periods are saved as 'logret' (log returns) and 'ret' (discrete returns).
+The benchmark returns for all periods are saved as 'logret' (log returns) and 'ret' (discrete returns).
 
 As the ichimoku object inherits the 'xts' class, these columns may be fed directly into other econometrics or analytics packages such as 'PerformanceAnalytics', as per the example below.
 
@@ -184,7 +184,7 @@ autostrat(cloud, n = 3, dir = "short", level = "2")
 
 Set the argument `level = 3` to `autostrat()` to test all strategies using an asymmetric combination of up to 2 indicator conditions, i.e. strat() with type = 3.
 
-Please note that level 3 autostrat is considered somewhat experimental as the results will tend to have higher sensitivity to the data and in particular the starting conditions. This means that results will likely be less robust.
+Please note that level 3 autostrat is considered somewhat experimental as the results will tend to have higher sensitivity to the data and in particular the starting conditions.
 
 ```{r autostrat3}
 autostrat(cloud, n = 3, dir = "long", level = "3")
@@ -254,6 +254,6 @@ The 'y' column can be switched between log and discrete returns. The date-time i
 
 Sasaki, H. 佐々木 英信 (1996), *一目均衡表の研究 [ichimoku kinkouhyou no kenkyuu]*. Tokyo, Japan: Toushi Radar.
 
-Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.1.0, <https://CRAN.R-project.org/package=ichimoku>.
+Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.1.1, <https://CRAN.R-project.org/package=ichimoku>.
 
 ---

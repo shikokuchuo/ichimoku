@@ -34,7 +34,7 @@ otherwise this is set to the name of the input object 'x'.}
 \item{periods}{[default c(9L, 26L, 52L)] a vector defining the length of
 periods used for the cloud. This parameter shoud not normally be modified
 as using other values would be invalid in the context of traditional
-Ichimoku analysis.}
+ichimoku analysis.}
 }
 \value{
 An ichimoku object is returned with S3 classes of 'ichimoku', 'xts'
@@ -49,15 +49,15 @@ Create an ichimoku object containing values for all components of the
 }
 \details{
 Calling an ichimoku object automatically invokes its print method,
-    which will by default produce a printout of the data to the console as
-    well as a static plot of the cloud chart to the graphical device.
+    which by default produces a printout of the data to the console as well
+    as a static plot of the cloud chart to the graphical device.
 
-    For further options, please use plot() on the returned ichimoku object to
-    pass further arguments for customising the chart. Use iplot() for
+    For further options, use \code{plot()} on the returned ichimoku object to
+    pass further arguments for customising the chart. Use \code{iplot()} for
     interactive charting.
 
-    Where an ichimoku object is passed to ichimoku(), the ichimoku object is
-    re-calculated using the OHLC pricing data contained within.
+    Where an ichimoku object is passed to \code{ichimoku()}, the ichimoku
+    object is re-calculated using the OHLC pricing data contained within.
 }
 \section{Object Specification}{
 

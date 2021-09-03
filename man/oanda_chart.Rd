@@ -56,7 +56,7 @@ parameters.}
 \item{periods}{[default c(9L, 26L, 52L)] a vector defining the length of
 periods used for the cloud. This parameter shoud not normally be modified
 as using other values would be invalid in the context of traditional
-Ichimoku analysis.}
+ichimoku analysis.}
 }
 \value{
 Does not return a value, however a plot of the ichimoku chart for the
