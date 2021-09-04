@@ -1,8 +1,14 @@
 # ichimoku 1.1.1
 
-* `ichimoku()` now works with single price data to create approximate cloud charts when OHLC data is not found.
+#### New features:
+
+* `ichimoku()` adds ability to work with single price data to create approximate cloud charts when OHLC data is not found.
+
+#### Updates:
+
 * Fixes certain cases where calculation of the future cloud could fail for data frequency lower than daily.
-* Ensure all dates in `sample_ohlc_data` are working days.
+* Updates to `sample_ohlc_data` to adhere to working days etc.
+* Minor performance improvements for `ichimoku()`.
 
 # ichimoku 1.1.0
 
