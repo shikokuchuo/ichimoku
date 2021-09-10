@@ -73,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.5</span>
       </span>
     </div>
 
@@ -143,16 +143,21 @@
       <small>Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="ichimoku-111" class="section level1">
-<h1 class="page-header" data-toc-text="1.1.1">
-<a href="#ichimoku-111" class="anchor"></a>ichimoku 1.1.1<small> Unreleased </small>
+    <div id="ichimoku-115" class="section level1">
+<h1 class="page-header" data-toc-text="1.1.5">
+<a href="#ichimoku-115" class="anchor"></a>ichimoku 1.1.5<small> Unreleased </small>
 </h1>
 <div id="new-features" class="section level4">
 <h4 class="hasAnchor">
 <a href="#new-features" class="anchor"></a>New features:</h4>
 <ul>
 <li>
-<code><a href="../reference/ichimoku.html">ichimoku()</a></code> adds ability to work with single price data to create approximate cloud charts when OHLC data is not found.</li>
+<code><a href="../reference/ichimoku.html">ichimoku()</a></code> adds ability to create <em>pseudo</em> cloud charts from single series price data where OHLC data is not available.</li>
+<li>New ‘keep.data’ argument for <code><a href="../reference/ichimoku.html">ichimoku()</a></code> to preserve additional data present in the input object.</li>
+<li>New ‘type’ argument for <code><a href="../reference/plot.ichimoku.html">plot.ichimoku()</a></code> and <code><a href="../reference/iplot.html">iplot()</a></code> enables a choice of oscillator (R-type and S-type) to be shown as a sub-plot.</li>
+<li>New ‘custom’ argument for <code><a href="../reference/plot.ichimoku.html">plot.ichimoku()</a></code> and <code><a href="../reference/iplot.html">iplot()</a></code> to enable custom data variable to be shown beneath the ichimoku cloud chart as either a line or bar chart.</li>
+<li>
+<code><a href="../reference/oanda_studio.html">oanda_studio()</a></code> adds a button for saving the underlying data of the live ichimoku cloud chart using <code><a href="../reference/archive.html">archive()</a></code>.</li>
 </ul>
 </div>
 <div id="updates" class="section level4">
@@ -160,8 +165,11 @@
 <a href="#updates" class="anchor"></a>Updates:</h4>
 <ul>
 <li>Fixes certain cases where calculation of the future cloud could fail for data frequency lower than daily.</li>
-<li>Updates to <code>sample_ohlc_data</code> to adhere to working days etc.</li>
-<li>Minor performance improvements for <code><a href="../reference/ichimoku.html">ichimoku()</a></code>.</li>
+<li>Updates to <code>sample_ohlc_data</code> to add volume column, adhere to working days etc.</li>
+<li>Argument ‘message’ renamed to ‘subtitle’ across all plot functions for clarity.</li>
+<li>New sub-plot functionality adds ‘gridExtra’ package dependency.</li>
+<li>Minor performance improvements for <code><a href="../reference/ichimoku.html">ichimoku()</a></code>, plot functions and various utilities.</li>
+<li>Vignettes updates</li>
 </ul>
 </div>
 </div>
@@ -169,13 +177,23 @@
 <h1 class="page-header" data-toc-text="1.1.0">
 <a href="#ichimoku-110" class="anchor"></a>ichimoku 1.1.0<small> 2021-08-23 </small>
 </h1>
+<div id="new-features-1" class="section level4">
+<h4 class="hasAnchor">
+<a href="#new-features-1" class="anchor"></a>New features:</h4>
 <ul>
 <li>
 <code><a href="../reference/archive.html">archive()</a></code> moves to using the native RData format, enabling any R object to be stored perfectly with sha256 verification.</li>
+</ul>
+</div>
+<div id="updates-1" class="section level4">
+<h4 class="hasAnchor">
+<a href="#updates-1" class="anchor"></a>Updates:</h4>
+<ul>
 <li>‘ArrowTabular’ method for <code><a href="../reference/ichimoku.html">ichimoku()</a></code> removed and ‘arrow’ optional dependency retired.</li>
 <li>Fixes data types issue affecting dataframes returned by <code><a href="../reference/oanda.html">oanda()</a></code> in v1.0.0.</li>
 <li>Fixes critical issues affecting the Solaris platform in v1.0.0.</li>
 </ul>
+</div>
 </div>
     <div id="ichimoku-100" class="section level1">
 <h1 class="page-header" data-toc-text="1.0.0">
@@ -183,15 +201,15 @@
 </h1>
 <div id="ichimoku-object-specification-release" class="section level4">
 <h4 class="hasAnchor">
-<a href="#ichimoku-object-specification-release" class="anchor"></a>ichimoku object specification release:</h4>
+<a href="#ichimoku-object-specification-release" class="anchor"></a><em>ichimoku object specification release:</em>
+</h4>
 <ul>
-<li>ichimoku objects created in versions prior to 0.3.51 will no longer work correctly with newer versions of the package.</li>
-<li>Upgrade to the latest package version and run <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on previously-created objects to re-create them according to the new specification (data is preserved).</li>
+<li>ichimoku objects created in versions prior to 0.3.51 will no longer work correctly with newer versions of the package. Upgrade to the latest package version and run <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on previously-created objects to re-create them according to the new specification (data is preserved).</li>
 </ul>
 </div>
-<div id="new-features-1" class="section level4">
+<div id="new-features-2" class="section level4">
 <h4 class="hasAnchor">
-<a href="#new-features-1" class="anchor"></a>New features:</h4>
+<a href="#new-features-2" class="anchor"></a>New features:</h4>
 <ul>
 <li>New <code><a href="../reference/archive.html">archive()</a></code> function allows for archiving of ichimoku objects to files stored in the Apache Arrow IPC file format. Also uses sha256 hashing to ensure data integrity of archives - adds optional dependency on <code>openssl</code> package.</li>
 <li>
@@ -209,9 +227,9 @@
 <li>Re-export functions for working with ichimoku objects: <code><a href="https://rdrr.io/pkg/zoo/man/index.html">index()</a></code>, <code><a href="https://rdrr.io/pkg/zoo/man/coredata.html">coredata()</a></code> from ‘zoo’, and <code><a href="https://rdrr.io/pkg/xts/man/xts.html">xts()</a></code> from the ‘xts’ package.</li>
 </ul>
 </div>
-<div id="updates-1" class="section level4">
+<div id="updates-2" class="section level4">
 <h4 class="hasAnchor">
-<a href="#updates-1" class="anchor"></a>Updates:</h4>
+<a href="#updates-2" class="anchor"></a>Updates:</h4>
 <ul>
 <li>Implements caching of certain OANDA variables so that they are retrieved once and then used throughout a session.</li>
 <li>Charts of daily or lower frequency now have prettier and more usefully-aligned breaks.</li>
@@ -243,9 +261,9 @@
 <h1 class="page-header" data-toc-text="0.3.0">
 <a href="#ichimoku-030" class="anchor"></a>ichimoku 0.3.0<small> 2021-07-22 </small>
 </h1>
-<div id="new-features-2" class="section level4">
+<div id="new-features-3" class="section level4">
 <h4 class="hasAnchor">
-<a href="#new-features-2" class="anchor"></a>New features:</h4>
+<a href="#new-features-3" class="anchor"></a>New features:</h4>
 <ul>
 <li>OANDA fxTrade API interface for retrieving price data: new <code><a href="../reference/oanda.html">oanda()</a></code>, <code><a href="../reference/oanda_stream.html">oanda_stream()</a></code> and <code><a href="../reference/oanda_chart.html">oanda_chart()</a></code> functions.</li>
 <li>
@@ -258,9 +276,9 @@
 <code><a href="../reference/strat.html">strat()</a></code> and <code><a href="../reference/autostrat.html">autostrat()</a></code> gain a new type/level 3 for asymmetric strategies using different indicators for position entry and exit.</li>
 </ul>
 </div>
-<div id="updates-2" class="section level4">
+<div id="updates-3" class="section level4">
 <h4 class="hasAnchor">
-<a href="#updates-2" class="anchor"></a>Updates:</h4>
+<a href="#updates-3" class="anchor"></a>Updates:</h4>
 <ul>
 <li>New dependencies on ‘httr’ and ‘jsonlite’ packages, required for the OANDA fxTrade API interface.</li>
 <li>
@@ -279,9 +297,9 @@
 <h1 class="page-header" data-toc-text="0.2.0">
 <a href="#ichimoku-020" class="anchor"></a>ichimoku 0.2.0<small> 2021-06-17 </small>
 </h1>
-<div id="new-features-3" class="section level4">
+<div id="new-features-4" class="section level4">
 <h4 class="hasAnchor">
-<a href="#new-features-3" class="anchor"></a>New features:</h4>
+<a href="#new-features-4" class="anchor"></a>New features:</h4>
 <ul>
 <li>ichimoku now has the following capabilities:
 <ul>
@@ -295,9 +313,9 @@
 <code><a href="../reference/tradingDays.html">tradingDays()</a></code> helper function to allow customisation of holidays when calculating the future cloud.</li>
 </ul>
 </div>
-<div id="updates-3" class="section level4">
+<div id="updates-4" class="section level4">
 <h4 class="hasAnchor">
-<a href="#updates-3" class="anchor"></a>Updates:</h4>
+<a href="#updates-4" class="anchor"></a>Updates:</h4>
 <ul>
 <li>Ichimoku object specification updated.</li>
 <li>Ichimoku objects now inherit ‘xts’ and ‘zoo’ classes for better integration with other econometrics and analytics packages.</li>

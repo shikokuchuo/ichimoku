@@ -77,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.5</span>
       </span>
     </div>
 
@@ -158,9 +158,11 @@
     <pre class="usage"><span class='fu'>iplot</span><span class='op'>(</span>
   <span class='va'>x</span>,
   <span class='va'>ticker</span>,
+  <span class='va'>subtitle</span>,
   theme <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"original"</span>, <span class='st'>"dark"</span>, <span class='st'>"solarized"</span>, <span class='st'>"mono"</span><span class='op'>)</span>,
-  <span class='va'>message</span>,
   strat <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"none"</span>, <span class='st'>"r"</span>, <span class='st'>"s"</span>, <span class='st'>"bar"</span>, <span class='st'>"line"</span><span class='op'>)</span>,
+  <span class='va'>custom</span>,
   <span class='va'>...</span>,
   launch.browser <span class='op'>=</span> <span class='cn'>TRUE</span>
 <span class='op'>)</span></pre>
@@ -179,20 +181,33 @@ chart heading. If not set, the ticker saved within the ichimoku object
 will be used.</p></td>
     </tr>
     <tr>
+      <th>subtitle</th>
+      <td><p>(optional) specify a subtitle to display under the chart title.</p></td>
+    </tr>
+    <tr>
       <th>theme</th>
       <td><p>[default 'original'] with alternative choices of 'dark',
 'solarized' or 'mono'.</p></td>
     </tr>
     <tr>
-      <th>message</th>
-      <td><p>(optional) specify a chart message to display under the title.</p></td>
-    </tr>
-    <tr>
       <th>strat</th>
       <td><p>[default TRUE] if the ichimoku object contains a strategy, the
 periods for which the strategy results in a position will be shaded, and
-the strategy printed as the chart message (if a message is not already
-specified). Set to FALSE to turn off this behaviour.</p></td>
+the strategy printed as the chart subtitle (if not otherwise specified).
+Set to FALSE to turn off this behaviour.</p></td>
+    </tr>
+    <tr>
+      <th>type</th>
+      <td><p>[default 'none'] type of sub-plot to display beneath the ichimoku
+cloud chart, with a choice of 'none', 'r' or 's' for the corresponding
+oscillator type, and 'bar' or 'line' for custom plots.</p></td>
+    </tr>
+    <tr>
+      <th>custom</th>
+      <td><p>(optional) character string (containing a regular expression)
+matching the column name of the variable to be displayed as sub-plot.
+Specify <code>type = 'bar'</code> or <code>type = 'line'</code>, otherwise other type
+settings will take precedence.</p></td>
     </tr>
     <tr>
       <th>...</th>

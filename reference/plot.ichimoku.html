@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.5</span>
       </span>
     </div>
 
@@ -141,7 +141,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plot Ichimoku Cloud Chart</h1>
-    <small class="dont-index">Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/R/ichimoku.R'><code>R/ichimoku.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/R/plot.R'><code>R/plot.R</code></a></small>
     <div class="hidden name"><code>plot.ichimoku.Rd</code></div>
     </div>
 
@@ -154,9 +154,11 @@
   <span class='va'>x</span>,
   <span class='va'>window</span>,
   <span class='va'>ticker</span>,
-  <span class='va'>message</span>,
+  <span class='va'>subtitle</span>,
   theme <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"original"</span>, <span class='st'>"dark"</span>, <span class='st'>"solarized"</span>, <span class='st'>"mono"</span><span class='op'>)</span>,
   strat <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"none"</span>, <span class='st'>"r"</span>, <span class='st'>"s"</span>, <span class='st'>"bar"</span>, <span class='st'>"line"</span><span class='op'>)</span>,
+  <span class='va'>custom</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
@@ -180,8 +182,8 @@ chart heading. If not set, the ticker saved within the ichimoku object
 will be used.</p></td>
     </tr>
     <tr>
-      <th>message</th>
-      <td><p>(optional) specify a chart message to display under the title.</p></td>
+      <th>subtitle</th>
+      <td><p>(optional) specify a subtitle to display under the chart title.</p></td>
     </tr>
     <tr>
       <th>theme</th>
@@ -192,19 +194,33 @@ will be used.</p></td>
       <th>strat</th>
       <td><p>[default TRUE] if the ichimoku object contains a strategy, the
 periods for which the strategy results in a position will be shaded, and
-the strategy printed as the chart message (if a message is not already
-specified). Set to FALSE to turn off this behaviour.</p></td>
+the strategy printed as the chart subtitle (if not otherwise specified).
+Set to FALSE to turn off this behaviour.</p></td>
+    </tr>
+    <tr>
+      <th>type</th>
+      <td><p>[default 'none'] type of sub-plot to display beneath the ichimoku
+cloud chart, with a choice of 'none', 'r' or 's' for the corresponding
+oscillator type, and 'bar' or 'line' for custom plots.</p></td>
+    </tr>
+    <tr>
+      <th>custom</th>
+      <td><p>(optional) character string (containing a regular expression)
+matching the column name of the variable to be displayed as sub-plot.
+Specify <code>type = 'bar'</code> or <code>type = 'line'</code>, otherwise other type
+settings will take precedence.</p></td>
     </tr>
     <tr>
       <th>...</th>
       <td><p>additional arguments passed along to the print method for 'ggplot'
-objects.</p></td>
+objects when <code>type = 'none'</code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns a ggplot2 object with classes 'gg' and 'ggplot'.</p>
+    <p>Returns the ichimoku object supplied (invisibly). The requested plot
+    is output to the graphical device as a side effect.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>This function is an S3 method for the generic function plot() for
@@ -222,9 +238,14 @@ objects.</p></td>
 
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>cloud</span><span class='op'>)</span>
 </div><div class='img'><img src='plot.ichimoku-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>cloud</span>, window <span class='op'>=</span> <span class='st'>"2020-05-01/2020-12-01"</span>, theme <span class='op'>=</span> <span class='st'>"dark"</span><span class='op'>)</span>
-</div><div class='img'><img src='plot.ichimoku-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>cloud</span>, window <span class='op'>=</span> <span class='st'>"2020-05/"</span>, ticker <span class='op'>=</span> <span class='st'>"TKR Co."</span>, theme <span class='op'>=</span> <span class='st'>"solarized"</span><span class='op'>)</span>
-</div><div class='img'><img src='plot.ichimoku-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>cloud</span>, window <span class='op'>=</span> <span class='st'>"/2020-11-02"</span>, message <span class='op'>=</span> <span class='st'>"Sample Price Data"</span>, theme <span class='op'>=</span> <span class='st'>"mono"</span><span class='op'>)</span>
+</div><div class='img'><img src='plot.ichimoku-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>cloud</span>, window <span class='op'>=</span> <span class='st'>"2020-05/"</span>, ticker <span class='op'>=</span> <span class='st'>"TKR Co."</span>, theme <span class='op'>=</span> <span class='st'>"solarized"</span>, type <span class='op'>=</span> <span class='st'>"s"</span><span class='op'>)</span>
+</div><div class='img'><img src='plot.ichimoku-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>cloud</span>, window <span class='op'>=</span> <span class='st'>"/2020-11-02"</span>, subtitle <span class='op'>=</span> <span class='st'>"Sample Price Data"</span>, theme <span class='op'>=</span> <span class='st'>"mono"</span>, type <span class='op'>=</span> <span class='st'>"r"</span><span class='op'>)</span>
 </div><div class='img'><img src='plot.ichimoku-4.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='va'>kumo</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ichimoku.html'>ichimoku</a></span><span class='op'>(</span><span class='va'>sample_ohlc_data</span>, ticker <span class='op'>=</span> <span class='st'>"TKR"</span>, keep.data <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>kumo</span>, theme <span class='op'>=</span> <span class='st'>"solarized"</span>, type <span class='op'>=</span> <span class='st'>"bar"</span>, custom <span class='op'>=</span> <span class='st'>"volume"</span><span class='op'>)</span>
+</div><div class='img'><img src='plot.ichimoku-5.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>kumo</span>, theme <span class='op'>=</span> <span class='st'>"original"</span>, type <span class='op'>=</span> <span class='st'>"line"</span>, custom <span class='op'>=</span> <span class='st'>"volume"</span><span class='op'>)</span>
+</div><div class='img'><img src='plot.ichimoku-6.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Append New Data to Dataframe — df_append • ichimoku</title>
+<title>extraplot — extraplot • ichimoku</title>
 
 
 <!-- jquery -->
@@ -41,10 +41,9 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Append New Data to Dataframe — df_append" />
-<meta property="og:description" content="Update a 'data.frame' object with new data. Can be used to append new updated
-    time series data to an existing dataframe, where each observation is indexed
-    by a unique timestamp." />
+<meta property="og:title" content="extraplot — extraplot" />
+<meta property="og:description" content="Plot Ichimoku Kinko Hyo cloud charts from ichimoku objects with a sub-plot for
+    oscillators or a custom specified variable." />
 
 
 
@@ -142,75 +141,99 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Append New Data to Dataframe</h1>
-    <small class="dont-index">Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
-    <div class="hidden name"><code>df_append.Rd</code></div>
+    <h1>extraplot</h1>
+    <small class="dont-index">Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/R/plot.R'><code>R/plot.R</code></a></small>
+    <div class="hidden name"><code>extraplot.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Update a 'data.frame' object with new data. Can be used to append new updated
-    time series data to an existing dataframe, where each observation is indexed
-    by a unique timestamp.</p>
+    <p>Plot Ichimoku Kinko Hyo cloud charts from ichimoku objects with a sub-plot for
+    oscillators or a custom specified variable.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>df_append</span><span class='op'>(</span><span class='va'>new</span>, <span class='va'>old</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>extraplot</span><span class='op'>(</span>
+  <span class='va'>object</span>,
+  <span class='va'>window</span>,
+  <span class='va'>ticker</span>,
+  <span class='va'>subtitle</span>,
+  theme <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"original"</span>, <span class='st'>"dark"</span>, <span class='st'>"solarized"</span>, <span class='st'>"mono"</span><span class='op'>)</span>,
+  strat <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"none"</span>, <span class='st'>"r"</span>, <span class='st'>"s"</span>, <span class='st'>"bar"</span>, <span class='st'>"line"</span><span class='op'>)</span>,
+  <span class='va'>custom</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>new</th>
-      <td><p>data.frame object containing new data.</p></td>
+      <th>object</th>
+      <td><p>an object of class 'ichimoku'.</p></td>
     </tr>
     <tr>
-      <th>old</th>
-      <td><p>data.frame object containing existing data.</p></td>
+      <th>window</th>
+      <td><p>(optional) a date-time window to subset the plot, in ISO-8601
+compatible range strings of the format used for 'xts' objects, for example
+"2020-02-15/2020-08-15" or "2020-02-15/", "/2020-08" or "2020-07".</p></td>
+    </tr>
+    <tr>
+      <th>ticker</th>
+      <td><p>(optional) specify a ticker (or other text) to include in the
+chart heading. If not set, the ticker saved within the ichimoku object
+will be used.</p></td>
+    </tr>
+    <tr>
+      <th>subtitle</th>
+      <td><p>(optional) specify a subtitle to display under the chart title.</p></td>
+    </tr>
+    <tr>
+      <th>theme</th>
+      <td><p>[default 'original'] with alternative choices of 'dark',
+'solarized' or 'mono'.</p></td>
+    </tr>
+    <tr>
+      <th>strat</th>
+      <td><p>[default TRUE] if the ichimoku object contains a strategy, the
+periods for which the strategy results in a position will be shaded, and
+the strategy printed as the chart subtitle (if not otherwise specified).
+Set to FALSE to turn off this behaviour.</p></td>
+    </tr>
+    <tr>
+      <th>type</th>
+      <td><p>[default 'none'] type of sub-plot to display beneath the ichimoku
+cloud chart, with a choice of 'none', 'r' or 's' for the corresponding
+oscillator type, and 'bar' or 'line' for custom plots.</p></td>
+    </tr>
+    <tr>
+      <th>custom</th>
+      <td><p>(optional) character string (containing a regular expression)
+matching the column name of the variable to be displayed as sub-plot.
+Specify <code>type = 'bar'</code> or <code>type = 'line'</code>, otherwise other type
+settings will take precedence.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>other arguments not used by this method.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data.frame of the existing data appended with the new data. If the
-    data in 'new' contains data with the same value for 'time' as 'old',
-    the data in 'new' will overwrite the data in 'old'.</p>
-<p>If the 'timestamp' attribute exists in 'new', this will be retained.</p>
+    <p>Returns a grid graphics object with S3 classes 'gtable', 'gTree', 'grob'
+    and 'gDesc'.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Can be used to update price dataframes retrieved by <code><a href='oanda.html'>oanda</a></code>.
-    The function is designed to update existing data with new values as they
-    become available. As opposed to <code><a href='df_merge.html'>df_merge</a></code>, the data in 'new'
-    will overwrite the data in 'old' rather than create duplicates.</p>
+    <p>The oscillator choices are between 'R-type', which is a modified form
+    of a relative strength index (RSI), and 'S-type', which is a modified form
+    of a stochastic oscillator. The oscillator look-back parameters are based
+    on the fast and medium cloud periods of the ichimoku object.</p>
+    <h2 class="hasAnchor" id="further-details"><a class="anchor" href="#further-details"></a>Further Details</h2>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>data1</span> <span class='op'>&lt;-</span> <span class='va'>sample_ohlc_data</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>8</span>, <span class='op'>]</span>
-<span class='va'>data1</span>
-</div><div class='output co'>#&gt;         time  open  high   low close volume
-#&gt; 1 2020-01-02 123.0 123.1 122.5 122.7   1875
-#&gt; 2 2020-01-03 122.7 122.8 122.6 122.8   1479
-#&gt; 3 2020-01-06 122.8 123.4 122.4 123.3   1792
-#&gt; 4 2020-01-07 123.3 124.3 123.3 124.1   1977
-#&gt; 5 2020-01-08 124.1 124.8 124.0 124.8   2239
-#&gt; 6 2020-01-09 124.8 125.4 124.5 125.3   1842
-#&gt; 7 2020-01-10 125.3 125.3 124.8 125.2   2548
-#&gt; 8 2020-01-13 125.2 125.3 125.1 125.2   2946</div><div class='input'><span class='va'>data2</span> <span class='op'>&lt;-</span> <span class='va'>sample_ohlc_data</span><span class='op'>[</span><span class='fl'>7</span><span class='op'>:</span><span class='fl'>10</span>, <span class='op'>]</span>
-<span class='va'>data2</span>
-</div><div class='output co'>#&gt;          time  open  high   low close volume
-#&gt; 7  2020-01-10 125.3 125.3 124.8 125.2   2548
-#&gt; 8  2020-01-13 125.2 125.3 125.1 125.2   2946
-#&gt; 9  2020-01-14 125.2 125.2 124.3 124.4   2796
-#&gt; 10 2020-01-15 124.4 124.5 123.7 123.9   2879</div><div class='input'><span class='fu'>df_append</span><span class='op'>(</span><span class='va'>data2</span>, <span class='va'>data1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;          time  open  high   low close volume
-#&gt; 1  2020-01-02 123.0 123.1 122.5 122.7   1875
-#&gt; 2  2020-01-03 122.7 122.8 122.6 122.8   1479
-#&gt; 3  2020-01-06 122.8 123.4 122.4 123.3   1792
-#&gt; 4  2020-01-07 123.3 124.3 123.3 124.1   1977
-#&gt; 5  2020-01-08 124.1 124.8 124.0 124.8   2239
-#&gt; 6  2020-01-09 124.8 125.4 124.5 125.3   1842
-#&gt; 7  2020-01-10 125.3 125.3 124.8 125.2   2548
-#&gt; 8  2020-01-13 125.2 125.3 125.1 125.2   2946
-#&gt; 9  2020-01-14 125.2 125.2 124.3 124.4   2796
-#&gt; 10 2020-01-15 124.4 124.5 123.7 123.9   2879</div><div class='input'>
-</div></pre>
+    
+
+<p>Please refer to the reference vignette by running:
+    <code><a href='../articles/reference.html'>vignette("reference", package = "ichimoku")</a></code></p>
+
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

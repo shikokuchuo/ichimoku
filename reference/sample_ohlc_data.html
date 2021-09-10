@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.5</span>
       </span>
     </div>
 
@@ -156,12 +156,13 @@
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A data frame with 256 observations of 5 variables:</p><ul>
+    <p>A data frame with 256 observations of 6 variables:</p><ul>
 <li><p>time - timestamp of observation [POSIXct]</p></li>
 <li><p>open - opening price [numeric]</p></li>
 <li><p>low - low price [numeric]</p></li>
 <li><p>high - high price [numeric]</p></li>
 <li><p>close - closing price [numeric]</p></li>
+<li><p>volume - volume [integer]</p></li>
 </ul>
 
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
@@ -169,8 +170,14 @@
     <p>Not applicable: simulated data</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>cloud</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ichimoku.html'>ichimoku</a></span><span class='op'>(</span><span class='va'>sample_ohlc_data</span>, ticker <span class='op'>=</span> <span class='st'>"TKR"</span><span class='op'>)</span>
-
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>sample_ohlc_data</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;         time  open  high   low close volume
+#&gt; 1 2020-01-02 123.0 123.1 122.5 122.7   1875
+#&gt; 2 2020-01-03 122.7 122.8 122.6 122.8   1479
+#&gt; 3 2020-01-06 122.8 123.4 122.4 123.3   1792
+#&gt; 4 2020-01-07 123.3 124.3 123.3 124.1   1977
+#&gt; 5 2020-01-08 124.1 124.8 124.0 124.8   2239
+#&gt; 6 2020-01-09 124.8 125.4 124.5 125.3   1842</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
