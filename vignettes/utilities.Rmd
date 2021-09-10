@@ -37,7 +37,7 @@ Takes the following arguments:
 - `x` a vector of POSIXct dates.
 - `holidays` (optional) a vector, or function which outputs a vector, of dates defined as holidays. If not specified, New Year's and Christmas day are defined as holidays by default.
 - `...` not used.
-- `noholidays` (optional) if set, bypasses the function logic and selects all dates in 'x'.
+- `noholidays` (optional) if set, bypasses the function logic and returns TRUE for all dates in 'x'.
 
 ```{r tradingDays}
 dates <- seq(from = as.POSIXct("2020-01-01"), by = "1 day", length.out = 7)
@@ -166,6 +166,6 @@ df_append(data1, data2)
 
 ## References
 
-Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.1.1, <https://CRAN.R-project.org/package=ichimoku>.
+Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.1.5, <https://CRAN.R-project.org/package=ichimoku>.
 
 ---

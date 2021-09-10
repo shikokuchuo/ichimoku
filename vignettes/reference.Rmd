@@ -51,7 +51,7 @@ It is outside the scope of this vignette to provide a full tutorial on the use o
 
 ### Context
 
-Ichimoku analysis is the latest refinement in candlestick charting techniques, which also originated from Japan back in the 18th century. Actually developed during the mid-20th century, it gained popularity especially from the late 1990s onward, and is now used on trading floors worldwide.
+Ichimoku analysis is the latest refinement in candlestick charting techniques, which also originated from Japan back in the 18th century. Developed earlier in the 20th century by 一目山人 *Ichimoku, Sanjin*, the pen name of 細田吾一 *Hosoda, Goichi*, his work was finally published in 1969 as the seminal *「一目均衡表」 [ichimoku kinkou hyou]*. It gained popularity especially after the publication of Sasaki's *「一目均衡表の研究」 [ichimoku kinkouhyou no kenkyuu]* in 1996, and is now widely-used in technical analysis worldwide.
 
 The ichimoku time periods have traditionally been calculated as 9, 26 and 52 based on manual data analysis performed in Japan in a pre-computer age where there was a 6-day working week resulting in 26 average trading days in a month. Although this bears little relevance to the current day, the use of these time periods has persisted as an 'industry norm' or 'accepted practice'. To use other periods would be meaningless in a sense as everyone uses these parameters and 'market psychology' can and often does create its own realities, independent of any fundamentals.
 
@@ -100,13 +100,13 @@ head(TKR)
 
 - If only HLC price data is available, ichimoku will take the opening price to be the closing price of the previous period. *This means that the candlesticks will not be accurate, but calculation of the cloud lines is not affected*
 
-**Single price data** can also be used for producing an *approximate* cloud chart if, for example, OHLC data is not available or because the price is a calculated price such as VWAP.
+**Single series price data** can also be used for producing an *pseudo* cloud chart if, for example, OHLC data is not available or because the price is a calculated price such as VWAP.
 
 - If ichimoku does not find HLC data in the dataset, it will proceed to seek for single price data in columns with names containing 'price', 'value', or 'close'
 
 - ichimoku will construct a pseudo-OHLC series from the single price. It does this by assigning the opening price to be the closing price of the previous period, and the high and low to be the max and min respectively of the opening and closing prices
 
-- As the constructed OHLC series does not contain real high/low values, *the ichimoku cloud charts calculated in this way are not accurate and serve as approximations only*
+- As the constructed OHLC series does not contain real high/low values, *the ichimoku cloud chart calculated in this way is not accurate and serves as an approximation only*
 
 **Note on data retrieval:** it is optimal to retrieve data starting from slightly further back than the period being analysed. This is as the cloud lines require several values to be calculated and hence there will be missing values at the start of the data. Run `ichimoku()` on the full dataset and then subset the data window when plotting to ensure that there is a full cloud for the entire chart.
 
@@ -119,6 +119,7 @@ Optional arguments:
 - `ticker` a ticker to identify the instrument, otherwise this is set to the name of the input object
 - `periods` [default c(9, 26, 52)] a vector defining the length of periods used for the cloud. This parameter should not normally be modified as using other values would be invalid in the context of traditional Ichimoku analysis
 - `...` additional arguments, for instance 'holidays', passed along to `tradingDays()` for calculating the future cloud on daily data
+- `keep.data` set to TRUE to preserve additional data present in the input object 'x' as additional columns and/or attributes. Note: only columns of numeric type or type coercible to numeric are preserved, otherwise NAs are introduced.
 
 An ichimoku object is returned by calling `ichimoku()` on the data:
 
@@ -165,7 +166,21 @@ The ticker is set by default to the input object name or can be overridden by sp
 
 `ichimoku()` may be used on an ichimoku object to re-calculate the cloud values using the price data contained within. If 'ticker' is specified as an argument, this will overwrite the ticker stored in the original ichimoku object.
 
-Calling `ichimoku()` on an ichimoku object containing a strategy will return the ichimoku object to its original state without the strategy. See the [strategies vignette](strategies.html) for information on strategies.
+Calling `ichimoku()` on an ichimoku object containing a strategy will return the ichimoku object to its original state without the strategy unless `keep.data = TRUE` is specified. See the [strategies vignette](strategies.html) for information on strategies.
+
+#### Preserving Data
+
+The input object may contain additional data not required for ichimoku analysis such as volume. To include such data in the ichimoku object specify `keep.data = TRUE` when calling `ichimoku()`.
+
+```{r ichimokupreserve}
+kumo <- ichimoku(TKR, keep.data = TRUE)
+
+print(kumo[100,], plot = FALSE, digits = 4)
+```
+
+This allows you to not have to deal with different objects for the same data. There is also the added benefit that it can now be plotted as a sub-plot beneath the main ichimoku cloud chart (see next section).
+
+Note: only numeric data or data coercible to numeric type is preserved in this way, and other types will introduce NAs. This is as ichimoku objects are based on the 'xts' format which essentially uses a numeric matrix to contain the data for performance reasons, and therefore does not allow multiple data types. Custom attributes set on the input object (such as a timestamp or data source) are also preserved.
 
 #### Working with ichimoku objects
 
@@ -213,64 +228,103 @@ ichimoku offers the choice of 2 visualization systems: static (default) and inte
 
 The default plot function produces static plots, which have the advantage of being easily exportable to pdf or image formats in high resolution.
 
-ichimoku implements a custom S3 method for ggplot2's `autoplot()` function for objects of class 'ichimoku'. Although autoplot can be called directly on an ichimoku object, it is more convenient to call `plot()` instead, which prints the output of autoplot.
+Call `plot()` on an ichimoku object to visualize the cloud chart. 
 
 ```{r plot}
 plot(cloud)
 ```
 
-As the implementation is via ggplot2, the user is able to further amend or customise the resulting plot using any ggplot2 methods. The most straightforward method would be to assign the output of `plot()` to a 'ggplot' object, after which further elements or layers can be added or modified using ggplot2's `+` operator.
-
-```{r plotnotrun, eval = FALSE}
-# Example code for incrementally updating ggplot2 layers:
-plot <- plot(cloud)
-plot + ggplot2::theme_classic()
-```
-
-The 'ggplot' object can be further used to produce an interactive chart that can be embedded in HTML output created by R Markdown, by using the 'plotly' package as per the below:
-
-```{r iplotnotrun, eval = FALSE}
-# For a plotly interactive plot:
-plotly::ggplotly(plot)
-```
-
-#### 2. Interactive Plots
-
-Interactive plots require the 'shiny' package to be installed. If Shiny is not available, ichimoku will issue an informational message, but not install the package automatically as it is recognised that Shiny may not be available in all environments.
-
-To produce an interactive plot, use ichimoku's `iplot()` function. An R Shiny app will be launched, allowing full further customisation of the chart interactively, including selecting the time window etc.
-
-In a live analysis environment, as opposed to creating charts for reports, it can be preferable to work with interactive plots. This is due to the ease of being able to customise the chart coupled with easy access to the data provided by the cursor infotip.
-
-- hover over the chart to read off data values at any given date-time
-- cursor guides provide easy calibration of date-times and price levels
-- select periods of interest on the timeline to subset / enlarge
-
 #### Plot customisation
 
-A plot with default parameters is shown above, but the plot functions contain built-in customisations to allow for most envisioned use cases. The example below demonstrates some of the arguments that can be supplied to customise the plot.
+A plot with default parameters is shown above. The plot function contains built-in customisations to allow for most envisioned use cases. The example below demonstrates some of the arguments that can be supplied to customise the plot.
 
 ```{r plot2}
-plot(cloud, window = "2020-05-01/2020-12-01", ticker = "TKR Co.", message = "一目均衡表", theme = "dark")
+plot(cloud, window = "2020-05-01/2020-12-01", ticker = "一目均衡表", subtitle = "Sample Data Index", theme = "dark")
 ```
 
 The following arguments for customisation are shared across `plot()` and `iplot()`:
 
 - `window` (optional) indispensable in a proper workflow. `ichimoku()` is run on a larger dataset than that of interest and at the visualization stage the data is subset to the window of interest. Supply as an ISO-8601 compatible range string in the format used for 'xts' objects, for example the range '2020-02-15/2020-08-15' or '2020-02-15/' (from 15 Feb 2020) or '/2020-08' (until end-Aug 2020) or simply '2020' to select all of the year 2020
 - `ticker` (optional) used to supply a different ticker to that stored in the ichimoku object, or alternatively a longer-form name or other text that will appear in the chart heading
-- `message` (optional) used to specify a chart message to display under the title
+- `subtitle` (optional) used to specify a subtitle to display under the chart title
 - `theme` [default 'original'] the following themes are also available: 'dark', 'solarized' and 'mono'
-- `strat` [default TRUE] if true, the periods for which a strategy results in a market position will be shaded (if the ichimoku object contains a strategy) with the strategy printed as the chart message (if a message is not already specified). See the [strategies vignette](strategies.html) for more information on working with strategies.
+- `strat` [default TRUE] if true, the periods for which a strategy results in a market position will be shaded (if the ichimoku object contains a strategy) with the strategy printed as the chart sustitle (if not otherwise specified). See the [strategies vignette](strategies.html) for more information on working with strategies.
+- `type` [default 'none'] type of sub-plot to display beneath the ichimoku cloud chart, with a choice of 'none', 'r' or 's' for the corresponding oscillator type, and 'bar' or 'line' for custom plots.
+- `custom` (optional) character string (containing a regular expression) matching the column name of the variable to be displayed as sub-plot. Specify `type = 'bar'` or `type = 'line'`, otherwise other type settings will take precedence.
 
 `plot()` takes additional parameters as follows:
 
-- `...` additional arguments passed along to the print method for 'ggplot' objects.
+- `...` additional arguments passed along to the print method for 'ggplot' objects when `type = 'none'`.
 
-`iplot()` takes the following additional parameters:
+#### Oscillators
+
+Although Ichimoku Kinko Hyo is considered a complete charting system, it can at times be useful to pair it with an oscillator.
+
+By specifying `type = "r"` or `type = "s"`, the corresponding type of oscillator will be shown beneath the main ichimoku cloud chart.
+
+An **R-type oscillator** is based on the formula for RSI or Relative Strength Index originally developed by J. Welles Wilder. This is a single line indicator with a look-back window of the ichimoku object's medium cloud period (default 26). The 75 and 25 levels are marked on the chart to demarcate potentially over-bought and over-sold levels.
+
+The R-type line is calculated as 100 - 100 / (1 + [26] period mean open to close gain / the absolute value of the [26] period mean open to close loss).
+
+Note that this corresponds to the usual RSI oscillator definition, although not identical as gains/losses are calculated with reference to each period's open rather than the previous close. Note also that the R-type oscillator does not employ a roll-forward mechanism from the initial value like the RSI as it seems that this was originally motivated in part by ease of calculation considerations, which are no longer applicable.
+
+```{r plotr}
+plot(cloud, window = "2020-05/", theme = "mono", type = "r")
+```
+
+An **S-type oscillator** is based on the formula for the stochastic indicator, as developed by George Lane and others. This is a 2-line indicator with fast and slow lines with look-back windows corresponding to the fast and medium cloud periods respectively (default 9 and 26). The fast line is quicker to react to price changes and the slow line can either provide confirmation or signal divergence.
+
+The fast S-type line is calculated as 100 times the ratio of the closing price minus the [9] period low to the [9] period high minus the [9] period low. The slow S-type line is calculated as 100 times the ratio of the closing price minus the [26] period low to the [26] period high minus the [26] period low.
+
+Note the difference to the usual stochastic oscillator definition where the slow line is a 3-period moving average of the fast line.
+
+```{r plots}
+plot(cloud, window = "2020-05/", theme = "solarized", type = "s")
+```
+
+#### Custom Sub-plots
+
+If additional input data is preserved within the ichimoku object, for example volume data, this can also be plotted in the sub-plot area by specifying the 'custom' argument. Other calculated metrics such as custom indicators can also be plotted if they are added as an additional column to the ichimoku object.
+
+The character string supplied to 'custom' is a regular expression pattern that is matched to the column name and hence does not need to match it exactly, nor is case considered.
+
+```{r plotbar}
+plot(kumo, window = "2020-05/", theme = "solarized", type = "bar", custom = "volume")
+```
+
+To view a custom sub-plot, type must be specified as either 'bar' or 'line', otherwise the type setting will take precedence. On a bar chart, the bar colours correspond to the candle direction.
+
+```{r plotline}
+plot(kumo, window = "2020-05/", type = "line", custom = "volume")
+```
+
+#### Further Options
+
+Internally, ichimoku's `plot()` method is a wrapper for `autoplot()` and `extraplot()`. As `plot()` returns the original ichimoku object (invisibly), to access the actual plot objects produced you must call those functions directly. `autoplot()` returns a ggplot object with classes 'gg' and 'ggplot' and `extraplot()` returns a grid graphics object with classes 'gtable', 'gTree', 'grob' and 'gDesc'.
+
+#### 2. Interactive Plots
+
+Interactive plots require the 'shiny' package to be installed.
+
+To produce an interactive plot, use ichimoku's `iplot()` function. An R Shiny app will be launched, allowing full further customisation of the chart interactively, including selecting the time window, theme, chart type, custom sub-plot etc.
+
+In a live analysis environment, as opposed to creating charts for reports, it can be preferable to work with interactive plots. This is due to the ease of being able to customise the chart coupled with easy access to the data provided by the cursor infotip:
+
+- hover over the chart to read off data values at any given date-time
+- cursor guides provide easy calibration of date-times and price levels
+- select periods of interest on the timeline to subset / enlarge
+
+`iplot()` takes the following additional parameters for customisation:
 
 - `...` additional parameters passed along to the 'options' argument of `shiny::shinyApp()`.
 - `launch.browser` [default TRUE] If TRUE, the system's default web browser will be launched automatically after the app is started. The value of this argument can also be a function to call with the application's URL. To use the default Shiny viewer in RStudio, please specify
 `getOption("shiny.launch.browser")`.
+
+#### Implementation notes
+
+The column names of the ichimoku object are automatically populated in a drop-down menu, and a selection can be made to view a variable as a custom sub-plot. Chart type must be set to either 'bar' or 'line', otherwise the type setting will take precedence in determining what is displayed.
+
+The cursor infotip and guides are available for a chart type of 'none' but are not yet implemented for charts with sub-plots.
 
 ### archive()
 
@@ -343,8 +397,7 @@ There may however still be other issues with the input data that prevent cloud v
 
 #### Since version 0.x
 
-- The first ichimoku object specification was released in version 0.3.51 - ichimoku objects created in versions prior to 0.3.51 will no longer work correctly with newer versions of the package
-- Upgrade to the latest package version and run `ichimoku()` on previously-created objects to re-create them according to the new specification (data is preserved)
+- The first ichimoku object specification was released in version 0.3.51 - ichimoku objects created in versions prior to 0.3.51 will no longer work correctly with newer versions of the package. Upgrade to the latest package version and run `ichimoku()` on previously-created objects to re-create them according to the new specification (data is preserved)
 
 ## Dependencies
 
@@ -352,6 +405,7 @@ The dependency on other packages is designed to be minimised to the extent possi
 
 - curl - for interfacing with external APIs
 - ggplot2 - the widely-used R graphics system for visualization
+- gridExtra - for high-level manipulation of graphics objects
 - jsonlite - for parsing JSON data retrieved from external APIs
 - rlang - R language requirement arising from the use of 'ggplot2'
 - xts - ichimoku objects are based on the 'xts' format for time series
@@ -372,6 +426,6 @@ Optional (provides additional features):
 
 Sasaki, H. 佐々木 英信 (1996), *一目均衡表の研究 [ichimoku kinkouhyou no kenkyuu]*. Tokyo, Japan: Toushi Radar.
 
-Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.1.1, <https://CRAN.R-project.org/package=ichimoku>.
+Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.1.5, <https://CRAN.R-project.org/package=ichimoku>.
 
 ---

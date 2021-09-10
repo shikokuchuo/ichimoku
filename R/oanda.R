@@ -211,19 +211,21 @@ getPrices <- function(instrument, granularity, count, from, to, price,
 
   ohlc <- data[, 4L]
 
-  structure(list(time = .POSIXct(time),
-                 open = as.numeric(ohlc[, 1L]),
-                 high = as.numeric(ohlc[, 2L]),
-                 low = as.numeric(ohlc[, 3L]),
-                 close = as.numeric(ohlc[, 4L]),
-                 volume = data[, 2L],
-                 complete = data[, 1L]),
-            class = "data.frame",
-            row.names = seq_len(dim(ohlc)[1L]),
-            instrument = instrument,
-            price = price,
-            timestamp = .POSIXct(timestamp),
-            oanda = TRUE)
+  df <- list(.POSIXct(time),
+             as.numeric(ohlc[, 1L]),
+             as.numeric(ohlc[, 2L]),
+             as.numeric(ohlc[, 3L]),
+             as.numeric(ohlc[, 4L]),
+             data[, 2L],
+             data[, 1L])
+  attributes(df) <- list(names = c("time", "open", "high", "low", "close", "volume", "complete"),
+                         class = "data.frame",
+                         row.names = .set_row_names(dim(ohlc)[1L]),
+                         instrument = instrument,
+                         price = price,
+                         timestamp = .POSIXct(timestamp),
+                         oanda = TRUE)
+  df
 
 }
 
@@ -396,10 +398,10 @@ oanda_chart <- function(instrument,
   message("Chart updating every ", refresh, " secs in graphical device... Press 'Esc' to return")
   while (TRUE) {
     pdata <- ichimoku.data.frame(data, periods = periods, ...)[minlen:(xlen + p2 - 1L), ]
-    message <- paste(instrument, ptype, "price [",
-                     data$close[xlen], "] at", attr(data, "timestamp"),
-                     "| Chart:", ctype, "| Cmplt:", data$complete[xlen])
-    plot.ichimoku(pdata, ticker = ticker, message = message, theme = theme,
+    subtitle <- paste(instrument, ptype, "price [",
+                      data$close[xlen], "] at", attr(data, "timestamp"),
+                      "| Chart:", ctype, "| Cmplt:", data$complete[xlen])
+    plot.ichimoku(pdata, ticker = ticker, subtitle = subtitle, theme = theme,
                   newpage = FALSE, ...)
     Sys.sleep(refresh)
     newdata <- getPrices(instrument = instrument, granularity = granularity,
@@ -507,7 +509,7 @@ oanda_studio <- function(instrument = "USD_JPY",
         shiny::uiOutput("hover_x"), shiny::uiOutput("hover_y"), shiny::uiOutput("infotip")
       ),
       shiny::fluidRow(
-        shiny::column(width = 2,
+        shiny::column(width = 12,
                       shiny::HTML("&nbsp;")
         )
       ),
@@ -538,7 +540,11 @@ oanda_studio <- function(instrument = "USD_JPY",
         shiny::column(width = 1,
                       shiny::numericInput("refresh", label = "Refresh",
                                           value = refresh, min = 1, max = 86400)),
-        shiny::column(width = 4,
+        shiny::column(width = 1,
+                      shiny::HTML("<label class='control-label'>Data</label><div class='form-group shiny-input-container'>"),
+                      shiny::downloadButton("savedata", label = "> Archive"),
+                      shiny::HTML("</div>")),
+        shiny::column(width = 3,
                       shiny::sliderInput("count", label = "Data Periods",
                                          min = 100, max = 800,
                                          value = count,
@@ -617,7 +623,8 @@ oanda_studio <- function(instrument = "USD_JPY",
         } else idata()
       })
       xlen <- shiny::reactive(dim(data())[1L])
-      pdata <- shiny::reactive(ichimoku(data(), periods = periods, ...)[minlen:(xlen() + p2 - 1L), ])
+      pdata <- shiny::reactive(ichimoku(data(), ticker = input$instrument,
+                                        periods = periods, ...)[minlen:(xlen() + p2 - 1L), ])
       ticker <- shiny::reactive(paste(dispname(), "  |", input$instrument, ptype(), "price [",
                                       data()$close[xlen()], "] at", attr(data(), "timestamp"),
                                       "| Chart:", ctype(), "| Cmplt:", data()$complete[xlen()]))
@@ -644,6 +651,12 @@ oanda_studio <- function(instrument = "USD_JPY",
       output$infotip <- shiny::renderUI({
         shiny::req(input$infotip, input$plot_hover, posi_x() > 0, posi_x() <= dim(pdata())[1L])
         drawInfotip(sdata = pdata()[posi_x(), ], left_px = left_px(), top_px = top_px())
+      })
+
+      output$savedata <- shiny::downloadHandler(filename = function() {
+        paste(input$instrument, input$granularity, input$price, input$count, sep = "_")
+      }, content = function(file) {
+        archive(pdata(), file)
       })
 
       session$onSessionEnded(function() shiny::stopApp())

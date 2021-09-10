@@ -215,7 +215,7 @@ writeStrat <- function(x, strategy, dir) {
                    short = (openvec - closevec) / openvec)
   tlen <- length(trades)
 
-  structure(x, strat = cbind(list(
+  attr(x, "strat") <- cbind(list(
     Strategy = strategy,
     `---------------------` = "----------",
     `Strategy cuml return %` = round((exp(sum(core[start:end, "slogret"])) - 1) * 100, 2),
@@ -234,7 +234,9 @@ writeStrat <- function(x, strategy, dir) {
     Start = index[start],
     End = index[end],
     Ticker = attr(x, "ticker")
-  )))
+  ))
+
+  x
 
 }
 
@@ -278,7 +280,7 @@ stratcombine <- function(s1, s2) {
   }
   core1 <- coredata(s1)
   core2 <- coredata(s2)
-  if (!identical(core1[, 1:4], core2[, 1:4])) {
+  if (!identical(core1[, c("high", "low", "close")], core2[, c("high", "low", "close")])) {
     stop("Strategies must be for the same data", call. = FALSE)
   }
   dir <- attr(s1, "strat")["Direction", ][[1L]]

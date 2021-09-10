@@ -57,7 +57,7 @@ look <- function(x, which) {
   } else {
     lk <- attributes(x)
     lk$dim <- lk$dimnames <- lk$names <- lk$row.names <- lk$index <- lk$class <- lk$mlgrid <- lk$oanda <- NULL
-    if (length(lk) == 0L) invisible() else lk
+    if (length(lk)) lk else invisible()
   }
 
 }

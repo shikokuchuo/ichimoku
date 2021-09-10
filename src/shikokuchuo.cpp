@@ -1,4 +1,4 @@
-// ichimoku - Window Functions: using an algorithm with the following license:
+// ichimoku - Window Functions: modified from code with the following license:
 
 /*
  Based on http://opensource.org/licenses/MIT
@@ -63,6 +63,24 @@ cpp11::doubles roll_minmax(const cpp11::doubles& x, Args a) {
   return rollx;
 }
 
+// calculates rolling window for mean
+cpp11::doubles roll_mean(const cpp11::doubles& x, int window) {
+
+  int n  = x.size(), w1 = window - 1;
+  cpp11::writable::doubles rollx(n);
+  long double sum = 0;
+  for (int i = 0; i < n; ++i) {
+    sum += x[i];
+    if (i >= window - 1){
+      rollx[i] = sum / window;
+      sum -= x[i - w1];
+    } else {
+      rollx[i] = NA_REAL;
+    }
+  }
+  return rollx;
+}
+
 [[cpp11::register]]
 cpp11::doubles maxOver(const cpp11::doubles& x, int window) {
   Args a; a.window = window; a.ctype = MAX;
@@ -75,3 +93,7 @@ cpp11::doubles minOver(const cpp11::doubles& x, int window) {
   return roll_minmax(x, a);
 }
 
+[[cpp11::register]]
+cpp11::doubles meanOver(const cpp11::doubles& x, int window) {
+  return roll_mean(x, window);
+}

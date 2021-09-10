@@ -18,15 +18,24 @@ extern "C" SEXP _ichimoku_minOver(SEXP x, SEXP window) {
     return cpp11::as_sexp(minOver(cpp11::as_cpp<cpp11::decay_t<const cpp11::doubles&>>(x), cpp11::as_cpp<cpp11::decay_t<int>>(window)));
   END_CPP11
 }
+// shikokuchuo.cpp
+cpp11::doubles meanOver(const cpp11::doubles& x, int window);
+extern "C" SEXP _ichimoku_meanOver(SEXP x, SEXP window) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(meanOver(cpp11::as_cpp<cpp11::decay_t<const cpp11::doubles&>>(x), cpp11::as_cpp<cpp11::decay_t<int>>(window)));
+  END_CPP11
+}
 
 extern "C" {
 /* .Call calls */
 extern SEXP _ichimoku_maxOver(SEXP, SEXP);
+extern SEXP _ichimoku_meanOver(SEXP, SEXP);
 extern SEXP _ichimoku_minOver(SEXP, SEXP);
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_ichimoku_maxOver", (DL_FUNC) &_ichimoku_maxOver, 2},
-    {"_ichimoku_minOver", (DL_FUNC) &_ichimoku_minOver, 2},
+    {"_ichimoku_maxOver",  (DL_FUNC) &_ichimoku_maxOver,  2},
+    {"_ichimoku_meanOver", (DL_FUNC) &_ichimoku_meanOver, 2},
+    {"_ichimoku_minOver",  (DL_FUNC) &_ichimoku_minOver,  2},
     {NULL, NULL, 0}
 };
 }

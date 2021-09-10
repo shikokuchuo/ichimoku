@@ -149,7 +149,7 @@ no kenkyuu]*. Tokyo, Japan: Toushi Radar.
 entity unaffiliated with the ichimoku package.
 
 Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko
-Hyo Strategies*. R package version 1.1.1,
+Hyo Strategies*. R package version 1.1.5,
 <https://CRAN.R-project.org/package=ichimoku>.
 
 –

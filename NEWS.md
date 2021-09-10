@@ -1,28 +1,39 @@
-# ichimoku 1.1.1
+# ichimoku 1.1.5
 
 #### New features:
 
-* `ichimoku()` adds ability to work with single price data to create approximate cloud charts when OHLC data is not found.
+* `ichimoku()` adds ability to create *pseudo* cloud charts from single series price data where OHLC data is not available.
+* New 'keep.data' argument for `ichimoku()` to preserve additional data present in the input object.
+* New 'type' argument for `plot.ichimoku()` and `iplot()` enables a choice of oscillator (R-type and S-type) to be shown as a sub-plot.
+* New 'custom' argument for `plot.ichimoku()` and `iplot()` to enable custom data variable to be shown beneath the ichimoku cloud chart as either a line or bar chart.
+* `oanda_studio()` adds a button for saving the underlying data of the live ichimoku cloud chart using `archive()`.
 
 #### Updates:
 
 * Fixes certain cases where calculation of the future cloud could fail for data frequency lower than daily.
-* Updates to `sample_ohlc_data` to adhere to working days etc.
-* Minor performance improvements for `ichimoku()`.
+* Updates to `sample_ohlc_data` to add volume column, adhere to working days etc.
+* Argument 'message' renamed to 'subtitle' across all plot functions for clarity.
+* New sub-plot functionality adds 'gridExtra' package dependency.
+* Minor performance improvements for `ichimoku()`, plot functions and various utilities.
+* Vignettes updates
 
 # ichimoku 1.1.0
 
+#### New features:
+
 * `archive()` moves to using the native RData format, enabling any R object to be stored perfectly with sha256 verification.
+
+#### Updates:
+
 * 'ArrowTabular' method for `ichimoku()` removed and 'arrow' optional dependency retired.
 * Fixes data types issue affecting dataframes returned by `oanda()` in v1.0.0.
 * Fixes critical issues affecting the Solaris platform in v1.0.0.
 
 # ichimoku 1.0.0
 
-#### ichimoku object specification release:
+#### *ichimoku object specification release:*
 
-* ichimoku objects created in versions prior to 0.3.51 will no longer work correctly with newer versions of the package.
-* Upgrade to the latest package version and run `ichimoku()` on previously-created objects to re-create them according to the new specification (data is preserved).
+* ichimoku objects created in versions prior to 0.3.51 will no longer work correctly with newer versions of the package. Upgrade to the latest package version and run `ichimoku()` on previously-created objects to re-create them according to the new specification (data is preserved).
 
 #### New features:
 

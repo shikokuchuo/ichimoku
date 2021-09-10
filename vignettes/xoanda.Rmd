@@ -20,9 +20,9 @@ knitr::opts_chunk$set(
 
 ## About OANDA fxTrade
 
-ichimoku contains an interface to the OANDA fxTrade API, creating a binding for the R language.
+ichimoku contains an interface, or binding, to the OANDA fxTrade API for the R language.
 
-OANDA is an authoritative source of foreign exchange data used by corporations and governments around the world. The API can be used for retrieving historical and live streaming price data for major currencies, metals, commodities, government bonds and stock indices.
+OANDA is known as an authoritative source of foreign exchange data used by corporations and governments around the world. The API can be used for retrieving historical and live streaming price data for major currencies, metals, commodities, government bonds and stock indices.
 
 As an example of the financial data that is available: OHLC pricing data can be obtained for major forex pairs from the start of 2005 with granularity ranging from 5 seconds to monthly. For the total list of over 120 covered instruments please refer to the [Available Instruments](#available-instruments) section below.
 
@@ -36,7 +36,7 @@ Registering for a 'demo' or 'practice' account is entirely free at the time of w
 
 After successful registration, a link can be found on your OANDA fxTrade account profile page 'Manage API Access' (My Account -> My Services -> Manage API Access). From there, a personal access token to use with the OANDA API can be generated, as well as revoked. This access token will enable all the OANDA functions in this package.
 
-Note: this package only contains functions for retrieving available instruments and price data. It does not contain any code to implement any trading capability whatsoever. Hence using your access token with this package should be safe even for live accounts. However, the access token can be used (outside of this package) for all operations on your account including placing orders and trades. It is therefore recommended, for maximum security, that you sign up for a demo/practice account and use the access token for that account even if you hold an existing live account with OANDA.
+Note: this package only contains functions for retrieving available instruments and price data. It does not contain code to implement any trading capability whatsoever. Hence using your access token with this package should be safe, even for live accounts. However, the access token can be used (outside of this package) for all operations on your account including placing orders and trades. It is therefore recommended, for maximum security, that you register for a demo/practice account and use the access token for that account even if you hold an existing live account with OANDA.
 
 ## Setting your OANDA API Key
 
@@ -138,6 +138,14 @@ The following additional parameters can be used to customise the behaviour of th
 
 - `...` additional arguments passed to `ichimoku()` for calculating the ichimoku cloud, `autoplot()` to set chart parameters, or the 'options' argument of `shiny::shinyApp()`
 - `launch.browser` [default TRUE] If TRUE, the system’s default web browser will be launched automatically after the app is started. The value of this argument can also be a function to call with the application’s URL. To use the default Shiny viewer in RStudio, please specify `getOption("shiny.launch.browser")`
+
+#### Downloading Data
+
+The ichimoku object underlying the live cloud chart can be saved by selecting the Data Archive button. 
+
+This button uses `archive()` to save the ichimoku object to disk. The filename will be of the form: `instrument_granularity_price_count`, e.g. `USD_JPY_H4_M_300`. If confirmed, the file is saved to the browser's default download location.
+
+To read back the file, use `archive()` supplying the quoted file path / name.
 
 ## Available Instruments
 
@@ -242,6 +250,6 @@ If for any reason these become invalid or outdated, please restart your R sessio
 
 OANDA fxTrade API developer website: <https://developer.oanda.com/>.
 
-Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.1.1, <https://CRAN.R-project.org/package=ichimoku>.
+Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.1.5, <https://CRAN.R-project.org/package=ichimoku>.
 
 ---

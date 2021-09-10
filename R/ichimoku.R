@@ -16,15 +16,18 @@
 #'     periods used for the cloud. This parameter shoud not normally be modified
 #'     as using other values would be invalid in the context of traditional
 #'     ichimoku analysis.
+#' @param keep.data (optional) set to TRUE to preserve additional data present
+#'     in the input object 'x' as additional columns and/or attributes.
 #' @param ... additional arguments, for instance 'holidays', passed along to
 #'     \code{\link{tradingDays}} for calculating the future cloud on daily data.
+
 #'
 #' @return An ichimoku object is returned with S3 classes of 'ichimoku', 'xts'
 #'     and 'zoo'.
 #'
 #' @details Calling an ichimoku object automatically invokes its print method,
 #'     which by default produces a printout of the data to the console as well
-#'     as a static plot of the cloud chart to the graphical device.
+#'     as a plot of the cloud chart to the graphical device.
 #'
 #'     For further options, use \code{plot()} on the returned ichimoku object to
 #'     pass further arguments for customising the chart. Use \code{iplot()} for
@@ -83,12 +86,24 @@
 #'      Additional methods are available by loading the 'xts' package.
 #'
 #' @section Further Details:
+#'
+#'     \code{ichimoku()} requires OHLC (or else HLC) price data as input.
+#'
+#'     If only single series price data is supplied, a \emph{pseudo} OHLC series
+#'     is generated and a \emph{pseudo} cloud chart is returned.
+#'
 #'     Please refer to the reference vignette by running:
 #'     \code{vignette("reference", package = "ichimoku")}
 #'
 #' @examples
-#' cloud <- ichimoku(sample_ohlc_data)
-#' ichimoku(sample_ohlc_data, ticker = "TKR", periods = c(9L, 26L, 52L))
+#' TKR <- sample_ohlc_data
+#'
+#' cloud <- ichimoku(TKR)
+#' plot(cloud)
+#' print(cloud[100:120,], plot = FALSE)
+#'
+#' kumo <- ichimoku(TKR, ticker = "TKR Co.", periods = c(9, 26, 52), keep.data = TRUE)
+#' plot(kumo, theme = "solarized", type = "bar", custom = "volume")
 #'
 #' @rdname ichimoku
 #' @export
@@ -99,13 +114,19 @@ ichimoku <- function(x, ...) UseMethod("ichimoku")
 #' @method ichimoku ichimoku
 #' @export
 #'
-ichimoku.ichimoku <- function(x, ticker, periods = c(9L, 26L, 52L), ...) {
+ichimoku.ichimoku <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, ...) {
 
   if (missing(ticker)) ticker <- attr(x, "ticker")
-  x <- xts_df(x)
-  x <- x[!is.na(x$close), ]
+  x <- x[!is.na(x[, "close"]), ]
 
-  ichimoku.data.frame(x, ticker = ticker, periods = periods, ...)
+  if (!missing(keep.data) && isTRUE(keep.data)) {
+    x$cd <- x$tenkan <- x$kijun <- x$senkouA <- x$senkouB <- x$chikou <- x$cloudT <- x$cloudB <- NULL
+    x <- xts_df(x, keep.attrs = TRUE)
+  } else {
+    x <- xts_df(x)
+  }
+
+  ichimoku.data.frame(x, ticker = ticker, periods = periods, keep.data = keep.data, ...)
 
 }
 
@@ -113,12 +134,17 @@ ichimoku.ichimoku <- function(x, ticker, periods = c(9L, 26L, 52L), ...) {
 #' @method ichimoku xts
 #' @export
 #'
-ichimoku.xts <- function(x, ticker, periods = c(9L, 26L, 52L), ...) {
+ichimoku.xts <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, ...) {
 
   if (missing(ticker)) ticker <- deparse(substitute(x))
-  x <- xts_df(x)
 
-  ichimoku.data.frame(x, ticker = ticker, periods = periods, ...)
+  if (!missing(keep.data) && isTRUE(keep.data)) {
+    x <- xts_df(x, keep.attrs = TRUE)
+  } else {
+    x <- xts_df(x)
+  }
+
+  ichimoku.data.frame(x, ticker = ticker, periods = periods, keep.data = keep.data, ...)
 
 }
 
@@ -126,24 +152,23 @@ ichimoku.xts <- function(x, ticker, periods = c(9L, 26L, 52L), ...) {
 #' @method ichimoku data.frame
 #' @export
 #'
-ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), ...) {
+ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, ...) {
 
   if (missing(ticker)) ticker <- deparse(substitute(x))
-
   xlen <- dim(x)[1L]
   cnames <- attr(x, "names")
+
   coli <- grep("index|date|time", cnames, ignore.case = TRUE, perl = TRUE)[1L]
   if (!is.na(coli)) {
     index <- tryCatch(as.POSIXct(x[, coli, drop = TRUE]), error = function(e) {
-      stop("Column '", cnames[coli], "' is not convertible to a POSIXct date-time format",
-           call. = FALSE)
-      })
+      stop("Column '", cnames[coli], "' is not convertible to a POSIXct date-time format", call. = FALSE)
+    })
   } else {
     index <- tryCatch(as.POSIXct(attr(x, "row.names")), error = function(e) {
-      stop("Valid date-time index not found",
-           call. = FALSE)
+      stop("Valid date-time index not found", call. = FALSE)
     })
   }
+
   colh <- grep("high", cnames, ignore.case = TRUE, perl = TRUE)[1L]
   coll <- grep("low", cnames, ignore.case = TRUE, perl = TRUE)[1L]
   colc <- grep("close", cnames, ignore.case = TRUE, perl = TRUE)[1L]
@@ -189,7 +214,6 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), ...) {
   cd <- numeric(xlen)
   cd[open < close] <- 1
   cd[open > close] <- -1
-
   tenkan <- (maxOver(high, p1) + minOver(low, p1)) / 2
   kijun <- (maxOver(high, p2) + minOver(low, p2)) / 2
   senkouA <- (tenkan + kijun) / 2
@@ -199,30 +223,51 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), ...) {
   cloudB <- pmin.int(senkouA, senkouB)
 
   periodicity <- min(unclass(index[2:4]) - unclass(index[1:3]))
-  future <- if (periodicity == 86400) {
+  if (periodicity == 86400) {
     seq <- seq.POSIXt(from = index[xlen], by = periodicity, length.out = p2 + p2)[-1L]
-    seq[tradingDays(seq, ...)][1:(p2 - 1L)]
+    future <- seq[tradingDays(seq, ...)][1:(p2 - 1L)]
   } else {
-    seq.POSIXt(from = index[xlen], by = periodicity, length.out = p2)[-1L]
+    future <- seq.POSIXt(from = index[xlen], by = periodicity, length.out = p2)[-1L]
   }
 
-  structure(xts(cbind(open = c(open, rep(NA, p2 - 1L)),
-                      high = c(high, rep(NA, p2 - 1L)),
-                      low = c(low, rep(NA, p2 - 1L)),
-                      close = c(close, rep(NA, p2 - 1L)),
-                      cd = c(cd, rep(NA, p2 - 1L)),
-                      tenkan = c(tenkan, rep(NA, p2 - 1L)),
-                      kijun = c(kijun, rep(NA, p2 - 1L)),
-                      senkouA = c(rep(NA, p2 - 1L), senkouA),
-                      senkouB = c(rep(NA, p2 - 1L), senkouB),
-                      chikou = c(chikou, rep(NA, p2 - 1L)),
-                      cloudT = c(rep(NA, p2 - 1L), cloudT),
-                      cloudB = c(rep(NA, p2 - 1L), cloudB)),
-                order.by = c(index, future)),
-            class = c("ichimoku", "xts", "zoo"),
-            periods = periods,
-            periodicity = periodicity,
-            ticker = ticker)
+  lk <- kmatrix <- NULL
+  if (!missing(keep.data) && isTRUE(keep.data)) {
+    cols <- c("coli", "colo", "colh", "coll", "colc", "colp")
+    used <- do.call(c, lapply(cols, function(x) {
+      if (exists(x, where = parent.frame(2L), inherits = FALSE)) x <- get(x, pos = parent.frame(2L), inherits = FALSE)
+    }))
+    used <- used[!is.na(used)]
+    keep <- if (!is.null(used)) cnames[-used]
+    kmatrix <- do.call(cbind,
+                       setNames(lapply(keep, function(k) {
+                         c(as.numeric(x[, k, drop = TRUE]), rep(NA, p2 - 1L))
+                       }), keep))
+    lk <- look(x)
+    lk$periods <- lk$periodicity <- lk$ticker <- NULL
+  }
+
+  kumo <- xts(x = cbind(open = c(open, rep(NA, p2 - 1L)),
+                        high = c(high, rep(NA, p2 - 1L)),
+                        low = c(low, rep(NA, p2 - 1L)),
+                        close = c(close, rep(NA, p2 - 1L)),
+                        cd = c(cd, rep(NA, p2 - 1L)),
+                        tenkan = c(tenkan, rep(NA, p2 - 1L)),
+                        kijun = c(kijun, rep(NA, p2 - 1L)),
+                        senkouA = c(rep(NA, p2 - 1L), senkouA),
+                        senkouB = c(rep(NA, p2 - 1L), senkouB),
+                        chikou = c(chikou, rep(NA, p2 - 1L)),
+                        cloudT = c(rep(NA, p2 - 1L), cloudT),
+                        cloudB = c(rep(NA, p2 - 1L), cloudB),
+                        kmatrix),
+              order.by = c(index, future),
+              class = c("ichimoku", "xts", "zoo"),
+              periods = periods,
+              periodicity = periodicity,
+              ticker = ticker)
+
+  if (!is.null(lk)) attributes(kumo) <- c(attributes(kumo), lk)
+
+  kumo
 
 }
 
@@ -230,12 +275,17 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), ...) {
 #' @method ichimoku matrix
 #' @export
 #'
-ichimoku.matrix <- function(x, ticker, periods = c(9L, 26L, 52L), ...) {
+ichimoku.matrix <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, ...) {
 
   if (missing(ticker)) ticker <- deparse(substitute(x))
-  x <- matrix_df(x)
 
-  ichimoku.data.frame(x, ticker = ticker, periods = periods, ...)
+  if (!missing(keep.data) && isTRUE(keep.data)) {
+    x <- matrix_df(x, keep.attrs = TRUE)
+  } else {
+    x <- matrix_df(x)
+  }
+
+  ichimoku.data.frame(x, ticker = ticker, periods = periods, keep.data = keep.data, ...)
 
 }
 
@@ -243,209 +293,21 @@ ichimoku.matrix <- function(x, ticker, periods = c(9L, 26L, 52L), ...) {
 #' @method ichimoku default
 #' @export
 #'
-ichimoku.default <- function(x, ticker, periods = c(9L, 26L, 52L), ...) {
+ichimoku.default <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, ...) {
 
-  if (missing(x)) stop("No object specified for ichimoku()", call. = FALSE)
-  tryExists <- tryCatch(exists(x), error = function(e) {
-    stop("Cannot create an ichimoku object from a '", class(x)[1L], "' object", call. = FALSE)
-  })
+  if (!is.character(x)) stop("cannot create an ichimoku object from a '",
+                             class(x)[1L], "' object", call. = FALSE)
+  if (!exists(x)) stop("object '", x, "' not found", call. = FALSE)
 
-  if (!tryExists) {
-    stop("object '", x, "' not found")
-  } else if (missing(ticker)) {
-    ichimoku(get(x), ticker = x, periods = periods, ...)
+  object <- get(x)
+  if (identical(x, object)) stop("cannot create an ichimoku object from a 'character' object",
+                                 call. = FALSE)
+
+  if (missing(ticker)) {
+    ichimoku(object, ticker = x, periods = periods, keep.data = keep.data, ...)
   } else {
-    ichimoku(get(x), ticker = ticker, periods = periods, ...)
+    ichimoku(object, ticker = ticker, periods = periods, keep.data = keep.data, ...)
   }
-
-}
-
-##' @importFrom ggplot2 autoplot
-##' @name autoplot
-##' @rdname autoplot.ichimoku
-##' @export
-NULL
-
-#' autoplot.ichimoku
-#'
-#' Plot Ichimoku Kinko Hyo cloud charts from ichimoku objects.
-#'
-#' @param object an object of class 'ichimoku'.
-#' @param window (optional) a date-time window to subset the plot, in ISO-8601
-#'     compatible range strings of the format used for 'xts' objects, for example
-#'     "2020-02-15/2020-08-15" or "2020-02-15/", "/2020-08" or "2020-07".
-#' @param ticker (optional) specify a ticker (or other text) to include in the
-#'     chart heading. If not set, the ticker saved within the ichimoku object
-#'     will be used.
-#' @param message (optional) specify a chart message to display under the title.
-#' @param theme [default 'original'] with alternative choices of 'dark',
-#'     'solarized' or 'mono'.
-#' @param strat [default TRUE] if the ichimoku object contains a strategy, the
-#'     periods for which the strategy results in a position will be shaded, and
-#'     the strategy printed as the chart message (if a message is not already
-#'     specified). Set to FALSE to turn off this behaviour.
-#' @param ... other arguments not used by this method.
-#'
-#' @return Returns a ggplot2 object with S3 classes 'gg' and 'ggplot'.
-#'
-#' @details This function is an S3 method for the generic function autoplot()
-#'     for class 'ichimoku'. It can be invoked by calling autoplot(x) on an
-#'     object 'x' of class 'ichimoku'.
-#'
-#' @section Further Details:
-#'     Please refer to the reference vignette by running:
-#'     \code{vignette("reference", package = "ichimoku")}
-#'
-#' @examples
-#' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
-#'
-#' autoplot(cloud)
-#' autoplot(cloud, window = "2020-05-01/2020-12-01", theme = "dark")
-#' autoplot(cloud, window = "2020-05/", ticker = "TKR Co.", theme = "solarized")
-#' autoplot(cloud, window = "/2020-11-02", message = "Sample Price Data", theme = "mono")
-#'
-#' @rdname autoplot.ichimoku
-#' @method autoplot ichimoku
-#' @export
-#'
-autoplot.ichimoku <- function(object,
-                              window,
-                              ticker,
-                              message,
-                              theme = c("original", "dark", "solarized", "mono"),
-                              strat = TRUE,
-                              ...) {
-
-  theme <- match.arg(theme)
-  pal <- ichimoku_themes[, theme]
-  periodicity <- attr(object, "periodicity")
-  if (missing(ticker)) ticker <- attr(object, "ticker")
-  if (missing(message)) {
-    message <- if (hasStrat(object) && isTRUE(strat)) paste0("Strategy: ",
-                                                             attr(object, "strat")["Strategy", ][[1]])
-  }
-
-  if (!missing(window)) object <- object[window]
-  xlen <- dim(object)[1L]
-  data <- xts_df(object)
-  data$idx <- seq_len(xlen)
-  data$cd <- as.character(data$cd)
-
-  layers <- list(
-    if (hasStrat(object) && isTRUE(strat)) {
-      geom_rect(aes(xmin = .data$posn * (.data$idx - 0.5),
-                    xmax = .data$posn * (.data$idx + 0.5),
-                    ymin = -Inf, ymax = Inf), fill = pal[1L], alpha = 0.2, na.rm = TRUE)
-    },
-    if (!all(is.na(data$senkouB))) {
-      geom_ribbon(aes(ymax = .data$senkouA, ymin = .data$senkouB),
-                  fill = pal[1L], alpha = 0.6, na.rm = TRUE)
-    },
-    geom_line(aes(y = .data$senkouA), col = pal[2L], alpha = 0.6, na.rm = TRUE),
-    geom_line(aes(y = .data$senkouB), col = pal[3L], alpha = 0.6, na.rm = TRUE),
-    geom_line(aes(y = .data$tenkan), col = pal[4L], na.rm = TRUE),
-    geom_line(aes(y = .data$kijun), col = pal[5L], na.rm = TRUE),
-    geom_segment(aes(xend = .data$idx, y = .data$high, yend = .data$low, colour = .data$cd),
-                 size = 0.3, na.rm = TRUE),
-    geom_rect(aes(xmin = .data$idx - 0.4, xmax = .data$idx + 0.4,
-                  ymin = .data$open, ymax = .data$close,
-                  colour = .data$cd, fill = .data$cd),
-              size = 0.3, na.rm = TRUE),
-    geom_line(aes(y = .data$chikou), col = pal[6L], na.rm = TRUE),
-    scale_x_continuous(breaks = function(x) {
-      if (periodicity > 80000) {
-        len <- length(endpoints(object, on = "months"))
-        if (len < 100L) {
-          k <- ceiling(len / 13)
-          breaks <- endpoints(object, on = "months", k = k) + 1L
-        } else {
-          k <- ceiling(len / 156)
-          breaks <- endpoints(object, on = "years", k = k) + 1L
-        }
-        if (len > 4L) {
-          cond <- (breaks[length(breaks)] - breaks[(length(breaks) - 1L)]) < 0.7 * (breaks[3L] - breaks[2L])
-          cond2 <- (breaks[2L] - breaks[1L]) < 0.7 * (breaks[3L] - breaks[2L])
-          if (cond) breaks <- breaks[-length(breaks)]
-          if (cond2) breaks <- breaks[-1L]
-        }
-        if (breaks[length(breaks)] > xlen) breaks[length(breaks)] <- breaks[length(breaks)] - 1L
-      } else {
-        breaks <- pretty.default(data$idx, n = 9L) + 1
-        if (breaks[length(breaks)] > xlen) breaks <- breaks[-length(breaks)]
-      }
-      breaks
-    }, labels = function(x) {
-      labels <- data$index[x]
-      if (periodicity > 80000) {
-        format(labels, paste("%d-%b", "%Y", sep = "\n"))
-      } else {
-        format(labels, paste("%H:%M", "%d-%b", "%Y", sep = "\n"))
-      }
-    }),
-    scale_y_continuous(breaks = function(x) pretty.default(x, n = 9L)),
-    scale_color_manual(values = c("1" = pal[7L], "-1" = pal[8L], "0" = pal[9L])),
-    scale_fill_manual(values = c("1" = pal[10L], "-1" = pal[11L], "0" = pal[12L])),
-    labs(x = "Date | Time", y = "Price", title = paste0("Ichimoku Kinko Hyo : : ", ticker),
-         subtitle = message),
-    theme_light(),
-    switch(theme,
-           dark = theme(legend.position = "none",
-                        plot.title = element_text(colour = "#eee8d5"),
-                        plot.subtitle = element_text(colour = "#eee8d5"),
-                        plot.background = element_rect(fill = "#586e75", colour = NA),
-                        panel.background = element_rect(fill = "#002b36", colour = NA),
-                        panel.grid = element_line(colour = "#073642"),
-                        axis.title = element_text(colour = "#eee8d5"),
-                        axis.text = element_text(colour = "#eee8d5"),
-                        axis.ticks = element_line(colour = "#eee8d5")),
-           theme(legend.position = "none"))
-  )
-
-  ggplot(data = data, aes(x = .data$idx)) + layers
-
-}
-
-#' Plot Ichimoku Cloud Chart
-#'
-#' Plot Ichimoku Kinko Hyo cloud charts from ichimoku objects.
-#'
-#' @param x an object of class 'ichimoku'.
-#' @param ... additional arguments passed along to the print method for 'ggplot'
-#'     objects.
-#' @inheritParams autoplot
-#'
-#' @return Returns a ggplot2 object with classes 'gg' and 'ggplot'.
-#'
-#' @details This function is an S3 method for the generic function plot() for
-#'     class 'ichimoku'. It can be invoked by calling plot(x) on an object 'x'
-#'     of class 'ichimoku'.
-#'
-#' @section Further Details:
-#'     Please refer to the reference vignette by running:
-#'     \code{vignette("reference", package = "ichimoku")}
-#'
-#' @examples
-#' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
-#'
-#' plot(cloud)
-#' plot(cloud, window = "2020-05-01/2020-12-01", theme = "dark")
-#' plot(cloud, window = "2020-05/", ticker = "TKR Co.", theme = "solarized")
-#' plot(cloud, window = "/2020-11-02", message = "Sample Price Data", theme = "mono")
-#'
-#' @method plot ichimoku
-#' @export
-#'
-plot.ichimoku <- function(x,
-                          window,
-                          ticker,
-                          message,
-                          theme = c("original", "dark", "solarized", "mono"),
-                          strat = TRUE,
-                          ...) {
-
-  print(autoplot.ichimoku(x, window = window, ticker = ticker, message = message,
-                          theme = theme, strat = strat), ...)
-
 }
 
 #' Print Ichimoku Objects

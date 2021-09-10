@@ -22,4 +22,11 @@ Create a vector of element positions of duplicates in the output of expand.grid
     on 2 identical vectors. An efficient method of creating combinations for
     2 variables.
 }
+\examples{
+n <- 3
+expand.grid(1:n, 1:n)
+expand.grid(1:n, 1:n)[-grid_dup(n), ]
+expand.grid(1:n, 1:n)[-grid_dup(n, omit.id = TRUE), ]
+
+}
 \keyword{internal}

@@ -8,8 +8,8 @@
 #' @param holidays (optional) a vector, or function which outputs a vector, of
 #'     dates defined as holidays.
 #' @param ... other arguments not used by this function.
-#' @param noholidays (optional) if set, bypasses the function logic and selects
-#'     all dates in 'x'.
+#' @param noholidays (optional) if set, bypasses the function logic and returns
+#'     TRUE for all dates in 'x'.
 #'
 #' @return A vector of logical values: TRUE if the corresponding element of 'x'
 #'     is a weekday and not a holiday, FALSE otherwise.
@@ -59,7 +59,14 @@ tradingDays <- function(x, holidays, ..., noholidays) {
 #'
 #' @return A numeric vector.
 #'
+#' @examples
+#' n <- 3
+#' expand.grid(1:n, 1:n)
+#' expand.grid(1:n, 1:n)[-grid_dup(n), ]
+#' expand.grid(1:n, 1:n)[-grid_dup(n, omit.id = TRUE), ]
+#'
 #' @keywords internal
+#' @export
 #'
 grid_dup <- function(n, omit.id) {
   vec <- do.call(c, lapply(seq_len(n - 1), function(x) x * n + 1:x))
@@ -121,15 +128,11 @@ df_trim <- function(x) {
 xts_df <- function(x, keep.attrs) {
   core <- coredata(x)
   dims <- dim(core)
-  df <- structure(c(list(index(x)), lapply(seq_len(dims[2L]), function(i) core[, i])),
-                  names = c("index", dimnames(core)[[2L]]),
-                  class = "data.frame",
-                  row.names = seq_len(dims[1L]))
-  if (!missing(keep.attrs) && isTRUE(keep.attrs)) {
-    lk <- look(x)
-    attrs <- attributes(df)
-    attributes(df) <- c(attrs, lk)
-  }
+  df <- c(list(index(x)), lapply(seq_len(dims[2L]), function(i) core[, i]))
+  attributes(df) <- c(list(names = c("index", dimnames(core)[[2L]]),
+                           class = "data.frame",
+                           row.names = .set_row_names(dims[1L])),
+                      if (!missing(keep.attrs) && isTRUE(keep.attrs)) look(x))
   df
 }
 
@@ -159,15 +162,11 @@ matrix_df <- function(x, keep.attrs) {
   dnames <- dimnames(x)
   mat <- unname(x)
   dims <- dim(mat)
-  df <- structure(lapply(seq_len(dims[2L]), function(i) mat[, i]),
-            names = dnames[[2L]],
-            class = "data.frame",
-            row.names = if (is.null(dnames[[1L]])) seq_len(dims[1L]) else dnames[[1L]])
-  if (!missing(keep.attrs) && isTRUE(keep.attrs)) {
-    lk <- look(x)
-    attrs <- attributes(df)
-    attributes(df) <- c(attrs, lk)
-  }
+  df <- lapply(seq_len(dims[2L]), function(i) mat[, i])
+  attributes(df) <- c(list(names = dnames[[2L]],
+                           class = "data.frame",
+                           row.names = if (is.null(dnames[[1L]])) .set_row_names(dims[1L]) else dnames[[1L]]),
+                      if (!missing(keep.attrs) && isTRUE(keep.attrs)) look(x))
   df
 }
 
@@ -204,15 +203,13 @@ df_merge <- function(...) {
   dots <- list(...)
   merge <- Reduce(function(x, y) merge.data.frame(x, y, all = TRUE), dots)
   if (isTRUE(attr(dots[[1L]], "oanda"))) {
-    merge <- structure(merge,
+    merge <- structure(.Data = merge,
                        instrument = attr(dots[[1L]], "instrument"),
                        price = attr(dots[[1L]], "price"),
                        timestamp = do.call(max, lapply(dots, attr, "timestamp")),
                        oanda = TRUE)
-    if (FALSE %in% merge$complete) {
-      warning("Incomplete periods in merged dataframe, please check for possible duplicates",
-              call. = FALSE)
-    }
+    if (FALSE %in% merge$complete) warning("Incomplete periods in merged dataframe, please check for possible duplicates",
+                                           call. = FALSE)
   }
   merge
 }
@@ -247,7 +244,8 @@ df_merge <- function(...) {
 #' @export
 #'
 df_append <- function(new, old) {
-  structure(rbind.data.frame(old[!old$time %in% new$time, ], new),
-            timestamp = attr(new, "timestamp"))
+  df <- rbind.data.frame(old[!old$time %in% new$time, ], new)
+  attr(df, "timestamp") <- attr(new, "timestamp")
+  df
 }
 

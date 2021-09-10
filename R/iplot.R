@@ -8,7 +8,7 @@
 #'     directly from the chart.
 #'
 #' @param x an object of class 'ichimoku'.
-#' @inheritParams autoplot
+#' @inheritParams plot.ichimoku
 #' @param ... additional parameters passed along to the 'options' argument of
 #'     \code{shiny::shinyApp()}.
 #' @param launch.browser [default TRUE] If TRUE, the system's default web browser
@@ -35,9 +35,11 @@
 #'
 iplot <- function(x,
                   ticker,
+                  subtitle,
                   theme = c("original", "dark", "solarized", "mono"),
-                  message,
                   strat = TRUE,
+                  type = c("none", "r", "s", "bar", "line"),
+                  custom,
                   ...,
                   launch.browser = TRUE) {
 
@@ -45,9 +47,10 @@ iplot <- function(x,
 
     if (!is.ichimoku(x)) stop("iplot() only works with ichimoku objects", call. = FALSE)
     theme <- match.arg(theme)
+    type <- match.arg(type)
     if (missing(ticker)) ticker <- attr(x, "ticker")
-    if (missing(message)) {
-      message <- if (hasStrat(x) && isTRUE(strat)) {
+    if (missing(subtitle)) {
+      subtitle <- if (hasStrat(x) && isTRUE(strat)) {
         paste0("Strategy: ", attr(x, "strat")["Strategy", ][[1L]])
       }
     }
@@ -81,17 +84,27 @@ iplot <- function(x,
                                          width = "100%", timeFormat = tformat))
         ),
       shiny::fluidRow(
-        shiny::column(width = 2, offset = 1,
+        shiny::column(width = 2,
                       shiny::selectInput("theme", label = "Theme",
                                          choices = c("original", "dark", "solarized", "mono"),
                                          selected = theme,
                                          selectize = FALSE)),
         shiny::column(width = 2,
+                      shiny::selectInput("type", label = "Type",
+                                         choices = c("none", "r", "s", "bar", "line"),
+                                         selected = type,
+                                         selectize = FALSE)),
+        shiny::column(width = 2,
+                      shiny::selectInput("custom", label = "Custom",
+                                         choices = dimnames(x)[[2L]],
+                                         selected = NULL,
+                                         selectize = FALSE)),
+        shiny::column(width = 2,
                       shiny::textInput("ticker", label = "Ticker",
                                        value = ticker, width = "100%")),
         shiny::column(width = 2,
-                      shiny::textInput("message", label = "Message",
-                                       value = message, width = "100%")),
+                      shiny::textInput("subtitle", label = "Subtitle",
+                                       value = subtitle, width = "100%")),
         shiny::column(width = 1,
                       shiny::HTML("<label class='control-label'>Show</label>"),
                       shiny::checkboxInput("infotip", "Infotip", value = TRUE)),
@@ -120,19 +133,24 @@ iplot <- function(x,
       }
 
       output$chart <- shiny::renderPlot(
-        autoplot.ichimoku(pdata(), ticker = input$ticker, message = input$message,
-                          theme = input$theme, strat = input$strat)
+        if (input$type == "none") {
+          autoplot.ichimoku(pdata(), ticker = input$ticker, subtitle = input$subtitle,
+                            theme = input$theme, strat = input$strat)
+        } else {
+          extraplot(pdata(), ticker = input$ticker, subtitle = input$subtitle, theme = input$theme,
+                    strat = input$strat, type = input$type, custom = input$custom)
+        }
       )
       output$hover_x <- shiny::renderUI({
-        shiny::req(input$plot_hover, posi_x() > 0, posi_x() <= dim(pdata())[1L])
+        shiny::req(input$type == "none", input$plot_hover, posi_x() > 0, posi_x() <= dim(pdata())[1L])
         drawGuide(label = index(pdata())[posi_x()], left = left_px() + xadj, top = 60)
       })
       output$hover_y <- shiny::renderUI({
-        shiny::req(input$plot_hover)
+        shiny::req(input$type == "none", input$plot_hover)
         drawGuide(label = signif(input$plot_hover$y, digits = 5L), left = 75, top = top_px() + 11)
       })
       output$infotip <- shiny::renderUI({
-        shiny::req(input$infotip, input$plot_hover, posi_x() > 0, posi_x() <= dim(pdata())[1L])
+        shiny::req(input$type == "none", input$infotip, input$plot_hover, posi_x() > 0, posi_x() <= dim(pdata())[1L])
         drawInfotip(sdata = pdata()[posi_x(), ], left_px = left_px(), top_px = top_px())
       })
 

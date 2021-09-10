@@ -128,10 +128,10 @@ autostrat <- function(x,
 
   }
 
-  invisible(structure(list,
-                      logret = cbind(logret),
-                      summary = print(do.call(cbind, lapply(list, attr, which = "strat"))),
-                      autostrat = TRUE))
+  attributes(list) <- list(logret = cbind(logret),
+                           summary = print(do.call(cbind, lapply(list, attr, which = "strat"))),
+                           autostrat = TRUE)
+  invisible(list)
 
 }
 
@@ -218,17 +218,18 @@ mlgrid <- function(x,
   }
 
   mat <- unname(matrix)
-  grid <- structure(c(list(y), lapply(seq_len(dim(mat)[2L]), function(i) mat[, i])),
-                    names = c("y", dimnames(matrix)[[2L]]),
-                    class = "data.frame",
-                    row.names = as.character(index(x)),
-                    y = target,
-                    direction = dir,
-                    ticker = attr(x, "ticker"),
-                    mlgrid = TRUE)
+  grid <- c(list(y), lapply(seq_len(dim(mat)[2L]), function(i) mat[, i]))
+  attributes(grid) <- list(names = c("y", dimnames(matrix)[[2L]]),
+                           class = "data.frame",
+                           row.names = as.character(index(x)),
+                           y = target,
+                           direction = dir,
+                           ticker = attr(x, "ticker"),
+                           mlgrid = TRUE)
   df_trim(grid)
 
 }
+
 
 #' writeMatrix
 #'

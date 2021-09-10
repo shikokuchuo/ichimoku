@@ -6,7 +6,7 @@ strat4 <- strat(cloud, c1 = "tenkan", c2 = "kijun", dir = "short")
 
 test_that("strat ok", {
   expect_s3_class(strat, "ichimoku")
-  expect_true(dim(strat)[2L] == 19)
+  expect_true(dim(strat)[2L] == 19L)
   expect_identical(strat, strat2)
   expect_error(strat(sample_ohlc_data), regexp = "ichimoku object")
   expect_error(strat(cloud, "close", "tenkan", "kijun", "chikou", type = "a"), regexp = "Invalid type")
@@ -15,7 +15,7 @@ test_that("strat ok", {
 test_that("stratcombine ok", {
   comb <- stratcombine(strat, strat3)
   expect_s3_class(comb, "ichimoku")
-  expect_true(dim(comb)[2L] == 19)
+  expect_true(dim(comb)[2L] == 19L)
   expect_identical(stratcombine(strat, strat), strat)
   expect_error(stratcombine(sample_ohlc_data), regexp = "ichimoku object")
   expect_error(stratcombine(strat, strat(cloud[1:100,])), regexp = "same data")
@@ -29,5 +29,5 @@ test_that("hasStrat ok", {
 
 test_that("summary.strat ok", {
   expect_true(inherits(summary(strat), "matrix"))
-  expect_true(inherits(summary(strat, strat = FALSE), "table"))
+  expect_false(inherits(summary(strat, strat = FALSE), "matrix"))
 })

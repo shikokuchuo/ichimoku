@@ -5,13 +5,14 @@
 \alias{sample_ohlc_data}
 \title{Sample OHLC Price Data}
 \format{
-A data frame with 256 observations of 5 variables:
+A data frame with 256 observations of 6 variables:
 \itemize{
   \item{time}{ - timestamp of observation [POSIXct]}
   \item{open}{ - opening price [numeric]}
   \item{low}{ - low price [numeric]}
   \item{high}{ - high price [numeric]}
   \item{close}{ - closing price [numeric]}
+  \item{volume}{ - volume [integer]}
 }
 }
 \source{
@@ -25,7 +26,7 @@ Simulated prices for a hypothetical financial asset. Created for the purpose
     of demonstrating package functions in examples and vignettes only.
 }
 \examples{
-cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
+head(sample_ohlc_data)
 
 }
 \keyword{datasets}
