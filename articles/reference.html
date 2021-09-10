@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.5.2</span>
       </span>
     </div>
 
@@ -187,7 +187,7 @@
 <li><p>ichimoku will construct a pseudo-OHLC series from the single price. It does this by assigning the opening price to be the closing price of the previous period, and the high and low to be the max and min respectively of the opening and closing prices</p></li>
 <li><p>As the constructed OHLC series does not contain real high/low values, <em>the ichimoku cloud chart calculated in this way is not accurate and serves as an approximation only</em></p></li>
 </ul>
-<p><strong>Note on data retrieval:</strong> it is optimal to retrieve data starting from slightly further back than the period being analysed. This is as the cloud lines require several values to be calculated and hence there will be missing values at the start of the data. Run <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on the full dataset and then subset the data window when plotting to ensure that there is a full cloud for the entire chart.</p>
+<p><strong>Note on data retrieval:</strong> it is optimal to retrieve data starting from further back than the period being analysed. This is as the various cloud lines are calculated using up to 52 values and then plotted ahead up to 26 periods, and hence there will be only be a full chart with all of the ichmoku cloud values from the 78th observation onwards (using default cloud periods). Run <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on the full dataset and then subset the data window when plotting to ensure that there is a full cloud for the entire chart.</p>
 </div>
 <div id="ichimoku" class="section level3">
 <h3 class="hasAnchor">
