@@ -68,4 +68,5 @@ Sasaki, H. (1996), \emph{ichimoku kinkouhyou no kenkyuu}. Tokyo,
 }
 \author{
 Charlie Gao <\email{charlie.gao@shikokuchuo.net}>
+    (\href{https://orcid.org/0000-0002-0750-061X}{ORCID})
 }

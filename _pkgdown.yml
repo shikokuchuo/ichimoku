@@ -10,4 +10,5 @@ navbar:
     href: https://shikokuchuo.net/
 reference:
 - contents:
+  - ichimoku-package
   - matches("^[a-zA-Z]*")

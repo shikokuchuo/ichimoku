@@ -1,7 +1,7 @@
 Package: ichimoku
 Type: Package
 Title: Visualization and Tools for Ichimoku Kinko Hyo Strategies
-Version: 1.1.5.1
+Version: 1.1.5.2
 Description: An implementation of 'Ichimoku Kinko Hyo', also commonly known as
     'cloud charts'. Static and interactive visualizations with tools for
     creating, backtesting and development of quantitative 'ichimoku' strategies.
@@ -17,7 +17,8 @@ Authors@R:
     person(given = "Charlie",
            family = "Gao",
            role = c("aut", "cre"),
-           email = "charlie.gao@shikokuchuo.net")
+           email = "charlie.gao@shikokuchuo.net",
+           comment = c(ORCID = "0000-0002-0750-061X"))
 Author: Charlie Gao [aut, cre]
 Maintainer: Charlie Gao <charlie.gao@shikokuchuo.net>
 BugReports: https://github.com/shikokuchuo/ichimoku/issues
