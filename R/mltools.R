@@ -8,19 +8,19 @@
 #'     asymmetric strategies of the form 'c1 > c2 x c3 > c4' (level 3).
 #'
 #' @inheritParams strat
-#' @param n [default 8] select top n number of strategies to return.
+#' @param n [default 8] select top 'n' number of strategies to return.
 #' @param level [default 1] to return simple strategies. For complex strategies,
-#'     set level to 2 to return strategies of the form 's1 & s2' or level to 3
-#'     to return strategies of the form 's1 x s2'
+#'     set level to 2 to return combined strategies of the form 's1 & s2' or
+#'     level to 3 to return asymmetric strategies of the form 's1 x s2'
 #'
-#' @return A list of 'n' ichimoku objects containing strategies. The
-#'     cumulative log returns for all strategies as well as the summaries for
-#'     the 'n' top strategies are saved as attributes to the list. The strategy
-#'     summaries are printed to the console as a side effect.
+#' @return A list of 'n' ichimoku objects containing strategies, with attributes
+#'     'logret', a matrix of cumulative log returns for all strategies, and 'summary',
+#'     a matrix of summaries for the top 'n' strategies. The strategy summaries
+#'     are printed to the console as a side effect.
 #'
 #' @details Ichimoku objects for each strategy are returned as a list. The
 #'     cumulative log returns for all strategies as well as the summaries for
-#'     the 'n' top strategies are saved as attributes to the list. This
+#'     the top 'n' strategies are saved as attributes to the list. This
 #'     information may be retrieved by using \code{\link{look}} on the returned list.
 #'
 #'     Each individual ichimoku object may be accessed via its position in the
@@ -138,8 +138,8 @@ autostrat <- function(x,
 #' mlgrid Numeric Representation
 #'
 #' Create a grid of ichimoku indicator conditions and next period returns. The
-#'     grid facilitates comparing strategy returns or as a basis for further
-#'     processing in machine learning applications. Translates the visual
+#'     grid facilitates the comparison of strategy returns and provides a basis
+#'     for use in machine learning applications. Translates the visual
 #'     representation of the relationship between cloud chart elements into a
 #'     numerical format for further analysis.
 #'

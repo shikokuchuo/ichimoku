@@ -9,19 +9,19 @@ autostrat(x, n = 8, dir = c("long", "short"), level = 1)
 \arguments{
 \item{x}{an ichimoku object.}
 
-\item{n}{[default 8] select top n number of strategies to return.}
+\item{n}{[default 8] select top 'n' number of strategies to return.}
 
 \item{dir}{[default 'long'] trade direction, either 'long' or 'short'.}
 
 \item{level}{[default 1] to return simple strategies. For complex strategies,
-set level to 2 to return strategies of the form 's1 & s2' or level to 3
-to return strategies of the form 's1 x s2'}
+set level to 2 to return combined strategies of the form 's1 & s2' or
+level to 3 to return asymmetric strategies of the form 's1 x s2'}
 }
 \value{
-A list of 'n' ichimoku objects containing strategies. The
-    cumulative log returns for all strategies as well as the summaries for
-    the 'n' top strategies are saved as attributes to the list. The strategy
-    summaries are printed to the console as a side effect.
+A list of 'n' ichimoku objects containing strategies, with attributes
+    'logret', a matrix of cumulative log returns for all strategies, and 'summary',
+    a matrix of summaries for the top 'n' strategies. The strategy summaries
+    are printed to the console as a side effect.
 }
 \description{
 Generate a list of the top performing ichimoku cloud strategies based on
@@ -32,7 +32,7 @@ Generate a list of the top performing ichimoku cloud strategies based on
 \details{
 Ichimoku objects for each strategy are returned as a list. The
     cumulative log returns for all strategies as well as the summaries for
-    the 'n' top strategies are saved as attributes to the list. This
+    the top 'n' strategies are saved as attributes to the list. This
     information may be retrieved by using \code{\link{look}} on the returned list.
 
     Each individual ichimoku object may be accessed via its position in the

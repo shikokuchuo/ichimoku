@@ -15,8 +15,8 @@ stratcombine(s1, s2)
 An ichimoku object augmented with the combined strategy.
 }
 \description{
-Create custom strategies from combining existing strategies contained in 's1'
-    and 's2' to form 's1 & s2'.
+Create custom strategies from combining existing strategies contained in
+    ichimoku objects 's1' and 's2' to form 's1 & s2'.
 }
 \details{
 The combined strategy 's1 & s2' means indicator conditions in 's1'
@@ -25,8 +25,8 @@ The combined strategy 's1 & s2' means indicator conditions in 's1'
     The boolean values showing whether these conditions are met are stored in
     the 'cond' column.
 
-    The stategy summary may be accessed by the summary() function or via
-    \code{\link{look}}.
+    The strategy summary may be accessed by the \code{summary()} method for
+    ichimoku objects or via \code{\link{look}}.
 }
 \section{Further Details}{
 

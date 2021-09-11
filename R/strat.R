@@ -51,8 +51,8 @@
 #'         \item{\code{$strat}:} {the strategy summary [matrix]}
 #'      }
 #'
-#'     The strategy summary may be accessed by the summary() function or via
-#'     \code{\link{look}}.
+#'     The strategy summary may be accessed by the \code{summary()} method for
+#'     ichimoku objects or via \code{\link{look}}.
 #'
 #' @section Complex Strategies:
 #'     For complex strategies: 's1' denotes the strategy 'c1 > c2' and 's2'
@@ -242,8 +242,8 @@ writeStrat <- function(x, strategy, dir) {
 
 #' Combine Ichimoku Strategies
 #'
-#' Create custom strategies from combining existing strategies contained in 's1'
-#'     and 's2' to form 's1 & s2'.
+#' Create custom strategies from combining existing strategies contained in
+#'     ichimoku objects 's1' and 's2' to form 's1 & s2'.
 #'
 #' @param s1 an ichimoku object containing a strategy.
 #' @param s2 an ichimoku object containing a strategy.
@@ -256,8 +256,8 @@ writeStrat <- function(x, strategy, dir) {
 #'     The boolean values showing whether these conditions are met are stored in
 #'     the 'cond' column.
 #'
-#'     The stategy summary may be accessed by the summary() function or via
-#'     \code{\link{look}}.
+#'     The strategy summary may be accessed by the \code{summary()} method for
+#'     ichimoku objects or via \code{\link{look}}.
 #'
 #' @section Further Details:
 #'     Please refer to the strategies vignette by running:

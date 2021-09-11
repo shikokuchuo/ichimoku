@@ -78,8 +78,8 @@ The following assumption applies to all strategies: confirmation of
         \item{\code{$strat}:} {the strategy summary [matrix]}
      }
 
-    The strategy summary may be accessed by the summary() function or via
-    \code{\link{look}}.
+    The strategy summary may be accessed by the \code{summary()} method for
+    ichimoku objects or via \code{\link{look}}.
 }
 
 \section{Complex Strategies}{

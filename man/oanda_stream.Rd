@@ -33,6 +33,10 @@ Stream live price and liquidity data for major currencies, metals,
 This function connects to the OANDA fxTrade Streaming API. Use the
     'Esc' key to stop the stream.
 
+    The output contains ANSI escape codes for console formatting, but
+    otherwise represents the raw feed without omission. Note that as this is
+    a raw stream, returned times are in UTC.
+
     For further details please refer to the OANDA fxTrade API vignette by
     running: \code{vignette("xoanda", package = "ichimoku")}.
 }
@@ -51,10 +55,6 @@ This function connects to the OANDA fxTrade Streaming API. Use the
     not all aligned to the top of the second). This means that during
     periods of rapid price movement, different subscribers may observe
     different prices depending on their alignment.
-
-    The streamed data is formatted for easier reading, but otherwise
-    represents the raw feed without omission. Note that as this is a raw
-    stream, returned times are in UTC.
 }
 
 \examples{

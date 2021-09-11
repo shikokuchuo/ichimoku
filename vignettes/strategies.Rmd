@@ -93,7 +93,7 @@ If 'type' is set to 3, the strategy will be formulated as an asymmetric strategy
 
 ### 3. View strategy summary with `summary()`
 
-A summary of the strategy is saved as an attribute to the ichimoku object and can be accessed by the `summary()` function.
+A summary of the strategy is saved as an attribute to the ichimoku object and can be accessed by the `summary()` method for ichimoku objects.
 
 ```{r summary}
 summary(strat)
@@ -121,7 +121,7 @@ To view the original chart without the strategy, simply pass the argument `strat
 
 ### 5. Combine strategies using `stratcombine()`
 
-`stratcombine()` can be used to create custom combined strategies from existing strategies contained in 's1' and 's2' to form 's1 & s2'.
+`stratcombine()` can be used to create custom combined strategies from existing strategies contained in ichimoku objects 's1' and 's2' to form 's1 & s2'.
 
 ```{r combine}
 strat2 <- strat(cloud, "kijun", "tenkan")
