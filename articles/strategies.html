@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.5.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.5.3</span>
       </span>
     </div>
 
@@ -209,7 +209,7 @@
 <h3 class="hasAnchor">
 <a href="#view-strategy-summary-with-summary" class="anchor"></a>3. View strategy summary with <code>summary()</code>
 </h3>
-<p>A summary of the strategy is saved as an attribute to the ichimoku object and can be accessed by the <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> function.</p>
+<p>A summary of the strategy is saved as an attribute to the ichimoku object and can be accessed by the <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> method for ichimoku objects.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">strat</span><span class="op">)</span>
 <span class="co">#&gt;                        [,1]               </span>
@@ -254,7 +254,7 @@
 <h3 class="hasAnchor">
 <a href="#combine-strategies-using-stratcombine" class="anchor"></a>5. Combine strategies using <code>stratcombine()</code>
 </h3>
-<p><code><a href="../reference/stratcombine.html">stratcombine()</a></code> can be used to create custom combined strategies from existing strategies contained in ‘s1’ and ‘s2’ to form ‘s1 &amp; s2’.</p>
+<p><code><a href="../reference/stratcombine.html">stratcombine()</a></code> can be used to create custom combined strategies from existing strategies contained in ichimoku objects ‘s1’ and ‘s2’ to form ‘s1 &amp; s2’.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">strat2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/strat.html">strat</a></span><span class="op">(</span><span class="va">cloud</span>, <span class="st">"kijun"</span>, <span class="st">"tenkan"</span><span class="op">)</span>
 
