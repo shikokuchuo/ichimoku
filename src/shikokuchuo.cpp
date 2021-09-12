@@ -27,11 +27,11 @@
 [[cpp11::register]]
 cpp11::doubles maxOver(const cpp11::doubles& x, int window) {
 
-  int n  = x.size();
+  int n = x.size(), w1 = window - 1;
   cpp11::writable::doubles rollx(n);
 
-  std::deque< std::pair<long double, int> > deck;
-  for (int i = 0; i < x.size(); ++i) {
+  std::deque<std::pair<long double, int>>deck;
+  for (int i = 0; i < n; ++i) {
       while (!deck.empty() && deck.back().first <= x[i])
         deck.pop_back();
     deck.push_back(std::make_pair(x[i], i));
@@ -40,10 +40,10 @@ cpp11::doubles maxOver(const cpp11::doubles& x, int window) {
       deck.pop_front();
 
     long double min = deck.front().first;
-    if (i < window - 1) {
-      rollx[i] = NA_REAL;
-    } else {
+    if (i >= w1) {
       rollx[i] = min;
+    } else {
+      rollx[i] = NA_REAL;
     }
   }
   return rollx;
@@ -52,11 +52,11 @@ cpp11::doubles maxOver(const cpp11::doubles& x, int window) {
 [[cpp11::register]]
 cpp11::doubles minOver(const cpp11::doubles& x, int window) {
 
-  int n  = x.size();
+  int n = x.size(), w1 = window - 1;
   cpp11::writable::doubles rollx(n);
 
-  std::deque< std::pair<long double, int> > deck;
-  for (int i = 0; i < x.size(); ++i) {
+  std::deque<std::pair<long double, int>>deck;
+  for (int i = 0; i < n; ++i) {
       while (!deck.empty() && deck.back().first >= x[i])
         deck.pop_back();
     deck.push_back(std::make_pair(x[i], i));
@@ -65,10 +65,10 @@ cpp11::doubles minOver(const cpp11::doubles& x, int window) {
       deck.pop_front();
 
     long double min = deck.front().first;
-    if (i < window - 1) {
-      rollx[i] = NA_REAL;
-    } else {
+    if (i >= w1) {
       rollx[i] = min;
+    } else {
+      rollx[i] = NA_REAL;
     }
   }
   return rollx;
@@ -77,12 +77,12 @@ cpp11::doubles minOver(const cpp11::doubles& x, int window) {
 [[cpp11::register]]
 cpp11::doubles meanOver(const cpp11::doubles& x, int window) {
 
-  int n  = x.size(), w1 = window - 1;
+  int n = x.size(), w1 = window - 1;
   cpp11::writable::doubles rollx(n);
   long double sum = 0;
   for (int i = 0; i < n; ++i) {
     sum += x[i];
-    if (i >= window - 1){
+    if (i >= w1) {
       rollx[i] = sum / window;
       sum -= x[i - w1];
     } else {
@@ -91,4 +91,3 @@ cpp11::doubles meanOver(const cpp11::doubles& x, int window) {
   }
   return rollx;
 }
-

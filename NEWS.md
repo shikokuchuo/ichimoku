@@ -31,9 +31,9 @@
 
 # ichimoku 1.0.0
 
-#### *ichimoku object specification release:*
+#### *ichimoku object specification v1 release:*
 
-* ichimoku objects created in versions prior to 0.3.51 will no longer work correctly with newer versions of the package. Upgrade to the latest package version and run `ichimoku()` on previously-created objects to re-create them according to the new specification (data is preserved).
+* ichimoku objects created in v0.x will no longer work correctly with newer versions of the package. Upgrade to the latest package version and run `ichimoku()` on previously-created objects to re-create them according to the new specification (data is preserved).
 
 #### New features:
 

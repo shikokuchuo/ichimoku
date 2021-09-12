@@ -144,16 +144,16 @@ autostrat(cloud, n = 3)
 
 Online versions:
 
-ichimoku: [Cloud Charts - The Reference
+[ 1 ] [Cloud Charts - The Reference
 Manual](https://shikokuchuo.net/ichimoku/articles/reference.html)
 
-ichimoku: [Beyond Visualization - Quantitative
+[ 2 ] [Beyond Visualization - Quantitative
 Strategies](https://shikokuchuo.net/ichimoku/articles/strategies.html)
 
-ichimoku: [Auxiliary
+[ 3 ] [Auxiliary
 Functions](https://shikokuchuo.net/ichimoku/articles/utilities.html)
 
-ichimoku: [The OANDA fxTrade
+[ 4 ] [The OANDA fxTrade
 API](https://shikokuchuo.net/ichimoku/articles/xoanda.html)
 
 ## References

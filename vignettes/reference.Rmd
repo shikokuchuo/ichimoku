@@ -122,7 +122,7 @@ head(TKR)
 
 ### ichimoku()
 
-`ichimoku()` is the main function of the ichimoku package. It takes the input data object and returns an ichimoku object, which inherits the classes 'ichimoku', 'xts' and 'zoo'.
+`ichimoku()` is the main function of the ichimoku package. It takes the input data object and returns an ichimoku object, which inherits the classes 'ichimoku', 'xts' and 'zoo'. For further details, please refer to the [ichimoku object specification](#ichimoku-object-specification).
 
 Optional arguments:
 
@@ -146,31 +146,7 @@ A section (rows 100 to 110) of the ichimoku object is shown above. Note that pri
 cloud
 ```
 
-#### The ichimoku object specification
-
-- Index:
-  + `index(object)` - date-time index [POSIXct]
-
-- Columns [numeric]:
-  + `object$open` - opening price
-  + `$high` - high price
-  + `$low` - low price
-  + `$close` - closing price
-  + `$cd` - candle direction (-1 = down, 0 = flat, 1 = up)
-  + `$tenkan` - Tenkan-sen
-  + `$kijun` - Kijun-sen
-  + `$senkouA` - Senkou span A
-  + `$senkouB` - Senkou span B
-  + `$chikou` - Chikou span
-  + `$cloudT` - cloud Top (max of senkouA, senkouB)
-  + `$cloudB` - cloud Base (min of senkouA, senkouB)
-
-- Attributes:
-  + `attributes(object)$periods` - parameters used to calculate the cloud [integer vector of length 3]
-  + `$periodicity` - periodicity of the data in seconds [numeric]
-  + `$ticker` - instrument identifier [character]
-  
-The ticker is set by default to the input object name or can be overridden by specifying the 'ticker' argument to `ichimoku()`.
+As an ichimoku object inherits the ‘xts’ and ‘zoo’ classes, all the existing methods for these classes should work seamlessly. For working with ichimoku objects, please see the section [re-exports](#re-exports).
 
 #### ichimoku.ichimoku()
 
@@ -191,23 +167,6 @@ print(kumo[100,], plot = FALSE, digits = 4)
 This allows you to not have to deal with different objects for the same data. There is also the added benefit that it can now be plotted as a sub-plot beneath the main ichimoku cloud chart (see next section).
 
 Note: only numeric data or data coercible to numeric type is preserved in this way, and other types will introduce NAs. This is as ichimoku objects are based on the 'xts' format which essentially uses a numeric matrix to contain the data for performance reasons, and therefore does not allow multiple data types. Custom attributes set on the input object (such as a timestamp or data source) are also preserved.
-
-#### Working with ichimoku objects
-
-As an ichimoku object inherits the 'xts' and 'zoo' classes, all the existing methods for these classes should work seamlessly. For convenience, the following functions are re-exported by ichimoku:
-
-*from 'zoo':*
-
-- `index()` to extract the index of an ichimoku object
-- `coredata()` to extract the columns of an ichimoku object as a numeric matrix (without the date index)
-
-*from 'xts':* 
-
-- `xts()` to create an 'xts' object from data and a date-time index, use `xts(data, index)`
-
-If modifications have been made, call `ichimoku()` on the modified object to re-create the ichimoku object according to the correct specification.
-
-For additional functionality, you may consider loading the 'xts' package to access a wide range of methods available for 'xts' objects, for example changing the periodicity of the data.
 
 #### Defining custom holidays
 
@@ -291,7 +250,7 @@ plot(cloud, window = "2020-04-01/2020-12-01", theme = "solarized", type = "s")
 
 If additional input data is preserved within the ichimoku object, for example volume data, this can also be plotted in the sub-plot area by specifying the 'custom' argument. Other calculated metrics such as custom indicators can also be plotted if they are added as an additional column to the ichimoku object.
 
-The character string supplied to 'custom' is a regular expression pattern that is matched to the column name and hence does not need to match it exactly, nor is case considered.
+The character string supplied to 'custom' is a regular expression pattern that is matched to the column name and hence does not need to match exactly, nor is case considered.
 
 To view a custom sub-plot, type must be specified as either 'bar' or 'line', otherwise the type setting will take precedence.
 
@@ -351,7 +310,7 @@ When an archive is written, the serialised object is hashed and the hash is also
 
 When an archive is read back, the sha256 hash of the restored object is checked against the hash of the original stored in the archive. If identical, a 'data verified' message is printed to the console along with the authenticated sha256 hash.
 
-## Troubleshooting
+## Supplementary Information
 
 ### Data validation
 
@@ -381,6 +340,47 @@ There may however still be other issues with the input data that prevent cloud v
 
 - There are NA values within the price data. This will affect the algorithm calculating the cloud lines in the window immediately following such NA values. Please check the data and manually correct NA values before invoking `ichimoku()`
 
+### ichimoku object specification
+
+- Index:
+  + `index(object)` - date-time index [POSIXct]
+
+- Columns [numeric]:
+  + `object$open` - opening price
+  + `$high` - high price
+  + `$low` - low price
+  + `$close` - closing price
+  + `$cd` - candle direction (-1 = down, 0 = flat, 1 = up)
+  + `$tenkan` - Tenkan-sen
+  + `$kijun` - Kijun-sen
+  + `$senkouA` - Senkou span A
+  + `$senkouB` - Senkou span B
+  + `$chikou` - Chikou span
+  + `$cloudT` - cloud Top (max of senkouA, senkouB)
+  + `$cloudB` - cloud Base (min of senkouA, senkouB)
+
+- Attributes:
+  + `attributes(object)$periods` - parameters used to calculate the cloud [integer vector of length 3]
+  + `$periodicity` - periodicity of the data in seconds [numeric]
+  + `$ticker` - instrument identifier [character]
+
+### Re-exports
+
+For convenience, the following functions are re-exported by ichimoku:
+
+*from 'zoo':*
+
+- `index()` to extract the index of an ichimoku object
+- `coredata()` to extract the columns of an ichimoku object as a numeric matrix (without the date index)
+
+*from 'xts':* 
+
+- `xts()` to create an 'xts' object from data and a date-time index, use `xts(data, index)`
+
+If modifications have been made to the price data of an ichimoku object, call `ichimoku()` on the modified object to re-create the object according to the correct specification.
+
+For additional functionality, you may consider loading the 'xts' package to access a wide range of methods available for 'xts' objects, for example changing the periodicity of the data.
+
 ### API modifications
 
 #### Since version 0.x
@@ -388,13 +388,13 @@ There may however still be other issues with the input data that prevent cloud v
 - ichimoku objects created in v0.x will no longer work correctly in v1.x and later of the package
 - To ensure compatibility with the ichimoku object specification v1, please upgrade to the latest package version and run `ichimoku()` on previously-created objects to re-create them according to the new specification (data is preserved)
 
-### Dependencies
+## Dependencies
 
-The dependency on other packages is designed to be minimised to the extent possible. ichimoku currently has the following external package dependencies:
+ichimoku currently has the following external package dependencies:
 
 - curl - for interfacing with external APIs
-- ggplot2 - the widely-used R graphics system for visualization
-- gridExtra - for high-level manipulation of graphics objects
+- ggplot2 - the R graphics system for visualization
+- gridExtra - for high-level manipulation of grid graphics objects
 - jsonlite - for parsing JSON data retrieved from external APIs
 - rlang - R language requirement arising from the use of 'ggplot2'
 - xts - ichimoku objects are based on the 'xts' format for time series
@@ -402,14 +402,14 @@ The dependency on other packages is designed to be minimised to the extent possi
 
 Compile time:
 
-- cpp11 - provides the C++ headers for various internal functions used by ichimoku
+- cpp11 - provides the C++ headers for various ichimoku internal functions
 
 Optional (provides additional features):
 
 - bslib - for full theming of 'shiny' applications
 - keyring - for saving API keys in the system credential store
-- openssl - for verification of the data integrity of archived objects
-- shiny - for interactive visualizations
+- openssl - for verifying the data integrity of archived objects
+- shiny - for interactive and live visualizations
 
 ## References
 

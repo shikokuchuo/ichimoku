@@ -121,7 +121,7 @@ autoplot.ichimoku <- function(object,
   if (missing(ticker)) ticker <- attr(object, "ticker")
   if (missing(subtitle)) {
     subtitle <- if (hasStrat(object) && isTRUE(strat)) {
-      paste0("Strategy: ", attr(object, "strat")["Strategy", ][[1]])
+      paste0("Strategy: ", attr(object, "strat")["Strategy", ][[1L]])
     }
   }
 
@@ -221,17 +221,16 @@ extraplot <- function(object,
       return(print(plot))
     }
 
+  } else if (type == "r") {
+    p2 <- attr(object, "periods")[2L]
+    object$rtype_osc <- 100 - 100 / (1 + meanOver((object[, "cd"] == 1) * (object[, "close"] - object[, "open"]), p2) / meanOver((object[, "cd"] == -1) * (object[, "open"] - object[, "close"]), p2))
+
   } else {
     periods <- attr(object, "periods")
     p1 <- periods[1L]
     p2 <- periods[2L]
-
-    if (type == "r") {
-      object$rtype_osc <- 100 - 100 / (1 + meanOver((object[, "cd"] == 1) * (object[, "close"] - object[, "open"]), p2) / meanOver((object[, "cd"] == -1) * (object[, "open"] - object[, "close"]), p2))
-    } else {
-      object$stype_fast <- 100 * (object[, "close"] - minOver(object[, "low"], p1)) / (maxOver(object[, "high"], p1) - minOver(object[, "low"], p1))
-      object$stype_slow <- 100 * (object[, "close"] - minOver(object[, "low"], p2)) / (maxOver(object[, "high"], p2) - minOver(object[, "low"], p2))
-    }
+    object$stype_fast <- 100 * (object[, "close"] - minOver(object[, "low"], p1)) / (maxOver(object[, "high"], p1) - minOver(object[, "low"], p1))
+    object$stype_slow <- 100 * (object[, "close"] - minOver(object[, "low"], p2)) / (maxOver(object[, "high"], p2) - minOver(object[, "low"], p2))
   }
 
   if (!missing(window)) object <- object[window]
