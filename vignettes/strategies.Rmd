@@ -112,7 +112,7 @@ See [strategy summary specification](#strategy-summary-specification) for detail
 ### 4. Visualize by calling `plot()` or `iplot()`.
 
 ```{r plot}
-plot(strat)
+plot(strat, theme = "dark")
 ```
 
 The periods where the strategy results in a market position are now shaded on the ichimoku cloud chart. The strategy is also printed as the chart subtitle (if not otherwise specified).

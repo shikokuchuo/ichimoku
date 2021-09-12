@@ -24,37 +24,23 @@
 #include <deque>
 #include <cpp11.hpp>
 
-// types of calculations
-enum CalcType {MIN, MAX};
-
-// function arguments for non-data
-struct Args {
-  int window;
-  CalcType ctype;
-};
-
-// calculates rolling window for {minimum, maximum}
-cpp11::doubles roll_minmax(const cpp11::doubles& x, Args a) {
+[[cpp11::register]]
+cpp11::doubles maxOver(const cpp11::doubles& x, int window) {
 
   int n  = x.size();
   cpp11::writable::doubles rollx(n);
 
   std::deque< std::pair<long double, int> > deck;
   for (int i = 0; i < x.size(); ++i) {
-    if(a.ctype == MIN) {
-      while (!deck.empty() && deck.back().first >= x[i])
-        deck.pop_back();
-    } else {
       while (!deck.empty() && deck.back().first <= x[i])
         deck.pop_back();
-    }
     deck.push_back(std::make_pair(x[i], i));
 
-    while(deck.front().second <= i - a.window)
+    while(deck.front().second <= i - window)
       deck.pop_front();
 
     long double min = deck.front().first;
-    if (i < a.window - 1) {
+    if (i < window - 1) {
       rollx[i] = NA_REAL;
     } else {
       rollx[i] = min;
@@ -63,8 +49,33 @@ cpp11::doubles roll_minmax(const cpp11::doubles& x, Args a) {
   return rollx;
 }
 
-// calculates rolling window for mean
-cpp11::doubles roll_mean(const cpp11::doubles& x, int window) {
+[[cpp11::register]]
+cpp11::doubles minOver(const cpp11::doubles& x, int window) {
+
+  int n  = x.size();
+  cpp11::writable::doubles rollx(n);
+
+  std::deque< std::pair<long double, int> > deck;
+  for (int i = 0; i < x.size(); ++i) {
+      while (!deck.empty() && deck.back().first >= x[i])
+        deck.pop_back();
+    deck.push_back(std::make_pair(x[i], i));
+
+    while(deck.front().second <= i - window)
+      deck.pop_front();
+
+    long double min = deck.front().first;
+    if (i < window - 1) {
+      rollx[i] = NA_REAL;
+    } else {
+      rollx[i] = min;
+    }
+  }
+  return rollx;
+}
+
+[[cpp11::register]]
+cpp11::doubles meanOver(const cpp11::doubles& x, int window) {
 
   int n  = x.size(), w1 = window - 1;
   cpp11::writable::doubles rollx(n);
@@ -81,19 +92,3 @@ cpp11::doubles roll_mean(const cpp11::doubles& x, int window) {
   return rollx;
 }
 
-[[cpp11::register]]
-cpp11::doubles maxOver(const cpp11::doubles& x, int window) {
-  Args a; a.window = window; a.ctype = MAX;
-  return roll_minmax(x, a);
-}
-
-[[cpp11::register]]
-cpp11::doubles minOver(const cpp11::doubles& x, int window) {
-  Args a; a.window = window; a.ctype = MIN;
-  return roll_minmax(x, a);
-}
-
-[[cpp11::register]]
-cpp11::doubles meanOver(const cpp11::doubles& x, int window) {
-  return roll_mean(x, window);
-}

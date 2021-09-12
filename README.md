@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# ichimoku <img src='man/figures/logo.jpg' align="right" height="79" />
+# ichimoku <img src='man/figures/logo.png' align="right" />
 
 <!-- badges: start -->
 
@@ -139,6 +139,22 @@ autostrat(cloud, n = 3)
 -   [`mlgrid()`](https://shikokuchuo.net/ichimoku/reference/mlgrid.html) -
     to generate a numeric representation of the relationship between
     ichimoku cloud chart elements.
+
+## Vignettes
+
+Online versions:
+
+ichimoku: [Cloud Charts - The Reference
+Manual](https://shikokuchuo.net/ichimoku/articles/reference.html)
+
+ichimoku: [Beyond Visualization - Quantitative
+Strategies](https://shikokuchuo.net/ichimoku/articles/strategies.html)
+
+ichimoku: [Auxiliary
+Functions](https://shikokuchuo.net/ichimoku/articles/utilities.html)
+
+ichimoku: [The OANDA fxTrade
+API](https://shikokuchuo.net/ichimoku/articles/xoanda.html)
 
 ## References
 

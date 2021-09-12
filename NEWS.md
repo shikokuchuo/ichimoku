@@ -15,7 +15,7 @@
 * Argument 'message' renamed to 'subtitle' across all plot functions for clarity.
 * New sub-plot functionality adds 'gridExtra' package dependency.
 * Minor performance improvements for `ichimoku()`, plot functions and various utilities.
-* Vignettes updates
+* Documentation refresh.
 
 # ichimoku 1.1.0
 

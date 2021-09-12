@@ -66,19 +66,29 @@ library(ichimoku)
 
 ### Data
 
-ichimoku works with data frames and tabular data, and interfaces with other R packages providing financial price data. The `ichimoku()` function is able to handle as input xts, data.frame, data.table, tibble, matrix, and other data.frame compatible objects. For further details see the section [compatible formats](#compatible-formats).
+ichimoku works with data frames and tabular data. The `ichimoku()` function handles as input xts, data.frame, data.table, tibble, matrix, and other data.frame compatible objects.
 
-```{r loaddatanotrun, eval = FALSE}
-# ichimoku is designed to interface well with other packages, for example:
-cloud <- ichimoku(quantmod::getSymbols("C"))
-```
-
-ichimoku also incorporates an interface with the OANDA fxTrade API to return data for major currencies, metals, commodities, government bonds and stock indices. Please refer to the [OANDA vignette](xoanda.html).
+ichimoku incorporates an interface with the OANDA fxTrade API to return data for major currencies, metals, commodities, government bonds and stock indices. Please refer to the [OANDA vignette](xoanda.html).
 
 ```{r oandadatanotrun, eval = FALSE}
 # ichimoku can create clouds directly from OANDA data, for example:
 cloud <- ichimoku(oanda("USD_JPY"))
 ```
+
+ichimoku has been designed to be fully pipeable and interfaces well with other R packages that return financial data.
+
+As an example, the `getSymbols()` function from the 'quantmod' package currently assigns the data to an object but returns a text string containing the name of the object. ichimoku handles this automatically such that a chart can be created directly as per the below:
+
+```{r pipe, eval = FALSE}
+# Using R 4.1's new pipe operator:
+quantmod::getSymbols("C") |> ichimoku() |> plot()
+# Or equally using the 'magrittr' pipe:
+quantmod::getSymbols("C") %>% ichimoku() %>% plot()
+```
+
+`ichimoku()` is implemented as a generic function that provides S3 methods for objects of class 'xts', 'data.frame' and 'matrix'. Hence, 'data.table' and 'tibble' work seamlessly with `ichimoku()`, as will most likely other classes that inherit the class 'data.frame'.
+
+#### Input data requirements
 
 The requirement on the input data is minimal: a series of prices indexed by valid date-times. 
 
@@ -230,16 +240,10 @@ The default plot function produces static plots, which have the advantage of bei
 
 Call `plot()` on an ichimoku object to visualize the cloud chart. 
 
-```{r plot}
-plot(cloud)
-```
-
-#### Plot customisation
-
-A plot with default parameters is shown above. The plot function contains built-in customisations to allow for most envisioned use cases. The example below demonstrates some of the arguments that can be supplied to customise the plot.
+The example below demonstrates some of the arguments that can be supplied to customise the plot.
 
 ```{r plot2}
-plot(cloud, window = "2020-05-01/2020-12-01", ticker = "一目均衡表", subtitle = "Sample Data Index", theme = "dark")
+plot(cloud, window = "2020-05/", ticker = "一目均衡表", subtitle = "Sample Data Series")
 ```
 
 The following arguments for customisation are shared across `plot()` and `iplot()`:
@@ -268,8 +272,9 @@ The R-type line is calculated as 100 - 100 / (1 + [26] period mean open to close
 
 Note that this corresponds to the usual RSI oscillator definition, although not identical as gains/losses are calculated with reference to each period's open rather than the previous close. Note also that the R-type oscillator does not employ a roll-forward mechanism from the initial value like the RSI as it seems that this was originally motivated in part by ease of calculation considerations, which are no longer applicable.
 
-```{r plotr}
-plot(cloud, window = "2020-05/", theme = "mono", type = "r")
+```{r plotr, eval=FALSE}
+# To plot an R-type oscillator:
+plot(cloud, type = "r")
 ```
 
 An **S-type oscillator** is based on the formula for the stochastic indicator, as developed by George Lane and others. This is a 2-line indicator with fast and slow lines with look-back windows corresponding to the fast and medium cloud periods respectively (default 9 and 26). The fast line is quicker to react to price changes and the slow line can either provide confirmation or signal divergence.
@@ -279,7 +284,7 @@ The fast S-type line is calculated as 100 times the ratio of the closing price m
 Note the difference to the usual stochastic oscillator definition where the slow line is a 3-period moving average of the fast line.
 
 ```{r plots}
-plot(cloud, window = "2020-05/", theme = "solarized", type = "s")
+plot(cloud, window = "2020-04-01/2020-12-01", theme = "solarized", type = "s")
 ```
 
 #### Custom Sub-plots
@@ -288,15 +293,13 @@ If additional input data is preserved within the ichimoku object, for example vo
 
 The character string supplied to 'custom' is a regular expression pattern that is matched to the column name and hence does not need to match it exactly, nor is case considered.
 
+To view a custom sub-plot, type must be specified as either 'bar' or 'line', otherwise the type setting will take precedence.
+
 ```{r plotbar}
-plot(kumo, window = "2020-05/", theme = "solarized", type = "bar", custom = "volume")
+plot(kumo, window = "2020-04/2020-11", theme = "mono", type = "bar", custom = "volume")
 ```
 
-To view a custom sub-plot, type must be specified as either 'bar' or 'line', otherwise the type setting will take precedence. On a bar chart, the bar colours correspond to the candle direction.
-
-```{r plotline}
-plot(kumo, window = "2020-05/", type = "line", custom = "volume")
-```
+On a bar chart, the bar colours correspond to the candle direction.
 
 #### Further Options
 
@@ -350,21 +353,6 @@ When an archive is read back, the sha256 hash of the restored object is checked 
 
 ## Troubleshooting
 
-### Compatible formats
-
-`ichimoku()` is a generic function that provides S3 methods for objects of class 'xts', 'data.frame' and 'matrix'.
-
-Other formats such as 'data.table' and 'tibble' that inherit the class 'data.frame' should also work with `ichimoku()`.
-
-ichimoku has been designed to be fully pipeable and interfaces well with other R packages that return financial data. As an example, the `getSymbols()` function from the 'quantmod' package currently exhibits non-standard R behaviour which assigns the data into an object but returns a text string containing the name of the object. ichimoku is able to handle this automatically such that a chart can be created without the need to save intermediate objects:
-
-```{r pipe, eval = FALSE}
-# Using R 4.1's new pipe operator:
-quantmod::getSymbols("C") |> ichimoku() |> plot()
-# Or equally using the 'magrittr' pipe:
-quantmod::getSymbols("C") %>% ichimoku() %>% plot()
-```
-
 ### Data validation
 
 ichimoku performs the following data validation steps before attempting to compute the cloud values. Failure at any step causes `ichimoku()` to halt.
@@ -397,9 +385,10 @@ There may however still be other issues with the input data that prevent cloud v
 
 #### Since version 0.x
 
-- The first ichimoku object specification was released in version 0.3.51 - ichimoku objects created in versions prior to 0.3.51 will no longer work correctly with newer versions of the package. Upgrade to the latest package version and run `ichimoku()` on previously-created objects to re-create them according to the new specification (data is preserved)
+- ichimoku objects created in v0.x will no longer work correctly in v1.x and later of the package
+- To ensure compatibility with the ichimoku object specification v1, please upgrade to the latest package version and run `ichimoku()` on previously-created objects to re-create them according to the new specification (data is preserved)
 
-## Dependencies
+### Dependencies
 
 The dependency on other packages is designed to be minimised to the extent possible. ichimoku currently has the following external package dependencies:
 
