@@ -6,6 +6,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ichimoku: Cloud Charts - The Reference Manual • ichimoku</title>
+<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/simplex/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
@@ -14,6 +20,7 @@
 <script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
 <meta property="og:title" content="ichimoku: Cloud Charts - The Reference Manual">
 <meta property="og:description" content="ichimoku">
+<meta property="og:image" content="https://shikokuchuo.net/ichimoku/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -32,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.5.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.5.4</span>
       </span>
     </div>
 
@@ -151,14 +158,22 @@
 <div id="data" class="section level3">
 <h3 class="hasAnchor">
 <a href="#data" class="anchor"></a>Data</h3>
-<p>ichimoku works with data frames and tabular data, and interfaces with other R packages providing financial price data. The <code><a href="../reference/ichimoku.html">ichimoku()</a></code> function is able to handle as input xts, data.frame, data.table, tibble, matrix, and other data.frame compatible objects. For further details see the section <a href="#compatible-formats">compatible formats</a>.</p>
+<p>ichimoku works with data frames and tabular data. The <code><a href="../reference/ichimoku.html">ichimoku()</a></code> function handles as input xts, data.frame, data.table, tibble, matrix, and other data.frame compatible objects.</p>
+<p>ichimoku incorporates an interface with the OANDA fxTrade API to return data for major currencies, metals, commodities, government bonds and stock indices. Please refer to the <a href="xoanda.html">OANDA vignette</a>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># ichimoku is designed to interface well with other packages, for example:</span>
-<span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="fu">quantmod</span><span class="fu">::</span><span class="fu">getSymbols</span><span class="op">(</span><span class="st">"C"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p>ichimoku also incorporates an interface with the OANDA fxTrade API to return data for major currencies, metals, commodities, government bonds and stock indices. Please refer to the <a href="xoanda.html">OANDA vignette</a>.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># ichimoku can create clouds directly from OANDA data, for example:</span>
 <span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="fu"><a href="../reference/oanda.html">oanda</a></span><span class="op">(</span><span class="st">"USD_JPY"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p>ichimoku has been designed to be fully pipeable and interfaces well with other R packages that return financial data.</p>
+<p>As an example, the <code>getSymbols()</code> function from the ‘quantmod’ package currently assigns the data to an object but returns a text string containing the name of the object. ichimoku handles this automatically such that a chart can be created directly as per the below:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Using R 4.1's new pipe operator:</span>
+<span class="fu">quantmod</span><span class="fu">::</span><span class="fu">getSymbols</span><span class="op">(</span><span class="st">"C"</span><span class="op">)</span> |&gt; <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co"># Or equally using the 'magrittr' pipe:</span>
+<span class="fu">quantmod</span><span class="fu">::</span><span class="fu">getSymbols</span><span class="op">(</span><span class="st">"C"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p><code><a href="../reference/ichimoku.html">ichimoku()</a></code> is implemented as a generic function that provides S3 methods for objects of class ‘xts’, ‘data.frame’ and ‘matrix’. Hence, ‘data.table’ and ‘tibble’ work seamlessly with <code><a href="../reference/ichimoku.html">ichimoku()</a></code>, as will most likely other classes that inherit the class ‘data.frame’.</p>
+<div id="input-data-requirements" class="section level4">
+<h4 class="hasAnchor">
+<a href="#input-data-requirements" class="anchor"></a>Input data requirements</h4>
 <p>The requirement on the input data is minimal: a series of prices indexed by valid date-times.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Simulated OHLC price data is assigned to data frame 'TKR':</span>
@@ -188,6 +203,7 @@
 <li><p>As the constructed OHLC series does not contain real high/low values, <em>the ichimoku cloud chart calculated in this way is not accurate and serves as an approximation only</em></p></li>
 </ul>
 <p><strong>Note on data retrieval:</strong> it is optimal to retrieve data starting from further back than the period being analysed. This is as the various cloud lines are calculated using up to 52 values and then plotted ahead up to 26 periods, and hence there will be only be a full chart with all of the ichmoku cloud values from the 78th observation onwards (using default cloud periods). Run <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on the full dataset and then subset the data window when plotting to ensure that there is a full cloud for the entire chart.</p>
+</div>
 </div>
 <div id="ichimoku" class="section level3">
 <h3 class="hasAnchor">
@@ -356,16 +372,9 @@
 <a href="#static-plots" class="anchor"></a>1. Static Plots</h4>
 <p>The default plot function produces static plots, which have the advantage of being easily exportable to pdf or image formats in high resolution.</p>
 <p>Call <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> on an ichimoku object to visualize the cloud chart.</p>
+<p>The example below demonstrates some of the arguments that can be supplied to customise the plot.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span></code></pre></div>
-<p><img src="reference_files/figure-html/plot-1.png" width="672"></p>
-</div>
-<div id="plot-customisation" class="section level4">
-<h4 class="hasAnchor">
-<a href="#plot-customisation" class="anchor"></a>Plot customisation</h4>
-<p>A plot with default parameters is shown above. The plot function contains built-in customisations to allow for most envisioned use cases. The example below demonstrates some of the arguments that can be supplied to customise the plot.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">cloud</span>, window <span class="op">=</span> <span class="st">"2020-05-01/2020-12-01"</span>, ticker <span class="op">=</span> <span class="st">"一目均衡表"</span>, subtitle <span class="op">=</span> <span class="st">"Sample Data Index"</span>, theme <span class="op">=</span> <span class="st">"dark"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">cloud</span>, window <span class="op">=</span> <span class="st">"2020-05/"</span>, ticker <span class="op">=</span> <span class="st">"一目均衡表"</span>, subtitle <span class="op">=</span> <span class="st">"Sample Data Series"</span><span class="op">)</span></code></pre></div>
 <p><img src="reference_files/figure-html/plot2-1.png" width="672"></p>
 <p>The following arguments for customisation are shared across <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> and <code><a href="../reference/iplot.html">iplot()</a></code>:</p>
 <ul>
@@ -398,14 +407,14 @@
 <p>An <strong>R-type oscillator</strong> is based on the formula for RSI or Relative Strength Index originally developed by J. Welles Wilder. This is a single line indicator with a look-back window of the ichimoku object’s medium cloud period (default 26). The 75 and 25 levels are marked on the chart to demarcate potentially over-bought and over-sold levels.</p>
 <p>The R-type line is calculated as 100 - 100 / (1 + [26] period mean open to close gain / the absolute value of the [26] period mean open to close loss).</p>
 <p>Note that this corresponds to the usual RSI oscillator definition, although not identical as gains/losses are calculated with reference to each period’s open rather than the previous close. Note also that the R-type oscillator does not employ a roll-forward mechanism from the initial value like the RSI as it seems that this was originally motivated in part by ease of calculation considerations, which are no longer applicable.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">cloud</span>, window <span class="op">=</span> <span class="st">"2020-05/"</span>, theme <span class="op">=</span> <span class="st">"mono"</span>, type <span class="op">=</span> <span class="st">"r"</span><span class="op">)</span></code></pre></div>
-<p><img src="reference_files/figure-html/plotr-1.png" width="672"></p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># To plot an R-type oscillator:</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">cloud</span>, type <span class="op">=</span> <span class="st">"r"</span><span class="op">)</span></code></pre></div>
 <p>An <strong>S-type oscillator</strong> is based on the formula for the stochastic indicator, as developed by George Lane and others. This is a 2-line indicator with fast and slow lines with look-back windows corresponding to the fast and medium cloud periods respectively (default 9 and 26). The fast line is quicker to react to price changes and the slow line can either provide confirmation or signal divergence.</p>
 <p>The fast S-type line is calculated as 100 times the ratio of the closing price minus the [9] period low to the [9] period high minus the [9] period low. The slow S-type line is calculated as 100 times the ratio of the closing price minus the [26] period low to the [26] period high minus the [26] period low.</p>
 <p>Note the difference to the usual stochastic oscillator definition where the slow line is a 3-period moving average of the fast line.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">cloud</span>, window <span class="op">=</span> <span class="st">"2020-05/"</span>, theme <span class="op">=</span> <span class="st">"solarized"</span>, type <span class="op">=</span> <span class="st">"s"</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">cloud</span>, window <span class="op">=</span> <span class="st">"2020-04-01/2020-12-01"</span>, theme <span class="op">=</span> <span class="st">"solarized"</span>, type <span class="op">=</span> <span class="st">"s"</span><span class="op">)</span></code></pre></div>
 <p><img src="reference_files/figure-html/plots-1.png" width="672"></p>
 </div>
 <div id="custom-sub-plots" class="section level4">
@@ -413,13 +422,11 @@
 <a href="#custom-sub-plots" class="anchor"></a>Custom Sub-plots</h4>
 <p>If additional input data is preserved within the ichimoku object, for example volume data, this can also be plotted in the sub-plot area by specifying the ‘custom’ argument. Other calculated metrics such as custom indicators can also be plotted if they are added as an additional column to the ichimoku object.</p>
 <p>The character string supplied to ‘custom’ is a regular expression pattern that is matched to the column name and hence does not need to match it exactly, nor is case considered.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">kumo</span>, window <span class="op">=</span> <span class="st">"2020-05/"</span>, theme <span class="op">=</span> <span class="st">"solarized"</span>, type <span class="op">=</span> <span class="st">"bar"</span>, custom <span class="op">=</span> <span class="st">"volume"</span><span class="op">)</span></code></pre></div>
+<p>To view a custom sub-plot, type must be specified as either ‘bar’ or ‘line’, otherwise the type setting will take precedence.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">kumo</span>, window <span class="op">=</span> <span class="st">"2020-04/2020-11"</span>, theme <span class="op">=</span> <span class="st">"mono"</span>, type <span class="op">=</span> <span class="st">"bar"</span>, custom <span class="op">=</span> <span class="st">"volume"</span><span class="op">)</span></code></pre></div>
 <p><img src="reference_files/figure-html/plotbar-1.png" width="672"></p>
-<p>To view a custom sub-plot, type must be specified as either ‘bar’ or ‘line’, otherwise the type setting will take precedence. On a bar chart, the bar colours correspond to the candle direction.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">kumo</span>, window <span class="op">=</span> <span class="st">"2020-05/"</span>, type <span class="op">=</span> <span class="st">"line"</span>, custom <span class="op">=</span> <span class="st">"volume"</span><span class="op">)</span></code></pre></div>
-<p><img src="reference_files/figure-html/plotline-1.png" width="672"></p>
+<p>On a bar chart, the bar colours correspond to the candle direction.</p>
 </div>
 <div id="further-options" class="section level4">
 <h4 class="hasAnchor">
@@ -479,18 +486,6 @@
 <div id="troubleshooting" class="section level2">
 <h2 class="hasAnchor">
 <a href="#troubleshooting" class="anchor"></a>Troubleshooting</h2>
-<div id="compatible-formats" class="section level3">
-<h3 class="hasAnchor">
-<a href="#compatible-formats" class="anchor"></a>Compatible formats</h3>
-<p><code><a href="../reference/ichimoku.html">ichimoku()</a></code> is a generic function that provides S3 methods for objects of class ‘xts’, ‘data.frame’ and ‘matrix’.</p>
-<p>Other formats such as ‘data.table’ and ‘tibble’ that inherit the class ‘data.frame’ should also work with <code><a href="../reference/ichimoku.html">ichimoku()</a></code>.</p>
-<p>ichimoku has been designed to be fully pipeable and interfaces well with other R packages that return financial data. As an example, the <code>getSymbols()</code> function from the ‘quantmod’ package currently exhibits non-standard R behaviour which assigns the data into an object but returns a text string containing the name of the object. ichimoku is able to handle this automatically such that a chart can be created without the need to save intermediate objects:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Using R 4.1's new pipe operator:</span>
-<span class="fu">quantmod</span><span class="fu">::</span><span class="fu">getSymbols</span><span class="op">(</span><span class="st">"C"</span><span class="op">)</span> |&gt; <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co"># Or equally using the 'magrittr' pipe:</span>
-<span class="fu">quantmod</span><span class="fu">::</span><span class="fu">getSymbols</span><span class="op">(</span><span class="st">"C"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-</div>
 <div id="data-validation" class="section level3">
 <h3 class="hasAnchor">
 <a href="#data-validation" class="anchor"></a>Data validation</h3>
@@ -528,14 +523,14 @@
 <h4 class="hasAnchor">
 <a href="#since-version-0-x" class="anchor"></a>Since version 0.x</h4>
 <ul>
-<li>The first ichimoku object specification was released in version 0.3.51 - ichimoku objects created in versions prior to 0.3.51 will no longer work correctly with newer versions of the package. Upgrade to the latest package version and run <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on previously-created objects to re-create them according to the new specification (data is preserved)</li>
+<li>ichimoku objects created in v0.x will no longer work correctly in v1.x and later of the package</li>
+<li>To ensure compatibility with the ichimoku object specification v1, please upgrade to the latest package version and run <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on previously-created objects to re-create them according to the new specification (data is preserved)</li>
 </ul>
 </div>
 </div>
-</div>
-<div id="dependencies" class="section level2">
-<h2 class="hasAnchor">
-<a href="#dependencies" class="anchor"></a>Dependencies</h2>
+<div id="dependencies" class="section level3">
+<h3 class="hasAnchor">
+<a href="#dependencies" class="anchor"></a>Dependencies</h3>
 <p>The dependency on other packages is designed to be minimised to the extent possible. ichimoku currently has the following external package dependencies:</p>
 <ul>
 <li>curl - for interfacing with external APIs</li>
@@ -557,6 +552,7 @@
 <li>openssl - for verification of the data integrity of archived objects</li>
 <li>shiny - for interactive visualizations</li>
 </ul>
+</div>
 </div>
 <div id="references" class="section level2">
 <h2 class="hasAnchor">

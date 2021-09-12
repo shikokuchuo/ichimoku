@@ -8,6 +8,13 @@
 
 <title>Read/write Objects &lt;&gt; Archive Files with Data Verification — archive • ichimoku</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -44,6 +51,7 @@
 <meta property="og:title" content="Read/write Objects &lt;&gt; Archive Files with Data Verification — archive" />
 <meta property="og:description" content="Read and write objects to/from archival storage in the native RData format,
     with verification of data integrity." />
+<meta property="og:image" content="https://shikokuchuo.net/ichimoku/logo.png" />
 
 
 
@@ -75,7 +83,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.5.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.5.4</span>
       </span>
     </div>
 
@@ -203,10 +211,10 @@ or read from.</p></td>
 <span class='va'>file</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span><span class='op'>(</span><span class='op'>)</span>
 
 <span class='fu'>archive</span><span class='op'>(</span><span class='va'>cloud</span>, <span class='va'>file</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Archive written to '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmpms2Z84/filec00677034e5'</span>
+</div><div class='output co'>#&gt; <span class='message'>Archive written to '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpUeXdMn/file1a797af0711c'</span>
 #&gt; <span class='message'>sha256: 3ba9b2c884032e9e264697bf980b15998df31dd993614b5b704af48ecb8d1bbe</span></div><div class='input'>
 <span class='va'>restored</span> <span class='op'>&lt;-</span> <span class='fu'>archive</span><span class='op'>(</span><span class='va'>file</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Archive read from '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmpms2Z84/filec00677034e5'</span>
+</div><div class='output co'>#&gt; <span class='message'>Archive read from '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpUeXdMn/file1a797af0711c'</span>
 #&gt; <span class='message'>Data verified by sha256: 3ba9b2c884032e9e264697bf980b15998df31dd993614b5b704af48ecb8d1bbe</span></div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/unlink.html'>unlink</a></span><span class='op'>(</span><span class='va'>file</span><span class='op'>)</span>
 
