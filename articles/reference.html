@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.5.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.5.5</span>
       </span>
     </div>
 
@@ -208,7 +208,7 @@
 <div id="ichimoku" class="section level3">
 <h3 class="hasAnchor">
 <a href="#ichimoku" class="anchor"></a>ichimoku()</h3>
-<p><code><a href="../reference/ichimoku.html">ichimoku()</a></code> is the main function of the ichimoku package. It takes the input data object and returns an ichimoku object, which inherits the classes ‘ichimoku’, ‘xts’ and ‘zoo’.</p>
+<p><code><a href="../reference/ichimoku.html">ichimoku()</a></code> is the main function of the ichimoku package. It takes the input data object and returns an ichimoku object, which inherits the classes ‘ichimoku’, ‘xts’ and ‘zoo’. For further details, please refer to the <a href="#ichimoku-object-specification">ichimoku object specification</a>.</p>
 <p>Optional arguments:</p>
 <ul>
 <li>
@@ -253,57 +253,7 @@
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># to view chart as well as data, simply issue:</span>
 <span class="va">cloud</span></code></pre></div>
-<div id="the-ichimoku-object-specification" class="section level4">
-<h4 class="hasAnchor">
-<a href="#the-ichimoku-object-specification" class="anchor"></a>The ichimoku object specification</h4>
-<ul>
-<li>Index:
-<ul>
-<li>
-<code><a href="https://rdrr.io/pkg/zoo/man/index.html">index(object)</a></code> - date-time index [POSIXct]</li>
-</ul>
-</li>
-<li>Columns [numeric]:
-<ul>
-<li>
-<code>object$open</code> - opening price</li>
-<li>
-<code>$high</code> - high price</li>
-<li>
-<code>$low</code> - low price</li>
-<li>
-<code>$close</code> - closing price</li>
-<li>
-<code>$cd</code> - candle direction (-1 = down, 0 = flat, 1 = up)</li>
-<li>
-<code>$tenkan</code> - Tenkan-sen</li>
-<li>
-<code>$kijun</code> - Kijun-sen</li>
-<li>
-<code>$senkouA</code> - Senkou span A</li>
-<li>
-<code>$senkouB</code> - Senkou span B</li>
-<li>
-<code>$chikou</code> - Chikou span</li>
-<li>
-<code>$cloudT</code> - cloud Top (max of senkouA, senkouB)</li>
-<li>
-<code>$cloudB</code> - cloud Base (min of senkouA, senkouB)</li>
-</ul>
-</li>
-<li>Attributes:
-<ul>
-<li>
-<code>attributes(object)$periods</code> - parameters used to calculate the cloud [integer vector of length 3]</li>
-<li>
-<code>$periodicity</code> - periodicity of the data in seconds [numeric]</li>
-<li>
-<code>$ticker</code> - instrument identifier [character]</li>
-</ul>
-</li>
-</ul>
-<p>The ticker is set by default to the input object name or can be overridden by specifying the ‘ticker’ argument to <code><a href="../reference/ichimoku.html">ichimoku()</a></code>.</p>
-</div>
+<p>As an ichimoku object inherits the ‘xts’ and ‘zoo’ classes, all the existing methods for these classes should work seamlessly. For working with ichimoku objects, please see the section <a href="#re-exports">re-exports</a>.</p>
 <div id="ichimoku-ichimoku" class="section level4">
 <h4 class="hasAnchor">
 <a href="#ichimoku-ichimoku" class="anchor"></a>ichimoku.ichimoku()</h4>
@@ -324,26 +274,6 @@
 <span class="co">#&gt; 2020-05-19 23:00:00  135.1  125.7  124.8   3440</span></code></pre></div>
 <p>This allows you to not have to deal with different objects for the same data. There is also the added benefit that it can now be plotted as a sub-plot beneath the main ichimoku cloud chart (see next section).</p>
 <p>Note: only numeric data or data coercible to numeric type is preserved in this way, and other types will introduce NAs. This is as ichimoku objects are based on the ‘xts’ format which essentially uses a numeric matrix to contain the data for performance reasons, and therefore does not allow multiple data types. Custom attributes set on the input object (such as a timestamp or data source) are also preserved.</p>
-</div>
-<div id="working-with-ichimoku-objects" class="section level4">
-<h4 class="hasAnchor">
-<a href="#working-with-ichimoku-objects" class="anchor"></a>Working with ichimoku objects</h4>
-<p>As an ichimoku object inherits the ‘xts’ and ‘zoo’ classes, all the existing methods for these classes should work seamlessly. For convenience, the following functions are re-exported by ichimoku:</p>
-<p><em>from ‘zoo’:</em></p>
-<ul>
-<li>
-<code><a href="https://rdrr.io/pkg/zoo/man/index.html">index()</a></code> to extract the index of an ichimoku object</li>
-<li>
-<code><a href="https://rdrr.io/pkg/zoo/man/coredata.html">coredata()</a></code> to extract the columns of an ichimoku object as a numeric matrix (without the date index)</li>
-</ul>
-<p><em>from ‘xts’:</em></p>
-<ul>
-<li>
-<code><a href="https://rdrr.io/pkg/xts/man/xts.html">xts()</a></code> to create an ‘xts’ object from data and a date-time index, use <code><a href="https://rdrr.io/pkg/xts/man/xts.html">xts(data, index)</a></code>
-</li>
-</ul>
-<p>If modifications have been made, call <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on the modified object to re-create the ichimoku object according to the correct specification.</p>
-<p>For additional functionality, you may consider loading the ‘xts’ package to access a wide range of methods available for ‘xts’ objects, for example changing the periodicity of the data.</p>
 </div>
 <div id="defining-custom-holidays" class="section level4">
 <h4 class="hasAnchor">
@@ -421,7 +351,7 @@
 <h4 class="hasAnchor">
 <a href="#custom-sub-plots" class="anchor"></a>Custom Sub-plots</h4>
 <p>If additional input data is preserved within the ichimoku object, for example volume data, this can also be plotted in the sub-plot area by specifying the ‘custom’ argument. Other calculated metrics such as custom indicators can also be plotted if they are added as an additional column to the ichimoku object.</p>
-<p>The character string supplied to ‘custom’ is a regular expression pattern that is matched to the column name and hence does not need to match it exactly, nor is case considered.</p>
+<p>The character string supplied to ‘custom’ is a regular expression pattern that is matched to the column name and hence does not need to match exactly, nor is case considered.</p>
 <p>To view a custom sub-plot, type must be specified as either ‘bar’ or ‘line’, otherwise the type setting will take precedence.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">kumo</span>, window <span class="op">=</span> <span class="st">"2020-04/2020-11"</span>, theme <span class="op">=</span> <span class="st">"mono"</span>, type <span class="op">=</span> <span class="st">"bar"</span>, custom <span class="op">=</span> <span class="st">"volume"</span><span class="op">)</span></code></pre></div>
@@ -483,9 +413,9 @@
 </div>
 </div>
 </div>
-<div id="troubleshooting" class="section level2">
+<div id="supplementary-information" class="section level2">
 <h2 class="hasAnchor">
-<a href="#troubleshooting" class="anchor"></a>Troubleshooting</h2>
+<a href="#supplementary-information" class="anchor"></a>Supplementary Information</h2>
 <div id="data-validation" class="section level3">
 <h3 class="hasAnchor">
 <a href="#data-validation" class="anchor"></a>Data validation</h3>
@@ -516,6 +446,76 @@
 <li><p>There are NA values within the price data. This will affect the algorithm calculating the cloud lines in the window immediately following such NA values. Please check the data and manually correct NA values before invoking <code><a href="../reference/ichimoku.html">ichimoku()</a></code></p></li>
 </ul>
 </div>
+<div id="ichimoku-object-specification" class="section level3">
+<h3 class="hasAnchor">
+<a href="#ichimoku-object-specification" class="anchor"></a>ichimoku object specification</h3>
+<ul>
+<li>Index:
+<ul>
+<li>
+<code><a href="https://rdrr.io/pkg/zoo/man/index.html">index(object)</a></code> - date-time index [POSIXct]</li>
+</ul>
+</li>
+<li>Columns [numeric]:
+<ul>
+<li>
+<code>object$open</code> - opening price</li>
+<li>
+<code>$high</code> - high price</li>
+<li>
+<code>$low</code> - low price</li>
+<li>
+<code>$close</code> - closing price</li>
+<li>
+<code>$cd</code> - candle direction (-1 = down, 0 = flat, 1 = up)</li>
+<li>
+<code>$tenkan</code> - Tenkan-sen</li>
+<li>
+<code>$kijun</code> - Kijun-sen</li>
+<li>
+<code>$senkouA</code> - Senkou span A</li>
+<li>
+<code>$senkouB</code> - Senkou span B</li>
+<li>
+<code>$chikou</code> - Chikou span</li>
+<li>
+<code>$cloudT</code> - cloud Top (max of senkouA, senkouB)</li>
+<li>
+<code>$cloudB</code> - cloud Base (min of senkouA, senkouB)</li>
+</ul>
+</li>
+<li>Attributes:
+<ul>
+<li>
+<code>attributes(object)$periods</code> - parameters used to calculate the cloud [integer vector of length 3]</li>
+<li>
+<code>$periodicity</code> - periodicity of the data in seconds [numeric]</li>
+<li>
+<code>$ticker</code> - instrument identifier [character]</li>
+</ul>
+</li>
+</ul>
+</div>
+<div id="re-exports" class="section level3">
+<h3 class="hasAnchor">
+<a href="#re-exports" class="anchor"></a>Re-exports</h3>
+<p>For convenience, the following functions are re-exported by ichimoku:</p>
+<p><em>from ‘zoo’:</em></p>
+<ul>
+<li>
+<code><a href="https://rdrr.io/pkg/zoo/man/index.html">index()</a></code> to extract the index of an ichimoku object</li>
+<li>
+<code><a href="https://rdrr.io/pkg/zoo/man/coredata.html">coredata()</a></code> to extract the columns of an ichimoku object as a numeric matrix (without the date index)</li>
+</ul>
+<p><em>from ‘xts’:</em></p>
+<ul>
+<li>
+<code><a href="https://rdrr.io/pkg/xts/man/xts.html">xts()</a></code> to create an ‘xts’ object from data and a date-time index, use <code><a href="https://rdrr.io/pkg/xts/man/xts.html">xts(data, index)</a></code>
+</li>
+</ul>
+<p>If modifications have been made to the price data of an ichimoku object, call <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on the modified object to re-create the object according to the correct specification.</p>
+<p>For additional functionality, you may consider loading the ‘xts’ package to access a wide range of methods available for ‘xts’ objects, for example changing the periodicity of the data.</p>
+</div>
 <div id="api-modifications" class="section level3">
 <h3 class="hasAnchor">
 <a href="#api-modifications" class="anchor"></a>API modifications</h3>
@@ -528,14 +528,15 @@
 </ul>
 </div>
 </div>
-<div id="dependencies" class="section level3">
-<h3 class="hasAnchor">
-<a href="#dependencies" class="anchor"></a>Dependencies</h3>
-<p>The dependency on other packages is designed to be minimised to the extent possible. ichimoku currently has the following external package dependencies:</p>
+</div>
+<div id="dependencies" class="section level2">
+<h2 class="hasAnchor">
+<a href="#dependencies" class="anchor"></a>Dependencies</h2>
+<p>ichimoku currently has the following external package dependencies:</p>
 <ul>
 <li>curl - for interfacing with external APIs</li>
-<li>ggplot2 - the widely-used R graphics system for visualization</li>
-<li>gridExtra - for high-level manipulation of graphics objects</li>
+<li>ggplot2 - the R graphics system for visualization</li>
+<li>gridExtra - for high-level manipulation of grid graphics objects</li>
 <li>jsonlite - for parsing JSON data retrieved from external APIs</li>
 <li>rlang - R language requirement arising from the use of ‘ggplot2’</li>
 <li>xts - ichimoku objects are based on the ‘xts’ format for time series</li>
@@ -543,16 +544,15 @@
 </ul>
 <p>Compile time:</p>
 <ul>
-<li>cpp11 - provides the C++ headers for various internal functions used by ichimoku</li>
+<li>cpp11 - provides the C++ headers for various ichimoku internal functions</li>
 </ul>
 <p>Optional (provides additional features):</p>
 <ul>
 <li>bslib - for full theming of ‘shiny’ applications</li>
 <li>keyring - for saving API keys in the system credential store</li>
-<li>openssl - for verification of the data integrity of archived objects</li>
-<li>shiny - for interactive visualizations</li>
+<li>openssl - for verifying the data integrity of archived objects</li>
+<li>shiny - for interactive and live visualizations</li>
 </ul>
-</div>
 </div>
 <div id="references" class="section level2">
 <h2 class="hasAnchor">
