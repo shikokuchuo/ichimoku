@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.6.1</span>
       </span>
     </div>
 
@@ -252,131 +252,133 @@
 <div id="available-instruments" class="section level2">
 <h2 class="hasAnchor">
 <a href="#available-instruments" class="anchor"></a>Available Instruments</h2>
-<p>The list of financial instruments below serves as a reference only and may not be exhaustive and/or differ from those available for your account type or country/region.</p>
 <p>The list of financial instruments available for your account may be retrieved by <code><a href="../reference/oanda_instruments.html">oanda_instruments()</a></code>. The available instruments are also automatically populated as an input in <code><a href="../reference/oanda_studio.html">oanda_studio()</a></code>.</p>
-<pre><code>#&gt;           name     type     displayName
-#&gt; 1    AU200_AUD      CFD   Australia 200
-#&gt; 2      AUD_CAD CURRENCY         AUD/CAD
-#&gt; 3      AUD_CHF CURRENCY         AUD/CHF
-#&gt; 4      AUD_HKD CURRENCY         AUD/HKD
-#&gt; 5      AUD_JPY CURRENCY         AUD/JPY
-#&gt; 6      AUD_NZD CURRENCY         AUD/NZD
-#&gt; 7      AUD_SGD CURRENCY         AUD/SGD
-#&gt; 8      AUD_USD CURRENCY         AUD/USD
-#&gt; 9      BCO_USD      CFD Brent Crude Oil
-#&gt; 10     CAD_CHF CURRENCY         CAD/CHF
-#&gt; 11     CAD_HKD CURRENCY         CAD/HKD
-#&gt; 12     CAD_JPY CURRENCY         CAD/JPY
-#&gt; 13     CAD_SGD CURRENCY         CAD/SGD
-#&gt; 14     CHF_HKD CURRENCY         CHF/HKD
-#&gt; 15     CHF_JPY CURRENCY         CHF/JPY
-#&gt; 16     CHF_ZAR CURRENCY         CHF/ZAR
-#&gt; 17    CN50_USD      CFD       China A50
-#&gt; 18    CORN_USD      CFD            Corn
-#&gt; 19  DE10YB_EUR      CFD            Bund
-#&gt; 20    DE30_EUR      CFD      Germany 30
-#&gt; 21    EU50_EUR      CFD       Europe 50
-#&gt; 22     EUR_AUD CURRENCY         EUR/AUD
-#&gt; 23     EUR_CAD CURRENCY         EUR/CAD
-#&gt; 24     EUR_CHF CURRENCY         EUR/CHF
-#&gt; 25     EUR_CZK CURRENCY         EUR/CZK
-#&gt; 26     EUR_DKK CURRENCY         EUR/DKK
-#&gt; 27     EUR_GBP CURRENCY         EUR/GBP
-#&gt; 28     EUR_HKD CURRENCY         EUR/HKD
-#&gt; 29     EUR_HUF CURRENCY         EUR/HUF
-#&gt; 30     EUR_JPY CURRENCY         EUR/JPY
-#&gt; 31     EUR_NOK CURRENCY         EUR/NOK
-#&gt; 32     EUR_NZD CURRENCY         EUR/NZD
-#&gt; 33     EUR_PLN CURRENCY         EUR/PLN
-#&gt; 34     EUR_SEK CURRENCY         EUR/SEK
-#&gt; 35     EUR_SGD CURRENCY         EUR/SGD
-#&gt; 36     EUR_TRY CURRENCY         EUR/TRY
-#&gt; 37     EUR_USD CURRENCY         EUR/USD
-#&gt; 38     EUR_ZAR CURRENCY         EUR/ZAR
-#&gt; 39    FR40_EUR      CFD       France 40
-#&gt; 40     GBP_AUD CURRENCY         GBP/AUD
-#&gt; 41     GBP_CAD CURRENCY         GBP/CAD
-#&gt; 42     GBP_CHF CURRENCY         GBP/CHF
-#&gt; 43     GBP_HKD CURRENCY         GBP/HKD
-#&gt; 44     GBP_JPY CURRENCY         GBP/JPY
-#&gt; 45     GBP_NZD CURRENCY         GBP/NZD
-#&gt; 46     GBP_PLN CURRENCY         GBP/PLN
-#&gt; 47     GBP_SGD CURRENCY         GBP/SGD
-#&gt; 48     GBP_USD CURRENCY         GBP/USD
-#&gt; 49     GBP_ZAR CURRENCY         GBP/ZAR
-#&gt; 50    HK33_HKD      CFD    Hong Kong 33
-#&gt; 51     HKD_JPY CURRENCY         HKD/JPY
-#&gt; 52    IN50_USD      CFD        India 50
-#&gt; 53   JP225_USD      CFD       Japan 225
-#&gt; 54  NAS100_USD      CFD      US Nas 100
-#&gt; 55  NATGAS_USD      CFD     Natural Gas
-#&gt; 56    NL25_EUR      CFD  Netherlands 25
-#&gt; 57     NZD_CAD CURRENCY         NZD/CAD
-#&gt; 58     NZD_CHF CURRENCY         NZD/CHF
-#&gt; 59     NZD_HKD CURRENCY         NZD/HKD
-#&gt; 60     NZD_JPY CURRENCY         NZD/JPY
-#&gt; 61     NZD_SGD CURRENCY         NZD/SGD
-#&gt; 62     NZD_USD CURRENCY         NZD/USD
-#&gt; 63    SG30_SGD      CFD    Singapore 30
-#&gt; 64     SGD_CHF CURRENCY         SGD/CHF
-#&gt; 65     SGD_JPY CURRENCY         SGD/JPY
-#&gt; 66   SOYBN_USD      CFD        Soybeans
-#&gt; 67  SPX500_USD      CFD      US SPX 500
-#&gt; 68   SUGAR_USD      CFD           Sugar
-#&gt; 69     TRY_JPY CURRENCY         TRY/JPY
-#&gt; 70    TWIX_USD      CFD    Taiwan Index
-#&gt; 71   UK100_GBP      CFD          UK 100
-#&gt; 72  UK10YB_GBP      CFD     UK 10Y Gilt
-#&gt; 73  US2000_USD      CFD    US Russ 2000
-#&gt; 74    US30_USD      CFD   US Wall St 30
-#&gt; 75  USB02Y_USD      CFD    US 2Y T-Note
-#&gt; 76  USB05Y_USD      CFD    US 5Y T-Note
-#&gt; 77  USB10Y_USD      CFD   US 10Y T-Note
-#&gt; 78  USB30Y_USD      CFD       US T-Bond
-#&gt; 79     USD_CAD CURRENCY         USD/CAD
-#&gt; 80     USD_CHF CURRENCY         USD/CHF
-#&gt; 81     USD_CNH CURRENCY         USD/CNH
-#&gt; 82     USD_CZK CURRENCY         USD/CZK
-#&gt; 83     USD_DKK CURRENCY         USD/DKK
-#&gt; 84     USD_HKD CURRENCY         USD/HKD
-#&gt; 85     USD_HUF CURRENCY         USD/HUF
-#&gt; 86     USD_INR CURRENCY         USD/INR
-#&gt; 87     USD_JPY CURRENCY         USD/JPY
-#&gt; 88     USD_MXN CURRENCY         USD/MXN
-#&gt; 89     USD_NOK CURRENCY         USD/NOK
-#&gt; 90     USD_PLN CURRENCY         USD/PLN
-#&gt; 91     USD_SEK CURRENCY         USD/SEK
-#&gt; 92     USD_SGD CURRENCY         USD/SGD
-#&gt; 93     USD_THB CURRENCY         USD/THB
-#&gt; 94     USD_TRY CURRENCY         USD/TRY
-#&gt; 95     USD_ZAR CURRENCY         USD/ZAR
-#&gt; 96   WHEAT_USD      CFD           Wheat
-#&gt; 97   WTICO_USD      CFD  West Texas Oil
-#&gt; 98     XAG_AUD    METAL      Silver/AUD
-#&gt; 99     XAG_CAD    METAL      Silver/CAD
-#&gt; 100    XAG_CHF    METAL      Silver/CHF
-#&gt; 101    XAG_EUR    METAL      Silver/EUR
-#&gt; 102    XAG_GBP    METAL      Silver/GBP
-#&gt; 103    XAG_HKD    METAL      Silver/HKD
-#&gt; 104    XAG_JPY    METAL      Silver/JPY
-#&gt; 105    XAG_NZD    METAL      Silver/NZD
-#&gt; 106    XAG_SGD    METAL      Silver/SGD
-#&gt; 107    XAG_USD    METAL          Silver
-#&gt; 108    XAU_AUD    METAL        Gold/AUD
-#&gt; 109    XAU_CAD    METAL        Gold/CAD
-#&gt; 110    XAU_CHF    METAL        Gold/CHF
-#&gt; 111    XAU_EUR    METAL        Gold/EUR
-#&gt; 112    XAU_GBP    METAL        Gold/GBP
-#&gt; 113    XAU_HKD    METAL        Gold/HKD
-#&gt; 114    XAU_JPY    METAL        Gold/JPY
-#&gt; 115    XAU_NZD    METAL        Gold/NZD
-#&gt; 116    XAU_SGD    METAL        Gold/SGD
-#&gt; 117    XAU_USD    METAL            Gold
-#&gt; 118    XAU_XAG    METAL     Gold/Silver
-#&gt; 119    XCU_USD      CFD          Copper
-#&gt; 120    XPD_USD    METAL       Palladium
-#&gt; 121    XPT_USD    METAL        Platinum
-#&gt; 122    ZAR_JPY CURRENCY         ZAR/JPY</code></pre>
+<p>The list below serves as a reference only and may differ from those actually available for your account type and/or country/region.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/oanda_instruments.html">oanda_instruments</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre><code>#&gt;           name     displayName     type
+#&gt; 1    AU200_AUD   Australia 200      CFD
+#&gt; 2      AUD_CAD         AUD/CAD CURRENCY
+#&gt; 3      AUD_CHF         AUD/CHF CURRENCY
+#&gt; 4      AUD_HKD         AUD/HKD CURRENCY
+#&gt; 5      AUD_JPY         AUD/JPY CURRENCY
+#&gt; 6      AUD_NZD         AUD/NZD CURRENCY
+#&gt; 7      AUD_SGD         AUD/SGD CURRENCY
+#&gt; 8      AUD_USD         AUD/USD CURRENCY
+#&gt; 9      BCO_USD Brent Crude Oil      CFD
+#&gt; 10     CAD_CHF         CAD/CHF CURRENCY
+#&gt; 11     CAD_HKD         CAD/HKD CURRENCY
+#&gt; 12     CAD_JPY         CAD/JPY CURRENCY
+#&gt; 13     CAD_SGD         CAD/SGD CURRENCY
+#&gt; 14     CHF_HKD         CHF/HKD CURRENCY
+#&gt; 15     CHF_JPY         CHF/JPY CURRENCY
+#&gt; 16     CHF_ZAR         CHF/ZAR CURRENCY
+#&gt; 17    CN50_USD       China A50      CFD
+#&gt; 18    CORN_USD            Corn      CFD
+#&gt; 19  DE10YB_EUR            Bund      CFD
+#&gt; 20    DE30_EUR      Germany 30      CFD
+#&gt; 21    EU50_EUR       Europe 50      CFD
+#&gt; 22     EUR_AUD         EUR/AUD CURRENCY
+#&gt; 23     EUR_CAD         EUR/CAD CURRENCY
+#&gt; 24     EUR_CHF         EUR/CHF CURRENCY
+#&gt; 25     EUR_CZK         EUR/CZK CURRENCY
+#&gt; 26     EUR_DKK         EUR/DKK CURRENCY
+#&gt; 27     EUR_GBP         EUR/GBP CURRENCY
+#&gt; 28     EUR_HKD         EUR/HKD CURRENCY
+#&gt; 29     EUR_HUF         EUR/HUF CURRENCY
+#&gt; 30     EUR_JPY         EUR/JPY CURRENCY
+#&gt; 31     EUR_NOK         EUR/NOK CURRENCY
+#&gt; 32     EUR_NZD         EUR/NZD CURRENCY
+#&gt; 33     EUR_PLN         EUR/PLN CURRENCY
+#&gt; 34     EUR_SEK         EUR/SEK CURRENCY
+#&gt; 35     EUR_SGD         EUR/SGD CURRENCY
+#&gt; 36     EUR_TRY         EUR/TRY CURRENCY
+#&gt; 37     EUR_USD         EUR/USD CURRENCY
+#&gt; 38     EUR_ZAR         EUR/ZAR CURRENCY
+#&gt; 39    FR40_EUR       France 40      CFD
+#&gt; 40     GBP_AUD         GBP/AUD CURRENCY
+#&gt; 41     GBP_CAD         GBP/CAD CURRENCY
+#&gt; 42     GBP_CHF         GBP/CHF CURRENCY
+#&gt; 43     GBP_HKD         GBP/HKD CURRENCY
+#&gt; 44     GBP_JPY         GBP/JPY CURRENCY
+#&gt; 45     GBP_NZD         GBP/NZD CURRENCY
+#&gt; 46     GBP_PLN         GBP/PLN CURRENCY
+#&gt; 47     GBP_SGD         GBP/SGD CURRENCY
+#&gt; 48     GBP_USD         GBP/USD CURRENCY
+#&gt; 49     GBP_ZAR         GBP/ZAR CURRENCY
+#&gt; 50    HK33_HKD    Hong Kong 33      CFD
+#&gt; 51     HKD_JPY         HKD/JPY CURRENCY
+#&gt; 52    IN50_USD        India 50      CFD
+#&gt; 53   JP225_USD       Japan 225      CFD
+#&gt; 54  NAS100_USD      US Nas 100      CFD
+#&gt; 55  NATGAS_USD     Natural Gas      CFD
+#&gt; 56    NL25_EUR  Netherlands 25      CFD
+#&gt; 57     NZD_CAD         NZD/CAD CURRENCY
+#&gt; 58     NZD_CHF         NZD/CHF CURRENCY
+#&gt; 59     NZD_HKD         NZD/HKD CURRENCY
+#&gt; 60     NZD_JPY         NZD/JPY CURRENCY
+#&gt; 61     NZD_SGD         NZD/SGD CURRENCY
+#&gt; 62     NZD_USD         NZD/USD CURRENCY
+#&gt; 63    SG30_SGD    Singapore 30      CFD
+#&gt; 64     SGD_CHF         SGD/CHF CURRENCY
+#&gt; 65     SGD_JPY         SGD/JPY CURRENCY
+#&gt; 66   SOYBN_USD        Soybeans      CFD
+#&gt; 67  SPX500_USD      US SPX 500      CFD
+#&gt; 68   SUGAR_USD           Sugar      CFD
+#&gt; 69     TRY_JPY         TRY/JPY CURRENCY
+#&gt; 70    TWIX_USD    Taiwan Index      CFD
+#&gt; 71   UK100_GBP          UK 100      CFD
+#&gt; 72  UK10YB_GBP     UK 10Y Gilt      CFD
+#&gt; 73  US2000_USD    US Russ 2000      CFD
+#&gt; 74    US30_USD   US Wall St 30      CFD
+#&gt; 75  USB02Y_USD    US 2Y T-Note      CFD
+#&gt; 76  USB05Y_USD    US 5Y T-Note      CFD
+#&gt; 77  USB10Y_USD   US 10Y T-Note      CFD
+#&gt; 78  USB30Y_USD       US T-Bond      CFD
+#&gt; 79     USD_CAD         USD/CAD CURRENCY
+#&gt; 80     USD_CHF         USD/CHF CURRENCY
+#&gt; 81     USD_CNH         USD/CNH CURRENCY
+#&gt; 82     USD_CZK         USD/CZK CURRENCY
+#&gt; 83     USD_DKK         USD/DKK CURRENCY
+#&gt; 84     USD_HKD         USD/HKD CURRENCY
+#&gt; 85     USD_HUF         USD/HUF CURRENCY
+#&gt; 86     USD_INR         USD/INR CURRENCY
+#&gt; 87     USD_JPY         USD/JPY CURRENCY
+#&gt; 88     USD_MXN         USD/MXN CURRENCY
+#&gt; 89     USD_NOK         USD/NOK CURRENCY
+#&gt; 90     USD_PLN         USD/PLN CURRENCY
+#&gt; 91     USD_SEK         USD/SEK CURRENCY
+#&gt; 92     USD_SGD         USD/SGD CURRENCY
+#&gt; 93     USD_THB         USD/THB CURRENCY
+#&gt; 94     USD_TRY         USD/TRY CURRENCY
+#&gt; 95     USD_ZAR         USD/ZAR CURRENCY
+#&gt; 96   WHEAT_USD           Wheat      CFD
+#&gt; 97   WTICO_USD  West Texas Oil      CFD
+#&gt; 98     XAG_AUD      Silver/AUD    METAL
+#&gt; 99     XAG_CAD      Silver/CAD    METAL
+#&gt; 100    XAG_CHF      Silver/CHF    METAL
+#&gt; 101    XAG_EUR      Silver/EUR    METAL
+#&gt; 102    XAG_GBP      Silver/GBP    METAL
+#&gt; 103    XAG_HKD      Silver/HKD    METAL
+#&gt; 104    XAG_JPY      Silver/JPY    METAL
+#&gt; 105    XAG_NZD      Silver/NZD    METAL
+#&gt; 106    XAG_SGD      Silver/SGD    METAL
+#&gt; 107    XAG_USD          Silver    METAL
+#&gt; 108    XAU_AUD        Gold/AUD    METAL
+#&gt; 109    XAU_CAD        Gold/CAD    METAL
+#&gt; 110    XAU_CHF        Gold/CHF    METAL
+#&gt; 111    XAU_EUR        Gold/EUR    METAL
+#&gt; 112    XAU_GBP        Gold/GBP    METAL
+#&gt; 113    XAU_HKD        Gold/HKD    METAL
+#&gt; 114    XAU_JPY        Gold/JPY    METAL
+#&gt; 115    XAU_NZD        Gold/NZD    METAL
+#&gt; 116    XAU_SGD        Gold/SGD    METAL
+#&gt; 117    XAU_USD            Gold    METAL
+#&gt; 118    XAU_XAG     Gold/Silver    METAL
+#&gt; 119    XCU_USD          Copper      CFD
+#&gt; 120    XPD_USD       Palladium    METAL
+#&gt; 121    XPT_USD        Platinum    METAL
+#&gt; 122    ZAR_JPY         ZAR/JPY CURRENCY</code></pre>
 </div>
 <div id="caching-implementation" class="section level2">
 <h2 class="hasAnchor">
