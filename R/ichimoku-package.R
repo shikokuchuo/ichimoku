@@ -71,7 +71,7 @@
 #' @importFrom rlang .data
 #' @importFrom curl curl_fetch_memory curl_fetch_stream new_handle
 #'     handle_setheaders
-#' @importFrom jsonlite fromJSON
+#' @importFrom jsonlite parse_json
 #'
 #' @docType package
 #' @name ichimoku-package

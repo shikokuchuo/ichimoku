@@ -174,13 +174,13 @@ getPrices <- function(instrument, granularity, count, from, to, price,
   resp <- curl_fetch_memory(url = url, handle = h)
 
   if (resp$status_code != 200L) stop("code ", resp$status_code, " - ",
-                                     fromJSON(rawToChar(resp$content)), call. = FALSE)
+                                     parse_json(rawToChar(resp$content)), call. = FALSE)
   headers <- rawToChar(resp$headers)
-  hdate <- strsplit(headers, "date: | GMT", perl = TRUE)[[1]][2]
+  hdate <- strsplit(headers, "date: | GMT", perl = TRUE)[[1L]][2L]
   timestamp <- as.POSIXct.POSIXlt(strptime(hdate, format = "%a, %d %b %Y %H:%M:%S", tz = "UTC"))
-  data <- fromJSON(rawToChar(resp$content))$candles
+  data <- parse_json(rawToChar(resp$content), simplifyVector = TRUE)$candles
 
-  time <- strptime(data[, 3L], format = "%Y-%m-%dT%H:%M:%S", tz = "UTC")
+  time <- strptime(data$time, format = "%Y-%m-%dT%H:%M:%S", tz = "UTC")
   if (!missing(.validate) && .validate == FALSE) {
     time <- as.POSIXct.POSIXlt(time)
   } else {
@@ -209,18 +209,18 @@ getPrices <- function(instrument, granularity, count, from, to, price,
     time <- time + periodicity
   }
 
-  ohlc <- data[, 4L]
+  ohlc <- switch(price, M = data$mid, B = data$bid, A = data$ask)
 
   df <- list(.POSIXct(time),
-             as.numeric(ohlc[, 1L]),
-             as.numeric(ohlc[, 2L]),
-             as.numeric(ohlc[, 3L]),
-             as.numeric(ohlc[, 4L]),
-             data[, 2L],
-             data[, 1L])
+             as.numeric(ohlc$o),
+             as.numeric(ohlc$h),
+             as.numeric(ohlc$l),
+             as.numeric(ohlc$c),
+             data$volume,
+             data$complete)
   attributes(df) <- list(names = c("time", "open", "high", "low", "close", "volume", "complete"),
                          class = "data.frame",
-                         row.names = .set_row_names(dim(ohlc)[1L]),
+                         row.names = .set_row_names(length(time)),
                          instrument = instrument,
                          price = price,
                          timestamp = .POSIXct(timestamp),
@@ -707,9 +707,11 @@ oanda_instruments <- function(server = c("practice", "live"), apikey) {
                         "User-Agent" = x_user_agent)
       resp <- curl_fetch_memory(url = url, handle = h)
       if (resp$status_code != 200L) stop("code ", resp$status_code, " - ",
-                                         fromJSON(rawToChar(resp$content)), call. = FALSE)
-      data <- fromJSON(rawToChar(resp$content))$instruments
-      cache <<- data[order(data[, 1L]), 1:3]
+                                         parse_json(rawToChar(resp$content)), call. = FALSE)
+      data <- parse_json(rawToChar(resp$content), simplifyVector = TRUE)$instruments
+      ins <- data[order(data$name), c("name", "displayName", "type")]
+      attr(ins, "row.names") <- .set_row_names(dim(ins)[1L])
+      cache <<- ins
     }
     cache
   }
@@ -743,9 +745,9 @@ oandaAccount <- function(server = c("practice", "live"), apikey) {
                         "User-Agent" = x_user_agent)
       resp <- curl_fetch_memory(url = url, handle = h)
       if (resp$status_code != 200L) stop("code ", resp$status_code, " - ",
-                                         fromJSON(rawToChar(resp$content)), call. = FALSE)
-      data <- fromJSON(rawToChar(resp$content))$accounts
-      cache <<- unlist(data, use.names = FALSE)[[1L]]
+                                         parse_json(rawToChar(resp$content)), call. = FALSE)
+      data <- parse_json(rawToChar(resp$content), simplifyVector = TRUE)$accounts
+      cache <<- data$id[1L]
     }
     cache
   }

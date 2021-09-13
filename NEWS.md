@@ -14,7 +14,7 @@
 * Updates to `sample_ohlc_data` to add volume column, adhere to working days etc.
 * Argument 'message' renamed to 'subtitle' across all plot functions for clarity.
 * New sub-plot functionality adds 'gridExtra' package dependency.
-* Minor performance improvements for `ichimoku()`, plot functions and various utilities.
+* Minor performance improvements for `ichimoku()`, plot functions, OANDA functions and various utilities.
 * Documentation refresh.
 
 # ichimoku 1.1.0

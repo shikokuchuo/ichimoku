@@ -161,10 +161,13 @@ To read back the file, use `archive()` supplying the quoted file path / name.
 
 ## Available Instruments
 
-The list of financial instruments below serves as a reference only and may not be exhaustive and/or differ from those available for your account type or country/region.
-
 The list of financial instruments available for your account may be retrieved by `oanda_instruments()`. The available instruments are also automatically populated as an input in `oanda_studio()`.
 
+The list below serves as a reference only and may differ from those actually available for your account type and/or country/region.
+
+```{r oandainstruments, eval=FALSE}
+oanda_instruments()
+```
 ```{r instruments, echo=FALSE}
 data.frame(
   stringsAsFactors = FALSE,
@@ -193,29 +196,6 @@ data.frame(
                        "XAG_USD","XAU_AUD","XAU_CAD","XAU_CHF","XAU_EUR","XAU_GBP",
                        "XAU_HKD","XAU_JPY","XAU_NZD","XAU_SGD","XAU_USD",
                        "XAU_XAG","XCU_USD","XPD_USD","XPT_USD","ZAR_JPY"),
-              type = c("CFD","CURRENCY","CURRENCY",
-                       "CURRENCY","CURRENCY","CURRENCY","CURRENCY",
-                       "CURRENCY","CFD","CURRENCY","CURRENCY","CURRENCY","CURRENCY",
-                       "CURRENCY","CURRENCY","CURRENCY","CFD","CFD","CFD",
-                       "CFD","CFD","CURRENCY","CURRENCY","CURRENCY",
-                       "CURRENCY","CURRENCY","CURRENCY","CURRENCY","CURRENCY",
-                       "CURRENCY","CURRENCY","CURRENCY","CURRENCY","CURRENCY",
-                       "CURRENCY","CURRENCY","CURRENCY","CURRENCY","CFD",
-                       "CURRENCY","CURRENCY","CURRENCY","CURRENCY","CURRENCY",
-                       "CURRENCY","CURRENCY","CURRENCY","CURRENCY",
-                       "CURRENCY","CFD","CURRENCY","CFD","CFD","CFD","CFD","CFD",
-                       "CURRENCY","CURRENCY","CURRENCY","CURRENCY",
-                       "CURRENCY","CURRENCY","CFD","CURRENCY","CURRENCY","CFD",
-                       "CFD","CFD","CURRENCY","CFD","CFD","CFD","CFD","CFD",
-                       "CFD","CFD","CFD","CFD","CURRENCY","CURRENCY",
-                       "CURRENCY","CURRENCY","CURRENCY","CURRENCY","CURRENCY",
-                       "CURRENCY","CURRENCY","CURRENCY","CURRENCY","CURRENCY",
-                       "CURRENCY","CURRENCY","CURRENCY","CURRENCY",
-                       "CURRENCY","CFD","CFD","METAL","METAL","METAL","METAL",
-                       "METAL","METAL","METAL","METAL","METAL","METAL",
-                       "METAL","METAL","METAL","METAL","METAL","METAL","METAL",
-                       "METAL","METAL","METAL","METAL","CFD","METAL",
-                       "METAL","CURRENCY"),
        displayName = c("Australia 200","AUD/CAD",
                        "AUD/CHF","AUD/HKD","AUD/JPY","AUD/NZD","AUD/SGD",
                        "AUD/USD","Brent Crude Oil","CAD/CHF","CAD/HKD","CAD/JPY",
@@ -242,7 +222,30 @@ data.frame(
                        "Silver","Gold/AUD","Gold/CAD","Gold/CHF","Gold/EUR",
                        "Gold/GBP","Gold/HKD","Gold/JPY","Gold/NZD","Gold/SGD",
                        "Gold","Gold/Silver","Copper","Palladium","Platinum",
-                       "ZAR/JPY")
+                       "ZAR/JPY"),
+                type = c("CFD","CURRENCY","CURRENCY",
+                       "CURRENCY","CURRENCY","CURRENCY","CURRENCY",
+                       "CURRENCY","CFD","CURRENCY","CURRENCY","CURRENCY","CURRENCY",
+                       "CURRENCY","CURRENCY","CURRENCY","CFD","CFD","CFD",
+                       "CFD","CFD","CURRENCY","CURRENCY","CURRENCY",
+                       "CURRENCY","CURRENCY","CURRENCY","CURRENCY","CURRENCY",
+                       "CURRENCY","CURRENCY","CURRENCY","CURRENCY","CURRENCY",
+                       "CURRENCY","CURRENCY","CURRENCY","CURRENCY","CFD",
+                       "CURRENCY","CURRENCY","CURRENCY","CURRENCY","CURRENCY",
+                       "CURRENCY","CURRENCY","CURRENCY","CURRENCY",
+                       "CURRENCY","CFD","CURRENCY","CFD","CFD","CFD","CFD","CFD",
+                       "CURRENCY","CURRENCY","CURRENCY","CURRENCY",
+                       "CURRENCY","CURRENCY","CFD","CURRENCY","CURRENCY","CFD",
+                       "CFD","CFD","CURRENCY","CFD","CFD","CFD","CFD","CFD",
+                       "CFD","CFD","CFD","CFD","CURRENCY","CURRENCY",
+                       "CURRENCY","CURRENCY","CURRENCY","CURRENCY","CURRENCY",
+                       "CURRENCY","CURRENCY","CURRENCY","CURRENCY","CURRENCY",
+                       "CURRENCY","CURRENCY","CURRENCY","CURRENCY",
+                       "CURRENCY","CFD","CFD","METAL","METAL","METAL","METAL",
+                       "METAL","METAL","METAL","METAL","METAL","METAL",
+                       "METAL","METAL","METAL","METAL","METAL","METAL","METAL",
+                       "METAL","METAL","METAL","METAL","CFD","METAL",
+                       "METAL","CURRENCY")
 )
 ```
 
