@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.5.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.6</span>
       </span>
     </div>
 
@@ -164,19 +164,18 @@
 <code class="sourceCode R"><span class="co"># ichimoku can create clouds directly from OANDA data, for example:</span>
 <span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="fu"><a href="../reference/oanda.html">oanda</a></span><span class="op">(</span><span class="st">"USD_JPY"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>ichimoku has been designed to be fully pipeable and interfaces well with other R packages that return financial data.</p>
-<p>As an example, the <code>getSymbols()</code> function from the ‘quantmod’ package currently assigns the data to an object but returns a text string containing the name of the object. ichimoku handles this automatically such that a chart can be created directly as per the below:</p>
+<p>As an example, the <code>getSymbols()</code> function from the ‘quantmod’ package assigns the data to an object but returns a text string containing the name of the object. ichimoku handles this automatically such that a chart can be created directly as per the below:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Using R 4.1's new pipe operator:</span>
 <span class="fu">quantmod</span><span class="fu">::</span><span class="fu">getSymbols</span><span class="op">(</span><span class="st">"C"</span><span class="op">)</span> |&gt; <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co"># Or equally using the 'magrittr' pipe:</span>
 <span class="fu">quantmod</span><span class="fu">::</span><span class="fu">getSymbols</span><span class="op">(</span><span class="st">"C"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p><code><a href="../reference/ichimoku.html">ichimoku()</a></code> is implemented as a generic function that provides S3 methods for objects of class ‘xts’, ‘data.frame’ and ‘matrix’. Hence, ‘data.table’ and ‘tibble’ work seamlessly with <code><a href="../reference/ichimoku.html">ichimoku()</a></code>, as will most likely other classes that inherit the class ‘data.frame’.</p>
 <div id="input-data-requirements" class="section level4">
 <h4 class="hasAnchor">
 <a href="#input-data-requirements" class="anchor"></a>Input data requirements</h4>
 <p>The requirement on the input data is minimal: a series of prices indexed by valid date-times.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Simulated OHLC price data is assigned to data frame 'TKR':</span>
+<code class="sourceCode R"><span class="co"># Sample OHLC price data is assigned to data frame 'TKR':</span>
 <span class="va">TKR</span> <span class="op">&lt;-</span> <span class="va">sample_ohlc_data</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">TKR</span><span class="op">)</span>
 <span class="co">#&gt;         time  open  high   low close volume</span>
@@ -198,11 +197,11 @@
 </ul>
 <p><strong>Single series price data</strong> can also be used for producing an <em>pseudo</em> cloud chart if, for example, OHLC data is not available or because the price is a calculated price such as VWAP.</p>
 <ul>
-<li><p>If ichimoku does not find HLC data in the dataset, it will proceed to seek for single price data in columns with names containing ‘price’, ‘value’, or ‘close’</p></li>
+<li><p>If ichimoku does not find HLC data in the dataset, it will proceed to seek for single series price data in columns with names containing ‘price’, ‘value’, or ‘close’</p></li>
 <li><p>ichimoku will construct a pseudo-OHLC series from the single price. It does this by assigning the opening price to be the closing price of the previous period, and the high and low to be the max and min respectively of the opening and closing prices</p></li>
 <li><p>As the constructed OHLC series does not contain real high/low values, <em>the ichimoku cloud chart calculated in this way is not accurate and serves as an approximation only</em></p></li>
 </ul>
-<p><strong>Note on data retrieval:</strong> it is optimal to retrieve data starting from further back than the period being analysed. This is as the various cloud lines are calculated using up to 52 values and then plotted ahead up to 26 periods, and hence there will be only be a full chart with all of the ichmoku cloud values from the 78th observation onwards (using default cloud periods). Run <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on the full dataset and then subset the data window when plotting to ensure that there is a full cloud for the entire chart.</p>
+<p><strong>Note on data retrieval:</strong> it is optimal to retrieve data starting from further back than the period being analysed. This is as certain cloud lines are calculated using up to 52 values and then plotted ahead up to 26 periods, and hence there will be only be a full chart with all of the ichimoku cloud values from the 78th observation onwards (using default cloud periods). Call <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on the full dataset and then subset the data window when plotting to ensure that there is a full cloud for the entire chart.</p>
 </div>
 </div>
 <div id="ichimoku" class="section level3">
@@ -253,7 +252,7 @@
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># to view chart as well as data, simply issue:</span>
 <span class="va">cloud</span></code></pre></div>
-<p>As an ichimoku object inherits the ‘xts’ and ‘zoo’ classes, all the existing methods for these classes should work seamlessly. For working with ichimoku objects, please see the section <a href="#re-exports">re-exports</a>.</p>
+<p>As an ichimoku object inherits the ‘xts’ and ‘zoo’ classes, all existing methods for these classes should work seamlessly. For working with ichimoku objects, please see the section <a href="#re-exports">re-exports</a>.</p>
 <div id="ichimoku-ichimoku" class="section level4">
 <h4 class="hasAnchor">
 <a href="#ichimoku-ichimoku" class="anchor"></a>ichimoku.ichimoku()</h4>
@@ -263,7 +262,7 @@
 <div id="preserving-data" class="section level4">
 <h4 class="hasAnchor">
 <a href="#preserving-data" class="anchor"></a>Preserving Data</h4>
-<p>The input object may contain additional data not required for ichimoku analysis such as volume. To include such data in the ichimoku object specify <code>keep.data = TRUE</code> when calling <code><a href="../reference/ichimoku.html">ichimoku()</a></code>.</p>
+<p>The input object may contain additional data not required for ichimoku analysis, such as volume etc. To include such data in the ichimoku object specify <code>keep.data = TRUE</code> when calling <code><a href="../reference/ichimoku.html">ichimoku()</a></code>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">kumo</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span>, keep.data <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
@@ -272,7 +271,7 @@
 <span class="co">#&gt; 2020-05-19 23:00:00 122.7 122.7 121.8 122.4 -1    121 123.9   125.7   124.8</span>
 <span class="co">#&gt;                     chikou cloudT cloudB volume</span>
 <span class="co">#&gt; 2020-05-19 23:00:00  135.1  125.7  124.8   3440</span></code></pre></div>
-<p>This allows you to not have to deal with different objects for the same data. There is also the added benefit that it can now be plotted as a sub-plot beneath the main ichimoku cloud chart (see next section).</p>
+<p>This allows you to consolidate all relevant data into a single object. There is also the added benefit that it can now be plotted as a sub-plot beneath the main ichimoku cloud chart (see <a href="#custom-sub-plots">custom sub-plots</a>).</p>
 <p>Note: only numeric data or data coercible to numeric type is preserved in this way, and other types will introduce NAs. This is as ichimoku objects are based on the ‘xts’ format which essentially uses a numeric matrix to contain the data for performance reasons, and therefore does not allow multiple data types. Custom attributes set on the input object (such as a timestamp or data source) are also preserved.</p>
 </div>
 <div id="defining-custom-holidays" class="section level4">
@@ -350,7 +349,7 @@
 <div id="custom-sub-plots" class="section level4">
 <h4 class="hasAnchor">
 <a href="#custom-sub-plots" class="anchor"></a>Custom Sub-plots</h4>
-<p>If additional input data is preserved within the ichimoku object, for example volume data, this can also be plotted in the sub-plot area by specifying the ‘custom’ argument. Other calculated metrics such as custom indicators can also be plotted if they are added as an additional column to the ichimoku object.</p>
+<p>Additional input data preserved within the ichimoku object, for example volume data, can be plotted in the sub-plot area by specifying the ‘custom’ argument. Other calculated metrics such as custom indicators can also be plotted if they are added as an additional column to the ichimoku object.</p>
 <p>The character string supplied to ‘custom’ is a regular expression pattern that is matched to the column name and hence does not need to match exactly, nor is case considered.</p>
 <p>To view a custom sub-plot, type must be specified as either ‘bar’ or ‘line’, otherwise the type setting will take precedence.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
@@ -361,7 +360,7 @@
 <div id="further-options" class="section level4">
 <h4 class="hasAnchor">
 <a href="#further-options" class="anchor"></a>Further Options</h4>
-<p>Internally, ichimoku’s <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> method is a wrapper for <code><a href="../reference/autoplot.html">autoplot()</a></code> and <code><a href="../reference/extraplot.html">extraplot()</a></code>. As <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> returns the original ichimoku object (invisibly), to access the actual plot objects produced you must call those functions directly. <code><a href="../reference/autoplot.html">autoplot()</a></code> returns a ggplot object with classes ‘gg’ and ‘ggplot’ and <code><a href="../reference/extraplot.html">extraplot()</a></code> returns a grid graphics object with classes ‘gtable’, ‘gTree’, ‘grob’ and ‘gDesc’.</p>
+<p>Internally, ichimoku’s <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> method is a wrapper for <code><a href="../reference/autoplot.html">autoplot()</a></code> and <code><a href="../reference/extraplot.html">extraplot()</a></code>. As <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> returns the original ichimoku object (invisibly), to access the actual plot objects produced you must call those functions directly. <code><a href="../reference/autoplot.html">autoplot()</a></code> returns a ggplot2 object and <code><a href="../reference/extraplot.html">extraplot()</a></code> returns a gtable object.</p>
 </div>
 <div id="interactive-plots" class="section level4">
 <h4 class="hasAnchor">
@@ -548,7 +547,7 @@
 </ul>
 <p>Optional (provides additional features):</p>
 <ul>
-<li>bslib - for full theming of ‘shiny’ applications</li>
+<li>bslib - for theming of ‘shiny’ applications</li>
 <li>keyring - for saving API keys in the system credential store</li>
 <li>openssl - for verifying the data integrity of archived objects</li>
 <li>shiny - for interactive and live visualizations</li>
@@ -558,7 +557,7 @@
 <h2 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h2>
 <p>Sasaki, H. 佐々木 英信 (1996), <em>一目均衡表の研究 [ichimoku kinkouhyou no kenkyuu]</em>. Tokyo, Japan: Toushi Radar.</p>
-<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.1.5, <a href="https://CRAN.R-project.org/package=ichimoku" class="uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
+<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.1.6, <a href="https://CRAN.R-project.org/package=ichimoku" class="uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
 <hr>
 </div>
   </div>

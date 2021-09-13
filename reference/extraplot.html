@@ -83,7 +83,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.5.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.6</span>
       </span>
     </div>
 
@@ -227,8 +227,9 @@ settings will take precedence.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns a grid graphics object with S3 classes 'gtable', 'gTree', 'grob'
-    and 'gDesc'.</p>
+    <p>Returns a gtable object with S3 classes 'gtable', 'gTree', 'grob' and
+    'gDesc', or else a ggplot2 object with S3 classes 'gg' and 'ggplot' when
+    falling back to a standard plot.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The oscillator choices are between 'R-type', which is a modified form
