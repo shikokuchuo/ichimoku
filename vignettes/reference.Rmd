@@ -77,7 +77,7 @@ cloud <- ichimoku(oanda("USD_JPY"))
 
 ichimoku has been designed to be fully pipeable and interfaces well with other R packages that return financial data.
 
-As an example, the `getSymbols()` function from the 'quantmod' package currently assigns the data to an object but returns a text string containing the name of the object. ichimoku handles this automatically such that a chart can be created directly as per the below:
+As an example, the `getSymbols()` function from the 'quantmod' package assigns the data to an object but returns a text string containing the name of the object. ichimoku handles this automatically such that a chart can be created directly as per the below:
 
 ```{r pipe, eval = FALSE}
 # Using R 4.1's new pipe operator:
@@ -86,14 +86,12 @@ quantmod::getSymbols("C") |> ichimoku() |> plot()
 quantmod::getSymbols("C") %>% ichimoku() %>% plot()
 ```
 
-`ichimoku()` is implemented as a generic function that provides S3 methods for objects of class 'xts', 'data.frame' and 'matrix'. Hence, 'data.table' and 'tibble' work seamlessly with `ichimoku()`, as will most likely other classes that inherit the class 'data.frame'.
-
 #### Input data requirements
 
 The requirement on the input data is minimal: a series of prices indexed by valid date-times. 
 
 ```{r viewdata}
-# Simulated OHLC price data is assigned to data frame 'TKR':
+# Sample OHLC price data is assigned to data frame 'TKR':
 TKR <- sample_ohlc_data
 head(TKR)
 ```
@@ -112,13 +110,13 @@ head(TKR)
 
 **Single series price data** can also be used for producing an *pseudo* cloud chart if, for example, OHLC data is not available or because the price is a calculated price such as VWAP.
 
-- If ichimoku does not find HLC data in the dataset, it will proceed to seek for single price data in columns with names containing 'price', 'value', or 'close'
+- If ichimoku does not find HLC data in the dataset, it will proceed to seek for single series price data in columns with names containing 'price', 'value', or 'close'
 
 - ichimoku will construct a pseudo-OHLC series from the single price. It does this by assigning the opening price to be the closing price of the previous period, and the high and low to be the max and min respectively of the opening and closing prices
 
 - As the constructed OHLC series does not contain real high/low values, *the ichimoku cloud chart calculated in this way is not accurate and serves as an approximation only*
 
-**Note on data retrieval:** it is optimal to retrieve data starting from further back than the period being analysed. This is as the various cloud lines are calculated using up to 52 values and then plotted ahead up to 26 periods, and hence there will be only be a full chart with all of the ichmoku cloud values from the 78th observation onwards (using default cloud periods). Run `ichimoku()` on the full dataset and then subset the data window when plotting to ensure that there is a full cloud for the entire chart.
+**Note on data retrieval:** it is optimal to retrieve data starting from further back than the period being analysed. This is as certain cloud lines are calculated using up to 52 values and then plotted ahead up to 26 periods, and hence there will be only be a full chart with all of the ichimoku cloud values from the 78th observation onwards (using default cloud periods). Call `ichimoku()` on the full dataset and then subset the data window when plotting to ensure that there is a full cloud for the entire chart.
 
 ### ichimoku()
 
@@ -146,7 +144,7 @@ A section (rows 100 to 110) of the ichimoku object is shown above. Note that pri
 cloud
 ```
 
-As an ichimoku object inherits the ‘xts’ and ‘zoo’ classes, all the existing methods for these classes should work seamlessly. For working with ichimoku objects, please see the section [re-exports](#re-exports).
+As an ichimoku object inherits the ‘xts’ and ‘zoo’ classes, all existing methods for these classes should work seamlessly. For working with ichimoku objects, please see the section [re-exports](#re-exports).
 
 #### ichimoku.ichimoku()
 
@@ -156,7 +154,7 @@ Calling `ichimoku()` on an ichimoku object containing a strategy will return the
 
 #### Preserving Data
 
-The input object may contain additional data not required for ichimoku analysis such as volume. To include such data in the ichimoku object specify `keep.data = TRUE` when calling `ichimoku()`.
+The input object may contain additional data not required for ichimoku analysis, such as volume etc. To include such data in the ichimoku object specify `keep.data = TRUE` when calling `ichimoku()`.
 
 ```{r ichimokupreserve}
 kumo <- ichimoku(TKR, keep.data = TRUE)
@@ -164,7 +162,7 @@ kumo <- ichimoku(TKR, keep.data = TRUE)
 print(kumo[100,], plot = FALSE, digits = 4)
 ```
 
-This allows you to not have to deal with different objects for the same data. There is also the added benefit that it can now be plotted as a sub-plot beneath the main ichimoku cloud chart (see next section).
+This allows you to consolidate all relevant data into a single object. There is also the added benefit that it can now be plotted as a sub-plot beneath the main ichimoku cloud chart (see [custom sub-plots](#custom-sub-plots)).
 
 Note: only numeric data or data coercible to numeric type is preserved in this way, and other types will introduce NAs. This is as ichimoku objects are based on the 'xts' format which essentially uses a numeric matrix to contain the data for performance reasons, and therefore does not allow multiple data types. Custom attributes set on the input object (such as a timestamp or data source) are also preserved.
 
@@ -248,7 +246,7 @@ plot(cloud, window = "2020-04-01/2020-12-01", theme = "solarized", type = "s")
 
 #### Custom Sub-plots
 
-If additional input data is preserved within the ichimoku object, for example volume data, this can also be plotted in the sub-plot area by specifying the 'custom' argument. Other calculated metrics such as custom indicators can also be plotted if they are added as an additional column to the ichimoku object.
+Additional input data preserved within the ichimoku object, for example volume data, can be plotted in the sub-plot area by specifying the 'custom' argument. Other calculated metrics such as custom indicators can also be plotted if they are added as an additional column to the ichimoku object.
 
 The character string supplied to 'custom' is a regular expression pattern that is matched to the column name and hence does not need to match exactly, nor is case considered.
 
@@ -262,7 +260,7 @@ On a bar chart, the bar colours correspond to the candle direction.
 
 #### Further Options
 
-Internally, ichimoku's `plot()` method is a wrapper for `autoplot()` and `extraplot()`. As `plot()` returns the original ichimoku object (invisibly), to access the actual plot objects produced you must call those functions directly. `autoplot()` returns a ggplot object with classes 'gg' and 'ggplot' and `extraplot()` returns a grid graphics object with classes 'gtable', 'gTree', 'grob' and 'gDesc'.
+Internally, ichimoku's `plot()` method is a wrapper for `autoplot()` and `extraplot()`. As `plot()` returns the original ichimoku object (invisibly), to access the actual plot objects produced you must call those functions directly. `autoplot()` returns a ggplot2 object and `extraplot()` returns a gtable object.
 
 #### 2. Interactive Plots
 
@@ -406,7 +404,7 @@ Compile time:
 
 Optional (provides additional features):
 
-- bslib - for full theming of 'shiny' applications
+- bslib - for theming of 'shiny' applications
 - keyring - for saving API keys in the system credential store
 - openssl - for verifying the data integrity of archived objects
 - shiny - for interactive and live visualizations
@@ -415,6 +413,6 @@ Optional (provides additional features):
 
 Sasaki, H. 佐々木 英信 (1996), *一目均衡表の研究 [ichimoku kinkouhyou no kenkyuu]*. Tokyo, Japan: Toushi Radar.
 
-Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.1.5, <https://CRAN.R-project.org/package=ichimoku>.
+Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.1.6, <https://CRAN.R-project.org/package=ichimoku>.
 
 ---

@@ -52,7 +52,7 @@ autostrat <- function(x,
   if (!is.ichimoku(x)) stop("autostrat() only works on ichimoku objects", call. = FALSE)
   dir <- match.arg(dir)
   if (!level %in% 1:3) {
-    warning("Invalid level specified, using default level of 1", call. = FALSE)
+    warning("Invalid level specified, falling back to default of 1", call. = FALSE)
     level <- 1
   }
 

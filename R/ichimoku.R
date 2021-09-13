@@ -175,7 +175,7 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
   if (anyNA(c(colh, coll, colc))) {
     colp <- grep("price|value|close", cnames, ignore.case = TRUE, perl = TRUE)[1L]
     if (is.na(colp)) {
-      stop("Price data not found - check column names for validity", call. = FALSE)
+      stop("Price data not found - please check column names are valid", call. = FALSE)
     }
     close <- as.numeric(x[, colp, drop = TRUE])
     open <- c(NA, close[1:(xlen - 1L)])
@@ -201,7 +201,7 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
   if (is.numeric(periods) && length(periods) == 3L && all(periods >= 1)) {
     periods <- as.integer(periods)
   } else {
-    warning("Specified cloud periods invalid - using defaults c(9L, 26L, 52L) instead",
+    warning("Invalid cloud periods specified - falling back to defaults c(9L, 26L, 52L)",
             call. = FALSE)
     periods <- c(9L, 26L, 52L)
   }

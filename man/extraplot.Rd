@@ -49,8 +49,9 @@ settings will take precedence.}
 \item{...}{other arguments not used by this method.}
 }
 \value{
-Returns a grid graphics object with S3 classes 'gtable', 'gTree', 'grob'
-    and 'gDesc'.
+Returns a gtable object with S3 classes 'gtable', 'gTree', 'grob' and
+    'gDesc', or else a ggplot2 object with S3 classes 'gg' and 'ggplot' when
+    falling back to a standard plot.
 }
 \description{
 Plot Ichimoku Kinko Hyo cloud charts from ichimoku objects with a sub-plot for

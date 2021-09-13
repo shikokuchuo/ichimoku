@@ -359,20 +359,20 @@ oanda_chart <- function(instrument,
   theme <- match.arg(theme)
   server <- match.arg(server)
   if (!is.numeric(refresh) || refresh < 1) {
-    message("Invalid refresh interval '", refresh, "' secs specified - using default of 5 secs instead")
+    message("Invalid refresh interval specified - falling back to default of 5 secs")
     refresh <- 5
   }
   if (is.numeric(periods) && length(periods) == 3L && all(periods >= 1)) {
     periods <- as.integer(periods)
   } else {
-    warning("Specified cloud periods invalid - using defaults c(9L, 26L, 52L) instead",
+    warning("Invalid cloud periods specified - falling back to defaults c(9L, 26L, 52L)",
             call. = FALSE)
     periods <- c(9L, 26L, 52L)
   }
   p2 <- periods[2L]
   minlen <- p2 + periods[3L]
   if (!is.numeric(count) || count < minlen) {
-    message("Invalid count specified - using default of 250 instead")
+    message("Invalid count specified - falling back to default of 250")
     count <- 250
   }
 
@@ -471,7 +471,7 @@ oanda_studio <- function(instrument = "USD_JPY",
 
     if (missing(apikey)) apikey <- oanda_get_key()
     if (!is.numeric(refresh) || refresh < 1) {
-      message("Invalid refresh interval '", refresh, "' secs specified - using default of 5 secs instead")
+      message("Invalid refresh interval specified - falling back to default of 5 secs")
       refresh <- 5
     }
     granularity <- match.arg(granularity)
@@ -481,14 +481,14 @@ oanda_studio <- function(instrument = "USD_JPY",
     if (is.numeric(periods) && length(periods) == 3L && all(periods >= 1)) {
       periods <- as.integer(periods)
     } else {
-      warning("Specified cloud periods invalid - using defaults c(9L, 26L, 52L) instead",
+      warning("Invalid cloud periods specified - falling back to defaults c(9L, 26L, 52L)",
               call. = FALSE)
       periods <- c(9L, 26L, 52L)
     }
     p2 <- periods[2L]
     minlen <- p2 + periods[3L]
     if (!is.numeric(count) || count <= minlen) {
-      message("Invalid count specified - using default of 300 instead")
+      message("Invalid count specified - falling back to default of 300")
       count <- 300
     }
 
@@ -745,7 +745,7 @@ oandaAccount <- function(server = c("practice", "live"), apikey) {
       if (resp$status_code != 200L) stop("code ", resp$status_code, " - ",
                                          fromJSON(rawToChar(resp$content)), call. = FALSE)
       data <- fromJSON(rawToChar(resp$content))$accounts
-      cache <<- unlist(data, use.names = FALSE)[[1]]
+      cache <<- unlist(data, use.names = FALSE)[[1L]]
     }
     cache
   }
@@ -780,7 +780,7 @@ oanda_set_key <- function() {
   if (requireNamespace("keyring", quietly = TRUE)) {
     keyring::key_set(service = "OANDA_API_KEY")
   } else {
-    message("Please install the 'keyring' package in order to store your OANDA API key")
+    message("Please install the 'keyring' package to store your OANDA API key")
   }
 }
 

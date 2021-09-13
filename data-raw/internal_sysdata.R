@@ -11,6 +11,6 @@ ichimoku_themes <- cbind(
            "#1a1a1a", "#1a1a1a", "#1a1a1a", "#ffffff", "#333333", "#1a1a1a")
 )
 
-x_user_agent <- "r-ichimoku/1.1.5"
+x_user_agent <- "r-ichimoku/1.1.6"
 
 usethis::use_data(ichimoku_themes, x_user_agent, internal = TRUE, overwrite = TRUE)

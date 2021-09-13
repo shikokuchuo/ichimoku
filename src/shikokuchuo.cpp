@@ -30,7 +30,7 @@ cpp11::doubles maxOver(const cpp11::doubles& x, int window) {
   int n = x.size(), w1 = window - 1;
   cpp11::writable::doubles rollx(n);
 
-  std::deque<std::pair<long double, int>>deck;
+  std::deque<std::pair<long double, int>> deck;
   for (int i = 0; i < n; ++i) {
       while (!deck.empty() && deck.back().first <= x[i])
         deck.pop_back();
@@ -55,7 +55,7 @@ cpp11::doubles minOver(const cpp11::doubles& x, int window) {
   int n = x.size(), w1 = window - 1;
   cpp11::writable::doubles rollx(n);
 
-  std::deque<std::pair<long double, int>>deck;
+  std::deque<std::pair<long double, int>> deck;
   for (int i = 0; i < n; ++i) {
       while (!deck.empty() && deck.back().first >= x[i])
         deck.pop_back();
@@ -91,3 +91,4 @@ cpp11::doubles meanOver(const cpp11::doubles& x, int window) {
   }
   return rollx;
 }
+

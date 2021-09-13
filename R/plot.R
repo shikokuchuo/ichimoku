@@ -173,8 +173,9 @@ autoplot.ichimoku <- function(object,
 #' @inheritParams autoplot.ichimoku
 #' @inheritParams plot.ichimoku
 #'
-#' @return Returns a grid graphics object with S3 classes 'gtable', 'gTree', 'grob'
-#'     and 'gDesc'.
+#' @return Returns a gtable object with S3 classes 'gtable', 'gTree', 'grob' and
+#'     'gDesc', or else a ggplot2 object with S3 classes 'gg' and 'ggplot' when
+#'     falling back to a standard plot.
 #'
 #' @details The oscillator choices are between 'R-type', which is a modified form
 #'     of a relative strength index (RSI), and 'S-type', which is a modified form
@@ -205,19 +206,19 @@ extraplot <- function(object,
                             subtitle = subtitle, theme = theme, strat = strat)
 
   if (type == "none") {
-    warning("Chart type not specified or set to 'none', defaulting to standard plot", call. = FALSE)
+    warning("Chart type not specified or set to 'none', falling back to standard plot", call. = FALSE)
     return(print(plot))
   }
 
   if (type == "bar" || type == "line") {
     if(missing(custom)) {
-      warning("Custom data column not specified, defaulting to standard plot", call. = FALSE)
+      warning("Custom data column not specified, falling back to standard plot", call. = FALSE)
       return(print(plot))
     }
     cnames <- dimnames(object)[[2L]]
     sel <- grep(custom, cnames, ignore.case = TRUE, perl = TRUE)[1L]
     if (is.na(sel)) {
-      warning("Custom data column '", custom, "' not found, defaulting to standard plot", call. = FALSE)
+      warning("Custom data column '", custom, "' not found, falling back to standard plot", call. = FALSE)
       return(print(plot))
     }
 
