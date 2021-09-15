@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.6.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.6.2</span>
       </span>
     </div>
 
@@ -118,7 +118,7 @@
 <div id="about-oanda-fxtrade" class="section level2">
 <h2 class="hasAnchor">
 <a href="#about-oanda-fxtrade" class="anchor"></a>About OANDA fxTrade</h2>
-<p>ichimoku contains an interface, or binding, to the OANDA fxTrade API for the R language.</p>
+<p>ichimoku contains an interface, or binding, to the OANDA fxTrade API.</p>
 <p>OANDA is a primary source of foreign exchange data used by corporations and governments around the world. The API can be used for retrieving historical and live streaming price data for major currencies, metals, commodities, government bonds and stock indices.</p>
 <p>As an example of the financial data that is available: OHLC pricing data can be obtained for major forex pairs from the start of 2005 with granularity ranging from 5 seconds to monthly. For the total list of over 120 covered instruments please refer to the <a href="#available-instruments">Available Instruments</a> section below.</p>
 <p>Please note that ‘OANDA’ and ‘fxTrade’ are trademarks owned by OANDA Corporation, an entity unaffiliated with the ichimoku package.</p>
@@ -244,8 +244,8 @@
 <h4 class="hasAnchor">
 <a href="#downloading-data" class="anchor"></a>Downloading Data</h4>
 <p>The ichimoku object underlying the live cloud chart can be saved by selecting the Data Archive button.</p>
-<p>This button uses <code><a href="../reference/archive.html">archive()</a></code> to save the ichimoku object to disk. The filename will be of the form: <code>instrument_granularity_price_count</code>, e.g. <code>USD_JPY_H4_M_300</code>. If confirmed, the file is saved to the browser’s default download location.</p>
-<p>To read back the file, use <code><a href="../reference/archive.html">archive()</a></code> supplying the quoted file path / name.</p>
+<p>This button uses <code><a href="../reference/archive.html">archive()</a></code> to save the ichimoku object to disk. The filename will be of the form: <code>instrument_granularity_price.rda</code>, e.g. <code>USD_JPY_H4_M.rda</code>. If confirmed, the file is saved to the browser’s default download location.</p>
+<p>To read back the file, use <code><a href="../reference/archive.html">archive()</a></code> supplying the quoted file path / name, for example: <code><a href="../reference/archive.html">archive("~/Downloads/USD_JPY_H4_M.rda")</a></code>.</p>
 </div>
 </div>
 </div>
@@ -379,6 +379,7 @@
 #&gt; 120    XPD_USD       Palladium    METAL
 #&gt; 121    XPT_USD        Platinum    METAL
 #&gt; 122    ZAR_JPY         ZAR/JPY CURRENCY</code></pre>
+<p>Note: the above table is saved as internal package data and used as a fallback if the instruments endpoint is offline (it can be the case that the pricing server is still online as the endpoints are different).</p>
 </div>
 <div id="caching-implementation" class="section level2">
 <h2 class="hasAnchor">

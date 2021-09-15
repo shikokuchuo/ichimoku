@@ -83,7 +83,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.6.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.6.2</span>
       </span>
     </div>
 
@@ -166,7 +166,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>an object (created by the ichimoku package).</p></td>
+      <td><p>an object.</p></td>
     </tr>
     <tr>
       <th>which</th>
@@ -177,15 +177,15 @@ list.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>For objects created by the ichimoku package, a list of attribute values
+    <p>For objects created by the ichimoku package, a list of attributes
     specific to that data type, or if 'which' is specified on an autostrat
     list, an ichimoku object containing a strategy.</p>
-<p>For other objects, a list of attributes that are non-standard for 'matrix',
-    'data.frame', or 'xts' objects, or else invisible NULL if none are present.</p>
+<p>For other objects, a list of attributes that are non-standard for matrix /
+    data.frame / xts objects, or else invisible NULL if none are present.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Note: for a level 2 autostrat object, if the object fails to print
-    correctly due to its length, please access the list items directly using
+    <p>Note: for a level 2 autostrat object, if the attributes fail to print
+    correctly due to their length, please access the them directly using
     <code>look(x)$summary</code> and <code>look(x)$logret</code>, possibly in conjunction
     with head() or by setting the 'max' argument in print().</p>
 

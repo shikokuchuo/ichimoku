@@ -1,30 +1,23 @@
 /* shikokuchuo{net} custom css for pkgdown bootswatch simplex theme */
-
 body {
   color:#02141c
 }
-
 footer {
   color: #02141c
 }
-
 .navbar-default .navbar-link {
  color:#02141c
 }
-
 .navbar-default .navbar-nav>li>a {
  color:#02141c
 }
-
 .dropdown-menu>li>a {
  color:#02141c
 }
-
 a {
  color:#dd424c;
  text-decoration:none
 }
-
 .navbar-default .navbar-nav>li>a:hover,
 .navbar-default .navbar-nav>li>a:focus {
  color:#dd424c;
@@ -36,14 +29,12 @@ a {
  color:#dd424c;
  background-color:transparent
 }
-
 .dropdown-menu>li>a:hover,
 .dropdown-menu>li>a:focus {
  color:#ffffff;
  text-decoration:none;
  background-color:#dd424c
 }
-
 .dropdown-menu>.active>a,
 .dropdown-menu>.active>a:hover,
 .dropdown-menu>.active>a:focus {
@@ -52,7 +43,6 @@ a {
  background-color:#dd424c;
  outline:0
 }
-
 .label-default {
  background-color:#02141c
 }

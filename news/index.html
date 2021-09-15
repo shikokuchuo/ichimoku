@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.6.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.6.2</span>
       </span>
     </div>
 
@@ -172,6 +172,7 @@
 <h4 class="hasAnchor">
 <a href="#updates" class="anchor"></a>Updates:</h4>
 <ul>
+<li>More robust to server outages: adds fallback for <code><a href="../reference/oanda_instruments.html">oanda_instruments()</a></code> when that particular API endpoint is down using an internal saved instruments table.</li>
 <li>Fixes certain cases where calculation of the future cloud could fail for data frequency lower than daily.</li>
 <li>Updates to <code>sample_ohlc_data</code> to add volume column, adhere to working days etc.</li>
 <li>Argument ‘message’ renamed to ‘subtitle’ across all plot functions for clarity.</li>
