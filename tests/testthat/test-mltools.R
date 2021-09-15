@@ -8,7 +8,7 @@ test_that("autostrat ok", {
   expect_length(stratlist, 2L)
   expect_type(autostrat(cloud, n = 1), "list")
   expect_type(autostrat(cloud, n = 1, level = 3), "list")
-  expect_warning(autostrat(cloud, n = 1, level = "a"), regexp = "Invalid level")
+  expect_warning(autostrat(cloud, n = 1, level = "a"), regexp = "'level' invalid")
   expect_error(autostrat(sample_ohlc_data), regexp = "ichimoku object")
 })
 

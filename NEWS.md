@@ -10,6 +10,7 @@
 
 #### Updates:
 
+* More robust to server outages: adds fallback for `oanda_instruments()` when that particular API endpoint is down using an internal saved instruments table.
 * Fixes certain cases where calculation of the future cloud could fail for data frequency lower than daily.
 * Updates to `sample_ohlc_data` to add volume column, adhere to working days etc.
 * Argument 'message' renamed to 'subtitle' across all plot functions for clarity.

@@ -9,7 +9,7 @@ test_that("strat ok", {
   expect_true(dim(strat)[2L] == 19L)
   expect_identical(strat, strat2)
   expect_error(strat(sample_ohlc_data), regexp = "ichimoku object")
-  expect_error(strat(cloud, "close", "tenkan", "kijun", "chikou", type = "a"), regexp = "Invalid type")
+  expect_error(strat(cloud, "close", "tenkan", "kijun", "chikou", type = "a"), regexp = "type invalid")
 })
 
 test_that("stratcombine ok", {

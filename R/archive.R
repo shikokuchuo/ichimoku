@@ -82,7 +82,9 @@ archive <- function(..., object, file) {
       writeArchive(object = object, file = file)
     }
 
-  } else stop("in archive(object, file): 'object' specified without 'file'", call. = FALSE)
+  } else {
+    stop("in archive(object, file): 'object' specified without 'file'", call. = FALSE)
+  }
 
 }
 
@@ -107,8 +109,7 @@ writeArchive <- function(object, file) {
   }
 
   if (file.exists(file)) {
-    continue <- readline(prompt = paste0("The file '", file,
-                                         "' already exists. Overwrite? [y/N] "))
+    continue <- readline(prompt = paste0("The file '", file, "' already exists. Overwrite? [y/N] "))
     if (!continue %in% c("y", "Y", "yes", "YES")) {
       message("Request cancelled")
       return(invisible())
@@ -124,6 +125,7 @@ writeArchive <- function(object, file) {
   message("Archive written to '", file, "'\nsha256: ", x_archive_sha256,
           if (is.na(x_archive_sha256[1L])) " ['openssl' package not installed]")
   invisible()
+
 }
 
 #' Read Objects from Archive

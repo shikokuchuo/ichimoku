@@ -30,9 +30,9 @@ However, it is often necessary to perform analysis on the data directly, for ins
 
 The 'strategy layer' of the ichimoku package aims to prepare the data in a standardized format for easy analysis in other R packages such as 'PerformanceAnalytics'. Short strategy summaries are generated automatically, but are designed to serve as a quick reference rather than a replacement for a full backtest.
 
-The `autostrat()` function is used to further facilitate idea generation, and leverages the computational capability of R to simultaneously test all valid indicator combinations. Whilst not all returned strategies may make intuitive sense, they will at a minimum serve to provide a further benchmark. To reiterate, the results generated should be fed through a full backtest, with all the implications of that analysed.
+The `autostrat()` function is used to further facilitate idea generation, and leverages the computational capability of R to simultaneously test all valid indicator combinations. Whilst not all returned strategies may make intuitive sense, they will at a minimum serve to provide a further benchmark.
 
-Past results do not imply future performance, and any results obtained should not be relied upon on the basis of the results alone.
+Past results do not imply future performance, and any results obtained should be fed through a full backtest and not be relied upon on the basis of the results alone.
 
 ## Working with Strategies
 
@@ -226,7 +226,7 @@ The 'y' column can be switched between log and discrete returns. The date-time i
 
 **Periods in market**: The number of periods (days, or whatever the periodicity of the data is) in the market
 
-**Total trades**: Total number of trades to implement the strategy. Note that each trade requires 2 transactions, one to enter the trade and one to close out of it. Note: the benchmark would imply one trade
+**Total trades**: Total number of trades to implement the strategy. Note that each trade requires 2 transactions, one to enter the trade and one to exit. Note: generating the benchmark return would imply one trade
 
 **Average trade length**: Periods in Market (above) divided by total trades (above)
 
@@ -246,7 +246,7 @@ The 'y' column can be switched between log and discrete returns. The date-time i
 
 **Ticker**: The ticker saved in the ichimoku object
 
-**Start/end**: The start and end dates of this backtest. These dates will differ for different cloud lines depending on how many periods it takes to calculate them, or if involving the chikou, shifting back a number of periods
+**Start/end**: The start and end dates of the backtest. These dates will differ for different cloud lines depending on how many periods it takes to calculate them, or if involving the chikou, shifting back a number of periods
 
 **Direction**: 'long' or 'short' trade direction as can be set via the argument 'dir' to strat(). Only single direction strategies are considered
 

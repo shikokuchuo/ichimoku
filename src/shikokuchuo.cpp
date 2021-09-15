@@ -28,7 +28,7 @@
 cpp11::doubles maxOver(const cpp11::doubles& x, int window) {
 
   int n = x.size(), w1 = window - 1;
-  cpp11::writable::doubles rollx(n);
+  cpp11::writable::doubles vec(n);
 
   std::deque<std::pair<long double, int>> deck;
   for (int i = 0; i < n; ++i) {
@@ -41,19 +41,19 @@ cpp11::doubles maxOver(const cpp11::doubles& x, int window) {
 
     long double min = deck.front().first;
     if (i >= w1) {
-      rollx[i] = min;
+      vec[i] = min;
     } else {
-      rollx[i] = NA_REAL;
+      vec[i] = NA_REAL;
     }
   }
-  return rollx;
+  return vec;
 }
 
 [[cpp11::register]]
 cpp11::doubles minOver(const cpp11::doubles& x, int window) {
 
   int n = x.size(), w1 = window - 1;
-  cpp11::writable::doubles rollx(n);
+  cpp11::writable::doubles vec(n);
 
   std::deque<std::pair<long double, int>> deck;
   for (int i = 0; i < n; ++i) {
@@ -66,29 +66,29 @@ cpp11::doubles minOver(const cpp11::doubles& x, int window) {
 
     long double min = deck.front().first;
     if (i >= w1) {
-      rollx[i] = min;
+      vec[i] = min;
     } else {
-      rollx[i] = NA_REAL;
+      vec[i] = NA_REAL;
     }
   }
-  return rollx;
+  return vec;
 }
 
 [[cpp11::register]]
 cpp11::doubles meanOver(const cpp11::doubles& x, int window) {
 
   int n = x.size(), w1 = window - 1;
-  cpp11::writable::doubles rollx(n);
+  cpp11::writable::doubles vec(n);
   long double sum = 0;
   for (int i = 0; i < n; ++i) {
     sum += x[i];
     if (i >= w1) {
-      rollx[i] = sum / window;
+      vec[i] = sum / window;
       sum -= x[i - w1];
     } else {
-      rollx[i] = NA_REAL;
+      vec[i] = NA_REAL;
     }
   }
-  return rollx;
+  return vec;
 }
 

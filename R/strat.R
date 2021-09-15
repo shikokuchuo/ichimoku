@@ -157,7 +157,7 @@ strat <- function(x,
       s2exit <- s2exit[s2exit > s1entry[1L]]
     }
 
-  } else stop("Invalid type specified", call. = FALSE)
+  } else stop("Specified type invalid - 'type' should be either 2 or 3", call. = FALSE)
 
   txn <- c(NA, diff(posn))
   txn[posn == 1 & is.na(txn)] <- 1
@@ -301,8 +301,7 @@ stratcombine <- function(s1, s2) {
   txn <- c(NA, diff(posn))
   txn[posn == 1 & is.na(txn)] <- 1
   if (posn[end] == 1) txn[end + 1L] <- -1
-  if (!sum(txn, na.rm = TRUE) == 0) stop("Calculation error - please check validity of data",
-                                         call. = FALSE)
+  if (!sum(txn, na.rm = TRUE) == 0) stop("Calculation error - please check validity of data", call. = FALSE)
   slogret <- s1[, "logret"] * posn
 
   s1$cond <- cond

@@ -35,11 +35,10 @@ tradingDays <- function(x, holidays, ..., noholidays) {
   vec <- posixlt$wday %in% 1:5
   vec[(posixlt$mon == 0L & posixlt$mday == 1L) | (posixlt$mon == 11L & posixlt$mday == 25L)] <- FALSE
   if (!missing(holidays)) {
-    holidays <- tryCatch(as.POSIXct(holidays),
-                         error = function(e) {
-                           warning("Specified holidays are invalid - disregarding", call. = FALSE)
-                           return(vec)
-                         })
+    holidays <- tryCatch(as.POSIXct(holidays), error = function(e) {
+      warning("Specified holidays are invalid - falling back to defaults", call. = FALSE)
+      return(vec)
+    })
     vec[x %in% holidays] <- FALSE
   }
   vec
@@ -208,8 +207,7 @@ df_merge <- function(...) {
                        price = attr(dots[[1L]], "price"),
                        timestamp = do.call(max, lapply(dots, attr, "timestamp")),
                        oanda = TRUE)
-    if (FALSE %in% merge$complete) warning("Incomplete periods in merged dataframe, please check for possible duplicates",
-                                           call. = FALSE)
+    if (FALSE %in% merge$complete) warning("Incomplete periods in merged dataframe - please check for possible duplicates", call. = FALSE)
   }
   merge
 }

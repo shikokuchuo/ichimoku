@@ -73,8 +73,7 @@ plot.ichimoku <- function(x,
          s = extraplot(x, window = window, ticker = ticker, subtitle = subtitle, theme = theme,
                        strat = strat, type = type),
          extraplot(x, window = window, ticker = ticker, subtitle = subtitle,
-                   theme = theme, strat = strat, type = type, custom = custom)
-         )
+                   theme = theme, strat = strat, type = type, custom = custom))
 
   invisible(x)
 
@@ -120,9 +119,7 @@ autoplot.ichimoku <- function(object,
   pal <- ichimoku_themes[, theme]
   if (missing(ticker)) ticker <- attr(object, "ticker")
   if (missing(subtitle)) {
-    subtitle <- if (hasStrat(object) && isTRUE(strat)) {
-      paste0("Strategy: ", attr(object, "strat")["Strategy", ][[1L]])
-    }
+    subtitle <- if (hasStrat(object) && isTRUE(strat)) paste0("Strategy: ", attr(object, "strat")["Strategy", ][[1L]])
   }
 
   if (!missing(window)) object <- object[window]
@@ -132,8 +129,7 @@ autoplot.ichimoku <- function(object,
 
   layers <- list(
     if (hasStrat(object) && isTRUE(strat)) {
-      geom_rect(aes(xmin = .data$posn * (.data$idx - 0.5),
-                    xmax = .data$posn * (.data$idx + 0.5),
+      geom_rect(aes(xmin = .data$posn * (.data$idx - 0.5), xmax = .data$posn * (.data$idx + 0.5),
                     ymin = -Inf, ymax = Inf), fill = pal[1L], alpha = 0.2, na.rm = TRUE)
     },
     if (!all(is.na(data$senkouB))) {
@@ -146,9 +142,8 @@ autoplot.ichimoku <- function(object,
     geom_line(aes(y = .data$kijun), color = pal[5L], na.rm = TRUE),
     geom_segment(aes(xend = .data$idx, y = .data$high, yend = .data$low, color = .data$cd),
                  size = 0.3, na.rm = TRUE),
-    geom_rect(aes(xmin = .data$idx - 0.4, xmax = .data$idx + 0.4,
-                  ymin = .data$open, ymax = .data$close,
-                  color = .data$cd, fill = .data$cd),
+    geom_rect(aes(xmin = .data$idx - 0.4, xmax = .data$idx + 0.4, ymin = .data$open,
+                  ymax = .data$close, color = .data$cd, fill = .data$cd),
               size = 0.3, na.rm = TRUE),
     geom_line(aes(y = .data$chikou), color = pal[6L], na.rm = TRUE),
     scale_x_continuous(breaks = breaks_ichimoku(data = data, object = object),
@@ -156,8 +151,7 @@ autoplot.ichimoku <- function(object,
     scale_y_continuous(breaks = function(x) pretty.default(x, n = 9L)),
     scale_color_manual(values = c("1" = pal[7L], "-1" = pal[8L], "0" = pal[9L])),
     scale_fill_manual(values = c("1" = pal[10L], "-1" = pal[11L], "0" = pal[12L])),
-    labs(x = "Date | Time", y = "Price", title = paste0("Ichimoku Kinko Hyo : : ", ticker),
-         subtitle = subtitle),
+    labs(x = "Date | Time", y = "Price", title = paste0("Ichimoku Kinko Hyo : : ", ticker), subtitle = subtitle),
     switch(theme, dark = theme_ichimoku_dark(), theme_ichimoku_light())
   )
 
@@ -206,19 +200,18 @@ extraplot <- function(object,
                             subtitle = subtitle, theme = theme, strat = strat)
 
   if (type == "none") {
-    warning("Chart type not specified or set to 'none', falling back to standard plot", call. = FALSE)
+    warning("Chart type not specified or set to 'none' - falling back to standard plot", call. = FALSE)
     return(print(plot))
   }
-
   if (type == "bar" || type == "line") {
     if(missing(custom)) {
-      warning("Custom data column not specified, falling back to standard plot", call. = FALSE)
+      warning("Custom data column not specified - falling back to standard plot", call. = FALSE)
       return(print(plot))
     }
     cnames <- dimnames(object)[[2L]]
     sel <- grep(custom, cnames, ignore.case = TRUE, perl = TRUE)[1L]
     if (is.na(sel)) {
-      warning("Custom data column '", custom, "' not found, falling back to standard plot", call. = FALSE)
+      warning("Custom data column '", custom, "' not found - falling back to standard plot", call. = FALSE)
       return(print(plot))
     }
 
@@ -267,7 +260,7 @@ extraplot <- function(object,
       },
       scale_x_continuous(breaks = breaks_ichimoku(data = data, object = object),
                          labels = NULL),
-      scale_y_continuous(labels = function(x) round(x, digits = 0L)),
+      scale_y_continuous(labels = function(x) round(x, digits = 0)),
       scale_color_manual(values = c("1" = pal[7L], "-1" = pal[8L], "0" = pal[9L])),
       scale_fill_manual(values = c("1" = pal[10L], "-1" = pal[11L], "0" = pal[12L])),
       labs(x = NULL, y = cols),
@@ -279,7 +272,7 @@ extraplot <- function(object,
 
   subplot <- ggplot(data = data, aes(x = .data$idx)) + layers
 
-  grid.arrange(plot + labs(x = NULL), subplot, layout_matrix = matrix(c(1L, 1L, 1L, 2L)))
+  grid.arrange(plot + labs(x = NULL), subplot, layout_matrix = cbind(c(1L, 1L, 1L, 2L)))
 
 }
 

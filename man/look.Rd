@@ -7,26 +7,26 @@
 look(x, which)
 }
 \arguments{
-\item{x}{an object (created by the ichimoku package).}
+\item{x}{an object.}
 
 \item{which}{(optional) integer value of strategy to return from an autostrat
 list.}
 }
 \value{
-For objects created by the ichimoku package, a list of attribute values
+For objects created by the ichimoku package, a list of attributes
     specific to that data type, or if 'which' is specified on an autostrat
     list, an ichimoku object containing a strategy.
 
-    For other objects, a list of attributes that are non-standard for 'matrix',
-    'data.frame', or 'xts' objects, or else invisible NULL if none are present.
+    For other objects, a list of attributes that are non-standard for matrix /
+    data.frame / xts objects, or else invisible NULL if none are present.
 }
 \description{
 Inspect the informational attributes of objects, or extract ichimoku objects
     from lists returned by \code{\link{autostrat}}.
 }
 \details{
-Note: for a level 2 autostrat object, if the object fails to print
-    correctly due to its length, please access the list items directly using
+Note: for a level 2 autostrat object, if the attributes fail to print
+    correctly due to their length, please access the them directly using
     \code{look(x)$summary} and \code{look(x)$logret}, possibly in conjunction
     with head() or by setting the 'max' argument in print().
 }

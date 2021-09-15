@@ -50,9 +50,7 @@ iplot <- function(x,
     type <- match.arg(type)
     if (missing(ticker)) ticker <- attr(x, "ticker")
     if (missing(subtitle)) {
-      subtitle <- if (hasStrat(x) && isTRUE(strat)) {
-        paste0("Strategy: ", attr(x, "strat")["Strategy", ][[1L]])
-      }
+      subtitle <- if (hasStrat(x) && isTRUE(strat)) paste0("Strategy: ", attr(x, "strat")["Strategy", ][[1L]])
     }
 
     tformat <- if (attr(x, "periodicity") > 80000) "%F" else "%F %T"
@@ -147,7 +145,7 @@ iplot <- function(x,
       })
       output$hover_y <- shiny::renderUI({
         shiny::req(input$type == "none", input$plot_hover)
-        drawGuide(label = signif(input$plot_hover$y, digits = 5L), left = 75, top = top_px() + 11)
+        drawGuide(label = signif(input$plot_hover$y, digits = 5), left = 75, top = top_px() + 11)
       })
       output$infotip <- shiny::renderUI({
         shiny::req(input$type == "none", input$infotip, input$plot_hover, posi_x() > 0, posi_x() <= dim(pdata())[1L])
@@ -208,18 +206,18 @@ drawInfotip <- function(sdata, left_px, top_px) {
                        if (isTRUE(sdata$cd == 1)) "&#9651;<br />" else if (isTRUE(sdata$cd == -1)) "&#9660;<br />" else "&#8212;<br />",
                        index(sdata),
                        "</div><div style='text-align:center; margin:2px 0 0 0; padding:0'>H: ",
-                       signif(sdata$high, digits = 5L),
+                       signif(sdata$high, digits = 5),
                        "</div><div style='margin:0; padding:0'>O: ",
-                       signif(sdata$open, digits = 5L),
-                       "&nbsp;&nbsp;C: ", signif(sdata$close, digits = 5L),
+                       signif(sdata$open, digits = 5),
+                       "&nbsp;&nbsp;C: ", signif(sdata$close, digits = 5),
                        "</div><div style='text-align:center; margin:0; padding:0'>L: ",
-                       signif(sdata$low, digits = 5L),
+                       signif(sdata$low, digits = 5),
                        "</div><div style='margin:2px 0 0 0; padding:0'>Tenkan: ",
-                       signif(sdata$tenkan, digits = 5L),
-                       "<br />Kijun: ", signif(sdata$kijun, digits = 5L),
-                       "<br />Senkou A: ", signif(sdata$senkouA, digits = 5L),
-                       "<br />Senkou B: ", signif(sdata$senkouB, digits = 5L),
-                       "<br />Chikou: ", signif(sdata$chikou, digits = 5L), "</div>"))
+                       signif(sdata$tenkan, digits = 5),
+                       "<br />Kijun: ", signif(sdata$kijun, digits = 5),
+                       "<br />Senkou A: ", signif(sdata$senkouA, digits = 5),
+                       "<br />Senkou B: ", signif(sdata$senkouB, digits = 5),
+                       "<br />Chikou: ", signif(sdata$chikou, digits = 5), "</div>"))
   )
 }
 

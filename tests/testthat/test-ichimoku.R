@@ -53,7 +53,7 @@ test_that("ichimoku error handling ok", {
   expect_error(ichimoku(sample_ohlc_data[, -5]), regexp = "data not found")
   expect_warning(ichimoku(sample_ohlc_data[, -3]), regexp = "pseudo-OHLC data")
   expect_warning(ichimoku(sample_ohlc_data[, -2]), regexp = "Opening prices")
-  expect_warning(ichimoku(sample_ohlc_data, periods = c(8, 15)), regexp = "Invalid cloud periods")
+  expect_warning(ichimoku(sample_ohlc_data, periods = c(8, 15)), regexp = "cloud periods invalid")
 })
 
 test_that("is.ichimoku ok", {

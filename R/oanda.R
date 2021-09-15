@@ -82,9 +82,11 @@ oanda <- function(instrument,
 
   if (!missing(from) && !missing(to)) {
     d1 <- tryCatch(as.POSIXct(from), error = function(e) {
-      stop("Specified value of 'from' is not convertible to a POSIXct date-time format", call. = FALSE)})
+      stop("Specified value of 'from' is not convertible to a POSIXct date-time format", call. = FALSE)
+    })
     d2 <- tryCatch(as.POSIXct(to), error = function(e) {
-      stop("Specified value of 'to' is not convertible to a POSIXct date-time format", call. = FALSE)})
+      stop("Specified value of 'to' is not convertible to a POSIXct date-time format", call. = FALSE)
+    })
     interval <- unclass(d2) - unclass(d1)
     if (interval < 0) stop("Requested time period invalid - 'to' takes place before 'from'", call. = FALSE)
     denom <- switch(granularity,
@@ -119,20 +121,20 @@ oanda <- function(instrument,
       })
       message("Merging data partitions...")
       df <- do.call(df_merge, list)
-      message("Complete.")
+      message("Complete")
       }
 
     } else {
       if (!missing(from)) {
         from <- tryCatch(as.POSIXct(from), error = function(e) {
-          stop("Specified value of 'from' is not convertible to a POSIXct date-time format",
-               call. = FALSE)})
+          stop("Specified value of 'from' is not convertible to a POSIXct date-time format", call. = FALSE)
+        })
         from <- strftime(from, format = "%Y-%m-%dT%H:%M:%S")
       }
       if (!missing(to)) {
         to <- tryCatch(as.POSIXct(to), error = function(e) {
-          stop("Specified value of 'to' is not convertible to a POSIXct date-time format",
-               call. = FALSE)})
+          stop("Specified value of 'to' is not convertible to a POSIXct date-time format", call. = FALSE)
+        })
         to <- strftime(to, format = "%Y-%m-%dT%H:%M:%S")
       }
 
@@ -157,8 +159,8 @@ oanda <- function(instrument,
 #'
 #' @noRd
 #'
-getPrices <- function(instrument, granularity, count, from, to, price,
-                      server, apikey, .validate) {
+getPrices <- function(instrument, granularity, count, from, to, price, server,
+                      apikey, .validate) {
 
   url <- paste0("https://api-fx", switch(server, practice = "practice", live = "trade"),
                 ".oanda.com/v3/instruments/", instrument, "/candles?granularity=",
@@ -196,7 +198,7 @@ getPrices <- function(instrument, granularity, count, from, to, price,
       }
       data <- data[keep, ]
       time <- time[keep, ]
-    } else if (missing(.validate)){
+    } else if (missing(.validate)) {
       cut <- (time$wday == 5L & time$hour > 20L) | time$wday == 6L | (time$wday == 0L & time$hour < 21L)
       data <- data[!cut, ]
       time <- time[!cut, ]
@@ -359,20 +361,19 @@ oanda_chart <- function(instrument,
   theme <- match.arg(theme)
   server <- match.arg(server)
   if (!is.numeric(refresh) || refresh < 1) {
-    message("Invalid refresh interval specified - falling back to default of 5 secs")
+    message("Specified refresh interval invalid - falling back to default of 5 secs")
     refresh <- 5
   }
   if (is.numeric(periods) && length(periods) == 3L && all(periods >= 1)) {
     periods <- as.integer(periods)
   } else {
-    warning("Invalid cloud periods specified - falling back to defaults c(9L, 26L, 52L)",
-            call. = FALSE)
+    warning("Specified cloud periods invalid - falling back to defaults c(9L, 26L, 52L)", call. = FALSE)
     periods <- c(9L, 26L, 52L)
   }
   p2 <- periods[2L]
   minlen <- p2 + periods[3L]
   if (!is.numeric(count) || count < minlen) {
-    message("Invalid count specified - falling back to default of 250")
+    message("Specified 'count' invalid - falling back to default of 250")
     count <- 250
   }
 
@@ -471,7 +472,7 @@ oanda_studio <- function(instrument = "USD_JPY",
 
     if (missing(apikey)) apikey <- oanda_get_key()
     if (!is.numeric(refresh) || refresh < 1) {
-      message("Invalid refresh interval specified - falling back to default of 5 secs")
+      message("Specified refresh interval invalid - falling back to default of 5 secs")
       refresh <- 5
     }
     granularity <- match.arg(granularity)
@@ -481,21 +482,19 @@ oanda_studio <- function(instrument = "USD_JPY",
     if (is.numeric(periods) && length(periods) == 3L && all(periods >= 1)) {
       periods <- as.integer(periods)
     } else {
-      warning("Invalid cloud periods specified - falling back to defaults c(9L, 26L, 52L)",
-              call. = FALSE)
+      warning("Specified cloud periods invalid - falling back to defaults c(9L, 26L, 52L)", call. = FALSE)
       periods <- c(9L, 26L, 52L)
     }
     p2 <- periods[2L]
     minlen <- p2 + periods[3L]
     if (!is.numeric(count) || count <= minlen) {
-      message("Invalid count specified - falling back to default of 300")
+      message("Specified 'count' invalid - falling back to default of 300")
       count <- 300
     }
 
     ins <- oanda_instruments(server = srvr, apikey = apikey)
     ichimoku_stheme <- if (requireNamespace("bslib", quietly = TRUE)) {
-      bslib::bs_theme(version = 4, bootswatch = "solar", bg = "#ffffff", fg = "#002b36",
-                      primary = "#073642", font_scale = 0.85)
+      bslib::bs_theme(version = 4, bootswatch = "solar", bg = "#ffffff", fg = "#002b36", primary = "#073642", font_scale = 0.85)
     }
 
     ui <- shiny::fluidPage(
@@ -504,8 +503,7 @@ oanda_studio <- function(instrument = "USD_JPY",
         padding = 20,
         shiny::tags$style(type = "text/css", "#chart {height: calc(100vh - 150px) !important;}"),
         shiny::plotOutput("chart", width = "100%",
-                          hover = shiny::hoverOpts(id = "plot_hover",
-                                                   delay = 80, delayType = "throttle")),
+                          hover = shiny::hoverOpts(id = "plot_hover", delay = 80, delayType = "throttle")),
         shiny::uiOutput("hover_x"), shiny::uiOutput("hover_y"), shiny::uiOutput("infotip")
       ),
       shiny::fluidRow(
@@ -620,7 +618,9 @@ oanda_studio <- function(instrument = "USD_JPY",
       data <- shiny::reactive({
         if (unclass(attr(datastore(), "timestamp")) > unclass(attr(idata(), "timestamp"))) {
           datastore()
-        } else idata()
+        } else {
+          idata()
+        }
       })
       xlen <- shiny::reactive(dim(data())[1L])
       pdata <- shiny::reactive(ichimoku(data(), ticker = input$instrument,
@@ -632,8 +632,7 @@ oanda_studio <- function(instrument = "USD_JPY",
       if (requireNamespace("bslib", quietly = TRUE)) {
         shiny::observe({
           session$setCurrentTheme(
-            bslib::bs_theme_update(ichimoku_stheme,
-                                   bootswatch = switch(input$theme, dark = "solar", NULL)))
+            bslib::bs_theme_update(ichimoku_stheme, bootswatch = switch(input$theme, dark = "solar", NULL)))
         })
       }
 
@@ -646,18 +645,15 @@ oanda_studio <- function(instrument = "USD_JPY",
       })
       output$hover_y <- shiny::renderUI({
         shiny::req(input$plot_hover)
-        drawGuide(label = signif(input$plot_hover$y, digits = 5L), left = 75, top = top_px() + 11)
+        drawGuide(label = signif(input$plot_hover$y, digits = 5), left = 75, top = top_px() + 11)
       })
       output$infotip <- shiny::renderUI({
         shiny::req(input$infotip, input$plot_hover, posi_x() > 0, posi_x() <= dim(pdata())[1L])
         drawInfotip(sdata = pdata()[posi_x(), ], left_px = left_px(), top_px = top_px())
       })
 
-      output$savedata <- shiny::downloadHandler(filename = function() {
-        paste(input$instrument, input$granularity, input$price, input$count, sep = "_")
-      }, content = function(file) {
-        archive(pdata(), file)
-      })
+      output$savedata <- shiny::downloadHandler(filename = function() paste0(input$instrument, "_", input$granularity, "_", input$price, ".rda"),
+                                                content = function(file) archive(pdata(), file))
 
       session$onSessionEnded(function() shiny::stopApp())
     }
@@ -706,8 +702,12 @@ oanda_instruments <- function(server = c("practice", "live"), apikey) {
                         "Authorization" = paste0("Bearer ", apikey),
                         "User-Agent" = x_user_agent)
       resp <- curl_fetch_memory(url = url, handle = h)
-      if (resp$status_code != 200L) stop("code ", resp$status_code, " - ",
-                                         parse_json(rawToChar(resp$content)), call. = FALSE)
+      if (resp$status_code != 200L) {
+        warning("code ", resp$status_code, " - ",
+                parse_json(rawToChar(resp$content)),
+                "\nInstrument list could not be retrieved - falling back to internal saved data", call. = FALSE)
+        return(x_oanda_instruments)
+      }
       data <- parse_json(rawToChar(resp$content), simplifyVector = TRUE)$instruments
       ins <- data[order(data$name), c("name", "displayName", "type")]
       attr(ins, "row.names") <- .set_row_names(dim(ins)[1L])
@@ -791,7 +791,7 @@ oanda_set_key <- function() {
 #' Return OANDA fxTrade API key (personal access token) saved in the system
 #'     credential store, or else prompts the user to provide a key interactively.
 #'
-#' @return A temporarily invisible character string, respresenting the key stored
+#' @return Returned invisibly, a character string representing the key stored
 #'     in the default keyring under the service name 'OANDA_API_KEY' if present,
 #'     otherwise the key supplied by the user interactively.
 #'

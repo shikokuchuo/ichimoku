@@ -165,7 +165,7 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
     })
   } else {
     index <- tryCatch(as.POSIXct(attr(x, "row.names")), error = function(e) {
-      stop("Valid date-time index not found", call. = FALSE)
+      stop("Valid date-time index not found. Perhaps check column names?", call. = FALSE)
     })
   }
 
@@ -174,15 +174,13 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
   colc <- grep("close", cnames, ignore.case = TRUE, perl = TRUE)[1L]
   if (anyNA(c(colh, coll, colc))) {
     colp <- grep("price|value|close", cnames, ignore.case = TRUE, perl = TRUE)[1L]
-    if (is.na(colp)) {
-      stop("Price data not found - please check column names are valid", call. = FALSE)
-    }
+    if (is.na(colp)) stop("Price data not found. Perhaps check column names?", call. = FALSE)
     close <- as.numeric(x[, colp, drop = TRUE])
     open <- c(NA, close[1:(xlen - 1L)])
     high <- pmax.int(open, close)
     low <- pmin.int(open, close)
     warning("OHLC data not found - using pseudo-OHLC data constructed from '", cnames[colp],
-            "'\nThis is not a true ichimoku cloud chart but an approximation only", call. = FALSE)
+            "'\nResulting ichimoku cloud chart is an approximation only", call. = FALSE)
 
   } else {
     high <- as.numeric(x[, colh, drop = TRUE])
@@ -201,15 +199,14 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
   if (is.numeric(periods) && length(periods) == 3L && all(periods >= 1)) {
     periods <- as.integer(periods)
   } else {
-    warning("Invalid cloud periods specified - falling back to defaults c(9L, 26L, 52L)",
+    warning("Specified cloud periods invalid - falling back to defaults c(9L, 26L, 52L)",
             call. = FALSE)
     periods <- c(9L, 26L, 52L)
   }
   p1 <- periods[1L]
   p2 <- periods[2L]
   p3 <- periods[3L]
-  if (p2 >= xlen) stop("Dataset must be longer than the medium cloud period '",
-                       p2, "'", call. = FALSE)
+  if (p2 >= xlen) stop("Dataset must be longer than the medium cloud period '", p2, "'", call. = FALSE)
 
   cd <- numeric(xlen)
   cd[open < close] <- 1
@@ -234,14 +231,13 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
   if (!missing(keep.data) && isTRUE(keep.data)) {
     cols <- c("coli", "colo", "colh", "coll", "colc", "colp")
     used <- do.call(c, lapply(cols, function(x) {
-      if (exists(x, where = parent.frame(2L), inherits = FALSE)) x <- get(x, pos = parent.frame(2L), inherits = FALSE)
+      if (exists(x, where = parent.frame(2L), inherits = FALSE)) get(x, pos = parent.frame(2L), inherits = FALSE)
     }))
     used <- used[!is.na(used)]
     keep <- if (!is.null(used)) cnames[-used]
-    kmatrix <- do.call(cbind,
-                       setNames(lapply(keep, function(k) {
-                         c(as.numeric(x[, k, drop = TRUE]), rep(NA, p2 - 1L))
-                       }), keep))
+    kmatrix <- do.call(cbind, setNames(lapply(keep, function(k) {
+      c(as.numeric(x[, k, drop = TRUE]), rep(NA, p2 - 1L))
+    }), keep))
     lk <- look(x)
     lk$periods <- lk$periodicity <- lk$ticker <- NULL
   }
@@ -297,6 +293,7 @@ ichimoku.default <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, ..
 
   if (!is.character(x)) stop("cannot create an ichimoku object from a '",
                              class(x)[1L], "' object", call. = FALSE)
+
   if (!exists(x)) stop("object '", x, "' not found", call. = FALSE)
 
   object <- get(x)

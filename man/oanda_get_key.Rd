@@ -7,7 +7,7 @@
 oanda_get_key()
 }
 \value{
-A temporarily invisible character string, respresenting the key stored
+Returned invisibly, a character string representing the key stored
     in the default keyring under the service name 'OANDA_API_KEY' if present,
     otherwise the key supplied by the user interactively.
 }

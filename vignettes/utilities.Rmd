@@ -26,7 +26,7 @@ This vignette is dedicated to the auxiliary functions exported by the ichimoku p
 
 Note that all of the auxiliary functions are programmed for performance and are hence stripped of superfluous validation and error-checking code. If they are used outside of their intended scopes then errors can be expected. In particular, the input types must match exactly.
 
-### Core Auxiliary Functions
+## Core Auxiliary Functions
 
 #### tradingDays()
 
@@ -50,7 +50,11 @@ tradingDays(dates, noholidays = TRUE)
 
 #### look()
 
-Can be used to inspect the informational attributes of objects created by the ichimoku package. This includes ichimoku objects or objects returned by `autostrat()`, `mlgrid()` or `oanda()`.
+Can be used to inspect the informational attributes of R objects.
+
+For objects created by the ichimoku package, a list of attributes specific to that data type is returned.
+
+For other objects, a list of attributes that are non-standard for matrix / data.frame / xts objects is returned, or else invisible NULL if none are found.
 
 ```{r look}
 cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
@@ -73,7 +77,7 @@ look(strat)
 
 ```
 
-### Performant Dataframe Constructors
+## Dataframe Constructors
 
 #### xts_df()
 
@@ -111,7 +115,7 @@ str(df)
 str(row.names(df))
 ```
 
-### Dataframe Manipulation Functions
+## Dataframe Utilities
 
 #### df_trim()
 

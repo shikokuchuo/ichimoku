@@ -52,7 +52,7 @@ autostrat <- function(x,
   if (!is.ichimoku(x)) stop("autostrat() only works on ichimoku objects", call. = FALSE)
   dir <- match.arg(dir)
   if (!level %in% 1:3) {
-    warning("Invalid level specified, falling back to default of 1", call. = FALSE)
+    warning("Specified 'level' invalid - falling back to default of 1", call. = FALSE)
     level <- 1
   }
 
@@ -206,8 +206,8 @@ mlgrid <- function(x,
 
   cols <- c("chikou", "close", "high", "low", "tenkan", "kijun",
             "senkouA", "senkouB", "cloudT", "cloudB")
-  comb <- as.matrix(expand.grid(cols, cols, KEEP.OUT.ATTRS = FALSE, stringsAsFactors = FALSE)
-  )[-grid_dup(length(cols), omit.id = TRUE), ]
+  comb <- as.matrix(expand.grid(cols, cols, KEEP.OUT.ATTRS = FALSE,
+                                stringsAsFactors = FALSE))[-grid_dup(length(cols), omit.id = TRUE), ]
   pairs <- comb[-c(10L, 11L, 18L, 41L, 42L, 43L, 44L, 45L), ]
   matrix <- writeMatrix(x = core, pairs = pairs, p2 = p2, xlen = xlen, type = type)
 

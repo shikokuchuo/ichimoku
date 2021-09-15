@@ -5,19 +5,19 @@
 #' Inspect the informational attributes of objects, or extract ichimoku objects
 #'     from lists returned by \code{\link{autostrat}}.
 #'
-#' @param x an object (created by the ichimoku package).
+#' @param x an object.
 #' @param which (optional) integer value of strategy to return from an autostrat
 #'     list.
 #'
-#' @return For objects created by the ichimoku package, a list of attribute values
+#' @return For objects created by the ichimoku package, a list of attributes
 #'     specific to that data type, or if 'which' is specified on an autostrat
 #'     list, an ichimoku object containing a strategy.
 #'
-#'     For other objects, a list of attributes that are non-standard for 'matrix',
-#'     'data.frame', or 'xts' objects, or else invisible NULL if none are present.
+#'     For other objects, a list of attributes that are non-standard for matrix /
+#'     data.frame / xts objects, or else invisible NULL if none are present.
 #'
-#' @details Note: for a level 2 autostrat object, if the object fails to print
-#'     correctly due to its length, please access the list items directly using
+#' @details Note: for a level 2 autostrat object, if the attributes fail to print
+#'     correctly due to their length, please access the them directly using
 #'     \code{look(x)$summary} and \code{look(x)$logret}, possibly in conjunction
 #'     with head() or by setting the 'max' argument in print().
 #'
@@ -44,20 +44,26 @@
 #'
 look <- function(x, which) {
 
-  if (isTRUE(attr(x, "autostrat"))) {
+  if (is.null(attr(x, "autostrat"))) {
+    lk <- attributes(x)
+    lk$dim <- lk$dimnames <- lk$names <- lk$row.names <- lk$index <- lk$class <- lk$mlgrid <- lk$oanda <- NULL
+    if (length(lk)) lk else invisible()
+  } else {
     if (missing(which)) {
       lk <- attributes(x)
       lk$autostrat <- NULL
       lk
-    } else tryCatch(x[[which]], error = function(e) {
-      stop("'", which, "' is not a valid value for 'which'\n'which' should be an integer ",
-           "value specifying one of the strategies 1 to ", length(x), call. = FALSE)
-    })
-
-  } else {
-    lk <- attributes(x)
-    lk$dim <- lk$dimnames <- lk$names <- lk$row.names <- lk$index <- lk$class <- lk$mlgrid <- lk$oanda <- NULL
-    if (length(lk)) lk else invisible()
+    } else if (!is.numeric(which)) {
+      stop("'", which, "' is not a valid value for 'which'\n",
+           "'which' should be an integer value specifying one of the strategies 1 to ",
+           length(x), call. = FALSE)
+    } else {
+      tryCatch(x[[which]], error = function(e) {
+        stop(which, " is not a valid value for 'which'\n",
+             "'which' should be an integer value specifying one of the strategies 1 to ",
+             length(x), call. = FALSE)
+      })
+    }
   }
 
 }
