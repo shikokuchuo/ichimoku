@@ -175,7 +175,7 @@ getPrices <- function(instrument, granularity, count, from, to, price, server,
                     "User-Agent" = x_user_agent)
   resp <- curl_fetch_memory(url = url, handle = h)
 
-  if (resp$status_code != 200L) stop("code ", resp$status_code, " - ",
+  if (resp$status_code != 200L) stop("server code ", resp$status_code, " - ",
                                      parse_json(rawToChar(resp$content)), call. = FALSE)
   headers <- rawToChar(resp$headers)
   hdate <- strsplit(headers, "date: | GMT", perl = TRUE)[[1L]][2L]
@@ -703,9 +703,9 @@ oanda_instruments <- function(server = c("practice", "live"), apikey) {
                         "User-Agent" = x_user_agent)
       resp <- curl_fetch_memory(url = url, handle = h)
       if (resp$status_code != 200L) {
-        warning("code ", resp$status_code, " - ",
+        warning("Server code ", resp$status_code, " - ",
                 parse_json(rawToChar(resp$content)),
-                "\nInstrument list could not be retrieved - falling back to internal saved data", call. = FALSE)
+                "\nInstrument list could not be retrieved - falling back to internal data", call. = FALSE)
         return(x_oanda_instruments)
       }
       data <- parse_json(rawToChar(resp$content), simplifyVector = TRUE)$instruments
@@ -744,7 +744,7 @@ oandaAccount <- function(server = c("practice", "live"), apikey) {
                         "Authorization" = paste0("Bearer ", apikey),
                         "User-Agent" = x_user_agent)
       resp <- curl_fetch_memory(url = url, handle = h)
-      if (resp$status_code != 200L) stop("code ", resp$status_code, " - ",
+      if (resp$status_code != 200L) stop("server code ", resp$status_code, " - ",
                                          parse_json(rawToChar(resp$content)), call. = FALSE)
       data <- parse_json(rawToChar(resp$content), simplifyVector = TRUE)$accounts
       cache <<- data$id[1L]

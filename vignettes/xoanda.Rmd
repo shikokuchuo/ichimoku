@@ -36,7 +36,7 @@ Registering for a 'demo' or 'practice' account is entirely free at the time of w
 
 After successful registration, a link can be found on your OANDA fxTrade account profile page 'Manage API Access' (My Account -> My Services -> Manage API Access). From there, a personal access token to use with the OANDA API can be generated, as well as revoked. This access token will enable all the OANDA functions in this package.
 
-Note: this package only contains functions for retrieving available instruments and price data. It does not contain code to implement any trading capability whatsoever. Hence using your access token with this package should be safe, even for live accounts. However, the access token can be used (outside of this package) for all operations on your account including placing orders and trades. It is therefore recommended, for maximum security, that you register for a demo/practice account and use the access token for that account even if you hold an existing live account with OANDA.
+Note: this package only contains functions for retrieving available instruments and price data. It does not contain code to implement any trading capability whatsoever. Hence using your access token with this package should be safe, even for live accounts. However, the access token can be used (outside of this package) for all operations on your account including placing orders and trades. It is therefore recommended that you register for a demo/practice account and use the access token for that account, even if you hold an existing live account with OANDA.
 
 ## Setting your OANDA API Key
 
@@ -172,7 +172,7 @@ oanda_instruments()
 print(ichimoku:::x_oanda_instruments)
 ```
 
-Note: the above table is saved as internal package data and used as a fallback if the instruments endpoint is offline (it can be the case that the pricing server is still online as the endpoints are different).
+Note: the above table is saved as internal package data and used as a fallback if the instruments endpoint is not available (it can be the case that only certain endpoints are taken offline for maintenance etc.).
 
 ## Caching Implementation
 
