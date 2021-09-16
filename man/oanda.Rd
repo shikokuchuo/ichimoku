@@ -78,7 +78,7 @@ This function queries the OANDA fxTrade API.
 }
 \examples{
 \dontrun{
-# OANDA fxTrade API key required to run this example
+# OANDA fxTrade API key required to run these examples
 prices <- oanda("USD_JPY")
 ichimoku(prices)
 

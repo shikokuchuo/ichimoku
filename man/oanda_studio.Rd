@@ -82,7 +82,7 @@ This function polls the OANDA fxTrade API for the latest prices and
 }
 \examples{
 \dontrun{
-# OANDA fxTrade API key required to run this example
+# OANDA fxTrade API key required to run these examples
 oanda_studio()
 
 # To open in RStudio viewer instead of default browser

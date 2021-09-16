@@ -1,4 +1,4 @@
-# ichimoku 1.1.6
+# ichimoku 1.1.7
 
 #### New features:
 
@@ -7,6 +7,7 @@
 * New 'type' argument for `plot.ichimoku()` and `iplot()` enables a choice of oscillator (R-type and S-type) to be shown as a sub-plot.
 * New 'custom' argument for `plot.ichimoku()` and `iplot()` to enable custom data variable to be shown beneath the ichimoku cloud chart as either a line or bar chart.
 * `oanda_studio()` adds a button for saving the underlying data of the live ichimoku cloud chart using `archive()`.
+* `oanda_chart()` now returns the underlying ichimoku object (invisibly) on exiting the function, providing easy access to the data.
 
 #### Updates:
 

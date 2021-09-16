@@ -53,7 +53,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' # OANDA fxTrade API key required to run this example
+#' # OANDA fxTrade API key required to run these examples
 #' prices <- oanda("USD_JPY")
 #' ichimoku(prices)
 #'
@@ -249,8 +249,8 @@ getPrices <- function(instrument, granularity, count, from, to, price, server,
 #'     For further details please refer to the OANDA fxTrade API vignette by
 #'     running: \code{vignette("xoanda", package = "ichimoku")}.
 #'
-#' @return Does not return a value, however the streaming data is output to the
-#'     console as a side effect.
+#' @return Returns invisible NULL on function exit. The streaming data is output
+#'     to the console as a side effect.
 #'
 #' @section Streaming Data:
 #'
@@ -290,6 +290,7 @@ oanda_stream <- function(instrument, server = c("practice", "live"), apikey) {
                     "User-Agent" = x_user_agent)
 
   message("Streaming data... Press 'Esc' to return")
+  on.exit(expr = return(invisible()))
   curl_fetch_stream(url = url, handle = h, fun = function(x) {
     stream <- sub("close", "\033[49m\033[39m\nclose",
                   sub("asks:", "\033[49m\033[39m asks: \033[90m\033[42m",
@@ -320,22 +321,28 @@ oanda_stream <- function(instrument, server = c("practice", "live"), apikey) {
 #'     calculating the ichimoku cloud or \code{\link{autoplot}} to set chart
 #'     parameters.
 #'
-#' @return Does not return a value, however a plot of the ichimoku chart for the
-#'     price data requested is output to the graphical device at each refresh
-#'     interval as a side effect.
+#' @return An invisible copy of the ichimoku object underlying the chart on function
+#'     exit. A plot of the ichimoku chart for the price data requested is output
+#'     to the graphical device at each refresh interval as a side effect.
 #'
 #' @details This function polls the OANDA fxTrade API for the latest live prices
 #'     and updates the plot in the graphical device at each refresh interval.
 #'     Use the 'Esc' key to stop updating.
+#'
+#'     To access the underlying data, assign the function to an object, for
+#'     example: \code{cloud <- oanda_chart("USD_JPY")}.
 #'
 #'     For further details please refer to the OANDA fxTrade API vignette by
 #'     running: \code{vignette("xoanda", package = "ichimoku")}.
 #'
 #' @examples
 #' \dontrun{
-#' # OANDA fxTrade API key required to run this example
+#' # OANDA fxTrade API key required to run these examples
 #' oanda_chart("USD_JPY")
 #' oanda_chart("EUR_JPY", granularity = "H1", refresh = 3, count = 300, price = "B", theme = "mono")
+#'
+#' # Save data underlying chart at time of function exit
+#' cloud <- oanda_chart("USD_JPY")
 #' }
 #'
 #' @export
@@ -397,6 +404,7 @@ oanda_chart <- function(instrument,
   xlen <- dim(data)[1L]
 
   message("Chart updating every ", refresh, " secs in graphical device... Press 'Esc' to return")
+  on.exit(expr = return(invisible(pdata)))
   while (TRUE) {
     pdata <- ichimoku.data.frame(data, periods = periods, ...)[minlen:(xlen + p2 - 1L), ]
     subtitle <- paste(instrument, ptype, "price [",
@@ -444,7 +452,7 @@ oanda_chart <- function(instrument,
 #'
 #' @examples
 #' \dontrun{
-#' # OANDA fxTrade API key required to run this example
+#' # OANDA fxTrade API key required to run these examples
 #' oanda_studio()
 #'
 #' # To open in RStudio viewer instead of default browser

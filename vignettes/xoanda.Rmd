@@ -126,7 +126,7 @@ The arguments are identical to `oanda()` above with the addition of:
 
 The arguments 'from' and 'to' are excluded as they are not relevant in this context.
 
-```{r oandachart, eval=FALSE}
+```{r oandac, eval=FALSE}
 # For a live Palladium price chart:
 oanda_chart("XPD_USD")
 ```
@@ -135,13 +135,20 @@ If focus is not initially on the plot pane (in RStudio), please switch to it to 
 
 Note also that the periods displayed on the chart will be fewer than the 'count' specified. This is by design to ensure a full cloud is always displayed (i.e. there are no missing values for certain cloud lines at the start of the data). If using the default cloud periods, the first 77 datapoints will be excluded from the chart. Please take this into account when setting the 'count' parameter.
 
+On exit from the function, the ichimoku object underlying the chart will be returned (invisibly). This allows easy access to the data.
+
+```{r oandacs, eval=FALSE}
+# To access the data, simply assign the return value to an object:
+cloud <- oanda_chart("XPD_USD")
+```
+
 ### `oanda_studio()`
 
 Create an interactive session in an R Shiny app for working with real-time Ichimoku cloud charts. Provides a live analysis environment where parameters may be set interactively as required. The cursor infotip provides ready access to the data directly from the chart.
 
 As all parameters can be set interactively in-app, the function may simply be launched as `oanda_studio()` without specifying any arguments. Otherwise, parameters may be set beforehand in the same way as `oanda_chart()`.
 
-```{r oandastudio, eval=FALSE}
+```{r oandas, eval=FALSE}
 oanda_studio()
 ```
 ![](oanda-studio.jpg)
@@ -165,10 +172,10 @@ The list of financial instruments available for your account may be retrieved by
 
 The list below serves as a reference only and may differ from those actually available for your account type and/or country/region.
 
-```{r oandainstruments, eval=FALSE}
+```{r oandai, eval=FALSE}
 oanda_instruments()
 ```
-```{r instruments, echo=FALSE}
+```{r ins, echo=FALSE}
 print(ichimoku:::x_oanda_instruments)
 ```
 
@@ -190,6 +197,6 @@ If for any reason these become invalid or outdated, please restart your R sessio
 
 OANDA fxTrade API developer website: <https://developer.oanda.com/>.
 
-Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.1.6, <https://CRAN.R-project.org/package=ichimoku>.
+Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.1.7, <https://CRAN.R-project.org/package=ichimoku>.
 
 ---
