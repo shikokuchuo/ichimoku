@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.6.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.6.3</span>
       </span>
     </div>
 
@@ -129,7 +129,7 @@
 <p>The OANDA fxTrade API, as distinct to other OANDA data sources, is based upon its retail and professional trading offering of the same name. As such, access to the API requires an fxTrade account with OANDA and agreement to their API terms of use.</p>
 <p>Registering for a ‘demo’ or ‘practice’ account is entirely free at the time of writing and provides full access to the API. For registering an account, the following URL may be used: <a href="https://www.oanda.com/forex-trading/" class="uri">https://www.oanda.com/forex-trading/</a>.</p>
 <p>After successful registration, a link can be found on your OANDA fxTrade account profile page ‘Manage API Access’ (My Account -&gt; My Services -&gt; Manage API Access). From there, a personal access token to use with the OANDA API can be generated, as well as revoked. This access token will enable all the OANDA functions in this package.</p>
-<p>Note: this package only contains functions for retrieving available instruments and price data. It does not contain code to implement any trading capability whatsoever. Hence using your access token with this package should be safe, even for live accounts. However, the access token can be used (outside of this package) for all operations on your account including placing orders and trades. It is therefore recommended, for maximum security, that you register for a demo/practice account and use the access token for that account even if you hold an existing live account with OANDA.</p>
+<p>Note: this package only contains functions for retrieving available instruments and price data. It does not contain code to implement any trading capability whatsoever. Hence using your access token with this package should be safe, even for live accounts. However, the access token can be used (outside of this package) for all operations on your account including placing orders and trades. It is therefore recommended that you register for a demo/practice account and use the access token for that account, even if you hold an existing live account with OANDA.</p>
 </div>
 <div id="setting-your-oanda-api-key" class="section level2">
 <h2 class="hasAnchor">
@@ -379,7 +379,7 @@
 #&gt; 120    XPD_USD       Palladium    METAL
 #&gt; 121    XPT_USD        Platinum    METAL
 #&gt; 122    ZAR_JPY         ZAR/JPY CURRENCY</code></pre>
-<p>Note: the above table is saved as internal package data and used as a fallback if the instruments endpoint is offline (it can be the case that the pricing server is still online as the endpoints are different).</p>
+<p>Note: the above table is saved as internal package data and used as a fallback if the instruments endpoint is not available (it can be the case that only certain endpoints are taken offline for maintenance etc.).</p>
 </div>
 <div id="caching-implementation" class="section level2">
 <h2 class="hasAnchor">
