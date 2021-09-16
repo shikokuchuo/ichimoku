@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.6.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.7</span>
       </span>
     </div>
 
@@ -221,6 +221,10 @@
 <span class="fu"><a href="../reference/oanda_chart.html">oanda_chart</a></span><span class="op">(</span><span class="st">"XPD_USD"</span><span class="op">)</span></code></pre></div>
 <p>If focus is not initially on the plot pane (in RStudio), please switch to it to view the chart.</p>
 <p>Note also that the periods displayed on the chart will be fewer than the ‘count’ specified. This is by design to ensure a full cloud is always displayed (i.e. there are no missing values for certain cloud lines at the start of the data). If using the default cloud periods, the first 77 datapoints will be excluded from the chart. Please take this into account when setting the ‘count’ parameter.</p>
+<p>On exit from the function, the ichimoku object underlying the chart will be returned (invisibly). This allows easy access to the data.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># To access the data, simply assign the return value to an object:</span>
+<span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/oanda_chart.html">oanda_chart</a></span><span class="op">(</span><span class="st">"XPD_USD"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="oanda_studio" class="section level3">
 <h3 class="hasAnchor">
@@ -228,7 +232,7 @@
 </h3>
 <p>Create an interactive session in an R Shiny app for working with real-time Ichimoku cloud charts. Provides a live analysis environment where parameters may be set interactively as required. The cursor infotip provides ready access to the data directly from the chart.</p>
 <p>As all parameters can be set interactively in-app, the function may simply be launched as <code><a href="../reference/oanda_studio.html">oanda_studio()</a></code> without specifying any arguments. Otherwise, parameters may be set beforehand in the same way as <code><a href="../reference/oanda_chart.html">oanda_chart()</a></code>.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/oanda_studio.html">oanda_studio</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="oanda-studio.jpg"></p>
 <p>The following additional parameters can be used to customise the behaviour of the Shiny environment:</p>
@@ -254,7 +258,7 @@
 <a href="#available-instruments" class="anchor"></a>Available Instruments</h2>
 <p>The list of financial instruments available for your account may be retrieved by <code><a href="../reference/oanda_instruments.html">oanda_instruments()</a></code>. The available instruments are also automatically populated as an input in <code><a href="../reference/oanda_studio.html">oanda_studio()</a></code>.</p>
 <p>The list below serves as a reference only and may differ from those actually available for your account type and/or country/region.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/oanda_instruments.html">oanda_instruments</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>#&gt;           name     displayName     type
 #&gt; 1    AU200_AUD   Australia 200      CFD
@@ -397,7 +401,7 @@
 <a href="#references" class="anchor"></a>References</h2>
 <p>‘OANDA’ and ‘fxTrade’ are trademarks owned by OANDA Corporation, an entity unaffiliated with the ichimoku package.</p>
 <p>OANDA fxTrade API developer website: <a href="https://developer.oanda.com/" class="uri">https://developer.oanda.com/</a>.</p>
-<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.1.6, <a href="https://CRAN.R-project.org/package=ichimoku" class="uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
+<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.1.7, <a href="https://CRAN.R-project.org/package=ichimoku" class="uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
 <hr>
 </div>
   </div>
