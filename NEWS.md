@@ -1,4 +1,4 @@
-# ichimoku 1.1.7
+# ichimoku 1.1.8
 
 #### New features:
 
@@ -8,14 +8,18 @@
 * New 'custom' argument for `plot.ichimoku()` and `iplot()` to enable custom data variable to be shown beneath the ichimoku cloud chart as either a line or bar chart.
 * `oanda_studio()` adds a button for saving the underlying data of the live ichimoku cloud chart using `archive()`.
 * `oanda_chart()` now returns the underlying ichimoku object (invisibly) on exiting the function, providing easy access to the data.
+* New `oanda_switch()` function allows the default OANDA server to be switched from 'practice' to 'live' for the rest of the session.
+* `oanda_set_key()` adds support for storing both practice and live account API keys.
+* `oanda_get_key()` automatically retrieves the practice or live account API key depending on the default set.
 
 #### Updates:
 
-* Adds fallback for `oanda_instruments()` using an internal saved instruments table when the API endpoint is unavailable.
+* Adds fallback for `oanda_instruments()` using an internal instruments table when the API call fails.
 * Fixes certain cases where calculation of the future cloud could fail for data frequency lower than daily.
 * Updates to `sample_ohlc_data` to add volume column, adhere to working days etc.
 * Argument 'message' renamed to 'subtitle' across all plot functions for clarity.
 * New sub-plot functionality adds 'gridExtra' package dependency.
+* 'rlang' package dependency retired as no longer required.
 * Minor performance improvements for `ichimoku()`, plot functions, OANDA functions and various utilities.
 * Documentation refresh.
 

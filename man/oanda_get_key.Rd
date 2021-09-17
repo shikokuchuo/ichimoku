@@ -8,8 +8,8 @@ oanda_get_key()
 }
 \value{
 Returned invisibly, a character string representing the key stored
-    in the default keyring under the service name 'OANDA_API_KEY' if present,
-    otherwise the key supplied by the user interactively.
+    in the default keyring for the default account type (practice or live) if
+    present, otherwise the key supplied by the user interactively.
 }
 \description{
 Return OANDA fxTrade API key (personal access token) saved in the system

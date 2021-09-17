@@ -4,7 +4,7 @@
 \alias{oanda_stream}
 \title{OANDA Streaming Data}
 \usage{
-oanda_stream(instrument, server = c("practice", "live"), apikey)
+oanda_stream(instrument, server, apikey)
 }
 \arguments{
 \item{instrument}{string containing the base currency and quote currency
@@ -12,8 +12,10 @@ delimited by a '_' (for example "USD_JPY"). Use the
 \code{\link{oanda_instruments}} function to return a list of all valid
 instruments.}
 
-\item{server}{[default "practice"] select either the "practice" or "live" server
-depending on the account type held with OANDA.}
+\item{server}{(optional) Specify the "practice" or "live" server according to
+the account type held with OANDA. If not specified, will initially default
+to "practice" To change the default server for the rest of the session,
+use \code{\link{oanda_switch}}.}
 
 \item{apikey}{(optional) string containing the OANDA fxTrade API key (personal
 access token), or function that returns this string. Does not need to be

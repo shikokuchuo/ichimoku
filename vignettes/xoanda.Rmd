@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 
 ## About OANDA fxTrade
 
-ichimoku contains an interface, or binding, to the OANDA fxTrade API.
+ichimoku contains an interface, or binding for the R language, to the OANDA fxTrade API.
 
 OANDA is a primary source of foreign exchange data used by corporations and governments around the world. The API can be used for retrieving historical and live streaming price data for major currencies, metals, commodities, government bonds and stock indices.
 
@@ -36,13 +36,25 @@ Registering for a 'demo' or 'practice' account is entirely free at the time of w
 
 After successful registration, a link can be found on your OANDA fxTrade account profile page 'Manage API Access' (My Account -> My Services -> Manage API Access). From there, a personal access token to use with the OANDA API can be generated, as well as revoked. This access token will enable all the OANDA functions in this package.
 
-Note: this package only contains functions for retrieving available instruments and price data. It does not contain code to implement any trading capability whatsoever. Hence using your access token with this package should be safe, even for live accounts. However, the access token can be used (outside of this package) for all operations on your account including placing orders and trades. It is therefore recommended that you register for a demo/practice account and use the access token for that account, even if you hold an existing live account with OANDA.
-
 ## Setting your OANDA API Key
 
 If the 'keyring' package is available on your machine, the OANDA API key (personal access token) can be set once and saved in your system credential store by using `oanda_set_key()`. This will enable it to be retrieved automatically for all subsequent sessions.
 
+Separate keys can be set for practice and live accounts; please choose the correct account type when prompted.
+
 If an access token is revoked and re-generated, please remember to set the API key again through the `oanda_set_key()` function.
+
+## Using a Live Account
+
+If you are using an access token for a live (real money) account, you will want to call `oanda_switch()` at the beginning of each session; this switches the default server from 'practice' to 'live'. Settings will persist only until the end of the session.
+
+```{r oandaswitch}
+# Re-load the package to clear cached account variables before calling oanda_switch()
+library(ichimoku)
+oanda_switch()
+```
+
+Note: this package only contains functions for retrieving available instruments and price data. It does not contain code to implement any trading capability whatsoever. However, a personal access token can be used (outside of this package) for all operations on your account including placing orders and trades. Please be aware of this and take the appropriate care when using your access token.
 
 ## The OANDA Functions
 
@@ -60,13 +72,12 @@ The arguments to the function are phrased identically to that of the API itself 
 - `from` (optional) the start of the time range for which to fetch price data, for example "2020-02-01"
 - `to` (optional) the end of the time range for which to fetch price data, for example "2020-06-30"
 - `price` [default "M"] the pricing component, one of "M" (midpoint), "B" (bid) or "A" (ask)
-- `server` [default "practice"] select either the "practice" or "live" server depending on the account type held with OANDA
+- `server` (optional) Specify the "practice" or "live" server according to the account type held with OANDA. If not specified, will initially default to "practice". To change the default server for the rest of the session, use `oanda_switch()`.
 - `apikey` (optional) string containing the OANDA fxTrade API key (personal access token). This argument is designed for specifying a function that returns such a string rather than the string itself, which could be potentially unsecure. This allows other packages that provide secure storage of secrets to be used if preferred over 'keyring'
 
 Note: if both `from` and `to` are specified and the request would result in over 5000 periods being returned, the function automatically prompts the user to confirm if multiple requests should be submitted. Unless the user response is "n" or "no", the data will proceed to be downloaded with rate limiting in place as per API best practices, and merged together into a single dataframe.
 
 ```{r oanda, eval=FALSE}
-library(ichimoku)
 oanda("USD_JPY", count = 3, from = "2010-11-01", price = "B")
 ```
 ```{r oanda2, echo=FALSE}
@@ -179,17 +190,17 @@ oanda_instruments()
 print(ichimoku:::x_oanda_instruments)
 ```
 
-Note: the above table is saved as internal package data and used as a fallback if the instruments endpoint is not available (it can be the case that only certain endpoints are taken offline for maintenance etc.).
+Note: the above table is saved as internal package data and used as a fallback if the API call fails. In such a case, a warning is issued once per session as subsequent calls will return the cached list.
 
 ## Caching Implementation
 
-The package retrieves the following once only during a single R session (the first time they are used) and caches the variables for further use throughout the session:
+The package retrieves the following once only during a single session (the first time they are used) and caches the variables for further use throughout the session:
 
 - OANDA fxTrade API key
 - OANDA fxTrade account associated with an fxTrade API key
 - OANDA list of available instruments
 
-If for any reason these become invalid or outdated, please restart your R session to enable these variables to be refreshed.
+If for any reason these become invalid or outdated, please re-load the package or else restart your R session to enable these variables to be refreshed.
 
 ## References
 
@@ -197,6 +208,6 @@ If for any reason these become invalid or outdated, please restart your R sessio
 
 OANDA fxTrade API developer website: <https://developer.oanda.com/>.
 
-Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.1.7, <https://CRAN.R-project.org/package=ichimoku>.
+Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.1.8, <https://CRAN.R-project.org/package=ichimoku>.
 
 ---

@@ -12,7 +12,7 @@ oanda_studio(
   count = 300,
   price = c("M", "B", "A"),
   theme = c("original", "dark", "solarized", "mono"),
-  server = c("practice", "live"),
+  server,
   apikey,
   ...,
   launch.browser = TRUE,
@@ -41,8 +41,10 @@ or "A" (ask).}
 \item{theme}{[default 'original'] chart theme with alternative choices of
 'dark', 'solarized' or 'mono'.}
 
-\item{server}{[default "practice"] select either the "practice" or "live" server
-depending on the account type held with OANDA.}
+\item{server}{(optional) Specify the "practice" or "live" server according to
+the account type held with OANDA. If not specified, will initially default
+to "practice" To change the default server for the rest of the session,
+use \code{\link{oanda_switch}}.}
 
 \item{apikey}{(optional) string containing the OANDA fxTrade API key (personal
 access token), or function that returns this string. Does not need to be

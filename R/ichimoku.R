@@ -199,8 +199,7 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
   if (is.numeric(periods) && length(periods) == 3L && all(periods >= 1)) {
     periods <- as.integer(periods)
   } else {
-    warning("Specified cloud periods invalid - falling back to defaults c(9L, 26L, 52L)",
-            call. = FALSE)
+    warning("Specified cloud periods invalid - falling back to defaults c(9L, 26L, 52L)", call. = FALSE)
     periods <- c(9L, 26L, 52L)
   }
   p1 <- periods[1L]
@@ -293,18 +292,16 @@ ichimoku.default <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, ..
 
   if (!is.character(x)) stop("cannot create an ichimoku object from a '",
                              class(x)[1L], "' object", call. = FALSE)
-
   if (!exists(x)) stop("object '", x, "' not found", call. = FALSE)
-
   object <- get(x)
-  if (identical(x, object)) stop("cannot create an ichimoku object from a 'character' object",
-                                 call. = FALSE)
+  if (identical(x, object)) stop("cannot create an ichimoku object from a 'character' object", call. = FALSE)
 
   if (missing(ticker)) {
     ichimoku(object, ticker = x, periods = periods, keep.data = keep.data, ...)
   } else {
     ichimoku(object, ticker = ticker, periods = periods, keep.data = keep.data, ...)
   }
+
 }
 
 #' Print Ichimoku Objects

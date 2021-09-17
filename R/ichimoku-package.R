@@ -56,22 +56,21 @@
 #'     unaffiliated with the ichimoku package.
 #'
 #'     Gao, C. (2021), \emph{ichimoku: Visualization and Tools for Ichimoku
-#'     Kinko Hyo Strategies}. R package version 1.1.7,
+#'     Kinko Hyo Strategies}. R package version 1.1.8,
 #'     \url{https://CRAN.R-project.org/package=ichimoku}.
 #'
 #' @useDynLib ichimoku, .registration = TRUE
-#' @importFrom stats na.omit setNames
-#' @importFrom xts xts endpoints
-#' @importFrom zoo index coredata
+#' @importFrom curl curl_fetch_memory curl_fetch_stream new_handle
+#'     handle_setheaders
 #' @importFrom ggplot2 autoplot ggplot aes geom_ribbon geom_line geom_segment
 #'     geom_rect scale_color_manual scale_fill_manual guides scale_x_datetime
 #'     scale_x_continuous scale_y_continuous labs theme_grey theme rel margin
 #'     element_rect element_line element_text element_blank %+replace%
 #' @importFrom gridExtra grid.arrange
-#' @importFrom rlang .data
-#' @importFrom curl curl_fetch_memory curl_fetch_stream new_handle
-#'     handle_setheaders
 #' @importFrom jsonlite parse_json
+#' @importFrom stats na.omit setNames
+#' @importFrom xts xts endpoints
+#' @importFrom zoo index coredata
 #'
 #' @docType package
 #' @name ichimoku-package
@@ -86,10 +85,13 @@ zoo::coredata
 #' @export
 xts::xts
 
+utils::globalVariables(".data")
+
 .onLoad <- function(libname, pkgname) {
   oanda_get_key <<- oanda_get_key()
   oandaAccount <<- oandaAccount()
   oanda_instruments <<- oanda_instruments()
+  Sys.setenv(OANDA_ACTYPE = "practice")
   invisible()
 }
 

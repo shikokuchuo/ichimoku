@@ -4,11 +4,13 @@
 \alias{oanda_instruments}
 \title{List Available OANDA Instruments}
 \usage{
-oanda_instruments(server = c("practice", "live"), apikey)
+oanda_instruments(server, apikey)
 }
 \arguments{
-\item{server}{[default "practice"] select either the "practice" or "live" server
-depending on the account type held with OANDA.}
+\item{server}{(optional) Specify the "practice" or "live" server according to
+the account type held with OANDA. If not specified, will initially default
+to "practice" To change the default server for the rest of the session,
+use \code{\link{oanda_switch}}.}
 
 \item{apikey}{(optional) string containing the OANDA fxTrade API key (personal
 access token), or function that returns this string. Does not need to be
@@ -16,7 +18,7 @@ specified if already stored by oanda_set_key(). Can also be entered
 interactively if not specified.}
 }
 \value{
-A data.frame containing the instrument name, type, and full display name.
+A data.frame containing the instrument name, full display name, and type.
 }
 \description{
 Return list of instruments including major currencies, metals, commodities,

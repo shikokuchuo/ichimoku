@@ -16,10 +16,11 @@ test_that("ichimoku object specification correct", {
 })
 
 test_that("ichimoku methods correct", {
+  expect_identical(cloud, ichimoku(cloud))
   expect_identical(cloud, ichimoku(xtsobject, ticker = "TKR"))
   expect_identical(cloud, ichimoku(mobject, ticker = "TKR"))
   expect_identical(cloud, ichimoku(charobject, ticker = "TKR"))
-  expect_identical(cloud, ichimoku(cloud))
+  expect_identical(ichimoku(sample_ohlc_data), ichimoku(charobject))
 })
 
 test_that("ichimoku handles higher frequency data", {

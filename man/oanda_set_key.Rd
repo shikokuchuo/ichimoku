@@ -7,16 +7,20 @@
 oanda_set_key()
 }
 \value{
-A key is set in the default keyring under the service name 'OANDA_API_KEY'.
+Invisible NULL. A key is set in the default keyring under the service
+    name 'OANDA_API_KEY' for practice accounts or 'OANDA_LIVE_KEY' for live
+    accounts.
 }
 \description{
 Save OANDA fxTrade API key (personal access token) to the system credential
     store.
 }
 \details{
-The key is read interactively.
+The key is read interactively. Different keys can be set for practice
+    and live accounts; enter 1 when prompted to set a practice account key or
+    2 to set a live account key.
 
-    This function only needs to be run once to set the key, it does not need
+    This function only needs to be run once to set the key; it does not need
     to be run each session.
 
     This function has a dependency on the 'keyring' package.

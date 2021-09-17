@@ -8,3 +8,8 @@ test_that("oanda functions error handling ok", {
   expect_error(oanda_stream(), regexp = "must be specified")
   expect_error(oanda_chart(), regexp = "must be specified")
 })
+
+test_that("oanda switch ok", {
+  expect_message(expect_invisible(oanda_switch()), regexp = "switched to 'live'")
+  expect_message(expect_invisible(oanda_switch()), regexp = "switched to 'practice'")
+})
