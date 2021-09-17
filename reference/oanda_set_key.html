@@ -83,7 +83,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.8</span>
       </span>
     </div>
 
@@ -164,11 +164,15 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A key is set in the default keyring under the service name 'OANDA_API_KEY'.</p>
+    <p>Invisible NULL. A key is set in the default keyring under the service
+    name 'OANDA_API_KEY' for practice accounts or 'OANDA_LIVE_KEY' for live
+    accounts.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The key is read interactively.</p>
-<p>This function only needs to be run once to set the key, it does not need
+    <p>The key is read interactively. Different keys can be set for practice
+    and live accounts; enter 1 when prompted to set a practice account key or
+    2 to set a live account key.</p>
+<p>This function only needs to be run once to set the key; it does not need
     to be run each session.</p>
 <p>This function has a dependency on the 'keyring' package.</p>
 <p>For further details please refer to the OANDA fxTrade API vignette by

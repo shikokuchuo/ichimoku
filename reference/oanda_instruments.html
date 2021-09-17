@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.8</span>
       </span>
     </div>
 
@@ -161,15 +161,17 @@
     from the OANDA fxTrade API.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>oanda_instruments</span><span class='op'>(</span>server <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"practice"</span>, <span class='st'>"live"</span><span class='op'>)</span>, <span class='va'>apikey</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>oanda_instruments</span><span class='op'>(</span><span class='va'>server</span>, <span class='va'>apikey</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>server</th>
-      <td><p>[default "practice"] select either the "practice" or "live" server
-depending on the account type held with OANDA.</p></td>
+      <td><p>(optional) Specify the "practice" or "live" server according to
+the account type held with OANDA. If not specified, will initially default
+to "practice" To change the default server for the rest of the session,
+use <code><a href='oanda_switch.html'>oanda_switch</a></code>.</p></td>
     </tr>
     <tr>
       <th>apikey</th>
@@ -182,7 +184,7 @@ interactively if not specified.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data.frame containing the instrument name, type, and full display name.</p>
+    <p>A data.frame containing the instrument name, full display name, and type.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>This function returns a data.frame listing the instrument names

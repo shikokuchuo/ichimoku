@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.8</span>
       </span>
     </div>
 
@@ -171,7 +171,7 @@
   count <span class='op'>=</span> <span class='fl'>300</span>,
   price <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"M"</span>, <span class='st'>"B"</span>, <span class='st'>"A"</span><span class='op'>)</span>,
   theme <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"original"</span>, <span class='st'>"dark"</span>, <span class='st'>"solarized"</span>, <span class='st'>"mono"</span><span class='op'>)</span>,
-  server <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"practice"</span>, <span class='st'>"live"</span><span class='op'>)</span>,
+  <span class='va'>server</span>,
   <span class='va'>apikey</span>,
   <span class='va'>...</span>,
   launch.browser <span class='op'>=</span> <span class='cn'>TRUE</span>,
@@ -216,8 +216,10 @@ or "A" (ask).</p></td>
     </tr>
     <tr>
       <th>server</th>
-      <td><p>[default "practice"] select either the "practice" or "live" server
-depending on the account type held with OANDA.</p></td>
+      <td><p>(optional) Specify the "practice" or "live" server according to
+the account type held with OANDA. If not specified, will initially default
+to "practice" To change the default server for the rest of the session,
+use <code><a href='oanda_switch.html'>oanda_switch</a></code>.</p></td>
     </tr>
     <tr>
       <th>apikey</th>

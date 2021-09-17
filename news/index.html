@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.8</span>
       </span>
     </div>
 
@@ -151,9 +151,9 @@
       <small>Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="ichimoku-117" class="section level1">
-<h1 class="page-header" data-toc-text="1.1.7">
-<a href="#ichimoku-117" class="anchor"></a>ichimoku 1.1.7<small> Unreleased </small>
+    <div id="ichimoku-118" class="section level1">
+<h1 class="page-header" data-toc-text="1.1.8">
+<a href="#ichimoku-118" class="anchor"></a>ichimoku 1.1.8<small> Unreleased </small>
 </h1>
 <div id="new-features" class="section level4">
 <h4 class="hasAnchor">
@@ -168,17 +168,23 @@
 <code><a href="../reference/oanda_studio.html">oanda_studio()</a></code> adds a button for saving the underlying data of the live ichimoku cloud chart using <code><a href="../reference/archive.html">archive()</a></code>.</li>
 <li>
 <code><a href="../reference/oanda_chart.html">oanda_chart()</a></code> now returns the underlying ichimoku object (invisibly) on exiting the function, providing easy access to the data.</li>
+<li>New <code><a href="../reference/oanda_switch.html">oanda_switch()</a></code> function allows the default OANDA server to be switched from ‘practice’ to ‘live’ for the rest of the session.</li>
+<li>
+<code><a href="../reference/oanda_set_key.html">oanda_set_key()</a></code> adds support for storing both practice and live account API keys.</li>
+<li>
+<code><a href="../reference/oanda_get_key.html">oanda_get_key()</a></code> automatically retrieves the practice or live account API key depending on the default set.</li>
 </ul>
 </div>
 <div id="updates" class="section level4">
 <h4 class="hasAnchor">
 <a href="#updates" class="anchor"></a>Updates:</h4>
 <ul>
-<li>Adds fallback for <code><a href="../reference/oanda_instruments.html">oanda_instruments()</a></code> using an internal saved instruments table when the API endpoint is unavailable.</li>
+<li>Adds fallback for <code><a href="../reference/oanda_instruments.html">oanda_instruments()</a></code> using an internal instruments table when the API call fails.</li>
 <li>Fixes certain cases where calculation of the future cloud could fail for data frequency lower than daily.</li>
 <li>Updates to <code>sample_ohlc_data</code> to add volume column, adhere to working days etc.</li>
 <li>Argument ‘message’ renamed to ‘subtitle’ across all plot functions for clarity.</li>
 <li>New sub-plot functionality adds ‘gridExtra’ package dependency.</li>
+<li>‘rlang’ package dependency retired as no longer required.</li>
 <li>Minor performance improvements for <code><a href="../reference/ichimoku.html">ichimoku()</a></code>, plot functions, OANDA functions and various utilities.</li>
 <li>Documentation refresh.</li>
 </ul>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>autoplot.ichimoku — autoplot • ichimoku</title>
+<title>Switch Default OANDA Server — oanda_switch • ichimoku</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,8 +48,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="autoplot.ichimoku — autoplot" />
-<meta property="og:description" content="Plot Ichimoku Kinko Hyo cloud charts from ichimoku objects." />
+<meta property="og:title" content="Switch Default OANDA Server — oanda_switch" />
+<meta property="og:description" content="Switch the default OANDA fxTrade server from 'practice' to 'live' or vice versa." />
 <meta property="og:image" content="https://shikokuchuo.net/ichimoku/logo.png" />
 
 
@@ -148,82 +148,35 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>autoplot.ichimoku</h1>
-    <small class="dont-index">Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/R/plot.R'><code>R/plot.R</code></a></small>
-    <div class="hidden name"><code>autoplot.ichimoku.Rd</code></div>
+    <h1>Switch Default OANDA Server</h1>
+    <small class="dont-index">Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/R/switch.R'><code>R/switch.R</code></a></small>
+    <div class="hidden name"><code>oanda_switch.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Plot Ichimoku Kinko Hyo cloud charts from ichimoku objects.</p>
+    <p>Switch the default OANDA fxTrade server from 'practice' to 'live' or vice versa.</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for ichimoku</span>
-<span class='fu'>autoplot</span><span class='op'>(</span>
-  <span class='va'>object</span>,
-  <span class='va'>window</span>,
-  <span class='va'>ticker</span>,
-  <span class='va'>subtitle</span>,
-  theme <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"original"</span>, <span class='st'>"dark"</span>, <span class='st'>"solarized"</span>, <span class='st'>"mono"</span><span class='op'>)</span>,
-  strat <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>oanda_switch</span><span class='op'>(</span><span class='op'>)</span></pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>object</th>
-      <td><p>an object of class 'ichimoku'.</p></td>
-    </tr>
-    <tr>
-      <th>window</th>
-      <td><p>(optional) a date-time window to subset the plot, in ISO-8601
-compatible range strings of the format used for 'xts' objects, for example
-"2020-02-15/2020-08-15" or "2020-02-15/", "/2020-08" or "2020-07".</p></td>
-    </tr>
-    <tr>
-      <th>ticker</th>
-      <td><p>(optional) specify a ticker (or other text) to include in the
-chart heading. If not set, the ticker saved within the ichimoku object
-will be used.</p></td>
-    </tr>
-    <tr>
-      <th>subtitle</th>
-      <td><p>(optional) specify a subtitle to display under the chart title.</p></td>
-    </tr>
-    <tr>
-      <th>theme</th>
-      <td><p>[default 'original'] with alternative choices of 'dark',
-'solarized' or 'mono'.</p></td>
-    </tr>
-    <tr>
-      <th>strat</th>
-      <td><p>[default TRUE] if the ichimoku object contains a strategy, the
-periods for which the strategy results in a position will be shaded, and
-the strategy printed as the chart subtitle (if not otherwise specified).
-Set to FALSE to turn off this behaviour.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>other arguments not used by this method.</p></td>
-    </tr>
-    </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns a ggplot2 object with S3 classes 'gg' and 'ggplot'.</p>
+    <p>Invisible NULL. A message informs the resulting default server setting.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function is an S3 method for the generic function autoplot()
-    for class 'ichimoku'. It can be invoked by calling autoplot(x) on an
-    object 'x' of class 'ichimoku'.</p>
-    <h2 class="hasAnchor" id="further-details"><a class="anchor" href="#further-details"></a>Further Details</h2>
+    <p>This function is designed to be run once at the start of each session
+    if using a live account.</p>
+<p>Re-load the package using <code><a href='https://shikokuchuo.net/ichimoku/'>library(ichimoku)</a></code> before calling
+    <code>oanda_switch()</code> to clear cached account variables if necessary.</p>
+<p>For further details please refer to the OANDA fxTrade API vignette by
+    running: <code><a href='../articles/xoanda.html'>vignette("xoanda", package = "ichimoku")</a></code>.</p>
 
-    
-
-<p>Please refer to the reference vignette by running:
-    <code><a href='../articles/reference.html'>vignette("reference", package = "ichimoku")</a></code></p>
-
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>oanda_switch</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Default OANDA server switched to 'live'</span></div><div class='input'><span class='fu'>oanda_switch</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Default OANDA server switched to 'practice'</span></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
