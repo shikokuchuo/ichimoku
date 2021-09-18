@@ -13,8 +13,7 @@
 #'
 #' @return For read operations: the object originally archived.
 #'
-#'     For write operations: invisible NULL. 'object' is written to 'file' as a
-#'     side effect.
+#'     For write operations: invisible NULL. 'object' is written to 'file'.
 #'
 #' @details For read operations: specify only 'file'. 'file' is read and the
 #'     return value may be assigned to an object. A confirmation message is
@@ -97,7 +96,7 @@ archive <- function(..., object, file) {
 #' @param file the name of the file or a connection where the object is saved to
 #'     or read from.
 #'
-#' @return Invisible NULL. 'object' is written to 'file' as a side effect.
+#' @return Invisible NULL. 'object' is written to 'file'.
 #'
 #' @noRd
 #'

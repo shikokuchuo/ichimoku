@@ -12,10 +12,9 @@ delimited by a '_' (for example "USD_JPY"). Use the
 \code{\link{oanda_instruments}} function to return a list of all valid
 instruments.}
 
-\item{server}{(optional) Specify the "practice" or "live" server according to
-the account type held with OANDA. If not specified, will initially default
-to "practice" To change the default server for the rest of the session,
-use \code{\link{oanda_switch}}.}
+\item{server}{(optional) specify the "practice" or "live" server according to
+the account type held. If not specified, will default to "practice", unless
+this has been changed by \code{\link{oanda_switch}}.}
 
 \item{apikey}{(optional) string containing the OANDA fxTrade API key (personal
 access token), or function that returns this string. Does not need to be
@@ -24,7 +23,7 @@ interactively if not specified.}
 }
 \value{
 Returns invisible NULL on function exit. The streaming data is output
-    to the console as a side effect.
+    as text to the console.
 }
 \description{
 Stream live price and liquidity data for major currencies, metals,

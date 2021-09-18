@@ -46,15 +46,15 @@ If an access token is revoked and re-generated, please remember to set the API k
 
 ## Using a Live Account
 
-If you are using an access token for a live (real money) account, you will want to call `oanda_switch()` at the beginning of each session; this switches the default server from 'practice' to 'live'. Settings will persist only until the end of the session.
+If you are using an access token for a live (real money) account, you will want to call `oanda_switch()` at the beginning of each session; this switches the default server from the practice server to the live server. Settings will persist only until the end of the session.
 
 ```{r oandaswitch}
-# Re-load the package to clear cached account variables before calling oanda_switch()
 library(ichimoku)
+
 oanda_switch()
 ```
 
-Note: this package only contains functions for retrieving available instruments and price data. It does not contain code to implement any trading capability whatsoever. However, a personal access token can be used (outside of this package) for all operations on your account including placing orders and trades. Please be aware of this and take the appropriate care when using your access token.
+Note: this package only contains functions for retrieving available instruments and price data. It does not contain code to implement any trading capability whatsoever. However, a personal access token can be used (outside of this package) for all operations on your account including placing orders and trades. Please be aware of this and take the appropriate precautions when using your access token.
 
 ## The OANDA Functions
 
@@ -142,11 +142,11 @@ The arguments 'from' and 'to' are excluded as they are not relevant in this cont
 oanda_chart("XPD_USD")
 ```
 
-If focus is not initially on the plot pane (in RStudio), please switch to it to view the chart.
+If using RStudio, please switch to the plots plane (if not already in focus) to view the chart.
 
-Note also that the periods displayed on the chart will be fewer than the 'count' specified. This is by design to ensure a full cloud is always displayed (i.e. there are no missing values for certain cloud lines at the start of the data). If using the default cloud periods, the first 77 datapoints will be excluded from the chart. Please take this into account when setting the 'count' parameter.
+Note that the periods displayed on the chart will be fewer than the 'count' specified - using default cloud periods, the first 77 datapoints will be excluded. This is by design to ensure a full cloud is displayed (i.e. there are no missing values for any cloud lines at the start of the data). Please take this into account when setting the 'count' parameter.
 
-On exit from the function, the ichimoku object underlying the chart will be returned (invisibly). This allows easy access to the data.
+On exit from the function, the ichimoku object underlying the chart will be returned (invisibly). This allows the data to be saved simply by assigning to an object.
 
 ```{r oandacs, eval=FALSE}
 # To access the data, simply assign the return value to an object:
@@ -157,7 +157,7 @@ cloud <- oanda_chart("XPD_USD")
 
 Create an interactive session in an R Shiny app for working with real-time Ichimoku cloud charts. Provides a live analysis environment where parameters may be set interactively as required. The cursor infotip provides ready access to the data directly from the chart.
 
-As all parameters can be set interactively in-app, the function may simply be launched as `oanda_studio()` without specifying any arguments. Otherwise, parameters may be set beforehand in the same way as `oanda_chart()`.
+As all parameters can be set interactively in-app, `oanda_studio()` may be called without specifying any arguments. Otherwise, parameters may be set beforehand in the same way as `oanda_chart()`.
 
 ```{r oandas, eval=FALSE}
 oanda_studio()
@@ -173,9 +173,9 @@ The following additional parameters can be used to customise the behaviour of th
 
 The ichimoku object underlying the live cloud chart can be saved by selecting the Data Archive button. 
 
-This button uses `archive()` to save the ichimoku object to disk. The filename will be of the form: `instrument_granularity_price.rda`, e.g. `USD_JPY_H4_M.rda`. If confirmed, the file is saved to the browser's default download location.
+This button uses `archive()` to save the ichimoku object to disk. The filename will be of the form: `instrument_granularity_price.rda`, e.g. `SUGAR_USD_D_A.rda`. If confirmed, the file is saved to the browser's default download location.
 
-To read back the file, use `archive()` supplying the quoted file path / name, for example: `archive("~/Downloads/USD_JPY_H4_M.rda")`.
+To read back the file, use `archive()` supplying the quoted file path / name, for example: `archive("~/Downloads/SUGAR_USD_D_A.rda")`.
 
 ## Available Instruments
 
@@ -200,7 +200,7 @@ The package retrieves the following once only during a single session (the first
 - OANDA fxTrade account associated with an fxTrade API key
 - OANDA list of available instruments
 
-If for any reason these become invalid or outdated, please re-load the package or else restart your R session to enable these variables to be refreshed.
+If for any reason these become invalid or outdated, please re-load the package (or restart your R session) to enable these variables to be refreshed.
 
 ## References
 
@@ -208,6 +208,6 @@ If for any reason these become invalid or outdated, please re-load the package o
 
 OANDA fxTrade API developer website: <https://developer.oanda.com/>.
 
-Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.1.8, <https://CRAN.R-project.org/package=ichimoku>.
+Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.1.9, <https://CRAN.R-project.org/package=ichimoku>.
 
 ---

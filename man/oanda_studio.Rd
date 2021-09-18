@@ -41,10 +41,9 @@ or "A" (ask).}
 \item{theme}{[default 'original'] chart theme with alternative choices of
 'dark', 'solarized' or 'mono'.}
 
-\item{server}{(optional) Specify the "practice" or "live" server according to
-the account type held with OANDA. If not specified, will initially default
-to "practice" To change the default server for the rest of the session,
-use \code{\link{oanda_switch}}.}
+\item{server}{(optional) specify the "practice" or "live" server according to
+the account type held. If not specified, will default to "practice", unless
+this has been changed by \code{\link{oanda_switch}}.}
 
 \item{apikey}{(optional) string containing the OANDA fxTrade API key (personal
 access token), or function that returns this string. Does not need to be
@@ -67,7 +66,8 @@ as using other values would be invalid in the context of traditional
 ichimoku analysis.}
 }
 \value{
-Returns a Shiny app object with class 'shiny.appobj'.
+A Shiny app object with class 'shiny.appobj'. With default arguments,
+    this Shiny app is launched in the default browser.
 }
 \description{
 Interactive and fully-customisable R Shiny environment providing real-time

@@ -22,7 +22,7 @@
  */
 
 #include <deque>
-#include <cpp11.hpp>
+#include "cpp11/doubles.hpp"
 
 [[cpp11::register]]
 cpp11::doubles maxOver(const cpp11::doubles& x, int window) {

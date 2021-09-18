@@ -39,7 +39,7 @@ Set to FALSE to turn off this behaviour.}
 \item{...}{other arguments not used by this method.}
 }
 \value{
-Returns a ggplot2 object with S3 classes 'gg' and 'ggplot'.
+A ggplot2 object with S3 classes 'gg' and 'ggplot'.
 }
 \description{
 Plot Ichimoku Kinko Hyo cloud charts from ichimoku objects.

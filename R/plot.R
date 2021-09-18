@@ -28,8 +28,8 @@
 #' @param ... additional arguments passed along to the print method for 'ggplot'
 #'     objects when \code{type = 'none'}.
 #'
-#' @return Returns the ichimoku object supplied (invisibly). The requested plot
-#'     is output to the graphical device as a side effect.
+#' @return The ichimoku object supplied (invisibly). The requested plot is output
+#'     to the graphical device.
 #'
 #' @details This function is an S3 method for the generic function plot() for
 #'     class 'ichimoku'. It can be invoked by calling plot(x) on an object 'x'
@@ -92,7 +92,7 @@ NULL
 #' @param object an object of class 'ichimoku'.
 #' @param ... other arguments not used by this method.
 #'
-#' @return Returns a ggplot2 object with S3 classes 'gg' and 'ggplot'.
+#' @return A ggplot2 object with S3 classes 'gg' and 'ggplot'.
 #'
 #' @details This function is an S3 method for the generic function autoplot()
 #'     for class 'ichimoku'. It can be invoked by calling autoplot(x) on an
@@ -167,9 +167,9 @@ autoplot.ichimoku <- function(object,
 #' @inheritParams autoplot.ichimoku
 #' @inheritParams plot.ichimoku
 #'
-#' @return Returns a gtable object with S3 classes 'gtable', 'gTree', 'grob' and
-#'     'gDesc', or else a ggplot2 object with S3 classes 'gg' and 'ggplot' when
-#'     falling back to a standard plot.
+#' @return A gtable object with S3 classes 'gtable', 'gTree', 'grob' and 'gDesc',
+#'     or else a ggplot2 object with S3 classes 'gg' and 'ggplot' when falling
+#'     back to a standard plot.
 #'
 #' @details The oscillator choices are between 'R-type', which is a modified form
 #'     of a relative strength index (RSI), and 'S-type', which is a modified form
@@ -247,7 +247,8 @@ extraplot <- function(object,
   } else {
 
     cols <- cnames[sel]
-    digits <- nchar(as.character(round(max(object[, sel], na.rm = TRUE))))
+    digits <- nchar(as.character(trunc(max(object[, sel], na.rm = TRUE))))
+    if (trunc(min(object[, sel], na.rm = TRUE)) < 0) digits <- digits + 0.55
     data$cd <- as.character(data$cd)
 
     layers <- list(
@@ -260,7 +261,7 @@ extraplot <- function(object,
       },
       scale_x_continuous(breaks = breaks_ichimoku(data = data, object = object),
                          labels = NULL),
-      scale_y_continuous(labels = function(x) round(x, digits = 0)),
+      scale_y_continuous(labels = function(x) trunc(x)),
       scale_color_manual(values = c("1" = pal[7L], "-1" = pal[8L], "0" = pal[9L])),
       scale_fill_manual(values = c("1" = pal[10L], "-1" = pal[11L], "0" = pal[12L])),
       labs(x = NULL, y = cols),

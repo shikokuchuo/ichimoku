@@ -17,7 +17,8 @@
 #'     the default Shiny viewer in RStudio, please specify
 #'     \code{getOption("shiny.launch.browser")}.
 #'
-#' @return Returns a Shiny app object with class 'shiny.appobj'.
+#' @return A Shiny app object with class 'shiny.appobj'. With default arguments,
+#'     this Shiny app is launched in the default browser.
 #'
 #' @details This function has a dependency on the 'shiny' package.
 #'

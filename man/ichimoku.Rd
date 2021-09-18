@@ -23,21 +23,21 @@ ichimoku(x, ...)
 }
 \arguments{
 \item{x}{a data.frame or other compatible object, which includes xts,
-data.table, tibble, and matrix formats.}
+data.table, tibble, and matrix.}
 
 \item{...}{additional arguments, for instance 'holidays', passed along to
 \code{\link{tradingDays}} for calculating the future cloud on daily data.}
 
 \item{ticker}{(optional) specify a ticker to identify the instrument,
-otherwise this is set to the name of the input object 'x'.}
+otherwise this is set to the name of the object supplied.}
 
 \item{periods}{[default c(9L, 26L, 52L)] a vector defining the length of
 periods used for the cloud. This parameter shoud not normally be modified
 as using other values would be invalid in the context of traditional
 ichimoku analysis.}
 
-\item{keep.data}{(optional) set to TRUE to preserve additional data present
-in the input object 'x' as additional columns and/or attributes.}
+\item{keep.data}{(optional) set to TRUE to retain additional data present
+in the object supplied as additional columns and/or attributes.}
 }
 \value{
 An ichimoku object is returned with S3 classes of 'ichimoku', 'xts'
@@ -118,7 +118,8 @@ Calling an ichimoku object automatically invokes its print method,
 \section{Further Details}{
 
 
-    \code{ichimoku()} requires OHLC (or else HLC) price data as input.
+    \code{ichimoku()} requires OHLC (or else HLC) price data as input to
+    calculate the cloud chart values.
 
     If only single series price data is supplied, a \emph{pseudo} OHLC series
     is generated and a \emph{pseudo} cloud chart is returned.

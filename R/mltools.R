@@ -13,10 +13,10 @@
 #'     set level to 2 to return combined strategies of the form 's1 & s2' or
 #'     level to 3 to return asymmetric strategies of the form 's1 x s2'
 #'
-#' @return A list of 'n' ichimoku objects containing strategies, with attributes
-#'     'logret', a matrix of cumulative log returns for all strategies, and 'summary',
-#'     a matrix of summaries for the top 'n' strategies. The strategy summaries
-#'     are printed to the console as a side effect.
+#' @return Returned invisibly, a list of 'n' ichimoku objects containing strategies,
+#'     with attributes 'logret', a matrix of cumulative log returns for all
+#'     strategies, and 'summary', a matrix of summaries for the top 'n' strategies.
+#'     The strategy summaries are printed to the console.
 #'
 #' @details Ichimoku objects for each strategy are returned as a list. The
 #'     cumulative log returns for all strategies as well as the summaries for
@@ -158,7 +158,7 @@ autostrat <- function(x,
 #'     feature per column with the target 'y' as the first column.
 #'
 #'     The 'y' parameter and trade direction are set as atrributes. To view these,
-#'     use the \code{\link{look}} function on the returned object.
+#'     use \code{\link{look}} on the returned object.
 #'
 #' @details The date-time index corresponds to when the indicator condition is
 #'     met at the close for that period. The return is the single-period return

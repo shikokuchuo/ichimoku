@@ -33,7 +33,7 @@ A data.frame in a 'tidy' format with one observation per row and one
     feature per column with the target 'y' as the first column.
 
     The 'y' parameter and trade direction are set as atrributes. To view these,
-    use the \code{\link{look}} function on the returned object.
+    use \code{\link{look}} on the returned object.
 }
 \description{
 Create a grid of ichimoku indicator conditions and next period returns. The

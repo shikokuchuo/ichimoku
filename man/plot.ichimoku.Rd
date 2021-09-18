@@ -50,8 +50,8 @@ settings will take precedence.}
 objects when \code{type = 'none'}.}
 }
 \value{
-Returns the ichimoku object supplied (invisibly). The requested plot
-    is output to the graphical device as a side effect.
+The ichimoku object supplied (invisibly). The requested plot is output
+    to the graphical device.
 }
 \description{
 Plot Ichimoku Kinko Hyo cloud charts from ichimoku objects.

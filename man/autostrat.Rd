@@ -18,10 +18,10 @@ set level to 2 to return combined strategies of the form 's1 & s2' or
 level to 3 to return asymmetric strategies of the form 's1 x s2'}
 }
 \value{
-A list of 'n' ichimoku objects containing strategies, with attributes
-    'logret', a matrix of cumulative log returns for all strategies, and 'summary',
-    a matrix of summaries for the top 'n' strategies. The strategy summaries
-    are printed to the console as a side effect.
+Returned invisibly, a list of 'n' ichimoku objects containing strategies,
+    with attributes 'logret', a matrix of cumulative log returns for all
+    strategies, and 'summary', a matrix of summaries for the top 'n' strategies.
+    The strategy summaries are printed to the console.
 }
 \description{
 Generate a list of the top performing ichimoku cloud strategies based on

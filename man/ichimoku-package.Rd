@@ -63,7 +63,7 @@ Sasaki, H. (1996), \emph{ichimoku kinkouhyou no kenkyuu}. Tokyo,
     unaffiliated with the ichimoku package.
 
     Gao, C. (2021), \emph{ichimoku: Visualization and Tools for Ichimoku
-    Kinko Hyo Strategies}. R package version 1.1.8,
+    Kinko Hyo Strategies}. R package version 1.1.9,
     \url{https://CRAN.R-project.org/package=ichimoku}.
 }
 \author{

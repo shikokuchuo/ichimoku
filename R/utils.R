@@ -144,9 +144,8 @@ xts_df <- function(x, keep.attrs) {
 #' @param keep.attrs (optional) if set to TRUE, will preserve any custom
 #'     attributes set on the original object.
 #'
-#' @return A 'data.frame' object. If the matrix has row names, these are retained
-#'     in the dataframe, otherwise the row names of the dataframe will be an
-#'     integer sequence.
+#' @return A 'data.frame' object. If the matrix has row names, these are
+#'     retained by the dataframe.
 #'
 #' @examples
 #' cloud <- ichimoku(sample_ohlc_data)
@@ -178,8 +177,8 @@ matrix_df <- function(x, keep.attrs) {
 #'
 #' @param ... data.frame objects to combine.
 #'
-#' @return A data.frame containing all unique entries in the objects passed is
-#'     returned.
+#' @return A data.frame containing all unique entries in the objects passed as
+#'     argument.
 #'
 #' @details Can be used to join price dataframes retrieved by \code{\link{oanda}}.
 #'     The function is designed to join complete historical data. If the data to

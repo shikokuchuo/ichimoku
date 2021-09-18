@@ -15,7 +15,9 @@ the ichimoku cloud chart.}
 \item{...}{additional arguments passed along to print and plot functions.}
 }
 \value{
-The ichimoku object 'x' passed as parameter.
+The ichimoku object supplied (invisibly). The data is printed to the
+    console. The cloud chart is also output to the graphical device depending
+    on the relevant parameter set.
 }
 \description{
 Custom print method for ichimoku objects.

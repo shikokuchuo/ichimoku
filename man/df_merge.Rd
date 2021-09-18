@@ -10,8 +10,8 @@ df_merge(...)
 \item{...}{data.frame objects to combine.}
 }
 \value{
-A data.frame containing all unique entries in the objects passed is
-    returned.
+A data.frame containing all unique entries in the objects passed as
+    argument.
 }
 \description{
 Full join on an arbitrary number of 'data.frame' objects passed as arguments,

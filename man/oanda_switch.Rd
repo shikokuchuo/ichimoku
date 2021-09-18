@@ -11,13 +11,15 @@ Invisible NULL. A message informs the resulting default server setting.
 }
 \description{
 Switch the default OANDA fxTrade server from 'practice' to 'live' or vice versa.
+    Settings persist for the current session only.
 }
 \details{
-This function is designed to be run once at the start of each session
-    if using a live account.
+The default server at the start of a new session is the practice server.
+    Call this function to switch to the live server.
 
-    Re-load the package using \code{library(ichimoku)} before calling
-    \code{oanda_switch()} to clear cached account variables if necessary.
+    This function can be used to toggle between the practice and live servers.
+    Any cached variables for API key, account or instruments list are cleared
+    each time this function is called.
 
     For further details please refer to the OANDA fxTrade API vignette by
     running: \code{vignette("xoanda", package = "ichimoku")}.

@@ -9,15 +9,15 @@
 #'     values for the cloud top and cloud base.
 #'
 #' @param x a data.frame or other compatible object, which includes xts,
-#'     data.table, tibble, and matrix formats.
+#'     data.table, tibble, and matrix.
 #' @param ticker (optional) specify a ticker to identify the instrument,
-#'     otherwise this is set to the name of the input object 'x'.
+#'     otherwise this is set to the name of the object supplied.
 #' @param periods [default c(9L, 26L, 52L)] a vector defining the length of
 #'     periods used for the cloud. This parameter shoud not normally be modified
 #'     as using other values would be invalid in the context of traditional
 #'     ichimoku analysis.
-#' @param keep.data (optional) set to TRUE to preserve additional data present
-#'     in the input object 'x' as additional columns and/or attributes.
+#' @param keep.data (optional) set to TRUE to retain additional data present
+#'     in the object supplied as additional columns and/or attributes.
 #' @param ... additional arguments, for instance 'holidays', passed along to
 #'     \code{\link{tradingDays}} for calculating the future cloud on daily data.
 
@@ -87,7 +87,8 @@
 #'
 #' @section Further Details:
 #'
-#'     \code{ichimoku()} requires OHLC (or else HLC) price data as input.
+#'     \code{ichimoku()} requires OHLC (or else HLC) price data as input to
+#'     calculate the cloud chart values.
 #'
 #'     If only single series price data is supplied, a \emph{pseudo} OHLC series
 #'     is generated and a \emph{pseudo} cloud chart is returned.
@@ -313,7 +314,9 @@ ichimoku.default <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, ..
 #'     the ichimoku cloud chart.
 #' @param ... additional arguments passed along to print and plot functions.
 #'
-#' @return The ichimoku object 'x' passed as parameter.
+#' @return The ichimoku object supplied (invisibly). The data is printed to the
+#'     console. The cloud chart is also output to the graphical device depending
+#'     on the relevant parameter set.
 #'
 #' @details This function is an S3 method for the generic function print() for
 #'     class 'ichimoku'. It can be invoked by calling print(x) on an object 'x'

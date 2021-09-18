@@ -18,8 +18,7 @@ or read from.}
 \value{
 For read operations: the object originally archived.
 
-    For write operations: invisible NULL. 'object' is written to 'file' as a
-    side effect.
+    For write operations: invisible NULL. 'object' is written to 'file'.
 }
 \description{
 Read and write objects to/from archival storage in the native RData format,

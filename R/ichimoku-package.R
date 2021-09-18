@@ -56,7 +56,7 @@
 #'     unaffiliated with the ichimoku package.
 #'
 #'     Gao, C. (2021), \emph{ichimoku: Visualization and Tools for Ichimoku
-#'     Kinko Hyo Strategies}. R package version 1.1.8,
+#'     Kinko Hyo Strategies}. R package version 1.1.9,
 #'     \url{https://CRAN.R-project.org/package=ichimoku}.
 #'
 #' @useDynLib ichimoku, .registration = TRUE
@@ -85,13 +85,10 @@ zoo::coredata
 #' @export
 xts::xts
 
-utils::globalVariables(".data")
+utils::globalVariables(c(".data", "do_oanda"))
 
 .onLoad <- function(libname, pkgname) {
-  oanda_get_key <<- oanda_get_key()
-  oandaAccount <<- oandaAccount()
-  oanda_instruments <<- oanda_instruments()
-  Sys.setenv(OANDA_ACTYPE = "practice")
+  do_oanda <<- do_oanda()
   invisible()
 }
 

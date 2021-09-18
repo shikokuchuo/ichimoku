@@ -1,25 +1,27 @@
-# ichimoku 1.1.8
+# ichimoku 1.1.9
 
 #### New features:
 
 * `ichimoku()` adds ability to create *pseudo* cloud charts from single series price data where OHLC data is not available.
-* New 'keep.data' argument for `ichimoku()` to preserve additional data present in the input object.
-* New 'type' argument for `plot.ichimoku()` and `iplot()` enables a choice of oscillator (R-type and S-type) to be shown as a sub-plot.
-* New 'custom' argument for `plot.ichimoku()` and `iplot()` to enable custom data variable to be shown beneath the ichimoku cloud chart as either a line or bar chart.
+* `ichimoku()` gains a 'keep.data' argument for retaining additional data present in the input object.
+* Plot functions gain a 'type' argument to enable a choice of oscillator (R-type and S-type) to be shown as a sub-plot.
+* Plot functions gain a 'custom' argument to enable a custom data variable to be plot as a line or bar chart in the sub-plot area.
 * `oanda_studio()` adds a button for saving the underlying data of the live ichimoku cloud chart using `archive()`.
-* `oanda_chart()` now returns the underlying ichimoku object (invisibly) on exiting the function, providing easy access to the data.
-* New `oanda_switch()` function allows the default OANDA server to be switched from 'practice' to 'live' for the rest of the session.
+* `oanda_chart()` now returns the underlying ichimoku object (invisibly) on function exit, providing easy access to the chart data.
 * `oanda_set_key()` adds support for storing both practice and live account API keys.
-* `oanda_get_key()` automatically retrieves the practice or live account API key depending on the default set.
+* New `oanda_switch()` function allows the default server to be switched from 'practice' to 'live' for the session.
 
 #### Updates:
 
 * Adds fallback for `oanda_instruments()` using an internal instruments table when the API call fails.
-* Fixes certain cases where calculation of the future cloud could fail for data frequency lower than daily.
+* For all plot functions, the argument 'message' is renamed to 'subtitle'.
 * Updates to `sample_ohlc_data` to add volume column, adhere to working days etc.
-* Argument 'message' renamed to 'subtitle' across all plot functions for clarity.
+* Fixes certain cases where calculation of the future cloud could fail for data frequency lower than daily.
+* OANDA internal functions re-implemented as encapsulated closure list.
+* `oanda_get_key()` is removed as no longer required.
 * New sub-plot functionality adds 'gridExtra' package dependency.
-* 'rlang' package dependency retired as no longer required.
+* 'rlang' package dependency is retired as no longer required.
+* Internal C++ code: now includes only required cpp11 headers, adds rolling mean function, miscellaneous improvements.
 * Minor performance improvements for `ichimoku()`, plot functions, OANDA functions and various utilities.
 * Documentation refresh.
 

@@ -144,16 +144,16 @@ autostrat(cloud, n = 3)
 
 Online versions:
 
-[ 1 ] [Cloud Charts - The Reference
+{ 1 } [Cloud Charts - The Reference
 Manual](https://shikokuchuo.net/ichimoku/articles/reference.html)
 
-[ 2 ] [Beyond Visualization - Quantitative
+{ 2 } [Beyond Visualization - Quantitative
 Strategies](https://shikokuchuo.net/ichimoku/articles/strategies.html)
 
-[ 3 ] [Auxiliary
+{ 3 } [Auxiliary
 Functions](https://shikokuchuo.net/ichimoku/articles/utilities.html)
 
-[ 4 ] [The OANDA fxTrade
+{ 4 } [The OANDA fxTrade
 API](https://shikokuchuo.net/ichimoku/articles/xoanda.html)
 
 ## References
@@ -165,7 +165,7 @@ no kenkyuu]*. Tokyo, Japan: Toushi Radar.
 entity unaffiliated with the ichimoku package.
 
 Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko
-Hyo Strategies*. R package version 1.1.8,
+Hyo Strategies*. R package version 1.1.9,
 <https://CRAN.R-project.org/package=ichimoku>.
 
 –

@@ -13,9 +13,8 @@ matrix_df(x, keep.attrs)
 attributes set on the original object.}
 }
 \value{
-A 'data.frame' object. If the matrix has row names, these are retained
-    in the dataframe, otherwise the row names of the dataframe will be an
-    integer sequence.
+A 'data.frame' object. If the matrix has row names, these are
+    retained by the dataframe.
 }
 \description{
 A performant 'matrix' to 'data.frame' constructor with no data validation or

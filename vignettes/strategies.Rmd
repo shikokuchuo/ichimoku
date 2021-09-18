@@ -28,11 +28,11 @@ First and foremost is visually, and the functions for visualization are describe
 
 However, it is often necessary to perform analysis on the data directly, for instance to test hypotheses about the price action of a particular security under certain scenarios. Here, complications of the ichimoku system can become apparent. The Chikou span in particular poses a challenge as the position of this indicator needs to be mapped in relation to the chart elements 26 periods previously, however this then affects trading decisions at the present point in time.
 
-The 'strategy layer' of the ichimoku package aims to prepare the data in a standardized format for easy analysis in other R packages such as 'PerformanceAnalytics'. Short strategy summaries are generated automatically, but are designed to serve as a quick reference rather than a replacement for a full backtest.
+The 'strategy layer' of the ichimoku package aims to prepare the data in a standardized format for easy further analysis. Short strategy summaries are generated automatically, but are designed to serve as a quick reference rather than a replacement for a full backtest using a package such as 'PerformanceAnalytics'.
 
-The `autostrat()` function is used to further facilitate idea generation, and leverages the computational capability of R to simultaneously test all valid indicator combinations. Whilst not all returned strategies may make intuitive sense, they will at a minimum serve to provide a further benchmark.
+The `autostrat()` function is used to further facilitate idea generation, and leverages the computational capability of R to simultaneously test all valid indicator combinations. Not all returned strategies may make intuitive sense, but they do serve to provide further benchmarks at the very least.
 
-Past results do not imply future performance, and any results obtained should be fed through a full backtest and not be relied upon on the basis of the results alone.
+Past results do not imply future performance, and any results should not be solely relied upon without the benefit of a full backtest and risk analysis.
 
 ## Working with Strategies
 
@@ -152,7 +152,7 @@ table.Drawdowns(strat[, "sret"])
 
 ### `autostrat()`
 
-The analytic capability of R can be leveraged to generate and evaluate all possible strategies. This function is designed for simplicity and can be run without any additional arguments on an ichimoku object. The arguments it does take are limited to:
+The analytic capability of R can be leveraged to generate and evaluate all possible strategies. This function is designed for simplicity and can be called on an ichimoku object without any additional arguments. The optional arguments it does take are limited to:
 
 - `n` [default 8] number of strategies to return
 - `dir` [default 'long'] trade direction 'long' or 'short'
@@ -172,7 +172,7 @@ The metadata is also saved as attributes to the list and can be accessed by the 
 
 Note: the strategies returned may not be in order of strategy returns as displayed in the strategy summaries. This is due to the fact that the implementation via `mlgrid()` simultaneously tests all strategies using the same time interval for comparability. However individual strategies are then run on the top 'n' strategies using all of the available data for those indicators, which may be more than that used during comparison.
 
-Note: as SenkouA, SenkouB, cloudT and cloudB are used in conjunction with other indicators, it is possible to get a series of similar returns with cloudB > c2, senkouB > c2 etc. Although these strategies may at times be equivalent or considered equivalent, this is not always the case and ichimoku presents all such results.
+Note: as SenkouA, SenkouB, cloudT and cloudB are used in conjunction with other indicators, it is possible to get a series of similar returns with cloudB > close, senkouB > close etc. Although these strategies may at times be equivalent or considered equivalent, this is not always the case and all such results are returned.
 
 ### `autostrat()` Levels 2 and 3
 
@@ -184,7 +184,7 @@ autostrat(cloud, n = 3, dir = "short", level = "2")
 
 Set the argument `level = 3` to `autostrat()` to test all strategies using an asymmetric combination of up to 2 indicator conditions, i.e. strat() with type = 3.
 
-Please note that level 3 autostrat is considered somewhat experimental as the results will tend to have higher sensitivity to the data and in particular the starting conditions.
+Note that level 3 autostrat is considered somewhat experimental as the results will tend to have higher sensitivity to the data and in particular the starting conditions.
 
 ```{r autostrat3}
 autostrat(cloud, n = 3, dir = "long", level = "3")
@@ -254,6 +254,6 @@ The 'y' column can be switched between log and discrete returns. The date-time i
 
 Sasaki, H. 佐々木 英信 (1996), *一目均衡表の研究 [ichimoku kinkouhyou no kenkyuu]*. Tokyo, Japan: Toushi Radar.
 
-Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.1.7, <https://CRAN.R-project.org/package=ichimoku>.
+Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.1.9, <https://CRAN.R-project.org/package=ichimoku>.
 
 ---
