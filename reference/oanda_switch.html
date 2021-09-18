@@ -49,7 +49,8 @@
   
 
 <meta property="og:title" content="Switch Default OANDA Server — oanda_switch" />
-<meta property="og:description" content="Switch the default OANDA fxTrade server from 'practice' to 'live' or vice versa." />
+<meta property="og:description" content="Switch the default OANDA fxTrade server from 'practice' to 'live' or vice versa.
+    Settings persist for the current session only." />
 <meta property="og:image" content="https://shikokuchuo.net/ichimoku/logo.png" />
 
 
@@ -82,7 +83,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.9</span>
       </span>
     </div>
 
@@ -154,7 +155,8 @@
     </div>
 
     <div class="ref-description">
-    <p>Switch the default OANDA fxTrade server from 'practice' to 'live' or vice versa.</p>
+    <p>Switch the default OANDA fxTrade server from 'practice' to 'live' or vice versa.
+    Settings persist for the current session only.</p>
     </div>
 
     <pre class="usage"><span class='fu'>oanda_switch</span><span class='op'>(</span><span class='op'>)</span></pre>
@@ -165,10 +167,11 @@
     <p>Invisible NULL. A message informs the resulting default server setting.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function is designed to be run once at the start of each session
-    if using a live account.</p>
-<p>Re-load the package using <code><a href='https://shikokuchuo.net/ichimoku/'>library(ichimoku)</a></code> before calling
-    <code>oanda_switch()</code> to clear cached account variables if necessary.</p>
+    <p>The default server at the start of a new session is the practice server.
+    Call this function to switch to the live server.</p>
+<p>This function can be used to toggle between the practice and live servers.
+    Any cached variables for API key, account or instruments list are cleared
+    each time this function is called.</p>
 <p>For further details please refer to the OANDA fxTrade API vignette by
     running: <code><a href='../articles/xoanda.html'>vignette("xoanda", package = "ichimoku")</a></code>.</p>
 

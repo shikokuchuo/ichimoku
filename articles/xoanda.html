@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.9</span>
       </span>
     </div>
 
@@ -140,13 +140,13 @@
 <div id="using-a-live-account" class="section level2">
 <h2 class="hasAnchor">
 <a href="#using-a-live-account" class="anchor"></a>Using a Live Account</h2>
-<p>If you are using an access token for a live (real money) account, you will want to call <code><a href="../reference/oanda_switch.html">oanda_switch()</a></code> at the beginning of each session; this switches the default server from ‘practice’ to ‘live’. Settings will persist only until the end of the session.</p>
+<p>If you are using an access token for a live (real money) account, you will want to call <code><a href="../reference/oanda_switch.html">oanda_switch()</a></code> at the beginning of each session; this switches the default server from the practice server to the live server. Settings will persist only until the end of the session.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Re-load the package to clear cached account variables before calling oanda_switch()</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://shikokuchuo.net/ichimoku/">ichimoku</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://shikokuchuo.net/ichimoku/">ichimoku</a></span><span class="op">)</span>
+
 <span class="fu"><a href="../reference/oanda_switch.html">oanda_switch</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; Default OANDA server switched to 'live'</span></code></pre></div>
-<p>Note: this package only contains functions for retrieving available instruments and price data. It does not contain code to implement any trading capability whatsoever. However, a personal access token can be used (outside of this package) for all operations on your account including placing orders and trades. Please be aware of this and take the appropriate care when using your access token.</p>
+<p>Note: this package only contains functions for retrieving available instruments and price data. It does not contain code to implement any trading capability whatsoever. However, a personal access token can be used (outside of this package) for all operations on your account including placing orders and trades. Please be aware of this and take the appropriate precautions when using your access token.</p>
 </div>
 <div id="the-oanda-functions" class="section level2">
 <h2 class="hasAnchor">
@@ -229,9 +229,9 @@
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># For a live Palladium price chart:</span>
 <span class="fu"><a href="../reference/oanda_chart.html">oanda_chart</a></span><span class="op">(</span><span class="st">"XPD_USD"</span><span class="op">)</span></code></pre></div>
-<p>If focus is not initially on the plot pane (in RStudio), please switch to it to view the chart.</p>
-<p>Note also that the periods displayed on the chart will be fewer than the ‘count’ specified. This is by design to ensure a full cloud is always displayed (i.e. there are no missing values for certain cloud lines at the start of the data). If using the default cloud periods, the first 77 datapoints will be excluded from the chart. Please take this into account when setting the ‘count’ parameter.</p>
-<p>On exit from the function, the ichimoku object underlying the chart will be returned (invisibly). This allows easy access to the data.</p>
+<p>If using RStudio, please switch to the plots plane (if not already in focus) to view the chart.</p>
+<p>Note that the periods displayed on the chart will be fewer than the ‘count’ specified - using default cloud periods, the first 77 datapoints will be excluded. This is by design to ensure a full cloud is displayed (i.e. there are no missing values for any cloud lines at the start of the data). Please take this into account when setting the ‘count’ parameter.</p>
+<p>On exit from the function, the ichimoku object underlying the chart will be returned (invisibly). This allows the data to be saved simply by assigning to an object.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># To access the data, simply assign the return value to an object:</span>
 <span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/oanda_chart.html">oanda_chart</a></span><span class="op">(</span><span class="st">"XPD_USD"</span><span class="op">)</span></code></pre></div>
@@ -241,7 +241,7 @@
 <a href="#oanda_studio" class="anchor"></a><code>oanda_studio()</code>
 </h3>
 <p>Create an interactive session in an R Shiny app for working with real-time Ichimoku cloud charts. Provides a live analysis environment where parameters may be set interactively as required. The cursor infotip provides ready access to the data directly from the chart.</p>
-<p>As all parameters can be set interactively in-app, the function may simply be launched as <code><a href="../reference/oanda_studio.html">oanda_studio()</a></code> without specifying any arguments. Otherwise, parameters may be set beforehand in the same way as <code><a href="../reference/oanda_chart.html">oanda_chart()</a></code>.</p>
+<p>As all parameters can be set interactively in-app, <code><a href="../reference/oanda_studio.html">oanda_studio()</a></code> may be called without specifying any arguments. Otherwise, parameters may be set beforehand in the same way as <code><a href="../reference/oanda_chart.html">oanda_chart()</a></code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/oanda_studio.html">oanda_studio</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="oanda-studio.jpg"></p>
@@ -258,8 +258,8 @@
 <h4 class="hasAnchor">
 <a href="#downloading-data" class="anchor"></a>Downloading Data</h4>
 <p>The ichimoku object underlying the live cloud chart can be saved by selecting the Data Archive button.</p>
-<p>This button uses <code><a href="../reference/archive.html">archive()</a></code> to save the ichimoku object to disk. The filename will be of the form: <code>instrument_granularity_price.rda</code>, e.g. <code>USD_JPY_H4_M.rda</code>. If confirmed, the file is saved to the browser’s default download location.</p>
-<p>To read back the file, use <code><a href="../reference/archive.html">archive()</a></code> supplying the quoted file path / name, for example: <code><a href="../reference/archive.html">archive("~/Downloads/USD_JPY_H4_M.rda")</a></code>.</p>
+<p>This button uses <code><a href="../reference/archive.html">archive()</a></code> to save the ichimoku object to disk. The filename will be of the form: <code>instrument_granularity_price.rda</code>, e.g. <code>SUGAR_USD_D_A.rda</code>. If confirmed, the file is saved to the browser’s default download location.</p>
+<p>To read back the file, use <code><a href="../reference/archive.html">archive()</a></code> supplying the quoted file path / name, for example: <code><a href="../reference/archive.html">archive("~/Downloads/SUGAR_USD_D_A.rda")</a></code>.</p>
 </div>
 </div>
 </div>
@@ -404,14 +404,14 @@
 <li>OANDA fxTrade account associated with an fxTrade API key</li>
 <li>OANDA list of available instruments</li>
 </ul>
-<p>If for any reason these become invalid or outdated, please re-load the package or else restart your R session to enable these variables to be refreshed.</p>
+<p>If for any reason these become invalid or outdated, please re-load the package (or restart your R session) to enable these variables to be refreshed.</p>
 </div>
 <div id="references" class="section level2">
 <h2 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h2>
 <p>‘OANDA’ and ‘fxTrade’ are trademarks owned by OANDA Corporation, an entity unaffiliated with the ichimoku package.</p>
 <p>OANDA fxTrade API developer website: <a href="https://developer.oanda.com/" class="uri">https://developer.oanda.com/</a>.</p>
-<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.1.8, <a href="https://CRAN.R-project.org/package=ichimoku" class="uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
+<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.1.9, <a href="https://CRAN.R-project.org/package=ichimoku" class="uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
 <hr>
 </div>
   </div>

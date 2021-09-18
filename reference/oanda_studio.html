@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.9</span>
       </span>
     </div>
 
@@ -216,10 +216,9 @@ or "A" (ask).</p></td>
     </tr>
     <tr>
       <th>server</th>
-      <td><p>(optional) Specify the "practice" or "live" server according to
-the account type held with OANDA. If not specified, will initially default
-to "practice" To change the default server for the rest of the session,
-use <code><a href='oanda_switch.html'>oanda_switch</a></code>.</p></td>
+      <td><p>(optional) specify the "practice" or "live" server according to
+the account type held. If not specified, will default to "practice", unless
+this has been changed by <code><a href='oanda_switch.html'>oanda_switch</a></code>.</p></td>
     </tr>
     <tr>
       <th>apikey</th>
@@ -253,7 +252,8 @@ ichimoku analysis.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns a Shiny app object with class 'shiny.appobj'.</p>
+    <p>A Shiny app object with class 'shiny.appobj'. With default arguments,
+    this Shiny app is launched in the default browser.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>This function polls the OANDA fxTrade API for the latest prices and

@@ -86,7 +86,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.9</span>
       </span>
     </div>
 
@@ -188,7 +188,7 @@
     <tr>
       <th>x</th>
       <td><p>a data.frame or other compatible object, which includes xts,
-data.table, tibble, and matrix formats.</p></td>
+data.table, tibble, and matrix.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -198,7 +198,7 @@ data.table, tibble, and matrix formats.</p></td>
     <tr>
       <th>ticker</th>
       <td><p>(optional) specify a ticker to identify the instrument,
-otherwise this is set to the name of the input object 'x'.</p></td>
+otherwise this is set to the name of the object supplied.</p></td>
     </tr>
     <tr>
       <th>periods</th>
@@ -209,8 +209,8 @@ ichimoku analysis.</p></td>
     </tr>
     <tr>
       <th>keep.data</th>
-      <td><p>(optional) set to TRUE to preserve additional data present
-in the input object 'x' as additional columns and/or attributes.</p></td>
+      <td><p>(optional) set to TRUE to retain additional data present
+in the object supplied as additional columns and/or attributes.</p></td>
     </tr>
     </table>
 
@@ -279,7 +279,8 @@ in the input object 'x' as additional columns and/or attributes.</p></td>
     
 
 
-<p><code>ichimoku()</code> requires OHLC (or else HLC) price data as input.</p>
+<p><code>ichimoku()</code> requires OHLC (or else HLC) price data as input to
+    calculate the cloud chart values.</p>
 <p>If only single series price data is supplied, a <em>pseudo</em> OHLC series
     is generated and a <em>pseudo</em> cloud chart is returned.</p>
 <p>Please refer to the reference vignette by running:
