@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.9.1</span>
       </span>
     </div>
 
@@ -180,8 +180,9 @@
 <ul>
 <li>Adds fallback for <code><a href="../reference/oanda_instruments.html">oanda_instruments()</a></code> using an internal instruments table when the API call fails.</li>
 <li>For all plot functions, the argument ‘message’ is renamed to ‘subtitle’.</li>
-<li>Updates to <code>sample_ohlc_data</code> to add volume column, adhere to working days etc.</li>
+<li>Plots now show Tenkan-sen over Kijun-sen.</li>
 <li>Fixes certain cases where calculation of the future cloud could fail for data frequency lower than daily.</li>
+<li>Updates to <code>sample_ohlc_data</code> to add volume column, adhere to working days etc.</li>
 <li>OANDA internal functions re-implemented as encapsulated closure list.</li>
 <li>
 <code>oanda_get_key()</code> is removed as no longer required.</li>
