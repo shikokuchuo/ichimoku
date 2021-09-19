@@ -15,8 +15,9 @@
 
 * Adds fallback for `oanda_instruments()` using an internal instruments table when the API call fails.
 * For all plot functions, the argument 'message' is renamed to 'subtitle'.
-* Updates to `sample_ohlc_data` to add volume column, adhere to working days etc.
+* Plots now show Tenkan-sen over Kijun-sen.
 * Fixes certain cases where calculation of the future cloud could fail for data frequency lower than daily.
+* Updates to `sample_ohlc_data` to add volume column, adhere to working days etc.
 * OANDA internal functions re-implemented as encapsulated closure list.
 * `oanda_get_key()` is removed as no longer required.
 * New sub-plot functionality adds 'gridExtra' package dependency.
