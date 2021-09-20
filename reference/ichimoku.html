@@ -86,7 +86,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.9.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.0</span>
       </span>
     </div>
 
@@ -198,7 +198,7 @@ data.table, tibble, and matrix.</p></td>
     <tr>
       <th>ticker</th>
       <td><p>(optional) specify a ticker to identify the instrument,
-otherwise this is set to the name of the object supplied.</p></td>
+otherwise this is set to the name of the input object.</p></td>
     </tr>
     <tr>
       <th>periods</th>
@@ -210,14 +210,13 @@ ichimoku analysis.</p></td>
     <tr>
       <th>keep.data</th>
       <td><p>(optional) set to TRUE to retain additional data present
-in the object supplied as additional columns and/or attributes.</p></td>
+in the input object as additional columns and/or attributes.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An ichimoku object is returned with S3 classes of 'ichimoku', 'xts'
-    and 'zoo'.</p>
+    <p>An ichimoku object with S3 classes of 'ichimoku', 'xts' and 'zoo'.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Calling an ichimoku object automatically invokes its print method,

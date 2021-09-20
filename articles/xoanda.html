@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.9.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.0</span>
       </span>
     </div>
 
@@ -172,7 +172,7 @@
 <li>
 <code>price</code> [default “M”] the pricing component, one of “M” (midpoint), “B” (bid) or “A” (ask)</li>
 <li>
-<code>server</code> (optional) Specify the “practice” or “live” server according to the account type held with OANDA. If not specified, will initially default to “practice”. To change the default server for the rest of the session, use <code><a href="../reference/oanda_switch.html">oanda_switch()</a></code>.</li>
+<code>server</code> (optional) Specify the “practice” or “live” server according to the account type held with OANDA. If not specified, will default to “practice”, unless this has been changed by <code><a href="../reference/oanda_switch.html">oanda_switch()</a></code>.</li>
 <li>
 <code>apikey</code> (optional) string containing the OANDA fxTrade API key (personal access token). This argument is designed for specifying a function that returns such a string rather than the string itself, which could be potentially unsecure. This allows other packages that provide secure storage of secrets to be used if preferred over ‘keyring’</li>
 </ul>
@@ -405,13 +405,14 @@
 <li>OANDA list of available instruments</li>
 </ul>
 <p>If for any reason these become invalid or outdated, please re-load the package (or restart your R session) to enable these variables to be refreshed.</p>
+<p>Calling <code><a href="../reference/oanda_switch.html">oanda_switch()</a></code> will also clear all cached variables.</p>
 </div>
 <div id="references" class="section level2">
 <h2 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h2>
 <p>‘OANDA’ and ‘fxTrade’ are trademarks owned by OANDA Corporation, an entity unaffiliated with the ichimoku package.</p>
 <p>OANDA fxTrade API developer website: <a href="https://developer.oanda.com/" class="uri">https://developer.oanda.com/</a>.</p>
-<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.1.9, <a href="https://CRAN.R-project.org/package=ichimoku" class="uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
+<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.2.0, <a href="https://CRAN.R-project.org/package=ichimoku" class="uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
 <hr>
 </div>
   </div>
