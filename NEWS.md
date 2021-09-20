@@ -1,4 +1,4 @@
-# ichimoku 1.1.9
+# ichimoku 1.2.0
 
 #### New features:
 
@@ -14,12 +14,14 @@
 #### Updates:
 
 * Adds fallback for `oanda_instruments()` using an internal instruments table when the API call fails.
+* `plot.ichimoku()` now returns the original object invisibly, use autoplot() and extraplot() to return plot objects.
 * For all plot functions, the argument 'message' is renamed to 'subtitle'.
 * Plots now show Tenkan-sen over Kijun-sen.
+* Slight adjustments to original theme: cloud edges now plum-tinted for Senkou A, cyan-tinted for Senkou B.
 * Fixes certain cases where calculation of the future cloud could fail for data frequency lower than daily.
 * Updates to `sample_ohlc_data` to add volume column, adhere to working days etc.
 * OANDA internal functions re-implemented as encapsulated closure list.
-* `oanda_get_key()` is removed as no longer required.
+* `oanda_get_key()` is removed as functionality incorporated elsewhere.
 * New sub-plot functionality adds 'gridExtra' package dependency.
 * 'rlang' package dependency is retired as no longer required.
 * Internal C++ code: now includes only required cpp11 headers, adds rolling mean function, miscellaneous improvements.

@@ -52,25 +52,21 @@ archive <- function(..., object, file) {
   if (missing(object) && missing(file)) {
 
     dots <- list(...)
+    dlen <- length(dots)
 
-    if (length(dots) == 1L) {
+    if (dlen == 1L) {
       file <- dots[[1L]]
       readArchive(file = file)
 
-    } else if (length(dots) == 2L) {
+    } else if (dlen == 2L) {
       object <- dots[[1L]]
       file <- dots[[2L]]
       writeArchive(object = object, file = file)
 
-    } else if (length(dots) > 2L) {
-      stop("Too many arguments passed to archive()",
-           "\nFor read operations specify 'file' only",
-           "\nFor write operations specify both 'object' and 'file'", call. = FALSE)
-
     } else {
-      stop("archive() is used to read/write objects to/from archive files",
-           "\nFor read operations specify 'file' only",
-           "\nFor write operations specify both 'object' and 'file'", call. = FALSE)
+      stop(dlen, " arguments passed to archive() which requires 1 or 2",
+           "\nFor read operations specify 'file' only, write operations both 'object' and 'file'", call. = FALSE)
+
     }
 
   } else if (!missing(file)) {
@@ -146,12 +142,11 @@ readArchive <- function(file) {
          "\nDid you omit the surrounding quotes \"\"?", call. = FALSE)
   }
 
+  object <- x_archive_sha256 <- NULL
   x_archive_names <- load(file)
-  if (!length(x_archive_names) == 2L || !identical(x_archive_names[2L], "x_archive_sha256")) {
+  if (!identical(x_archive_names[2L], "x_archive_sha256") || !identical(x_archive_names[1L], "object")) {
     stop("archive file was not created by archive()", call. = FALSE)
   }
-  object <- get(x_archive_names[1L])
-  x_archive_sha256 <- get(x_archive_names[2L])
 
   if (is.na(x_archive_sha256[1L])) {
     message("Archive read from '", file, "'\nData unverified: sha256 hash not present")

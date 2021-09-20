@@ -67,7 +67,7 @@ ichimoku analysis.}
 }
 \value{
 A Shiny app object with class 'shiny.appobj'. With default arguments,
-    this Shiny app is launched in the default browser.
+    the Shiny app is launched in the default browser.
 }
 \description{
 Interactive and fully-customisable R Shiny environment providing real-time

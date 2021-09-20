@@ -250,8 +250,8 @@ getPrices <- function(instrument, granularity, count, from, to, price, server,
 #'     For further details please refer to the OANDA fxTrade API vignette by
 #'     running: \code{vignette("xoanda", package = "ichimoku")}.
 #'
-#' @return Returns invisible NULL on function exit. The streaming data is output
-#'     as text to the console.
+#' @return Invisible NULL on function exit. The streaming data is output as text
+#'     to the console.
 #'
 #' @section Streaming Data:
 #'
@@ -444,7 +444,7 @@ oanda_chart <- function(instrument,
 #'     parameters, or the 'options' argument of \code{shiny::shinyApp()}.
 #'
 #' @return A Shiny app object with class 'shiny.appobj'. With default arguments,
-#'     this Shiny app is launched in the default browser.
+#'     the Shiny app is launched in the default browser.
 #'
 #' @details This function polls the OANDA fxTrade API for the latest prices and
 #'     updates a customisable reactive Shiny app at each refresh interval.
@@ -700,7 +700,9 @@ oanda_studio <- function(instrument = "USD_JPY",
 #' @export
 #'
 oanda_instruments <- function(server, apikey) {
+
   do_oanda$getInstruments(server = server, apikey = apikey)
+
 }
 
 #' Set OANDA fxTrade API Key
@@ -733,8 +735,11 @@ oanda_instruments <- function(server, apikey) {
 #' @export
 #'
 oanda_set_key <- function() {
+
   if (requireNamespace("keyring", quietly = TRUE)) {
+
     type <- readline("Please choose:\n(1) for practice account \n(2) for live account")
+
     if (type == 1) {
       keyring::key_set(service = "OANDA_API_KEY")
     } else if (type == 2) {

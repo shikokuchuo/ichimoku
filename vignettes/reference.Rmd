@@ -122,10 +122,10 @@ head(TKR)
 
 Optional arguments:
 
-- `ticker` a ticker to identify the instrument, otherwise this is set to the name of the object supplied
+- `ticker` a ticker to identify the instrument, otherwise this is set to the name of the input object
 - `periods` [default c(9, 26, 52)] a vector defining the length of periods used for the cloud. This parameter should not normally be modified as using other values would be invalid in the context of traditional Ichimoku analysis
 - `...` additional arguments, for instance 'holidays', passed along to `tradingDays()` for calculating the future cloud on daily data
-- `keep.data` set to TRUE to retain additional data present in the object supplied as additional columns and/or attributes. Note: only columns of numeric type or type coercible to numeric are preserved, otherwise NAs are introduced.
+- `keep.data` set to TRUE to retain additional data present in the input object as additional columns and/or attributes. Note: only columns of numeric type or type coercible to numeric are preserved, otherwise NAs are introduced.
 
 ```{r ichimoku}
 cloud <- ichimoku(TKR)
@@ -230,7 +230,7 @@ Note that this corresponds to the usual RSI oscillator definition, although not 
 plot(cloud, type = "r")
 ```
 
-An **S-type oscillator** is based on the formula for the stochastic indicator. This is a 2-line indicator with fast and slow lines with look-back windows corresponding to the fast and medium cloud periods respectively (default 9 and 26). The fast line is quicker to react to price changes and the slow line can be used for confirmation or divergence.
+An **S-type oscillator** is based on the formula for the stochastic indicator. This is a 2-line indicator with fast and slow lines with look-back windows corresponding to the fast and medium cloud periods respectively (default 9 and 26). The fast line is quicker to react to price changes and the slow line can be used to provide confirmation or divergence.
 
 The fast S-type line is calculated as 100 times the ratio of the closing price minus the [9] period low to the [9] period high minus the [9] period low. The slow S-type line is calculated as 100 times the ratio of the closing price minus the [26] period low to the [26] period high minus the [26] period low.
 
@@ -414,6 +414,6 @@ Optional (enables additional features):
 
 Sasaki, H. 佐々木 英信 (1996), *一目均衡表の研究 [ichimoku kinkouhyou no kenkyuu]*. Tokyo, Japan: Toushi Radar.
 
-Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.1.9, <https://CRAN.R-project.org/package=ichimoku>.
+Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.2.0, <https://CRAN.R-project.org/package=ichimoku>.
 
 ---

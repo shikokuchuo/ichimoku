@@ -29,7 +29,7 @@ data.table, tibble, and matrix.}
 \code{\link{tradingDays}} for calculating the future cloud on daily data.}
 
 \item{ticker}{(optional) specify a ticker to identify the instrument,
-otherwise this is set to the name of the object supplied.}
+otherwise this is set to the name of the input object.}
 
 \item{periods}{[default c(9L, 26L, 52L)] a vector defining the length of
 periods used for the cloud. This parameter shoud not normally be modified
@@ -37,11 +37,10 @@ as using other values would be invalid in the context of traditional
 ichimoku analysis.}
 
 \item{keep.data}{(optional) set to TRUE to retain additional data present
-in the object supplied as additional columns and/or attributes.}
+in the input object as additional columns and/or attributes.}
 }
 \value{
-An ichimoku object is returned with S3 classes of 'ichimoku', 'xts'
-    and 'zoo'.
+An ichimoku object with S3 classes of 'ichimoku', 'xts' and 'zoo'.
 }
 \description{
 Create an ichimoku object containing values for all components of the

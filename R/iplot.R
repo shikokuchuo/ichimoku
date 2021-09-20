@@ -18,7 +18,7 @@
 #'     \code{getOption("shiny.launch.browser")}.
 #'
 #' @return A Shiny app object with class 'shiny.appobj'. With default arguments,
-#'     this Shiny app is launched in the default browser.
+#'     the Shiny app is launched in the default browser.
 #'
 #' @details This function has a dependency on the 'shiny' package.
 #'

@@ -13,8 +13,8 @@
 #'     specific to that data type, or if 'which' is specified on an autostrat
 #'     list, an ichimoku object containing a strategy.
 #'
-#'     For other objects, a list of attributes that are non-standard for matrix /
-#'     data.frame / xts objects, or else invisible NULL if none are present.
+#'     For other objects, a list of non-standard attributes for matrix /
+#'     data.frame / xts classes, or else invisible NULL if none are present.
 #'
 #' @details Note: for a level 2 autostrat object, if the attributes fail to print
 #'     correctly due to their length, please access the them directly using

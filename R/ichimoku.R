@@ -11,19 +11,18 @@
 #' @param x a data.frame or other compatible object, which includes xts,
 #'     data.table, tibble, and matrix.
 #' @param ticker (optional) specify a ticker to identify the instrument,
-#'     otherwise this is set to the name of the object supplied.
+#'     otherwise this is set to the name of the input object.
 #' @param periods [default c(9L, 26L, 52L)] a vector defining the length of
 #'     periods used for the cloud. This parameter shoud not normally be modified
 #'     as using other values would be invalid in the context of traditional
 #'     ichimoku analysis.
 #' @param keep.data (optional) set to TRUE to retain additional data present
-#'     in the object supplied as additional columns and/or attributes.
+#'     in the input object as additional columns and/or attributes.
 #' @param ... additional arguments, for instance 'holidays', passed along to
 #'     \code{\link{tradingDays}} for calculating the future cloud on daily data.
 
 #'
-#' @return An ichimoku object is returned with S3 classes of 'ichimoku', 'xts'
-#'     and 'zoo'.
+#' @return An ichimoku object with S3 classes of 'ichimoku', 'xts' and 'zoo'.
 #'
 #' @details Calling an ichimoku object automatically invokes its print method,
 #'     which by default produces a printout of the data to the console as well

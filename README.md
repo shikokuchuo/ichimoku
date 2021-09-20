@@ -142,7 +142,7 @@ autostrat(cloud, n = 3)
 
 ## Vignettes
 
-Online versions:
+Long-form documentation links:
 
 { 1 } [Cloud Charts - The Reference
 Manual](https://shikokuchuo.net/ichimoku/articles/reference.html)
@@ -165,7 +165,7 @@ no kenkyuu]*. Tokyo, Japan: Toushi Radar.
 entity unaffiliated with the ichimoku package.
 
 Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko
-Hyo Strategies*. R package version 1.1.9,
+Hyo Strategies*. R package version 1.2.0,
 <https://CRAN.R-project.org/package=ichimoku>.
 
 –

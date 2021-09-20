@@ -22,8 +22,8 @@ specified if already stored by oanda_set_key(). Can also be entered
 interactively if not specified.}
 }
 \value{
-Returns invisible NULL on function exit. The streaming data is output
-    as text to the console.
+Invisible NULL on function exit. The streaming data is output as text
+    to the console.
 }
 \description{
 Stream live price and liquidity data for major currencies, metals,

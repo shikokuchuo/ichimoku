@@ -24,7 +24,9 @@
 #' @export
 #'
 oanda_switch <- function() {
+
   do_oanda$switchServer()
+
 }
 
 #' OANDA Internal Functions
@@ -36,16 +38,17 @@ oanda_switch <- function() {
 #' @noRd
 #'
 do_oanda <- function() {
+
   server_type <- "practice"
   keystore <- NULL
   account <- NULL
   instruments <- NULL
 
-  func <- list()
-  func$getServer <- function() {
-    server_type
-  }
-  func$switchServer <- function() {
+  list(
+    getServer = function() {
+      server_type
+    },
+    switchServer = function() {
     if (server_type == "practice") {
       server_type <<- "live"
       keystore <<- account <<- instruments <<- NULL
@@ -55,8 +58,8 @@ do_oanda <- function() {
       keystore <<- account <<- instruments <<- NULL
       message("Default OANDA server switched to 'practice'")
     }
-  }
-  func$getKey <- function() {
+  },
+  getKey = function() {
     if (is.null(keystore)) {
       if (requireNamespace("keyring", quietly = TRUE)) {
         actype <- switch(do_oanda$getServer(), practice = "OANDA_API_KEY", live = "OANDA_LIVE_KEY")
@@ -71,8 +74,8 @@ do_oanda <- function() {
       keystore <<- apikey
     }
     invisible(keystore)
-  }
-  func$getAccount <- function(server, apikey) {
+  },
+  getAccount = function(server, apikey) {
     if (is.null(account)) {
       if (missing(apikey)) apikey <- do_oanda$getKey()
       server <- if (missing(server)) do_oanda$getServer() else match.arg(server, c("practice", "live"))
@@ -90,8 +93,8 @@ do_oanda <- function() {
       account <<- data$id[1L]
     }
     invisible(account)
-  }
-  func$getInstruments <- function(server, apikey) {
+  },
+  getInstruments = function(server, apikey) {
     if (is.null(instruments)) {
       if (missing(apikey)) apikey <- do_oanda$getKey()
       server <- if (missing(server)) do_oanda$getServer() else match.arg(server, c("practice", "live"))
@@ -118,8 +121,7 @@ do_oanda <- function() {
     }
     instruments
   }
-
-  func
+  )
 
 }
 

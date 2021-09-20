@@ -17,8 +17,8 @@ For objects created by the ichimoku package, a list of attributes
     specific to that data type, or if 'which' is specified on an autostrat
     list, an ichimoku object containing a strategy.
 
-    For other objects, a list of attributes that are non-standard for matrix /
-    data.frame / xts objects, or else invisible NULL if none are present.
+    For other objects, a list of non-standard attributes for matrix /
+    data.frame / xts classes, or else invisible NULL if none are present.
 }
 \description{
 Inspect the informational attributes of objects, or extract ichimoku objects

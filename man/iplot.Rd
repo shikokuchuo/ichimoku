@@ -53,7 +53,7 @@ the default Shiny viewer in RStudio, please specify
 }
 \value{
 A Shiny app object with class 'shiny.appobj'. With default arguments,
-    this Shiny app is launched in the default browser.
+    the Shiny app is launched in the default browser.
 }
 \description{
 Plot Ichimoku Kinko Hyo cloud charts from ichimoku objects in R Shiny,
