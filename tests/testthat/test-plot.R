@@ -11,9 +11,9 @@ test_that("extraplot ok", {
   expect_s3_class(extraplot(strat, theme = "original", type = "r", custom = "nonexist"), "gtable")
   expect_s3_class(extraplot(strat, type = "line", custom = "posn"), "gtable")
   expect_s3_class(extraplot(cloud, type = "bar", custom = "vol"), "gtable")
-  expect_s3_class(expect_warning(extraplot(cloud), "type not specified"), "ggplot")
-  expect_s3_class(expect_warning(extraplot(cloud, type = "line"), "column not specified"), "ggplot")
-  expect_s3_class(expect_warning(extraplot(cloud, type = "bar", custom = "vix"), "not found"), "ggplot")
+  expect_s3_class(expect_warning(extraplot(cloud), "'type' not specified"), "ggplot")
+  expect_s3_class(expect_warning(extraplot(cloud, type = "line"), "'custom' not specified"), "ggplot")
+  expect_s3_class(expect_warning(extraplot(cloud, type = "bar", custom = "vix"), "does not match"), "ggplot")
 })
 
 test_that("ichimoku plot method ok", {

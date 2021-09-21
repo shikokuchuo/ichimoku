@@ -69,7 +69,7 @@ iplot <- function(x,
       theme = ichimoku_stheme,
       shiny::fillPage(
         padding = 20,
-        shiny::tags$style(type = "text/css", "#chart {height: calc(100vh - 190px) !important;}"),
+        shiny::tags$style("#chart {height: calc(100vh - 190px) !important;}"),
         shiny::plotOutput("chart", width = "100%",
                           hover = shiny::hoverOpts(id = "plot_hover",
                                                    delay = 80, delayType = "throttle")),
@@ -77,27 +77,23 @@ iplot <- function(x,
         ),
       shiny::fluidRow(
         shiny::column(width = 10, offset = 1,
-                      shiny::sliderInput("dates", label = NULL,
-                                         min = start, max = end,
-                                         value = c(start, end),
-                                         width = "100%", timeFormat = tformat))
+                      shiny::sliderInput("dates", label = NULL, min = start, max = end,
+                                         value = c(start, end), width = "100%",
+                                         timeFormat = tformat))
         ),
       shiny::fluidRow(
         shiny::column(width = 2,
                       shiny::selectInput("theme", label = "Theme",
                                          choices = c("original", "dark", "solarized", "mono"),
-                                         selected = theme,
-                                         selectize = FALSE)),
+                                         selected = theme, selectize = FALSE)),
         shiny::column(width = 2,
                       shiny::selectInput("type", label = "Type",
                                          choices = c("none", "r", "s", "bar", "line"),
-                                         selected = type,
-                                         selectize = FALSE)),
+                                         selected = type, selectize = FALSE)),
         shiny::column(width = 2,
                       shiny::selectInput("custom", label = "Custom",
                                          choices = dimnames(x)[[2L]],
-                                         selected = NULL,
-                                         selectize = FALSE)),
+                                         selected = NULL, selectize = FALSE)),
         shiny::column(width = 2,
                       shiny::textInput("ticker", label = "Ticker",
                                        value = ticker, width = "100%")),
@@ -109,8 +105,7 @@ iplot <- function(x,
                       shiny::checkboxInput("infotip", "Infotip", value = TRUE)),
         shiny::column(width = 1,
                       shiny::HTML("<label class='control-label'>&nbsp;</label>"),
-                      if (hasStrat(x)) shiny::checkboxInput("strat", "Strategy",
-                                                            value = isTRUE(strat)))
+                      if (hasStrat(x)) shiny::checkboxInput("strat", "Strategy", value = isTRUE(strat)))
         )
     )
 
@@ -122,6 +117,7 @@ iplot <- function(x,
       posi_x <- shiny::reactive(round(input$plot_hover$x, digits = 0))
 
       pdata <- shiny::reactive(x[window()])
+      plen <- shiny::reactive(dim(pdata())[1L])
 
       if (requireNamespace("bslib", quietly = TRUE)) {
         shiny::observe({
@@ -136,12 +132,12 @@ iplot <- function(x,
           autoplot.ichimoku(pdata(), ticker = input$ticker, subtitle = input$subtitle,
                             theme = input$theme, strat = input$strat)
         } else {
-          extraplot(pdata(), ticker = input$ticker, subtitle = input$subtitle, theme = input$theme,
-                    strat = input$strat, type = input$type, custom = input$custom)
+          extraplot(x, window = window(), ticker = input$ticker, subtitle = input$subtitle,
+                    theme = input$theme, strat = input$strat, type = input$type, custom = input$custom)
         }
       )
       output$hover_x <- shiny::renderUI({
-        shiny::req(input$type == "none", input$plot_hover, posi_x() > 0, posi_x() <= dim(pdata())[1L])
+        shiny::req(input$type == "none", input$plot_hover, posi_x() > 0, posi_x() <= plen())
         drawGuide(label = index(pdata())[posi_x()], left = left_px() + xadj, top = 60)
       })
       output$hover_y <- shiny::renderUI({
@@ -149,7 +145,7 @@ iplot <- function(x,
         drawGuide(label = signif(input$plot_hover$y, digits = 5), left = 75, top = top_px() + 11)
       })
       output$infotip <- shiny::renderUI({
-        shiny::req(input$type == "none", input$infotip, input$plot_hover, posi_x() > 0, posi_x() <= dim(pdata())[1L])
+        shiny::req(input$type == "none", input$infotip, input$plot_hover, posi_x() > 0, posi_x() <= plen())
         drawInfotip(sdata = pdata()[posi_x(), ], left_px = left_px(), top_px = top_px())
       })
 
@@ -179,8 +175,8 @@ iplot <- function(x,
 #'
 drawGuide <- function(label, left, top) {
   shiny::wellPanel(
-    style = paste0("position:absolute; z-index:100; background-color: rgba(245, 245, 245, 0.85); left:",
-                   left, "px; top:", top, "px; font-size: 0.8em; padding:0;"),
+    style = paste0("position: absolute; z-index: 100; background-color: rgba(245, 245, 245, 0.85); left: ",
+                   left, "px; top: ", top, "px; font-size: 0.8em; padding: 0;"),
     shiny::HTML(paste(label))
   )
 }
@@ -200,20 +196,19 @@ drawGuide <- function(label, left, top) {
 #'
 drawInfotip <- function(sdata, left_px, top_px) {
   shiny::wellPanel(
-    style = paste0("position:absolute; z-index:100; background-color: rgba(245, 245, 245, 0.85); ",
-                   "left:", left_px + 50, "px; top:", top_px + 40, "px; ",
-                   "font-size: 0.8em; padding: 1px 5px 5px 5px;"),
-    shiny::HTML(paste0("<div style='margin:0; padding:0; font-weight:bold'>",
+    style = paste0("position: absolute; z-index: 100; background-color: rgba(245, 245, 245, 0.85); left: ",
+                   left_px + 50, "px; top: ", top_px + 40, "px; font-size: 0.8em; padding: 1px 5px 5px 5px;"),
+    shiny::HTML(paste0("<div style='margin: 0; padding: 0; font-weight: bold'>",
                        if (isTRUE(sdata$cd == 1)) "&#9651;<br />" else if (isTRUE(sdata$cd == -1)) "&#9660;<br />" else "&#8212;<br />",
                        index(sdata),
-                       "</div><div style='text-align:center; margin:2px 0 0 0; padding:0'>H: ",
+                       "</div><div style='text-align: center; margin: 2px 0 0 0; padding: 0'>H: ",
                        signif(sdata$high, digits = 5),
-                       "</div><div style='margin:0; padding:0'>O: ",
+                       "</div><div style='margin: 0; padding: 0'>O: ",
                        signif(sdata$open, digits = 5),
                        "&nbsp;&nbsp;C: ", signif(sdata$close, digits = 5),
-                       "</div><div style='text-align:center; margin:0; padding:0'>L: ",
+                       "</div><div style='text-align: center; margin: 0; padding: 0'>L: ",
                        signif(sdata$low, digits = 5),
-                       "</div><div style='margin:2px 0 0 0; padding:0'>Tenkan: ",
+                       "</div><div style='margin: 2px 0 0 0; padding: 0'>Tenkan: ",
                        signif(sdata$tenkan, digits = 5),
                        "<br />Kijun: ", signif(sdata$kijun, digits = 5),
                        "<br />Senkou A: ", signif(sdata$senkouA, digits = 5),

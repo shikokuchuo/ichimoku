@@ -36,7 +36,7 @@ tradingDays <- function(x, holidays, ..., noholidays) {
   vec[(posixlt$mon == 0L & posixlt$mday == 1L) | (posixlt$mon == 11L & posixlt$mday == 25L)] <- FALSE
   if (!missing(holidays)) {
     holidays <- tryCatch(as.POSIXct(holidays), error = function(e) {
-      warning("Specified holidays are invalid - falling back to defaults", call. = FALSE)
+      warning("Specified holidays are invalid - reverting to defaults", call. = FALSE)
       return(vec)
     })
     vec[x %in% holidays] <- FALSE

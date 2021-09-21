@@ -1,3 +1,12 @@
+# ichimoku 1.2.0.1
+
+#### Updates:
+
+* Fixes cases of mis-alignment of main and sub-plots, axis label formatting of custom plots.
+* Fixes issue which caused `iplot()` to re-calculate the indicators when adjusting the data window.
+* Package dependency switched from 'gridExtra' to 'gtable'.
+* Adds 'grid' R core package dependency.
+
 # ichimoku 1.2.0
 
 #### New features:

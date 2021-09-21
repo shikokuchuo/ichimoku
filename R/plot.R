@@ -196,23 +196,23 @@ extraplot <- function(object,
   type <- match.arg(type)
   theme <- match.arg(theme)
   pal <- ichimoku_themes[, theme]
-  plot <- autoplot.ichimoku(object = object, window = window, ticker = ticker,
-                            subtitle = subtitle, theme = theme, strat = strat)
+  aplot <- autoplot.ichimoku(object = object, window = window, ticker = ticker,
+                             subtitle = subtitle, theme = theme, strat = strat)
 
   if (type == "none") {
-    warning("Chart type not specified or set to 'none' - falling back to standard plot", call. = FALSE)
-    return(print(plot))
+    warning("Required argument 'type' not specified or set to 'none'", call. = FALSE)
+    return(print(aplot))
   }
   if (type == "bar" || type == "line") {
     if(missing(custom)) {
-      warning("Custom data column not specified - falling back to standard plot", call. = FALSE)
-      return(print(plot))
+      warning("For type = 'bar' or 'line': required argument 'custom' not specified", call. = FALSE)
+      return(print(aplot))
     }
     cnames <- dimnames(object)[[2L]]
     sel <- grep(custom, cnames, ignore.case = TRUE, perl = TRUE)[1L]
     if (is.na(sel)) {
-      warning("Custom data column '", custom, "' not found - falling back to standard plot", call. = FALSE)
-      return(print(plot))
+      warning("Specified value '", custom, "' for 'custom' does not match any columns", call. = FALSE)
+      return(print(aplot))
     }
 
   } else if (type == "r") {
@@ -236,8 +236,7 @@ extraplot <- function(object,
       if (type == "r") geom_line(aes(y = .data$rtype_osc), color = pal[5L], na.rm = TRUE),
       if (type == "s") geom_line(aes(y = .data$stype_fast), color = pal[4L], na.rm = TRUE),
       if (type == "s") geom_line(aes(y = .data$stype_slow), color = pal[5L], na.rm = TRUE),
-      scale_x_continuous(breaks = breaks_ichimoku(data = data, object = object),
-                         labels = NULL),
+      scale_x_continuous(breaks = breaks_ichimoku(data = data, object = object), labels = NULL),
       scale_y_continuous(breaks = c(0, 25, 50, 75, 100), limits = c(0, 100), expand = c(0,0)),
       labs(x = NULL, y = switch(type, r = "R-type", s = "S-type")),
       switch(theme, dark = theme_ichimoku_dark(), theme_ichimoku_light()),
@@ -247,8 +246,7 @@ extraplot <- function(object,
   } else {
 
     cols <- cnames[sel]
-    digits <- nchar(as.character(trunc(max(object[, sel], na.rm = TRUE))))
-    if (trunc(min(object[, sel], na.rm = TRUE)) < 0) digits <- digits + 0.55
+    llen <- nchar(as.character(trunc(max(object[, sel], na.rm = TRUE))))
     data$cd <- as.character(data$cd)
 
     layers <- list(
@@ -259,21 +257,27 @@ extraplot <- function(object,
                       ymax = .data[[cols]], color = .data$cd, fill = .data$cd),
                   size = 0.3, na.rm = TRUE)
       },
-      scale_x_continuous(breaks = breaks_ichimoku(data = data, object = object),
-                         labels = NULL),
-      scale_y_continuous(labels = function(x) trunc(x)),
+      scale_x_continuous(breaks = breaks_ichimoku(data = data, object = object), labels = NULL),
+      scale_y_continuous(),
       scale_color_manual(values = c("1" = pal[7L], "-1" = pal[8L], "0" = pal[9L])),
       scale_fill_manual(values = c("1" = pal[10L], "-1" = pal[11L], "0" = pal[12L])),
       labs(x = NULL, y = cols),
       switch(theme, dark = theme_ichimoku_dark(), theme_ichimoku_light()),
       theme(axis.ticks.x = element_blank(),
-            axis.text.y = element_text(size = rel(3 / digits)))
+            axis.text.y = element_text(size = rel(min(3 / llen, 1))))
     )
   }
 
   subplot <- ggplot(data = data, aes(x = .data$idx)) + layers
 
-  grid.arrange(plot + labs(x = NULL), subplot, layout_matrix = cbind(c(1L, 1L, 1L, 2L)))
+  gp <- ggplotGrob(aplot + labs(x = NULL))
+  gs <- ggplotGrob(subplot)
+  gs$widths[2:5] <- gp$widths[2:5]
+  gt <- gtable(widths = unit(1, "null"), heights = unit(c(0.75, 0.25), "null"))
+  gt <- gtable_add_grob(gt, list(gp, gs), t = c(1, 2), l = c(1, 1), clip = "off")
+  grid.newpage()
+  grid.draw(gt)
+  invisible(gt)
 
 }
 

@@ -369,19 +369,19 @@ oanda_chart <- function(instrument,
   theme <- match.arg(theme)
   server <- if (missing(server)) do_oanda$getServer() else match.arg(server, c("practice", "live"))
   if (!is.numeric(refresh) || refresh < 1) {
-    message("Specified refresh interval invalid - falling back to default of 5 secs")
+    message("Specified refresh interval invalid - reverting to default of 5 secs")
     refresh <- 5
   }
   if (is.numeric(periods) && length(periods) == 3L && all(periods >= 1)) {
     periods <- as.integer(periods)
   } else {
-    warning("Specified cloud periods invalid - falling back to defaults c(9L, 26L, 52L)", call. = FALSE)
+    warning("Specified cloud periods invalid - reverting to defaults c(9L, 26L, 52L)", call. = FALSE)
     periods <- c(9L, 26L, 52L)
   }
   p2 <- periods[2L]
   minlen <- p2 + periods[3L]
   if (!is.numeric(count) || count < minlen) {
-    message("Specified 'count' invalid - falling back to default of 250")
+    message("Specified 'count' invalid - reverting to default of 250")
     count <- 250
   }
 
@@ -408,9 +408,9 @@ oanda_chart <- function(instrument,
   on.exit(expr = return(invisible(pdata)))
   while (TRUE) {
     pdata <- ichimoku.data.frame(data, periods = periods, ...)[minlen:(xlen + p2 - 1L), ]
-    subtitle <- paste(instrument, ptype, "price [",
-                      data$close[xlen], "] at", attr(data, "timestamp"),
-                      "| Chart:", ctype, "| Cmplt:", data$complete[xlen])
+    subtitle <- paste(instrument, ptype, "price [", data$close[xlen],
+                      "] at", attr(data, "timestamp"), "| Chart:", ctype,
+                      "| Cmplt:", data$complete[xlen])
     plot.ichimoku(pdata, ticker = ticker, subtitle = subtitle, theme = theme,
                   newpage = FALSE, ...)
     Sys.sleep(refresh)
@@ -482,7 +482,7 @@ oanda_studio <- function(instrument = "USD_JPY",
 
     if (missing(apikey)) apikey <- do_oanda$getKey()
     if (!is.numeric(refresh) || refresh < 1) {
-      message("Specified refresh interval invalid - falling back to default of 5 secs")
+      message("Specified refresh interval invalid - reverting to default of 5 secs")
       refresh <- 5
     }
     granularity <- match.arg(granularity)
@@ -492,13 +492,13 @@ oanda_studio <- function(instrument = "USD_JPY",
     if (is.numeric(periods) && length(periods) == 3L && all(periods >= 1)) {
       periods <- as.integer(periods)
     } else {
-      warning("Specified cloud periods invalid - falling back to defaults c(9L, 26L, 52L)", call. = FALSE)
+      warning("Specified cloud periods invalid - reverting to defaults c(9L, 26L, 52L)", call. = FALSE)
       periods <- c(9L, 26L, 52L)
     }
     p2 <- periods[2L]
     minlen <- p2 + periods[3L]
     if (!is.numeric(count) || count <= minlen) {
-      message("Specified 'count' invalid - falling back to default of 300")
+      message("Specified 'count' invalid - reverting to default of 300")
       count <- 300
     }
 
@@ -511,40 +511,35 @@ oanda_studio <- function(instrument = "USD_JPY",
       theme = ichimoku_stheme,
       shiny::fillPage(
         padding = 20,
-        shiny::tags$style(type = "text/css", "#chart {height: calc(100vh - 150px) !important;}"),
+        shiny::tags$style("#chart {height: calc(100vh - 150px) !important;}"),
         shiny::plotOutput("chart", width = "100%",
                           hover = shiny::hoverOpts(id = "plot_hover", delay = 80, delayType = "throttle")),
         shiny::uiOutput("hover_x"), shiny::uiOutput("hover_y"), shiny::uiOutput("infotip")
       ),
       shiny::fluidRow(
-        shiny::column(width = 12,
-                      shiny::HTML("&nbsp;")
+        shiny::column(width = 12, shiny::HTML("&nbsp;")
         )
       ),
       shiny::fluidRow(
         shiny::column(width = 2,
                       shiny::selectInput("theme", label = "Theme",
                                          choices = c("original", "dark", "solarized", "mono"),
-                                         selected = theme,
-                                         selectize = FALSE)),
+                                         selected = theme, selectize = FALSE)),
         shiny::column(width = 2,
                       shiny::selectInput("instrument", label = "Instrument",
                                          choices = ins$name,
-                                         selected = instrument,
-                                         selectize = FALSE)),
+                                         selected = instrument, selectize = FALSE)),
         shiny::column(width = 1,
                       shiny::selectInput("granularity", label = "Granularity",
                                          choices = c("M", "W", "D",
                                                      "H12", "H8", "H6", "H4", "H3", "H2", "H1",
                                                      "M30", "M15", "M10", "M5", "M4", "M2", "M1",
                                                      "S30", "S15", "S10", "S5"),
-                                         selected = granularity,
-                                         selectize = FALSE)),
+                                         selected = granularity, selectize = FALSE)),
         shiny::column(width = 1,
                       shiny::selectInput("price", label = "Price",
                                          choices = c("M", "B", "A"),
-                                         selected = price,
-                                         selectize = FALSE)),
+                                         selected = price, selectize = FALSE)),
         shiny::column(width = 1,
                       shiny::numericInput("refresh", label = "Refresh",
                                           value = refresh, min = 1, max = 86400)),
@@ -553,10 +548,8 @@ oanda_studio <- function(instrument = "USD_JPY",
                       shiny::downloadButton("savedata", label = "> Archive"),
                       shiny::HTML("</div>")),
         shiny::column(width = 3,
-                      shiny::sliderInput("count", label = "Data Periods",
-                                         min = 100, max = 800,
-                                         value = count,
-                                         width = "100%")),
+                      shiny::sliderInput("count", label = "Data Periods", min = 100,
+                                         max = 800, value = count, width = "100%")),
         shiny::column(width = 1,
                       shiny::HTML("<label class='control-label'>Show</label>"),
                       shiny::checkboxInput("infotip", "Infotip", value = TRUE))
@@ -635,6 +628,7 @@ oanda_studio <- function(instrument = "USD_JPY",
       xlen <- shiny::reactive(dim(data())[1L])
       pdata <- shiny::reactive(ichimoku(data(), ticker = input$instrument,
                                         periods = periods, ...)[minlen:(xlen() + p2 - 1L), ])
+      plen <- shiny::reactive(xlen() + p2 - minlen)
       ticker <- shiny::reactive(paste(dispname(), "  |", input$instrument, ptype(), "price [",
                                       data()$close[xlen()], "] at", attr(data(), "timestamp"),
                                       "| Chart:", ctype(), "| Cmplt:", data()$complete[xlen()]))
@@ -650,7 +644,7 @@ oanda_studio <- function(instrument = "USD_JPY",
         autoplot.ichimoku(pdata(), ticker = ticker(), theme = input$theme, ...)
       )
       output$hover_x <- shiny::renderUI({
-        shiny::req(input$plot_hover, posi_x() > 0, posi_x() <= dim(pdata())[1L])
+        shiny::req(input$plot_hover, posi_x() > 0, posi_x() <= plen())
         drawGuide(label = index(pdata())[posi_x()], left = left_px() - 17, top = 45)
       })
       output$hover_y <- shiny::renderUI({
@@ -658,7 +652,7 @@ oanda_studio <- function(instrument = "USD_JPY",
         drawGuide(label = signif(input$plot_hover$y, digits = 5), left = 75, top = top_px() + 11)
       })
       output$infotip <- shiny::renderUI({
-        shiny::req(input$infotip, input$plot_hover, posi_x() > 0, posi_x() <= dim(pdata())[1L])
+        shiny::req(input$infotip, input$plot_hover, posi_x() > 0, posi_x() <= plen())
         drawInfotip(sdata = pdata()[posi_x(), ], left_px = left_px(), top_px = top_px())
       })
 

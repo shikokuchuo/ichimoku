@@ -65,8 +65,10 @@
 #' @importFrom ggplot2 autoplot ggplot aes geom_ribbon geom_line geom_segment
 #'     geom_rect scale_color_manual scale_fill_manual guides scale_x_datetime
 #'     scale_x_continuous scale_y_continuous labs theme_grey theme rel margin
-#'     element_rect element_line element_text element_blank %+replace%
-#' @importFrom gridExtra grid.arrange
+#'     element_rect element_line element_text element_blank ggplotGrob
+#'     %+replace%
+#' @importFrom grid grid.draw grid.newpage unit
+#' @importFrom gtable gtable gtable_add_grob
 #' @importFrom jsonlite parse_json
 #' @importFrom stats na.omit setNames
 #' @importFrom xts xts endpoints
