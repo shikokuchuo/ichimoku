@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.1</span>
       </span>
     </div>
 
@@ -151,18 +151,21 @@
       <small>Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="ichimoku-1201" class="section level1">
-<h1 class="page-header" data-toc-text="1.2.0.1">
-<a href="#ichimoku-1201" class="anchor"></a>ichimoku 1.2.0.1<small> Unreleased </small>
+    <div id="ichimoku-121" class="section level1">
+<h1 class="page-header" data-toc-text="1.2.1">
+<a href="#ichimoku-121" class="anchor"></a>ichimoku 1.2.1<small> 2021-09-23 </small>
 </h1>
 <div id="updates" class="section level4">
 <h4 class="hasAnchor">
 <a href="#updates" class="anchor"></a>Updates:</h4>
 <ul>
-<li>Fixes cases of mis-alignment of main and sub-plots, axis label formatting of custom plots.</li>
-<li>Fixes issue which caused <code><a href="../reference/iplot.html">iplot()</a></code> to re-calculate the indicators when adjusting the data window.</li>
+<li>Fix issue with ‘bslib’ theming after release of Shiny 1.7.0. For improved reliability, ‘bslib’ optional dependency removed.</li>
+<li>More neutral formatting of <code><a href="../reference/oanda_stream.html">oanda_stream()</a></code> output to accommodate different console colour schemes.</li>
+<li>Fix cases of mis-alignment of main and sub-plots, axis label formatting of custom plots.</li>
+<li>Fix issue which caused <code><a href="../reference/iplot.html">iplot()</a></code> to re-calculate the indicators when adjusting the data window.</li>
 <li>Package dependency switched from ‘gridExtra’ to ‘gtable’.</li>
 <li>Adds ‘grid’ R core package dependency.</li>
+<li>Minor performance improvements for <code><a href="../reference/ichimoku.html">ichimoku()</a></code> and other functions.</li>
 </ul>
 </div>
 </div>

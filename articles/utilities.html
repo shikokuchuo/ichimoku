@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.1</span>
       </span>
     </div>
 
@@ -415,7 +415,7 @@
 <div id="df_append" class="section level4">
 <h4 class="hasAnchor">
 <a href="#df_append" class="anchor"></a>df_append()</h4>
-<p>Update a ‘data.frame’ object with new data. Can be used to append new updated time series data to an existing dataframe, where each observation is indexed by a unique timestamp.</p>
+<p>Update a ‘data.frame’ object with new data. Can be used to append new updated time series data to an existing dataframe, where each observation is indexed by a unique timestamp in a column headed ‘time’.</p>
 <p>Takes 2 arguments:</p>
 <ul>
 <li>
@@ -424,6 +424,7 @@
 <code>old</code> data.frame object containing existing data.</li>
 </ul>
 <p>Can be used to update price dataframes retrieved by <code><a href="../reference/oanda.html">oanda()</a></code>. The function is designed to update existing data with new values as they become available. As opposed to <code><a href="../reference/df_merge.html">df_merge()</a></code>, the data in ‘new’ will overwrite the data in ‘old’ rather than create duplicates.</p>
+<p>If the ‘timestamp’ attribute exists in ‘new’, for example in pricing data returned by <code><a href="../reference/oanda.html">oanda()</a></code>, this is retained. All other non-required attributes are dropped.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">data1</span> <span class="op">&lt;-</span> <span class="va">sample_ohlc_data</span><span class="op">[</span><span class="fl">7</span><span class="op">:</span><span class="fl">10</span>, <span class="op">]</span>
 <span class="va">data1</span>
@@ -460,7 +461,7 @@
 <div id="references" class="section level2">
 <h2 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h2>
-<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.2.0, <a href="https://CRAN.R-project.org/package=ichimoku" class="uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
+<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.2.1, <a href="https://CRAN.R-project.org/package=ichimoku" class="uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
 <hr>
 </div>
   </div>

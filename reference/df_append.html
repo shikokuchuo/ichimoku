@@ -51,7 +51,7 @@
 <meta property="og:title" content="Append New Data to Dataframe — df_append" />
 <meta property="og:description" content="Update a 'data.frame' object with new data. Can be used to append new updated
     time series data to an existing dataframe, where each observation is indexed
-    by a unique timestamp." />
+    by a unique timestamp in a column headed 'time'." />
 <meta property="og:image" content="https://shikokuchuo.net/ichimoku/logo.png" />
 
 
@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.1</span>
       </span>
     </div>
 
@@ -158,7 +158,7 @@
     <div class="ref-description">
     <p>Update a 'data.frame' object with new data. Can be used to append new updated
     time series data to an existing dataframe, where each observation is indexed
-    by a unique timestamp.</p>
+    by a unique timestamp in a column headed 'time'.</p>
     </div>
 
     <pre class="usage"><span class='fu'>df_append</span><span class='op'>(</span><span class='va'>new</span>, <span class='va'>old</span><span class='op'>)</span></pre>
@@ -181,7 +181,8 @@
     <p>A data.frame of the existing data appended with the new data. If the
     data in 'new' contains data with the same value for 'time' as 'old',
     the data in 'new' will overwrite the data in 'old'.</p>
-<p>If the 'timestamp' attribute exists in 'new', this will be retained.</p>
+<p>If the 'timestamp' attribute exists in 'new', this is retained. All other
+    non-required attributes are dropped.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Can be used to update price dataframes retrieved by <code><a href='oanda.html'>oanda</a></code>.

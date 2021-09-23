@@ -1,6 +1,9 @@
 /* shikokuchuo{net} custom css for pkgdown bootswatch simplex theme */
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata&family=Open+Sans&display=swap');
 body {
-  color:#02141c
+  color:#02141c;
+  font-family:'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight:400
 }
 footer {
   color: #02141c
@@ -45,4 +48,11 @@ a {
 }
 .label-default {
  background-color:#02141c
+}
+code,
+kbd,
+pre,
+samp {
+ font-family:Inconsolata,Menlo,Monaco,Consolas,monospace;
+ font-size:100%
 }
