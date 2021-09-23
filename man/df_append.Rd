@@ -16,12 +16,13 @@ A data.frame of the existing data appended with the new data. If the
     data in 'new' contains data with the same value for 'time' as 'old',
     the data in 'new' will overwrite the data in 'old'.
 
-    If the 'timestamp' attribute exists in 'new', this will be retained.
+    If the 'timestamp' attribute exists in 'new', this is retained. All other
+    non-required attributes are dropped.
 }
 \description{
 Update a 'data.frame' object with new data. Can be used to append new updated
     time series data to an existing dataframe, where each observation is indexed
-    by a unique timestamp.
+    by a unique timestamp in a column headed 'time'.
 }
 \details{
 Can be used to update price dataframes retrieved by \code{\link{oanda}}.

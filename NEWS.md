@@ -1,11 +1,14 @@
-# ichimoku 1.2.0.1
+# ichimoku 1.2.1
 
 #### Updates:
 
-* Fixes cases of mis-alignment of main and sub-plots, axis label formatting of custom plots.
-* Fixes issue which caused `iplot()` to re-calculate the indicators when adjusting the data window.
+* Fix issue with 'bslib' theming after release of Shiny 1.7.0. For improved reliability, 'bslib' optional dependency removed.
+* More neutral formatting of `oanda_stream()` output to accommodate different console colour schemes.
+* Fix cases of mis-alignment of main and sub-plots, axis label formatting of custom plots.
+* Fix issue which caused `iplot()` to re-calculate the indicators when adjusting the data window.
 * Package dependency switched from 'gridExtra' to 'gtable'.
 * Adds 'grid' R core package dependency.
+* Minor performance improvements for `ichimoku()` and other functions.
 
 # ichimoku 1.2.0
 

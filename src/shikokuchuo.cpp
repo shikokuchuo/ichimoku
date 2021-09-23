@@ -39,9 +39,9 @@ cpp11::doubles maxOver(const cpp11::doubles& x, int window) {
     while(deck.front().second <= i - window)
       deck.pop_front();
 
-    long double min = deck.front().first;
+    long double max = deck.front().first;
     if (i >= w1) {
-      vec[i] = min;
+      vec[i] = max;
     } else {
       vec[i] = NA_REAL;
     }

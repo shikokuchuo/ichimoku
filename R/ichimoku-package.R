@@ -47,7 +47,7 @@
 #'     relationship between ichimoku cloud chart elements.}
 #' }
 #' @encoding UTF-8
-#' @author Charlie Gao <\email{charlie.gao@@shikokuchuo.net}>
+#' @author Charlie Gao \email{charlie.gao@@shikokuchuo.net}
 #'     (\href{https://orcid.org/0000-0002-0750-061X}{ORCID})
 #' @references Sasaki, H. (1996), \emph{ichimoku kinkouhyou no kenkyuu}. Tokyo,
 #'     Japan: Toushi Radar.
@@ -56,7 +56,7 @@
 #'     unaffiliated with the ichimoku package.
 #'
 #'     Gao, C. (2021), \emph{ichimoku: Visualization and Tools for Ichimoku
-#'     Kinko Hyo Strategies}. R package version 1.2.0,
+#'     Kinko Hyo Strategies}. R package version 1.2.1,
 #'     \url{https://CRAN.R-project.org/package=ichimoku}.
 #'
 #' @useDynLib ichimoku, .registration = TRUE

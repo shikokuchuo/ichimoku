@@ -117,7 +117,7 @@ ichimoku <- function(x, ...) UseMethod("ichimoku")
 ichimoku.ichimoku <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, ...) {
 
   if (missing(ticker)) ticker <- attr(x, "ticker")
-  x <- x[!is.na(x[, "close"]), ]
+  x <- x[!is.na(x[, "close", drop = TRUE]), ]
 
   if (!missing(keep.data) && isTRUE(keep.data)) {
     x$cd <- x$tenkan <- x$kijun <- x$senkouA <- x$senkouB <- x$chikou <- x$cloudT <- x$cloudB <- NULL
@@ -160,7 +160,7 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
 
   coli <- grep("index|date|time", cnames, ignore.case = TRUE, perl = TRUE)[1L]
   if (!is.na(coli)) {
-    index <- tryCatch(as.POSIXct(x[, coli, drop = TRUE]), error = function(e) {
+    index <- tryCatch(as.POSIXct(.subset2(x, coli)), error = function(e) {
       stop("Column '", cnames[coli], "' is not convertible to a POSIXct date-time format", call. = FALSE)
     })
   } else {
@@ -175,7 +175,7 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
   if (anyNA(c(colh, coll, colc))) {
     colp <- grep("price|value|close", cnames, ignore.case = TRUE, perl = TRUE)[1L]
     if (is.na(colp)) stop("Price data not found. Perhaps check column names?", call. = FALSE)
-    close <- as.numeric(x[, colp, drop = TRUE])
+    close <- as.numeric(.subset2(x, colp))
     open <- c(NA, close[1:(xlen - 1L)])
     high <- pmax.int(open, close)
     low <- pmin.int(open, close)
@@ -183,12 +183,12 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
             "'\nResulting ichimoku cloud chart is an approximation only", call. = FALSE)
 
   } else {
-    high <- as.numeric(x[, colh, drop = TRUE])
-    low <- as.numeric(x[, coll, drop = TRUE])
-    close <- as.numeric(x[, colc, drop = TRUE])
+    high <- as.numeric(.subset2(x, colh))
+    low <- as.numeric(.subset2(x, coll))
+    close <- as.numeric(.subset2(x, colc))
     colo <- grep("open", cnames, ignore.case = TRUE, perl = TRUE)[1L]
     if (!is.na(colo)) {
-      open <- as.numeric(x[, colo, drop = TRUE])
+      open <- as.numeric(.subset2(x, colo))
     } else {
       warning("Opening prices not found - using previous closing prices as substitute",
               "\nThis affects the candles but not the calculation of the cloud chart", call. = FALSE)
@@ -235,7 +235,7 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
     used <- used[!is.na(used)]
     keep <- if (!is.null(used)) cnames[-used]
     kmatrix <- do.call(cbind, setNames(lapply(keep, function(k) {
-      c(as.numeric(x[, k, drop = TRUE]), rep(NA, p2 - 1L))
+      c(as.numeric(.subset2(x, k)), rep(NA, p2 - 1L))
     }), keep))
     lk <- look(x)
     lk$periods <- lk$periodicity <- lk$ticker <- NULL

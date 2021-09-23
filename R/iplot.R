@@ -60,16 +60,13 @@ iplot <- function(x,
     end <- index[dim(x)[1L]]
     xadj <- if (nchar(as.character(start)) > 10) -17 else 5
 
-    ichimoku_stheme <- if (requireNamespace("bslib", quietly = TRUE)) {
-      bslib::bs_theme(version = 4, bootswatch = "solar", bg = "#ffffff", fg = "#002b36",
-                      primary = "#073642", font_scale = 0.85)
-    }
-
     ui <- shiny::fluidPage(
-      theme = ichimoku_stheme,
+      shiny::tags$head(shiny::tags$style("
+    #chart {height: calc(100vh - 189px) !important}
+    .control-label {font-weight: 400}
+  ")),
       shiny::fillPage(
         padding = 20,
-        shiny::tags$style("#chart {height: calc(100vh - 190px) !important;}"),
         shiny::plotOutput("chart", width = "100%",
                           hover = shiny::hoverOpts(id = "plot_hover",
                                                    delay = 80, delayType = "throttle")),
@@ -118,14 +115,6 @@ iplot <- function(x,
 
       pdata <- shiny::reactive(x[window()])
       plen <- shiny::reactive(dim(pdata())[1L])
-
-      if (requireNamespace("bslib", quietly = TRUE)) {
-        shiny::observe({
-          session$setCurrentTheme(
-            bslib::bs_theme_update(ichimoku_stheme,
-                                   bootswatch = switch(input$theme, dark = "solar", NULL)))
-        })
-      }
 
       output$chart <- shiny::renderPlot(
         if (input$type == "none") {

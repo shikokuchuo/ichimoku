@@ -30,9 +30,9 @@ However, it is often necessary to perform analysis on the data directly, for ins
 
 The 'strategy layer' of the ichimoku package aims to prepare the data in a standardized format for easy further analysis. Short strategy summaries are generated automatically, but are designed to serve as a quick reference rather than a replacement for a full backtest using a package such as 'PerformanceAnalytics'.
 
-The `autostrat()` function is used to further facilitate idea generation, and leverages the computational capability of R to simultaneously test all valid indicator combinations. Not all returned strategies may make intuitive sense, but they do serve to provide further benchmarks at the very least.
+The `autostrat()` function is used to further facilitate idea generation, and leverages the computational capability of R to simultaneously test all valid indicator combinations.
 
-Past results do not imply future performance, and any results should not be solely relied upon without the benefit of a full backtest and risk analysis.
+Past results do not imply future performance, and should always be used in conjunction with a full backtest and risk analysis.
 
 ## Working with Strategies
 
@@ -254,6 +254,6 @@ The 'y' column can be switched between log and discrete returns. The date-time i
 
 Sasaki, H. 佐々木 英信 (1996), *一目均衡表の研究 [ichimoku kinkouhyou no kenkyuu]*. Tokyo, Japan: Toushi Radar.
 
-Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.2.0, <https://CRAN.R-project.org/package=ichimoku>.
+Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.2.1, <https://CRAN.R-project.org/package=ichimoku>.
 
 ---

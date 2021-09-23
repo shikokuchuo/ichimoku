@@ -394,7 +394,7 @@ ichimoku currently has the following external package dependencies:
 
 - curl - for interfacing with external APIs
 - ggplot2 - the R graphics system for visualization
-- gridExtra - for high-level manipulation of grid graphics objects
+- gtable - for arranging grid graphics objects
 - jsonlite - for parsing JSON data retrieved from external APIs
 - xts - ichimoku objects are based on the 'xts' format for time series
 - zoo - 'xts' is built on 'zoo' technology
@@ -405,7 +405,6 @@ Compile time:
 
 Optional (enables additional features):
 
-- bslib - for theming of 'shiny' applications
 - keyring - for saving API keys in the system credential store
 - openssl - for verifying the data integrity of archived objects
 - shiny - for interactive and live visualizations
@@ -414,6 +413,6 @@ Optional (enables additional features):
 
 Sasaki, H. 佐々木 英信 (1996), *一目均衡表の研究 [ichimoku kinkouhyou no kenkyuu]*. Tokyo, Japan: Toushi Radar.
 
-Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.2.0, <https://CRAN.R-project.org/package=ichimoku>.
+Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.2.1, <https://CRAN.R-project.org/package=ichimoku>.
 
 ---

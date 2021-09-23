@@ -1,6 +1,6 @@
 ## code to prepare internal sysdata
 
-ichimoku_themes <- cbind(
+ichimoku_themes <- list(
   original = c("#ffc0cb", "#b4cdcd", "#dda0dd", "#b22222", "#228b22", "#a4d1eb",
                "#00008b", "#00008b", "#00008b", "#ffffff", "#191970", "#00008b"),
   dark = c("#ffb6c1", "#b4cdcd", "#dda0dd", "#c71585", "#40e0d0", "#b58900",
@@ -90,6 +90,6 @@ x_oanda_instruments <- data.frame(
            "METAL","CURRENCY")
 )
 
-x_user_agent <- "r-ichimoku/1.2.0"
+x_user_agent <- "r-ichimoku/1.2.1"
 
 usethis::use_data(ichimoku_themes, x_oanda_instruments, x_user_agent, internal = TRUE, overwrite = TRUE)

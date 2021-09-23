@@ -116,7 +116,7 @@ autoplot.ichimoku <- function(object,
                               ...) {
 
   theme <- match.arg(theme)
-  pal <- ichimoku_themes[, theme]
+  pal <- ichimoku_themes[[theme]]
   if (missing(ticker)) ticker <- attr(object, "ticker")
   if (missing(subtitle)) {
     subtitle <- if (hasStrat(object) && isTRUE(strat)) paste0("Strategy: ", attr(object, "strat")["Strategy", ][[1L]])
@@ -125,14 +125,14 @@ autoplot.ichimoku <- function(object,
   if (!missing(window)) object <- object[window]
   data <- xts_df(object)
   data$idx <- attr(data, "row.names")
-  data$cd <- as.character(data$cd)
+  data$cd <- as.character(.subset2(data, "cd"))
 
   layers <- list(
     if (hasStrat(object) && isTRUE(strat)) {
       geom_rect(aes(xmin = .data$posn * (.data$idx - 0.5), xmax = .data$posn * (.data$idx + 0.5),
                     ymin = -Inf, ymax = Inf), fill = pal[1L], alpha = 0.2, na.rm = TRUE)
     },
-    if (!all(is.na(data$senkouB))) {
+    if (!all(is.na(.subset2(data, "senkouB")))) {
       geom_ribbon(aes(ymax = .data$senkouA, ymin = .data$senkouB),
                   fill = pal[1L], alpha = 0.6, na.rm = TRUE)
     },
@@ -195,7 +195,7 @@ extraplot <- function(object,
 
   type <- match.arg(type)
   theme <- match.arg(theme)
-  pal <- ichimoku_themes[, theme]
+  pal <- ichimoku_themes[[theme]]
   aplot <- autoplot.ichimoku(object = object, window = window, ticker = ticker,
                              subtitle = subtitle, theme = theme, strat = strat)
 
@@ -246,8 +246,8 @@ extraplot <- function(object,
   } else {
 
     cols <- cnames[sel]
-    llen <- nchar(as.character(trunc(max(object[, sel], na.rm = TRUE))))
-    data$cd <- as.character(data$cd)
+    llen <- nchar(as.character(trunc(max(.subset2(data, cols), na.rm = TRUE))))
+    data$cd <- as.character(.subset2(data, "cd"))
 
     layers <- list(
       if (type == "line") {
@@ -312,7 +312,7 @@ breaks_ichimoku <- function(data, object) {
     if (breaks[length(breaks)] > dim(object)[1L]) breaks[length(breaks)] <- breaks[length(breaks)] - 1L
 
   } else {
-    breaks <- pretty.default(data$idx, n = 9L) + 1
+    breaks <- pretty.default(.subset2(data, "idx"), n = 9L) + 1
     if (breaks[length(breaks)] > dim(object)[1L]) breaks <- breaks[-length(breaks)]
   }
 
@@ -334,7 +334,7 @@ breaks_ichimoku <- function(data, object) {
 labels_ichimoku <- function(data, object) {
 
   function(x) {
-    labels <- data$index[x]
+    labels <- .subset2(data, "index")[x]
     if (attr(object, "periodicity") > 80000) {
       format(labels, paste("%d-%b", "%Y", sep = "\n"))
     } else {

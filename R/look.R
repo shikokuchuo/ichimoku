@@ -16,10 +16,8 @@
 #'     For other objects, a list of non-standard attributes for matrix /
 #'     data.frame / xts classes, or else invisible NULL if none are present.
 #'
-#' @details Note: for a level 2 autostrat object, if the attributes fail to print
-#'     correctly due to their length, please access the them directly using
-#'     \code{look(x)$summary} and \code{look(x)$logret}, possibly in conjunction
-#'     with head() or by setting the 'max' argument in print().
+#' @details Note: autostrat list attributes may be accessed directly using
+#'     \code{look(x)$logret} and \code{look(x)$summary}.
 #'
 #' @examples
 #' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")

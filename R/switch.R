@@ -89,8 +89,8 @@ do_oanda <- function() {
       resp <- curl_fetch_memory(url = url, handle = h)
       if (resp$status_code != 200L) stop("server code ", resp$status_code, " - ",
                                          parse_json(rawToChar(resp$content)), call. = FALSE)
-      data <- parse_json(rawToChar(resp$content), simplifyVector = TRUE)$accounts
-      account <<- data$id[1L]
+      data <- parse_json(rawToChar(resp$content), simplifyVector = TRUE)[["accounts"]]
+      account <<- .subset2(data, "id")[1L]
     }
     invisible(account)
   },
@@ -114,7 +114,7 @@ do_oanda <- function() {
         instruments <<- x_oanda_instruments
         return(instruments)
       }
-      data <- parse_json(rawToChar(resp$content), simplifyVector = TRUE)$instruments
+      data <- parse_json(rawToChar(resp$content), simplifyVector = TRUE)[["instruments"]]
       ins <- data[order(data$name), c("name", "displayName", "type")]
       attr(ins, "row.names") <- .set_row_names(dim(ins)[1L])
       instruments <<- ins

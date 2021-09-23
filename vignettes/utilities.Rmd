@@ -151,7 +151,7 @@ df_merge(data1, data2)
 
 #### df_append()
 
-Update a 'data.frame' object with new data. Can be used to append new updated time series data to an existing dataframe, where each observation is indexed by a unique timestamp.
+Update a 'data.frame' object with new data. Can be used to append new updated time series data to an existing dataframe, where each observation is indexed by a unique timestamp in a column headed 'time'.
 
 Takes 2 arguments:
 
@@ -159,6 +159,8 @@ Takes 2 arguments:
 - `old`  data.frame object containing existing data.
 
 Can be used to update price dataframes retrieved by `oanda()`. The function is designed to update existing data with new values as they become available. As opposed to `df_merge()`, the data in 'new' will overwrite the data in 'old' rather than create duplicates.
+
+If the 'timestamp' attribute exists in 'new', for example in pricing data returned by `oanda()`, this is retained. All other non-required attributes are dropped.
 
 ```{r dfappend}
 data1 <- sample_ohlc_data[7:10, ]
@@ -170,6 +172,6 @@ df_append(data1, data2)
 
 ## References
 
-Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.2.0, <https://CRAN.R-project.org/package=ichimoku>.
+Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.2.1, <https://CRAN.R-project.org/package=ichimoku>.
 
 ---

@@ -68,9 +68,17 @@ tradingDays <- function(x, holidays, ..., noholidays) {
 #' @export
 #'
 grid_dup <- function(n, omit.id) {
-  vec <- do.call(c, lapply(seq_len(n - 1), function(x) x * n + 1:x))
+  vec <- vector(mode = "list", length = n - 1)
+  for (i in seq_len(n - 1)) {
+    vec[[i]] <- i * n + 1:i
+  }
+  vec <- unlist(vec)
   if (!missing(omit.id) && isTRUE(omit.id)) {
-    vec <- c(vec, do.call(c, lapply(seq_len(n), function(x) x + n * (x - 1))))
+    vec2 <- numeric(n)
+    for (j in seq_len(n)) {
+      vec2[j] <- j + n * (j - 1)
+    }
+    vec <- c(vec, vec2)
   }
   vec
 }
@@ -127,7 +135,12 @@ df_trim <- function(x) {
 xts_df <- function(x, keep.attrs) {
   core <- coredata(x)
   dims <- dim(core)
-  df <- c(list(index(x)), lapply(seq_len(dims[2L]), function(i) core[, i]))
+  len <- dims[2L]
+  df <- vector(mode = "list", length = len + 1L)
+  df[[1L]] <- index(x)
+  for (i in seq_len(len)) {
+    df[[i + 1L]] <- core[, i]
+  }
   attributes(df) <- c(list(names = c("index", dimnames(core)[[2L]]),
                            class = "data.frame",
                            row.names = .set_row_names(dims[1L])),
@@ -160,7 +173,11 @@ matrix_df <- function(x, keep.attrs) {
   dnames <- dimnames(x)
   mat <- unname(x)
   dims <- dim(mat)
-  df <- lapply(seq_len(dims[2L]), function(i) mat[, i])
+  len <- dims[2L]
+  df <- vector(mode = "list", length = len)
+  for (i in seq_len(len)) {
+    df[[i]] <- mat[, i]
+  }
   attributes(df) <- c(list(names = dnames[[2L]],
                            class = "data.frame",
                            row.names = if (is.null(dnames[[1L]])) .set_row_names(dims[1L]) else dnames[[1L]]),
@@ -206,7 +223,7 @@ df_merge <- function(...) {
                        price = attr(dots[[1L]], "price"),
                        timestamp = do.call(max, lapply(dots, attr, "timestamp")),
                        oanda = TRUE)
-    if (FALSE %in% merge$complete) warning("Incomplete periods in merged dataframe - please check for possible duplicates", call. = FALSE)
+    if (FALSE %in% .subset2(merge, "complete")) warning("Incomplete periods in merged dataframe - please check for possible duplicates", call. = FALSE)
   }
   merge
 }
@@ -215,7 +232,7 @@ df_merge <- function(...) {
 #'
 #' Update a 'data.frame' object with new data. Can be used to append new updated
 #'     time series data to an existing dataframe, where each observation is indexed
-#'     by a unique timestamp.
+#'     by a unique timestamp in a column headed 'time'.
 #'
 #' @param new data.frame object containing new data.
 #' @param old data.frame object containing existing data.
@@ -224,7 +241,8 @@ df_merge <- function(...) {
 #'     data in 'new' contains data with the same value for 'time' as 'old',
 #'     the data in 'new' will overwrite the data in 'old'.
 #'
-#'     If the 'timestamp' attribute exists in 'new', this will be retained.
+#'     If the 'timestamp' attribute exists in 'new', this is retained. All other
+#'     non-required attributes are dropped.
 #'
 #' @details Can be used to update price dataframes retrieved by \code{\link{oanda}}.
 #'     The function is designed to update existing data with new values as they
@@ -241,8 +259,17 @@ df_merge <- function(...) {
 #' @export
 #'
 df_append <- function(new, old) {
-  df <- rbind.data.frame(old[!old$time %in% new$time, ], new)
-  attr(df, "timestamp") <- attr(new, "timestamp")
+  ret <- old[!.subset2(old, "time") %in% .subset2(new, "time"), ]
+  cnames <- attr(new, "names")
+  len <- length(new)
+  df <- vector(mode = "list", length = len)
+  for (i in seq_len(len)) {
+    df[[i]] <- c(.subset2(ret, i), .subset2(new, i))
+  }
+  attributes(df) <- list(names = cnames,
+                         class = "data.frame",
+                         row.names = .set_row_names(length(df[[1L]])),
+                         timestamp = attr(new, "timestamp"))
   df
 }
 

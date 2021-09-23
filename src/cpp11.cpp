@@ -3,6 +3,7 @@
 
 
 #include "cpp11/declarations.hpp"
+#include <R_ext/Visibility.h>
 
 // shikokuchuo.cpp
 cpp11::doubles maxOver(const cpp11::doubles& x, int window);
@@ -27,11 +28,6 @@ extern "C" SEXP _ichimoku_meanOver(SEXP x, SEXP window) {
 }
 
 extern "C" {
-/* .Call calls */
-extern SEXP _ichimoku_maxOver(SEXP, SEXP);
-extern SEXP _ichimoku_meanOver(SEXP, SEXP);
-extern SEXP _ichimoku_minOver(SEXP, SEXP);
-
 static const R_CallMethodDef CallEntries[] = {
     {"_ichimoku_maxOver",  (DL_FUNC) &_ichimoku_maxOver,  2},
     {"_ichimoku_meanOver", (DL_FUNC) &_ichimoku_meanOver, 2},
@@ -40,7 +36,7 @@ static const R_CallMethodDef CallEntries[] = {
 };
 }
 
-extern "C" void R_init_ichimoku(DllInfo* dll){
+extern "C" attribute_visible void R_init_ichimoku(DllInfo* dll){
   R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
   R_useDynamicSymbols(dll, FALSE);
   R_forceSymbols(dll, TRUE);

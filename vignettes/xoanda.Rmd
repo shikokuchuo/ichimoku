@@ -116,7 +116,7 @@ The 'server' and 'apikey' arguments are also available if required.
 
 ![](oanda-stream.jpg)
 
-The stream output contains injected ANSI escape codes to create the colour blocks in the console, but otherwise represents the raw data feed without omission. As this is a raw feed, please note that the returned times are in UTC.
+The stream output contains injected ANSI escape codes for formatting the console output, but otherwise represents the raw data feed without omission. As this is a raw feed, please note that the returned times are in UTC.
 
 The following should be noted from the streaming API documentation:
 
@@ -210,6 +210,6 @@ Calling `oanda_switch()` will also clear all cached variables.
 
 OANDA fxTrade API developer website: <https://developer.oanda.com/>.
 
-Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.2.0, <https://CRAN.R-project.org/package=ichimoku>.
+Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.2.1, <https://CRAN.R-project.org/package=ichimoku>.
 
 ---

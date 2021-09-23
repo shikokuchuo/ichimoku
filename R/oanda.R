@@ -111,15 +111,15 @@ oanda <- function(instrument,
                                            requests, " requests will be made. Continue? [Y/n] "))
       if (continue %in% c("n", "N", "no", "NO")) stop("Request cancelled by user", call. = FALSE)
       message("Request started with rate limiting in place >>>")
-      list <- lapply(1:requests, function(i) {
-        data <- getPrices(instrument = instrument, granularity = granularity,
-                          from = strftime(first[[i]], format = "%Y-%m-%dT%H:%M:%S"),
-                          to = strftime(second[[i]], format = "%Y-%m-%dT%H:%M:%S"),
-                          price = price, server = server, apikey = apikey)
+      list <- vector(mode = "list", length = requests)
+      for (i in seq_len(requests)) {
+        list[[i]] <- getPrices(instrument = instrument, granularity = granularity,
+                               from = strftime(first[[i]], format = "%Y-%m-%dT%H:%M:%S"),
+                               to = strftime(second[[i]], format = "%Y-%m-%dT%H:%M:%S"),
+                               price = price, server = server, apikey = apikey)
         message("Downloaded data partition ", i, " of ", requests)
         if (i != requests) Sys.sleep(1)
-        data
-      })
+      }
       message("Merging data partitions...")
       df <- do.call(df_merge, list)
       message("Complete")
@@ -181,9 +181,9 @@ getPrices <- function(instrument, granularity, count, from, to, price, server,
   headers <- rawToChar(resp$headers)
   hdate <- strsplit(headers, "date: | GMT", perl = TRUE)[[1L]][2L]
   timestamp <- as.POSIXct.POSIXlt(strptime(hdate, format = "%a, %d %b %Y %H:%M:%S", tz = "UTC"))
-  data <- parse_json(rawToChar(resp$content), simplifyVector = TRUE)$candles
+  data <- parse_json(rawToChar(resp$content), simplifyVector = TRUE)[["candles"]]
 
-  time <- strptime(data$time, format = "%Y-%m-%dT%H:%M:%S", tz = "UTC")
+  time <- strptime(.subset2(data, "time"), format = "%Y-%m-%dT%H:%M:%S", tz = "UTC")
   if (!missing(.validate) && .validate == FALSE) {
     time <- as.POSIXct.POSIXlt(time)
   } else {
@@ -212,15 +212,15 @@ getPrices <- function(instrument, granularity, count, from, to, price, server,
     time <- time + periodicity
   }
 
-  ohlc <- switch(price, M = data$mid, B = data$bid, A = data$ask)
+  ohlc <- switch(price, M = .subset2(data, "mid"), B = .subset2(data, "bid"), A = .subset2(data, "ask"))
 
   df <- list(.POSIXct(time),
-             as.numeric(ohlc$o),
-             as.numeric(ohlc$h),
-             as.numeric(ohlc$l),
-             as.numeric(ohlc$c),
-             data$volume,
-             data$complete)
+             as.numeric(.subset2(ohlc, "o")),
+             as.numeric(.subset2(ohlc, "h")),
+             as.numeric(.subset2(ohlc, "l")),
+             as.numeric(.subset2(ohlc, "c")),
+             .subset2(data, "volume"),
+             .subset2(data, "complete"))
   attributes(df) <- list(names = c("time", "open", "high", "low", "close", "volume", "complete"),
                          class = "data.frame",
                          row.names = .set_row_names(length(time)),
@@ -293,9 +293,9 @@ oanda_stream <- function(instrument, server, apikey) {
   message("Streaming data... Press 'Esc' to return")
   on.exit(expr = return(invisible()))
   curl_fetch_stream(url = url, handle = h, fun = function(x) {
-    stream <- sub("close", "\033[49m\033[39m\nclose",
-                  sub("asks:", "\033[49m\033[39m asks: \033[90m\033[42m",
-                      sub("bids:", "\nbids: \033[37m\033[44m",
+    stream <- sub("close", "\u001b[27m\nclose",
+                  sub("asks:", "\u001b[27m asks:\u001b[7m ",
+                      sub("bids:", "\nbids:\u001b[7m ",
                           gsub(",", "  ",
                                gsub('"|{|}|\\[|\\]', "", rawToChar(x), perl = TRUE),
                                fixed = TRUE), fixed = TRUE), fixed = TRUE), fixed = TRUE)
@@ -386,7 +386,7 @@ oanda_chart <- function(instrument,
   }
 
   ins <- do_oanda$getInstruments(server = server, apikey = apikey)
-  ticker <- ins$displayName[ins$name %in% instrument]
+  ticker <- .subset2(ins, "displayName")[.subset2(ins, "name") %in% instrument]
   periodicity <- switch(granularity,
                         M = 2419200, W = 604800, D = 86400, H12 = 43200, H8 = 28800,
                         H6 = 21600, H4 = 14400, H3 = 10800, H2 = 7200, H1 = 3600,
@@ -410,7 +410,7 @@ oanda_chart <- function(instrument,
     pdata <- ichimoku.data.frame(data, periods = periods, ...)[minlen:(xlen + p2 - 1L), ]
     subtitle <- paste(instrument, ptype, "price [", data$close[xlen],
                       "] at", attr(data, "timestamp"), "| Chart:", ctype,
-                      "| Cmplt:", data$complete[xlen])
+                      "| Cmplt:", .subset2(data, "complete")[xlen])
     plot.ichimoku(pdata, ticker = ticker, subtitle = subtitle, theme = theme,
                   newpage = FALSE, ...)
     Sys.sleep(refresh)
@@ -503,15 +503,16 @@ oanda_studio <- function(instrument = "USD_JPY",
     }
 
     ins <- do_oanda$getInstruments(server = srvr, apikey = apikey)
-    ichimoku_stheme <- if (requireNamespace("bslib", quietly = TRUE)) {
-      bslib::bs_theme(version = 4, bootswatch = "solar", bg = "#ffffff", fg = "#002b36", primary = "#073642", font_scale = 0.85)
-    }
+    dispnamevec <- .subset2(ins, "displayName")
+    namevec <- .subset2(ins, "name")
 
     ui <- shiny::fluidPage(
-      theme = ichimoku_stheme,
+      shiny::tags$head(shiny::tags$style("
+    #chart {height: calc(100vh - 147px) !important}
+    .control-label {font-weight: 400}
+  ")),
       shiny::fillPage(
         padding = 20,
-        shiny::tags$style("#chart {height: calc(100vh - 150px) !important;}"),
         shiny::plotOutput("chart", width = "100%",
                           hover = shiny::hoverOpts(id = "plot_hover", delay = 80, delayType = "throttle")),
         shiny::uiOutput("hover_x"), shiny::uiOutput("hover_y"), shiny::uiOutput("infotip")
@@ -587,7 +588,7 @@ oanda_studio <- function(instrument = "USD_JPY",
                S30 = "30 Secs", S15 = "15 Secs", S10 = "10 Secs", S5 = "5 Secs")
       )
       ptype <- shiny::reactive(switch(input$price, M = "mid", B = "bid", A = "ask"))
-      dispname <- shiny::reactive(ins$displayName[ins$name %in% input$instrument])
+      dispname <- shiny::reactive(dispnamevec[namevec %in% input$instrument])
 
       newdata <- shiny::reactive({
         shiny::req(input$refresh >= 1)
@@ -631,14 +632,8 @@ oanda_studio <- function(instrument = "USD_JPY",
       plen <- shiny::reactive(xlen() + p2 - minlen)
       ticker <- shiny::reactive(paste(dispname(), "  |", input$instrument, ptype(), "price [",
                                       data()$close[xlen()], "] at", attr(data(), "timestamp"),
-                                      "| Chart:", ctype(), "| Cmplt:", data()$complete[xlen()]))
-
-      if (requireNamespace("bslib", quietly = TRUE)) {
-        shiny::observe({
-          session$setCurrentTheme(
-            bslib::bs_theme_update(ichimoku_stheme, bootswatch = switch(input$theme, dark = "solar", NULL)))
-        })
-      }
+                                      "| Chart:", ctype(), "| Cmplt:",
+                                      .subset2(data(), "complete")[xlen()]))
 
       output$chart <- shiny::renderPlot(
         autoplot.ichimoku(pdata(), ticker = ticker(), theme = input$theme, ...)

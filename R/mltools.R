@@ -14,14 +14,15 @@
 #'     level to 3 to return asymmetric strategies of the form 's1 x s2'
 #'
 #' @return Returned invisibly, a list of 'n' ichimoku objects containing strategies,
-#'     with attributes 'logret', a matrix of cumulative log returns for all
-#'     strategies, and 'summary', a matrix of summaries for the top 'n' strategies.
-#'     The strategy summaries are printed to the console.
+#'     with attributes 'logret' (a vector of cumulative log returns for all
+#'     strategies) and 'summary' (a matrix of summaries for the top 'n'
+#'     strategies). The strategy summaries are printed to the console.
 #'
 #' @details Ichimoku objects for each strategy are returned as a list. The
 #'     cumulative log returns for all strategies as well as the summaries for
 #'     the top 'n' strategies are saved as attributes to the list. This
-#'     information may be retrieved by using \code{\link{look}} on the returned list.
+#'     information may be retrieved by using \code{\link{look}} on the returned
+#'     list.
 #'
 #'     Each individual ichimoku object may be accessed via its position in the
 #'     list, e.g. [[1]] for the 1st item, or by using \code{\link{look}}
@@ -60,7 +61,7 @@ autostrat <- function(x,
 
   if (level == 1) {
     matrix <- grid[, 1L] * grid[, -1L]
-    logret <- sort(colSums(matrix), decreasing = TRUE)
+    logret <- sort.int(colSums(matrix), decreasing = TRUE)
     returns <- logret[!logret == 0]
     args <- do.call(rbind, strsplit(names(returns[1:n]), "_", fixed = TRUE))
     list <- mapply(strat, c1 = args[, 1L], c2 = args[, 2L],
@@ -128,7 +129,7 @@ autostrat <- function(x,
 
   }
 
-  attributes(list) <- list(logret = cbind(logret),
+  attributes(list) <- list(logret = logret,
                            summary = print(do.call(cbind, lapply(list, attr, which = "strat"))),
                            autostrat = TRUE)
   invisible(list)
