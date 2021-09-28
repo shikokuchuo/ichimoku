@@ -63,6 +63,6 @@ test_that("is.ichimoku ok", {
 })
 
 test_that("print.ichimoku print method ok", {
-  expect_s3_class(print(cloud), "ichimoku")
-  expect_s3_class(print(cloud, plot = FALSE), "ichimoku")
+  expect_output(expect_s3_class(print(cloud), "ichimoku"))
+  expect_output(expect_s3_class(print(cloud, plot = FALSE), "ichimoku"))
 })
