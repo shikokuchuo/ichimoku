@@ -4,38 +4,35 @@
 \alias{tradingDays}
 \title{Select Trading Days}
 \usage{
-tradingDays(x, holidays, ..., noholidays)
+tradingDays(x, holidays, ...)
 }
 \arguments{
 \item{x}{a vector of POSIXct date objects.}
 
 \item{holidays}{(optional) a vector, or function which outputs a vector, of
-dates defined as holidays.}
+dates defined as holidays. Set to NULL for a continuously-traded market.}
 
 \item{...}{other arguments not used by this function.}
-
-\item{noholidays}{(optional) if set, bypasses the function logic and returns
-TRUE for all dates in 'x'.}
 }
 \value{
 A vector of logical values: TRUE if the corresponding element of 'x'
     is a weekday and not a holiday, FALSE otherwise.
 
-    Or, if the parameter 'noholidays' is set (for example to TRUE or NA),
-    a vector of TRUE values of the same length as 'x'.
+    Or, if the parameter 'holidays' is set to NULL, a vector of TRUE values
+    of the same length as 'x'.
 }
 \description{
 Used by \code{\link{ichimoku}} to subset a vector of dates to trading days.
 }
 \details{
 New Year's Day (01-01) and Christmas Day (12-25) are defined as
-    holidays by default regardless of the values supplied by 'holidays'.
+    holidays by default if 'holidays' is not specified.
 }
 \examples{
 dates <- seq(from = as.POSIXct("2020-01-01"), by = "1 day", length.out = 7)
 dates
 tradingDays(dates)
 tradingDays(dates, holidays = c("2020-01-02", "2020-01-03"))
-tradingDays(dates, noholidays = TRUE)
+tradingDays(dates, holidays = NULL)
 
 }

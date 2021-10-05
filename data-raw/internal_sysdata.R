@@ -1,13 +1,13 @@
 ## code to prepare internal sysdata
 
 ichimoku_themes <- list(
-  original = c("#ffc0cb", "#b4cdcd", "#dda0dd", "#b22222", "#228b22", "#a4d1eb",
+  original = c("#ffc6cb", "#c3dede", "#e0a9e0", "#db4525", "#1aa1a6", "#a4d1eb",
                "#00008b", "#00008b", "#00008b", "#ffffff", "#191970", "#00008b"),
   dark = c("#ffb6c1", "#b4cdcd", "#dda0dd", "#c71585", "#40e0d0", "#b58900",
            "#eee8d5", "#fdf6e3", "#fdf6e3", "#002b36", "#eee8d5", "#fdf6e3"),
   solarized = c("#d33682", "#eee8d5", "#6c71c4", "#cb4b16", "#859900", "#268bd2",
                 "#002b36", "#002b36", "#002b36", "#fdf6e3", "#073642", "#002b36"),
-  mono = c("#d9d9d9", "#d4d4d4", "#d1d1d1", "#737373", "#1f1f1f", "#b8b8b8",
+  mono = c("#d9d9d9", "#d7d7d7", "#d1d1d1", "#737373", "#1f1f1f", "#b8b8b8",
            "#1a1a1a", "#1a1a1a", "#1a1a1a", "#ffffff", "#333333", "#1a1a1a")
 )
 
@@ -90,6 +90,6 @@ x_oanda_instruments <- data.frame(
            "METAL","CURRENCY")
 )
 
-x_user_agent <- "r-ichimoku/1.2.1"
+x_user_agent <- "r-ichimoku/1.2.2"
 
 usethis::use_data(ichimoku_themes, x_oanda_instruments, x_user_agent, internal = TRUE, overwrite = TRUE)

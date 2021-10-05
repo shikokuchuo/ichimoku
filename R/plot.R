@@ -72,8 +72,9 @@ plot.ichimoku <- function(x,
          r =,
          s = extraplot(x, window = window, ticker = ticker, subtitle = subtitle, theme = theme,
                        strat = strat, type = type),
-         extraplot(x, window = window, ticker = ticker, subtitle = subtitle,
-                   theme = theme, strat = strat, type = type, custom = custom))
+         bar =,
+         line = extraplot(x, window = window, ticker = ticker, subtitle = subtitle,
+                          theme = theme, strat = strat, type = type, custom = custom))
 
   invisible(x)
 
@@ -272,7 +273,7 @@ extraplot <- function(object,
 
   gp <- ggplotGrob(aplot + labs(x = NULL))
   gs <- ggplotGrob(subplot)
-  gs$widths[2:5] <- gp$widths[2:5]
+  gs$widths[1:4] <- gp$widths[1:4]
   gt <- gtable(widths = unit(1, "null"), heights = unit(c(0.75, 0.25), "null"))
   gt <- gtable_add_grob(gt, list(gp, gs), t = c(1, 2), l = c(1, 1), clip = "off")
   grid.newpage()

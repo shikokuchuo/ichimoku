@@ -25,9 +25,11 @@ Read and write objects to/from archival storage in the native RData format,
     with verification of data integrity.
 }
 \details{
-For read operations: specify only 'file'. 'file' is read and the
-    return value may be assigned to an object. A confirmation message is
-    issued if the file read operation has been successful.
+For read operations: specify only 'file', or alternatively if no
+    arguments are specified, a system dialog will be opened allowing a file
+    to be chosen interactively. 'file' is read and the return value may be
+    assigned to an object. A confirmation message is issued if the file read
+    operation has been successful.
 
     For write operations: specify both 'object' and 'file'. 'object' will be
     written to 'file'. A confirmation message is issued if the file write
@@ -56,5 +58,10 @@ archive(cloud, file)
 restored <- archive(file)
 
 unlink(file)
+
+if (interactive()) {
+# Only run example in interactive R sessions
+object <- archive()
+}
 
 }

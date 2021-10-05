@@ -51,16 +51,12 @@ look <- function(x, which) {
       lk <- attributes(x)
       lk$autostrat <- NULL
       lk
-    } else if (!is.numeric(which)) {
+    } else if (is.numeric(which) && which %in% seq_len(length(x))) {
+      x[[which]]
+    } else {
       stop("'", which, "' is not a valid value for 'which'\n",
            "'which' should be an integer value specifying one of the strategies 1 to ",
            length(x), call. = FALSE)
-    } else {
-      tryCatch(x[[which]], error = function(e) {
-        stop(which, " is not a valid value for 'which'\n",
-             "'which' should be an integer value specifying one of the strategies 1 to ",
-             length(x), call. = FALSE)
-      })
     }
   }
 

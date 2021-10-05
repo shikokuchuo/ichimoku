@@ -9,7 +9,7 @@
 #'     values for the cloud top and cloud base.
 #'
 #' @param x a data.frame or other compatible object, which includes xts,
-#'     data.table, tibble, and matrix.
+#'     data.table, tibble, tsibble, and matrix.
 #' @param ticker (optional) specify a ticker to identify the instrument,
 #'     otherwise this is set to the name of the input object.
 #' @param periods [default c(9L, 26L, 52L)] a vector defining the length of
@@ -161,11 +161,11 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
   coli <- grep("index|date|time", cnames, ignore.case = TRUE, perl = TRUE)[1L]
   if (!is.na(coli)) {
     index <- tryCatch(as.POSIXct(.subset2(x, coli)), error = function(e) {
-      stop("Column '", cnames[coli], "' is not convertible to a POSIXct date-time format", call. = FALSE)
+      stop("column '", cnames[coli], "' is not convertible to a POSIXct date-time format", call. = FALSE)
     })
   } else {
     index <- tryCatch(as.POSIXct(attr(x, "row.names")), error = function(e) {
-      stop("Valid date-time index not found. Perhaps check column names?", call. = FALSE)
+      stop("valid date-time index not found. Perhaps check column names?", call. = FALSE)
     })
   }
 
@@ -174,7 +174,7 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
   colc <- grep("close", cnames, ignore.case = TRUE, perl = TRUE)[1L]
   if (anyNA(c(colh, coll, colc))) {
     colp <- grep("price|value|close", cnames, ignore.case = TRUE, perl = TRUE)[1L]
-    if (is.na(colp)) stop("Price data not found. Perhaps check column names?", call. = FALSE)
+    if (is.na(colp)) stop("price data not found. Perhaps check column names?", call. = FALSE)
     close <- as.numeric(.subset2(x, colp))
     open <- c(NA, close[1:(xlen - 1L)])
     high <- pmax.int(open, close)
@@ -205,7 +205,7 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
   p1 <- periods[1L]
   p2 <- periods[2L]
   p3 <- periods[3L]
-  if (p2 >= xlen) stop("Dataset must be longer than the medium cloud period '", p2, "'", call. = FALSE)
+  if (p2 >= xlen) stop("dataset must be longer than the medium cloud period '", p2, "'", call. = FALSE)
 
   cd <- numeric(xlen)
   cd[open < close] <- 1

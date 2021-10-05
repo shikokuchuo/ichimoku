@@ -9,39 +9,27 @@
 An implementation of 'Ichimoku Kinko Hyo', also commonly known as 'cloud
     charts'. Static and interactive visualizations with tools for creating,
     backtesting and development of quantitative 'ichimoku' strategies. As
-    described in Sasaki (1996, ISBN:4925152009), the technique is a
-    refinement on candlestick charting originating from Japan, now in
-    widespread use in technical analysis worldwide. Translating as
-    'one-glance equilibrium chart', it allows the price action and market
-    structure of financial securities to be determined 'at-a-glance'.
-    Incorporates an interface with the OANDA fxTrade API
-    \url{https://developer.oanda.com/} for retrieving historical and live
-    streaming price data for major currencies, metals, commodities,
-    government bonds and stock indices.
+    described in Sasaki (1996, ISBN:4925152009), the technique is a refinement
+    on candlestick charting, originating from Japan and now in widespread use
+    in technical analysis worldwide. Translating as 'one-glance equilibrium
+    chart', it allows the price action and market structure of financial
+    securities to be determined 'at-a-glance'. Incorporates an interface with
+    the OANDA fxTrade API \url{https://developer.oanda.com/} for retrieving
+    historical and live streaming price data for major currencies, metals,
+    commodities, government bonds and stock indices.
 }
 \section{Principal ichimoku functions}{
 
-Data
+Data & Visualization
 \itemize{
     \item{\code{\link{ichimoku}}} {to create an ichimoku object from price
     data.}
+    \item{\code{\link{plot.ichimoku}} / \code{\link{iplot}}} {to plot
+    (interactive) cloud charts from ichimoku objects.}
     \item{\code{\link{archive}}} {for reading/writing objects to/from archive
     files with data verification.}
     \item{\code{\link{oanda}}} {to retrieve price data from the OANDA fxTrade
     API.}
-    \item{\code{\link{oanda_stream}}} {to stream a live data feed from the
-    OANDA fxTrade API.}
-}
-Visualization
-\itemize{
-    \item{\code{\link{plot.ichimoku}}} {to plot a cloud chart from an
-    ichimoku object.}
-    \item{\code{\link{iplot}}} {to plot an interactive cloud chart from an
-    ichimoku object.}
-    \item{\code{\link{oanda_chart}}} {to plot real-time ichimoku cloud
-    charts using OANDA data.}
-    \item{\code{\link{oanda_studio}}} {a complete live analysis environment
-    using OANDA data implemented in R Shiny.}
 }
 Strategies & ML
 \itemize{
@@ -53,6 +41,17 @@ Strategies & ML
     \item{\code{\link{mlgrid}}} {to generate a numeric representation of the
     relationship between ichimoku cloud chart elements.}
 }
+Real-time
+\itemize{
+    \item{\code{\link{oanda_chart}}} {to plot real-time ichimoku cloud
+    charts using OANDA data.}
+    \item{\code{\link{oanda_studio}}} {a complete live analysis environment
+    using OANDA data implemented in R Shiny.}
+    \item{\code{\link{oanda_stream}} / \code{\link{oanda_quote}}} {to obtain
+    the latest live data stream / quote from the OANDA fxTrade API.}
+    \item{\code{\link{oanda_view}}} {for a market overview showing the
+    relative performance of constituents.}
+}
 }
 
 \references{
@@ -63,7 +62,7 @@ Sasaki, H. (1996), \emph{ichimoku kinkouhyou no kenkyuu}. Tokyo,
     unaffiliated with the ichimoku package.
 
     Gao, C. (2021), \emph{ichimoku: Visualization and Tools for Ichimoku
-    Kinko Hyo Strategies}. R package version 1.2.1,
+    Kinko Hyo Strategies}. R package version 1.2.2,
     \url{https://CRAN.R-project.org/package=ichimoku}.
 }
 \author{

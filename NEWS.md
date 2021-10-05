@@ -1,3 +1,22 @@
+# ichimoku 1.2.2
+
+#### New features:
+
+* New `oanda_quote()` function outputs the latest quote for an instrument along with intraday trading statistics to the console.
+* New `oanda_view()` function provides the latest overview of an entire market - showing the relative performance of constituents.
+* New `oanda_positions()` function provides the OANDA fxTrade position book (% longs and shorts at each price level) for certain major currency pairs.
+* `archive()` easier to use by allowing files to be chosen interactively using a system dialog - simply call with no arguments.
+* `df_append()` utility is now faster and gains the arguments 'key' and 'keep.attr'.
+
+#### Updates:
+
+* Accessibility improvements: default 'original' theme adjusted to accommodate colour vision deficiency.
+* All OANDA functions now prompt for missing required arguments instead of returning errors.
+* For ease of use, the 'instrument' argument in all OANDA functions is now case-insensitive and the delimiter may be supplied as either '_' or '-', so both `oanda("usd-jpy")` and `oanda("USD_JPY")` are acceptable.
+* `tradingDays()` argument 'noholidays' removed in favour of 'holidays = NULL'. Logic changed slightly so that default holidays are applied only if 'holidays' is not specified.
+* Minor performance improvements to OANDA and ML layer functions.
+* Documentation refresh
+
 # ichimoku 1.2.1
 
 #### Updates:

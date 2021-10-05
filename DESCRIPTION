@@ -1,12 +1,12 @@
 Package: ichimoku
 Type: Package
 Title: Visualization and Tools for Ichimoku Kinko Hyo Strategies
-Version: 1.2.1
+Version: 1.2.2
 Description: An implementation of 'Ichimoku Kinko Hyo', also commonly known as
     'cloud charts'. Static and interactive visualizations with tools for
     creating, backtesting and development of quantitative 'ichimoku' strategies.
     As described in Sasaki (1996, ISBN:4925152009), the technique is a refinement
-    on candlestick charting originating from Japan, now in widespread use in
+    on candlestick charting, originating from Japan and now in widespread use in
     technical analysis worldwide. Translating as 'one-glance equilibrium chart',
     it allows the price action and market structure of financial securities to
     be determined 'at-a-glance'. Incorporates an interface with the OANDA
@@ -27,23 +27,23 @@ LazyData: true
 Depends: 
     R (>= 3.2)
 Imports: 
+    grid,
+    stats,
     curl,
     ggplot2,
-    grid,
     gtable,
     jsonlite,
-    stats,
     xts,
     zoo
-LinkingTo: 
+LinkingTo:  
     cpp11
 Suggests: 
-    covr,
+    shiny,
+    openssl,
     keyring,
     knitr,
-    openssl,
     rmarkdown,
-    shiny,
+    covr,
     testthat (>= 3.0.0)
 SystemRequirements: C++11
 VignetteBuilder: knitr

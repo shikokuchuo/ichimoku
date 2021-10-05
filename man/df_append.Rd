@@ -4,25 +4,30 @@
 \alias{df_append}
 \title{Append New Data to Dataframe}
 \usage{
-df_append(new, old)
+df_append(new, old, key = "time", keep.attr = "timestamp")
 }
 \arguments{
 \item{new}{data.frame object containing new data.}
 
 \item{old}{data.frame object containing existing data.}
+
+\item{key}{[default 'time'] column name used as key, provided as a character string.}
+
+\item{keep.attr}{[default 'timestamp'] name of an attribute in 'new' to retain
+if it is present, provided as a character string.}
 }
 \value{
 A data.frame of the existing data appended with the new data. If the
-    data in 'new' contains data with the same value for 'time' as 'old',
+    data in 'new' contains data with the same value for the key column as 'old',
     the data in 'new' will overwrite the data in 'old'.
 
-    If the 'timestamp' attribute exists in 'new', this is retained. All other
-    non-required attributes are dropped.
+    If the attribute specified by 'keep.attr' is present in 'new', this is
+    retained. All other non-required attributes are dropped.
 }
 \description{
 Update a 'data.frame' object with new data. Can be used to append new updated
-    time series data to an existing dataframe, where each observation is indexed
-    by a unique timestamp in a column headed 'time'.
+    time series data to an existing dataframe, where each observation is
+    indexed by a unique timestamp/identifier in a key column.
 }
 \details{
 Can be used to update price dataframes retrieved by \code{\link{oanda}}.

@@ -51,7 +51,7 @@ It is outside the scope of this vignette to provide a full tutorial on the use o
 
 ### Context
 
-Ichimoku analysis is the latest refinement in candlestick charting techniques, which also originated from Japan back in the 18th century. Developed earlier in the 20th century by 一目山人 *Ichimoku, Sanjin*, the pen name of 細田吾一 *Hosoda, Goichi*, his work was finally published in 1969 as the seminal *「一目均衡表」 [ichimoku kinkou hyou]*. It gained popularity especially after the publication of Sasaki's *「一目均衡表の研究」 [ichimoku kinkouhyou no kenkyuu]* in 1996, and is now widely-used in technical analysis worldwide.
+Ichimoku analysis is the latest refinement in candlestick charting techniques, which also originated from Japan. Developed by 一目山人 *Ichimoku, Sanjin*, the pen name of 細田吾一 *Hosoda, Goichi*, his work was published in 1969 as the seminal *「一目均衡表」 [ichimoku kinkou hyou]*. It gained popularity in Japan especially after the publication of Sasaki's *「一目均衡表の研究」 [ichimoku kinkouhyou no kenkyuu]* in 1996, and is now widely-used in technical analysis worldwide.
 
 The ichimoku time periods have traditionally been calculated as 9, 26 and 52 based on manual data analysis performed in Japan in a pre-computer age where there was a 6-day working week resulting in 26 average trading days in a month. Although this bears little relevance to the current day, the use of these time periods has persisted as an 'industry norm' or 'accepted practice'. To use other periods would be meaningless in a sense as everyone uses these parameters and 'market psychology' can and often does create its own realities, independent of any fundamentals.
 
@@ -66,7 +66,7 @@ library(ichimoku)
 
 ### Data
 
-ichimoku works with data frames and tabular data. The `ichimoku()` function handles as input xts, data.frame, data.table, tibble, matrix, and other data.frame compatible objects.
+ichimoku works with data frames and tabular data. The `ichimoku()` function handles as input xts, data.frame, data.table, tibble, tsibble, matrix, and other data.frame compatible objects.
 
 ichimoku incorporates an interface with the OANDA fxTrade API to return data for major currencies, metals, commodities, government bonds and stock indices. Please refer to the [OANDA vignette](xoanda.html).
 
@@ -164,11 +164,11 @@ Note: only numeric data or data coercible to numeric type is preserved in this w
 
 #### Defining custom holidays
 
-When calculating the future cloud for daily data, `ichimoku()` makes a call to the `tradingDays()` helper function to ensure that future dates fall on trading days (i.e. not weekends or holidays). By default, New Year's and Christmas day are defined as holidays as these are for all purposes universal across markets. These defaults should be acceptable for general use.
+When calculating the future cloud for daily data, `ichimoku()` makes a call to the `tradingDays()` helper function to ensure that future dates fall on trading days (i.e. not weekends or holidays). By default, New Year's and Christmas day are defined as holidays if the 'holidays' argument is not specified. These defaults should be acceptable for general use.
 
-To define other dates as non-trading days, additional custom holidays may be supplied via a 'holidays' argument to `ichimoku()` which is then passed on to the `tradingDays()` function.
+To define other dates as non-trading days, a vector of custom holidays may be supplied via a 'holidays' argument to `ichimoku()` which is then passed on to the `tradingDays()` function.
 
-If the relevant market trades on a 24/7 basis, the parameter `noholidays` can be specified. This will bypass the logic of `tradingDays()` and use all dates for calculating the future cloud.
+If the relevant market trades continuously on a 24/7 basis, specify 'holidays = NULL'. This will bypass the logic of `tradingDays()` and return all dates for calculating the future cloud.
 
 ```{r holidays, eval = FALSE}
 # Holidays can be specified directly via a vector of dates:
@@ -179,7 +179,7 @@ ichimoku(TKR, holidays = timeDate::holidayLONDON())
 ichimoku(TKR, holidays = timeDate::holidayNYSE())
 
 # For a market that trades 24/7:
-ichimoku(TKR, noholidays = TRUE)
+ichimoku(TKR, holidays = NULL)
 
 ```
 
@@ -300,7 +300,7 @@ Archive files created by this function are stored in the native RData format for
 
 #### Reading
 
-`archive()` for read operations takes a single argument: the file path/name of the file to be read. The return value of the function can be assigned to an object. A confirmation is printed to the console once the file has been read.
+`archive()` for read operations takes a single argument: the file path/name of the file to be read. Alternatively, if no arguments are specified, a system dialog will be opened allowing a file to be chosen interactively. The return value of the function can be assigned to an object. A confirmation is printed to the console once the file has been read.
 
 #### Data Integrity Verification
 
@@ -413,6 +413,6 @@ Optional (enables additional features):
 
 Sasaki, H. 佐々木 英信 (1996), *一目均衡表の研究 [ichimoku kinkouhyou no kenkyuu]*. Tokyo, Japan: Toushi Radar.
 
-Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.2.1, <https://CRAN.R-project.org/package=ichimoku>.
+Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.2.2, <https://CRAN.R-project.org/package=ichimoku>.
 
 ---

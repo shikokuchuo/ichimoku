@@ -61,7 +61,7 @@ autostrat <- function(x,
 
   if (level == 1) {
     matrix <- grid[, 1L] * grid[, -1L]
-    logret <- sort.int(colSums(matrix), decreasing = TRUE)
+    logret <- (cs <- colSums(matrix))[order(cs, decreasing = TRUE)]
     returns <- logret[!logret == 0]
     args <- do.call(rbind, strsplit(names(returns[1:n]), "_", fixed = TRUE))
     list <- mapply(strat, c1 = args[, 1L], c2 = args[, 2L],
@@ -81,9 +81,9 @@ autostrat <- function(x,
                                             a = pairs[, 1L], b = pairs[, 2L],
                                             SIMPLIFY = FALSE, USE.NAMES = FALSE))
     matrix <- grid[, 1L] * mgrid
-    logret <- sort(colSums(matrix), decreasing = TRUE)
+    logret <- (cs <- colSums(matrix))[order(cs, decreasing = TRUE)]
     returns <- logret[!logret == 0]
-    args <- do.call(rbind, strsplit(names(returns[1:n]), "&|_"))
+    args <- do.call(rbind, strsplit(names(returns[1:n]), "&|_", perl = TRUE))
     list <- mapply(strat, c1 = args[, 1L], c2 = args[, 2L], c3 = args[, 3L], c4 = args[, 4L],
                    MoreArgs = list(x = x, dir = dir, type = 2),
                    SIMPLIFY = FALSE, USE.NAMES = FALSE)
@@ -120,9 +120,9 @@ autostrat <- function(x,
                                             a = pairs[, 1L], b = pairs[, 2L],
                                             SIMPLIFY = FALSE, USE.NAMES = FALSE))
     matrix <- grid[, 1L] * mgrid
-    logret <- sort(colSums(matrix), decreasing = TRUE)
+    logret <- (cs <- colSums(matrix))[order(cs, decreasing = TRUE)]
     returns <- logret[!logret == 0]
-    args <- do.call(rbind, strsplit(names(returns[1:n]), "x|_"))
+    args <- do.call(rbind, strsplit(names(returns[1:n]), "x|_", perl = TRUE))
     list <- mapply(strat, c1 = args[, 1L], c2 = args[, 2L], c3 = args[, 3L], c4 = args[, 4L],
                    MoreArgs = list(x = x, dir = dir, type = 3),
                    SIMPLIFY = FALSE, USE.NAMES = FALSE)
@@ -205,22 +205,32 @@ mlgrid <- function(x,
   if (dir == "short") y <- -y
   if (target == "ret") y <- exp(y) - 1
 
-  cols <- c("chikou", "close", "high", "low", "tenkan", "kijun",
-            "senkouA", "senkouB", "cloudT", "cloudB")
-  comb <- as.matrix(expand.grid(cols, cols, KEEP.OUT.ATTRS = FALSE,
-                                stringsAsFactors = FALSE))[-grid_dup(length(cols), omit.id = TRUE), ]
-  pairs <- comb[-c(10L, 11L, 18L, 41L, 42L, 43L, 44L, 45L), ]
-  matrix <- writeMatrix(x = core, pairs = pairs, p2 = p2, xlen = xlen, type = type)
+  cols <- c("chikou", "close", "high", "low", "tenkan", "kijun", "senkouA", "senkouB", "cloudT", "cloudB")
+  pairs <- list(character(37L), character(37L))
+  ctr <- 0L
+  for (i in 1:7) {
+    colm <- cols[(i + 1L):10]
+    for (j in seq_along(colm)) {
+      colsi <- cols[i]
+      colmj <- colm[j]
+      if(colsi == "close" && (colmj == "high" || colmj == "low") ||
+         colsi == "high" && colmj == "low") next
+      ctr <- ctr + 1L
+      pairs[[1]][ctr] <- colsi
+      pairs[[2]][ctr] <- colmj
+      if (colsi == "senkouA" && colmj == "senkouB") break
+    }
+  }
+  veclist <- writeVectors(x = core, pairs = pairs, p2 = p2, xlen = xlen, type = type)
 
   if (!isTRUE(unique)) {
-    pairs <- cbind(pairs[, 2L], pairs[, 1L])
-    matrixf <- writeMatrix(x = core, pairs = pairs, p2 = p2, xlen = xlen, type = type)
-    matrix <- cbind(matrix, matrixf)
+    pairs <- list(pairs[[2L]], pairs[[1L]])
+    veclistf <- writeVectors(x = core, pairs = pairs, p2 = p2, xlen = xlen, type = type)
+    veclist <- c(veclist, veclistf)
   }
 
-  mat <- unname(matrix)
-  grid <- c(list(y), lapply(seq_len(dim(mat)[2L]), function(i) mat[, i]))
-  attributes(grid) <- list(names = c("y", dimnames(matrix)[[2L]]),
+  grid <- c(list(y = y), veclist)
+  attributes(grid) <- list(names = attr(grid, "names"),
                            class = "data.frame",
                            row.names = as.character(index(x)),
                            y = target,
@@ -231,34 +241,30 @@ mlgrid <- function(x,
 
 }
 
-
-#' writeMatrix
+#' writeVectors
 #'
-#' Internal function used by mlgrid to create matrices of ichimoku representations.
+#' Internal function used by mlgrid to create vectors of ichimoku representations.
 #'
 #' @param x an ichimoku object or coredata matrix of an ichimoku object.
-#' @param pairs a 2-column matrix of pairs of column names.
+#' @param pairs a 2-vector list of column name pairs.
 #' @param p2 length of second ichimoku period.
 #' @param xlen number of rows of 'x'.
-#' @param type type of matrix to return, 'boolean' or 'numeric'.
+#' @param type type of vectors to return, 'boolean' or 'numeric'.
 #'
-#' @return A matrix with column headings.
+#' @return A named list of equal-length vectors.
 #'
 #' @noRd
 #'
-writeMatrix <- function(x, pairs, p2, xlen, type) {
+writeVectors <- function(x, pairs, p2, xlen, type) {
 
-  matrix <- do.call(cbind, mapply(function(c1, c2) {
+  setNames(mapply(function(c1, c2) {
     offset <- (p2 - 1L) * (c1 == "chikou" | c2 == "chikou")
     switch(type,
            boolean = as.integer(c(rep(NA, offset), (x[, c1] > x[, c2])[1:(xlen - offset)])),
            numeric = c(rep(NA, offset), (x[, c1] - x[, c2])[1:(xlen - offset)]))
-  }, c1 = pairs[, 2L], c2 = pairs[, 1L], SIMPLIFY = FALSE, USE.NAMES = FALSE))
-
-  dimnames(matrix)[[2L]] <- do.call(c, mapply(function(c1, c2) paste0(c1, "_", c2),
-                                              c1 = pairs[, 2L], c2 = pairs[, 1L],
-                                              SIMPLIFY = FALSE, USE.NAMES = FALSE))
-  matrix
+  }, c1 = pairs[[1L]], c2 = pairs[[2L]], SIMPLIFY = FALSE, USE.NAMES = FALSE),
+  do.call(c, mapply(function(c1, c2) paste0(c1, "_", c2),
+                    c1 = pairs[[1L]], c2 = pairs[[2L]], SIMPLIFY = FALSE, USE.NAMES = FALSE)))
 
 }
 

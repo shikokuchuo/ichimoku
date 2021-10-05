@@ -6,7 +6,6 @@ test_that("archive functions ok", {
   restored <- archive(file = file)
   unlink(file)
   expect_identical(restored, object)
-  expect_error(archive(), "0 arguments passed")
   expect_error(archive(object, object, object), "3 arguments passed")
   expect_error(archive(object), "supplied as a string")
   expect_error(archive(object, object), "supplied as a string")

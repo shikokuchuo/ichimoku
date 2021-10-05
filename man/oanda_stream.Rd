@@ -8,7 +8,7 @@ oanda_stream(instrument, server, apikey)
 }
 \arguments{
 \item{instrument}{string containing the base currency and quote currency
-delimited by a '_' (for example "USD_JPY"). Use the
+delimited by '_' or '-' (e.g. "USD_JPY" or "usd-jpy"). Use the
 \code{\link{oanda_instruments}} function to return a list of all valid
 instruments.}
 

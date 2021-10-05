@@ -49,7 +49,7 @@ test_that("ichimoku error handling ok", {
   expect_error(ichimoku(recursive, regexp = "character"))
   expect_error(ichimoku("recursive", regexp = "character"))
   expect_error(ichimoku(data.frame(time = 1:10)), regexp = "not convertible")
-  expect_error(ichimoku(sample_ohlc_data[-1]), regexp = "Valid date-time")
+  expect_error(ichimoku(sample_ohlc_data[-1]), regexp = "valid date-time")
   expect_error(ichimoku(sample_ohlc_data[1, ]), regexp = "longer than")
   expect_error(ichimoku(sample_ohlc_data[, -5]), regexp = "data not found")
   expect_warning(ichimoku(sample_ohlc_data[, -3]), regexp = "pseudo-OHLC data")

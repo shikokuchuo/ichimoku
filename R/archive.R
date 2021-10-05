@@ -15,9 +15,11 @@
 #'
 #'     For write operations: invisible NULL. 'object' is written to 'file'.
 #'
-#' @details For read operations: specify only 'file'. 'file' is read and the
-#'     return value may be assigned to an object. A confirmation message is
-#'     issued if the file read operation has been successful.
+#' @details For read operations: specify only 'file', or alternatively if no
+#'     arguments are specified, a system dialog will be opened allowing a file
+#'     to be chosen interactively. 'file' is read and the return value may be
+#'     assigned to an object. A confirmation message is issued if the file read
+#'     operation has been successful.
 #'
 #'     For write operations: specify both 'object' and 'file'. 'object' will be
 #'     written to 'file'. A confirmation message is issued if the file write
@@ -45,6 +47,11 @@
 #'
 #' unlink(file)
 #'
+#' if (interactive()) {
+#' # Only run example in interactive R sessions
+#' object <- archive()
+#' }
+#'
 #' @export
 #'
 archive <- function(..., object, file) {
@@ -63,10 +70,12 @@ archive <- function(..., object, file) {
       file <- dots[[2L]]
       writeArchive(object = object, file = file)
 
+    } else if (dlen == 0L) {
+      readArchive(file = file.choose())
+
     } else {
       stop(dlen, " arguments passed to archive() which requires 1 or 2",
            "\nFor read operations specify 'file' only, write operations both 'object' and 'file'", call. = FALSE)
-
     }
 
   } else if (!missing(file)) {

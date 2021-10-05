@@ -6,37 +6,37 @@
 #'
 #' @param x a vector of POSIXct date objects.
 #' @param holidays (optional) a vector, or function which outputs a vector, of
-#'     dates defined as holidays.
+#'     dates defined as holidays. Set to NULL for a continuously-traded market.
 #' @param ... other arguments not used by this function.
-#' @param noholidays (optional) if set, bypasses the function logic and returns
-#'     TRUE for all dates in 'x'.
 #'
 #' @return A vector of logical values: TRUE if the corresponding element of 'x'
 #'     is a weekday and not a holiday, FALSE otherwise.
 #'
-#'     Or, if the parameter 'noholidays' is set (for example to TRUE or NA),
-#'     a vector of TRUE values of the same length as 'x'.
+#'     Or, if the parameter 'holidays' is set to NULL, a vector of TRUE values
+#'     of the same length as 'x'.
 #'
 #' @details New Year's Day (01-01) and Christmas Day (12-25) are defined as
-#'     holidays by default regardless of the values supplied by 'holidays'.
+#'     holidays by default if 'holidays' is not specified.
 #'
 #' @examples
 #' dates <- seq(from = as.POSIXct("2020-01-01"), by = "1 day", length.out = 7)
 #' dates
 #' tradingDays(dates)
 #' tradingDays(dates, holidays = c("2020-01-02", "2020-01-03"))
-#' tradingDays(dates, noholidays = TRUE)
+#' tradingDays(dates, holidays = NULL)
 #'
 #' @export
 #'
-tradingDays <- function(x, holidays, ..., noholidays) {
-  if (!missing(noholidays)) return(rep(TRUE, length(x)))
+tradingDays <- function(x, holidays, ...) {
   posixlt <- as.POSIXlt.POSIXct(x)
   vec <- posixlt$wday %in% 1:5
-  vec[(posixlt$mon == 0L & posixlt$mday == 1L) | (posixlt$mon == 11L & posixlt$mday == 25L)] <- FALSE
-  if (!missing(holidays)) {
+  if (missing(holidays)) {
+    vec[(posixlt$mon == 0L & posixlt$mday == 1L) | (posixlt$mon == 11L & posixlt$mday == 25L)] <- FALSE
+  } else {
+    if (is.null(holidays)) return(rep(TRUE, length(x)))
     holidays <- tryCatch(as.POSIXct(holidays), error = function(e) {
       warning("Specified holidays are invalid - reverting to defaults", call. = FALSE)
+      vec[(posixlt$mon == 0L & posixlt$mday == 1L) | (posixlt$mon == 11L & posixlt$mday == 25L)] <- FALSE
       return(vec)
     })
     vec[x %in% holidays] <- FALSE
@@ -231,18 +231,21 @@ df_merge <- function(...) {
 #' Append New Data to Dataframe
 #'
 #' Update a 'data.frame' object with new data. Can be used to append new updated
-#'     time series data to an existing dataframe, where each observation is indexed
-#'     by a unique timestamp in a column headed 'time'.
+#'     time series data to an existing dataframe, where each observation is
+#'     indexed by a unique timestamp/identifier in a key column.
 #'
 #' @param new data.frame object containing new data.
 #' @param old data.frame object containing existing data.
+#' @param key [default 'time'] column name used as key, provided as a character string.
+#' @param keep.attr [default 'timestamp'] name of an attribute in 'new' to retain
+#'     if it is present, provided as a character string.
 #'
 #' @return A data.frame of the existing data appended with the new data. If the
-#'     data in 'new' contains data with the same value for 'time' as 'old',
+#'     data in 'new' contains data with the same value for the key column as 'old',
 #'     the data in 'new' will overwrite the data in 'old'.
 #'
-#'     If the 'timestamp' attribute exists in 'new', this is retained. All other
-#'     non-required attributes are dropped.
+#'     If the attribute specified by 'keep.attr' is present in 'new', this is
+#'     retained. All other non-required attributes are dropped.
 #'
 #' @details Can be used to update price dataframes retrieved by \code{\link{oanda}}.
 #'     The function is designed to update existing data with new values as they
@@ -258,18 +261,18 @@ df_merge <- function(...) {
 #'
 #' @export
 #'
-df_append <- function(new, old) {
-  ret <- old[!.subset2(old, "time") %in% .subset2(new, "time"), ]
+df_append <- function(new, old, key = "time", keep.attr = "timestamp") {
+  keep <- !.subset2(old, key) %in% .subset2(new, key)
   cnames <- attr(new, "names")
   len <- length(new)
   df <- vector(mode = "list", length = len)
   for (i in seq_len(len)) {
-    df[[i]] <- c(.subset2(ret, i), .subset2(new, i))
+    df[[i]] <- c(.subset2(old, i)[keep], .subset2(new, i))
   }
   attributes(df) <- list(names = cnames,
                          class = "data.frame",
-                         row.names = .set_row_names(length(df[[1L]])),
-                         timestamp = attr(new, "timestamp"))
+                         row.names = .set_row_names(length(df[[1L]])))
+  attr(df, keep.attr) <- attr(new, keep.attr)
   df
 }
 

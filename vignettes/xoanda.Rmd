@@ -38,7 +38,7 @@ After successful registration, a link can be found on your OANDA fxTrade account
 
 ## Setting your OANDA API Key
 
-If the 'keyring' package is available on your machine, the OANDA API key (personal access token) can be set once and saved in your system credential store by using `oanda_set_key()`. This will enable it to be retrieved automatically for all subsequent sessions.
+If the 'keyring' package is installed, the OANDA API key (personal access token) can be set once and saved in your system credential store by using `oanda_set_key()`. This will enable it to be retrieved automatically for all subsequent sessions.
 
 Separate keys can be set for practice and live accounts; please choose the correct account type when prompted.
 
@@ -46,7 +46,7 @@ If an access token is revoked and re-generated, please remember to set the API k
 
 ## Using a Live Account
 
-If you are using an access token for a live (real money) account, you will want to call `oanda_switch()` at the beginning of each session; this switches the default server from the practice server to the live server. Settings will persist only until the end of the session.
+If you are using an access token for a live (real money) account, you will want to call `oanda_switch()` at the beginning of each session; this switches the default server from the practice server to the live server. Settings will only persist until the end of the session.
 
 ```{r oandaswitch}
 library(ichimoku)
@@ -54,11 +54,15 @@ library(ichimoku)
 oanda_switch()
 ```
 
-Note: this package only contains functions for retrieving available instruments and price data. It does not contain code to implement any trading capability whatsoever. However, a personal access token can be used (outside of this package) for all operations on your account including placing orders and trades. Please be aware of this and take the appropriate precautions when using your access token.
+Note: this package only contains functions for retrieving available instruments and price data. It does not contain code to implement any trading capability whatsoever. Please be aware however, that a personal access token can be used (outside of this package) for all operations on your account including placing orders and trades, and take the appropriate precautions when using your live account token.
 
 ## The OANDA Functions
 
-All of the OANDA functions in the package are prefixed by 'oanda' for clarity and ease of use.
+All of the OANDA functions in the package are prefixed by 'oanda' for clarity.
+
+Functions designed primarily for interactive use may be called without any arguments, e.g. `oanda_stream()` or `oanda_view()`, in which case you will be further prompted to enter required arguments; these should be entered unquoted i.e. without any surrounding "".
+
+The 'instrument' argument is case-insensitive and the delimiter can be either '_' or '-', such that both `oanda("USD_JPY")` and `oanda("usd-jpy")` would be acceptable.
 
 ### `oanda()`
 
@@ -66,7 +70,7 @@ Retrieve pricing data from the OANDA fxTrade API.
 
 The arguments to the function are phrased identically to that of the API itself where relevant:
 
-- `instrument` a string containing the base currency and quote currency delimited by a '_' (for example "USD_JPY"). Use the `oanda_instruments()` function to return a list of all valid instruments
+- `instrument` string containing the base currency and quote currency delimited by a '_' (e.g. "USD_JPY"). Use the `oanda_instruments()` function to return a list of all valid instruments
 - `granularity` [default "D"] the granularity of the price data to fetch, one of "M", "W", "D", "H12", "H8", "H6", "H4", "H3", "H2", "H1", "M30", "M15", "M10", "M5", "M4", "M2", "M1", "S30", "S15", "S10", "S5"
 - `count` (optional) the number of periods to return. The API supports a maximum of 5000 for each individual request, and defaults to 500 if not specified. If both 'from' and 'to' are specified, 'count' is ignored, as the time range combined with 'granularity' will determine the number of periods to return
 - `from` (optional) the start of the time range for which to fetch price data, for example "2020-02-01"
@@ -79,18 +83,10 @@ Note: if both `from` and `to` are specified and the request would result in over
 
 ```{r oanda, eval=FALSE}
 oanda("USD_JPY", count = 3, from = "2010-11-01", price = "B")
-```
-```{r oanda2, echo=FALSE}
-data.frame(
-        time = c("2010-11-01 21:00:00",
-                 "2010-11-02 21:00:00","2010-11-03 21:00:00"),
-        open = c(80.275, 80.504, 80.632),
-        high = c(81.504, 80.956, 81.585),
-         low = c(80.225, 80.46, 80.594),
-       close = c(80.501, 80.617, 81.069),
-      volume = c(22291L, 13795L, 22204L),
-    complete = c(TRUE, TRUE, TRUE)
-)
+#>                  time   open   high    low  close volume complete
+#> 1 2010-11-01 21:00:00 80.275 81.504 80.225 80.501  22291     TRUE
+#> 2 2010-11-02 21:00:00 80.504 80.956 80.460 80.617  13795     TRUE
+#> 3 2010-11-03 21:00:00 80.632 81.585 80.594 81.069  22204     TRUE
 ```
 
 The returned object is a dataframe with the following columns:
@@ -106,32 +102,13 @@ Important implementation notes:
 
 - The API data sometimes includes data for non-trading days with very low volumes. This is more common for older data and less so with more recent data. These may represent OTC trades that occurred over the OANDA platform, but nevertheless do not reflect market rates. These are automatically excluded from the data returned as they would otherwise produce spurious results if used with `ichimoku()`
 
-### `oanda_stream()`
-
-Connect to the OANDA fxTrade streaming API and stream a list of prices generated by OANDA.
-
-Requires a single argument, the 'instrument' to stream data for (please refer to `oanda()` above).
-
-The 'server' and 'apikey' arguments are also available if required.
-
-![](oanda-stream.jpg)
-
-The stream output contains injected ANSI escape codes for formatting the console output, but otherwise represents the raw data feed without omission. As this is a raw feed, please note that the returned times are in UTC.
-
-The following should be noted from the streaming API documentation:
-
-- Get a stream of Account Prices starting from when the request is made
-- This pricing stream does not include every single price created for the Account, but instead will provide at most 4 prices per second (every 250 milliseconds) for each instrument being requested
-- If more than one price is created for an instrument during the 250 millisecond window, only the price in effect at the end of the window is sent. This means that during periods of rapid price movement, subscribers to this stream will not be sent every price
-- Pricing windows for different connections to the price stream are not all aligned in the same way (i.e. they are not all aligned to the top of the second). This means that during periods of rapid price movement, different subscribers may observe different prices depending on their alignment
-
 ### `oanda_chart()`
 
 Create an updating real-time Ichimoku cloud chart. The refresh rate can be set for the chart to be updated down to every second. A plot of the ichimoku chart for the price data requested is output to the graphical device at each refresh interval.
 
 The arguments are identical to `oanda()` above with the addition of:
 
-- `refresh` set the refresh rate of the chart in seconds, with a minimum of 1
+- `refresh` [default 5] set the refresh rate of the chart in seconds, with a minimum of 1
 - `...` additional parameters passed onto `ichimoku()` for calculating the ichimoku cloud or `autoplot()` to set chart parameters
 - `periods` [default c(9L, 26L, 52L)] a vector defining the length of periods used for the cloud. This parameter should not normally be modified as using other values would be invalid in the context of traditional Ichimoku analysis
 
@@ -142,7 +119,7 @@ The arguments 'from' and 'to' are excluded as they are not relevant in this cont
 oanda_chart("XPD_USD")
 ```
 
-If using RStudio, please switch to the plots plane (if not already in focus) to view the chart.
+In RStudio, please switch to the plots plane to view the chart if not already in focus.
 
 Note that the periods displayed on the chart will be fewer than the 'count' specified - using default cloud periods, the first 77 datapoints will be excluded. This is by design to ensure a full cloud is displayed (i.e. there are no missing values for any cloud lines at the start of the data). Please take this into account when setting the 'count' parameter.
 
@@ -155,7 +132,7 @@ cloud <- oanda_chart("XPD_USD")
 
 ### `oanda_studio()`
 
-Create an interactive session in an R Shiny app for working with real-time Ichimoku cloud charts. Provides a live analysis environment where parameters may be set interactively as required. The cursor infotip provides ready access to the data directly from the chart.
+Create an interactive R Shiny session for working with real-time Ichimoku cloud charts. Provides a live analysis environment where parameters may be set interactively as required. The cursor infotip provides ready access to the data directly from the chart.
 
 As all parameters can be set interactively in-app, `oanda_studio()` may be called without specifying any arguments. Otherwise, parameters may be set beforehand in the same way as `oanda_chart()`.
 
@@ -173,9 +150,85 @@ The following additional parameters can be used to customise the behaviour of th
 
 The ichimoku object underlying the live cloud chart can be saved by selecting the Data Archive button. 
 
-This button uses `archive()` to save the ichimoku object to disk. The filename will be of the form: `instrument_granularity_price.rda`, e.g. `SUGAR_USD_D_A.rda`. If confirmed, the file is saved to the browser's default download location.
+This button uses `archive()` to save the ichimoku object to disk. The filename will be of the form: `instrument_granularity_price.rda`, e.g. `SUGAR_USD_D_A.rda`. If confirmed, the file is saved to the browser's default download location. Note that files with the same name are not overwritten but instead the filename is made unique.
 
-To read back the file, use `archive()` supplying the quoted file path / name, for example: `archive("~/Downloads/SUGAR_USD_D_A.rda")`.
+To read back the file, use `archive()`:
+
+```{r archive, eval=FALSE}
+# Supply the quoted file path / name, for example:
+cloud <- archive("~/Downloads/SUGAR_USD_D_A.rda")
+
+# Or alternatively, choose the saved file interactively using a system dialog:
+cloud <- archive()
+```
+
+### `oanda_stream()`
+
+Connect to the OANDA fxTrade streaming API and stream a list of prices generated by OANDA.
+
+Requires a single argument, the 'instrument' to stream data for.
+
+The 'server' and 'apikey' arguments are also available if required.
+
+```{r oandastream, eval=FALSE}
+oanda_stream("UK10YB_GBP")
+#> Streaming data... Press 'Esc' to return
+#> type:PRICE  time:2021-10-01T16:59:51.377314414Z  
+#> bids: price:126.500  liquidity:10000   asks: price:126.540  liquidity:10000  
+#> closeoutBid:126.500  closeoutAsk:126.540  status:non-tradeable  tradeable:false  instrument:UK10YB_GBP
+```
+
+The stream output contains injected ANSI escape codes for formatting the console output, but otherwise represents the raw data feed without omission. As this is a raw feed, please note that the returned times are in UTC.
+
+The following should be noted from the streaming API documentation:
+
+- Get a stream of Account Prices starting from when the request is made. This pricing stream does not include every single price created for the Account, but instead will provide at most 4 prices per second (every 250 milliseconds) for each instrument being requested
+- If more than one price is created for an instrument during the 250 millisecond window, only the price in effect at the end of the window is sent. This means that during periods of rapid price movement, subscribers to this stream will not be sent every price
+- Pricing windows for different connections to the price stream are not all aligned in the same way (i.e. they are not all aligned to the top of the second). This means that during periods of rapid price movement, different subscribers may observe different prices depending on their alignment
+
+### `oanda_quote()`
+
+A convenience function that outputs to the console the latest one-line price quote for an instrument.
+
+The output format is as follows: instrument, timestamp, daily open, high, low and last prices, daily percentage change (from the open), and the pricing component (M for mid, B for bid, A for ask).
+
+```{r oandaq, eval = FALSE}
+oanda_quote("USD_JPY")
+#> USD_JPY 2021-10-02 14:40:44 open: 111.296  high: 111.489  low: 110.906  last: 111.051  %chg: 0.2206 M
+```
+
+### `oanda_view()`
+
+Prints a snapshot overview of the selected market, showing the relative performance of all constituents.
+
+The available markets are : 'fx' for major currency pairs, 'allfx' for all available currencies, 'bonds' for government bonds, 'commodities' for commodities, 'metals' for metals and 'stocks' for global stock markets. As partial matching is enabled, it is possible to type just the first letter e.g. 'c' for commodities.
+
+The first retrieved timestamp and the pricing component are printed, followed by the dataframe showing similar data to `oanda_quote()` for all instruments in the selected market. The data is ordered by the daily percentage change, from the most positive to the most negative.
+
+```{r oandav, eval = FALSE}
+oanda_view()
+Enter market [f]x [a]llfx [b]onds [c]ommodities [m]etals [s]tocks: c
+#> Retrieving commodities.........
+#> 2021-10-03 11:15:14 / M 
+#>               open    high     low    last    %chg
+#> WHEAT_USD    7.166   7.484   7.139   7.484  4.4376
+#> XCU_USD    4.09312 4.19604 4.04606 4.19368  2.4568
+#> WTICO_USD   75.244  76.134  74.364  75.861  0.8200
+#> CORN_USD     5.640   5.718   5.582   5.686  0.8156
+#> BCO_USD     79.358  80.266  78.419  79.975  0.7775
+#> TWIX_USD     665.0   671.4   661.4   664.9 -0.0150
+#> SOYBN_USD   12.725  12.806  12.601  12.643 -0.6444
+#> SUGAR_USD  0.19590 0.19670 0.19360 0.19410 -0.9188
+#> NATGAS_USD   5.898   5.948   5.480   5.493 -6.8667
+```
+
+### `oanda_positions()`
+
+Provides a summary of the aggregate positions held by OANDA fxTrade clients at each price level.
+
+The data is returned as a dataframe, with parameters saved as attributes which can be viewed with `look()`. A chart showing the percentage long and short positions at each price level is output to the graphical device.
+
+Please note that this feature has been implemented by OANDA only for certain major currency pairs and should be considered experimental.
 
 ## Available Instruments
 
@@ -194,7 +247,7 @@ Note: the above table is saved as internal package data and used as a fallback i
 
 ## Caching Implementation
 
-The package retrieves the following once only during a single session (the first time they are used) and caches the variables for further use throughout the session:
+The package retrieves the following once only during a session (the first time they are used) and caches the variables for further use:
 
 - OANDA fxTrade API key
 - OANDA fxTrade account associated with an fxTrade API key
@@ -210,6 +263,6 @@ Calling `oanda_switch()` will also clear all cached variables.
 
 OANDA fxTrade API developer website: <https://developer.oanda.com/>.
 
-Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.2.1, <https://CRAN.R-project.org/package=ichimoku>.
+Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.2.2, <https://CRAN.R-project.org/package=ichimoku>.
 
 ---

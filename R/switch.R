@@ -89,8 +89,7 @@ do_oanda <- function() {
       resp <- curl_fetch_memory(url = url, handle = h)
       if (resp$status_code != 200L) stop("server code ", resp$status_code, " - ",
                                          parse_json(rawToChar(resp$content)), call. = FALSE)
-      data <- parse_json(rawToChar(resp$content), simplifyVector = TRUE)[["accounts"]]
-      account <<- .subset2(data, "id")[1L]
+      account <<- parse_json(rawToChar(resp$content))[["accounts"]][[1L]][["id"]]
     }
     invisible(account)
   },
@@ -114,10 +113,18 @@ do_oanda <- function() {
         instruments <<- x_oanda_instruments
         return(instruments)
       }
-      data <- parse_json(rawToChar(resp$content), simplifyVector = TRUE)[["instruments"]]
-      ins <- data[order(data$name), c("name", "displayName", "type")]
-      attr(ins, "row.names") <- .set_row_names(dim(ins)[1L])
-      instruments <<- ins
+      vec <- unlist(parse_json(rawToChar(resp$content))[["instruments"]])
+      cnames <- attr(vec, "names")
+      vec <- unname(vec)
+      name <- vec[cnames == "name"]
+      dispName <- vec[cnames == "displayName"]
+      type <- vec[cnames == "type"]
+      reorder <- order(name)
+      df <- list(name[reorder], dispName[reorder], type[reorder])
+      attributes(df) <- list(names = c("name", "displayName", "type"),
+                             class = "data.frame",
+                             row.names = .set_row_names(length(reorder)))
+      instruments <<- df
     }
     instruments
   }
