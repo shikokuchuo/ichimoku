@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>OANDA Streaming Data — oanda_stream • ichimoku</title>
+<title>OANDA Position Book — oanda_positions • ichimoku</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,10 +48,9 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="OANDA Streaming Data — oanda_stream" />
-<meta property="og:description" content="Stream live price and liquidity data for major currencies, metals,
-    commodities, government bonds and stock indices from the OANDA fxTrade
-    Streaming API." />
+<meta property="og:title" content="OANDA Position Book — oanda_positions" />
+<meta property="og:description" content="Provides a summary of the aggregate positions held by OANDA fxTrade clients
+    at each price level." />
 <meta property="og:image" content="https://shikokuchuo.net/ichimoku/logo.png" />
 
 
@@ -150,18 +149,17 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>OANDA Streaming Data</h1>
+    <h1>OANDA Position Book</h1>
     <small class="dont-index">Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/R/oanda.R'><code>R/oanda.R</code></a></small>
-    <div class="hidden name"><code>oanda_stream.Rd</code></div>
+    <div class="hidden name"><code>oanda_positions.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Stream live price and liquidity data for major currencies, metals,
-    commodities, government bonds and stock indices from the OANDA fxTrade
-    Streaming API.</p>
+    <p>Provides a summary of the aggregate positions held by OANDA fxTrade clients
+    at each price level.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>oanda_stream</span><span class='op'>(</span><span class='va'>instrument</span>, <span class='va'>server</span>, <span class='va'>apikey</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>oanda_positions</span><span class='op'>(</span><span class='va'>instrument</span>, <span class='va'>server</span>, <span class='va'>apikey</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -190,39 +188,20 @@ interactively if not specified.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Invisible NULL on function exit. The streaming data is output as text
-    to the console.</p>
+    <p>Invisibly, a data frame of the position book with parameters saved as
+    attributes. A chart showing the percentage long and short positions at
+    each price level is output to the graphical device.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function connects to the OANDA fxTrade Streaming API. Use the
-    'Esc' key to stop the stream.</p>
-<p>The output contains ANSI escape codes for console formatting, but
-    otherwise represents the raw feed without omission. Note that as this is
-    a raw stream, returned times are in UTC.</p>
+    <p>This feature has been implemented by OANDA only for certain major
+    currency pairs and should be considered experimental.</p>
 <p>For further details please refer to the OANDA fxTrade API vignette by
     running: <code><a href='../articles/xoanda.html'>vignette("xoanda", package = "ichimoku")</a></code>.</p>
-    <h2 class="hasAnchor" id="streaming-data"><a class="anchor" href="#streaming-data"></a>Streaming Data</h2>
-
-    
-
-
-<p>Get a stream of Account Prices starting from when the request is made.
-    This pricing stream does not include every single price created for the
-    Account, but instead will provide at most 4 prices per second (every
-    250 milliseconds) for each instrument being requested. If more than one
-    price is created for an instrument during the 250 millisecond window,
-    only the price in effect at the end of the window is sent. This means
-    that during periods of rapid price movement, subscribers to this stream
-    will not be sent every price. Pricing windows for different connections
-    to the price stream are not all aligned in the same way (i.e. they are
-    not all aligned to the top of the second). This means that during
-    periods of rapid price movement, different subscribers may observe
-    different prices depending on their alignment.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># OANDA fxTrade API key required to run this example</span>
-<span class='fu'>oanda_stream</span><span class='op'>(</span><span class='st'>"USD_JPY"</span><span class='op'>)</span>
+<span class='fu'>oanda_positions</span><span class='op'>(</span><span class='st'>"USD_JPY"</span><span class='op'>)</span>
 <span class='op'>}</span>
 
 </div></pre>

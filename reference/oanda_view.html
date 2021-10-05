@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>OANDA Streaming Data — oanda_stream • ichimoku</title>
+<title>OANDA View Market Performance — oanda_view • ichimoku</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,10 +48,9 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="OANDA Streaming Data — oanda_stream" />
-<meta property="og:description" content="Stream live price and liquidity data for major currencies, metals,
-    commodities, government bonds and stock indices from the OANDA fxTrade
-    Streaming API." />
+<meta property="og:title" content="OANDA View Market Performance — oanda_view" />
+<meta property="og:description" content="Provides a snapshot overview of markets on an intraday basis, showing the
+    relative performance of individual constituents." />
 <meta property="og:image" content="https://shikokuchuo.net/ichimoku/logo.png" />
 
 
@@ -150,28 +149,37 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>OANDA Streaming Data</h1>
+    <h1>OANDA View Market Performance</h1>
     <small class="dont-index">Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/R/oanda.R'><code>R/oanda.R</code></a></small>
-    <div class="hidden name"><code>oanda_stream.Rd</code></div>
+    <div class="hidden name"><code>oanda_view.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Stream live price and liquidity data for major currencies, metals,
-    commodities, government bonds and stock indices from the OANDA fxTrade
-    Streaming API.</p>
+    <p>Provides a snapshot overview of markets on an intraday basis, showing the
+    relative performance of individual constituents.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>oanda_stream</span><span class='op'>(</span><span class='va'>instrument</span>, <span class='va'>server</span>, <span class='va'>apikey</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>oanda_view</span><span class='op'>(</span>
+  market <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"fx"</span>, <span class='st'>"allfx"</span>, <span class='st'>"bonds"</span>, <span class='st'>"commodities"</span>, <span class='st'>"metals"</span>, <span class='st'>"stocks"</span><span class='op'>)</span>,
+  price <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"M"</span>, <span class='st'>"B"</span>, <span class='st'>"A"</span><span class='op'>)</span>,
+  <span class='va'>server</span>,
+  <span class='va'>apikey</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>instrument</th>
-      <td><p>string containing the base currency and quote currency
-delimited by '_' or '-' (e.g. "USD_JPY" or "usd-jpy"). Use the
-<code><a href='oanda_instruments.html'>oanda_instruments</a></code> function to return a list of all valid
-instruments.</p></td>
+      <th>market</th>
+      <td><p>string specifying the market: 'fx' for major currency pairs,
+'allfx' for all available currencies, 'bonds' for government bonds,
+'commodities' for commodities, 'metals' for metals and 'stocks' for
+global stock markets.</p></td>
+    </tr>
+    <tr>
+      <th>price</th>
+      <td><p>[default "M"] pricing component, one of "M" (midpoint), "B" (bid)
+or "A" (ask).</p></td>
     </tr>
     <tr>
       <th>server</th>
@@ -190,39 +198,22 @@ interactively if not specified.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Invisible NULL on function exit. The streaming data is output as text
-    to the console.</p>
+    <p>A data.frame containing the daily open, high, low and last prices,
+    along with the percentage price change from the open, ordered by the
+    percentage change. The instrument names are set as row names.</p>
+<p>The first timestamp retrieved and the pricing component are printed to
+    the console as well as saved as attributes to the dataframe. The dataframe
+    is also printed to the console.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function connects to the OANDA fxTrade Streaming API. Use the
-    'Esc' key to stop the stream.</p>
-<p>The output contains ANSI escape codes for console formatting, but
-    otherwise represents the raw feed without omission. Note that as this is
-    a raw stream, returned times are in UTC.</p>
+    <p>This function is designed for interactive use.</p>
 <p>For further details please refer to the OANDA fxTrade API vignette by
     running: <code><a href='../articles/xoanda.html'>vignette("xoanda", package = "ichimoku")</a></code>.</p>
-    <h2 class="hasAnchor" id="streaming-data"><a class="anchor" href="#streaming-data"></a>Streaming Data</h2>
-
-    
-
-
-<p>Get a stream of Account Prices starting from when the request is made.
-    This pricing stream does not include every single price created for the
-    Account, but instead will provide at most 4 prices per second (every
-    250 milliseconds) for each instrument being requested. If more than one
-    price is created for an instrument during the 250 millisecond window,
-    only the price in effect at the end of the window is sent. This means
-    that during periods of rapid price movement, subscribers to this stream
-    will not be sent every price. Pricing windows for different connections
-    to the price stream are not all aligned in the same way (i.e. they are
-    not all aligned to the top of the second). This means that during
-    periods of rapid price movement, different subscribers may observe
-    different prices depending on their alignment.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># OANDA fxTrade API key required to run this example</span>
-<span class='fu'>oanda_stream</span><span class='op'>(</span><span class='st'>"USD_JPY"</span><span class='op'>)</span>
+<span class='fu'>oanda_view</span><span class='op'>(</span><span class='st'>"fx"</span><span class='op'>)</span>
 <span class='op'>}</span>
 
 </div></pre>

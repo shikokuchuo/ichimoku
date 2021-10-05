@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2</span>
       </span>
     </div>
 
@@ -157,7 +157,7 @@
     <p>Used by <code><a href='ichimoku.html'>ichimoku</a></code> to subset a vector of dates to trading days.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>tradingDays</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>holidays</span>, <span class='va'>...</span>, <span class='va'>noholidays</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>tradingDays</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>holidays</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -169,16 +169,11 @@
     <tr>
       <th>holidays</th>
       <td><p>(optional) a vector, or function which outputs a vector, of
-dates defined as holidays.</p></td>
+dates defined as holidays. Set to NULL for a continuously-traded market.</p></td>
     </tr>
     <tr>
       <th>...</th>
       <td><p>other arguments not used by this function.</p></td>
-    </tr>
-    <tr>
-      <th>noholidays</th>
-      <td><p>(optional) if set, bypasses the function logic and returns
-TRUE for all dates in 'x'.</p></td>
     </tr>
     </table>
 
@@ -186,12 +181,12 @@ TRUE for all dates in 'x'.</p></td>
 
     <p>A vector of logical values: TRUE if the corresponding element of 'x'
     is a weekday and not a holiday, FALSE otherwise.</p>
-<p>Or, if the parameter 'noholidays' is set (for example to TRUE or NA),
-    a vector of TRUE values of the same length as 'x'.</p>
+<p>Or, if the parameter 'holidays' is set to NULL, a vector of TRUE values
+    of the same length as 'x'.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>New Year's Day (01-01) and Christmas Day (12-25) are defined as
-    holidays by default regardless of the values supplied by 'holidays'.</p>
+    holidays by default if 'holidays' is not specified.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>dates</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span>from <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.POSIXlt.html'>as.POSIXct</a></span><span class='op'>(</span><span class='st'>"2020-01-01"</span><span class='op'>)</span>, by <span class='op'>=</span> <span class='st'>"1 day"</span>, length.out <span class='op'>=</span> <span class='fl'>7</span><span class='op'>)</span>
@@ -199,7 +194,7 @@ TRUE for all dates in 'x'.</p></td>
 </div><div class='output co'>#&gt; [1] "2020-01-01 UTC" "2020-01-02 UTC" "2020-01-03 UTC" "2020-01-04 UTC"
 #&gt; [5] "2020-01-05 UTC" "2020-01-06 UTC" "2020-01-07 UTC"</div><div class='input'><span class='fu'>tradingDays</span><span class='op'>(</span><span class='va'>dates</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] FALSE  TRUE  TRUE FALSE FALSE  TRUE  TRUE</div><div class='input'><span class='fu'>tradingDays</span><span class='op'>(</span><span class='va'>dates</span>, holidays <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"2020-01-02"</span>, <span class='st'>"2020-01-03"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE</div><div class='input'><span class='fu'>tradingDays</span><span class='op'>(</span><span class='va'>dates</span>, noholidays <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1]  TRUE FALSE FALSE FALSE FALSE  TRUE  TRUE</div><div class='input'><span class='fu'>tradingDays</span><span class='op'>(</span><span class='va'>dates</span>, holidays <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE</div><div class='input'>
 </div></pre>
   </div>

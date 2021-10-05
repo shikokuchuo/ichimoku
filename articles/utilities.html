@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2</span>
       </span>
     </div>
 
@@ -151,7 +151,7 @@
 <span class="fu"><a href="../reference/tradingDays.html">tradingDays</a></span><span class="op">(</span><span class="va">dates</span>, holidays <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2020-01-01"</span>, <span class="st">"2020-01-02"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; [1] FALSE FALSE  TRUE FALSE FALSE  TRUE  TRUE</span>
 <span class="fu"><a href="../reference/tradingDays.html">tradingDays</a></span><span class="op">(</span><span class="va">dates</span>, noholidays <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt; [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE</span></code></pre></div>
+<span class="co">#&gt; [1] FALSE  TRUE  TRUE FALSE FALSE  TRUE  TRUE</span></code></pre></div>
 </div>
 <div id="look" class="section level4">
 <h4 class="hasAnchor">
@@ -418,26 +418,23 @@
 <div id="df_append" class="section level4">
 <h4 class="hasAnchor">
 <a href="#df_append" class="anchor"></a>df_append()</h4>
-<p>Update a ‘data.frame’ object with new data. Can be used to append new updated time series data to an existing dataframe, where each observation is indexed by a unique timestamp in a column headed ‘time’.</p>
-<p>Takes 2 arguments:</p>
+<p>Update a ‘data.frame’ object with new data. Can be used to append new updated time series data to an existing dataframe, where each observation is indexed by a unique timestamp/identifier in a key column.</p>
+<p>Takes 4 arguments:</p>
 <ul>
 <li>
 <code>new</code> data.frame object containing new data.</li>
 <li>
 <code>old</code> data.frame object containing existing data.</li>
+<li>
+<code>key</code> [default ‘time’] column name used as key provided as a character string.</li>
+<li>
+<code>keep.attr</code> [default ‘timestamp’] name of an attribute in ‘new’ to retain if it is present, provided as a character string.</li>
 </ul>
 <p>Can be used to update price dataframes retrieved by <code><a href="../reference/oanda.html">oanda()</a></code>. The function is designed to update existing data with new values as they become available. As opposed to <code><a href="../reference/df_merge.html">df_merge()</a></code>, the data in ‘new’ will overwrite the data in ‘old’ rather than create duplicates.</p>
-<p>If the ‘timestamp’ attribute exists in ‘new’, for example in pricing data returned by <code><a href="../reference/oanda.html">oanda()</a></code>, this is retained. All other non-required attributes are dropped.</p>
+<p>If the attribute specified by ‘keep.attr’ is present in ‘new’, for example the ‘timestamp’ in pricing data returned by <code><a href="../reference/oanda.html">oanda()</a></code>, this is retained. If the attribute is not found in ‘new’, the argument has no effect. All other non-required attributes are dropped.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">data1</span> <span class="op">&lt;-</span> <span class="va">sample_ohlc_data</span><span class="op">[</span><span class="fl">7</span><span class="op">:</span><span class="fl">10</span>, <span class="op">]</span>
+<code class="sourceCode R"><span class="va">data1</span> <span class="op">&lt;-</span> <span class="va">sample_ohlc_data</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span>, <span class="op">]</span>
 <span class="va">data1</span>
-<span class="co">#&gt;          time  open  high   low close volume</span>
-<span class="co">#&gt; 7  2020-01-10 125.3 125.3 124.8 125.2   2548</span>
-<span class="co">#&gt; 8  2020-01-13 125.2 125.3 125.1 125.2   2946</span>
-<span class="co">#&gt; 9  2020-01-14 125.2 125.2 124.3 124.4   2796</span>
-<span class="co">#&gt; 10 2020-01-15 124.4 124.5 123.7 123.9   2879</span>
-<span class="va">data2</span> <span class="op">&lt;-</span> <span class="va">sample_ohlc_data</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span>, <span class="op">]</span>
-<span class="va">data2</span>
 <span class="co">#&gt;         time  open  high   low close volume</span>
 <span class="co">#&gt; 1 2020-01-02 123.0 123.1 122.5 122.7   1875</span>
 <span class="co">#&gt; 2 2020-01-03 122.7 122.8 122.6 122.8   1479</span>
@@ -447,7 +444,14 @@
 <span class="co">#&gt; 6 2020-01-09 124.8 125.4 124.5 125.3   1842</span>
 <span class="co">#&gt; 7 2020-01-10 125.3 125.3 124.8 125.2   2548</span>
 <span class="co">#&gt; 8 2020-01-13 125.2 125.3 125.1 125.2   2946</span>
-<span class="fu"><a href="../reference/df_append.html">df_append</a></span><span class="op">(</span><span class="va">data1</span>, <span class="va">data2</span><span class="op">)</span>
+<span class="va">data2</span> <span class="op">&lt;-</span> <span class="va">sample_ohlc_data</span><span class="op">[</span><span class="fl">7</span><span class="op">:</span><span class="fl">10</span>, <span class="op">]</span>
+<span class="va">data2</span>
+<span class="co">#&gt;          time  open  high   low close volume</span>
+<span class="co">#&gt; 7  2020-01-10 125.3 125.3 124.8 125.2   2548</span>
+<span class="co">#&gt; 8  2020-01-13 125.2 125.3 125.1 125.2   2946</span>
+<span class="co">#&gt; 9  2020-01-14 125.2 125.2 124.3 124.4   2796</span>
+<span class="co">#&gt; 10 2020-01-15 124.4 124.5 123.7 123.9   2879</span>
+<span class="fu"><a href="../reference/df_append.html">df_append</a></span><span class="op">(</span><span class="va">data2</span>, <span class="va">data1</span><span class="op">)</span>
 <span class="co">#&gt;          time  open  high   low close volume</span>
 <span class="co">#&gt; 1  2020-01-02 123.0 123.1 122.5 122.7   1875</span>
 <span class="co">#&gt; 2  2020-01-03 122.7 122.8 122.6 122.8   1479</span>
@@ -464,7 +468,7 @@
 <div id="references" class="section level2">
 <h2 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h2>
-<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.2.1, <a href="https://CRAN.R-project.org/package=ichimoku" class="uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
+<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.2.2, <a href="https://CRAN.R-project.org/package=ichimoku" class="uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
 <hr>
 </div>
   </div>

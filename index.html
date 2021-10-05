@@ -23,7 +23,7 @@
     cloud charts. Static and interactive visualizations with tools for
     creating, backtesting and development of quantitative ichimoku strategies.
     As described in Sasaki (1996, ISBN:4925152009), the technique is a refinement
-    on candlestick charting originating from Japan, now in widespread use in
+    on candlestick charting, originating from Japan and now in widespread use in
     technical analysis worldwide. Translating as one-glance equilibrium chart,
     it allows the price action and market structure of financial securities to
     be determined at-a-glance. Incorporates an interface with the OANDA
@@ -49,7 +49,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2</span>
       </span>
     </div>
 
@@ -121,7 +121,7 @@
 <!-- badges: start -->
 
 <p>Visualization and Tools for Ichimoku Kinko Hyo Strategies</p>
-<p>An implementation of ‘Ichimoku Kinko Hyo’, also commonly known as ‘cloud charts’. Static and interactive visualizations with tools for creating, backtesting and development of quantitative ‘ichimoku’ strategies. As described in Sasaki (1996, <a href="ISBN:4925152009" class="uri">ISBN:4925152009</a>), the technique is a refinement on candlestick charting originating from Japan, now in widespread use in technical analysis worldwide. Translating as ‘one-glance equilibrium chart’, it allows the price action and market structure of financial securities to be determined ‘at-a-glance’. Incorporates an interface with the OANDA fxTrade API <a href="https://developer.oanda.com/" class="uri">https://developer.oanda.com/</a> for retrieving historical and live streaming price data for major currencies, metals, commodities, government bonds and stock indices.</p>
+<p>An implementation of ‘Ichimoku Kinko Hyo’, also commonly known as ‘cloud charts’. Static and interactive visualizations with tools for creating, backtesting and development of quantitative ‘ichimoku’ strategies. As described in Sasaki (1996, <a href="ISBN:4925152009" class="uri">ISBN:4925152009</a>), the technique is a refinement on candlestick charting, originating from Japan and now in widespread use in technical analysis worldwide. Translating as ‘one-glance equilibrium chart’, it allows the price action and market structure of financial securities to be determined ‘at-a-glance’. Incorporates an interface with the OANDA fxTrade API <a href="https://developer.oanda.com/" class="uri">https://developer.oanda.com/</a> for retrieving historical and live streaming price data for major currencies, metals, commodities, government bonds and stock indices.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -173,24 +173,14 @@
 <div id="principal-ichimoku-functions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#principal-ichimoku-functions" class="anchor"></a>Principal ichimoku functions</h2>
-<div id="data" class="section level4">
+<div id="data--visualization" class="section level4">
 <h4 class="hasAnchor">
-<a href="#data" class="anchor"></a>Data</h4>
+<a href="#data--visualization" class="anchor"></a>Data &amp; Visualization</h4>
 <ul>
 <li><p><a href="https://shikokuchuo.net/ichimoku/reference/ichimoku.html"><code>ichimoku()</code></a> - to create an ichimoku object from price data.</p></li>
+<li><p><a href="https://shikokuchuo.net/ichimoku/reference/plot.ichimoku.html"><code>plot()</code></a> / <a href="https://shikokuchuo.net/ichimoku/reference/iplot.html"><code>iplot()</code></a> - to plot (interactive) cloud charts from ichimoku objects.</p></li>
 <li><p><a href="https://shikokuchuo.net/ichimoku/reference/archive.html"><code>archive()</code></a> - for reading/writing objects to/from archive files with data verification.</p></li>
 <li><p><a href="https://shikokuchuo.net/ichimoku/reference/oanda.html"><code>oanda()</code></a> - to retrieve price data from the OANDA fxTrade API.</p></li>
-<li><p><a href="https://shikokuchuo.net/ichimoku/reference/oanda_stream.html"><code>oanda_stream()</code></a> - to stream a live data feed from the OANDA fxTrade API.</p></li>
-</ul>
-</div>
-<div id="visualization" class="section level4">
-<h4 class="hasAnchor">
-<a href="#visualization" class="anchor"></a>Visualization</h4>
-<ul>
-<li><p><a href="https://shikokuchuo.net/ichimoku/reference/plot.ichimoku.html"><code>plot()</code></a> - to plot a cloud chart from an ichimoku object.</p></li>
-<li><p><a href="https://shikokuchuo.net/ichimoku/reference/iplot.html"><code>iplot()</code></a> - to plot an interactive cloud chart from an ichimoku object.</p></li>
-<li><p><a href="https://shikokuchuo.net/ichimoku/reference/oanda_chart.html"><code>oanda_chart()</code></a> - to plot real-time ichimoku cloud charts using OANDA data.</p></li>
-<li><p><a href="https://shikokuchuo.net/ichimoku/reference/oanda_studio.html"><code>oanda_studio()</code></a> - a complete live analysis environment using OANDA data implemented in R Shiny.</p></li>
 </ul>
 </div>
 <div id="strategies--ml" class="section level4">
@@ -201,6 +191,16 @@
 <li><p><a href="https://shikokuchuo.net/ichimoku/reference/stratcombine.html"><code>stratcombine()</code></a> - to create custom combined strategies.</p></li>
 <li><p><a href="https://shikokuchuo.net/ichimoku/reference/autostrat.html"><code>autostrat()</code></a> - to automatically evaluate and rank top-performing strategies.</p></li>
 <li><p><a href="https://shikokuchuo.net/ichimoku/reference/mlgrid.html"><code>mlgrid()</code></a> - to generate a numeric representation of the relationship between ichimoku cloud chart elements.</p></li>
+</ul>
+</div>
+<div id="real-time" class="section level4">
+<h4 class="hasAnchor">
+<a href="#real-time" class="anchor"></a>Real-time</h4>
+<ul>
+<li><p><a href="https://shikokuchuo.net/ichimoku/reference/oanda_chart.html"><code>oanda_chart()</code></a> - to plot real-time ichimoku cloud charts using OANDA data.</p></li>
+<li><p><a href="https://shikokuchuo.net/ichimoku/reference/oanda_studio.html"><code>oanda_studio()</code></a> - a complete live analysis environment using OANDA data implemented in R Shiny.</p></li>
+<li><p><a href="https://shikokuchuo.net/ichimoku/reference/oanda_stream.html"><code>oanda_stream()</code></a> / <a href="https://shikokuchuo.net/ichimoku/reference/oanda_quote.html"><code>oanda_quote()</code></a> - to obtain the latest live data stream / quote from the OANDA fxTrade API.</p></li>
+<li><p><a href="https://shikokuchuo.net/ichimoku/reference/oanda_view.html"><code>oanda_view()</code></a> - for a market overview showing the relative performance of constituents.</p></li>
 </ul>
 </div>
 </div>
@@ -218,7 +218,7 @@
 <a href="#references" class="anchor"></a>References</h2>
 <p>Sasaki, H. 佐々木 英信 (1996), <em>一目均衡表の研究 [ichimoku kinkouhyou no kenkyuu]</em>. Tokyo, Japan: Toushi Radar.</p>
 <p>‘OANDA’ and ‘fxTrade’ are trademarks owned by OANDA Corporation, an entity unaffiliated with the ichimoku package.</p>
-<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.2.1, <a href="https://CRAN.R-project.org/package=ichimoku" class="uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
+<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.2.2, <a href="https://CRAN.R-project.org/package=ichimoku" class="uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
 <p>–</p>
 <p>◈ ichimoku R package: <a href="https://shikokuchuo.net/ichimoku/" class="uri">https://shikokuchuo.net/ichimoku/</a>.</p>
 <p>Listed CRAN Finance Task View: <a href="https://CRAN.R-project.org/view=Finance" class="uri">https://CRAN.R-project.org/view=Finance</a>.</p>

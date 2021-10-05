@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2</span>
       </span>
     </div>
 
@@ -133,25 +133,27 @@
 <div id="setting-your-oanda-api-key" class="section level2">
 <h2 class="hasAnchor">
 <a href="#setting-your-oanda-api-key" class="anchor"></a>Setting your OANDA API Key</h2>
-<p>If the ‘keyring’ package is available on your machine, the OANDA API key (personal access token) can be set once and saved in your system credential store by using <code><a href="../reference/oanda_set_key.html">oanda_set_key()</a></code>. This will enable it to be retrieved automatically for all subsequent sessions.</p>
+<p>If the ‘keyring’ package is installed, the OANDA API key (personal access token) can be set once and saved in your system credential store by using <code><a href="../reference/oanda_set_key.html">oanda_set_key()</a></code>. This will enable it to be retrieved automatically for all subsequent sessions.</p>
 <p>Separate keys can be set for practice and live accounts; please choose the correct account type when prompted.</p>
 <p>If an access token is revoked and re-generated, please remember to set the API key again through the <code><a href="../reference/oanda_set_key.html">oanda_set_key()</a></code> function.</p>
 </div>
 <div id="using-a-live-account" class="section level2">
 <h2 class="hasAnchor">
 <a href="#using-a-live-account" class="anchor"></a>Using a Live Account</h2>
-<p>If you are using an access token for a live (real money) account, you will want to call <code><a href="../reference/oanda_switch.html">oanda_switch()</a></code> at the beginning of each session; this switches the default server from the practice server to the live server. Settings will persist only until the end of the session.</p>
+<p>If you are using an access token for a live (real money) account, you will want to call <code><a href="../reference/oanda_switch.html">oanda_switch()</a></code> at the beginning of each session; this switches the default server from the practice server to the live server. Settings will only persist until the end of the session.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://shikokuchuo.net/ichimoku/">ichimoku</a></span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/oanda_switch.html">oanda_switch</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; Default OANDA server switched to 'live'</span></code></pre></div>
-<p>Note: this package only contains functions for retrieving available instruments and price data. It does not contain code to implement any trading capability whatsoever. However, a personal access token can be used (outside of this package) for all operations on your account including placing orders and trades. Please be aware of this and take the appropriate precautions when using your access token.</p>
+<p>Note: this package only contains functions for retrieving available instruments and price data. It does not contain code to implement any trading capability whatsoever. Please be aware however, that a personal access token can be used (outside of this package) for all operations on your account including placing orders and trades, and take the appropriate precautions when using your live account token.</p>
 </div>
 <div id="the-oanda-functions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#the-oanda-functions" class="anchor"></a>The OANDA Functions</h2>
-<p>All of the OANDA functions in the package are prefixed by ‘oanda’ for clarity and ease of use.</p>
+<p>All of the OANDA functions in the package are prefixed by ‘oanda’ for clarity.</p>
+<p>Functions designed primarily for interactive use may be called without any arguments, e.g. <code><a href="../reference/oanda_stream.html">oanda_stream()</a></code> or <code><a href="../reference/oanda_view.html">oanda_view()</a></code>, in which case you will be further prompted to enter required arguments; these should be entered unquoted i.e. without any surrounding "".</p>
+<p>The ‘instrument’ argument is case-insensitive and the delimiter can be either ’_’ or ‘-’, such that both <code><a href="../reference/oanda.html">oanda("USD_JPY")</a></code> and <code><a href="../reference/oanda.html">oanda("usd-jpy")</a></code> would be acceptable.</p>
 <div id="oanda" class="section level3">
 <h3 class="hasAnchor">
 <a href="#oanda" class="anchor"></a><code>oanda()</code>
@@ -160,7 +162,7 @@
 <p>The arguments to the function are phrased identically to that of the API itself where relevant:</p>
 <ul>
 <li>
-<code>instrument</code> a string containing the base currency and quote currency delimited by a ’_’ (for example “USD_JPY”). Use the <code><a href="../reference/oanda_instruments.html">oanda_instruments()</a></code> function to return a list of all valid instruments</li>
+<code>instrument</code> string containing the base currency and quote currency delimited by a ’_’ (e.g. “USD_JPY”). Use the <code><a href="../reference/oanda_instruments.html">oanda_instruments()</a></code> function to return a list of all valid instruments</li>
 <li>
 <code>granularity</code> [default “D”] the granularity of the price data to fetch, one of “M”, “W”, “D”, “H12”, “H8”, “H6”, “H4”, “H3”, “H2”, “H1”, “M30”, “M15”, “M10”, “M5”, “M4”, “M2”, “M1”, “S30”, “S15”, “S10”, “S5”</li>
 <li>
@@ -178,11 +180,11 @@
 </ul>
 <p>Note: if both <code>from</code> and <code>to</code> are specified and the request would result in over 5000 periods being returned, the function automatically prompts the user to confirm if multiple requests should be submitted. Unless the user response is “n” or “no”, the data will proceed to be downloaded with rate limiting in place as per API best practices, and merged together into a single dataframe.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/oanda.html">oanda</a></span><span class="op">(</span><span class="st">"USD_JPY"</span>, count <span class="op">=</span> <span class="fl">3</span>, from <span class="op">=</span> <span class="st">"2010-11-01"</span>, price <span class="op">=</span> <span class="st">"B"</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt;                  time   open   high    low  close volume complete
-#&gt; 1 2010-11-01 21:00:00 80.275 81.504 80.225 80.501  22291     TRUE
-#&gt; 2 2010-11-02 21:00:00 80.504 80.956 80.460 80.617  13795     TRUE
-#&gt; 3 2010-11-03 21:00:00 80.632 81.585 80.594 81.069  22204     TRUE</code></pre>
+<code class="sourceCode R"><span class="fu"><a href="../reference/oanda.html">oanda</a></span><span class="op">(</span><span class="st">"USD_JPY"</span>, count <span class="op">=</span> <span class="fl">3</span>, from <span class="op">=</span> <span class="st">"2010-11-01"</span>, price <span class="op">=</span> <span class="st">"B"</span><span class="op">)</span>
+<span class="co">#&gt;                  time   open   high    low  close volume complete</span>
+<span class="co">#&gt; 1 2010-11-01 21:00:00 80.275 81.504 80.225 80.501  22291     TRUE</span>
+<span class="co">#&gt; 2 2010-11-02 21:00:00 80.504 80.956 80.460 80.617  13795     TRUE</span>
+<span class="co">#&gt; 3 2010-11-03 21:00:00 80.632 81.585 80.594 81.069  22204     TRUE</span></code></pre></div>
 <p>The returned object is a dataframe with the following columns: ‘time’, ‘open’, ‘high’, ‘low’, ‘close’, ‘volume’ and ‘complete’.</p>
 <ul>
 <li><p><strong>volume</strong> should normally be disregarded as this reflects the trading volume registered by OANDA and may not be reflective of the broader market</p></li>
@@ -194,23 +196,6 @@
 <li><p>The API data sometimes includes data for non-trading days with very low volumes. This is more common for older data and less so with more recent data. These may represent OTC trades that occurred over the OANDA platform, but nevertheless do not reflect market rates. These are automatically excluded from the data returned as they would otherwise produce spurious results if used with <code><a href="../reference/ichimoku.html">ichimoku()</a></code></p></li>
 </ul>
 </div>
-<div id="oanda_stream" class="section level3">
-<h3 class="hasAnchor">
-<a href="#oanda_stream" class="anchor"></a><code>oanda_stream()</code>
-</h3>
-<p>Connect to the OANDA fxTrade streaming API and stream a list of prices generated by OANDA.</p>
-<p>Requires a single argument, the ‘instrument’ to stream data for (please refer to <code><a href="../reference/oanda.html">oanda()</a></code> above).</p>
-<p>The ‘server’ and ‘apikey’ arguments are also available if required.</p>
-<p><img src="oanda-stream.jpg"></p>
-<p>The stream output contains injected ANSI escape codes for formatting the console output, but otherwise represents the raw data feed without omission. As this is a raw feed, please note that the returned times are in UTC.</p>
-<p>The following should be noted from the streaming API documentation:</p>
-<ul>
-<li>Get a stream of Account Prices starting from when the request is made</li>
-<li>This pricing stream does not include every single price created for the Account, but instead will provide at most 4 prices per second (every 250 milliseconds) for each instrument being requested</li>
-<li>If more than one price is created for an instrument during the 250 millisecond window, only the price in effect at the end of the window is sent. This means that during periods of rapid price movement, subscribers to this stream will not be sent every price</li>
-<li>Pricing windows for different connections to the price stream are not all aligned in the same way (i.e. they are not all aligned to the top of the second). This means that during periods of rapid price movement, different subscribers may observe different prices depending on their alignment</li>
-</ul>
-</div>
 <div id="oanda_chart" class="section level3">
 <h3 class="hasAnchor">
 <a href="#oanda_chart" class="anchor"></a><code>oanda_chart()</code>
@@ -219,20 +204,20 @@
 <p>The arguments are identical to <code><a href="../reference/oanda.html">oanda()</a></code> above with the addition of:</p>
 <ul>
 <li>
-<code>refresh</code> set the refresh rate of the chart in seconds, with a minimum of 1</li>
+<code>refresh</code> [default 5] set the refresh rate of the chart in seconds, with a minimum of 1</li>
 <li>
 <code>...</code> additional parameters passed onto <code><a href="../reference/ichimoku.html">ichimoku()</a></code> for calculating the ichimoku cloud or <code><a href="../reference/autoplot.html">autoplot()</a></code> to set chart parameters</li>
 <li>
 <code>periods</code> [default c(9L, 26L, 52L)] a vector defining the length of periods used for the cloud. This parameter should not normally be modified as using other values would be invalid in the context of traditional Ichimoku analysis</li>
 </ul>
 <p>The arguments ‘from’ and ‘to’ are excluded as they are not relevant in this context.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># For a live Palladium price chart:</span>
 <span class="fu"><a href="../reference/oanda_chart.html">oanda_chart</a></span><span class="op">(</span><span class="st">"XPD_USD"</span><span class="op">)</span></code></pre></div>
-<p>If using RStudio, please switch to the plots plane (if not already in focus) to view the chart.</p>
+<p>In RStudio, please switch to the plots plane to view the chart if not already in focus.</p>
 <p>Note that the periods displayed on the chart will be fewer than the ‘count’ specified - using default cloud periods, the first 77 datapoints will be excluded. This is by design to ensure a full cloud is displayed (i.e. there are no missing values for any cloud lines at the start of the data). Please take this into account when setting the ‘count’ parameter.</p>
 <p>On exit from the function, the ichimoku object underlying the chart will be returned (invisibly). This allows the data to be saved simply by assigning to an object.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># To access the data, simply assign the return value to an object:</span>
 <span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/oanda_chart.html">oanda_chart</a></span><span class="op">(</span><span class="st">"XPD_USD"</span><span class="op">)</span></code></pre></div>
 </div>
@@ -240,9 +225,9 @@
 <h3 class="hasAnchor">
 <a href="#oanda_studio" class="anchor"></a><code>oanda_studio()</code>
 </h3>
-<p>Create an interactive session in an R Shiny app for working with real-time Ichimoku cloud charts. Provides a live analysis environment where parameters may be set interactively as required. The cursor infotip provides ready access to the data directly from the chart.</p>
+<p>Create an interactive R Shiny session for working with real-time Ichimoku cloud charts. Provides a live analysis environment where parameters may be set interactively as required. The cursor infotip provides ready access to the data directly from the chart.</p>
 <p>As all parameters can be set interactively in-app, <code><a href="../reference/oanda_studio.html">oanda_studio()</a></code> may be called without specifying any arguments. Otherwise, parameters may be set beforehand in the same way as <code><a href="../reference/oanda_chart.html">oanda_chart()</a></code>.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/oanda_studio.html">oanda_studio</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="oanda-studio.jpg"></p>
 <p>The following additional parameters can be used to customise the behaviour of the Shiny environment:</p>
@@ -258,9 +243,76 @@
 <h4 class="hasAnchor">
 <a href="#downloading-data" class="anchor"></a>Downloading Data</h4>
 <p>The ichimoku object underlying the live cloud chart can be saved by selecting the Data Archive button.</p>
-<p>This button uses <code><a href="../reference/archive.html">archive()</a></code> to save the ichimoku object to disk. The filename will be of the form: <code>instrument_granularity_price.rda</code>, e.g. <code>SUGAR_USD_D_A.rda</code>. If confirmed, the file is saved to the browser’s default download location.</p>
-<p>To read back the file, use <code><a href="../reference/archive.html">archive()</a></code> supplying the quoted file path / name, for example: <code><a href="../reference/archive.html">archive("~/Downloads/SUGAR_USD_D_A.rda")</a></code>.</p>
+<p>This button uses <code><a href="../reference/archive.html">archive()</a></code> to save the ichimoku object to disk. The filename will be of the form: <code>instrument_granularity_price.rda</code>, e.g. <code>SUGAR_USD_D_A.rda</code>. If confirmed, the file is saved to the browser’s default download location. Note that files with the same name are not overwritten but instead the filename is made unique.</p>
+<p>To read back the file, use <code><a href="../reference/archive.html">archive()</a></code>:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Supply the quoted file path / name, for example:</span>
+<span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/archive.html">archive</a></span><span class="op">(</span><span class="st">"~/Downloads/SUGAR_USD_D_A.rda"</span><span class="op">)</span>
+
+<span class="co"># Or alternatively, choose the saved file interactively using a system dialog:</span>
+<span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/archive.html">archive</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 </div>
+</div>
+<div id="oanda_stream" class="section level3">
+<h3 class="hasAnchor">
+<a href="#oanda_stream" class="anchor"></a><code>oanda_stream()</code>
+</h3>
+<p>Connect to the OANDA fxTrade streaming API and stream a list of prices generated by OANDA.</p>
+<p>Requires a single argument, the ‘instrument’ to stream data for.</p>
+<p>The ‘server’ and ‘apikey’ arguments are also available if required.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/oanda_stream.html">oanda_stream</a></span><span class="op">(</span><span class="st">"UK10YB_GBP"</span><span class="op">)</span>
+<span class="co">#&gt; Streaming data... Press 'Esc' to return</span>
+<span class="co">#&gt; type:PRICE  time:2021-10-01T16:59:51.377314414Z  </span>
+<span class="co">#&gt; bids: price:126.500  liquidity:10000   asks: price:126.540  liquidity:10000  </span>
+<span class="co">#&gt; closeoutBid:126.500  closeoutAsk:126.540  status:non-tradeable  tradeable:false  instrument:UK10YB_GBP</span></code></pre></div>
+<p>The stream output contains injected ANSI escape codes for formatting the console output, but otherwise represents the raw data feed without omission. As this is a raw feed, please note that the returned times are in UTC.</p>
+<p>The following should be noted from the streaming API documentation:</p>
+<ul>
+<li>Get a stream of Account Prices starting from when the request is made. This pricing stream does not include every single price created for the Account, but instead will provide at most 4 prices per second (every 250 milliseconds) for each instrument being requested</li>
+<li>If more than one price is created for an instrument during the 250 millisecond window, only the price in effect at the end of the window is sent. This means that during periods of rapid price movement, subscribers to this stream will not be sent every price</li>
+<li>Pricing windows for different connections to the price stream are not all aligned in the same way (i.e. they are not all aligned to the top of the second). This means that during periods of rapid price movement, different subscribers may observe different prices depending on their alignment</li>
+</ul>
+</div>
+<div id="oanda_quote" class="section level3">
+<h3 class="hasAnchor">
+<a href="#oanda_quote" class="anchor"></a><code>oanda_quote()</code>
+</h3>
+<p>A convenience function that outputs to the console the latest one-line price quote for an instrument.</p>
+<p>The output format is as follows: instrument, timestamp, daily open, high, low and last prices, daily percentage change (from the open), and the pricing component (M for mid, B for bid, A for ask).</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/oanda_quote.html">oanda_quote</a></span><span class="op">(</span><span class="st">"USD_JPY"</span><span class="op">)</span>
+<span class="co">#&gt; USD_JPY 2021-10-02 14:40:44 open: 111.296  high: 111.489  low: 110.906  last: 111.051  %chg: 0.2206 M</span></code></pre></div>
+</div>
+<div id="oanda_view" class="section level3">
+<h3 class="hasAnchor">
+<a href="#oanda_view" class="anchor"></a><code>oanda_view()</code>
+</h3>
+<p>Prints a snapshot overview of the selected market, showing the relative performance of all constituents.</p>
+<p>The available markets are : ‘fx’ for major currency pairs, ‘allfx’ for all available currencies, ‘bonds’ for government bonds, ‘commodities’ for commodities, ‘metals’ for metals and ‘stocks’ for global stock markets. As partial matching is enabled, it is possible to type just the first letter e.g. ‘c’ for commodities.</p>
+<p>The first retrieved timestamp and the pricing component are printed, followed by the dataframe showing similar data to <code><a href="../reference/oanda_quote.html">oanda_quote()</a></code> for all instruments in the selected market. The data is ordered by the daily percentage change, from the most positive to the most negative.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw">oanda_view</span>()</span>
+<span id="cb9-2"><a href="#cb9-2"></a>Enter market [f]x [a]llfx [b]onds [c]ommodities [m]etals [s]tocks<span class="op">:</span><span class="st"> </span>c</span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="co">#&gt; Retrieving commodities.........</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="co">#&gt; 2021-10-03 11:15:14 / M </span></span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="co">#&gt;               open    high     low    last    %chg</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="co">#&gt; WHEAT_USD    7.166   7.484   7.139   7.484  4.4376</span></span>
+<span id="cb9-7"><a href="#cb9-7"></a><span class="co">#&gt; XCU_USD    4.09312 4.19604 4.04606 4.19368  2.4568</span></span>
+<span id="cb9-8"><a href="#cb9-8"></a><span class="co">#&gt; WTICO_USD   75.244  76.134  74.364  75.861  0.8200</span></span>
+<span id="cb9-9"><a href="#cb9-9"></a><span class="co">#&gt; CORN_USD     5.640   5.718   5.582   5.686  0.8156</span></span>
+<span id="cb9-10"><a href="#cb9-10"></a><span class="co">#&gt; BCO_USD     79.358  80.266  78.419  79.975  0.7775</span></span>
+<span id="cb9-11"><a href="#cb9-11"></a><span class="co">#&gt; TWIX_USD     665.0   671.4   661.4   664.9 -0.0150</span></span>
+<span id="cb9-12"><a href="#cb9-12"></a><span class="co">#&gt; SOYBN_USD   12.725  12.806  12.601  12.643 -0.6444</span></span>
+<span id="cb9-13"><a href="#cb9-13"></a><span class="co">#&gt; SUGAR_USD  0.19590 0.19670 0.19360 0.19410 -0.9188</span></span>
+<span id="cb9-14"><a href="#cb9-14"></a><span class="co">#&gt; NATGAS_USD   5.898   5.948   5.480   5.493 -6.8667</span></span></code></pre></div>
+</div>
+<div id="oanda_positions" class="section level3">
+<h3 class="hasAnchor">
+<a href="#oanda_positions" class="anchor"></a><code>oanda_positions()</code>
+</h3>
+<p>Provides a summary of the aggregate positions held by OANDA fxTrade clients at each price level.</p>
+<p>The data is returned as a dataframe, with parameters saved as attributes which can be viewed with <code><a href="../reference/look.html">look()</a></code>. A chart showing the percentage long and short positions at each price level is output to the graphical device.</p>
+<p>Please note that this feature has been implemented by OANDA only for certain major currency pairs and should be considered experimental.</p>
 </div>
 </div>
 <div id="available-instruments" class="section level2">
@@ -268,7 +320,7 @@
 <a href="#available-instruments" class="anchor"></a>Available Instruments</h2>
 <p>The list of financial instruments available for your account may be retrieved by <code><a href="../reference/oanda_instruments.html">oanda_instruments()</a></code>. The available instruments are also automatically populated as an input in <code><a href="../reference/oanda_studio.html">oanda_studio()</a></code>.</p>
 <p>The list below serves as a reference only and may differ from those actually available for your account type and/or country/region.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/oanda_instruments.html">oanda_instruments</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>#&gt;           name     displayName     type
 #&gt; 1    AU200_AUD   Australia 200      CFD
@@ -398,7 +450,7 @@
 <div id="caching-implementation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#caching-implementation" class="anchor"></a>Caching Implementation</h2>
-<p>The package retrieves the following once only during a single session (the first time they are used) and caches the variables for further use throughout the session:</p>
+<p>The package retrieves the following once only during a session (the first time they are used) and caches the variables for further use:</p>
 <ul>
 <li>OANDA fxTrade API key</li>
 <li>OANDA fxTrade account associated with an fxTrade API key</li>
@@ -412,7 +464,7 @@
 <a href="#references" class="anchor"></a>References</h2>
 <p>‘OANDA’ and ‘fxTrade’ are trademarks owned by OANDA Corporation, an entity unaffiliated with the ichimoku package.</p>
 <p>OANDA fxTrade API developer website: <a href="https://developer.oanda.com/" class="uri">https://developer.oanda.com/</a>.</p>
-<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.2.1, <a href="https://CRAN.R-project.org/package=ichimoku" class="uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
+<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.2.2, <a href="https://CRAN.R-project.org/package=ichimoku" class="uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
 <hr>
 </div>
   </div>

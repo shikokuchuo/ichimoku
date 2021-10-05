@@ -61,6 +61,12 @@
     <loc>https://shikokuchuo.net/ichimoku/reference/oanda_instruments.html</loc>
   </url>
   <url>
+    <loc>https://shikokuchuo.net/ichimoku/reference/oanda_positions.html</loc>
+  </url>
+  <url>
+    <loc>https://shikokuchuo.net/ichimoku/reference/oanda_quote.html</loc>
+  </url>
+  <url>
     <loc>https://shikokuchuo.net/ichimoku/reference/oanda_set_key.html</loc>
   </url>
   <url>
@@ -71,6 +77,9 @@
   </url>
   <url>
     <loc>https://shikokuchuo.net/ichimoku/reference/oanda_switch.html</loc>
+  </url>
+  <url>
+    <loc>https://shikokuchuo.net/ichimoku/reference/oanda_view.html</loc>
   </url>
   <url>
     <loc>https://shikokuchuo.net/ichimoku/reference/plot.ichimoku.html</loc>

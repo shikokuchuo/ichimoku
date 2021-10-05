@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2</span>
       </span>
     </div>
 
@@ -144,7 +144,7 @@
 <div id="context" class="section level3">
 <h3 class="hasAnchor">
 <a href="#context" class="anchor"></a>Context</h3>
-<p>Ichimoku analysis is the latest refinement in candlestick charting techniques, which also originated from Japan back in the 18th century. Developed earlier in the 20th century by 一目山人 <em>Ichimoku, Sanjin</em>, the pen name of 細田吾一 <em>Hosoda, Goichi</em>, his work was finally published in 1969 as the seminal <em>「一目均衡表」 [ichimoku kinkou hyou]</em>. It gained popularity especially after the publication of Sasaki’s <em>「一目均衡表の研究」 [ichimoku kinkouhyou no kenkyuu]</em> in 1996, and is now widely-used in technical analysis worldwide.</p>
+<p>Ichimoku analysis is the latest refinement in candlestick charting techniques, which also originated from Japan. Developed by 一目山人 <em>Ichimoku, Sanjin</em>, the pen name of 細田吾一 <em>Hosoda, Goichi</em>, his work was published in 1969 as the seminal <em>「一目均衡表」 [ichimoku kinkou hyou]</em>. It gained popularity in Japan especially after the publication of Sasaki’s <em>「一目均衡表の研究」 [ichimoku kinkouhyou no kenkyuu]</em> in 1996, and is now widely-used in technical analysis worldwide.</p>
 <p>The ichimoku time periods have traditionally been calculated as 9, 26 and 52 based on manual data analysis performed in Japan in a pre-computer age where there was a 6-day working week resulting in 26 average trading days in a month. Although this bears little relevance to the current day, the use of these time periods has persisted as an ‘industry norm’ or ‘accepted practice’. To use other periods would be meaningless in a sense as everyone uses these parameters and ‘market psychology’ can and often does create its own realities, independent of any fundamentals.</p>
 <p>However, there is no reason for the technique not to evolve, and to reflect changing trading realities perhaps other parameters will become more relevant in the collective psychology. For this reason, the length of these periods can be freely set in the ‘ichimoku’ package. However please do so only with caution and note that using other periods invalidates the traditional interpretations of Ichimoku Kinko Hyo.</p>
 <p>Finally, the use originated with daily candlesticks, and the most valid interpretation remains for daily data. However, it is equally used today for both shorter, e.g. 4-hour or hourly, and longer, e.g. weekly or monthly, charts.</p>
@@ -158,7 +158,7 @@
 <div id="data" class="section level3">
 <h3 class="hasAnchor">
 <a href="#data" class="anchor"></a>Data</h3>
-<p>ichimoku works with data frames and tabular data. The <code><a href="../reference/ichimoku.html">ichimoku()</a></code> function handles as input xts, data.frame, data.table, tibble, matrix, and other data.frame compatible objects.</p>
+<p>ichimoku works with data frames and tabular data. The <code><a href="../reference/ichimoku.html">ichimoku()</a></code> function handles as input xts, data.frame, data.table, tibble, tsibble, matrix, and other data.frame compatible objects.</p>
 <p>ichimoku incorporates an interface with the OANDA fxTrade API to return data for major currencies, metals, commodities, government bonds and stock indices. Please refer to the <a href="xoanda.html">OANDA vignette</a>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># ichimoku can create clouds directly from OANDA data, for example:</span>
@@ -275,9 +275,9 @@
 <div id="defining-custom-holidays" class="section level4">
 <h4 class="hasAnchor">
 <a href="#defining-custom-holidays" class="anchor"></a>Defining custom holidays</h4>
-<p>When calculating the future cloud for daily data, <code><a href="../reference/ichimoku.html">ichimoku()</a></code> makes a call to the <code><a href="../reference/tradingDays.html">tradingDays()</a></code> helper function to ensure that future dates fall on trading days (i.e. not weekends or holidays). By default, New Year’s and Christmas day are defined as holidays as these are for all purposes universal across markets. These defaults should be acceptable for general use.</p>
-<p>To define other dates as non-trading days, additional custom holidays may be supplied via a ‘holidays’ argument to <code><a href="../reference/ichimoku.html">ichimoku()</a></code> which is then passed on to the <code><a href="../reference/tradingDays.html">tradingDays()</a></code> function.</p>
-<p>If the relevant market trades on a 24/7 basis, the parameter <code>noholidays</code> can be specified. This will bypass the logic of <code><a href="../reference/tradingDays.html">tradingDays()</a></code> and use all dates for calculating the future cloud.</p>
+<p>When calculating the future cloud for daily data, <code><a href="../reference/ichimoku.html">ichimoku()</a></code> makes a call to the <code><a href="../reference/tradingDays.html">tradingDays()</a></code> helper function to ensure that future dates fall on trading days (i.e. not weekends or holidays). By default, New Year’s and Christmas day are defined as holidays if the ‘holidays’ argument is not specified. These defaults should be acceptable for general use.</p>
+<p>To define other dates as non-trading days, a vector of custom holidays may be supplied via a ‘holidays’ argument to <code><a href="../reference/ichimoku.html">ichimoku()</a></code> which is then passed on to the <code><a href="../reference/tradingDays.html">tradingDays()</a></code> function.</p>
+<p>If the relevant market trades continuously on a 24/7 basis, specify ‘holidays = NULL’. This will bypass the logic of <code><a href="../reference/tradingDays.html">tradingDays()</a></code> and return all dates for calculating the future cloud.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Holidays can be specified directly via a vector of dates:</span>
 <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span>, holidays <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2020-01-13"</span>, <span class="st">"2020-02-11"</span>, <span class="st">"2020-02-24"</span><span class="op">)</span><span class="op">)</span>
@@ -287,7 +287,7 @@
 <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span>, holidays <span class="op">=</span> <span class="fu">timeDate</span><span class="fu">::</span><span class="fu">holidayNYSE</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># For a market that trades 24/7:</span>
-<span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span>, noholidays <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span>, holidays <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
 </div>
 </div>
 <div id="plot" class="section level3">
@@ -402,7 +402,7 @@
 <div id="reading" class="section level4">
 <h4 class="hasAnchor">
 <a href="#reading" class="anchor"></a>Reading</h4>
-<p><code><a href="../reference/archive.html">archive()</a></code> for read operations takes a single argument: the file path/name of the file to be read. The return value of the function can be assigned to an object. A confirmation is printed to the console once the file has been read.</p>
+<p><code><a href="../reference/archive.html">archive()</a></code> for read operations takes a single argument: the file path/name of the file to be read. Alternatively, if no arguments are specified, a system dialog will be opened allowing a file to be chosen interactively. The return value of the function can be assigned to an object. A confirmation is printed to the console once the file has been read.</p>
 </div>
 <div id="data-integrity-verification" class="section level4">
 <h4 class="hasAnchor">
@@ -556,7 +556,7 @@
 <h2 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h2>
 <p>Sasaki, H. 佐々木 英信 (1996), <em>一目均衡表の研究 [ichimoku kinkouhyou no kenkyuu]</em>. Tokyo, Japan: Toushi Radar.</p>
-<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.2.1, <a href="https://CRAN.R-project.org/package=ichimoku" class="uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
+<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.2.2, <a href="https://CRAN.R-project.org/package=ichimoku" class="uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
 <hr>
 </div>
   </div>
