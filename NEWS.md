@@ -1,3 +1,9 @@
+# ichimoku 1.2.2.1
+
+#### Updates:
+
+* Fixes sign of %chg for `oanda_quote()`.
+
 # ichimoku 1.2.2
 
 #### New features:
@@ -11,7 +17,7 @@
 #### Updates:
 
 * Accessibility improvements: default 'original' theme adjusted to accommodate colour vision deficiency.
-* All OANDA functions now prompt for missing required arguments instead of returning errors.
+* Primarily interactive OANDA functions now prompt for missing required arguments instead of returning errors.
 * For ease of use, the 'instrument' argument in all OANDA functions is now case-insensitive and the delimiter may be supplied as either '_' or '-', so both `oanda("usd-jpy")` and `oanda("USD_JPY")` are acceptable.
 * `tradingDays()` argument 'noholidays' removed in favour of 'holidays = NULL'. Logic changed slightly so that default holidays are applied only if 'holidays' is not specified.
 * Minor performance improvements to OANDA and ML layer functions.

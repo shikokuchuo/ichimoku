@@ -860,7 +860,7 @@ oanda_quote <- function(instrument, price = c("M", "B", "A"), server, apikey) {
   server <- if (missing(server)) do_oanda$getServer() else match.arg(server, c("practice", "live"))
   data <- getPrices(instrument = instrument, granularity = "D", count = 1, price = price,
                     server = server, apikey = apikey, .validate = FALSE)
-  pctchg <- round(100 * (as.numeric(data[["o"]]) / as.numeric(data[["c"]]) - 1), digits = 4L)
+  pctchg <- round(100 * (as.numeric(data[["c"]]) / as.numeric(data[["o"]]) - 1), digits = 4L)
   cat(instrument, data[["t"]], "open:", data[["o"]], " high:", data[["h"]], " low:", data[["l"]],
       " last:\u001b[7m", data[["c"]], "\u001b[27m %chg:", pctchg, price)
 }

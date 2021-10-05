@@ -194,7 +194,7 @@ The output format is as follows: instrument, timestamp, daily open, high, low an
 
 ```{r oandaq, eval = FALSE}
 oanda_quote("USD_JPY")
-#> USD_JPY 2021-10-02 14:40:44 open: 111.296  high: 111.489  low: 110.906  last: 111.051  %chg: 0.2206 M
+#> USD_JPY 2021-10-05 16:29:44 open: 110.931  high: 111.564  low: 110.871  last: 111.398  %chg: 0.421 M
 ```
 
 ### `oanda_view()`
