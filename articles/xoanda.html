@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2.2</span>
       </span>
     </div>
 
@@ -293,18 +293,18 @@
 <p>The first retrieved timestamp and the pricing component are printed, followed by the dataframe showing similar data to <code><a href="../reference/oanda_quote.html">oanda_quote()</a></code> for all instruments in the selected market. The data is ordered by the daily percentage change, from the most positive to the most negative.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw">oanda_view</span>()</span>
 <span id="cb9-2"><a href="#cb9-2"></a>Enter market [f]x [a]llfx [b]onds [c]ommodities [m]etals [s]tocks<span class="op">:</span><span class="st"> </span>c</span>
-<span id="cb9-3"><a href="#cb9-3"></a><span class="co">#&gt; Retrieving commodities.........</span></span>
-<span id="cb9-4"><a href="#cb9-4"></a><span class="co">#&gt; 2021-10-03 11:15:14 / M </span></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="co">#&gt; Retrieving commodities [.........]</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="co">#&gt; 2021-10-06 10:39:32 / M </span></span>
 <span id="cb9-5"><a href="#cb9-5"></a><span class="co">#&gt;               open    high     low    last    %chg</span></span>
-<span id="cb9-6"><a href="#cb9-6"></a><span class="co">#&gt; WHEAT_USD    7.166   7.484   7.139   7.484  4.4376</span></span>
-<span id="cb9-7"><a href="#cb9-7"></a><span class="co">#&gt; XCU_USD    4.09312 4.19604 4.04606 4.19368  2.4568</span></span>
-<span id="cb9-8"><a href="#cb9-8"></a><span class="co">#&gt; WTICO_USD   75.244  76.134  74.364  75.861  0.8200</span></span>
-<span id="cb9-9"><a href="#cb9-9"></a><span class="co">#&gt; CORN_USD     5.640   5.718   5.582   5.686  0.8156</span></span>
-<span id="cb9-10"><a href="#cb9-10"></a><span class="co">#&gt; BCO_USD     79.358  80.266  78.419  79.975  0.7775</span></span>
-<span id="cb9-11"><a href="#cb9-11"></a><span class="co">#&gt; TWIX_USD     665.0   671.4   661.4   664.9 -0.0150</span></span>
-<span id="cb9-12"><a href="#cb9-12"></a><span class="co">#&gt; SOYBN_USD   12.725  12.806  12.601  12.643 -0.6444</span></span>
-<span id="cb9-13"><a href="#cb9-13"></a><span class="co">#&gt; SUGAR_USD  0.19590 0.19670 0.19360 0.19410 -0.9188</span></span>
-<span id="cb9-14"><a href="#cb9-14"></a><span class="co">#&gt; NATGAS_USD   5.898   5.948   5.480   5.493 -6.8667</span></span></code></pre></div>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="co">#&gt; NATGAS_USD   6.267   6.412   6.162   6.318  0.8138</span></span>
+<span id="cb9-7"><a href="#cb9-7"></a><span class="co">#&gt; SOYBN_USD   12.659  12.676  12.629  12.642 -0.1343</span></span>
+<span id="cb9-8"><a href="#cb9-8"></a><span class="co">#&gt; WHEAT_USD    7.370   7.422   7.338   7.343 -0.3664</span></span>
+<span id="cb9-9"><a href="#cb9-9"></a><span class="co">#&gt; SUGAR_USD  0.19204 0.19224 0.19026 0.19124 -0.4166</span></span>
+<span id="cb9-10"><a href="#cb9-10"></a><span class="co">#&gt; CORN_USD     5.620   5.620   5.596   5.596 -0.4270</span></span>
+<span id="cb9-11"><a href="#cb9-11"></a><span class="co">#&gt; BCO_USD     83.470  84.227  82.747  82.768 -0.8410</span></span>
+<span id="cb9-12"><a href="#cb9-12"></a><span class="co">#&gt; WTICO_USD   79.136  79.889  78.426  78.464 -0.8492</span></span>
+<span id="cb9-13"><a href="#cb9-13"></a><span class="co">#&gt; TWIX_USD     653.4   656.2   645.6   645.7 -1.1785</span></span>
+<span id="cb9-14"><a href="#cb9-14"></a><span class="co">#&gt; XCU_USD    4.16862 4.17796 4.10188 4.10962 -1.4153</span></span></code></pre></div>
 </div>
 <div id="oanda_positions" class="section level3">
 <h3 class="hasAnchor">
