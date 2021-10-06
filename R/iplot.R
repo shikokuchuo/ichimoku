@@ -46,7 +46,7 @@ iplot <- function(x,
 
   if (requireNamespace("shiny", quietly = TRUE)) {
 
-    if (!is.ichimoku(x)) stop("iplot() only works with ichimoku objects", call. = FALSE)
+    is.ichimoku(x) || stop("iplot() only works with ichimoku objects", call. = FALSE)
     theme <- match.arg(theme)
     type <- match.arg(type)
     if (missing(ticker)) ticker <- attr(x, "ticker")

@@ -200,18 +200,18 @@ extraplot <- function(object,
   aplot <- autoplot.ichimoku(object = object, window = window, ticker = ticker,
                              subtitle = subtitle, theme = theme, strat = strat)
 
-  if (type == "none") {
+  type == "none" && {
     warning("Required argument 'type' not specified or set to 'none'", call. = FALSE)
     return(print(aplot))
   }
   if (type == "bar" || type == "line") {
-    if(missing(custom)) {
+    missing(custom) && {
       warning("For type = 'bar' or 'line': required argument 'custom' not specified", call. = FALSE)
       return(print(aplot))
     }
     cnames <- dimnames(object)[[2L]]
     sel <- grep(custom, cnames, ignore.case = TRUE, perl = TRUE)[1L]
-    if (is.na(sel)) {
+    is.na(sel) && {
       warning("Specified value '", custom, "' for 'custom' does not match any columns", call. = FALSE)
       return(print(aplot))
     }

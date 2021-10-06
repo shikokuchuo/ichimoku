@@ -50,7 +50,7 @@ autostrat <- function(x,
                       dir = c("long", "short"),
                       level = 1) {
 
-  if (!is.ichimoku(x)) stop("autostrat() only works on ichimoku objects", call. = FALSE)
+  is.ichimoku(x) || stop("autostrat() only works on ichimoku objects", call. = FALSE)
   dir <- match.arg(dir)
   if (!level %in% 1:3) {
     warning("Specified 'level' invalid - reverting to default of 1", call. = FALSE)
@@ -193,7 +193,7 @@ mlgrid <- function(x,
                    type = c("boolean", "numeric"),
                    unique = TRUE) {
 
-  if (!is.ichimoku(x)) stop("mlgrid() only works on ichimoku objects", call. = FALSE)
+  is.ichimoku(x) || stop("mlgrid() only works on ichimoku objects", call. = FALSE)
   target <- match.arg(y)
   dir <- match.arg(dir)
   type <- match.arg(type)

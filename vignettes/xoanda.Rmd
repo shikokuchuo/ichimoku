@@ -208,18 +208,18 @@ The first retrieved timestamp and the pricing component are printed, followed by
 ```{r oandav, eval = FALSE}
 oanda_view()
 Enter market [f]x [a]llfx [b]onds [c]ommodities [m]etals [s]tocks: c
-#> Retrieving commodities.........
-#> 2021-10-03 11:15:14 / M 
+#> Retrieving commodities [.........]
+#> 2021-10-06 10:39:32 / M 
 #>               open    high     low    last    %chg
-#> WHEAT_USD    7.166   7.484   7.139   7.484  4.4376
-#> XCU_USD    4.09312 4.19604 4.04606 4.19368  2.4568
-#> WTICO_USD   75.244  76.134  74.364  75.861  0.8200
-#> CORN_USD     5.640   5.718   5.582   5.686  0.8156
-#> BCO_USD     79.358  80.266  78.419  79.975  0.7775
-#> TWIX_USD     665.0   671.4   661.4   664.9 -0.0150
-#> SOYBN_USD   12.725  12.806  12.601  12.643 -0.6444
-#> SUGAR_USD  0.19590 0.19670 0.19360 0.19410 -0.9188
-#> NATGAS_USD   5.898   5.948   5.480   5.493 -6.8667
+#> NATGAS_USD   6.267   6.412   6.162   6.318  0.8138
+#> SOYBN_USD   12.659  12.676  12.629  12.642 -0.1343
+#> WHEAT_USD    7.370   7.422   7.338   7.343 -0.3664
+#> SUGAR_USD  0.19204 0.19224 0.19026 0.19124 -0.4166
+#> CORN_USD     5.620   5.620   5.596   5.596 -0.4270
+#> BCO_USD     83.470  84.227  82.747  82.768 -0.8410
+#> WTICO_USD   79.136  79.889  78.426  78.464 -0.8492
+#> TWIX_USD     653.4   656.2   645.6   645.7 -1.1785
+#> XCU_USD    4.16862 4.17796 4.10188 4.10962 -1.4153
 ```
 
 ### `oanda_positions()`

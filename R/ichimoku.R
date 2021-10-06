@@ -159,13 +159,13 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
   cnames <- attr(x, "names")
 
   coli <- grep("index|date|time", cnames, ignore.case = TRUE, perl = TRUE)[1L]
-  if (!is.na(coli)) {
-    index <- tryCatch(as.POSIXct(.subset2(x, coli)), error = function(e) {
-      stop("column '", cnames[coli], "' is not convertible to a POSIXct date-time format", call. = FALSE)
-    })
-  } else {
+  if (is.na(coli)) {
     index <- tryCatch(as.POSIXct(attr(x, "row.names")), error = function(e) {
       stop("valid date-time index not found. Perhaps check column names?", call. = FALSE)
+    })
+  } else {
+    index <- tryCatch(as.POSIXct(.subset2(x, coli)), error = function(e) {
+      stop("column '", cnames[coli], "' is not convertible to a POSIXct date-time format", call. = FALSE)
     })
   }
 
@@ -174,7 +174,7 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
   colc <- grep("close", cnames, ignore.case = TRUE, perl = TRUE)[1L]
   if (anyNA(c(colh, coll, colc))) {
     colp <- grep("price|value|close", cnames, ignore.case = TRUE, perl = TRUE)[1L]
-    if (is.na(colp)) stop("price data not found. Perhaps check column names?", call. = FALSE)
+    is.na(colp) && stop("price data not found. Perhaps check column names?", call. = FALSE)
     close <- as.numeric(.subset2(x, colp))
     open <- c(NA, close[1:(xlen - 1L)])
     high <- pmax.int(open, close)
@@ -187,12 +187,12 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
     low <- as.numeric(.subset2(x, coll))
     close <- as.numeric(.subset2(x, colc))
     colo <- grep("open", cnames, ignore.case = TRUE, perl = TRUE)[1L]
-    if (!is.na(colo)) {
-      open <- as.numeric(.subset2(x, colo))
-    } else {
+    if (is.na(colo)) {
       warning("Opening prices not found - using previous closing prices as substitute",
               "\nThis affects the candles but not the calculation of the cloud chart", call. = FALSE)
       open <- c(NA, close[1:(xlen - 1L)])
+    } else {
+      open <- as.numeric(.subset2(x, colo))
     }
   }
 
@@ -205,7 +205,7 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
   p1 <- periods[1L]
   p2 <- periods[2L]
   p3 <- periods[3L]
-  if (p2 >= xlen) stop("dataset must be longer than the medium cloud period '", p2, "'", call. = FALSE)
+  xlen > p2 || stop("dataset must be longer than the medium cloud period '", p2, "'", call. = FALSE)
 
   cd <- numeric(xlen)
   cd[open < close] <- 1
@@ -225,6 +225,8 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
   } else {
     future <- seq.POSIXt(from = index[xlen], by = periodicity, length.out = p2)[-1L]
   }
+  xtsindex <- unclass(c(index, future))
+  attributes(xtsindex) <- list(tzone = Sys.getenv("TZ"), tclass = class(future))
 
   lk <- kmatrix <- NULL
   if (!missing(keep.data) && isTRUE(keep.data)) {
@@ -241,27 +243,26 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
     lk$periods <- lk$periodicity <- lk$ticker <- NULL
   }
 
-  kumo <- xts(x = cbind(open = c(open, rep(NA, p2 - 1L)),
-                        high = c(high, rep(NA, p2 - 1L)),
-                        low = c(low, rep(NA, p2 - 1L)),
-                        close = c(close, rep(NA, p2 - 1L)),
-                        cd = c(cd, rep(NA, p2 - 1L)),
-                        tenkan = c(tenkan, rep(NA, p2 - 1L)),
-                        kijun = c(kijun, rep(NA, p2 - 1L)),
-                        senkouA = c(rep(NA, p2 - 1L), senkouA),
-                        senkouB = c(rep(NA, p2 - 1L), senkouB),
-                        chikou = c(chikou, rep(NA, p2 - 1L)),
-                        cloudT = c(rep(NA, p2 - 1L), cloudT),
-                        cloudB = c(rep(NA, p2 - 1L), cloudB),
-                        kmatrix),
-              order.by = c(index, future),
-              class = c("ichimoku", "xts", "zoo"),
-              periods = periods,
-              periodicity = periodicity,
-              ticker = ticker)
-
-  if (!is.null(lk)) attributes(kumo) <- c(attributes(kumo), lk)
-
+  kumo <- cbind(open = c(open, rep(NA, p2 - 1L)),
+                high = c(high, rep(NA, p2 - 1L)),
+                low = c(low, rep(NA, p2 - 1L)),
+                close = c(close, rep(NA, p2 - 1L)),
+                cd = c(cd, rep(NA, p2 - 1L)),
+                tenkan = c(tenkan, rep(NA, p2 - 1L)),
+                kijun = c(kijun, rep(NA, p2 - 1L)),
+                senkouA = c(rep(NA, p2 - 1L), senkouA),
+                senkouB = c(rep(NA, p2 - 1L), senkouB),
+                chikou = c(chikou, rep(NA, p2 - 1L)),
+                cloudT = c(rep(NA, p2 - 1L), cloudT),
+                cloudB = c(rep(NA, p2 - 1L), cloudB),
+                kmatrix)
+  attributes(kumo) <- c(attributes(kumo),
+                        list(index = xtsindex,
+                             class = c("ichimoku", "xts", "zoo"),
+                             periods = periods,
+                             periodicity = periodicity,
+                             ticker = ticker),
+                        lk)
   kumo
 
 }
@@ -290,11 +291,10 @@ ichimoku.matrix <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, ...
 #'
 ichimoku.default <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, ...) {
 
-  if (!is.character(x)) stop("cannot create an ichimoku object from a '",
-                             class(x)[1L], "' object", call. = FALSE)
-  if (!exists(x)) stop("object '", x, "' not found", call. = FALSE)
+  is.character(x) || stop("cannot create an ichimoku object from a '", class(x)[1L], "' object", call. = FALSE)
+  exists(x) || stop("object '", x, "' not found", call. = FALSE)
   object <- get(x)
-  if (identical(x, object)) stop("cannot create an ichimoku object from a 'character' object", call. = FALSE)
+  identical(x, object) && stop("cannot create an ichimoku object from a 'character' object", call. = FALSE)
 
   if (missing(ticker)) {
     ichimoku(object, ticker = x, periods = periods, keep.data = keep.data, ...)

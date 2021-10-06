@@ -33,7 +33,7 @@ tradingDays <- function(x, holidays, ...) {
   if (missing(holidays)) {
     vec[(posixlt$mon == 0L & posixlt$mday == 1L) | (posixlt$mon == 11L & posixlt$mday == 25L)] <- FALSE
   } else {
-    if (is.null(holidays)) return(rep(TRUE, length(x)))
+    is.null(holidays) && return(rep(TRUE, length(x)))
     holidays <- tryCatch(as.POSIXct(holidays), error = function(e) {
       warning("Specified holidays are invalid - reverting to defaults", call. = FALSE)
       vec[(posixlt$mon == 0L & posixlt$mday == 1L) | (posixlt$mon == 11L & posixlt$mday == 25L)] <- FALSE
@@ -218,11 +218,11 @@ df_merge <- function(...) {
   dots <- list(...)
   merge <- Reduce(function(x, y) merge.data.frame(x, y, all = TRUE), dots)
   if (isTRUE(attr(dots[[1L]], "oanda"))) {
-    merge <- structure(.Data = merge,
-                       instrument = attr(dots[[1L]], "instrument"),
-                       price = attr(dots[[1L]], "price"),
-                       timestamp = do.call(max, lapply(dots, attr, "timestamp")),
-                       oanda = TRUE)
+    attributes(merge) <- c(attributes(merge),
+                           list(instrument = attr(dots[[1L]], "instrument"),
+                                price = attr(dots[[1L]], "price"),
+                                timestamp = .POSIXct(max(unlist(lapply(dots, attr, "timestamp")))),
+                                oanda = TRUE))
     if (FALSE %in% .subset2(merge, "complete")) warning("Incomplete periods in merged dataframe - please check for possible duplicates", call. = FALSE)
   }
   merge

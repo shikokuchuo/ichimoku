@@ -87,8 +87,8 @@ do_oanda <- function() {
                         "Authorization" = paste0("Bearer ", apikey),
                         "User-Agent" = x_user_agent)
       resp <- curl_fetch_memory(url = url, handle = h)
-      if (resp$status_code != 200L) stop("server code ", resp$status_code, " - ",
-                                         parse_json(rawToChar(resp$content)), call. = FALSE)
+      resp$status_code == 200L || stop("server code ", resp$status_code, " - ",
+                                       parse_json(rawToChar(resp$content)), call. = FALSE)
       account <<- parse_json(rawToChar(resp$content))[["accounts"]][[1L]][["id"]]
     }
     invisible(account)
@@ -105,7 +105,7 @@ do_oanda <- function() {
                         "Authorization" = paste0("Bearer ", apikey),
                         "User-Agent" = x_user_agent)
       resp <- curl_fetch_memory(url = url, handle = h)
-      if (resp$status_code != 200L) {
+      resp$status_code == 200L || {
         warning("Server code ", resp$status_code, " - ",
                 parse_json(rawToChar(resp$content)),
                 "\nInstruments list could not be retrieved - falling back to internal data",

@@ -98,7 +98,7 @@ strat <- function(x,
                   dir = c("long", "short"),
                   type = 2) {
 
-  if (!is.ichimoku(x)) stop("strat() only works on ichimoku objects", call. = FALSE)
+  is.ichimoku(x) || stop("strat() only works on ichimoku objects", call. = FALSE)
   c1 <- match.arg(c1)
   c2 <- match.arg(c2)
   dir <- match.arg(dir)
@@ -157,12 +157,15 @@ strat <- function(x,
       s2exit <- s2exit[s2exit > s1entry[1L]]
     }
 
-  } else stop("Specified type invalid - 'type' should be either 2 or 3", call. = FALSE)
+  } else {
+    stop("Specified type invalid - 'type' should be either 2 or 3", call. = FALSE)
+
+  }
 
   txn <- c(NA, diff(posn))
   txn[posn == 1 & is.na(txn)] <- 1
   if (posn[end] == 1) txn[end + 1L] <- -1
-  if (!sum(txn, na.rm = TRUE) == 0) stop("Calculation error - please check validity of data", call. = FALSE)
+  sum(txn, na.rm = TRUE) == 0 || stop("Calculation error - please check validity of data", call. = FALSE)
 
   logret <- c(diff(log(core[, "open"])), NA)
   if (dir == "short") logret <- -logret
@@ -274,21 +277,18 @@ writeStrat <- function(x, strategy, dir) {
 #'
 stratcombine <- function(s1, s2) {
 
-  if (!is.ichimoku(s1) || !is.ichimoku(s2) || !hasStrat(s1) || !hasStrat(s2)) {
+  is.ichimoku(s1) && is.ichimoku(s2) && hasStrat(s1) && hasStrat(s2) ||
     stop("stratcombine() only works on ichimoku objects containing strategies", call. = FALSE)
-  }
   core1 <- coredata(s1)
   core2 <- coredata(s2)
-  if (!identical(core1[, c("high", "low", "close")], core2[, c("high", "low", "close")])) {
+  identical(core1[, c("high", "low", "close")], core2[, c("high", "low", "close")]) ||
     stop("Strategies must be for the same data", call. = FALSE)
-  }
   dir <- attr(s1, "strat")["Direction", ][[1L]]
-  if (!identical(dir, attr(s2, "strat")["Direction", ][[1L]])) {
+  identical(dir, attr(s2, "strat")["Direction", ][[1L]]) ||
     stop("Trade direction must be the same for all strategies", call. = FALSE)
-  }
   strat1 <- attr(s1, "strat")["Strategy", ][[1L]]
   strat2 <- attr(s2, "strat")["Strategy", ][[1L]]
-  if (identical(strat1, strat2)) return(s1)
+  identical(strat1, strat2) && return(s1)
 
   strategy <- paste0(strat1, " & ", strat2)
   p2 <- attr(s1, "periods")[2L]
@@ -300,7 +300,7 @@ stratcombine <- function(s1, s2) {
   txn <- c(NA, diff(posn))
   txn[posn == 1 & is.na(txn)] <- 1
   if (posn[end] == 1) txn[end + 1L] <- -1
-  if (!sum(txn, na.rm = TRUE) == 0) stop("Calculation error - please check validity of data", call. = FALSE)
+  sum(txn, na.rm = TRUE) == 0 || stop("Calculation error - please check validity of data", call. = FALSE)
   slogret <- s1[, "logret"] * posn
 
   s1$cond <- cond

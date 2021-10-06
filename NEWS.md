@@ -1,8 +1,10 @@
-# ichimoku 1.2.2.1
+# ichimoku 1.2.2.2
 
 #### Updates:
 
+* Improved visual appearance of progress indicators for `oanda()` and `oanda_view()`.
 * Fixes sign of %chg for `oanda_quote()`.
+* Further performance improvements to `ichimoku()`.
 
 # ichimoku 1.2.2
 

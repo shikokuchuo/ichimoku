@@ -75,8 +75,8 @@ oanda <- function(instrument,
                   server,
                   apikey) {
 
-  if (missing(instrument)) stop("Argument 'instrument' must be specified", call. = FALSE)
-  instrument <- toupper(sub("-", "_", force(instrument), fixed = TRUE))
+  missing(instrument) && stop("Argument 'instrument' must be specified", call. = FALSE)
+  instrument <- sub("-", "_", toupper(force(instrument)), fixed = TRUE)
   granularity <- match.arg(granularity)
   price <- match.arg(price)
   server <- if (missing(server)) do_oanda$getServer() else match.arg(server, c("practice", "live"))
@@ -90,7 +90,7 @@ oanda <- function(instrument,
       stop("specified value of 'to' is not convertible to a POSIXct date-time format", call. = FALSE)
     })
     interval <- unclass(d2) - unclass(d1)
-    if (interval < 0) stop("requested time period invalid - 'to' takes place before 'from'", call. = FALSE)
+    interval >= 0 || stop("requested time period invalid - 'to' takes place before 'from'", call. = FALSE)
     denom <- switch(granularity,
                     M = 18144000, W = 604800, D = 86400, H12 = 43200, H8 = 28800,
                     H6 = 21600, H4 = 14400, H3 = 10800, H2 = 7200, H1 = 3600,
@@ -109,19 +109,18 @@ oanda <- function(instrument,
       continue <- readline(prompt = paste0("Max of 5000 data periods per request. ",
                                            requests, " requests will be made. Continue? [Y/n] "))
       if (continue %in% c("n", "N", "no", "NO")) stop("Request cancelled by user", call. = FALSE)
-      message("Request started with rate limiting in place...")
       list <- vector(mode = "list", length = requests)
       for (i in seq_len(requests)) {
+        cat("\rPerforming request [", rep(".", i), rep(" ", requests - i), "]", sep = "")
         list[[i]] <- getPrices(instrument = instrument, granularity = granularity,
                                from = strftime(bounds[i], format = "%Y-%m-%dT%H:%M:%S"),
                                to = strftime(bounds[i + 1L], format = "%Y-%m-%dT%H:%M:%S"),
                                price = price, server = server, apikey = apikey)
-        message("Downloaded data partition ", i, " of ", requests)
         if (i != requests) Sys.sleep(0.5)
       }
-      message("Merging data partitions...")
+      cat("\nMerging data partitions... ")
       df <- do.call(df_merge, list)
-      message("Complete")
+      cat("complete.")
       }
 
     } else {
@@ -175,8 +174,8 @@ getPrices <- function(instrument, granularity, count, from, to, price, server,
                     "User-Agent" = x_user_agent)
   resp <- curl_fetch_memory(url = url, handle = h)
 
-  if (resp$status_code != 200L) stop("server code ", resp$status_code, " - ",
-                                     parse_json(rawToChar(resp$content)), call. = FALSE)
+  resp$status_code == 200L || stop("server code ", resp$status_code, " - ",
+                                   parse_json(rawToChar(resp$content)), call. = FALSE)
 
   hdate <- strsplit(rawToChar(resp$headers), "date: | GMT", perl = TRUE)[[1L]][2L]
   timestamp <- .POSIXct(as.POSIXct.POSIXlt(strptime(hdate, format = "%a, %d %b %Y %H:%M:%S", tz = "UTC")))
@@ -278,7 +277,7 @@ getPrices <- function(instrument, granularity, count, from, to, price, server,
 oanda_stream <- function(instrument, server, apikey) {
 
   if (missing(instrument)) instrument <- readline("Enter instrument:")
-  instrument <- toupper(sub("-", "_", force(instrument), fixed = TRUE))
+  instrument <- sub("-", "_", toupper(force(instrument)), fixed = TRUE)
   if (missing(apikey)) apikey <- do_oanda$getKey()
   server <- if (missing(server)) do_oanda$getServer() else match.arg(server, c("practice", "live"))
   url <- paste0("https://stream-fx", switch(server, practice = "practice", live = "trade"),
@@ -363,7 +362,7 @@ oanda_chart <- function(instrument,
                         periods = c(9L, 26L, 52L)) {
 
   if (missing(instrument)) instrument <- readline("Enter instrument:")
-  instrument <- toupper(sub("-", "_", force(instrument), fixed = TRUE))
+  instrument <- sub("-", "_", toupper(force(instrument)), fixed = TRUE)
   if (missing(apikey)) apikey <- do_oanda$getKey()
   granularity <- match.arg(granularity)
   price <- match.arg(price)
@@ -481,7 +480,7 @@ oanda_studio <- function(instrument = "USD_JPY",
 
   if (requireNamespace("shiny", quietly = TRUE)) {
 
-    if (!missing(instrument)) instrument <- toupper(sub("-", "_", force(instrument), fixed = TRUE))
+    if (!missing(instrument)) instrument <- sub("-", "_", toupper(force(instrument)), fixed = TRUE)
     if (missing(apikey)) apikey <- do_oanda$getKey()
     if (!is.numeric(refresh) || refresh < 1) {
       message("Specified refresh interval invalid - reverting to default of 5 secs")
@@ -804,12 +803,11 @@ oanda_view <- function(market = c("fx", "allfx", "bonds", "commodities", "metals
                 })
   xlen <- length(sel)
   data <- vector(mode = "list", length = xlen)
-  cat("Retrieving", market)
   for (i in seq_len(xlen)) {
-    cat(".")
+    cat("\rRetrieving ", market, " [", rep(".", i), rep(" ", xlen - i), "]", sep = "")
     data[[i]] <- getPrices(instrument = sel[i], granularity = "D", count = 1, price = price,
                            server = server, apikey = apikey, .validate = FALSE)
-    if (i != xlen) Sys.sleep(0.05) else cat("\n")
+    if (i != xlen) Sys.sleep(0.05)
   }
   data <- do.call(rbind, data)
   time <- unlist(data[, "t", drop = FALSE])
@@ -817,7 +815,7 @@ oanda_view <- function(market = c("fx", "allfx", "bonds", "commodities", "metals
   high <- unlist(data[, "h", drop = FALSE])
   low <- unlist(data[, "l", drop = FALSE])
   close <- unlist(data[, "c", drop = FALSE])
-  change <- round(100 * ( as.numeric(close) / as.numeric(open) - 1), digits = 4L)
+  change <- round(100 * (as.numeric(close) / as.numeric(open) - 1), digits = 4L)
   reorder <- order(change, decreasing = TRUE)
   df <- list(open[reorder], high[reorder], low[reorder], close[reorder], change[reorder])
   attributes(df) <- list(names = c("open", "high", "low", "last", "%chg"),
@@ -825,7 +823,7 @@ oanda_view <- function(market = c("fx", "allfx", "bonds", "commodities", "metals
                          row.names = sel[reorder],
                          price = price,
                          timestamp = time[1L])
-  cat(time[1L], "/", price, "\n")
+  cat("\n", time[1L], " / ", price, "\n", sep = "")
   print(df)
 }
 
@@ -854,7 +852,7 @@ oanda_view <- function(market = c("fx", "allfx", "bonds", "commodities", "metals
 #'
 oanda_quote <- function(instrument, price = c("M", "B", "A"), server, apikey) {
   if (missing(instrument)) instrument <- readline("Enter instrument:")
-  instrument <- toupper(sub("-", "_", force(instrument), fixed = TRUE))
+  instrument <- sub("-", "_", toupper(force(instrument)), fixed = TRUE)
   price <- match.arg(price)
   if (missing(apikey)) apikey <- do_oanda$getKey()
   server <- if (missing(server)) do_oanda$getServer() else match.arg(server, c("practice", "live"))
@@ -893,7 +891,7 @@ oanda_quote <- function(instrument, price = c("M", "B", "A"), server, apikey) {
 oanda_positions <- function(instrument, server, apikey) {
 
   if (missing(instrument)) instrument <- readline("Enter instrument:")
-  instrument <- toupper(sub("-", "_", force(instrument), fixed = TRUE))
+  instrument <- sub("-", "_", toupper(force(instrument)), fixed = TRUE)
   if (missing(apikey)) apikey <- do_oanda$getKey()
   server <- if (missing(server)) do_oanda$getServer() else match.arg(server, c("practice", "live"))
 
@@ -907,8 +905,8 @@ oanda_positions <- function(instrument, server, apikey) {
                     "User-Agent" = x_user_agent)
   resp <- curl_fetch_memory(url = url, handle = h)
 
-  if (resp$status_code != 200L) stop("server code ", resp$status_code, " - ",
-                                     parse_json(rawToChar(resp$content)), call. = FALSE)
+  resp$status_code == 200L || stop("server code ", resp$status_code, " - ",
+                                   parse_json(rawToChar(resp$content)), call. = FALSE)
 
   data <- parse_json(rawToChar(resp$content))[["positionBook"]]
   currentprice <- as.numeric(data[["price"]])
