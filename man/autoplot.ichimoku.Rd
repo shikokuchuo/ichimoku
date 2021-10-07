@@ -3,7 +3,7 @@
 \name{autoplot}
 \alias{autoplot}
 \alias{autoplot.ichimoku}
-\title{autoplot.ichimoku}
+\title{Plot Ichimoku Objects with ggplot2}
 \usage{
 \method{autoplot}{ichimoku}(
   object,

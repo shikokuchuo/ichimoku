@@ -85,7 +85,7 @@ plot.ichimoku <- function(x,
 #' @export
 NULL
 
-#' autoplot.ichimoku
+#' Plot Ichimoku Objects with ggplot2
 #'
 #' Plot Ichimoku Kinko Hyo cloud charts from ichimoku objects.
 #'
@@ -124,7 +124,7 @@ autoplot.ichimoku <- function(object,
   }
 
   if (!missing(window)) object <- object[window]
-  data <- xts_df(object)
+  data <- ichimoku_df(object)
   data$idx <- attr(data, "row.names")
   data$cd <- as.character(.subset2(data, "cd"))
 
@@ -160,7 +160,7 @@ autoplot.ichimoku <- function(object,
 
 }
 
-#' extraplot
+#' Plot Ichimoku Objects with ggplot2 and gtable
 #'
 #' Plot Ichimoku Kinko Hyo cloud charts from ichimoku objects with a sub-plot for
 #'     oscillators or a custom specified variable.
@@ -229,7 +229,7 @@ extraplot <- function(object,
   }
 
   if (!missing(window)) object <- object[window]
-  data <- xts_df(object)
+  data <- ichimoku_df(object)
   data$idx <- attr(data, "row.names")
 
   if (type == "r" || type == "s") {

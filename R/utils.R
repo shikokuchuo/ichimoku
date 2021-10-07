@@ -110,6 +110,44 @@ df_trim <- function(x) {
   x[!omit, , drop = FALSE]
 }
 
+#' Convert ichimoku to data.frame
+#'
+#' A performant 'ichimoku' to 'data.frame' constructor with no data validation
+#'     or checking.
+#'
+#' @param x an object of class 'ichimoku'.
+#' @param keep.attrs (optional) if set to TRUE, will preserve any custom
+#'     attributes set on the original object.
+#'
+#' @return A 'data.frame' object. The ichimoku object index is preserved as the
+#'     first column with header 'index'.
+#'
+#' @examples
+#' cloud <- ichimoku(sample_ohlc_data)
+#' df <- ichimoku_df(cloud)
+#' str(df)
+#'
+#' df2 <- ichimoku_df(cloud, keep.attrs = TRUE)
+#' str(df2)
+#'
+#' @export
+#'
+ichimoku_df <- function(x, keep.attrs) {
+  core <- coredata.ichimoku(x)
+  dims <- dim(core)
+  len <- dims[2L]
+  df <- vector(mode = "list", length = len + 1L)
+  df[[1L]] <- index.ichimoku(x)
+  for (i in seq_len(len)) {
+    df[[i + 1L]] <- core[, i]
+  }
+  attributes(df) <- c(list(names = c("index", dimnames(core)[[2L]]),
+                           class = "data.frame",
+                           row.names = .set_row_names(dims[1L])),
+                      if (!missing(keep.attrs) && isTRUE(keep.attrs)) look(x))
+  df
+}
+
 #' Convert xts to data.frame
 #'
 #' A performant 'xts' to 'data.frame' constructor with no data validation or
@@ -236,7 +274,8 @@ df_merge <- function(...) {
 #'
 #' @param new data.frame object containing new data.
 #' @param old data.frame object containing existing data.
-#' @param key [default 'time'] column name used as key, provided as a character string.
+#' @param key [default 'time'] column name used as key, provided as a character
+#'     string.
 #' @param keep.attr [default 'timestamp'] name of an attribute in 'new' to retain
 #'     if it is present, provided as a character string.
 #'
@@ -274,5 +313,82 @@ df_append <- function(new, old, key = "time", keep.attr = "timestamp") {
                          row.names = .set_row_names(length(df[[1L]])))
   attr(df, keep.attr) <- attr(new, keep.attr)
   df
+}
+
+#' @name coredata
+#' @rdname coredata.ichimoku
+#' @export
+NULL
+
+#' Extract the Core Data of Ichimoku Objects
+#'
+#' Method for extracting the core data matrix of ichimoku objects.
+#'
+#' @param x an object of class 'ichimoku'.
+#' @param fmt (optional) set to TRUE to retain the index as row names of the
+#'     returned matrix, or a character string passed on to the 'format' argument
+#'     of \code{format.POSIXct()} to format these values in a specific way.
+#' @param ... arguments used by other methods.
+#'
+#' @return A numeric matrix containing the ichimoku object data, stripped of the
+#'     index unless 'fmt' is specified in which case the index will be retained
+#'     as character values in the matrix row names.
+#'
+#' @details This function is an S3 method for the generic function coredata()
+#'     for class 'ichimoku'. It can be invoked by calling coredata(x) on an
+#'     object 'x' of class 'ichimoku'.
+#'
+#' @section Further Details:
+#'     Please refer to the reference vignette by running:
+#'     \code{vignette("reference", package = "ichimoku")}
+#'
+#' @rdname coredata.ichimoku
+#' @method coredata ichimoku
+#' @export
+#'
+coredata.ichimoku <- function(x, fmt, ...) {
+  if (missing(fmt)) {
+    attributes(x) <- list(dim = attr(x, "dim"), dimnames = attr(x, "dimnames"))
+  } else {
+    attributes(x) <- list(
+      dim = attr(x, "dim"), dimnames = list(
+        if (is.character(fmt)) format.POSIXct(index.ichimoku(x), format = fmt) else format.POSIXct(index.ichimoku(x)),
+        attr(x, "dimnames")[[2L]])
+      )
+  }
+  x
+}
+
+#' @name index
+#' @rdname index.ichimoku
+#' @export
+NULL
+
+#' Extract the Index of Ichimoku Objects
+#'
+#' Method for extracting the date-time index of ichimoku objects.
+#'
+#' @param x an object of class 'ichimoku'.
+#' @param ... arguments used by other methods.
+#'
+#' @return The date-time index of the ichimoku object as a vector of POSIXct
+#'     values.
+#'
+#' @details This function is an S3 method for the generic function index()
+#'     for class 'ichimoku'. It can be invoked by calling index(x) on an
+#'     object 'x' of class 'ichimoku'.
+#'
+#' @section Further Details:
+#'     Please refer to the reference vignette by running:
+#'     \code{vignette("reference", package = "ichimoku")}
+#'
+#' @rdname index.ichimoku
+#' @method index ichimoku
+#' @export
+#'
+index.ichimoku <- function(x, ...) {
+  idx <- attr(x, "index")
+  class(idx) <- c("POSIXct", "POSIXt")
+  idx
 }
 

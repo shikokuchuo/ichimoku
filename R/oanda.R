@@ -183,7 +183,7 @@ getPrices <- function(instrument, granularity, count, from, to, price, server,
 
   if (!missing(.validate) && .validate == FALSE) {
     data <- parse_json(rawToChar(resp$content))[["candles"]][[1L]][[ptype]]
-    return(c(list(t = as.character(timestamp)), data))
+    return(c(list(t = format.POSIXct(timestamp)), data))
   }
 
   data <- do.call(rbind, parse_json(rawToChar(resp$content))[["candles"]])
@@ -628,8 +628,8 @@ oanda_studio <- function(instrument = "USD_JPY",
         }
       })
       xlen <- shiny::reactive(dim(data())[1L])
-      pdata <- shiny::reactive(ichimoku(data(), ticker = input$instrument,
-                                        periods = periods, ...)[minlen:(xlen() + p2 - 1L), ])
+      pdata <- shiny::reactive(ichimoku.data.frame(data(), ticker = input$instrument,
+                                                   periods = periods, ...)[minlen:(xlen() + p2 - 1L), ])
       plen <- shiny::reactive(xlen() + p2 - minlen)
       ticker <- shiny::reactive(paste(dispname(), "  |", input$instrument, ptype(), "price [",
                                       data()$close[xlen()], "] at", attr(data(), "timestamp"),
@@ -641,7 +641,7 @@ oanda_studio <- function(instrument = "USD_JPY",
       )
       output$hover_x <- shiny::renderUI({
         shiny::req(input$plot_hover, posi_x() > 0, posi_x() <= plen())
-        drawGuide(label = index(pdata())[posi_x()], left = left_px() - 17, top = 45)
+        drawGuide(label = index.ichimoku(pdata())[posi_x()], left = left_px() - 17, top = 45)
       })
       output$hover_y <- shiny::renderUI({
         shiny::req(input$plot_hover)
@@ -665,7 +665,7 @@ oanda_studio <- function(instrument = "USD_JPY",
   }
 }
 
-#' List Available OANDA Instruments
+#' Available OANDA Instruments
 #'
 #' Return list of instruments including major currencies, metals, commodities,
 #'     government bonds and stock indices for which pricing data is available

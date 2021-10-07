@@ -1,10 +1,17 @@
-# ichimoku 1.2.2.2
+# ichimoku 1.2.2.3
+
+#### New features:
+
+* Optimised 'ichimoku' methods for `coredata()` and `index()` - these are no longer simple re-exports from the 'zoo' package.
+* New `ichimoku_df()` ichimoku to data.frame converter.
 
 #### Updates:
 
+* Improved time index handling for `ichimoku()`: where conversion by `as.POSIXct()` fails, will convert numeric values as POSIX times (with an appropriate warning).
 * Improved visual appearance of progress indicators for `oanda()` and `oanda_view()`.
 * Fixes sign of %chg for `oanda_quote()`.
-* Further performance improvements to `ichimoku()`.
+* `xts()` is no longer re-exported from the 'xts' package as `ichimoku()` can now fully re-construct an ichimoku object from its components (see 'Working with ichimoku objects' in the Reference vignette).
+* Further performance improvements to `ichimoku()` and various other functions.
 
 # ichimoku 1.2.2
 

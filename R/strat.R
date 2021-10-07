@@ -104,7 +104,7 @@ strat <- function(x,
   dir <- match.arg(dir)
   p2 <- attr(x, "periods")[2L]
 
-  core <- coredata(x)
+  core <- coredata.ichimoku(x)
   xlen <- dim(core)[1L]
   end <- xlen - p2
   offset <- (p2 - 1L) * (c1 == "chikou" || c2 == "chikou")
@@ -204,8 +204,8 @@ strat <- function(x,
 writeStrat <- function(x, strategy, dir) {
 
   p2 <- attr(x, "periods")[2L]
-  index <- index(x)
-  core <- coredata(x)
+  index <- index.ichimoku(x)
+  core <- coredata.ichimoku(x)
   xlen <- dim(core)[1L]
   start <- xlen - sum(!is.na(core[, "posn"])) - p2 + 1L
   end <- xlen - p2
@@ -279,8 +279,8 @@ stratcombine <- function(s1, s2) {
 
   is.ichimoku(s1) && is.ichimoku(s2) && hasStrat(s1) && hasStrat(s2) ||
     stop("stratcombine() only works on ichimoku objects containing strategies", call. = FALSE)
-  core1 <- coredata(s1)
-  core2 <- coredata(s2)
+  core1 <- coredata.ichimoku(s1)
+  core2 <- coredata.ichimoku(s2)
   identical(core1[, c("high", "low", "close")], core2[, c("high", "low", "close")]) ||
     stop("Strategies must be for the same data", call. = FALSE)
   dir <- attr(s1, "strat")["Direction", ][[1L]]

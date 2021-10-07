@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot.R
 \name{extraplot}
 \alias{extraplot}
-\title{extraplot}
+\title{Plot Ichimoku Objects with ggplot2 and gtable}
 \usage{
 extraplot(
   object,

@@ -121,9 +121,9 @@ ichimoku.ichimoku <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, .
 
   if (!missing(keep.data) && isTRUE(keep.data)) {
     x$cd <- x$tenkan <- x$kijun <- x$senkouA <- x$senkouB <- x$chikou <- x$cloudT <- x$cloudB <- NULL
-    x <- xts_df(x, keep.attrs = TRUE)
+    x <- ichimoku_df(x, keep.attrs = TRUE)
   } else {
-    x <- xts_df(x)
+    x <- ichimoku_df(x)
   }
 
   ichimoku.data.frame(x, ticker = ticker, periods = periods, keep.data = keep.data, ...)
@@ -161,11 +161,21 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
   coli <- grep("index|date|time", cnames, ignore.case = TRUE, perl = TRUE)[1L]
   if (is.na(coli)) {
     index <- tryCatch(as.POSIXct(attr(x, "row.names")), error = function(e) {
-      stop("valid date-time index not found. Perhaps check column names?", call. = FALSE)
+      if (is.integer(rnames <- attr(x, "row.names")) && rnames[1L] != 1L) {
+        warning("Converted numeric row names as POSIX time - please check validity", call. = FALSE)
+        .POSIXct(rnames)
+      } else {
+        stop("valid date-time index not found. Perhaps check column names?", call. = FALSE)
+      }
     })
   } else {
     index <- tryCatch(as.POSIXct(.subset2(x, coli)), error = function(e) {
-      stop("column '", cnames[coli], "' is not convertible to a POSIXct date-time format", call. = FALSE)
+      if (is.numeric(idxcol <- .subset2(x, coli))) {
+        warning("Converted numeric values in column '", cnames[coli], "' as POSIX time - please check validity", call. = FALSE)
+        .POSIXct(idxcol)
+      } else {
+        stop("column '", cnames[coli], "' is not convertible to a POSIXct date-time format", call. = FALSE)
+      }
     })
   }
 

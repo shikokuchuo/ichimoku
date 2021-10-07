@@ -44,7 +44,7 @@ look <- function(x, which) {
 
   if (is.null(attr(x, "autostrat"))) {
     lk <- attributes(x)
-    lk$dim <- lk$dimnames <- lk$names <- lk$row.names <- lk$index <- lk$class <- lk$mlgrid <- lk$oanda <- NULL
+    lk <- lk[!names(lk) %in% c("dim", "dimnames", "names", "row.names", "index", "class", "mlgrid", "oanda")]
     if (length(lk)) lk else invisible()
   } else {
     if (missing(which)) {

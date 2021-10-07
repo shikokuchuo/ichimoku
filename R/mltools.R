@@ -198,7 +198,7 @@ mlgrid <- function(x,
   dir <- match.arg(dir)
   type <- match.arg(type)
 
-  core <- coredata(x)
+  core <- coredata.ichimoku(x)
   xlen <- dim(core)[1L]
   p2 <- attr(x, "periods")[2L]
   y <- c(diff(log(core[, "open"]))[2:(xlen - 1L)], NA, NA)
@@ -232,7 +232,7 @@ mlgrid <- function(x,
   grid <- c(list(y = y), veclist)
   attributes(grid) <- list(names = attr(grid, "names"),
                            class = "data.frame",
-                           row.names = as.character(index(x)),
+                           row.names = format.POSIXct(index.ichimoku(x)),
                            y = target,
                            direction = dir,
                            ticker = attr(x, "ticker"),

@@ -71,21 +71,12 @@
 #' @importFrom gtable gtable gtable_add_grob
 #' @importFrom jsonlite parse_json
 #' @importFrom stats na.omit setNames
-#' @importFrom xts endpoints xts
+#' @importFrom xts endpoints
 #' @importFrom zoo coredata index
 #'
 #' @docType package
 #' @name ichimoku-package
 NULL
-
-#' @export
-zoo::index
-
-#' @export
-zoo::coredata
-
-#' @export
-xts::xts
 
 utils::globalVariables(".data")
 

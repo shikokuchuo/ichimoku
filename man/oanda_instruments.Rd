@@ -2,7 +2,7 @@
 % Please edit documentation in R/oanda.R
 \name{oanda_instruments}
 \alias{oanda_instruments}
-\title{List Available OANDA Instruments}
+\title{Available OANDA Instruments}
 \usage{
 oanda_instruments(server, apikey)
 }

@@ -11,7 +11,8 @@ df_append(new, old, key = "time", keep.attr = "timestamp")
 
 \item{old}{data.frame object containing existing data.}
 
-\item{key}{[default 'time'] column name used as key, provided as a character string.}
+\item{key}{[default 'time'] column name used as key, provided as a character
+string.}
 
 \item{keep.attr}{[default 'timestamp'] name of an attribute in 'new' to retain
 if it is present, provided as a character string.}
