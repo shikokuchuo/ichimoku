@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2.4</span>
       </span>
     </div>
 
@@ -292,14 +292,15 @@
 <div id="working-with-ichimoku-objects" class="section level4">
 <h4 class="hasAnchor">
 <a href="#working-with-ichimoku-objects" class="anchor"></a>Working with ichimoku objects</h4>
-<p>The following S3 methods for the generic ‘zoo’ functions are provided:</p>
+<p>An optimised ichimoku S3 method for the base generic <code><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame()</a></code> is provided for converting an ichimoku object to a dataframe. Set the argument <code>keep.attrs = TRUE</code> to retain the attributes of the original ichimoku object.</p>
+<p>S3 methods for the following ‘zoo’ generics are also provided:</p>
 <ul>
 <li>
 <code><a href="../reference/index.html">index()</a></code> to extract the index of an ichimoku object as a vector of POSIXct values</li>
 <li>
 <code><a href="../reference/coredata.html">coredata()</a></code> to extract the columns of an ichimoku object as a numeric matrix</li>
 </ul>
-<p>As the extracted objects are simple base types, they can be easily modified as required.</p>
+<p>As the extracted objects are simple base types, they can easily be modified as required.</p>
 <p>The below shows how to faithfully re-create an ichimoku object from its components:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">index</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/index.html">index</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span>

@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2.4</span>
       </span>
     </div>
 
@@ -264,7 +264,8 @@
 <div id="xts_df" class="section level4">
 <h4 class="hasAnchor">
 <a href="#xts_df" class="anchor"></a>xts_df()</h4>
-<p>Convert an ‘xts’ object to ‘data.frame’. This function can be an order of magnitude faster than <code>as.data.frame</code> for an ‘xts’ object.</p>
+<p>Convert an ‘xts’ object to ‘data.frame’. This function can be an order of magnitude faster than <code><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame()</a></code> for an ‘xts’ object.</p>
+<p>Note that for ichimoku objects, a marginally faster, more specific version has been implemented as the S3 method <code><a href="../reference/as.data.frame.ichimoku.html">as.data.frame.ichimoku()</a></code>. Hence using this utility on an ichimoku object is not required.</p>
 <p>Takes the following arguments:</p>
 <ul>
 <li>

@@ -7,6 +7,9 @@
     <loc>https://shikokuchuo.net/ichimoku/reference/archive.html</loc>
   </url>
   <url>
+    <loc>https://shikokuchuo.net/ichimoku/reference/as.data.frame.ichimoku.html</loc>
+  </url>
+  <url>
     <loc>https://shikokuchuo.net/ichimoku/reference/autoplot.ichimoku.html</loc>
   </url>
   <url>
@@ -38,9 +41,6 @@
   </url>
   <url>
     <loc>https://shikokuchuo.net/ichimoku/reference/ichimoku.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/ichimoku_df.html</loc>
   </url>
   <url>
     <loc>https://shikokuchuo.net/ichimoku/reference/index.ichimoku.html</loc>

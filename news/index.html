@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2.4</span>
       </span>
     </div>
 
@@ -151,23 +151,26 @@
       <small>Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="ichimoku-1223" class="section level1">
-<h1 class="page-header" data-toc-text="1.2.2.3">
-<a href="#ichimoku-1223" class="anchor"></a>ichimoku 1.2.2.3<small> Unreleased </small>
+    <div id="ichimoku-1224" class="section level1">
+<h1 class="page-header" data-toc-text="1.2.2.4">
+<a href="#ichimoku-1224" class="anchor"></a>ichimoku 1.2.2.4<small> Unreleased </small>
 </h1>
 <div id="new-features" class="section level4">
 <h4 class="hasAnchor">
 <a href="#new-features" class="anchor"></a>New features:</h4>
 <ul>
 <li>Optimised ‘ichimoku’ methods for <code><a href="../reference/coredata.html">coredata()</a></code> and <code><a href="../reference/index.html">index()</a></code> - these are no longer simple re-exports from the ‘zoo’ package.</li>
-<li>New <code><a href="../reference/ichimoku_df.html">ichimoku_df()</a></code> ichimoku to data.frame converter.</li>
+<li>
+<code><a href="../reference/as.data.frame.ichimoku.html">as.data.frame.ichimoku()</a></code> S3 method is implemented as a marginally faster version of <code><a href="../reference/xts_df.html">xts_df()</a></code>.</li>
+<li>
+<code><a href="../reference/oanda_studio.html">oanda_studio()</a></code> gains the argument ‘new.process’, which when set to TRUE, starts the shiny session in a new R process, unblocking the current process and allowing continued use of the console.</li>
+<li>Improved time index handling for <code><a href="../reference/ichimoku.html">ichimoku()</a></code>: where conversion by <code><a href="https://rdrr.io/r/base/as.POSIXlt.html">as.POSIXct()</a></code> fails, will convert numeric values as POSIX times (with an appropriate warning).</li>
 </ul>
 </div>
 <div id="updates" class="section level4">
 <h4 class="hasAnchor">
 <a href="#updates" class="anchor"></a>Updates:</h4>
 <ul>
-<li>Improved time index handling for <code><a href="../reference/ichimoku.html">ichimoku()</a></code>: where conversion by <code><a href="https://rdrr.io/r/base/as.POSIXlt.html">as.POSIXct()</a></code> fails, will convert numeric values as POSIX times (with an appropriate warning).</li>
 <li>Improved visual appearance of progress indicators for <code><a href="../reference/oanda.html">oanda()</a></code> and <code><a href="../reference/oanda_view.html">oanda_view()</a></code>.</li>
 <li>Fixes sign of %chg for <code><a href="../reference/oanda_quote.html">oanda_quote()</a></code>.</li>
 <li>
