@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Trim Dataframe Rows with NA Values — df_trim • ichimoku</title>
+<title>Convert ichimoku to data.frame — ichimoku_df • ichimoku</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,9 +48,9 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Trim Dataframe Rows with NA Values — df_trim" />
-<meta property="og:description" content="Trim rows containing NA values from a 'data.frame' object. An efficient
-    version of stats::na.omit() with no data validation or checking." />
+<meta property="og:title" content="Convert ichimoku to data.frame — ichimoku_df" />
+<meta property="og:description" content="A performant 'ichimoku' to 'data.frame' constructor with no data validation
+    or checking." />
 <meta property="og:image" content="https://shikokuchuo.net/ichimoku/logo.png" />
 
 
@@ -149,48 +149,74 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Trim Dataframe Rows with NA Values</h1>
+    <h1>Convert ichimoku to data.frame</h1>
     <small class="dont-index">Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
-    <div class="hidden name"><code>df_trim.Rd</code></div>
+    <div class="hidden name"><code>ichimoku_df.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Trim rows containing NA values from a 'data.frame' object. An efficient
-    version of <code><a href='https://rdrr.io/r/stats/na.fail.html'>stats::na.omit()</a></code> with no data validation or checking.</p>
+    <p>A performant 'ichimoku' to 'data.frame' constructor with no data validation
+    or checking.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>df_trim</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>ichimoku_df</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>keep.attrs</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>the data.frame to trim.</p></td>
+      <td><p>an object of class 'ichimoku'.</p></td>
+    </tr>
+    <tr>
+      <th>keep.attrs</th>
+      <td><p>(optional) if set to TRUE, will preserve any custom
+attributes set on the original object.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The data.frame 'x' with rows containing NA values removed.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>Works only where the columns contain atomic (e.g. numeric) and not
-    recursive types (e.g. lists).</p>
+    <p>A 'data.frame' object. The ichimoku object index is preserved as the
+    first column with header 'index'.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>, <span class='cn'>NA</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='fl'>2</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>data</span>
-</div><div class='output co'>#&gt;   c.1.4..NA. c.NA..2.5.
-#&gt; 1          1         NA
-#&gt; 2          2          2
-#&gt; 3          3          3
-#&gt; 4          4          4
-#&gt; 5         NA          5</div><div class='input'><span class='fu'>df_trim</span><span class='op'>(</span><span class='va'>data</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;   c.1.4..NA. c.NA..2.5.
-#&gt; 2          2          2
-#&gt; 3          3          3
-#&gt; 4          4          4</div><div class='input'>
+    <pre class="examples"><div class='input'><span class='va'>cloud</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ichimoku.html'>ichimoku</a></span><span class='op'>(</span><span class='va'>sample_ohlc_data</span><span class='op'>)</span>
+<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>ichimoku_df</span><span class='op'>(</span><span class='va'>cloud</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 'data.frame':	281 obs. of  13 variables:
+#&gt;  $ index  : POSIXct, format: "2020-01-02 00:00:00" "2020-01-03 00:00:00" ...
+#&gt;  $ open   : num  123 123 123 123 124 ...
+#&gt;  $ high   : num  123 123 123 124 125 ...
+#&gt;  $ low    : num  122 123 122 123 124 ...
+#&gt;  $ close  : num  123 123 123 124 125 ...
+#&gt;  $ cd     : num  -1 1 1 1 1 1 -1 0 -1 -1 ...
+#&gt;  $ tenkan : num  NA NA NA NA NA ...
+#&gt;  $ kijun  : num  NA NA NA NA NA NA NA NA NA NA ...
+#&gt;  $ senkouA: num  NA NA NA NA NA NA NA NA NA NA ...
+#&gt;  $ senkouB: num  NA NA NA NA NA NA NA NA NA NA ...
+#&gt;  $ chikou : num  123 123 123 124 124 ...
+#&gt;  $ cloudT : num  NA NA NA NA NA NA NA NA NA NA ...
+#&gt;  $ cloudB : num  NA NA NA NA NA NA NA NA NA NA ...</div><div class='input'>
+<span class='va'>df2</span> <span class='op'>&lt;-</span> <span class='fu'>ichimoku_df</span><span class='op'>(</span><span class='va'>cloud</span>, keep.attrs <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>df2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 'data.frame':	281 obs. of  13 variables:
+#&gt;  $ index  : POSIXct, format: "2020-01-02 00:00:00" "2020-01-03 00:00:00" ...
+#&gt;  $ open   : num  123 123 123 123 124 ...
+#&gt;  $ high   : num  123 123 123 124 125 ...
+#&gt;  $ low    : num  122 123 122 123 124 ...
+#&gt;  $ close  : num  123 123 123 124 125 ...
+#&gt;  $ cd     : num  -1 1 1 1 1 1 -1 0 -1 -1 ...
+#&gt;  $ tenkan : num  NA NA NA NA NA ...
+#&gt;  $ kijun  : num  NA NA NA NA NA NA NA NA NA NA ...
+#&gt;  $ senkouA: num  NA NA NA NA NA NA NA NA NA NA ...
+#&gt;  $ senkouB: num  NA NA NA NA NA NA NA NA NA NA ...
+#&gt;  $ chikou : num  123 123 123 124 124 ...
+#&gt;  $ cloudT : num  NA NA NA NA NA NA NA NA NA NA ...
+#&gt;  $ cloudB : num  NA NA NA NA NA NA NA NA NA NA ...
+#&gt;  - attr(*, "periods")= int [1:3] 9 26 52
+#&gt;  - attr(*, "periodicity")= num 86400
+#&gt;  - attr(*, "ticker")= chr "sample_ohlc_data"</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

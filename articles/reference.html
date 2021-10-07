@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2.3</span>
       </span>
     </div>
 
@@ -289,6 +289,31 @@
 <span class="co"># For a market that trades 24/7:</span>
 <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span>, holidays <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
 </div>
+<div id="working-with-ichimoku-objects" class="section level4">
+<h4 class="hasAnchor">
+<a href="#working-with-ichimoku-objects" class="anchor"></a>Working with ichimoku objects</h4>
+<p>The following S3 methods for the generic ‘zoo’ functions are provided:</p>
+<ul>
+<li>
+<code><a href="../reference/index.html">index()</a></code> to extract the index of an ichimoku object as a vector of POSIXct values</li>
+<li>
+<code><a href="../reference/coredata.html">coredata()</a></code> to extract the columns of an ichimoku object as a numeric matrix</li>
+</ul>
+<p>As the extracted objects are simple base types, they can be easily modified as required.</p>
+<p>The below shows how to faithfully re-create an ichimoku object from its components:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">index</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/index.html">index</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span>
+<span class="va">coredata</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/coredata.html">coredata</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span>
+
+<span class="va">cloud2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">index</span>, <span class="va">coredata</span><span class="op">)</span>, ticker <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html">attr</a></span><span class="op">(</span><span class="va">cloud</span>, <span class="st">"ticker"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; Warning: Converted numeric values in column 'index' as POSIX time - please check</span>
+<span class="co">#&gt; validity</span>
+<span class="fu"><a href="https://rdrr.io/r/base/identical.html">identical</a></span><span class="op">(</span><span class="va">cloud</span>, <span class="va">cloud2</span><span class="op">)</span>
+<span class="co">#&gt; [1] TRUE</span></code></pre></div>
+<p>Note specifically that ichimoku needs to be called twice - first to convert the matrix to an ichimoku object and then again to recalculate taking into account NA values correctly. The ticker name should also be set explicitly.</p>
+<p>A warning is issued about checking the validity of POSIX times, which may safely be ignored as the POSIXct values in ‘index’ were simply coerced to numeric during the <code><a href="https://rdrr.io/r/base/cbind.html">cbind()</a></code> operation and remain valid.</p>
+<p>For additional functionality, the ‘xts’ package may be loaded to access a wide range of methods available for ‘xts’ objects, for example changing the periodicity of the data.</p>
+</div>
 </div>
 <div id="plot" class="section level3">
 <h3 class="hasAnchor">
@@ -300,7 +325,7 @@
 <p>The default plot function produces static plots, which have the advantage of being easily exportable to pdf or image formats in high resolution.</p>
 <p>Call <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> on an ichimoku object to visualize the cloud chart.</p>
 <p>The example below demonstrates some of the arguments that can be supplied to customise the plot.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">cloud</span>, window <span class="op">=</span> <span class="st">"2020-05/"</span>, ticker <span class="op">=</span> <span class="st">"一目均衡表"</span>, subtitle <span class="op">=</span> <span class="st">"Sample Data Series"</span><span class="op">)</span></code></pre></div>
 <p><img src="reference_files/figure-html/plot2-1.png" width="672"></p>
 <p>The following arguments for customisation are shared across <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> and <code><a href="../reference/iplot.html">iplot()</a></code>:</p>
@@ -334,13 +359,13 @@
 <p>An <strong>R-type oscillator</strong> is based on the formula for Relative Strength Index (RSI). This is a single line indicator with a look-back window of the ichimoku object’s medium cloud period (default 26). The 75 and 25 levels are marked on the chart to demarcate potentially over-bought and over-sold levels.</p>
 <p>The R-type line is calculated as 100 - 100 / (1 + [26] period mean open to close gain / the absolute value of the [26] period mean open to close loss).</p>
 <p>Note that this corresponds to the usual RSI oscillator definition, although not identical as gains/losses are calculated with reference to each period’s open rather than the previous close. Note also that the R-type oscillator is calculated consistently and does not employ a roll-forward mechanism based on previous oscillator values like the RSI.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># To plot an R-type oscillator:</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">cloud</span>, type <span class="op">=</span> <span class="st">"r"</span><span class="op">)</span></code></pre></div>
-<p>An <strong>S-type oscillator</strong> is based on the formula for the stochastic indicator. This is a 2-line indicator with fast and slow lines with look-back windows corresponding to the fast and medium cloud periods respectively (default 9 and 26). The fast line is quicker to react to price changes and the slow line can be used to provide confirmation or divergence.</p>
+<p>An <strong>S-type oscillator</strong> is based on the formula for the stochastic indicator. This is a 2-line indicator with fast and slow lines with look-back windows corresponding to the fast and medium cloud periods respectively (default 9 and 26). The fast line is quicker to react to price changes and the slow line can be used for confirmation / divergence.</p>
 <p>The fast S-type line is calculated as 100 times the ratio of the closing price minus the [9] period low to the [9] period high minus the [9] period low. The slow S-type line is calculated as 100 times the ratio of the closing price minus the [26] period low to the [26] period high minus the [26] period low.</p>
 <p>Note the difference to the usual stochastic oscillator definition where the slow line is a 3-period moving average of the fast line.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">cloud</span>, window <span class="op">=</span> <span class="st">"2020-04-01/2020-12-01"</span>, theme <span class="op">=</span> <span class="st">"solarized"</span>, type <span class="op">=</span> <span class="st">"s"</span><span class="op">)</span></code></pre></div>
 <p><img src="reference_files/figure-html/plots-1.png" width="672"></p>
 </div>
@@ -350,7 +375,7 @@
 <p>Additional input data preserved within the ichimoku object, for example volume data, can be plotted in the sub-plot area by specifying the ‘custom’ argument. Other metrics can also be plotted if they are added as an additional column to the ichimoku object.</p>
 <p>The character string supplied to ‘custom’ is a regular expression pattern that is matched to the column name and hence does not need to match exactly, nor is case considered.</p>
 <p>To view a custom sub-plot, type must be specified as either ‘bar’ or ‘line’, otherwise the type setting will take precedence (default is ‘none’).</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">kumo</span>, window <span class="op">=</span> <span class="st">"2020-04/2020-11"</span>, theme <span class="op">=</span> <span class="st">"mono"</span>, type <span class="op">=</span> <span class="st">"bar"</span>, custom <span class="op">=</span> <span class="st">"volume"</span><span class="op">)</span></code></pre></div>
 <p><img src="reference_files/figure-html/plotbar-1.png" width="672"></p>
 <p>On a bar chart, the bar colours correspond to the candle direction.</p>
@@ -365,7 +390,7 @@
 <a href="#interactive-plots" class="anchor"></a>2. Interactive Plots</h4>
 <p>Interactive plots require the ‘shiny’ package to be installed.</p>
 <p>To produce an interactive plot, use ichimoku’s <code><a href="../reference/iplot.html">iplot()</a></code> function, which launches an R Shiny app.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># For an interactive plot:</span>
 <span class="fu"><a href="../reference/iplot.html">iplot</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span></code></pre></div>
 <p>Further arguments are optional as full customisation of the chart can be done interactively in-app, including selecting the time window, theme, chart type, custom sub-plot etc.</p>
@@ -421,11 +446,12 @@
 <a href="#data-validation" class="anchor"></a>Data validation</h3>
 <p>ichimoku performs the following data validation steps before attempting to compute the cloud values. Failure at any step causes <code><a href="../reference/ichimoku.html">ichimoku()</a></code> to halt.</p>
 <ol style="list-style-type: decimal">
-<li>Searches column names of the data object for the first column containing ‘index’, ‘date’ or ‘time’ (not case-dependent). If such a column is found but the data is not convertible into POSIXct format, an error is returned</li>
+<li>Searches column names of the data object for the first column containing ‘index’, ‘date’ or ‘time’ (not case-dependent).</li>
 </ol>
 <ul>
-<li>
-<em>If not found:</em> searches in row names of the data object if present. If the row names do not contain data that is convertible into POSIXct format, an error is returned. Note: ‘xts’ objects are always indexed by a valid timestamp and ichimoku handles this automatically</li>
+<li><p><em>If found:</em> will attempt to convert the column to POSIXct by <code><a href="https://rdrr.io/r/base/as.POSIXlt.html">as.POSIXct()</a></code>. If this fails, will check if the column is numeric and if so convert it to POSIXct by assuming the numeric value is a valid unix/POSIX time (a warning is issued to check the validity in case the numeric value is not a valid POSIX time)</p></li>
+<li><p><em>If not found:</em> will attempt to convert the row names to POSIXct by <code><a href="https://rdrr.io/r/base/as.POSIXlt.html">as.POSIXct()</a></code>. If this fails, will check if the row names are integer values that are not just the default row names for data frames, and if so convert it to POSIXct by assuming the numeric value is a valid unix/POSIX time (a warning is issued to check the validity in case the numeric value is not a valid POSIX time)</p></li>
+<li><p>Note: ‘xts’ objects are always indexed by a valid timestamp and ichimoku handles this automatically</p></li>
 </ul>
 <ol start="2" style="list-style-type: decimal">
 <li>Searches for HLC price data in columns with names containing ‘high’, ‘low’ and ‘close’ (not case-dependent) respectively</li>
@@ -453,7 +479,7 @@
 <li>Index:
 <ul>
 <li>
-<code><a href="https://rdrr.io/pkg/zoo/man/index.html">index(object)</a></code> - date-time index [POSIXct]</li>
+<code><a href="../reference/index.html">index(object)</a></code> - date-time index [POSIXct]</li>
 </ul>
 </li>
 <li>Columns [numeric]:
@@ -496,26 +522,6 @@
 </li>
 </ul>
 </div>
-<div id="re-exports" class="section level3">
-<h3 class="hasAnchor">
-<a href="#re-exports" class="anchor"></a>Re-exports</h3>
-<p>For convenience, the following functions are re-exported by ichimoku:</p>
-<p><em>from ‘zoo’:</em></p>
-<ul>
-<li>
-<code><a href="https://rdrr.io/pkg/zoo/man/index.html">index()</a></code> to extract the index of an ichimoku object</li>
-<li>
-<code><a href="https://rdrr.io/pkg/zoo/man/coredata.html">coredata()</a></code> to extract the columns of an ichimoku object as a numeric matrix (without the date index)</li>
-</ul>
-<p><em>from ‘xts’:</em></p>
-<ul>
-<li>
-<code><a href="https://rdrr.io/pkg/xts/man/xts.html">xts()</a></code> to create an ‘xts’ object from data and a date-time index, use <code><a href="https://rdrr.io/pkg/xts/man/xts.html">xts(data, index)</a></code>
-</li>
-</ul>
-<p>If modifications have been made to the data of an ichimoku object, call <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on the modified object to re-create the object according to the correct specification.</p>
-<p>For additional functionality, the ‘xts’ package may be loaded to access a wide range of methods available for ‘xts’ objects, for example changing the periodicity of the data.</p>
-</div>
 <div id="api-modifications" class="section level3">
 <h3 class="hasAnchor">
 <a href="#api-modifications" class="anchor"></a>API modifications</h3>
@@ -523,8 +529,7 @@
 <h4 class="hasAnchor">
 <a href="#since-version-0-x" class="anchor"></a>Since version 0.x</h4>
 <ul>
-<li>ichimoku objects created in v0.x will no longer work correctly in v1.x and later of the package</li>
-<li>To ensure compatibility with the ichimoku object specification v1, please upgrade to the latest package version and run <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on previously-created objects to re-create them according to the new specification (data is preserved)</li>
+<li>ichimoku objects created in v0.x will no longer work correctly in v1.x and later of the package. To ensure compatibility with the ichimoku object specification v1, please upgrade to the latest package version and run <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on previously-created objects to re-create them according to the new specification (data is preserved)</li>
 </ul>
 </div>
 </div>

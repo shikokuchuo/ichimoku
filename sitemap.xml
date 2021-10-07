@@ -13,6 +13,9 @@
     <loc>https://shikokuchuo.net/ichimoku/reference/autostrat.html</loc>
   </url>
   <url>
+    <loc>https://shikokuchuo.net/ichimoku/reference/coredata.ichimoku.html</loc>
+  </url>
+  <url>
     <loc>https://shikokuchuo.net/ichimoku/reference/df_append.html</loc>
   </url>
   <url>
@@ -35,6 +38,12 @@
   </url>
   <url>
     <loc>https://shikokuchuo.net/ichimoku/reference/ichimoku.html</loc>
+  </url>
+  <url>
+    <loc>https://shikokuchuo.net/ichimoku/reference/ichimoku_df.html</loc>
+  </url>
+  <url>
+    <loc>https://shikokuchuo.net/ichimoku/reference/index.ichimoku.html</loc>
   </url>
   <url>
     <loc>https://shikokuchuo.net/ichimoku/reference/iplot.html</loc>
@@ -86,9 +95,6 @@
   </url>
   <url>
     <loc>https://shikokuchuo.net/ichimoku/reference/print.ichimoku.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/reexports.html</loc>
   </url>
   <url>
     <loc>https://shikokuchuo.net/ichimoku/reference/sample_ohlc_data.html</loc>

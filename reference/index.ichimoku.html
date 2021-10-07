@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Trim Dataframe Rows with NA Values — df_trim • ichimoku</title>
+<title>Extract the Index of Ichimoku Objects — index • ichimoku</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,9 +48,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Trim Dataframe Rows with NA Values — df_trim" />
-<meta property="og:description" content="Trim rows containing NA values from a 'data.frame' object. An efficient
-    version of stats::na.omit() with no data validation or checking." />
+<meta property="og:title" content="Extract the Index of Ichimoku Objects — index" />
+<meta property="og:description" content="Method for extracting the date-time index of ichimoku objects." />
 <meta property="og:image" content="https://shikokuchuo.net/ichimoku/logo.png" />
 
 
@@ -149,49 +148,47 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Trim Dataframe Rows with NA Values</h1>
+    <h1>Extract the Index of Ichimoku Objects</h1>
     <small class="dont-index">Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
-    <div class="hidden name"><code>df_trim.Rd</code></div>
+    <div class="hidden name"><code>index.ichimoku.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Trim rows containing NA values from a 'data.frame' object. An efficient
-    version of <code><a href='https://rdrr.io/r/stats/na.fail.html'>stats::na.omit()</a></code> with no data validation or checking.</p>
+    <p>Method for extracting the date-time index of ichimoku objects.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>df_trim</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='co'># S3 method for ichimoku</span>
+<span class='fu'>index</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>the data.frame to trim.</p></td>
+      <td><p>an object of class 'ichimoku'.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>arguments used by other methods.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The data.frame 'x' with rows containing NA values removed.</p>
+    <p>The date-time index of the ichimoku object as a vector of POSIXct
+    values.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Works only where the columns contain atomic (e.g. numeric) and not
-    recursive types (e.g. lists).</p>
+    <p>This function is an S3 method for the generic function index()
+    for class 'ichimoku'. It can be invoked by calling index(x) on an
+    object 'x' of class 'ichimoku'.</p>
+    <h2 class="hasAnchor" id="further-details"><a class="anchor" href="#further-details"></a>Further Details</h2>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>, <span class='cn'>NA</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='fl'>2</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>data</span>
-</div><div class='output co'>#&gt;   c.1.4..NA. c.NA..2.5.
-#&gt; 1          1         NA
-#&gt; 2          2          2
-#&gt; 3          3          3
-#&gt; 4          4          4
-#&gt; 5         NA          5</div><div class='input'><span class='fu'>df_trim</span><span class='op'>(</span><span class='va'>data</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;   c.1.4..NA. c.NA..2.5.
-#&gt; 2          2          2
-#&gt; 3          3          3
-#&gt; 4          4          4</div><div class='input'>
-</div></pre>
+    
+
+<p>Please refer to the reference vignette by running:
+    <code><a href='../articles/reference.html'>vignette("reference", package = "ichimoku")</a></code></p>
+
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
