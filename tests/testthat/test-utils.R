@@ -1,10 +1,9 @@
 xtsobject <- ichimoku(sample_ohlc_data)[1:10, ]
-cloud <- ichimoku(sample_ohlc_data)
 
 test_that("tradingDays ok", {
-  expect_true(tradingDays(sample_ohlc_data$time[1]))
-  expect_vector(tradingDays(sample_ohlc_data$time[1:3]), ptype = logical(), size = 3)
-  expect_warning(tradingDays(sample_ohlc_data$time[4], holidays = 0), regexp = "holidays are invalid")
+  expect_vector(tradingDays(smp <- sample_ohlc_data$time[1:3]), ptype = logical(), size = 3)
+  expect_true(all(tradingDays(smp)))
+  expect_warning(expect_true(tradingDays(sample_ohlc_data$time[4], holidays = 0)), regexp = "holidays are invalid")
   expect_true(all(tradingDays(as.POSIXct(c("2021-01-01", "2021-01-02", "2021-01-03")), holidays = NULL)))
   expect_false(all(tradingDays(as.POSIXct(c("2021-01-01", "2021-01-02", "2021-01-03")))))
 })
@@ -50,12 +49,12 @@ test_that("df_append ok", {
 })
 
 test_that("coredata method ok", {
-  expect_identical(coredata.ichimoku(cloud), xts:::coredata.xts(cloud))
-  expect_identical(coredata.ichimoku(cloud, fmt = TRUE), xts:::coredata.xts(cloud, fmt = TRUE))
+  expect_identical(coredata.ichimoku(xtsobject), xts:::coredata.xts(xtsobject))
+  expect_identical(coredata.ichimoku(xtsobject, fmt = TRUE), xts:::coredata.xts(xtsobject, fmt = TRUE))
 })
 
 test_that("index method ok", {
-  expect_identical(index.ichimoku(cloud), xts:::index.xts(cloud))
+  expect_identical(index.ichimoku(xtsobject), xts:::index.xts(xtsobject))
 })
 
 test_that("internal window functions ok", {

@@ -1,13 +1,11 @@
 cloud <- ichimoku(sample_ohlc_data)
-stratlist <- autostrat(cloud, n = 2, dir = "short", level = 2)
 grid <- mlgrid(cloud, y = "logret", type = "numeric")
 grid2 <- mlgrid(cloud, y = "ret", type = "boolean", dir = "short", unique = FALSE)
 
 test_that("autostrat ok", {
-  expect_type(stratlist, "list")
-  expect_length(stratlist, 2L)
-  expect_type(autostrat(cloud, n = 1), "list")
-  expect_type(autostrat(cloud, n = 1, level = 3), "list")
+  expect_output(expect_length(expect_type(expect_invisible(autostrat(cloud, n = 2)), "list"), 2L))
+  expect_output(expect_type(autostrat(cloud, n = 1), "list"))
+  expect_output(expect_type(autostrat(cloud, n = 1, level = 3), "list"))
   expect_warning(autostrat(cloud, n = 1, level = "a"), regexp = "'level' invalid")
   expect_error(autostrat(sample_ohlc_data), regexp = "ichimoku object")
 })
@@ -27,6 +25,7 @@ test_that("mlgrid ok", {
 })
 
 test_that("look ok", {
+  expect_output(stratlist <- autostrat(cloud, n = 2, dir = "short", level = 2))
   expect_length(expect_type(look(cloud), "list"), 3L)
   expect_length(expect_type(look(stratlist[[1L]]), "list"), 4L)
   expect_length(expect_type(look(grid), "list"), 3L)
