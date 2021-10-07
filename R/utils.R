@@ -110,48 +110,9 @@ df_trim <- function(x) {
   x[!omit, , drop = FALSE]
 }
 
-#' Convert ichimoku to data.frame
-#'
-#' A performant 'ichimoku' to 'data.frame' constructor with no data validation
-#'     or checking.
-#'
-#' @param x an object of class 'ichimoku'.
-#' @param keep.attrs (optional) if set to TRUE, will preserve any custom
-#'     attributes set on the original object.
-#'
-#' @return A 'data.frame' object. The ichimoku object index is preserved as the
-#'     first column with header 'index'.
-#'
-#' @examples
-#' cloud <- ichimoku(sample_ohlc_data)
-#' df <- ichimoku_df(cloud)
-#' str(df)
-#'
-#' df2 <- ichimoku_df(cloud, keep.attrs = TRUE)
-#' str(df2)
-#'
-#' @export
-#'
-ichimoku_df <- function(x, keep.attrs) {
-  core <- coredata.ichimoku(x)
-  dims <- dim(core)
-  len <- dims[2L]
-  df <- vector(mode = "list", length = len + 1L)
-  df[[1L]] <- index.ichimoku(x)
-  for (i in seq_len(len)) {
-    df[[i + 1L]] <- core[, i]
-  }
-  attributes(df) <- c(list(names = c("index", dimnames(core)[[2L]]),
-                           class = "data.frame",
-                           row.names = .set_row_names(dims[1L])),
-                      if (!missing(keep.attrs) && isTRUE(keep.attrs)) look(x))
-  df
-}
-
 #' Convert xts to data.frame
 #'
-#' A performant 'xts' to 'data.frame' constructor with no data validation or
-#'     checking.
+#' A performant 'xts' to 'data.frame' constructor.
 #'
 #' @param x an 'xts' object.
 #' @param keep.attrs (optional) if set to TRUE, will preserve any custom
@@ -159,6 +120,10 @@ ichimoku_df <- function(x, keep.attrs) {
 #'
 #' @return A 'data.frame' object. The 'xts' index is preserved as the first
 #'     column with header 'index'.
+#'
+#' @details The performant data.frame constructors are used internally within
+#'     the package and made available as utilities. Please note that no data
+#'     validation or checking is performed.
 #'
 #' @examples
 #' cloud <- ichimoku(sample_ohlc_data)
@@ -188,8 +153,7 @@ xts_df <- function(x, keep.attrs) {
 
 #' Convert matrix to data.frame
 #'
-#' A performant 'matrix' to 'data.frame' constructor with no data validation or
-#'     checking.
+#' A performant 'matrix' to 'data.frame' constructor.
 #'
 #' @param x a matrix.
 #' @param keep.attrs (optional) if set to TRUE, will preserve any custom
@@ -197,6 +161,10 @@ xts_df <- function(x, keep.attrs) {
 #'
 #' @return A 'data.frame' object. If the matrix has row names, these are
 #'     retained by the dataframe.
+#'
+#' @details The performant data.frame constructors are used internally within
+#'     the package and made available as utilities. Please note that no data
+#'     validation or checking is performed.
 #'
 #' @examples
 #' cloud <- ichimoku(sample_ohlc_data)

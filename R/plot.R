@@ -124,7 +124,7 @@ autoplot.ichimoku <- function(object,
   }
 
   if (!missing(window)) object <- object[window]
-  data <- ichimoku_df(object)
+  data <- as.data.frame.ichimoku(object)
   data$idx <- attr(data, "row.names")
   data$cd <- as.character(.subset2(data, "cd"))
 
@@ -229,7 +229,7 @@ extraplot <- function(object,
   }
 
   if (!missing(window)) object <- object[window]
-  data <- ichimoku_df(object)
+  data <- as.data.frame.ichimoku(object)
   data$idx <- attr(data, "row.names")
 
   if (type == "r" || type == "s") {

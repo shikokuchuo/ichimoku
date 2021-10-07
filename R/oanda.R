@@ -439,6 +439,10 @@ oanda_chart <- function(instrument,
 #' @param count [default 300] the number of periods to return, from 100 to 800.
 #'     Note that fewer periods are actually shown on the chart to ensure a full
 #'     cloud is always displayed.
+#' @param new.process [default FALSE] if TRUE, will start the shiny session in a
+#'     new R process, unblocking the current process and allowing continued use
+#'     of the R console (stderr output from the new process is still output to
+#'     the console).
 #' @param ... additional arguments passed along to \code{\link{ichimoku}} for
 #'     calculating the ichimoku cloud, \code{\link{autoplot}} to set chart
 #'     parameters, or the 'options' argument of \code{shiny::shinyApp()}.
@@ -474,12 +478,18 @@ oanda_studio <- function(instrument = "USD_JPY",
                          theme = c("original", "dark", "solarized", "mono"),
                          server,
                          apikey,
+                         new.process = FALSE,
                          ...,
                          launch.browser = TRUE,
                          periods = c(9L, 26L, 52L)) {
 
   if (requireNamespace("shiny", quietly = TRUE)) {
 
+    isTRUE(new.process) && {
+      mc <- match.call()
+      mc$new.process <- NULL
+      return(system2(command = "R", args = c("-e", paste0("'ichimoku::", deparse(mc), "'")), stdout = NULL, wait = FALSE))
+    }
     if (!missing(instrument)) instrument <- sub("-", "_", toupper(force(instrument)), fixed = TRUE)
     if (missing(apikey)) apikey <- do_oanda$getKey()
     if (!is.numeric(refresh) || refresh < 1) {

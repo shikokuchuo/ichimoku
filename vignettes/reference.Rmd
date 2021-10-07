@@ -185,12 +185,14 @@ ichimoku(TKR, holidays = NULL)
 
 #### Working with ichimoku objects
 
-The following S3 methods for the generic 'zoo' functions are provided:
+An optimised ichimoku S3 method for the base generic `as.data.frame()` is provided for converting an ichimoku object to a dataframe. Set the argument `keep.attrs = TRUE` to retain the attributes of the original ichimoku object.
+
+S3 methods for the following 'zoo' generics are also provided:
 
 - `index()` to extract the index of an ichimoku object as a vector of POSIXct values
 - `coredata()` to extract the columns of an ichimoku object as a numeric matrix
 
-As the extracted objects are simple base types, they can be easily modified as required.
+As the extracted objects are simple base types, they can easily be modified as required.
 
 The below shows how to faithfully re-create an ichimoku object from its components:
 

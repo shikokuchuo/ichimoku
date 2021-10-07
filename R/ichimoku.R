@@ -121,9 +121,9 @@ ichimoku.ichimoku <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, .
 
   if (!missing(keep.data) && isTRUE(keep.data)) {
     x$cd <- x$tenkan <- x$kijun <- x$senkouA <- x$senkouB <- x$chikou <- x$cloudT <- x$cloudB <- NULL
-    x <- ichimoku_df(x, keep.attrs = TRUE)
+    x <- as.data.frame.ichimoku(x, keep.attrs = TRUE)
   } else {
-    x <- ichimoku_df(x)
+    x <- as.data.frame.ichimoku(x)
   }
 
   ichimoku.data.frame(x, ticker = ticker, periods = periods, keep.data = keep.data, ...)
@@ -312,6 +312,55 @@ ichimoku.default <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, ..
     ichimoku(object, ticker = ticker, periods = periods, keep.data = keep.data, ...)
   }
 
+}
+
+#' Convert ichimoku to data.frame
+#'
+#' An optimised 'ichimoku' to 'data.frame' constructor.
+#'
+#' @param x an object of class 'ichimoku'.
+#' @param row.names not used.
+#' @param optional not used.
+#' @param keep.attrs (optional) if set to TRUE, will preserve any custom
+#'     attributes set on the original object.
+#' @param ... not used.
+#'
+#' @return A 'data.frame' object. The ichimoku object index is preserved as the
+#'     first column with header 'index'.
+#'
+#' @details This function is an S3 method for the generic function
+#'     as.data.frame() for class 'ichimoku'. It can be invoked by calling
+#'     as.data.frame(x) on an object 'x' of class 'ichimoku'.
+#'
+#' @section Further Details:
+#'     Please refer to the reference vignette by running:
+#'     \code{vignette("reference", package = "ichimoku")}
+#'
+#' @examples
+#' cloud <- ichimoku(sample_ohlc_data)
+#' df <- as.data.frame(cloud)
+#' str(df)
+#'
+#' df2 <- as.data.frame(cloud, keep.attrs = TRUE)
+#' str(df2)
+#'
+#' @method as.data.frame ichimoku
+#' @export
+#'
+as.data.frame.ichimoku <- function(x, row.names, optional, keep.attrs, ...) {
+  core <- coredata.ichimoku(x)
+  dims <- dim(core)
+  len <- dims[2L]
+  df <- vector(mode = "list", length = len + 1L)
+  df[[1L]] <- index.ichimoku(x)
+  for (i in seq_len(len)) {
+    df[[i + 1L]] <- core[, i]
+  }
+  attributes(df) <- c(list(names = c("index", dimnames(core)[[2L]]),
+                           class = "data.frame",
+                           row.names = .set_row_names(dims[1L])),
+                      if (!missing(keep.attrs) && isTRUE(keep.attrs)) look(x))
+  df
 }
 
 #' Print Ichimoku Objects

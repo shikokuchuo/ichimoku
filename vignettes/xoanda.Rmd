@@ -143,6 +143,7 @@ oanda_studio()
 
 The following additional parameters can be used to customise the behaviour of the Shiny environment:
 
+- `new.process` [default FALSE] if TRUE, will start the shiny session in a new R process, unblocking the current process and allowing continued use of the R console. stderr output (errors, warnings and messages) from the new process is still output to the console
 - `...` additional arguments passed to `ichimoku()` for calculating the ichimoku cloud, `autoplot()` to set chart parameters, or the 'options' argument of `shiny::shinyApp()`
 - `launch.browser` [default TRUE] If TRUE, the system’s default web browser will be launched automatically after the app is started. The value of this argument can also be a function to call with the application’s URL. To use the default Shiny viewer in RStudio, please specify `getOption("shiny.launch.browser")`
 

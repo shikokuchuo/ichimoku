@@ -14,6 +14,7 @@ oanda_studio(
   theme = c("original", "dark", "solarized", "mono"),
   server,
   apikey,
+  new.process = FALSE,
   ...,
   launch.browser = TRUE,
   periods = c(9L, 26L, 52L)
@@ -49,6 +50,11 @@ this has been changed by \code{\link{oanda_switch}}.}
 access token), or function that returns this string. Does not need to be
 specified if already stored by oanda_set_key(). Can also be entered
 interactively if not specified.}
+
+\item{new.process}{[default FALSE] if TRUE, will start the shiny session in a
+new R process, unblocking the current process and allowing continued use
+of the R console (stderr output from the new process is still output to
+the console).}
 
 \item{...}{additional arguments passed along to \code{\link{ichimoku}} for
 calculating the ichimoku cloud, \code{\link{autoplot}} to set chart

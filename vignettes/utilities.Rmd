@@ -81,7 +81,9 @@ look(strat)
 
 #### xts_df()
 
-Convert an 'xts' object to 'data.frame'. This function can be an order of magnitude faster than `as.data.frame` for an 'xts' object.
+Convert an 'xts' object to 'data.frame'. This function can be an order of magnitude faster than `as.data.frame()` for an 'xts' object.
+
+Note that for ichimoku objects, a marginally faster, more specific version has been implemented as the S3 method `as.data.frame.ichimoku()`. Hence using this utility on an ichimoku object is not required.
 
 Takes the following arguments:
 

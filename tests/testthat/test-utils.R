@@ -1,4 +1,5 @@
 xtsobject <- ichimoku(sample_ohlc_data)[1:10, ]
+cloud <- ichimoku(sample_ohlc_data)
 
 test_that("tradingDays ok", {
   expect_true(tradingDays(sample_ohlc_data$time[1]))
@@ -16,7 +17,7 @@ test_that("grid_dup ok", {
 test_that("xts_df ok", {
   df <- xts_df(xtsobject)
   expect_s3_class(df, "data.frame")
-  expect_identical(dim(df), c(10L, 13L))
+  expect_equal(dim(df), c(10L, 13L))
   xts <- structure(xtsobject, special = "set")
   dfmod <- xts_df(xts, keep.attrs = TRUE)
   expect_equal(attr(dfmod, "special"), "set")
@@ -25,7 +26,7 @@ test_that("xts_df ok", {
 test_that("matrix_df ok", {
   df <- matrix_df(as.matrix(xtsobject))
   expect_s3_class(df, "data.frame")
-  expect_identical(dim(df), c(10L, 12L))
+  expect_equal(dim(df), c(10L, 12L))
   mat <- structure(as.matrix(xtsobject), special = "set")
   dfmod <- matrix_df(mat, keep.attrs = TRUE)
   expect_equal(attr(dfmod, "special"), "set")
@@ -46,6 +47,15 @@ test_that("df_merge ok", {
 
 test_that("df_append ok", {
   expect_equal(dim(df_append(sample_ohlc_data[4:10, ], sample_ohlc_data[1:6, ]))[1L], 10)
+})
+
+test_that("coredata method ok", {
+  expect_identical(coredata.ichimoku(cloud), xts:::coredata.xts(cloud))
+  expect_identical(coredata.ichimoku(cloud, fmt = TRUE), xts:::coredata.xts(cloud, fmt = TRUE))
+})
+
+test_that("index method ok", {
+  expect_identical(index.ichimoku(cloud), xts:::index.xts(cloud))
 })
 
 test_that("internal window functions ok", {

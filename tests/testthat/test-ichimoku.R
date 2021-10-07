@@ -68,3 +68,12 @@ test_that("print.ichimoku print method ok", {
   expect_output(expect_s3_class(print(cloud), "ichimoku"))
   expect_output(expect_s3_class(print(cloud, plot = FALSE), "ichimoku"))
 })
+
+test_that("as.data.frame method ok", {
+  df <- as.data.frame.ichimoku(cloud)
+  expect_s3_class(df, "data.frame")
+  expect_identical(dim(df), c(281L, 13L))
+  scloud <- structure(cloud, special = "set")
+  sdf <- as.data.frame(scloud, keep.attrs = TRUE)
+  expect_equal(attr(sdf, "special"), "set")
+})
