@@ -2,7 +2,7 @@
 % Please edit documentation in R/ichimoku.R
 \name{summary.ichimoku}
 \alias{summary.ichimoku}
-\title{Summary of Ichimoku Strategies}
+\title{Summary of Ichimoku Objects and Strategies}
 \usage{
 \method{summary}{ichimoku}(object, strat = TRUE, ...)
 }
@@ -10,16 +10,17 @@
 \item{object}{an object of class 'ichimoku'.}
 
 \item{strat}{[default TRUE] to show the strategy summary if present. Set to
-FALSE to show the data summary instead.}
+FALSE to show the object summary instead.}
 
-\item{...}{additional arguments to be passed along.}
+\item{...}{arguments passed to or from other methods.}
 }
 \value{
-A matrix containing the strategy summary if present, otherwise a table
-    containing the data summary.
+A matrix containing the strategy summary, if present and 'strat' is
+    set to TRUE, otherwise a character vector containing an abbreviated object
+    summary (the full object summary is output to the console).
 }
 \description{
-Custom summary method for ichimoku objects for viewing strategies.
+Custom summary method for ichimoku objects.
 }
 \details{
 This function is an S3 method for the generic function summary() for
@@ -33,7 +34,10 @@ This function is an S3 method for the generic function summary() for
 }
 
 \examples{
-strat <- strat(ichimoku(sample_ohlc_data, ticker = "TKR"))
+cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
+summary(cloud)
+
+strat <- strat(cloud)
 summary(strat)
 
 }

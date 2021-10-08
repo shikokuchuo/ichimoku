@@ -10,7 +10,7 @@
 \arguments{
 \item{x}{an object of class 'ichimoku'.}
 
-\item{...}{arguments used by other methods.}
+\item{...}{arguments passed to or from other methods.}
 }
 \value{
 The date-time index of the ichimoku object as a vector of POSIXct

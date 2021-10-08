@@ -26,7 +26,7 @@ test_that("hasStrat ok", {
   expect_false(hasStrat(cloud))
 })
 
-test_that("summary method ok", {
+test_that("summary method for strat ok", {
   expect_true(inherits(summary(strat), "matrix"))
-  expect_false(inherits(summary(strat, strat = FALSE), "matrix"))
+  expect_output(expect_vector(summary(strat, strat = FALSE), ptype = "character()"))
 })

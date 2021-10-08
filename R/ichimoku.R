@@ -354,17 +354,18 @@ print.ichimoku <- function(x, plot = TRUE, ...) {
 
 }
 
-#' Summary of Ichimoku Strategies
+#' Summary of Ichimoku Objects and Strategies
 #'
-#' Custom summary method for ichimoku objects for viewing strategies.
+#' Custom summary method for ichimoku objects.
 #'
 #' @param object an object of class 'ichimoku'.
 #' @param strat [default TRUE] to show the strategy summary if present. Set to
-#'     FALSE to show the data summary instead.
-#' @param ... additional arguments to be passed along.
+#'     FALSE to show the object summary instead.
+#' @param ... arguments passed to or from other methods.
 #'
-#' @return A matrix containing the strategy summary if present, otherwise a table
-#'     containing the data summary.
+#' @return A matrix containing the strategy summary, if present and 'strat' is
+#'     set to TRUE, otherwise a character vector containing an abbreviated object
+#'     summary (the full object summary is output to the console).
 #'
 #' @details This function is an S3 method for the generic function summary() for
 #'     class 'ichimoku'. It can be invoked by calling summary(x) on an object 'x'
@@ -375,7 +376,10 @@ print.ichimoku <- function(x, plot = TRUE, ...) {
 #'     \code{vignette("strategies", package = "ichimoku")}
 #'
 #' @examples
-#' strat <- strat(ichimoku(sample_ohlc_data, ticker = "TKR"))
+#' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
+#' summary(cloud)
+#'
+#' strat <- strat(cloud)
 #' summary(strat)
 #'
 #' @method summary ichimoku
@@ -383,7 +387,38 @@ print.ichimoku <- function(x, plot = TRUE, ...) {
 #'
 summary.ichimoku <- function(object, strat = TRUE, ...) {
 
-  if (hasStrat(object) && isTRUE(strat)) attr(object, "strat") else NextMethod()
+  if (hasStrat(object) && isTRUE(strat)) {
+    attr(object, "strat")
+  } else {
+    dims <- dim(object)
+    xlen <- dims[1L]
+    cat(summary <- paste0("ichimoku object with dimensions (", xlen, ", ", dims[2L], ")"))
+
+    idx <- index.ichimoku(object)
+    end <- sum(!is.na(object[, "close"]))
+    high <- which.max(object[1:end, "high"])
+    low <- which.min(object[1:end, "low"])
+    dates <- format.POSIXct(c(idx[1L], idx[high], idx[low], idx[end]))
+
+    cat("\n\n            Max: ", dates[2L], " [", object[high, "high"], "]", sep = "")
+    cat("\nStart: ", dates[1L], " [", object[1L, "open"],
+        "]   End: ", dates[4L], " [", object[end, "close"], "]", sep = "")
+    cat("\n            Min: ", dates[3L], " [", object[low, "low"], "]", sep = "")
+
+    periodicity <- attr(object, "periodicity")
+    cat("\n\nTicker:", attr(object, "ticker"),
+        "\nCloud periods:", attr(object, "periods"), "\nPeriodicity:",
+        if (periodicity >= 86400) {
+          paste0(round(periodicity / 86400, digits = 1), " days")
+        } else if (periodicity >= 3600) {
+          paste0(round(periodicity / 3600, digits = 1), " hours")
+        } else if (periodicity >= 60) {
+          paste0(round(periodicity / 60, digits = 1), " mins")
+        } else {
+          paste0(periodicity, " secs")
+        })
+    invisible(summary)
+  }
 
 }
 
@@ -396,7 +431,7 @@ summary.ichimoku <- function(object, strat = TRUE, ...) {
 #' @param optional not used.
 #' @param keep.attrs (optional) if set to TRUE, will preserve any custom
 #'     attributes set on the original object.
-#' @param ... not used.
+#' @param ... arguments passed to or from other methods.
 #'
 #' @return A 'data.frame' object. The ichimoku object index is preserved as the
 #'     first column with header 'index'.
@@ -449,7 +484,7 @@ NULL
 #' @param fmt (optional) set to TRUE to retain the index as row names of the
 #'     returned matrix, or a character string passed on to the 'format' argument
 #'     of \code{format.POSIXct()} to format these values in a specific way.
-#' @param ... arguments used by other methods.
+#' @param ... arguments passed to or from other methods.
 #'
 #' @return A numeric matrix containing the ichimoku object data, stripped of the
 #'     index unless 'fmt' is specified in which case the index will be retained
@@ -490,7 +525,7 @@ NULL
 #' Method for extracting the date-time index of ichimoku objects.
 #'
 #' @param x an object of class 'ichimoku'.
-#' @param ... arguments used by other methods.
+#' @param ... arguments passed to or from other methods.
 #'
 #' @return The date-time index of the ichimoku object as a vector of POSIXct
 #'     values.

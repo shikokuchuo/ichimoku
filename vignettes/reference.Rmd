@@ -140,7 +140,13 @@ A section (rows 100 to 110) of the ichimoku object is shown above. Note that pri
 cloud
 ```
 
-As an ichimoku object inherits the ‘xts’ and ‘zoo’ classes, all existing methods for these classes should work seamlessly. For working with ichimoku objects, please see the section [re-exports](#re-exports).
+The summary method using `summary()` will also provide a brief description of the data:
+
+```{r ichimokusummary}
+summary(cloud)
+```
+
+As an ichimoku object inherits the ‘xts’ and ‘zoo’ classes, all existing methods for these classes should work seamlessly. Please refer to the section [Working with ichimoku objects](#working-with-ichimoku-objects).
 
 #### ichimoku.ichimoku()
 

@@ -14,7 +14,7 @@
 returned matrix, or a character string passed on to the 'format' argument
 of \code{format.POSIXct()} to format these values in a specific way.}
 
-\item{...}{arguments used by other methods.}
+\item{...}{arguments passed to or from other methods.}
 }
 \value{
 A numeric matrix containing the ichimoku object data, stripped of the

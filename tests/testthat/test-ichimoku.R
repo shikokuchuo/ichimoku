@@ -61,6 +61,10 @@ test_that("print method ok", {
   expect_output(expect_s3_class(print(cloud, plot = FALSE), "ichimoku"))
 })
 
+test_that("summary method for objects ok", {
+  expect_output(expect_vector(summary(cloud), ptype = "character()"))
+})
+
 test_that("as.data.frame method ok", {
   expect_s3_class(df <- as.data.frame.ichimoku(cloud), "data.frame")
   expect_identical(df, xts_df(cloud))

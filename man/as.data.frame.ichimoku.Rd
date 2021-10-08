@@ -16,7 +16,7 @@
 \item{keep.attrs}{(optional) if set to TRUE, will preserve any custom
 attributes set on the original object.}
 
-\item{...}{not used.}
+\item{...}{arguments passed to or from other methods.}
 }
 \value{
 A 'data.frame' object. The ichimoku object index is preserved as the

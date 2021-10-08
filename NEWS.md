@@ -1,4 +1,4 @@
-# ichimoku 1.2.2.6
+# ichimoku 1.2.2.7
 
 #### New features:
 
@@ -6,6 +6,7 @@
 * `as.data.frame.ichimoku()` S3 method is implemented as a marginally faster version of `xts_df()` for ichimoku objects.
 * `oanda_studio()` gains the argument 'new.process', which when set to TRUE, starts the shiny session in a new R process, unblocking the current process and allowing continued use of the console.
 * Improved time index handling for `ichimoku()`: where conversion by `as.POSIXct()` fails, will convert numeric values as POSIX times (with an appropriate warning).
+* New custom summary method for ichimoku objects (without strategies).
 
 #### Updates:
 
