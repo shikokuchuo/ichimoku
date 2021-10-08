@@ -86,7 +86,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2.8</span>
       </span>
     </div>
 
@@ -227,7 +227,7 @@ in the input object as additional columns and/or attributes.</p></td>
     interactive charting.</p>
 <p>Where an ichimoku object is passed to <code>ichimoku()</code>, the ichimoku
     object is re-calculated using the OHLC pricing data contained within.</p>
-    <h2 class="hasAnchor" id="object-specification"><a class="anchor" href="#object-specification"></a>Object Specification</h2>
+    <h2 class="hasAnchor" id="ichimoku-object-specification"><a class="anchor" href="#ichimoku-object-specification"></a>Ichimoku Object Specification</h2>
 
     
 
@@ -255,24 +255,6 @@ in the input object as additional columns and/or attributes.</p></td>
 <li><p><code>$ticker</code>:  instrument identifier [character]</p></li>
 </ul>
 
-    <h2 class="hasAnchor" id="working-with-ichimoku-objects"><a class="anchor" href="#working-with-ichimoku-objects"></a>Working with ichimoku objects</h2>
-
-    
-
-<p>An ichimoku object inherits the 'xts' and 'zoo' classes. For convenience,
-    the following functions are re-exported by ichimoku:</p>
-<p><em>from 'zoo':</em></p><ul>
-<li><p><code><a href='index.html'>index()</a></code>:  to extract the index of an ichimoku object</p></li>
-<li><p><code><a href='coredata.html'>coredata()</a></code>:  to extract the columns of an ichimoku
-        object as a numeric matrix</p></li>
-</ul>
-
-<p><em>from 'xts':</em></p><ul>
-<li><p><code>xts()</code>:  to create an 'xts' object from data and a
-        date-time index use <code>xts(data, index)</code></p></li>
-</ul>
-
-<p>Additional methods are available by loading the 'xts' package.</p>
     <h2 class="hasAnchor" id="further-details"><a class="anchor" href="#further-details"></a>Further Details</h2>
 
     
@@ -282,7 +264,7 @@ in the input object as additional columns and/or attributes.</p></td>
     calculate the cloud chart values.</p>
 <p>If only single series price data is supplied, a <em>pseudo</em> OHLC series
     is generated and a <em>pseudo</em> cloud chart is returned.</p>
-<p>Please refer to the reference vignette by running:
+<p>Please refer to the reference vignette by calling:
     <code><a href='../articles/reference.html'>vignette("reference", package = "ichimoku")</a></code></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -290,7 +272,7 @@ in the input object as additional columns and/or attributes.</p></td>
 
 <span class='va'>cloud</span> <span class='op'>&lt;-</span> <span class='fu'>ichimoku</span><span class='op'>(</span><span class='va'>TKR</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>cloud</span><span class='op'>)</span>
-</div><div class='img'><img src='ichimoku-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>cloud</span><span class='op'>[</span><span class='fl'>100</span><span class='op'>:</span><span class='fl'>120</span>,<span class='op'>]</span>, plot <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+</div><div class='img'><img src='ichimoku-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>cloud</span><span class='op'>[</span><span class='fl'>100</span><span class='op'>:</span><span class='fl'>120</span>, <span class='op'>]</span>, plot <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;                      open  high   low close cd tenkan  kijun senkouA senkouB
 #&gt; 2020-05-19 23:00:00 122.7 122.7 121.8 122.4 -1 121.05 123.90 125.675  124.85
 #&gt; 2020-05-20 23:00:00 122.4 122.6 121.1 121.9 -1 121.05 123.90 125.675  124.85
