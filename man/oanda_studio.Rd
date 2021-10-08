@@ -53,8 +53,7 @@ interactively if not specified.}
 
 \item{new.process}{[default FALSE] if TRUE, will start the shiny session in a
 new R process, unblocking the current process and allowing continued use
-of the R console (stderr output from the new process is still output to
-the console).}
+of the R console.}
 
 \item{...}{additional arguments passed along to \code{\link{ichimoku}} for
 calculating the ichimoku cloud, \code{\link{autoplot}} to set chart

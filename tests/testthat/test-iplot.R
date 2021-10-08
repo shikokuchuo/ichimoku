@@ -11,6 +11,6 @@ test_that("iplot Shiny functions ok", {
                       infotip = TRUE)
     expect_s3_class(pdata(), "ichimoku")
   })
-  expect_s3_class(drawInfotip(sdata = cloud[100,], left_px = 100, top_px = 100), "shiny.tag")
-  expect_s3_class(drawGuide(label = index(cloud)[1], left = 100, top = 100), "shiny.tag")
+  expect_s3_class(drawInfotip(sdata = cloud[100L, ], left_px = 100, top_px = 100), "shiny.tag")
+  expect_s3_class(drawGuide(label = index(cloud)[1L], left = 100, top = 100), "shiny.tag")
 })

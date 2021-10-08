@@ -441,8 +441,7 @@ oanda_chart <- function(instrument,
 #'     cloud is always displayed.
 #' @param new.process [default FALSE] if TRUE, will start the shiny session in a
 #'     new R process, unblocking the current process and allowing continued use
-#'     of the R console (stderr output from the new process is still output to
-#'     the console).
+#'     of the R console.
 #' @param ... additional arguments passed along to \code{\link{ichimoku}} for
 #'     calculating the ichimoku cloud, \code{\link{autoplot}} to set chart
 #'     parameters, or the 'options' argument of \code{shiny::shinyApp()}.
@@ -488,7 +487,8 @@ oanda_studio <- function(instrument = "USD_JPY",
     isTRUE(new.process) && {
       mc <- match.call()
       mc$new.process <- NULL
-      return(system2(command = "R", args = c("-e", paste0("'ichimoku::", deparse(mc), "'")), stdout = NULL, wait = FALSE))
+      return(system2(command = "R", args = c("-e", paste0("'ichimoku::", deparse(mc), "'")),
+                     stdout = NULL, stderr = NULL, wait = FALSE))
     }
     if (!missing(instrument)) instrument <- sub("-", "_", toupper(force(instrument)), fixed = TRUE)
     if (missing(apikey)) apikey <- do_oanda$getKey()

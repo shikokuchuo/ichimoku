@@ -314,55 +314,6 @@ ichimoku.default <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, ..
 
 }
 
-#' Convert ichimoku to data.frame
-#'
-#' An optimised 'ichimoku' to 'data.frame' constructor.
-#'
-#' @param x an object of class 'ichimoku'.
-#' @param row.names not used.
-#' @param optional not used.
-#' @param keep.attrs (optional) if set to TRUE, will preserve any custom
-#'     attributes set on the original object.
-#' @param ... not used.
-#'
-#' @return A 'data.frame' object. The ichimoku object index is preserved as the
-#'     first column with header 'index'.
-#'
-#' @details This function is an S3 method for the generic function
-#'     as.data.frame() for class 'ichimoku'. It can be invoked by calling
-#'     as.data.frame(x) on an object 'x' of class 'ichimoku'.
-#'
-#' @section Further Details:
-#'     Please refer to the reference vignette by running:
-#'     \code{vignette("reference", package = "ichimoku")}
-#'
-#' @examples
-#' cloud <- ichimoku(sample_ohlc_data)
-#' df <- as.data.frame(cloud)
-#' str(df)
-#'
-#' df2 <- as.data.frame(cloud, keep.attrs = TRUE)
-#' str(df2)
-#'
-#' @method as.data.frame ichimoku
-#' @export
-#'
-as.data.frame.ichimoku <- function(x, row.names, optional, keep.attrs, ...) {
-  core <- coredata.ichimoku(x)
-  dims <- dim(core)
-  len <- dims[2L]
-  df <- vector(mode = "list", length = len + 1L)
-  df[[1L]] <- index.ichimoku(x)
-  for (i in seq_len(len)) {
-    df[[i + 1L]] <- core[, i]
-  }
-  attributes(df) <- c(list(names = c("index", dimnames(core)[[2L]]),
-                           class = "data.frame",
-                           row.names = .set_row_names(dims[1L])),
-                      if (!missing(keep.attrs) && isTRUE(keep.attrs)) look(x))
-  df
-}
-
 #' Print Ichimoku Objects
 #'
 #' Custom print method for ichimoku objects.
@@ -434,6 +385,132 @@ summary.ichimoku <- function(object, strat = TRUE, ...) {
 
   if (hasStrat(object) && isTRUE(strat)) attr(object, "strat") else NextMethod()
 
+}
+
+#' Convert ichimoku to data.frame
+#'
+#' An optimised 'ichimoku' to 'data.frame' constructor.
+#'
+#' @param x an object of class 'ichimoku'.
+#' @param row.names not used.
+#' @param optional not used.
+#' @param keep.attrs (optional) if set to TRUE, will preserve any custom
+#'     attributes set on the original object.
+#' @param ... not used.
+#'
+#' @return A 'data.frame' object. The ichimoku object index is preserved as the
+#'     first column with header 'index'.
+#'
+#' @details This function is an S3 method for the generic function
+#'     as.data.frame() for class 'ichimoku'. It can be invoked by calling
+#'     as.data.frame(x) on an object 'x' of class 'ichimoku'.
+#'
+#' @section Further Details:
+#'     Please refer to the reference vignette by running:
+#'     \code{vignette("reference", package = "ichimoku")}
+#'
+#' @examples
+#' cloud <- ichimoku(sample_ohlc_data)
+#' df <- as.data.frame(cloud)
+#' str(df)
+#'
+#' df2 <- as.data.frame(cloud, keep.attrs = TRUE)
+#' str(df2)
+#'
+#' @method as.data.frame ichimoku
+#' @export
+#'
+as.data.frame.ichimoku <- function(x, row.names, optional, keep.attrs, ...) {
+  core <- coredata.ichimoku(x)
+  dims <- dim(core)
+  len <- dims[2L]
+  df <- vector(mode = "list", length = len + 1L)
+  df[[1L]] <- index.ichimoku(x)
+  for (i in seq_len(len)) {
+    df[[i + 1L]] <- core[, i]
+  }
+  attributes(df) <- c(list(names = c("index", dimnames(core)[[2L]]),
+                           class = "data.frame",
+                           row.names = .set_row_names(dims[1L])),
+                      if (!missing(keep.attrs) && isTRUE(keep.attrs)) look(x))
+  df
+}
+
+#' @name coredata
+#' @rdname coredata.ichimoku
+#' @export
+NULL
+
+#' Extract the Core Data of Ichimoku Objects
+#'
+#' Method for extracting the core data matrix of ichimoku objects.
+#'
+#' @param x an object of class 'ichimoku'.
+#' @param fmt (optional) set to TRUE to retain the index as row names of the
+#'     returned matrix, or a character string passed on to the 'format' argument
+#'     of \code{format.POSIXct()} to format these values in a specific way.
+#' @param ... arguments used by other methods.
+#'
+#' @return A numeric matrix containing the ichimoku object data, stripped of the
+#'     index unless 'fmt' is specified in which case the index will be retained
+#'     as character values in the matrix row names.
+#'
+#' @details This function is an S3 method for the generic function coredata()
+#'     for class 'ichimoku'. It can be invoked by calling coredata(x) on an
+#'     object 'x' of class 'ichimoku'.
+#'
+#' @section Further Details:
+#'     Please refer to the reference vignette by running:
+#'     \code{vignette("reference", package = "ichimoku")}
+#'
+#' @rdname coredata.ichimoku
+#' @method coredata ichimoku
+#' @export
+#'
+coredata.ichimoku <- function(x, fmt, ...) {
+  if (missing(fmt)) {
+    attributes(x) <- list(dim = attr(x, "dim"), dimnames = attr(x, "dimnames"))
+  } else {
+    attributes(x) <- list(
+      dim = attr(x, "dim"), dimnames = list(
+        if (is.character(fmt)) format.POSIXct(index.ichimoku(x), format = fmt) else format.POSIXct(index.ichimoku(x)),
+        attr(x, "dimnames")[[2L]])
+    )
+  }
+  x
+}
+
+#' @name index
+#' @rdname index.ichimoku
+#' @export
+NULL
+
+#' Extract the Index of Ichimoku Objects
+#'
+#' Method for extracting the date-time index of ichimoku objects.
+#'
+#' @param x an object of class 'ichimoku'.
+#' @param ... arguments used by other methods.
+#'
+#' @return The date-time index of the ichimoku object as a vector of POSIXct
+#'     values.
+#'
+#' @details This function is an S3 method for the generic function index()
+#'     for class 'ichimoku'. It can be invoked by calling index(x) on an
+#'     object 'x' of class 'ichimoku'.
+#'
+#' @section Further Details:
+#'     Please refer to the reference vignette by running:
+#'     \code{vignette("reference", package = "ichimoku")}
+#'
+#' @rdname index.ichimoku
+#' @method index ichimoku
+#' @export
+#'
+index.ichimoku <- function(x, ...) {
+  idx <- attr(x, "index")
+  class(idx) <- c("POSIXct", "POSIXt")
+  idx
 }
 
 #' is.ichimoku

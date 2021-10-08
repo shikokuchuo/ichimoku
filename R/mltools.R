@@ -229,15 +229,20 @@ mlgrid <- function(x,
     veclist <- c(veclist, veclistf)
   }
 
-  grid <- c(list(y = y), veclist)
-  attributes(grid) <- list(names = attr(grid, "names"),
+  df <- c(list(y = y), veclist)
+  cnames <- attr(df, "names")
+  attributes(df) <- list(names = cnames,
+                         class = "data.frame",
+                         row.names = format.POSIXct(index.ichimoku(x)))
+  grid <- df_trim(df)
+  attributes(grid) <- list(names = cnames,
                            class = "data.frame",
-                           row.names = format.POSIXct(index.ichimoku(x)),
+                           row.names = attr(grid, "row.names"),
                            y = target,
                            direction = dir,
                            ticker = attr(x, "ticker"),
                            mlgrid = TRUE)
-  df_trim(grid)
+  grid
 
 }
 

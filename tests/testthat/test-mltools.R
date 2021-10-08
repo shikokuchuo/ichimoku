@@ -12,12 +12,10 @@ test_that("autostrat ok", {
 
 test_that("mlgrid ok", {
   expect_s3_class(grid, "data.frame")
-  expect_true(dim(grid)[2L] == 38L)
-  expect_true(attr(grid, "mlgrid"))
-  expect_identical(attr(grid, "y"), "logret")
-  expect_identical(attr(grid, "direction"), "long")
+  expect_identical(dim(grid), c(153L, 38L))
+  expect_identical(names(attributes(grid)), c("names", "class", "row.names", "y", "direction", "ticker", "mlgrid"))
   expect_s3_class(grid2, "data.frame")
-  expect_true(dim(grid2)[2L] == 75L)
+  expect_identical(dim(grid2), c(153L, 75L))
   expect_true(attr(grid2, "mlgrid"))
   expect_identical(attr(grid2, "y"), "ret")
   expect_identical(attr(grid2, "direction"), "short")
