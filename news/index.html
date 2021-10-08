@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2.7</span>
       </span>
     </div>
 
@@ -151,9 +151,9 @@
       <small>Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="ichimoku-1226" class="section level1">
-<h1 class="page-header" data-toc-text="1.2.2.6">
-<a href="#ichimoku-1226" class="anchor"></a>ichimoku 1.2.2.6<small> Unreleased </small>
+    <div id="ichimoku-1227" class="section level1">
+<h1 class="page-header" data-toc-text="1.2.2.7">
+<a href="#ichimoku-1227" class="anchor"></a>ichimoku 1.2.2.7<small> Unreleased </small>
 </h1>
 <div id="new-features" class="section level4">
 <h4 class="hasAnchor">
@@ -165,6 +165,7 @@
 <li>
 <code><a href="../reference/oanda_studio.html">oanda_studio()</a></code> gains the argument ‘new.process’, which when set to TRUE, starts the shiny session in a new R process, unblocking the current process and allowing continued use of the console.</li>
 <li>Improved time index handling for <code><a href="../reference/ichimoku.html">ichimoku()</a></code>: where conversion by <code><a href="https://rdrr.io/r/base/as.POSIXlt.html">as.POSIXct()</a></code> fails, will convert numeric values as POSIX times (with an appropriate warning).</li>
+<li>New custom summary method for ichimoku objects (without strategies).</li>
 </ul>
 </div>
 <div id="updates" class="section level4">
