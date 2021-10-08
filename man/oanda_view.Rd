@@ -46,7 +46,7 @@ Provides a snapshot overview of markets on an intraday basis, showing the
 This function is designed for interactive use.
 
     For further details please refer to the OANDA fxTrade API vignette by
-    running: \code{vignette("xoanda", package = "ichimoku")}.
+    calling: \code{vignette("xoanda", package = "ichimoku")}.
 }
 \examples{
 \dontrun{

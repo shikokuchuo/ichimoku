@@ -1,4 +1,4 @@
-# ichimoku 1.2.2.7
+# ichimoku 1.2.2.8
 
 #### New features:
 
@@ -14,6 +14,7 @@
 * Fixes sign of %chg for `oanda_quote()`.
 * `xts()` is no longer re-exported from the 'xts' package as `ichimoku()` can now fully re-construct an ichimoku object from its components (see 'Working with ichimoku objects' in the Reference vignette).
 * Further performance improvements to `ichimoku()` and other functions.
+* Documentation refresh.
 
 # ichimoku 1.2.2
 

@@ -70,7 +70,7 @@
 #'      }
 #'
 #' @section Further Details:
-#'     Please refer to the strategies vignette by running:
+#'     Please refer to the strategies vignette by calling:
 #'     \code{vignette("strategies", package = "ichimoku")}
 #'
 #' @examples
@@ -262,7 +262,7 @@ writeStrat <- function(x, strategy, dir) {
 #'     ichimoku objects or via \code{\link{look}}.
 #'
 #' @section Further Details:
-#'     Please refer to the strategies vignette by running:
+#'     Please refer to the strategies vignette by calling:
 #'     \code{vignette("strategies", package = "ichimoku")}
 #'
 #' @examples

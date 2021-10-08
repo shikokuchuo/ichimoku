@@ -28,10 +28,12 @@ Method for extracting the core data matrix of ichimoku objects.
 This function is an S3 method for the generic function coredata()
     for class 'ichimoku'. It can be invoked by calling coredata(x) on an
     object 'x' of class 'ichimoku'.
-}
-\section{Further Details}{
 
-    Please refer to the reference vignette by running:
+    For further details please refer to the reference vignette by calling:
     \code{vignette("reference", package = "ichimoku")}
 }
+\examples{
+cloud <- ichimoku(sample_ohlc_data)
+coredata(cloud)[100:120, ]
 
+}

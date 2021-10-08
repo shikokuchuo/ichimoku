@@ -35,7 +35,7 @@ This feature has been implemented by OANDA only for certain major
     currency pairs and should be considered experimental.
 
     For further details please refer to the OANDA fxTrade API vignette by
-    running: \code{vignette("xoanda", package = "ichimoku")}.
+    calling: \code{vignette("xoanda", package = "ichimoku")}.
 }
 \examples{
 \dontrun{

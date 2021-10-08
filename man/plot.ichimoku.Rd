@@ -60,13 +60,10 @@ Plot Ichimoku Kinko Hyo cloud charts from ichimoku objects.
 This function is an S3 method for the generic function plot() for
     class 'ichimoku'. It can be invoked by calling plot(x) on an object 'x'
     of class 'ichimoku'.
-}
-\section{Further Details}{
 
-    Please refer to the reference vignette by running:
+    For further details please refer to the reference vignette by calling:
     \code{vignette("reference", package = "ichimoku")}
 }
-
 \examples{
 cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 

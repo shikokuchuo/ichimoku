@@ -35,8 +35,7 @@
 #'     class 'ichimoku'. It can be invoked by calling plot(x) on an object 'x'
 #'     of class 'ichimoku'.
 #'
-#' @section Further Details:
-#'     Please refer to the reference vignette by running:
+#'     For further details please refer to the reference vignette by calling:
 #'     \code{vignette("reference", package = "ichimoku")}
 #'
 #' @examples
@@ -98,10 +97,6 @@ NULL
 #' @details This function is an S3 method for the generic function autoplot()
 #'     for class 'ichimoku'. It can be invoked by calling autoplot(x) on an
 #'     object 'x' of class 'ichimoku'.
-#'
-#' @section Further Details:
-#'     Please refer to the reference vignette by running:
-#'     \code{vignette("reference", package = "ichimoku")}
 #'
 #' @rdname autoplot.ichimoku
 #' @method autoplot ichimoku
@@ -176,10 +171,6 @@ autoplot.ichimoku <- function(object,
 #'     of a relative strength index (RSI), and 'S-type', which is a modified form
 #'     of a stochastic oscillator. The oscillator look-back parameters are based
 #'     on the fast and medium cloud periods of the ichimoku object.
-#'
-#' @section Further Details:
-#'     Please refer to the reference vignette by running:
-#'     \code{vignette("reference", package = "ichimoku")}
 #'
 #' @keywords internal
 #' @export

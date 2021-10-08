@@ -54,13 +54,13 @@ The date-time index corresponds to when the indicator condition is
     excluded: (high, close), (low, close), (low, high), (cloudTop, Senkou A),
     (cloudBase, senkou A), (cloudTop, senkouB), (cloudBase, senkouB),
     (cloudBase, cloudTop).
-
-    mlgrid is used by \code{\link{autostrat}} to enumerate the returns for all
-    valid strategy combinations.
 }
 \section{Further Details}{
 
-    Please refer to the strategies vignette by running:
+    mlgrid is used by \code{\link{autostrat}} to enumerate the returns for all
+    valid strategy combinations.
+
+    Please refer to the strategies vignette by calling:
     \code{vignette("strategies", package = "ichimoku")}
 }
 

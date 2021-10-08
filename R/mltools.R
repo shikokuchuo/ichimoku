@@ -29,7 +29,7 @@
 #'     specifying the parameter 'which'.
 #'
 #' @section Further Details:
-#'     Please refer to the strategies vignette by running:
+#'     Please refer to the strategies vignette by calling:
 #'     \code{vignette("strategies", package = "ichimoku")}
 #'
 #' @examples
@@ -173,11 +173,11 @@ autostrat <- function(x,
 #'     (cloudBase, senkou A), (cloudTop, senkouB), (cloudBase, senkouB),
 #'     (cloudBase, cloudTop).
 #'
+#' @section Further Details:
 #'     mlgrid is used by \code{\link{autostrat}} to enumerate the returns for all
 #'     valid strategy combinations.
 #'
-#' @section Further Details:
-#'     Please refer to the strategies vignette by running:
+#'     Please refer to the strategies vignette by calling:
 #'     \code{vignette("strategies", package = "ichimoku")}
 #'
 #' @examples

@@ -46,8 +46,9 @@
 #'     in the system credential store so that it is automatically recognised in
 #'     future (requires the 'keyring' package to be installed).
 #'
-#'     For further details please refer to the OANDA fxTrade API vignette by
-#'     running: \code{vignette("xoanda", package = "ichimoku")}.
+#' @section Further Details:
+#'     Please refer to the OANDA fxTrade API vignette by calling:
+#'     \code{vignette("xoanda", package = "ichimoku")}.
 #'
 #'     'OANDA' and 'fxTrade' are trademarks owned by OANDA Corporation, an
 #'     entity unaffiliated with the ichimoku package.
@@ -238,18 +239,15 @@ getPrices <- function(instrument, granularity, count, from, to, price, server,
 #'
 #' @inheritParams oanda
 #'
+#' @return Invisible NULL on function exit. The streaming data is output as text
+#'     to the console.
+#'
 #' @details This function connects to the OANDA fxTrade Streaming API. Use the
 #'     'Esc' key to stop the stream.
 #'
 #'     The output contains ANSI escape codes for console formatting, but
 #'     otherwise represents the raw feed without omission. Note that as this is
 #'     a raw stream, returned times are in UTC.
-#'
-#'     For further details please refer to the OANDA fxTrade API vignette by
-#'     running: \code{vignette("xoanda", package = "ichimoku")}.
-#'
-#' @return Invisible NULL on function exit. The streaming data is output as text
-#'     to the console.
 #'
 #' @section Streaming Data:
 #'
@@ -265,6 +263,10 @@ getPrices <- function(instrument, granularity, count, from, to, price, server,
 #'     not all aligned to the top of the second). This means that during
 #'     periods of rapid price movement, different subscribers may observe
 #'     different prices depending on their alignment.
+#'
+#' @section Further Details:
+#'     Please refer to the OANDA fxTrade API vignette by calling:
+#'     \code{vignette("xoanda", package = "ichimoku")}.
 #'
 #' @examples
 #' \dontrun{
@@ -332,8 +334,9 @@ oanda_stream <- function(instrument, server, apikey) {
 #'     To access the underlying data, assign the function to an object, for
 #'     example: \code{cloud <- oanda_chart("USD_JPY")}.
 #'
-#'     For further details please refer to the OANDA fxTrade API vignette by
-#'     running: \code{vignette("xoanda", package = "ichimoku")}.
+#' @section Further Details:
+#'     Please refer to the OANDA fxTrade API vignette by calling:
+#'     \code{vignette("xoanda", package = "ichimoku")}.
 #'
 #' @examples
 #' \dontrun{
@@ -452,8 +455,9 @@ oanda_chart <- function(instrument,
 #' @details This function polls the OANDA fxTrade API for the latest prices and
 #'     updates a customisable reactive Shiny app at each refresh interval.
 #'
-#'     For further details please refer to the OANDA fxTrade API vignette by
-#'     running: \code{vignette("xoanda", package = "ichimoku")}.
+#' @section Further Details:
+#'     Please refer to the OANDA fxTrade API vignette by calling:
+#'     \code{vignette("xoanda", package = "ichimoku")}.
 #'
 #' @examples
 #' \dontrun{
@@ -689,7 +693,7 @@ oanda_studio <- function(instrument = "USD_JPY",
 #'     available for an account associated with the supplied OANDA fxTrade API key.
 #'
 #'     For further details please refer to the OANDA fxTrade API vignette by
-#'     running: \code{vignette("xoanda", package = "ichimoku")}.
+#'     calling: \code{vignette("xoanda", package = "ichimoku")}.
 #'
 #' @examples
 #' \dontrun{
@@ -723,8 +727,11 @@ oanda_instruments <- function(server, apikey) {
 #'
 #'     This function has a dependency on the 'keyring' package.
 #'
-#'     For further details please refer to the OANDA fxTrade API vignette by
-#'     running: \code{vignette("xoanda", package = "ichimoku")}.
+#' @section Further Details:
+#'     This function has a dependency on the 'keyring' package.
+#'
+#'     Please refer to the OANDA fxTrade API vignette by calling:
+#'     \code{vignette("xoanda", package = "ichimoku")}.
 #'
 #' @examples
 #' if (interactive()) {
@@ -778,7 +785,7 @@ oanda_set_key <- function() {
 #' @details This function is designed for interactive use.
 #'
 #'     For further details please refer to the OANDA fxTrade API vignette by
-#'     running: \code{vignette("xoanda", package = "ichimoku")}.
+#'     calling: \code{vignette("xoanda", package = "ichimoku")}.
 #'
 #' @examples
 #' \dontrun{
@@ -850,7 +857,7 @@ oanda_view <- function(market = c("fx", "allfx", "bonds", "commodities", "metals
 #' @details This function is designed for interactive use.
 #'
 #'     For further details please refer to the OANDA fxTrade API vignette by
-#'     running: \code{vignette("xoanda", package = "ichimoku")}.
+#'     calling: \code{vignette("xoanda", package = "ichimoku")}.
 #'
 #' @examples
 #' \dontrun{
@@ -888,7 +895,7 @@ oanda_quote <- function(instrument, price = c("M", "B", "A"), server, apikey) {
 #'     currency pairs and should be considered experimental.
 #'
 #'     For further details please refer to the OANDA fxTrade API vignette by
-#'     running: \code{vignette("xoanda", package = "ichimoku")}.
+#'     calling: \code{vignette("xoanda", package = "ichimoku")}.
 #'
 #' @examples
 #' \dontrun{

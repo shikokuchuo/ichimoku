@@ -24,10 +24,15 @@ The key is read interactively. Different keys can be set for practice
     to be run each session.
 
     This function has a dependency on the 'keyring' package.
-
-    For further details please refer to the OANDA fxTrade API vignette by
-    running: \code{vignette("xoanda", package = "ichimoku")}.
 }
+\section{Further Details}{
+
+    This function has a dependency on the 'keyring' package.
+
+    Please refer to the OANDA fxTrade API vignette by calling:
+    \code{vignette("xoanda", package = "ichimoku")}.
+}
+
 \examples{
 if (interactive()) {
 # Only run example in interactive R sessions

@@ -23,10 +23,12 @@ Method for extracting the date-time index of ichimoku objects.
 This function is an S3 method for the generic function index()
     for class 'ichimoku'. It can be invoked by calling index(x) on an
     object 'x' of class 'ichimoku'.
-}
-\section{Further Details}{
 
-    Please refer to the reference vignette by running:
+    For further details please refer to the reference vignette by calling:
     \code{vignette("reference", package = "ichimoku")}
 }
+\examples{
+cloud <- ichimoku(sample_ohlc_data)
+index(cloud)[100:120]
 
+}

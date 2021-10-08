@@ -35,7 +35,7 @@
 #'     Where an ichimoku object is passed to \code{ichimoku()}, the ichimoku
 #'     object is re-calculated using the OHLC pricing data contained within.
 #'
-#' @section Object Specification:
+#' @section Ichimoku Object Specification:
 #'
 #'     Index:
 #'     \itemize{
@@ -65,25 +65,6 @@
 #'         \item{\code{$ticker}:} { instrument identifier [character]}
 #'      }
 #'
-#' @section Working with ichimoku objects:
-#'     An ichimoku object inherits the 'xts' and 'zoo' classes. For convenience,
-#'     the following functions are re-exported by ichimoku:
-#'
-#'     \emph{from 'zoo':}
-#'      \itemize{
-#'         \item{\code{index()}:} { to extract the index of an ichimoku object}
-#'         \item{\code{coredata()}:} { to extract the columns of an ichimoku
-#'         object as a numeric matrix}
-#'      }
-#'
-#'      \emph{from 'xts':}
-#'      \itemize{
-#'         \item{\code{xts()}:} { to create an 'xts' object from data and a
-#'         date-time index use \code{xts(data, index)}}
-#'      }
-#'
-#'      Additional methods are available by loading the 'xts' package.
-#'
 #' @section Further Details:
 #'
 #'     \code{ichimoku()} requires OHLC (or else HLC) price data as input to
@@ -92,7 +73,7 @@
 #'     If only single series price data is supplied, a \emph{pseudo} OHLC series
 #'     is generated and a \emph{pseudo} cloud chart is returned.
 #'
-#'     Please refer to the reference vignette by running:
+#'     Please refer to the reference vignette by calling:
 #'     \code{vignette("reference", package = "ichimoku")}
 #'
 #' @examples
@@ -100,7 +81,7 @@
 #'
 #' cloud <- ichimoku(TKR)
 #' plot(cloud)
-#' print(cloud[100:120,], plot = FALSE)
+#' print(cloud[100:120, ], plot = FALSE)
 #'
 #' kumo <- ichimoku(TKR, ticker = "TKR Co.", periods = c(9, 26, 52), keep.data = TRUE)
 #' plot(kumo, theme = "solarized", type = "bar", custom = "volume")
@@ -331,8 +312,7 @@ ichimoku.default <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, ..
 #'     class 'ichimoku'. It can be invoked by calling print(x) on an object 'x'
 #'     of class 'ichimoku'.
 #'
-#' @section Further Details:
-#'     Please refer to the reference vignette by running:
+#'     For further details please refer to the reference vignette by calling:
 #'     \code{vignette("reference", package = "ichimoku")}
 #'
 #' @examples
@@ -371,9 +351,9 @@ print.ichimoku <- function(x, plot = TRUE, ...) {
 #'     class 'ichimoku'. It can be invoked by calling summary(x) on an object 'x'
 #'     of class 'ichimoku'.
 #'
-#' @section Further Details:
-#'     Please refer to the strategies vignette by running:
-#'     \code{vignette("strategies", package = "ichimoku")}
+#'     For further details please refer to the reference vignette by calling:
+#'     \code{vignette("reference", package = "ichimoku")} and the strategies
+#'     vignette by calling: \code{vignette("strategies", package = "ichimoku")}
 #'
 #' @examples
 #' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
@@ -440,8 +420,7 @@ summary.ichimoku <- function(object, strat = TRUE, ...) {
 #'     as.data.frame() for class 'ichimoku'. It can be invoked by calling
 #'     as.data.frame(x) on an object 'x' of class 'ichimoku'.
 #'
-#' @section Further Details:
-#'     Please refer to the reference vignette by running:
+#'     For further details please refer to the reference vignette by calling:
 #'     \code{vignette("reference", package = "ichimoku")}
 #'
 #' @examples
@@ -494,9 +473,12 @@ NULL
 #'     for class 'ichimoku'. It can be invoked by calling coredata(x) on an
 #'     object 'x' of class 'ichimoku'.
 #'
-#' @section Further Details:
-#'     Please refer to the reference vignette by running:
+#'     For further details please refer to the reference vignette by calling:
 #'     \code{vignette("reference", package = "ichimoku")}
+#'
+#' @examples
+#' cloud <- ichimoku(sample_ohlc_data)
+#' coredata(cloud)[100:120, ]
 #'
 #' @rdname coredata.ichimoku
 #' @method coredata ichimoku
@@ -534,9 +516,12 @@ NULL
 #'     for class 'ichimoku'. It can be invoked by calling index(x) on an
 #'     object 'x' of class 'ichimoku'.
 #'
-#' @section Further Details:
-#'     Please refer to the reference vignette by running:
+#'     For further details please refer to the reference vignette by calling:
 #'     \code{vignette("reference", package = "ichimoku")}
+#'
+#' @examples
+#' cloud <- ichimoku(sample_ohlc_data)
+#' index(cloud)[100:120]
 #'
 #' @rdname index.ichimoku
 #' @method index ichimoku

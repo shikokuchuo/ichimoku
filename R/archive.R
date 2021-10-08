@@ -37,6 +37,10 @@
 #'     For read operations: a 'data verified' message is issued if the sha256
 #'     hash found within the data file has been authenticated.
 #'
+#' @section Further Details:
+#'     Please refer to the reference vignette by calling:
+#'     \code{vignette("reference", package = "ichimoku")}
+#'
 #' @examples
 #' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 #' file <- tempfile()

@@ -42,7 +42,7 @@ Ichimoku objects for each strategy are returned as a list. The
 }
 \section{Further Details}{
 
-    Please refer to the strategies vignette by running:
+    Please refer to the strategies vignette by calling:
     \code{vignette("strategies", package = "ichimoku")}
 }
 

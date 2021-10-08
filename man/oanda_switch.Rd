@@ -22,7 +22,7 @@ The default server at the start of a new session is the practice server.
     each time this function is called.
 
     For further details please refer to the OANDA fxTrade API vignette by
-    running: \code{vignette("xoanda", package = "ichimoku")}.
+    calling: \code{vignette("xoanda", package = "ichimoku")}.
 }
 \examples{
 oanda_switch()

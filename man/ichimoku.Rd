@@ -61,7 +61,7 @@ Calling an ichimoku object automatically invokes its print method,
     Where an ichimoku object is passed to \code{ichimoku()}, the ichimoku
     object is re-calculated using the OHLC pricing data contained within.
 }
-\section{Object Specification}{
+\section{Ichimoku Object Specification}{
 
 
     Index:
@@ -93,27 +93,6 @@ Calling an ichimoku object automatically invokes its print method,
      }
 }
 
-\section{Working with ichimoku objects}{
-
-    An ichimoku object inherits the 'xts' and 'zoo' classes. For convenience,
-    the following functions are re-exported by ichimoku:
-
-    \emph{from 'zoo':}
-     \itemize{
-        \item{\code{index()}:} { to extract the index of an ichimoku object}
-        \item{\code{coredata()}:} { to extract the columns of an ichimoku
-        object as a numeric matrix}
-     }
-
-     \emph{from 'xts':}
-     \itemize{
-        \item{\code{xts()}:} { to create an 'xts' object from data and a
-        date-time index use \code{xts(data, index)}}
-     }
-
-     Additional methods are available by loading the 'xts' package.
-}
-
 \section{Further Details}{
 
 
@@ -123,7 +102,7 @@ Calling an ichimoku object automatically invokes its print method,
     If only single series price data is supplied, a \emph{pseudo} OHLC series
     is generated and a \emph{pseudo} cloud chart is returned.
 
-    Please refer to the reference vignette by running:
+    Please refer to the reference vignette by calling:
     \code{vignette("reference", package = "ichimoku")}
 }
 
@@ -132,7 +111,7 @@ TKR <- sample_ohlc_data
 
 cloud <- ichimoku(TKR)
 plot(cloud)
-print(cloud[100:120,], plot = FALSE)
+print(cloud[100:120, ], plot = FALSE)
 
 kumo <- ichimoku(TKR, ticker = "TKR Co.", periods = c(9, 26, 52), keep.data = TRUE)
 plot(kumo, theme = "solarized", type = "bar", custom = "volume")

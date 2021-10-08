@@ -101,7 +101,7 @@ The following assumption applies to all strategies: confirmation of
 
 \section{Further Details}{
 
-    Please refer to the strategies vignette by running:
+    Please refer to the strategies vignette by calling:
     \code{vignette("strategies", package = "ichimoku")}
 }
 

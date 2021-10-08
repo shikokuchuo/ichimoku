@@ -63,6 +63,9 @@ Plot Ichimoku Kinko Hyo cloud charts from ichimoku objects in R Shiny,
 }
 \details{
 This function has a dependency on the 'shiny' package.
+
+    For further details please refer to the reference vignette by calling:
+    \code{vignette("reference", package = "ichimoku")}
 }
 \examples{
 if (interactive()) {

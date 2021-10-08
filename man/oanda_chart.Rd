@@ -76,10 +76,13 @@ This function polls the OANDA fxTrade API for the latest live prices
 
     To access the underlying data, assign the function to an object, for
     example: \code{cloud <- oanda_chart("USD_JPY")}.
-
-    For further details please refer to the OANDA fxTrade API vignette by
-    running: \code{vignette("xoanda", package = "ichimoku")}.
 }
+\section{Further Details}{
+
+    Please refer to the OANDA fxTrade API vignette by calling:
+    \code{vignette("xoanda", package = "ichimoku")}.
+}
+
 \examples{
 \dontrun{
 # OANDA fxTrade API key required to run these examples

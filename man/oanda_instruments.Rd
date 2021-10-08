@@ -29,7 +29,7 @@ This function returns a data.frame listing the instrument names
     available for an account associated with the supplied OANDA fxTrade API key.
 
     For further details please refer to the OANDA fxTrade API vignette by
-    running: \code{vignette("xoanda", package = "ichimoku")}.
+    calling: \code{vignette("xoanda", package = "ichimoku")}.
 }
 \examples{
 \dontrun{

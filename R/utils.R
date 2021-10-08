@@ -112,7 +112,7 @@ df_trim <- function(x) {
 
 #' Convert xts to data.frame
 #'
-#' A performant 'xts' to 'data.frame' constructor.
+#' An optimised 'xts' to 'data.frame' constructor.
 #'
 #' @param x an 'xts' object.
 #' @param keep.attrs (optional) if set to TRUE, will preserve any custom
@@ -121,7 +121,7 @@ df_trim <- function(x) {
 #' @return A 'data.frame' object. The 'xts' index is preserved as the first
 #'     column with header 'index'.
 #'
-#' @details The performant data.frame constructors are used internally within
+#' @details The optimised data.frame constructors are used internally within
 #'     the package and made available as utilities. Please note that no data
 #'     validation or checking is performed.
 #'
@@ -153,7 +153,7 @@ xts_df <- function(x, keep.attrs) {
 
 #' Convert matrix to data.frame
 #'
-#' A performant 'matrix' to 'data.frame' constructor.
+#' An optimised 'matrix' to 'data.frame' constructor.
 #'
 #' @param x a matrix.
 #' @param keep.attrs (optional) if set to TRUE, will preserve any custom
@@ -162,7 +162,7 @@ xts_df <- function(x, keep.attrs) {
 #' @return A 'data.frame' object. If the matrix has row names, these are
 #'     retained by the dataframe.
 #'
-#' @details The performant data.frame constructors are used internally within
+#' @details The optimised data.frame constructors are used internally within
 #'     the package and made available as utilities. Please note that no data
 #'     validation or checking is performed.
 #'

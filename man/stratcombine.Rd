@@ -30,7 +30,7 @@ The combined strategy 's1 & s2' means indicator conditions in 's1'
 }
 \section{Further Details}{
 
-    Please refer to the strategies vignette by running:
+    Please refer to the strategies vignette by calling:
     \code{vignette("strategies", package = "ichimoku")}
 }
 

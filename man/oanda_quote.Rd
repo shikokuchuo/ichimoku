@@ -36,7 +36,7 @@ Provides a single line price quote for an instrument.
 This function is designed for interactive use.
 
     For further details please refer to the OANDA fxTrade API vignette by
-    running: \code{vignette("xoanda", package = "ichimoku")}.
+    calling: \code{vignette("xoanda", package = "ichimoku")}.
 }
 \examples{
 \dontrun{

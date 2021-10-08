@@ -17,10 +17,10 @@ A 'data.frame' object. If the matrix has row names, these are
     retained by the dataframe.
 }
 \description{
-A performant 'matrix' to 'data.frame' constructor.
+An optimised 'matrix' to 'data.frame' constructor.
 }
 \details{
-The performant data.frame constructors are used internally within
+The optimised data.frame constructors are used internally within
     the package and made available as utilities. Please note that no data
     validation or checking is performed.
 }

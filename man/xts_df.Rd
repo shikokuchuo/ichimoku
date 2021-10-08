@@ -17,10 +17,10 @@ A 'data.frame' object. The 'xts' index is preserved as the first
     column with header 'index'.
 }
 \description{
-A performant 'xts' to 'data.frame' constructor.
+An optimised 'xts' to 'data.frame' constructor.
 }
 \details{
-The performant data.frame constructors are used internally within
+The optimised data.frame constructors are used internally within
     the package and made available as utilities. Please note that no data
     validation or checking is performed.
 }

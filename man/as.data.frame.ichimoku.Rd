@@ -29,13 +29,10 @@ An optimised 'ichimoku' to 'data.frame' constructor.
 This function is an S3 method for the generic function
     as.data.frame() for class 'ichimoku'. It can be invoked by calling
     as.data.frame(x) on an object 'x' of class 'ichimoku'.
-}
-\section{Further Details}{
 
-    Please refer to the reference vignette by running:
+    For further details please refer to the reference vignette by calling:
     \code{vignette("reference", package = "ichimoku")}
 }
-
 \examples{
 cloud <- ichimoku(sample_ohlc_data)
 df <- as.data.frame(cloud)

@@ -83,10 +83,13 @@ Interactive and fully-customisable R Shiny environment providing real-time
 \details{
 This function polls the OANDA fxTrade API for the latest prices and
     updates a customisable reactive Shiny app at each refresh interval.
-
-    For further details please refer to the OANDA fxTrade API vignette by
-    running: \code{vignette("xoanda", package = "ichimoku")}.
 }
+\section{Further Details}{
+
+    Please refer to the OANDA fxTrade API vignette by calling:
+    \code{vignette("xoanda", package = "ichimoku")}.
+}
+
 \examples{
 \dontrun{
 # OANDA fxTrade API key required to run these examples
