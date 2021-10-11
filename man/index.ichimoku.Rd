@@ -29,6 +29,6 @@ This function is an S3 method for the generic function index()
 }
 \examples{
 cloud <- ichimoku(sample_ohlc_data)
-index(cloud)[100:120]
+index(cloud)[101:120]
 
 }

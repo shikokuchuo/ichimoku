@@ -113,9 +113,10 @@ autoplot.ichimoku <- function(object,
 
   theme <- match.arg(theme)
   pal <- ichimoku_themes[[theme]]
+  showstrat <- hasStrat(object) && isTRUE(strat)
   if (missing(ticker)) ticker <- attr(object, "ticker")
   if (missing(subtitle)) {
-    subtitle <- if (hasStrat(object) && isTRUE(strat)) paste0("Strategy: ", attr(object, "strat")["Strategy", ][[1L]])
+    subtitle <- if (showstrat) paste0("Strategy: ", attr(object, "strat")["Strategy", ][[1L]])
   }
 
   if (!missing(window)) object <- object[window]
@@ -124,7 +125,7 @@ autoplot.ichimoku <- function(object,
   data$cd <- as.character(.subset2(data, "cd"))
 
   layers <- list(
-    if (hasStrat(object) && isTRUE(strat)) {
+    if (showstrat) {
       geom_rect(aes(xmin = .data$posn * (.data$idx - 0.5), xmax = .data$posn * (.data$idx + 0.5),
                     ymin = -Inf, ymax = Inf), fill = pal[1L], alpha = 0.2, na.rm = TRUE)
     },

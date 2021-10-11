@@ -81,7 +81,7 @@
 #'
 #' cloud <- ichimoku(TKR)
 #' plot(cloud)
-#' print(cloud[100:120, ], plot = FALSE)
+#' print(cloud[101:120, ], plot = FALSE)
 #'
 #' kumo <- ichimoku(TKR, ticker = "TKR Co.", periods = c(9, 26, 52), keep.data = TRUE)
 #' plot(kumo, theme = "solarized", type = "bar", custom = "volume")
@@ -478,21 +478,21 @@ NULL
 #'
 #' @examples
 #' cloud <- ichimoku(sample_ohlc_data)
-#' coredata(cloud)[100:120, ]
+#' coredata(cloud)[101:120, ]
 #'
 #' @rdname coredata.ichimoku
 #' @method coredata ichimoku
 #' @export
 #'
 coredata.ichimoku <- function(x, fmt, ...) {
-  if (missing(fmt)) {
-    attributes(x) <- list(dim = attr(x, "dim"), dimnames = attr(x, "dimnames"))
+  attributes(x) <- if (missing(fmt)) {
+    list(dim = attr(x, "dim"), dimnames = attr(x, "dimnames"))
+  } else if (is.null(dim(x))) {
+    list(names = if (is.character(fmt)) format.POSIXct(index.ichimoku(x), format = fmt) else format.POSIXct(index.ichimoku(x)))
   } else {
-    attributes(x) <- list(
-      dim = attr(x, "dim"), dimnames = list(
-        if (is.character(fmt)) format.POSIXct(index.ichimoku(x), format = fmt) else format.POSIXct(index.ichimoku(x)),
-        attr(x, "dimnames")[[2L]])
-    )
+    list(dim = attr(x, "dim"),
+         dimnames = list(if (is.character(fmt)) format.POSIXct(index.ichimoku(x), format = fmt) else format.POSIXct(index.ichimoku(x)),
+                         attr(x, "dimnames")[[2L]]))
   }
   x
 }
@@ -521,7 +521,7 @@ NULL
 #'
 #' @examples
 #' cloud <- ichimoku(sample_ohlc_data)
-#' index(cloud)[100:120]
+#' index(cloud)[101:120]
 #'
 #' @rdname index.ichimoku
 #' @method index ichimoku

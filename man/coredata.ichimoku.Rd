@@ -34,6 +34,6 @@ This function is an S3 method for the generic function coredata()
 }
 \examples{
 cloud <- ichimoku(sample_ohlc_data)
-coredata(cloud)[100:120, ]
+coredata(cloud)[101:120, ]
 
 }

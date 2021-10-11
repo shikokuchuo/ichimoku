@@ -31,5 +31,4 @@ test_that("look ok", {
   expect_s3_class(look(stratlist, which = 1), "ichimoku")
   expect_null(expect_invisible(look(sample_ohlc_data)))
   expect_error(look(stratlist, which = 9), regexp = "not a valid")
-  expect_error(look(stratlist, which = "test"), regexp = "not a valid")
 })

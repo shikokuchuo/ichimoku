@@ -111,7 +111,7 @@ TKR <- sample_ohlc_data
 
 cloud <- ichimoku(TKR)
 plot(cloud)
-print(cloud[100:120, ], plot = FALSE)
+print(cloud[101:120, ], plot = FALSE)
 
 kumo <- ichimoku(TKR, ticker = "TKR Co.", periods = c(9, 26, 52), keep.data = TRUE)
 plot(kumo, theme = "solarized", type = "bar", custom = "volume")

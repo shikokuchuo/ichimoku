@@ -209,6 +209,7 @@ writeStrat <- function(x, strategy, dir) {
   xlen <- dim(core)[1L]
   start <- xlen - sum(!is.na(core[, "posn"])) - p2 + 1L
   end <- xlen - p2
+  mperiods <- sum(core[start:end, "posn"])
 
   openvec <- na.omit(core[core[, "txn"] == 1, "open"])
   closevec <- na.omit(core[core[, "txn"] == -1, "open"])
@@ -222,9 +223,9 @@ writeStrat <- function(x, strategy, dir) {
     `---------------------` = "----------",
     `Strategy cuml return %` = round((exp(sum(core[start:end, "slogret"])) - 1) * 100, 2),
     `Per period mean ret %` = round((exp(mean(core[start:end, "slogret"])) - 1) * 100, 4),
-    `Periods in market` = sum(core[start:end, "posn"]),
+    `Periods in market` = mperiods,
     `Total trades` = tlen,
-    `Average trade length` = round(sum(core[start:end, "posn"]) / tlen, 2),
+    `Average trade length` = round(mperiods / tlen, 2),
     `Trade success %` = round(length(trades[trades > 0]) / tlen * 100, 2),
     `Worst trade ret %` = round(min(trades) * 100, 2),
     `---------------------` = "----------",

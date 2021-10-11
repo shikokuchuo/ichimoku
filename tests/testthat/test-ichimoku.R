@@ -59,6 +59,7 @@ test_that("ichimoku error handling ok", {
 test_that("print method ok", {
   expect_output(expect_s3_class(print(cloud), "ichimoku"))
   expect_output(expect_s3_class(print(cloud, plot = FALSE), "ichimoku"))
+  expect_output(print(cloud[, 1L, drop = TRUE]))
 })
 
 test_that("summary method for objects ok", {

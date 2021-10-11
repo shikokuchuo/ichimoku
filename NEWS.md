@@ -1,4 +1,4 @@
-# ichimoku 1.2.2.8
+# ichimoku 1.2.2.9
 
 #### New features:
 

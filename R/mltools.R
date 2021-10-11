@@ -144,10 +144,9 @@ autostrat <- function(x,
 #'     representation of the relationship between cloud chart elements into a
 #'     numerical format for further analysis.
 #'
-#' @param x an ichimoku object.
+#' @inheritParams strat
 #' @param y [default 'logret'] choose target variable 'logret' (log returns) or
 #'     'ret' (discrete returns).
-#' @param dir [default 'long'] trade direction, either 'long' or 'short'.
 #' @param type [default 'boolean'] either 'boolean' or 'numeric'. 'boolean'
 #'     creates a grid of dummy variables for ichimoku indicator conditions of
 #'     the form 1 if c1 > c2, 0 otherwise. 'numeric' creates a grid of the
