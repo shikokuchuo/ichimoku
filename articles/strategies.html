@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2.10</span>
       </span>
     </div>
 
@@ -498,7 +498,7 @@
 </h3>
 <p>The ML layer provides tools for further developing quantitative ichimoku solutions.</p>
 <p><code><a href="../reference/mlgrid.html">mlgrid()</a></code> generates a numeric representation of the relationship between ichimoku cloud chart elements. Its purpose is to provide a base grid which can then be manipulated as required before being fed into machine learning workflows.</p>
-<p><code><a href="../reference/mlgrid.html">mlgrid()</a></code> is used to power ichimoku’s <code><a href="../reference/autostrat.html">autostrat()</a></code> function.</p>
+<p><code><a href="../reference/mlgrid.html">mlgrid()</a></code> is used to power the <code><a href="../reference/autostrat.html">autostrat()</a></code> and <code><a href="../reference/relative.html">relative()</a></code> functions.</p>
 <p>The object returned by the function is a data.frame in a ‘tidy’ format with one observation per row and one feature per column with the target ‘y’ as the first column. This is a format that is compatible with many machine learning packages.</p>
 <p>Below are shown the 2 basic types of grid: ‘boolean’ and ‘numeric’, where ‘boolean’ produces a ‘1’ or ‘0’ depending on whether the condition c1_c2 (read c1 &gt; c2) is met, whereas ‘numeric’ will produce the numeric difference of c1 - c2.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
@@ -522,6 +522,30 @@
 <p>Note: only valid combinations are included within the grid. Any combination involving ‘open’ is excluded as it is in effect a lagged indicator and not contemporaneous. The following trivial or highly-collinear pairs are also excluded: {high, close} ,{low, close}, {low, high}, {cloudT, senkouA}, {cloudB, senkouA}, {cloudT, senkouB}, {cloudB, senkouB}, {cloudB, cloudT}.</p>
 <p>The parameter ‘unique’ defaults to TRUE to return only unique combinations of c1 and c2, but can also be set to FALSE to return both c1 &gt; c2 and c2 &gt; c1 where the situation merits.</p>
 <p>The ‘y’ column can be switched between log and discrete returns. The date-time index corresponds to when the condition is met at the close for that period. The return is the single-period return achieved by transacting at the immediately following opening price until the next opening price. In this sense, the time periods do not strictly match, but are nevertheless correctly paired.</p>
+<p>The calculation of the returns and correct pairing effectively uses up 2 periods, hence in order to obtain the grid for the latest available price data, y must be set to ‘none’, in which case a grid is returned without the target variable.</p>
+</div>
+<div id="relative" class="section level3">
+<h3 class="hasAnchor">
+<a href="#relative" class="anchor"></a><code>relative()</code>
+</h3>
+<p>Takes the current numeric representation of the ichimoku cloud chart and compares it with the historical values contained within the ichimoku object.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/relative.html">relative</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="op">]</span>
+<span class="co">#&gt; Current: 2020-08-04 23:00:00</span>
+<span class="co">#&gt;                mean   sd current relative</span>
+<span class="co">#&gt; chikou_high    0.79 6.09    6.60     0.95</span>
+<span class="co">#&gt; low_tenkan    -0.30 1.72    1.30     0.93</span>
+<span class="co">#&gt; low_kijun      0.44 3.28    3.45     0.92</span>
+<span class="co">#&gt; chikou_close   1.51 6.07    7.00     0.91</span>
+<span class="co">#&gt; chikou_low     2.31 6.12    7.80     0.90</span>
+<span class="co">#&gt; low_cloudT     0.45 5.76    5.35     0.85</span>
+<span class="co">#&gt; chikou_tenkan  1.73 6.15    6.90     0.84</span>
+<span class="co">#&gt; close_kijun    1.27 3.25    3.85     0.79</span>
+<span class="co">#&gt; close_cloudT   1.27 5.73    5.75     0.78</span>
+<span class="co">#&gt; low_senkouA    1.18 5.97    5.50     0.72</span></code></pre></div>
+<p>The mean and standard deviation of each element is calculated, and the latest available datapoint is shown under ‘current’. ‘relative’ is calculated as (current - mean) / sd and hence represents a centred and scaled ‘relative’ deviation.</p>
+<p>Where this value is large (either positive or negative), this would indicate exceptional behaviour as opposed to being within normal ranges.</p>
+<p>The elements are ordered by the absolute value of ‘relative’ so those with a higher relative deviation are always listed first.</p>
 </div>
 </div>
 <div id="strategy-summary-specification" class="section level2">

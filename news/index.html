@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2.10</span>
       </span>
     </div>
 
@@ -151,20 +151,21 @@
       <small>Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="ichimoku-1229" class="section level1">
-<h1 class="page-header" data-toc-text="1.2.2.9">
-<a href="#ichimoku-1229" class="anchor"></a>ichimoku 1.2.2.9<small> Unreleased </small>
+    <div id="ichimoku-12210" class="section level1">
+<h1 class="page-header" data-toc-text="1.2.2.10">
+<a href="#ichimoku-12210" class="anchor"></a>ichimoku 1.2.2.10<small> Unreleased </small>
 </h1>
 <div id="new-features" class="section level4">
 <h4 class="hasAnchor">
 <a href="#new-features" class="anchor"></a>New features:</h4>
 <ul>
-<li>Optimised ‘ichimoku’ methods for <code><a href="../reference/coredata.html">coredata()</a></code> and <code><a href="../reference/index.html">index()</a></code> - these are no longer simple re-exports from the ‘zoo’ package.</li>
-<li>
-<code><a href="../reference/as.data.frame.ichimoku.html">as.data.frame.ichimoku()</a></code> S3 method is implemented as a marginally faster version of <code><a href="../reference/xts_df.html">xts_df()</a></code> for ichimoku objects.</li>
+<li>New <code><a href="../reference/relative.html">relative()</a></code> function to compare the current numeric representation of the ichimoku cloud to historical values.</li>
 <li>
 <code><a href="../reference/oanda_studio.html">oanda_studio()</a></code> gains the argument ‘new.process’, which when set to TRUE, starts the shiny session in a new R process, unblocking the current process and allowing continued use of the console.</li>
 <li>Improved time index handling for <code><a href="../reference/ichimoku.html">ichimoku()</a></code>: where conversion by <code><a href="https://rdrr.io/r/base/as.POSIXlt.html">as.POSIXct()</a></code> fails, will convert numeric values as POSIX times (with an appropriate warning).</li>
+<li>Optimised ‘ichimoku’ methods for <code><a href="../reference/coredata.html">coredata()</a></code> and <code><a href="../reference/index.html">index()</a></code> - these are no longer simple re-exports from the ‘zoo’ package.</li>
+<li>
+<code><a href="../reference/as.data.frame.ichimoku.html">as.data.frame.ichimoku()</a></code> S3 method is implemented as a marginally faster version of <code><a href="../reference/xts_df.html">xts_df()</a></code> for ichimoku objects.</li>
 <li>New custom summary method for ichimoku objects (without strategies).</li>
 </ul>
 </div>
@@ -173,6 +174,7 @@
 <a href="#updates" class="anchor"></a>Updates:</h4>
 <ul>
 <li>Improved appearance of progress indicators for <code><a href="../reference/oanda.html">oanda()</a></code> and <code><a href="../reference/oanda_view.html">oanda_view()</a></code>.</li>
+<li>Minor tweaks to the visual appearance of oscillator plots.</li>
 <li>Fixes sign of %chg for <code><a href="../reference/oanda_quote.html">oanda_quote()</a></code>.</li>
 <li>
 <code>xts()</code> is no longer re-exported from the ‘xts’ package as <code><a href="../reference/ichimoku.html">ichimoku()</a></code> can now fully re-construct an ichimoku object from its components (see ‘Working with ichimoku objects’ in the Reference vignette).</li>

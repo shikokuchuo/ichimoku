@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Interactive Ichimoku Cloud Plot — iplot • ichimoku</title>
+<title>Relative Numeric Representation — relative • ichimoku</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,11 +48,10 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Interactive Ichimoku Cloud Plot — iplot" />
-<meta property="og:description" content="Plot Ichimoku Kinko Hyo cloud charts from ichimoku objects in R Shiny,
-    allowing full customisation of chart elements in an interactive
-    environment. Intuitive cursor infotip provides ready access to the data
-    directly from the chart." />
+<meta property="og:title" content="Relative Numeric Representation — relative" />
+<meta property="og:description" content="Compare the current numeric representation of the ichimoku cloud chart
+    relative to historical values. Aids in determining whether current trading
+    behaviour is exceptional or falls within normal ranges." />
 <meta property="og:image" content="https://shikokuchuo.net/ichimoku/logo.png" />
 
 
@@ -151,107 +150,91 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Interactive Ichimoku Cloud Plot</h1>
-    <small class="dont-index">Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/R/iplot.R'><code>R/iplot.R</code></a></small>
-    <div class="hidden name"><code>iplot.Rd</code></div>
+    <h1>Relative Numeric Representation</h1>
+    <small class="dont-index">Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/R/mltools.R'><code>R/mltools.R</code></a></small>
+    <div class="hidden name"><code>relative.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Plot Ichimoku Kinko Hyo cloud charts from ichimoku objects in R Shiny,
-    allowing full customisation of chart elements in an interactive
-    environment. Intuitive cursor infotip provides ready access to the data
-    directly from the chart.</p>
+    <p>Compare the current numeric representation of the ichimoku cloud chart
+    relative to historical values. Aids in determining whether current trading
+    behaviour is exceptional or falls within normal ranges.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>iplot</span><span class='op'>(</span>
-  <span class='va'>x</span>,
-  <span class='va'>ticker</span>,
-  <span class='va'>subtitle</span>,
-  theme <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"original"</span>, <span class='st'>"dark"</span>, <span class='st'>"solarized"</span>, <span class='st'>"mono"</span><span class='op'>)</span>,
-  strat <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"none"</span>, <span class='st'>"r"</span>, <span class='st'>"s"</span>, <span class='st'>"bar"</span>, <span class='st'>"line"</span><span class='op'>)</span>,
-  <span class='va'>custom</span>,
-  <span class='va'>...</span>,
-  launch.browser <span class='op'>=</span> <span class='cn'>TRUE</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>relative</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>an object of class 'ichimoku'.</p></td>
-    </tr>
-    <tr>
-      <th>ticker</th>
-      <td><p>(optional) specify a ticker (or other text) to include in the
-chart heading. If not set, the ticker saved within the ichimoku object
-will be used.</p></td>
-    </tr>
-    <tr>
-      <th>subtitle</th>
-      <td><p>(optional) specify a subtitle to display under the chart title.</p></td>
-    </tr>
-    <tr>
-      <th>theme</th>
-      <td><p>[default 'original'] with alternative choices of 'dark',
-'solarized' or 'mono'.</p></td>
-    </tr>
-    <tr>
-      <th>strat</th>
-      <td><p>[default TRUE] if the ichimoku object contains a strategy, the
-periods for which the strategy results in a position will be shaded, and
-the strategy printed as the chart subtitle (if not otherwise specified).
-Set to FALSE to turn off this behaviour.</p></td>
-    </tr>
-    <tr>
-      <th>type</th>
-      <td><p>[default 'none'] type of sub-plot to display beneath the ichimoku
-cloud chart, with a choice of 'none', 'r' or 's' for the corresponding
-oscillator type, and 'bar' or 'line' for custom plots.</p></td>
-    </tr>
-    <tr>
-      <th>custom</th>
-      <td><p>(optional) character string (containing a regular expression)
-matching the column name of the variable to be displayed as sub-plot.
-Specify <code>type = 'bar'</code> or <code>type = 'line'</code>, otherwise other type
-settings will take precedence.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>additional parameters passed along to the 'options' argument of
-<code><a href='https://rdrr.io/pkg/shiny/man/shinyApp.html'>shiny::shinyApp()</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>launch.browser</th>
-      <td><p>[default TRUE] If TRUE, the system's default web browser
-will be launched automatically after the app is started. The value of this
-argument can also be a function to call with the application's URL. To use
-the default Shiny viewer in RStudio, please specify
-<code><a href='https://rdrr.io/r/base/options.html'>getOption("shiny.launch.browser")</a></code>.</p></td>
+      <td><p>an ichimoku object.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A Shiny app object with class 'shiny.appobj'. With default arguments,
-    the Shiny app is launched in the default browser.</p>
+    <p>A data frame listing the mean and standard deviation of the numeric
+    ichimoku chart representation for the data, the current values for the
+    latest available price data, and their relative values in terms of
+    standard deviations from the mean. The time index for 'current' is saved
+    as an attribute and also printed to the console.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function has a dependency on the 'shiny' package.</p>
-<p>For further details please refer to the reference vignette by calling:
-    <code><a href='../articles/reference.html'>vignette("reference", package = "ichimoku")</a></code></p>
+    <p>'relative' is calculated as (current - mean) / sd and represents a
+    centred and scaled measure of deviation. The elements are ordered by
+    their 'relative' value, so that those with the highest (postive or
+    negative) relative deviation are listed first.</p>
+<p>A large 'relative' value indicates exceptional behaviour as opposed to
+    being within normal ranges.</p>
+    <h2 class="hasAnchor" id="further-details"><a class="anchor" href="#further-details"></a>Further Details</h2>
+
+    
+
+<p>Please refer to the strategies vignette by calling:
+    <code><a href='../articles/strategies.html'>vignette("strategies", package = "ichimoku")</a></code></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='co'># Only run examples in interactive R sessions</span>
-<span class='va'>cloud</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ichimoku.html'>ichimoku</a></span><span class='op'>(</span><span class='va'>sample_ohlc_data</span>, ticker <span class='op'>=</span> <span class='st'>"TKR"</span><span class='op'>)</span>
-<span class='fu'>iplot</span><span class='op'>(</span><span class='va'>cloud</span><span class='op'>)</span>
-
-<span class='co'># To open in RStudio viewer instead of default browser</span>
-<span class='fu'>iplot</span><span class='op'>(</span><span class='va'>cloud</span>, launch.browser <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"shiny.launch.browser"</span><span class='op'>)</span><span class='op'>)</span>
-<span class='op'>}</span>
-
+    <pre class="examples"><div class='input'><span class='va'>cloud</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ichimoku.html'>ichimoku</a></span><span class='op'>(</span><span class='va'>sample_ohlc_data</span>, ticker <span class='op'>=</span> <span class='st'>"TKR"</span><span class='op'>)</span>
+<span class='fu'>relative</span><span class='op'>(</span><span class='va'>cloud</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Current: 2020-08-04 23:00:00 </div><div class='output co'>#&gt;                  mean   sd current relative
+#&gt; chikou_high      0.79 6.09    6.60     0.95
+#&gt; low_tenkan      -0.30 1.72    1.30     0.93
+#&gt; low_kijun        0.44 3.28    3.45     0.92
+#&gt; chikou_close     1.51 6.07    7.00     0.91
+#&gt; chikou_low       2.31 6.12    7.80     0.90
+#&gt; low_cloudT       0.45 5.76    5.35     0.85
+#&gt; chikou_tenkan    1.73 6.15    6.90     0.84
+#&gt; close_kijun      1.27 3.25    3.85     0.79
+#&gt; close_cloudT     1.27 5.73    5.75     0.78
+#&gt; low_senkouA      1.18 5.97    5.50     0.72
+#&gt; high_cloudT      1.96 5.64    5.95     0.71
+#&gt; high_kijun       1.96 3.12    4.05     0.67
+#&gt; close_tenkan     0.52 1.77    1.70     0.67
+#&gt; close_senkouA    2.00 5.93    5.90     0.66
+#&gt; tenkan_cloudT    0.75 5.20    4.05     0.63
+#&gt; low_senkouB      2.19 5.38    5.35     0.59
+#&gt; high_senkouA     2.69 5.84    6.10     0.58
+#&gt; tenkan_kijun     0.75 2.42    2.15     0.58
+#&gt; kijun_cloudT     0.00 3.62    1.90     0.52
+#&gt; close_senkouB    3.02 5.34    5.75     0.51
+#&gt; tenkan_senkouA   1.48 5.44    4.20     0.50
+#&gt; low_cloudB       2.92 5.38    5.50     0.48
+#&gt; high_tenkan      1.21 1.56    1.90     0.44
+#&gt; chikou_kijun     2.28 5.96    4.90     0.44
+#&gt; high_senkouB     3.71 5.29    5.95     0.42
+#&gt; close_cloudB     3.75 5.31    5.90     0.40
+#&gt; senkouA_senkouB  1.01 2.98   -0.15    -0.39
+#&gt; kijun_senkouA    0.74 3.64    2.05     0.36
+#&gt; high_cloudB      4.44 5.27    6.10     0.32
+#&gt; tenkan_senkouB   2.49 5.12    4.05     0.30
+#&gt; chikou_cloudT    2.67 6.44    4.35     0.26
+#&gt; chikou_senkouA   3.44 6.46    4.75     0.20
+#&gt; tenkan_cloudB    3.23 5.12    4.20     0.19
+#&gt; kijun_cloudB     2.48 3.86    2.05    -0.11
+#&gt; chikou_cloudB    5.03 5.20    4.75    -0.05
+#&gt; kijun_senkouB    1.75 4.16    1.90     0.04
+#&gt; chikou_senkouB   4.26 5.40    4.35     0.02</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
