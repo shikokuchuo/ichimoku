@@ -145,8 +145,8 @@ autostrat <- function(x,
 #'     numerical format for further analysis.
 #'
 #' @inheritParams strat
-#' @param y [default 'logret'] choose target variable 'logret' (log returns) or
-#'     'ret' (discrete returns).
+#' @param y [default 'logret'] choose target variable 'logret' (log returns),
+#'     'ret' (discrete returns), or 'none'.
 #' @param type [default 'boolean'] either 'boolean' or 'numeric'. 'boolean'
 #'     creates a grid of dummy variables for ichimoku indicator conditions of
 #'     the form 1 if c1 > c2, 0 otherwise. 'numeric' creates a grid of the
@@ -155,7 +155,8 @@ autostrat <- function(x,
 #'     Set to FALSE to return both c1 > c2 and c2 > c1.
 #'
 #' @return A data.frame in a 'tidy' format with one observation per row and one
-#'     feature per column with the target 'y' as the first column.
+#'     feature per column with the target 'y' as the first column (unless set to
+#'     'none').
 #'
 #'     The 'y' parameter and trade direction are set as atrributes. To view these,
 #'     use \code{\link{look}} on the returned object.
@@ -172,9 +173,13 @@ autostrat <- function(x,
 #'     (cloudBase, senkou A), (cloudTop, senkouB), (cloudBase, senkouB),
 #'     (cloudBase, cloudTop).
 #'
+#' @seealso \code{\link{autostrat}} which uses \code{mlgrid()} to enumerate all
+#'     valid return combinations.
+#'
+#'     \code{\link{relative}} which relates a current numeric representation to
+#'     historical values.
+#'
 #' @section Further Details:
-#'     mlgrid is used by \code{\link{autostrat}} to enumerate the returns for all
-#'     valid strategy combinations.
 #'
 #'     Please refer to the strategies vignette by calling:
 #'     \code{vignette("strategies", package = "ichimoku")}
@@ -187,22 +192,24 @@ autostrat <- function(x,
 #' @export
 #'
 mlgrid <- function(x,
-                   y = c("logret", "ret"),
+                   y = c("logret", "ret", "none"),
                    dir = c("long", "short"),
                    type = c("boolean", "numeric"),
                    unique = TRUE) {
 
   is.ichimoku(x) || stop("mlgrid() only works on ichimoku objects", call. = FALSE)
-  target <- match.arg(y)
+  y <- match.arg(y)
   dir <- match.arg(dir)
   type <- match.arg(type)
-
   core <- coredata.ichimoku(x)
   xlen <- dim(core)[1L]
   p2 <- attr(x, "periods")[2L]
-  y <- c(diff(log(core[, "open"]))[2:(xlen - 1L)], NA, NA)
-  if (dir == "short") y <- -y
-  if (target == "ret") y <- exp(y) - 1
+
+  if (y != "none") {
+    target <- c(diff(log(core[, "open"]))[2:(xlen - 1L)], NA, NA)
+    if (dir == "short") target <- -target
+    if (y == "ret") target <- exp(target) - 1
+  }
 
   cols <- c("chikou", "close", "high", "low", "tenkan", "kijun", "senkouA", "senkouB", "cloudT", "cloudB")
   pairs <- list(character(37L), character(37L))
@@ -228,7 +235,7 @@ mlgrid <- function(x,
     veclist <- c(veclist, veclistf)
   }
 
-  df <- c(list(y = y), veclist)
+  df <- if (y == "none") veclist else c(list(y = target), veclist)
   cnames <- attr(df, "names")
   attributes(df) <- list(names = cnames,
                          class = "data.frame",
@@ -237,10 +244,9 @@ mlgrid <- function(x,
   attributes(grid) <- list(names = cnames,
                            class = "data.frame",
                            row.names = attr(grid, "row.names"),
-                           y = target,
+                           y = y,
                            direction = dir,
-                           ticker = attr(x, "ticker"),
-                           mlgrid = TRUE)
+                           ticker = attr(x, "ticker"))
   grid
 
 }
@@ -269,6 +275,70 @@ writeVectors <- function(x, pairs, p2, xlen, type) {
   }, c1 = pairs[[1L]], c2 = pairs[[2L]], SIMPLIFY = FALSE, USE.NAMES = FALSE),
   do.call(c, mapply(function(c1, c2) paste0(c1, "_", c2),
                     c1 = pairs[[1L]], c2 = pairs[[2L]], SIMPLIFY = FALSE, USE.NAMES = FALSE)))
+
+}
+
+#' Relative Numeric Representation
+#'
+#' Compare the current numeric representation of the ichimoku cloud chart
+#'     relative to historical values. Aids in determining whether current trading
+#'     behaviour is exceptional or falls within normal ranges.
+#'
+#' @inheritParams strat
+#'
+#' @return A data frame listing the mean and standard deviation of the numeric
+#'     ichimoku chart representation for the data, the current values for the
+#'     latest available price data, and their relative values in terms of
+#'     standard deviations from the mean. The time index for 'current' is saved
+#'     as an attribute and also printed to the console.
+#'
+#' @details 'relative' is calculated as (current - mean) / sd and represents a
+#'     centred and scaled measure of deviation. The elements are ordered by
+#'     their 'relative' value, so that those with the highest (postive or
+#'     negative) relative deviation are listed first.
+#'
+#'     A large 'relative' value indicates exceptional behaviour as opposed to
+#'     being within normal ranges.
+#'
+#' @section Further Details:
+#'     Please refer to the strategies vignette by calling:
+#'     \code{vignette("strategies", package = "ichimoku")}
+#'
+#' @examples
+#' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
+#' relative(cloud)
+#'
+#' @export
+#'
+relative <- function(x) {
+
+  is.ichimoku(x) || stop("relative() only works on ichimoku objects", call. = FALSE)
+  grid <- mlgrid(x, y = "none", type = "numeric")
+  dims <- dim(grid)
+  xlen <- dims[1L]
+  xwid <- dims[2L]
+  cnames <- attr(grid, "names")
+  time <- index.ichimoku(x)[xlen]
+  sdevs <- means <- numeric(xwid)
+  for (i in seq_len(xwid)) {
+    vec <- .subset2(grid, i)
+    means[i] <- mean(vec)
+    sdevs[i] <- sd(vec)
+  }
+  current <- as.numeric(grid[xlen, ])
+  relative <- (current - means) / sdevs
+  reorder <- order(abs(relative), decreasing = TRUE)
+  df <- lapply(list(means[reorder], sdevs[reorder], current[reorder], relative[reorder]),
+               round, digits = 2)
+  attributes(df) <- list(names = c("mean", "sd", "current", "relative"),
+                         class = "data.frame",
+                         row.names = cnames[reorder],
+                         current = time,
+                         periods = attr(x, "periods"),
+                         periodicity = attr(x, "periodicity"),
+                         ticker = attr(x, "ticker"))
+  cat("Current:", format.POSIXct(time), "\n")
+  df
 
 }
 

@@ -28,12 +28,15 @@
 #' @export
 #'
 tradingDays <- function(x, holidays, ...) {
-  posixlt <- as.POSIXlt.POSIXct(x)
-  vec <- posixlt$wday %in% 1:5
   if (missing(holidays)) {
+    posixlt <- as.POSIXlt.POSIXct(x)
+    vec <- posixlt$wday %in% 1:5
     vec[(posixlt$mon == 0L & posixlt$mday == 1L) | (posixlt$mon == 11L & posixlt$mday == 25L)] <- FALSE
+  } else if (is.null(holidays)) {
+    return(rep(TRUE, length(x)))
   } else {
-    is.null(holidays) && return(rep(TRUE, length(x)))
+    posixlt <- as.POSIXlt.POSIXct(x)
+    vec <- posixlt$wday %in% 1:5
     holidays <- tryCatch(as.POSIXct(holidays), error = function(e) {
       warning("Specified holidays are invalid - reverting to defaults", call. = FALSE)
       vec[(posixlt$mon == 0L & posixlt$mday == 1L) | (posixlt$mon == 11L & posixlt$mday == 25L)] <- FALSE

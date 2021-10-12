@@ -196,7 +196,7 @@ The ML layer provides tools for further developing quantitative ichimoku solutio
 
 `mlgrid()` generates a numeric representation of the relationship between ichimoku cloud chart elements. Its purpose is to provide a base grid which can then be manipulated as required before being fed into machine learning workflows.
 
-`mlgrid()` is used to power ichimoku's `autostrat()` function.
+`mlgrid()` is used to power the `autostrat()` and `relative()` functions.
 
 The object returned by the function is a data.frame in a 'tidy' format with one observation per row and one feature per column with the target 'y' as the first column. This is a format that is compatible with many machine learning packages.
 
@@ -214,7 +214,23 @@ Note: only valid combinations are included within the grid. Any combination invo
 
 The parameter 'unique' defaults to TRUE to return only unique combinations of c1 and c2, but can also be set to FALSE to return both c1 > c2 and c2 > c1 where the situation merits.
 
-The 'y' column can be switched between log and discrete returns. The date-time index corresponds to when the condition is met at the close for that period. The return is the single-period return achieved by transacting at the immediately following opening price until the next opening price. In this sense, the time periods do not strictly match, but are nevertheless correctly paired.
+The 'y' column can be switched between log and discrete returns. The date-time index corresponds to when the condition is met at the close for that period. The return is the single-period return achieved by transacting at the immediately following opening price until the next opening price. In this sense, the time periods do not strictly match, but are nevertheless correctly paired. 
+
+The calculation of the returns and correct pairing effectively uses up 2 periods, hence in order to obtain the grid for the latest available price data, y must be set to 'none', in which case a grid is returned without the target variable.
+
+### `relative()`
+
+Takes the current numeric representation of the ichimoku cloud chart and compares it with the historical values contained within the ichimoku object.
+
+```{r relative}
+relative(cloud)[1:10, ]
+```
+
+The mean and standard deviation of each element is calculated, and the latest available datapoint is shown under 'current'. 'relative' is calculated as (current - mean) / sd and hence represents a centred and scaled 'relative' deviation.
+
+Where this value is large (either positive or negative), this would indicate exceptional behaviour as opposed to being within normal ranges.
+
+The elements are ordered by the absolute value of 'relative' so those with a higher relative deviation are always listed first.
 
 ## Strategy Summary Specification
 

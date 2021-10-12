@@ -1,10 +1,10 @@
 xtsobject <- ichimoku(sample_ohlc_data)[1:10, ]
 
 test_that("tradingDays ok", {
-  expect_vector(tradingDays(smp <- sample_ohlc_data$time[1:3]), ptype = logical(), size = 3)
-  expect_true(all(tradingDays(smp)))
-  expect_warning(expect_true(tradingDays(sample_ohlc_data$time[4L], holidays = 0)), regexp = "holidays are invalid")
-  expect_true(all(tradingDays(as.POSIXct(c("2021-01-01", "2021-01-02", "2021-01-03")), holidays = NULL)))
+  expect_vector(tradingDays(as.POSIXct(c("2021-02-01", "2021-02-02", "2021-02-03"))), ptype = logical(), size = 3)
+  expect_warning(expect_true(tradingDays(as.POSIXct("2021-02-02"), holidays = 0)), regexp = "holidays are invalid")
+  expect_true(all(tradingDays(as.POSIXct(c("2021-02-01", "2021-02-02", "2021-02-03")))))
+  expect_true(all(tradingDays(as.POSIXct(c("2021-01-01", "2021-01-02")), holidays = NULL)))
   expect_false(all(tradingDays(as.POSIXct(c("2021-01-01", "2021-01-02", "2021-01-03")))))
 })
 

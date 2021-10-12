@@ -44,20 +44,17 @@ look <- function(x, which) {
 
   if (is.null(attr(x, "autostrat"))) {
     lk <- attributes(x)
-    lk <- lk[!names(lk) %in% c("dim", "dimnames", "names", "row.names", "index", "class", "mlgrid", "oanda")]
+    lk <- lk[!names(lk) %in% c("dim", "dimnames", "names", "row.names", "index", "class", "oanda")]
     if (length(lk)) lk else invisible()
+  } else if (missing(which)) {
+    lk <- attributes(x)
+    lk$autostrat <- NULL
+    lk
+  } else if (is.numeric(which) && which %in% seq_len(length(x))) {
+    x[[which]]
   } else {
-    if (missing(which)) {
-      lk <- attributes(x)
-      lk$autostrat <- NULL
-      lk
-    } else if (is.numeric(which) && which %in% seq_len(length(x))) {
-      x[[which]]
-    } else {
-      stop("'", which, "' is not a valid value for 'which'\n",
-           "'which' should be an integer value specifying one of the strategies 1 to ",
-           length(x), call. = FALSE)
-    }
+    stop("'", which, "' is not a valid value for 'which'\n'which' should be an integer value specifying one of the strategies 1 to ",
+         length(x), call. = FALSE)
   }
 
 }

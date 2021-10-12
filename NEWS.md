@@ -1,16 +1,18 @@
-# ichimoku 1.2.2.9
+# ichimoku 1.2.2.10
 
 #### New features:
 
-* Optimised 'ichimoku' methods for `coredata()` and `index()` - these are no longer simple re-exports from the 'zoo' package.
-* `as.data.frame.ichimoku()` S3 method is implemented as a marginally faster version of `xts_df()` for ichimoku objects.
+* New `relative()` function to compare the current numeric representation of the ichimoku cloud to historical values.
 * `oanda_studio()` gains the argument 'new.process', which when set to TRUE, starts the shiny session in a new R process, unblocking the current process and allowing continued use of the console.
 * Improved time index handling for `ichimoku()`: where conversion by `as.POSIXct()` fails, will convert numeric values as POSIX times (with an appropriate warning).
+* Optimised 'ichimoku' methods for `coredata()` and `index()` - these are no longer simple re-exports from the 'zoo' package.
+* `as.data.frame.ichimoku()` S3 method is implemented as a marginally faster version of `xts_df()` for ichimoku objects.
 * New custom summary method for ichimoku objects (without strategies).
 
 #### Updates:
 
 * Improved appearance of progress indicators for `oanda()` and `oanda_view()`.
+* Minor tweaks to the visual appearance of oscillator plots.
 * Fixes sign of %chg for `oanda_quote()`.
 * `xts()` is no longer re-exported from the 'xts' package as `ichimoku()` can now fully re-construct an ichimoku object from its components (see 'Working with ichimoku objects' in the Reference vignette).
 * Further performance improvements to `ichimoku()` and other functions.

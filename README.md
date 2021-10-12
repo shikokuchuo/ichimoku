@@ -117,15 +117,16 @@ autostrat(cloud, n = 3)
     to augment an ichimoku object with a strategy, including combined
     and asymmetric strategies.
 
--   [`stratcombine()`](https://shikokuchuo.net/ichimoku/reference/stratcombine.html) -
-    to create custom combined strategies.
-
 -   [`autostrat()`](https://shikokuchuo.net/ichimoku/reference/autostrat.html) -
     to automatically evaluate and rank top-performing strategies.
 
 -   [`mlgrid()`](https://shikokuchuo.net/ichimoku/reference/mlgrid.html) -
     to generate a numeric representation of the relationship between
-    ichimoku cloud chart elements.
+    ichimoku chart elements.
+
+-   [`relative()`](https://shikokuchuo.net/ichimoku/reference/relative.html) -
+    to compare the current numeric representation of the ichimoku cloud
+    chart to historical values.
 
 #### Real-time
 

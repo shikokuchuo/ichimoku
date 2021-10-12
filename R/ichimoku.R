@@ -98,7 +98,7 @@ ichimoku <- function(x, ...) UseMethod("ichimoku")
 ichimoku.ichimoku <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, ...) {
 
   if (missing(ticker)) ticker <- attr(x, "ticker")
-  x <- x[!is.na(x[, "close", drop = TRUE]), ]
+  x <- x[!is.na(coredata.ichimoku(x)[, "close"]), ]
 
   if (!missing(keep.data) && isTRUE(keep.data)) {
     x$cd <- x$tenkan <- x$kijun <- x$senkouA <- x$senkouB <- x$chikou <- x$cloudT <- x$cloudB <- NULL
@@ -326,9 +326,9 @@ ichimoku.default <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, ..
 #'
 print.ichimoku <- function(x, plot = TRUE, ...) {
 
-  if (isTRUE(plot)) tryCatch(plot.ichimoku(x, ...),
-                             error = function(e) invisible(),
-                             warning = function(w) invisible())
+  if (missing(plot) || isTRUE(plot)) tryCatch(plot.ichimoku(x, ...),
+                                              error = function(e) invisible(),
+                                              warning = function(w) invisible())
   NextMethod()
   invisible(x)
 
@@ -369,21 +369,23 @@ summary.ichimoku <- function(object, strat = TRUE, ...) {
 
   if (hasStrat(object) && isTRUE(strat)) {
     attr(object, "strat")
+
   } else {
-    dims <- dim(object)
-    xlen <- dims[1L]
-    cat(summary <- paste0("ichimoku object with dimensions (", xlen, ", ", dims[2L], ")"))
+    dims <- attr(object, "dim")
+    (is.null(dims) || (dim2 <- dims[2L]) < 12 || (dim1 <- dims[1L]) == 0) &&
+      return(cat("This is not a valid complete ichimoku object"))
+    cat(summary <- paste0("ichimoku object with dimensions (", dim1, ", ", dim2, ")"))
 
     idx <- index.ichimoku(object)
-    end <- sum(!is.na(object[, "close"]))
-    high <- which.max(object[1:end, "high"])
-    low <- which.min(object[1:end, "low"])
+    core <- coredata.ichimoku(object)
+    end <- sum(!is.na(core[, "close"]))
+    high <- which.max(core[1:end, "high"])
+    low <- which.min(core[1:end, "low"])
     dates <- format.POSIXct(c(idx[1L], idx[high], idx[low], idx[end]))
-
-    cat("\n\n            Max: ", dates[2L], " [", object[high, "high"], "]", sep = "")
-    cat("\nStart: ", dates[1L], " [", object[1L, "open"],
-        "]   End: ", dates[4L], " [", object[end, "close"], "]", sep = "")
-    cat("\n            Min: ", dates[3L], " [", object[low, "low"], "]", sep = "")
+    cat("\n\n            Max: ", dates[2L], " [", core[high, "high"], "]", sep = "")
+    cat("\nStart: ", dates[1L], " [", core[1L, "open"],
+        "]   End: ", dates[4L], " [", core[end, "close"], "]", sep = "")
+    cat("\n            Min: ", dates[3L], " [", core[low, "low"], "]", sep = "")
 
     periodicity <- attr(object, "periodicity")
     cat("\n\nTicker:", attr(object, "ticker"),
@@ -397,6 +399,7 @@ summary.ichimoku <- function(object, strat = TRUE, ...) {
         } else {
           paste0(periodicity, " secs")
         })
+
     invisible(summary)
   }
 
@@ -487,7 +490,7 @@ NULL
 coredata.ichimoku <- function(x, fmt, ...) {
   attributes(x) <- if (missing(fmt)) {
     list(dim = attr(x, "dim"), dimnames = attr(x, "dimnames"))
-  } else if (is.null(dim(x))) {
+  } else if (is.null(attr(x, "dim"))) {
     list(names = if (is.character(fmt)) format.POSIXct(index.ichimoku(x), format = fmt) else format.POSIXct(index.ichimoku(x)))
   } else {
     list(dim = attr(x, "dim"),

@@ -28,16 +28,17 @@
 #' \itemize{
 #'     \item{\code{\link{strat}}} {to augment an ichimoku object with a strategy,
 #'     including combined and asymmetric strategies.}
-#'     \item{\code{\link{stratcombine}}} {to create custom combined strategies.}
 #'     \item{\code{\link{autostrat}}} {to automatically evaluate and rank
 #'     top-performing strategies.}
 #'     \item{\code{\link{mlgrid}}} {to generate a numeric representation of the
 #'     relationship between ichimoku cloud chart elements.}
+#'     \item{\code{\link{relative}}} {to compare the current numeric
+#'     representation of the ichimoku cloud chart to historical values.}
 #' }
 #' Real-time
 #' \itemize{
-#'     \item{\code{\link{oanda_chart}}} {to plot real-time ichimoku cloud
-#'     charts using OANDA data.}
+#'     \item{\code{\link{oanda_chart}}} {to plot real-time ichimoku cloud charts
+#'     using OANDA data.}
 #'     \item{\code{\link{oanda_studio}}} {a complete live analysis environment
 #'     using OANDA data implemented in R Shiny.}
 #'     \item{\code{\link{oanda_stream}} / \code{\link{oanda_quote}}} {to obtain
@@ -70,7 +71,7 @@
 #' @importFrom grid grid.draw grid.newpage unit
 #' @importFrom gtable gtable gtable_add_grob
 #' @importFrom jsonlite parse_json
-#' @importFrom stats na.omit setNames
+#' @importFrom stats na.omit sd setNames
 #' @importFrom xts endpoints
 #' @importFrom zoo coredata index
 #'

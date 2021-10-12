@@ -210,14 +210,14 @@ extraplot <- function(object,
 
   } else if (type == "r") {
     p2 <- attr(object, "periods")[2L]
-    object$rtype_osc <- 100 - 100 / (1 + meanOver((object[, "cd"] == 1) * (object[, "close"] - object[, "open"]), p2) / meanOver((object[, "cd"] == -1) * (object[, "open"] - object[, "close"]), p2))
+    object$osc_typ_slw <- 100 - 100 / (1 + meanOver((object[, "cd"] == 1) * (object[, "close"] - object[, "open"]), p2) / meanOver((object[, "cd"] == -1) * (object[, "open"] - object[, "close"]), p2))
 
   } else {
     periods <- attr(object, "periods")
     p1 <- periods[1L]
     p2 <- periods[2L]
-    object$stype_fast <- 100 * (object[, "close"] - minOver(object[, "low"], p1)) / (maxOver(object[, "high"], p1) - minOver(object[, "low"], p1))
-    object$stype_slow <- 100 * (object[, "close"] - minOver(object[, "low"], p2)) / (maxOver(object[, "high"], p2) - minOver(object[, "low"], p2))
+    object$osc_typ_fst <- 100 * (object[, "close"] - minOver(object[, "low"], p1)) / (maxOver(object[, "high"], p1) - minOver(object[, "low"], p1))
+    object$osc_typ_slw <- 100 * (object[, "close"] - minOver(object[, "low"], p2)) / (maxOver(object[, "high"], p2) - minOver(object[, "low"], p2))
   }
 
   if (!missing(window)) object <- object[window]
@@ -226,9 +226,8 @@ extraplot <- function(object,
 
   if (type == "r" || type == "s") {
     layers <- list(
-      if (type == "r") geom_line(aes(y = .data$rtype_osc), color = pal[5L], na.rm = TRUE),
-      if (type == "s") geom_line(aes(y = .data$stype_fast), color = pal[4L], na.rm = TRUE),
-      if (type == "s") geom_line(aes(y = .data$stype_slow), color = pal[5L], na.rm = TRUE),
+      geom_line(aes(y = .data$osc_typ_slw), color = pal[5L], alpha = 0.8, na.rm = TRUE),
+      if (type == "s") geom_line(aes(y = .data$osc_typ_fst), color = pal[4L], alpha = 0.7, na.rm = TRUE),
       scale_x_continuous(breaks = breaks_ichimoku(data = data, object = object), labels = NULL),
       scale_y_continuous(breaks = c(0, 25, 50, 75, 100), limits = c(0, 100), expand = c(0,0)),
       labs(x = NULL, y = switch(type, r = "R-type", s = "S-type")),
@@ -244,11 +243,11 @@ extraplot <- function(object,
 
     layers <- list(
       if (type == "line") {
-        geom_line(aes(y = .data[[cols]]), color = pal[7L], na.rm = TRUE)
+        geom_line(aes(y = .data[[cols]]), color = pal[7L], alpha = 0.8, na.rm = TRUE)
       } else {
         geom_rect(aes(xmin = .data$idx - 0.4, xmax = .data$idx + 0.4, ymin = 0,
                       ymax = .data[[cols]], color = .data$cd, fill = .data$cd),
-                  size = 0.3, na.rm = TRUE)
+                  size = 0.3, alpha = 0.8, na.rm = TRUE)
       },
       scale_x_continuous(breaks = breaks_ichimoku(data = data, object = object), labels = NULL),
       scale_y_continuous(),

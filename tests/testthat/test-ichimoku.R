@@ -26,6 +26,7 @@ test_that("ichimoku handles higher frequency data", {
   data$time <- seq.POSIXt(from = .POSIXct(1), by = "1 hour", length.out = 256)
   expect_s3_class(cloudhf <- ichimoku(data), "ichimoku")
   expect_s3_class(autoplot(cloudhf), "ggplot")
+  expect_output(summary(cloudhf))
 })
 
 test_that("ichimoku keep.data ok", {
@@ -60,10 +61,13 @@ test_that("print method ok", {
   expect_output(expect_s3_class(print(cloud), "ichimoku"))
   expect_output(expect_s3_class(print(cloud, plot = FALSE), "ichimoku"))
   expect_output(print(cloud[, 1L, drop = TRUE]))
+  expect_output(print(cloud[0]))
 })
 
 test_that("summary method for objects ok", {
-  expect_output(expect_vector(summary(cloud), ptype = "character()"))
+  expect_output(expect_vector(expect_invisible(summary(cloud)), ptype = "character()"))
+  expect_output(summary(cloud[0]), regexp = "not a valid complete")
+  expect_output(summary(cloud[, 1L]), regexp = "not a valid complete")
 })
 
 test_that("as.data.frame method ok", {

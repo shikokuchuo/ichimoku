@@ -1,6 +1,7 @@
 cloud <- ichimoku(sample_ohlc_data)
 grid <- mlgrid(cloud, y = "logret", type = "numeric")
 grid2 <- mlgrid(cloud, y = "ret", type = "boolean", dir = "short", unique = FALSE)
+grid3 <- mlgrid(cloud, y = "none", type = "numeric")
 
 test_that("autostrat ok", {
   expect_output(expect_length(expect_type(expect_invisible(autostrat(cloud, n = 2)), "list"), 2L))
@@ -13,13 +14,20 @@ test_that("autostrat ok", {
 test_that("mlgrid ok", {
   expect_s3_class(grid, "data.frame")
   expect_identical(dim(grid), c(153L, 38L))
-  expect_identical(names(attributes(grid)), c("names", "class", "row.names", "y", "direction", "ticker", "mlgrid"))
+  expect_identical(names(look(grid)), c("y", "direction", "ticker"))
   expect_s3_class(grid2, "data.frame")
   expect_identical(dim(grid2), c(153L, 75L))
-  expect_true(attr(grid2, "mlgrid"))
-  expect_identical(attr(grid2, "y"), "ret")
-  expect_identical(attr(grid2, "direction"), "short")
+  expect_s3_class(grid3, "data.frame")
+  expect_identical(dim(grid3), c(155L, 37L))
   expect_error(mlgrid(sample_ohlc_data), regexp = "ichimoku object")
+})
+
+test_that("relative ok", {
+  expect_output(expect_s3_class(rel <- relative(cloud), "data.frame"))
+  expect_identical(dim(rel), c(37L, 4L))
+  expect_identical(names(rel), c("mean", "sd", "current", "relative"))
+  expect_identical(names(look(rel)), c("current", "periods", "periodicity", "ticker"))
+  expect_error(relative(sample_ohlc_data), regexp = "ichimoku object")
 })
 
 test_that("look ok", {
