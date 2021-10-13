@@ -32,8 +32,8 @@
 #'     top-performing strategies.}
 #'     \item{\code{\link{mlgrid}}} {to generate a numeric representation of the
 #'     relationship between ichimoku cloud chart elements.}
-#'     \item{\code{\link{relative}}} {to compare the current numeric
-#'     representation of the ichimoku cloud chart to historical values.}
+#'     \item{\code{\link{relative}}} {to produce a statistical summary of the
+#'     latest ichimoku numeric representation relative to historical values.}
 #' }
 #' Real-time
 #' \itemize{

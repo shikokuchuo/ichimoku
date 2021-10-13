@@ -122,11 +122,11 @@ autostrat(cloud, n = 3)
 
 -   [`mlgrid()`](https://shikokuchuo.net/ichimoku/reference/mlgrid.html) -
     to generate a numeric representation of the relationship between
-    ichimoku chart elements.
+    ichimoku cloud chart elements.
 
 -   [`relative()`](https://shikokuchuo.net/ichimoku/reference/relative.html) -
-    to compare the current numeric representation of the ichimoku cloud
-    chart to historical values.
+    to produce a statistical summary of the latest ichimoku numeric
+    representation relative to historical values.
 
 #### Real-time
 

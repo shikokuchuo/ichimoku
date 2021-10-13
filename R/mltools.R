@@ -280,25 +280,29 @@ writeVectors <- function(x, pairs, p2, xlen, type) {
 
 #' Relative Numeric Representation
 #'
-#' Compare the current numeric representation of the ichimoku cloud chart
-#'     relative to historical values. Aids in determining whether current trading
-#'     behaviour is exceptional or falls within normal ranges.
+#' Produce a statistical summary of the latest numeric representation of the
+#'     ichimoku cloud chart relative to historical values. Aids in determining
+#'     if current trading falls within normal or exceptional ranges.
 #'
 #' @inheritParams strat
 #'
-#' @return A data frame listing the mean and standard deviation of the numeric
-#'     ichimoku chart representation for the data, the current values for the
-#'     latest available price data, and their relative values in terms of
-#'     standard deviations from the mean. The time index for 'current' is saved
-#'     as an attribute and also printed to the console.
+#' @return A data frame containing a statistical summary of the latest ichimoku
+#'     cloud chart representation and how it relates to the historical data.
+#'     The elements are ordered by their absolute 'r value', so that those with
+#'     the highest relative deviation are listed first. The time index value for
+#'     'latest' and the number of observations are printed to the console.
 #'
-#' @details 'relative' is calculated as (current - mean) / sd and represents a
-#'     centred and scaled measure of deviation. The elements are ordered by
-#'     their 'relative' value, so that those with the highest (postive or
-#'     negative) relative deviation are listed first.
+#' @details Column 'mean' is the mean value, 'sd' the standard deviation,
+#'     and 'latest' the latest observed values from the data.
 #'
-#'     A large 'relative' value indicates exceptional behaviour as opposed to
-#'     being within normal ranges.
+#'     The 'relative' or 'r value' is calculated as (latest - mean) / sd and
+#'     represents a standardised (centred and scaled) measure of deviation.
+#'
+#'     Column 'p >= |r|' contains the empirical probability of the observed
+#'     absolute 'r value' or greater.
+#'
+#'     Column 'E(|r|)|p' contains the expected absolute 'r value', conditional
+#'     upon being greater than equal to the observed absolute 'r value'.
 #'
 #' @section Further Details:
 #'     Please refer to the strategies vignette by calling:
@@ -319,25 +323,32 @@ relative <- function(x) {
   xwid <- dims[2L]
   cnames <- attr(grid, "names")
   time <- index.ichimoku(x)[xlen]
-  sdevs <- means <- numeric(xwid)
+  expec <- pval <- latest <- sdevs <- means <- numeric(xwid)
+
   for (i in seq_len(xwid)) {
     vec <- .subset2(grid, i)
     means[i] <- mean(vec)
     sdevs[i] <- sd(vec)
+    latest[i] <- vec[xlen]
+    rvec <- (vec - means[i]) / sdevs[i]
+    exceed <- abs(rvec) >= abs(rvec[xlen])
+    pval[i] <- sum(exceed) / xlen
+    expec[i] <- mean(abs(rvec[exceed]))
   }
-  current <- as.numeric(grid[xlen, ])
-  relative <- (current - means) / sdevs
-  reorder <- order(abs(relative), decreasing = TRUE)
-  df <- lapply(list(means[reorder], sdevs[reorder], current[reorder], relative[reorder]),
+
+  rval <- (latest - means) / sdevs
+  reorder <- order(abs(rval), decreasing = TRUE)
+
+  df <- lapply(list(means[reorder], sdevs[reorder], latest[reorder], rval[reorder], pval[reorder], expec[reorder]),
                round, digits = 2)
-  attributes(df) <- list(names = c("mean", "sd", "current", "relative"),
+  attributes(df) <- list(names = c("mean", "sd", "latest", "r value", "p >= |r|", "E(|r|)|p"),
                          class = "data.frame",
                          row.names = cnames[reorder],
-                         current = time,
+                         latest = time,
                          periods = attr(x, "periods"),
                          periodicity = attr(x, "periodicity"),
                          ticker = attr(x, "ticker"))
-  cat("Current:", format.POSIXct(time), "\n")
+  cat("Latest:", format.POSIXct(time), "| n:", xlen, "\n")
   df
 
 }

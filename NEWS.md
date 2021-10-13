@@ -1,8 +1,8 @@
-# ichimoku 1.2.2.10
+# ichimoku 1.2.2.11
 
 #### New features:
 
-* New `relative()` function to compare the current numeric representation of the ichimoku cloud to historical values.
+* New `relative()` function to produce a statistical summary of the latest ichimoku cloud chart numeric representation relative to historical values.
 * `oanda_studio()` gains the argument 'new.process', which when set to TRUE, starts the shiny session in a new R process, unblocking the current process and allowing continued use of the console.
 * Improved time index handling for `ichimoku()`: where conversion by `as.POSIXct()` fails, will convert numeric values as POSIX times (with an appropriate warning).
 * Optimised 'ichimoku' methods for `coredata()` and `index()` - these are no longer simple re-exports from the 'zoo' package.

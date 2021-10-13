@@ -14,7 +14,6 @@ test_that("autostrat ok", {
 test_that("mlgrid ok", {
   expect_s3_class(grid, "data.frame")
   expect_identical(dim(grid), c(153L, 38L))
-  expect_identical(names(look(grid)), c("y", "direction", "ticker"))
   expect_s3_class(grid2, "data.frame")
   expect_identical(dim(grid2), c(153L, 75L))
   expect_s3_class(grid3, "data.frame")
@@ -24,9 +23,8 @@ test_that("mlgrid ok", {
 
 test_that("relative ok", {
   expect_output(expect_s3_class(rel <- relative(cloud), "data.frame"))
-  expect_identical(dim(rel), c(37L, 4L))
-  expect_identical(names(rel), c("mean", "sd", "current", "relative"))
-  expect_identical(names(look(rel)), c("current", "periods", "periodicity", "ticker"))
+  expect_identical(dim(rel), c(37L, 6L))
+  expect_length(expect_type(look(rel), "list"), 4L)
   expect_error(relative(sample_ohlc_data), regexp = "ichimoku object")
 })
 
