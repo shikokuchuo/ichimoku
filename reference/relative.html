@@ -49,9 +49,9 @@
   
 
 <meta property="og:title" content="Relative Numeric Representation — relative" />
-<meta property="og:description" content="Compare the current numeric representation of the ichimoku cloud chart
-    relative to historical values. Aids in determining whether current trading
-    behaviour is exceptional or falls within normal ranges." />
+<meta property="og:description" content="Produce a statistical summary of the latest numeric representation of the
+    ichimoku cloud chart relative to historical values. Aids in determining
+    if current trading falls within normal or exceptional ranges." />
 <meta property="og:image" content="https://shikokuchuo.net/ichimoku/logo.png" />
 
 
@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2.10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2.11</span>
       </span>
     </div>
 
@@ -156,9 +156,9 @@
     </div>
 
     <div class="ref-description">
-    <p>Compare the current numeric representation of the ichimoku cloud chart
-    relative to historical values. Aids in determining whether current trading
-    behaviour is exceptional or falls within normal ranges.</p>
+    <p>Produce a statistical summary of the latest numeric representation of the
+    ichimoku cloud chart relative to historical values. Aids in determining
+    if current trading falls within normal or exceptional ranges.</p>
     </div>
 
     <pre class="usage"><span class='fu'>relative</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
@@ -174,19 +174,21 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame listing the mean and standard deviation of the numeric
-    ichimoku chart representation for the data, the current values for the
-    latest available price data, and their relative values in terms of
-    standard deviations from the mean. The time index for 'current' is saved
-    as an attribute and also printed to the console.</p>
+    <p>A data frame containing a statistical summary of the latest ichimoku
+    cloud chart representation and how it relates to the historical data.
+    The elements are ordered by their absolute 'r value', so that those with
+    the highest relative deviation are listed first. The time index value for
+    'latest' and the number of observations are printed to the console.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>'relative' is calculated as (current - mean) / sd and represents a
-    centred and scaled measure of deviation. The elements are ordered by
-    their 'relative' value, so that those with the highest (postive or
-    negative) relative deviation are listed first.</p>
-<p>A large 'relative' value indicates exceptional behaviour as opposed to
-    being within normal ranges.</p>
+    <p>Column 'mean' is the mean value, 'sd' the standard deviation,
+    and 'latest' the latest observed values from the data.</p>
+<p>The 'relative' or 'r value' is calculated as (latest - mean) / sd and
+    represents a standardised (centred and scaled) measure of deviation.</p>
+<p>Column 'p &gt;= |r|' contains the empirical probability of the observed
+    absolute 'r value' or greater.</p>
+<p>Column 'E(|r|)|p' contains the expected absolute 'r value', conditional
+    upon being greater than equal to the observed absolute 'r value'.</p>
     <h2 class="hasAnchor" id="further-details"><a class="anchor" href="#further-details"></a>Further Details</h2>
 
     
@@ -197,44 +199,44 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>cloud</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ichimoku.html'>ichimoku</a></span><span class='op'>(</span><span class='va'>sample_ohlc_data</span>, ticker <span class='op'>=</span> <span class='st'>"TKR"</span><span class='op'>)</span>
 <span class='fu'>relative</span><span class='op'>(</span><span class='va'>cloud</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Current: 2020-08-04 23:00:00 </div><div class='output co'>#&gt;                  mean   sd current relative
-#&gt; chikou_high      0.79 6.09    6.60     0.95
-#&gt; low_tenkan      -0.30 1.72    1.30     0.93
-#&gt; low_kijun        0.44 3.28    3.45     0.92
-#&gt; chikou_close     1.51 6.07    7.00     0.91
-#&gt; chikou_low       2.31 6.12    7.80     0.90
-#&gt; low_cloudT       0.45 5.76    5.35     0.85
-#&gt; chikou_tenkan    1.73 6.15    6.90     0.84
-#&gt; close_kijun      1.27 3.25    3.85     0.79
-#&gt; close_cloudT     1.27 5.73    5.75     0.78
-#&gt; low_senkouA      1.18 5.97    5.50     0.72
-#&gt; high_cloudT      1.96 5.64    5.95     0.71
-#&gt; high_kijun       1.96 3.12    4.05     0.67
-#&gt; close_tenkan     0.52 1.77    1.70     0.67
-#&gt; close_senkouA    2.00 5.93    5.90     0.66
-#&gt; tenkan_cloudT    0.75 5.20    4.05     0.63
-#&gt; low_senkouB      2.19 5.38    5.35     0.59
-#&gt; high_senkouA     2.69 5.84    6.10     0.58
-#&gt; tenkan_kijun     0.75 2.42    2.15     0.58
-#&gt; kijun_cloudT     0.00 3.62    1.90     0.52
-#&gt; close_senkouB    3.02 5.34    5.75     0.51
-#&gt; tenkan_senkouA   1.48 5.44    4.20     0.50
-#&gt; low_cloudB       2.92 5.38    5.50     0.48
-#&gt; high_tenkan      1.21 1.56    1.90     0.44
-#&gt; chikou_kijun     2.28 5.96    4.90     0.44
-#&gt; high_senkouB     3.71 5.29    5.95     0.42
-#&gt; close_cloudB     3.75 5.31    5.90     0.40
-#&gt; senkouA_senkouB  1.01 2.98   -0.15    -0.39
-#&gt; kijun_senkouA    0.74 3.64    2.05     0.36
-#&gt; high_cloudB      4.44 5.27    6.10     0.32
-#&gt; tenkan_senkouB   2.49 5.12    4.05     0.30
-#&gt; chikou_cloudT    2.67 6.44    4.35     0.26
-#&gt; chikou_senkouA   3.44 6.46    4.75     0.20
-#&gt; tenkan_cloudB    3.23 5.12    4.20     0.19
-#&gt; kijun_cloudB     2.48 3.86    2.05    -0.11
-#&gt; chikou_cloudB    5.03 5.20    4.75    -0.05
-#&gt; kijun_senkouB    1.75 4.16    1.90     0.04
-#&gt; chikou_senkouB   4.26 5.40    4.35     0.02</div><div class='input'>
+</div><div class='output co'>#&gt; Latest: 2020-08-04 23:00:00 | n: 155 </div><div class='output co'>#&gt;                  mean   sd latest r value p &gt;= |r| E(|r|)|p
+#&gt; chikou_high      0.79 6.09   6.60    0.95     0.36     1.46
+#&gt; low_tenkan      -0.30 1.72   1.30    0.93     0.40     1.38
+#&gt; low_kijun        0.44 3.28   3.45    0.92     0.43     1.37
+#&gt; chikou_close     1.51 6.07   7.00    0.91     0.39     1.41
+#&gt; chikou_low       2.31 6.12   7.80    0.90     0.41     1.37
+#&gt; low_cloudT       0.45 5.76   5.35    0.85     0.43     1.39
+#&gt; chikou_tenkan    1.73 6.15   6.90    0.84     0.41     1.41
+#&gt; close_kijun      1.27 3.25   3.85    0.79     0.48     1.31
+#&gt; close_cloudT     1.27 5.73   5.75    0.78     0.43     1.39
+#&gt; low_senkouA      1.18 5.97   5.50    0.72     0.45     1.36
+#&gt; high_cloudT      1.96 5.64   5.95    0.71     0.48     1.32
+#&gt; high_kijun       1.96 3.12   4.05    0.67     0.53     1.25
+#&gt; close_tenkan     0.52 1.77   1.70    0.67     0.52     1.24
+#&gt; close_senkouA    2.00 5.93   5.90    0.66     0.49     1.30
+#&gt; tenkan_cloudT    0.75 5.20   4.05    0.63     0.50     1.31
+#&gt; low_senkouB      2.19 5.38   5.35    0.59     0.64     1.16
+#&gt; high_senkouA     2.69 5.84   6.10    0.58     0.56     1.22
+#&gt; tenkan_kijun     0.75 2.42   2.15    0.58     0.60     1.16
+#&gt; kijun_cloudT     0.00 3.62   1.90    0.52     0.64     1.16
+#&gt; close_senkouB    3.02 5.34   5.75    0.51     0.73     1.09
+#&gt; tenkan_senkouA   1.48 5.44   4.20    0.50     0.57     1.21
+#&gt; low_cloudB       2.92 5.38   5.50    0.48     0.68     1.12
+#&gt; high_tenkan      1.21 1.56   1.90    0.44     0.66     1.06
+#&gt; chikou_kijun     2.28 5.96   4.90    0.44     0.63     1.15
+#&gt; high_senkouB     3.71 5.29   5.95    0.42     0.76     1.06
+#&gt; close_cloudB     3.75 5.31   5.90    0.40     0.70     1.11
+#&gt; senkouA_senkouB  1.01 2.98  -0.15   -0.39     0.70     1.10
+#&gt; kijun_senkouA    0.74 3.64   2.05    0.36     0.69     1.11
+#&gt; high_cloudB      4.44 5.27   6.10    0.32     0.71     1.10
+#&gt; tenkan_senkouB   2.49 5.12   4.05    0.30     0.79     1.03
+#&gt; chikou_cloudT    2.67 6.44   4.35    0.26     0.84     1.02
+#&gt; chikou_senkouA   3.44 6.46   4.75    0.20     0.89     0.97
+#&gt; tenkan_cloudB    3.23 5.12   4.20    0.19     0.79     1.01
+#&gt; kijun_cloudB     2.48 3.86   2.05   -0.11     0.98     0.86
+#&gt; chikou_cloudB    5.03 5.20   4.75   -0.05     0.99     0.89
+#&gt; kijun_senkouB    1.75 4.16   1.90    0.04     0.97     0.84
+#&gt; chikou_senkouB   4.26 5.40   4.35    0.02     1.00     0.88</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
