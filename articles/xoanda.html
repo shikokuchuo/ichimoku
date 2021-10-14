@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2.12</span>
       </span>
     </div>
 
@@ -233,7 +233,7 @@
 <p>The following additional parameters can be used to customise the behaviour of the Shiny environment:</p>
 <ul>
 <li>
-<code>new.process</code> [default FALSE] if TRUE, will start the shiny session in a new R process, unblocking the current process and allowing continued use of the R console. Note that any stdout and stderr output from the new process is discarded</li>
+<code>new.process</code> [default FALSE] if TRUE, will start the shiny session in a new R process, unblocking the current process and allowing continued use of the R console. Note that any stdout output from the new process is discarded but stderr output - messages, warnings and errors - are still sent to the console</li>
 <li>
 <code>...</code> additional arguments passed to <code><a href="../reference/ichimoku.html">ichimoku()</a></code> for calculating the ichimoku cloud, <code><a href="../reference/autoplot.html">autoplot()</a></code> to set chart parameters, or the ‘options’ argument of <code><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html">shiny::shinyApp()</a></code>
 </li>
@@ -291,22 +291,22 @@
 <a href="#oanda_view" class="anchor"></a><code>oanda_view()</code>
 </h3>
 <p>Prints a snapshot overview of the selected market, showing the relative performance of all constituents.</p>
-<p>The available markets are : ‘fx’ for major currency pairs, ‘allfx’ for all available currencies, ‘bonds’ for government bonds, ‘commodities’ for commodities, ‘metals’ for metals and ‘stocks’ for global stock markets. As partial matching is enabled, it is possible to type just the first letter e.g. ‘c’ for commodities.</p>
+<p>The available markets are : ‘allfx’ for all available currencies, ‘bonds’ for government bonds, ‘commodities’ for commodities, ‘fx’ for major currency pairs, ‘metals’ for metals and ‘stocks’ for global stock markets. As partial matching is enabled, it is possible to type just the first letter e.g. ‘c’ for commodities.</p>
 <p>The first retrieved timestamp and the pricing component are printed, followed by the dataframe showing similar data to <code><a href="../reference/oanda_quote.html">oanda_quote()</a></code> for all instruments in the selected market. The data is ordered by the daily percentage change, from the most positive to the most negative.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw">oanda_view</span>()</span>
-<span id="cb9-2"><a href="#cb9-2"></a>Enter market [f]x [a]llfx [b]onds [c]ommodities [m]etals [s]tocks<span class="op">:</span><span class="st"> </span>c</span>
+<span id="cb9-2"><a href="#cb9-2"></a>Enter market [a]llfx [b]onds [c]ommodities [f]x [m]etals [s]tocks<span class="op">:</span><span class="st"> </span>c</span>
 <span id="cb9-3"><a href="#cb9-3"></a><span class="co">#&gt; Retrieving commodities [.........]</span></span>
-<span id="cb9-4"><a href="#cb9-4"></a><span class="co">#&gt; 2021-10-06 10:39:32 / M </span></span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="co">#&gt; 2021-10-13 23:42:58 / M</span></span>
 <span id="cb9-5"><a href="#cb9-5"></a><span class="co">#&gt;               open    high     low    last    %chg</span></span>
-<span id="cb9-6"><a href="#cb9-6"></a><span class="co">#&gt; NATGAS_USD   6.267   6.412   6.162   6.318  0.8138</span></span>
-<span id="cb9-7"><a href="#cb9-7"></a><span class="co">#&gt; SOYBN_USD   12.659  12.676  12.629  12.642 -0.1343</span></span>
-<span id="cb9-8"><a href="#cb9-8"></a><span class="co">#&gt; WHEAT_USD    7.370   7.422   7.338   7.343 -0.3664</span></span>
-<span id="cb9-9"><a href="#cb9-9"></a><span class="co">#&gt; SUGAR_USD  0.19204 0.19224 0.19026 0.19124 -0.4166</span></span>
-<span id="cb9-10"><a href="#cb9-10"></a><span class="co">#&gt; CORN_USD     5.620   5.620   5.596   5.596 -0.4270</span></span>
-<span id="cb9-11"><a href="#cb9-11"></a><span class="co">#&gt; BCO_USD     83.470  84.227  82.747  82.768 -0.8410</span></span>
-<span id="cb9-12"><a href="#cb9-12"></a><span class="co">#&gt; WTICO_USD   79.136  79.889  78.426  78.464 -0.8492</span></span>
-<span id="cb9-13"><a href="#cb9-13"></a><span class="co">#&gt; TWIX_USD     653.4   656.2   645.6   645.7 -1.1785</span></span>
-<span id="cb9-14"><a href="#cb9-14"></a><span class="co">#&gt; XCU_USD    4.16862 4.17796 4.10188 4.10962 -1.4153</span></span></code></pre></div>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="co">#&gt; TWIX_USD     654.0   658.4   644.6   657.6  0.5505</span></span>
+<span id="cb9-7"><a href="#cb9-7"></a><span class="co">#&gt; WTICO_USD   80.614  80.819  80.589  80.779  0.2047</span></span>
+<span id="cb9-8"><a href="#cb9-8"></a><span class="co">#&gt; XCU_USD    4.47846 4.49068 4.47821 4.48719  0.1949</span></span>
+<span id="cb9-9"><a href="#cb9-9"></a><span class="co">#&gt; BCO_USD     83.871  83.879  83.858  83.873  0.0024</span></span>
+<span id="cb9-10"><a href="#cb9-10"></a><span class="co">#&gt; SOYBN_USD   12.113  12.237  11.966  12.091 -0.1816</span></span>
+<span id="cb9-11"><a href="#cb9-11"></a><span class="co">#&gt; NATGAS_USD   5.644   5.649   5.616   5.630 -0.2481</span></span>
+<span id="cb9-12"><a href="#cb9-12"></a><span class="co">#&gt; SUGAR_USD  0.19468 0.19530 0.19230 0.19242 -1.1609</span></span>
+<span id="cb9-13"><a href="#cb9-13"></a><span class="co">#&gt; WHEAT_USD    7.280   7.304   7.054   7.104 -2.4176</span></span>
+<span id="cb9-14"><a href="#cb9-14"></a><span class="co">#&gt; CORN_USD     5.454   5.466   5.274   5.322 -2.4202</span></span></code></pre></div>
 </div>
 <div id="oanda_positions" class="section level3">
 <h3 class="hasAnchor">

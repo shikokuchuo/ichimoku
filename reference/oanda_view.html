@@ -83,7 +83,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2.12</span>
       </span>
     </div>
 
@@ -160,7 +160,7 @@
     </div>
 
     <pre class="usage"><span class='fu'>oanda_view</span><span class='op'>(</span>
-  market <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"fx"</span>, <span class='st'>"allfx"</span>, <span class='st'>"bonds"</span>, <span class='st'>"commodities"</span>, <span class='st'>"metals"</span>, <span class='st'>"stocks"</span><span class='op'>)</span>,
+  market <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"allfx"</span>, <span class='st'>"bonds"</span>, <span class='st'>"commodities"</span>, <span class='st'>"fx"</span>, <span class='st'>"metals"</span>, <span class='st'>"stocks"</span><span class='op'>)</span>,
   price <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"M"</span>, <span class='st'>"B"</span>, <span class='st'>"A"</span><span class='op'>)</span>,
   <span class='va'>server</span>,
   <span class='va'>apikey</span>
@@ -171,9 +171,9 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>market</th>
-      <td><p>string specifying the market: 'fx' for major currency pairs,
-'allfx' for all available currencies, 'bonds' for government bonds,
-'commodities' for commodities, 'metals' for metals and 'stocks' for
+      <td><p>string specifying the market: 'allfx' for all available
+currencies, 'bonds' for government bonds, 'commodities' for commodities,
+'fx' for major currency pairs, 'metals' for metals and 'stocks' for
 global stock markets.</p></td>
     </tr>
     <tr>

@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2.12</span>
       </span>
     </div>
 
@@ -151,15 +151,15 @@
       <small>Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="ichimoku-12211" class="section level1">
-<h1 class="page-header" data-toc-text="1.2.2.11">
-<a href="#ichimoku-12211" class="anchor"></a>ichimoku 1.2.2.11<small> Unreleased </small>
+    <div id="ichimoku-12212" class="section level1">
+<h1 class="page-header" data-toc-text="1.2.2.12">
+<a href="#ichimoku-12212" class="anchor"></a>ichimoku 1.2.2.12<small> Unreleased </small>
 </h1>
 <div id="new-features" class="section level4">
 <h4 class="hasAnchor">
 <a href="#new-features" class="anchor"></a>New features:</h4>
 <ul>
-<li>New <code><a href="../reference/relative.html">relative()</a></code> function to produce a statistical summary of the latest ichimoku cloud chart numeric representation relative to historical values.</li>
+<li>New <code><a href="../reference/relative.html">relative()</a></code> function produces a statistical summary of the latest ichimoku cloud chart numeric representation relative to historical values to determine whether trading falls within or outside of normal ranges.</li>
 <li>
 <code><a href="../reference/oanda_studio.html">oanda_studio()</a></code> gains the argument ‘new.process’, which when set to TRUE, starts the shiny session in a new R process, unblocking the current process and allowing continued use of the console.</li>
 <li>Improved time index handling for <code><a href="../reference/ichimoku.html">ichimoku()</a></code>: where conversion by <code><a href="https://rdrr.io/r/base/as.POSIXlt.html">as.POSIXct()</a></code> fails, will convert numeric values as POSIX times (with an appropriate warning).</li>
@@ -173,8 +173,11 @@
 <h4 class="hasAnchor">
 <a href="#updates" class="anchor"></a>Updates:</h4>
 <ul>
+<li>For OANDA functions, where the ‘server’ parameter is specified, the corresponding API key will now be retrieved rather than the default, allowing for example <code><a href="../reference/oanda_studio.html">oanda_studio(server = "live", new.process = TRUE)</a></code>
+</li>
 <li>Improved appearance of progress indicators for <code><a href="../reference/oanda.html">oanda()</a></code> and <code><a href="../reference/oanda_view.html">oanda_view()</a></code>.</li>
-<li>Minor tweaks to the visual appearance of oscillator plots.</li>
+<li>Improvements to the visual appearance of oscillator plots.</li>
+<li>Update to the interactive interface for <code><a href="../reference/oanda_set_key.html">oanda_set_key()</a></code>.</li>
 <li>Fixes sign of %chg for <code><a href="../reference/oanda_quote.html">oanda_quote()</a></code>.</li>
 <li>
 <code>xts()</code> is no longer re-exported from the ‘xts’ package as <code><a href="../reference/ichimoku.html">ichimoku()</a></code> can now fully re-construct an ichimoku object from its components (see ‘Working with ichimoku objects’ in the Reference vignette).</li>
@@ -205,7 +208,7 @@
 <a href="#updates-1" class="anchor"></a>Updates:</h4>
 <ul>
 <li>Accessibility improvements: default ‘original’ theme adjusted to accommodate colour vision deficiency.</li>
-<li>Primarily interactive OANDA functions now prompt for missing required arguments instead of returning errors.</li>
+<li>All OANDA functions now prompt for missing required arguments instead of returning errors.</li>
 <li>For ease of use, the ‘instrument’ argument in all OANDA functions is now case-insensitive and the delimiter may be supplied as either ’_’ or ‘-’, so both <code><a href="../reference/oanda.html">oanda("usd-jpy")</a></code> and <code><a href="../reference/oanda.html">oanda("USD_JPY")</a></code> are acceptable.</li>
 <li>
 <code><a href="../reference/tradingDays.html">tradingDays()</a></code> argument ‘noholidays’ removed in favour of ‘holidays = NULL’. Logic changed slightly so that default holidays are applied only if ‘holidays’ is not specified.</li>

@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2.12</span>
       </span>
     </div>
 
@@ -528,7 +528,7 @@
 <h3 class="hasAnchor">
 <a href="#relative" class="anchor"></a><code>relative()</code>
 </h3>
-<p>Provides a statistical summary of the latest numeric representation of the ichimoku cloud chart relative to historical values contained within the ichimoku object.</p>
+<p>Produces a statistical summary of the latest numeric representation of the ichimoku cloud chart relative to historical values contained within the ichimoku object. This can be used to determine whether current trading falls within or outside of normal ranges.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/relative.html">relative</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="op">]</span>
 <span class="co">#&gt; Latest: 2020-08-04 23:00:00 | n: 155</span>
@@ -544,7 +544,7 @@
 <span class="co">#&gt; close_cloudT   1.27 5.73   5.75    0.78     0.43     1.39</span>
 <span class="co">#&gt; low_senkouA    1.18 5.97   5.50    0.72     0.45     1.36</span></code></pre></div>
 <p>The mean and standard deviation of each element is calculated, with the latest values shown under ‘latest’.</p>
-<p>The relative or ‘r value’ is calculated as (latest - mean) / sd and represents a standardised (centred and scaled) measure of deviation.</p>
+<p>The ‘relative’ or ‘r value’ is calculated as (latest - mean) / sd and represents a standardised (centred and scaled) measure of deviation.</p>
 <p>Column ‘p &gt;= |r|’ contains the empirical probability of the observed absolute ‘r value’ or greater.</p>
 <p>Column ‘E(|r|)|p’ then contains the expected absolute ‘r value’, conditional upon being greater than equal to the observed absolute ‘r value’. This provides an indication of how much further the measure may reach in more extreme cases.</p>
 <p>The elements are ordered by their absolute ‘r value’, so that those with the highest relative deviation are listed first.</p>
