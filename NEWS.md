@@ -1,8 +1,8 @@
-# ichimoku 1.2.2.11
+# ichimoku 1.2.2.12
 
 #### New features:
 
-* New `relative()` function to produce a statistical summary of the latest ichimoku cloud chart numeric representation relative to historical values.
+* New `relative()` function produces a statistical summary of the latest ichimoku cloud chart numeric representation relative to historical values to determine whether trading falls within or outside of normal ranges.
 * `oanda_studio()` gains the argument 'new.process', which when set to TRUE, starts the shiny session in a new R process, unblocking the current process and allowing continued use of the console.
 * Improved time index handling for `ichimoku()`: where conversion by `as.POSIXct()` fails, will convert numeric values as POSIX times (with an appropriate warning).
 * Optimised 'ichimoku' methods for `coredata()` and `index()` - these are no longer simple re-exports from the 'zoo' package.
@@ -11,8 +11,10 @@
 
 #### Updates:
 
+* For OANDA functions, where the 'server' parameter is specified, the corresponding API key will now be retrieved rather than the default, allowing for example `oanda_studio(server = "live", new.process = TRUE)`
 * Improved appearance of progress indicators for `oanda()` and `oanda_view()`.
-* Minor tweaks to the visual appearance of oscillator plots.
+* Improvements to the visual appearance of oscillator plots.
+* Update to the interactive interface for `oanda_set_key()`.
 * Fixes sign of %chg for `oanda_quote()`.
 * `xts()` is no longer re-exported from the 'xts' package as `ichimoku()` can now fully re-construct an ichimoku object from its components (see 'Working with ichimoku objects' in the Reference vignette).
 * Further performance improvements to `ichimoku()` and other functions.
@@ -31,7 +33,7 @@
 #### Updates:
 
 * Accessibility improvements: default 'original' theme adjusted to accommodate colour vision deficiency.
-* Primarily interactive OANDA functions now prompt for missing required arguments instead of returning errors.
+* All OANDA functions now prompt for missing required arguments instead of returning errors.
 * For ease of use, the 'instrument' argument in all OANDA functions is now case-insensitive and the delimiter may be supplied as either '_' or '-', so both `oanda("usd-jpy")` and `oanda("USD_JPY")` are acceptable.
 * `tradingDays()` argument 'noholidays' removed in favour of 'holidays = NULL'. Logic changed slightly so that default holidays are applied only if 'holidays' is not specified.
 * Minor performance improvements to OANDA and ML layer functions.

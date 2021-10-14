@@ -5,16 +5,16 @@
 \title{OANDA View Market Performance}
 \usage{
 oanda_view(
-  market = c("fx", "allfx", "bonds", "commodities", "metals", "stocks"),
+  market = c("allfx", "bonds", "commodities", "fx", "metals", "stocks"),
   price = c("M", "B", "A"),
   server,
   apikey
 )
 }
 \arguments{
-\item{market}{string specifying the market: 'fx' for major currency pairs,
-'allfx' for all available currencies, 'bonds' for government bonds,
-'commodities' for commodities, 'metals' for metals and 'stocks' for
+\item{market}{string specifying the market: 'allfx' for all available
+currencies, 'bonds' for government bonds, 'commodities' for commodities,
+'fx' for major currency pairs, 'metals' for metals and 'stocks' for
 global stock markets.}
 
 \item{price}{[default "M"] pricing component, one of "M" (midpoint), "B" (bid)

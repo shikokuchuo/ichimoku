@@ -220,7 +220,7 @@ The calculation of the returns and correct pairing effectively uses up 2 periods
 
 ### `relative()`
 
-Provides a statistical summary of the latest numeric representation of the ichimoku cloud chart relative to historical values contained within the ichimoku object.
+Produces a statistical summary of the latest numeric representation of the ichimoku cloud chart relative to historical values contained within the ichimoku object. This can be used to determine whether current trading falls within or outside of normal ranges.
 
 ```{r relative}
 relative(cloud)[1:10, ]
@@ -228,7 +228,7 @@ relative(cloud)[1:10, ]
 
 The mean and standard deviation of each element is calculated, with the latest values shown under 'latest'.
 
-The relative or 'r value' is calculated as (latest - mean) / sd and represents a standardised (centred and scaled) measure of deviation.
+The 'relative' or 'r value' is calculated as (latest - mean) / sd and represents a standardised (centred and scaled) measure of deviation.
 
 Column 'p >= |r|' contains the empirical probability of the observed absolute 'r value' or greater.
 

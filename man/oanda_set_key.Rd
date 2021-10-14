@@ -16,18 +16,15 @@ Save OANDA fxTrade API key (personal access token) to the system credential
     store.
 }
 \details{
-The key is read interactively. Different keys can be set for practice
-    and live accounts; enter 1 when prompted to set a practice account key or
-    2 to set a live account key.
+The key is read interactively. Separate keys can be set for practice
+    and live accounts - please choose the correct account type when prompted.
 
-    This function only needs to be run once to set the key; it does not need
-    to be run each session.
+    This function only needs to be called once to set the key; it does not
+    need to be called each session.
 
     This function has a dependency on the 'keyring' package.
 }
 \section{Further Details}{
-
-    This function has a dependency on the 'keyring' package.
 
     Please refer to the OANDA fxTrade API vignette by calling:
     \code{vignette("xoanda", package = "ichimoku")}.

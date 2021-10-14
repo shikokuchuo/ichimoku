@@ -40,9 +40,7 @@ oanda_switch <- function() {
 do_oanda <- function() {
 
   server_type <- "practice"
-  keystore <- NULL
-  account <- NULL
-  instruments <- NULL
+  livestore <- keystore <- instruments <- account <- NULL
 
   list(
     getServer = function() {
@@ -51,34 +49,51 @@ do_oanda <- function() {
     switchServer = function() {
     if (server_type == "practice") {
       server_type <<- "live"
-      keystore <<- account <<- instruments <<- NULL
+      livestore <<- keystore <<- instruments <<- account <<- NULL
       message("Default OANDA server switched to 'live'")
     } else {
       server_type <<- "practice"
-      keystore <<- account <<- instruments <<- NULL
+      livestore <<- keystore <<- instruments <<- account <<- NULL
       message("Default OANDA server switched to 'practice'")
     }
   },
-  getKey = function() {
-    if (is.null(keystore)) {
-      if (requireNamespace("keyring", quietly = TRUE)) {
-        actype <- switch(do_oanda$getServer(), practice = "OANDA_API_KEY", live = "OANDA_LIVE_KEY")
-        apikey <- tryCatch(keyring::key_get(service = actype), error = function(e) {
-          message("No API key found for account type '", do_oanda$getServer(),
-                  "'.\nPlease use oanda_set_key() to store your API key for automatic retrieval")
-          readline("Please enter OANDA API key: ")
-        })
-      } else {
-        apikey <- readline("Please enter OANDA API key: ")
-      }
-      keystore <<- apikey
-    }
-    invisible(keystore)
+  getKey = function(server) {
+    if (missing(server)) server <- server_type
+    switch(server,
+           practice = {
+             if (is.null(keystore)) {
+               if (requireNamespace("keyring", quietly = TRUE)) {
+                 apikey <- tryCatch(keyring::key_get(service = "OANDA_API_KEY"), error = function(e) {
+                   message("No API key found for 'practice' account type\nPlease use oanda_set_key() to store your API key for automatic retrieval")
+                   if (interactive()) readline("Please enter OANDA API key: ")
+                 })
+               } else {
+                 apikey <- if (interactive()) readline("Please enter OANDA API key: ")
+               }
+               keystore <<- apikey
+             }
+             invisible(keystore)
+           },
+           live = {
+             if (is.null(livestore)) {
+               if (requireNamespace("keyring", quietly = TRUE)) {
+                 apikey <- tryCatch(keyring::key_get(service = "OANDA_LIVE_KEY"), error = function(e) {
+                   message("No API key found for 'live' account type\nPlease use oanda_set_key() to store your API key for automatic retrieval")
+                   if (interactive()) readline("Please enter OANDA API key: ")
+                 })
+               } else {
+                 apikey <- if (interactive()) readline("Please enter OANDA API key: ")
+               }
+               livestore <<- apikey
+             }
+             invisible(livestore)
+           },
+           message("Invalid server type specified"))
   },
   getAccount = function(server, apikey) {
     if (is.null(account)) {
-      if (missing(apikey)) apikey <- do_oanda$getKey()
-      server <- if (missing(server)) do_oanda$getServer() else match.arg(server, c("practice", "live"))
+      server <- if (missing(server)) server_type else match.arg(server, c("practice", "live"))
+      if (missing(apikey)) apikey <- do_oanda$getKey(server = server)
       url <- switch(server,
                     practice = "https://api-fxpractice.oanda.com/v3/accounts",
                     live = "https://api-fxtrade.oanda.com/v3/accounts")
@@ -95,8 +110,8 @@ do_oanda <- function() {
   },
   getInstruments = function(server, apikey) {
     if (is.null(instruments)) {
-      if (missing(apikey)) apikey <- do_oanda$getKey()
-      server <- if (missing(server)) do_oanda$getServer() else match.arg(server, c("practice", "live"))
+      server <- if (missing(server)) server_type else match.arg(server, c("practice", "live"))
+      if (missing(apikey)) apikey <- do_oanda$getKey(server = server)
       url <- paste0("https://api-fx", switch(server, practice = "practice", live = "trade"),
                     ".oanda.com/v3/accounts/", do_oanda$getAccount(server = server, apikey = apikey),
                     "/instruments")

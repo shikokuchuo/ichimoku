@@ -74,7 +74,7 @@ archive <- function(..., object, file) {
       file <- dots[[2L]]
       writeArchive(object = object, file = file)
 
-    } else if (dlen == 0L) {
+    } else if (dlen == 0L && interactive()) {
       readArchive(file = file.choose())
 
     } else {

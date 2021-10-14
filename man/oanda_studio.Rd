@@ -83,6 +83,8 @@ Interactive and fully-customisable R Shiny environment providing real-time
 \details{
 This function polls the OANDA fxTrade API for the latest prices and
     updates a customisable reactive Shiny app at each refresh interval.
+
+    This function has a dependency on the 'shiny' package.
 }
 \section{Further Details}{
 
