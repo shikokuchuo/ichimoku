@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2.12</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2.13</span>
       </span>
     </div>
 
@@ -319,8 +319,8 @@
 <span class="va">coredata</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/coredata.html">coredata</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span>
 
 <span class="va">cloud2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">index</span>, <span class="va">coredata</span><span class="op">)</span>, ticker <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html">attr</a></span><span class="op">(</span><span class="va">cloud</span>, <span class="st">"ticker"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Warning: Converted numeric values in column 'index' as POSIX time - please check</span>
-<span class="co">#&gt; validity</span>
+<span class="co">#&gt; Warning: Converted numeric values in column 'index' as POSIX times - please</span>
+<span class="co">#&gt; check validity</span>
 <span class="fu"><a href="https://rdrr.io/r/base/identical.html">identical</a></span><span class="op">(</span><span class="va">cloud</span>, <span class="va">cloud2</span><span class="op">)</span>
 <span class="co">#&gt; [1] TRUE</span></code></pre></div>
 <p>Note specifically that ichimoku needs to be called twice - first to convert the matrix to an ichimoku object and then again to recalculate taking into account NA values correctly. The ticker name should also be set explicitly.</p>

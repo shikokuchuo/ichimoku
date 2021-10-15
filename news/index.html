@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2.12</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2.13</span>
       </span>
     </div>
 
@@ -151,17 +151,19 @@
       <small>Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="ichimoku-12212" class="section level1">
-<h1 class="page-header" data-toc-text="1.2.2.12">
-<a href="#ichimoku-12212" class="anchor"></a>ichimoku 1.2.2.12<small> Unreleased </small>
+    <div id="ichimoku-12213" class="section level1">
+<h1 class="page-header" data-toc-text="1.2.2.13">
+<a href="#ichimoku-12213" class="anchor"></a>ichimoku 1.2.2.13<small> Unreleased </small>
 </h1>
 <div id="new-features" class="section level4">
 <h4 class="hasAnchor">
 <a href="#new-features" class="anchor"></a>New features:</h4>
 <ul>
-<li>New <code><a href="../reference/relative.html">relative()</a></code> function produces a statistical summary of the latest ichimoku cloud chart numeric representation relative to historical values to determine whether trading falls within or outside of normal ranges.</li>
+<li>New <code><a href="../reference/relative.html">relative()</a></code> function produces a statistical summary of the latest ichimoku cloud chart numeric representation relative to historical values, for determining whether trading falls within or outside of normal ranges.</li>
 <li>
 <code><a href="../reference/oanda_studio.html">oanda_studio()</a></code> gains the argument ‘new.process’, which when set to TRUE, starts the shiny session in a new R process, unblocking the current process and allowing continued use of the console.</li>
+<li>
+<code><a href="../reference/autostrat.html">autostrat()</a></code>, <code><a href="../reference/relative.html">relative()</a></code> and <code><a href="../reference/oanda.html">oanda()</a></code> gain the argument ‘quietly’ which suppresses additional console output if set to TRUE.</li>
 <li>Improved time index handling for <code><a href="../reference/ichimoku.html">ichimoku()</a></code>: where conversion by <code><a href="https://rdrr.io/r/base/as.POSIXlt.html">as.POSIXct()</a></code> fails, will convert numeric values as POSIX times (with an appropriate warning).</li>
 <li>Optimised ‘ichimoku’ methods for <code><a href="../reference/coredata.html">coredata()</a></code> and <code><a href="../reference/index.html">index()</a></code> - these are no longer simple re-exports from the ‘zoo’ package.</li>
 <li>
@@ -176,6 +178,8 @@
 <li>For OANDA functions, where the ‘server’ parameter is specified, the corresponding API key will now be retrieved rather than the default, allowing for example <code><a href="../reference/oanda_studio.html">oanda_studio(server = "live", new.process = TRUE)</a></code>
 </li>
 <li>Improved appearance of progress indicators for <code><a href="../reference/oanda.html">oanda()</a></code> and <code><a href="../reference/oanda_view.html">oanda_view()</a></code>.</li>
+<li>
+<code><a href="../reference/oanda.html">oanda()</a></code> now safe to use non-interactively - it will no longer prompt in such cases.</li>
 <li>Improvements to the visual appearance of oscillator plots.</li>
 <li>Update to the interactive interface for <code><a href="../reference/oanda_set_key.html">oanda_set_key()</a></code>.</li>
 <li>Fixes sign of %chg for <code><a href="../reference/oanda_quote.html">oanda_quote()</a></code>.</li>

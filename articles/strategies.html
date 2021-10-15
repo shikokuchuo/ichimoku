@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2.12</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2.13</span>
       </span>
     </div>
 
@@ -317,6 +317,8 @@
 <code>dir</code> [default ‘long’] trade direction ‘long’ or ‘short’</li>
 <li>
 <code>level</code> [default 1] to return simple strategies. For complex strategies, set <code>level = 2</code> to return combined strategies of the form ‘s1 &amp; s2’ or <code>level = 3</code> to return asymmetric strategies of the form ‘s1 x s2’</li>
+<li>
+<code>quietly</code> if set to TRUE, will suppress printing of additional output to the console and return quietly</li>
 </ul>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/autostrat.html">autostrat</a></span><span class="op">(</span><span class="va">cloud</span>, n <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
@@ -528,26 +530,37 @@
 <h3 class="hasAnchor">
 <a href="#relative" class="anchor"></a><code>relative()</code>
 </h3>
-<p>Produces a statistical summary of the latest numeric representation of the ichimoku cloud chart relative to historical values contained within the ichimoku object. This can be used to determine whether current trading falls within or outside of normal ranges.</p>
+<p>Produces a statistical summary of the latest numeric representation of the ichimoku cloud chart relative to historical values contained within the ichimoku object. This can aid in determining whether current trading falls within or outside of normal ranges.</p>
+<p>Takes the following optional arguments:</p>
+<ul>
+<li>
+<code>order</code> [default FALSE] set to TRUE to order the results by the absolue ‘r value’. Those with the highest relative deviation are listed first</li>
+<li>
+<code>signif</code> [default 0.2] set a significance threshold for which if ‘p’ is equal or lower, the element will be starred with a ’*’. Note: this value may be freely set and the default of 0.2 is arbitrary with no special significance</li>
+<li>
+<code>quietly</code> if set to TRUE, will suppress printing of additional output to the console and return quietly</li>
+</ul>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/relative.html">relative</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="op">]</span>
+<code class="sourceCode R"><span class="fu"><a href="../reference/relative.html">relative</a></span><span class="op">(</span><span class="va">cloud</span>, signif <span class="op">=</span> <span class="fl">0.4</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="op">]</span>
 <span class="co">#&gt; Latest: 2020-08-04 23:00:00 | n: 155</span>
-<span class="co">#&gt;                mean   sd latest r value p &gt;= |r| E(|r|)|p</span>
-<span class="co">#&gt; chikou_high    0.79 6.09   6.60    0.95     0.36     1.46</span>
-<span class="co">#&gt; low_tenkan    -0.30 1.72   1.30    0.93     0.40     1.38</span>
-<span class="co">#&gt; low_kijun      0.44 3.28   3.45    0.92     0.43     1.37</span>
-<span class="co">#&gt; chikou_close   1.51 6.07   7.00    0.91     0.39     1.41</span>
-<span class="co">#&gt; chikou_low     2.31 6.12   7.80    0.90     0.41     1.37</span>
-<span class="co">#&gt; low_cloudT     0.45 5.76   5.35    0.85     0.43     1.39</span>
-<span class="co">#&gt; chikou_tenkan  1.73 6.15   6.90    0.84     0.41     1.41</span>
-<span class="co">#&gt; close_kijun    1.27 3.25   3.85    0.79     0.48     1.31</span>
-<span class="co">#&gt; close_cloudT   1.27 5.73   5.75    0.78     0.43     1.39</span>
-<span class="co">#&gt; low_senkouA    1.18 5.97   5.50    0.72     0.45     1.36</span></code></pre></div>
-<p>The mean and standard deviation of each element is calculated, with the latest values shown under ‘latest’.</p>
-<p>The ‘relative’ or ‘r value’ is calculated as (latest - mean) / sd and represents a standardised (centred and scaled) measure of deviation.</p>
-<p>Column ‘p &gt;= |r|’ contains the empirical probability of the observed absolute ‘r value’ or greater.</p>
-<p>Column ‘E(|r|)|p’ then contains the expected absolute ‘r value’, conditional upon being greater than equal to the observed absolute ‘r value’. This provides an indication of how much further the measure may reach in more extreme cases.</p>
-<p>The elements are ordered by their absolute ‘r value’, so that those with the highest relative deviation are listed first.</p>
+<span class="co">#&gt;                mean(X) sd(X) X[n]   res r value p &gt;= |r| p* E(|res|)|p</span>
+<span class="co">#&gt; chikou_close      1.51  6.07 7.00  5.49    0.91     0.39  *       8.53</span>
+<span class="co">#&gt; chikou_high       0.79  6.09 6.60  5.81    0.95     0.36  *       8.91</span>
+<span class="co">#&gt; chikou_low        2.31  6.12 7.80  5.49    0.90     0.41          8.40</span>
+<span class="co">#&gt; chikou_tenkan     1.73  6.15 6.90  5.17    0.84     0.41          8.70</span>
+<span class="co">#&gt; chikou_kijun      2.28  5.96 4.90  2.62    0.44     0.63          6.84</span>
+<span class="co">#&gt; chikou_senkouA    3.44  6.46 4.75  1.31    0.20     0.89          6.26</span>
+<span class="co">#&gt; chikou_senkouB    4.26  5.40 4.35  0.09    0.02     1.00          4.76</span>
+<span class="co">#&gt; chikou_cloudT     2.67  6.44 4.35  1.68    0.26     0.84          6.59</span>
+<span class="co">#&gt; chikou_cloudB     5.03  5.20 4.75 -0.28   -0.05     0.99          4.60</span>
+<span class="co">#&gt; close_tenkan      0.52  1.77 1.70  1.18    0.67     0.52          2.19</span></code></pre></div>
+<p>‘mean(X)’ is the mean value for each element X, ‘sd(X)’ the standard deviation, and ‘X[n]’ the nth or latest observed values.</p>
+<p>‘res’ is the residual X[n] - mean(X) and represents a centred measure of deviation for the latest observed value.</p>
+<p>The ‘relative’ or ‘r value’ is calculated as res / sd(X) and represents a standardised (centred and scaled) measure of deviation for the latest observed value.</p>
+<p>‘p &gt;= |r|’ represents the empirical probability of the latest observed absolute ‘r value’ or greater.</p>
+<p>’p*’ will display a star if ‘p &gt;= |r|’ is less than or equal to the value of the argument ‘signif’.</p>
+<p>‘E(|res|)|p’ represents the mean or expected absolute value of ‘res’, conditional upon the absolute ‘r value’ being greater than equal to the latest observed absolute ‘r value’. This provides an indication by how much ‘res’ might increase in more extreme cases.</p>
+<p>Note: All calculations are performed on the full values, but are rounded to 2 decimal places for presentation.</p>
 </div>
 </div>
 <div id="strategy-summary-specification" class="section level2">

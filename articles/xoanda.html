@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2.12</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2.13</span>
       </span>
     </div>
 
@@ -177,6 +177,8 @@
 <code>server</code> (optional) Specify the “practice” or “live” server according to the account type held with OANDA. If not specified, will default to “practice”, unless this has been changed by <code><a href="../reference/oanda_switch.html">oanda_switch()</a></code>.</li>
 <li>
 <code>apikey</code> (optional) string containing the OANDA fxTrade API key (personal access token). This argument is designed for specifying a function that returns such a string rather than the string itself, which could be potentially unsecure. This allows other packages that provide secure storage of secrets to be used if preferred over ‘keyring’</li>
+<li>
+<code>quietly</code> if set to TRUE, will suppress printing of output to the console and return quietly</li>
 </ul>
 <p>Note: if both <code>from</code> and <code>to</code> are specified and the request would result in over 5000 periods being returned, the function automatically prompts the user to confirm if multiple requests should be submitted. Unless the user response is “n” or “no”, the data will proceed to be downloaded with rate limiting in place as per API best practices, and merged together into a single dataframe.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">

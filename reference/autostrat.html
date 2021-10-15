@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2.12</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2.13</span>
       </span>
     </div>
 
@@ -163,7 +163,7 @@
     asymmetric strategies of the form 'c1 &gt; c2 x c3 &gt; c4' (level 3).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>autostrat</span><span class='op'>(</span><span class='va'>x</span>, n <span class='op'>=</span> <span class='fl'>8</span>, dir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"long"</span>, <span class='st'>"short"</span><span class='op'>)</span>, level <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>autostrat</span><span class='op'>(</span><span class='va'>x</span>, n <span class='op'>=</span> <span class='fl'>8</span>, dir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"long"</span>, <span class='st'>"short"</span><span class='op'>)</span>, level <span class='op'>=</span> <span class='fl'>1</span>, <span class='va'>quietly</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -184,16 +184,22 @@
       <th>level</th>
       <td><p>[default 1] to return simple strategies. For complex strategies,
 set level to 2 to return combined strategies of the form 's1 &amp; s2' or
-level to 3 to return asymmetric strategies of the form 's1 x s2'</p></td>
+level to 3 to return asymmetric strategies of the form 's1 x s2'.</p></td>
+    </tr>
+    <tr>
+      <th>quietly</th>
+      <td><p>(optional) if set to TRUE, will suppress printing of additional
+output to the console and return quietly.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returned invisibly, a list of 'n' ichimoku objects containing strategies,
-    with attributes 'logret' (a vector of cumulative log returns for all
-    strategies) and 'summary' (a matrix of summaries for the top 'n'
-    strategies). The strategy summaries are printed to the console.</p>
+    <p>Returned invisibly, a list of 'n' ichimoku objects containing
+    strategies, with attributes 'logret' (a vector of cumulative log returns
+    for all strategies) and 'summary' (a matrix of summaries for the top 'n'
+    strategies).</p>
+<p>In addition, the strategy summaries are printed to the console.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Ichimoku objects for each strategy are returned as a list. The
@@ -214,45 +220,8 @@ level to 3 to return asymmetric strategies of the form 's1 x s2'</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>cloud</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ichimoku.html'>ichimoku</a></span><span class='op'>(</span><span class='va'>sample_ohlc_data</span>, ticker <span class='op'>=</span> <span class='st'>"TKR"</span><span class='op'>)</span>
 
-<span class='va'>stratlist</span> <span class='op'>&lt;-</span> <span class='fu'>autostrat</span><span class='op'>(</span><span class='va'>cloud</span>, n <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                        [,1]                [,2]               
-#&gt; Strategy               "senkouB &gt; tenkan"  "cloudB &gt; tenkan"  
-#&gt; ---------------------  "----------"        "----------"       
-#&gt; Strategy cuml return % 17.49               16.08              
-#&gt; Per period mean ret %  0.0906              0.0838             
-#&gt; Periods in market      63                  51                 
-#&gt; Total trades           3                   3                  
-#&gt; Average trade length   21                  17                 
-#&gt; Trade success %        100                 100                
-#&gt; Worst trade ret %      3.64                3.16               
-#&gt; ---------------------  "----------"        "----------"       
-#&gt; Benchmark cuml ret %   5.53                5.53               
-#&gt; Per period mean ret %  0.0302              0.0302             
-#&gt; Periods in market      178                 178                
-#&gt; ---------------------  "----------"        "----------"       
-#&gt; Direction              "long"              "long"             
-#&gt; Start                  2020-04-19 23:00:00 2020-04-19 23:00:00
-#&gt; End                    2020-12-23          2020-12-23         
-#&gt; Ticker                 "TKR"               "TKR"              
-#&gt;                        [,3]               
-#&gt; Strategy               "senkouB &gt; kijun"  
-#&gt; ---------------------  "----------"       
-#&gt; Strategy cuml return % 14.1               
-#&gt; Per period mean ret %  0.0741             
-#&gt; Periods in market      64                 
-#&gt; Total trades           3                  
-#&gt; Average trade length   21.33              
-#&gt; Trade success %        100                
-#&gt; Worst trade ret %      3.49               
-#&gt; ---------------------  "----------"       
-#&gt; Benchmark cuml ret %   5.53               
-#&gt; Per period mean ret %  0.0302             
-#&gt; Periods in market      178                
-#&gt; ---------------------  "----------"       
-#&gt; Direction              "long"             
-#&gt; Start                  2020-04-19 23:00:00
-#&gt; End                    2020-12-23         
-#&gt; Ticker                 "TKR"              </div><div class='input'><span class='fu'><a href='look.html'>look</a></span><span class='op'>(</span><span class='va'>stratlist</span><span class='op'>)</span>
+<span class='va'>stratlist</span> <span class='op'>&lt;-</span> <span class='fu'>autostrat</span><span class='op'>(</span><span class='va'>cloud</span>, n <span class='op'>=</span> <span class='fl'>3</span>, quietly <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='fu'><a href='look.html'>look</a></span><span class='op'>(</span><span class='va'>stratlist</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; $logret
 #&gt;  senkouB_tenkan   cloudB_tenkan   senkouB_kijun    cloudB_kijun      low_tenkan 
 #&gt;     0.144869048     0.132721126     0.124552623     0.124476092     0.119988595 

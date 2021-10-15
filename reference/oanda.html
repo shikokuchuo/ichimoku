@@ -83,7 +83,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2.12</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2.13</span>
       </span>
     </div>
 
@@ -168,7 +168,8 @@
   to <span class='op'>=</span> <span class='cn'>NULL</span>,
   price <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"M"</span>, <span class='st'>"B"</span>, <span class='st'>"A"</span><span class='op'>)</span>,
   <span class='va'>server</span>,
-  <span class='va'>apikey</span>
+  <span class='va'>apikey</span>,
+  <span class='va'>quietly</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -222,6 +223,11 @@ this has been changed by <code><a href='oanda_switch.html'>oanda_switch</a></cod
 access token), or function that returns this string. Does not need to be
 specified if already stored by oanda_set_key(). Can also be entered
 interactively if not specified.</p></td>
+    </tr>
+    <tr>
+      <th>quietly</th>
+      <td><p>(optional) if set to TRUE, will suppress printing of auxiliary
+output to the console and return quietly.</p></td>
     </tr>
     </table>
 
