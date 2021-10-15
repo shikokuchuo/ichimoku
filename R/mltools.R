@@ -11,12 +11,16 @@
 #' @param n [default 8] select top 'n' number of strategies to return.
 #' @param level [default 1] to return simple strategies. For complex strategies,
 #'     set level to 2 to return combined strategies of the form 's1 & s2' or
-#'     level to 3 to return asymmetric strategies of the form 's1 x s2'
+#'     level to 3 to return asymmetric strategies of the form 's1 x s2'.
+#' @param quietly (optional) if set to TRUE, will suppress printing of additional
+#'     output to the console and return quietly.
 #'
-#' @return Returned invisibly, a list of 'n' ichimoku objects containing strategies,
-#'     with attributes 'logret' (a vector of cumulative log returns for all
-#'     strategies) and 'summary' (a matrix of summaries for the top 'n'
-#'     strategies). The strategy summaries are printed to the console.
+#' @return Returned invisibly, a list of 'n' ichimoku objects containing
+#'     strategies, with attributes 'logret' (a vector of cumulative log returns
+#'     for all strategies) and 'summary' (a matrix of summaries for the top 'n'
+#'     strategies).
+#'
+#'     In addition, the strategy summaries are printed to the console.
 #'
 #' @details Ichimoku objects for each strategy are returned as a list. The
 #'     cumulative log returns for all strategies as well as the summaries for
@@ -35,7 +39,7 @@
 #' @examples
 #' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 #'
-#' stratlist <- autostrat(cloud, n = 3)
+#' stratlist <- autostrat(cloud, n = 3, quietly = TRUE)
 #' look(stratlist)
 #' strat <- look(stratlist, which = 1)
 #' summary(strat)
@@ -48,7 +52,8 @@
 autostrat <- function(x,
                       n = 8,
                       dir = c("long", "short"),
-                      level = 1) {
+                      level = 1,
+                      quietly) {
 
   is.ichimoku(x) || stop("autostrat() only works on ichimoku objects", call. = FALSE)
   dir <- match.arg(dir)
@@ -130,8 +135,9 @@ autostrat <- function(x,
   }
 
   attributes(list) <- list(logret = logret,
-                           summary = print(do.call(cbind, lapply(list, attr, which = "strat"))),
+                           summary = do.call(cbind, lapply(list, attr, which = "strat")),
                            autostrat = TRUE)
+  if (missing(quietly) || !isTRUE(quietly)) print(attr(list, "summary"))
   invisible(list)
 
 }
@@ -281,29 +287,41 @@ writeVectors <- function(x, pairs, p2, xlen, type) {
 #' Relative Numeric Representation
 #'
 #' Produce a statistical summary of the latest numeric representation of the
-#'     ichimoku cloud chart relative to historical values. Can be used to
-#'     determine whether current trading falls within or outside of normal
+#'     ichimoku cloud chart relative to historical values. Can help in
+#'     determining whether current trading falls within or outside of normal
 #'     ranges.
 #'
-#' @inheritParams strat
+#' @inheritParams autostrat
+#' @param order [default FALSE] set to TRUE to order the results by the absolute
+#'     'r value'.
+#' @param signif [default 0.2] set a significance threshold for which if 'p' is
+#'     equal or lower, the element will be starred with a '*'.
 #'
 #' @return A data frame containing a statistical summary of the latest ichimoku
-#'     cloud chart representation and how it relates to the historical data.
-#'     The elements are ordered by their absolute 'r value', so that those with
-#'     the highest relative deviation are listed first. The time index value for
-#'     'latest' and the number of observations are printed to the console.
+#'     cloud chart representation in relation to historical values.
 #'
-#' @details Column 'mean' is the mean value, 'sd' the standard deviation,
-#'     and 'latest' the latest observed values from the data.
+#'     In addition, the time index of the latest observed values and total
+#'     number of datapoints are printed to the console.
 #'
-#'     The 'relative' or 'r value' is calculated as (latest - mean) / sd and
-#'     represents a standardised (centred and scaled) measure of deviation.
+#' @details 'mean(X)' is the mean value for each element X, 'sd(X)' the
+#'     standard deviation, and 'X[n]' the nth or latest observed values.
 #'
-#'     Column 'p >= |r|' contains the empirical probability of the observed
+#'     'res' is the residual X[n] - mean(X) and represents a centred measure of
+#'     deviation for the latest observed value.
+#'
+#'     The 'relative' or 'r value' is calculated as res / sd(X) and represents a
+#'     standardised (centred and scaled) measure of deviation for the latest
+#'     observed value.
+#'
+#'     'p >= |r|' represents the empirical probability of the latest observed
 #'     absolute 'r value' or greater.
 #'
-#'     Column 'E(|r|)|p' contains the expected absolute 'r value', conditional
-#'     upon being greater than equal to the observed absolute 'r value'.
+#'     'p*' will display a star if 'p >= |r|' is less than or equal to the value
+#'     of the argument 'signif'.
+#'
+#'     'E(|res|)|p' represents the mean or expected absolute value of 'res',
+#'     conditional upon the absolute 'r value' being greater than equal to the
+#'     latest observed absolute 'r value'.
 #'
 #' @section Further Details:
 #'     Please refer to the strategies vignette by calling:
@@ -311,11 +329,13 @@ writeVectors <- function(x, pairs, p2, xlen, type) {
 #'
 #' @examples
 #' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
-#' relative(cloud)
+#' statistics <- relative(cloud, quietly = TRUE)
+#' relative(cloud, signif = 0.4)
+#' relative(cloud, order = TRUE, signif = 0.4)
 #'
 #' @export
 #'
-relative <- function(x) {
+relative <- function(x, order = FALSE, signif = 0.2, quietly) {
 
   is.ichimoku(x) || stop("relative() only works on ichimoku objects", call. = FALSE)
   grid <- mlgrid(x, y = "none", type = "numeric")
@@ -324,32 +344,41 @@ relative <- function(x) {
   xwid <- dims[2L]
   cnames <- attr(grid, "names")
   time <- index.ichimoku(x)[xlen]
-  expec <- pval <- latest <- sdevs <- means <- numeric(xwid)
 
+  xn <- as.numeric(grid[xlen, ])
+  means <- unname(unlist(lapply(grid, mean)))
+  sdevs <- unname(unlist(lapply(grid, sd)))
+  res <- xn - means
+  rval <- res / sdevs
+
+  expec <- pval <- numeric(xwid)
   for (i in seq_len(xwid)) {
     vec <- .subset2(grid, i)
-    means[i] <- mean(vec)
-    sdevs[i] <- sd(vec)
-    latest[i] <- vec[xlen]
     rvec <- (vec - means[i]) / sdevs[i]
-    exceed <- abs(rvec) >= abs(rvec[xlen])
+    exceed <- abs(rvec) >= abs(rval[i])
     pval[i] <- sum(exceed) / xlen
-    expec[i] <- mean(abs(rvec[exceed]))
+    expec[i] <- mean(abs(vec[exceed] - means[i]))
   }
 
-  rval <- (latest - means) / sdevs
-  reorder <- order(abs(rval), decreasing = TRUE)
+  signif <- ifelse(pval <= signif, "*", "")
 
-  df <- lapply(list(means[reorder], sdevs[reorder], latest[reorder], rval[reorder], pval[reorder], expec[reorder]),
-               round, digits = 2)
-  attributes(df) <- list(names = c("mean", "sd", "latest", "r value", "p >= |r|", "E(|r|)|p"),
+  df <- lapply(list(means, sdevs, xn, res, rval, pval, signif, expec),
+               function(x) if (is.numeric(x)) round(x, digits = 2) else x)
+  ordered <- !missing(order) && isTRUE(order)
+  if (ordered) {
+    reorder <- order(abs(rval), decreasing = TRUE)
+    df <- lapply(df, function(x) x[reorder])
+  }
+
+  attributes(df) <- list(names = c("mean(X)", "sd(X)", "X[n]", "res", "r value", "p >= |r|", "p*", "E(|res|)|p"),
                          class = "data.frame",
-                         row.names = cnames[reorder],
+                         row.names = if (ordered) cnames[reorder] else cnames,
                          latest = time,
                          periods = attr(x, "periods"),
                          periodicity = attr(x, "periodicity"),
                          ticker = attr(x, "ticker"))
-  cat("Latest:", format.POSIXct(time), "| n:", xlen, "\n")
+
+  if (missing(quietly) || !isTRUE(quietly)) cat("Latest:", format.POSIXct(time), "| n:", xlen, "\n")
   df
 
 }

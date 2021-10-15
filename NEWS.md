@@ -1,9 +1,10 @@
-# ichimoku 1.2.2.12
+# ichimoku 1.2.2.13
 
 #### New features:
 
-* New `relative()` function produces a statistical summary of the latest ichimoku cloud chart numeric representation relative to historical values to determine whether trading falls within or outside of normal ranges.
+* New `relative()` function produces a statistical summary of the latest ichimoku cloud chart numeric representation relative to historical values, for determining whether trading falls within or outside of normal ranges.
 * `oanda_studio()` gains the argument 'new.process', which when set to TRUE, starts the shiny session in a new R process, unblocking the current process and allowing continued use of the console.
+* `autostrat()`, `relative()` and `oanda()` gain the argument 'quietly' which suppresses additional console output if set to TRUE.
 * Improved time index handling for `ichimoku()`: where conversion by `as.POSIXct()` fails, will convert numeric values as POSIX times (with an appropriate warning).
 * Optimised 'ichimoku' methods for `coredata()` and `index()` - these are no longer simple re-exports from the 'zoo' package.
 * `as.data.frame.ichimoku()` S3 method is implemented as a marginally faster version of `xts_df()` for ichimoku objects.
@@ -13,6 +14,7 @@
 
 * For OANDA functions, where the 'server' parameter is specified, the corresponding API key will now be retrieved rather than the default, allowing for example `oanda_studio(server = "live", new.process = TRUE)`
 * Improved appearance of progress indicators for `oanda()` and `oanda_view()`.
+* `oanda()` now safe to use non-interactively - it will no longer prompt in such cases.
 * Improvements to the visual appearance of oscillator plots.
 * Update to the interactive interface for `oanda_set_key()`.
 * Fixes sign of %chg for `oanda_quote()`.

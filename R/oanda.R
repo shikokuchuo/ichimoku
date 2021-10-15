@@ -30,6 +30,8 @@
 #'     access token), or function that returns this string. Does not need to be
 #'     specified if already stored by oanda_set_key(). Can also be entered
 #'     interactively if not specified.
+#' @param quietly (optional) if set to TRUE, will suppress printing of auxiliary
+#'     output to the console and return quietly.
 #'
 #' @return A data.frame containing the price data requested.
 #'
@@ -74,7 +76,8 @@ oanda <- function(instrument,
                   to = NULL,
                   price = c("M", "B", "A"),
                   server,
-                  apikey) {
+                  apikey,
+                  quietly) {
 
   if (missing(instrument) && interactive()) instrument <- readline("Enter instrument:")
   instrument <- sub("-", "_", toupper(force(instrument)), fixed = TRUE)
@@ -106,22 +109,23 @@ oanda <- function(instrument,
                       price = price, server = server, apikey = apikey)
 
     } else {
-      bounds <- do.call(c, lapply(0:requests, function(x) d1 + interval * x / requests))
+      bounds <- d1 + interval * 0:requests/requests
       continue <- if (interactive()) readline(prompt = paste0("Max of 5000 data periods per request. ",
                                                               requests, " requests will be made. Continue? [Y/n] ")) else ""
       continue %in% c("n", "N", "no", "NO") && stop("Request cancelled by user", call. = FALSE)
+      output <- missing(quietly) || !isTRUE(quietly)
       list <- vector(mode = "list", length = requests)
       for (i in seq_len(requests)) {
-        cat("\rPerforming request [", rep(".", i), rep(" ", requests - i), "]", sep = "")
+        if (output) cat("\rPerforming request [", rep(".", i), rep(" ", requests - i), "]", sep = "")
         list[[i]] <- getPrices(instrument = instrument, granularity = granularity,
                                from = strftime(bounds[i], format = "%Y-%m-%dT%H:%M:%S"),
                                to = strftime(bounds[i + 1L], format = "%Y-%m-%dT%H:%M:%S"),
                                price = price, server = server, apikey = apikey)
         if (i != requests) Sys.sleep(0.5)
       }
-      cat("\nMerging data partitions... ")
+      if (output) cat("\nMerging data partitions... ")
       df <- do.call(df_merge, list)
-      cat("complete.")
+      if (output) cat("complete")
       }
 
     } else {
@@ -745,7 +749,7 @@ oanda_set_key <- function() {
   if (requireNamespace("keyring", quietly = TRUE)) {
 
     type <- if (interactive()) readline("Choose account type, either [p]ractice or [l]ive: ") else ""
-    type <- tryCatch(match.arg(type, c("practice", "live")), error = function(e) {""})
+    type <- tryCatch(match.arg(type, c("practice", "live")), error = function(e) "")
     switch(type,
            practice = keyring::key_set(service = "OANDA_API_KEY"),
            live = keyring::key_set(service = "OANDA_LIVE_KEY"),
@@ -836,8 +840,10 @@ oanda_view <- function(market = c("allfx", "bonds", "commodities", "fx", "metals
                          row.names = sel[reorder],
                          price = price,
                          timestamp = time[1L])
+
   cat("\n", time[1L], " / ", price, "\n", sep = "")
   print(df)
+
 }
 
 #' OANDA Quote Latest Price

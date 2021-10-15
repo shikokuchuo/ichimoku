@@ -66,8 +66,8 @@ test_that("print method ok", {
 
 test_that("summary method for objects ok", {
   expect_output(expect_vector(expect_invisible(summary(cloud)), ptype = "character()"))
-  expect_output(summary(cloud[0]), regexp = "not a valid complete")
-  expect_output(summary(cloud[, 1L]), regexp = "not a valid complete")
+  expect_output(summary(cloud[0]), regexp = "incomplete or invalid")
+  expect_output(summary(cloud[, 1L]), regexp = "incomplete or invalid")
 })
 
 test_that("as.data.frame method ok", {

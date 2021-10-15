@@ -143,7 +143,7 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
   if (is.na(coli)) {
     index <- tryCatch(as.POSIXct(attr(x, "row.names")), error = function(e) {
       if (is.integer(rnames <- attr(x, "row.names")) && rnames[1L] != 1L) {
-        warning("Converted numeric row names as POSIX time - please check validity", call. = FALSE)
+        warning("Converted numeric row names as POSIX times - please check validity", call. = FALSE)
         .POSIXct(rnames)
       } else {
         stop("valid date-time index not found. Perhaps check column names?", call. = FALSE)
@@ -152,7 +152,7 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
   } else {
     index <- tryCatch(as.POSIXct(.subset2(x, coli)), error = function(e) {
       if (is.numeric(idxcol <- .subset2(x, coli))) {
-        warning("Converted numeric values in column '", cnames[coli], "' as POSIX time - please check validity", call. = FALSE)
+        warning("Converted numeric values in column '", cnames[coli], "' as POSIX times - please check validity", call. = FALSE)
         .POSIXct(idxcol)
       } else {
         stop("column '", cnames[coli], "' is not convertible to a POSIXct date-time format", call. = FALSE)
@@ -373,7 +373,7 @@ summary.ichimoku <- function(object, strat = TRUE, ...) {
   } else {
     dims <- attr(object, "dim")
     (is.null(dims) || (dim2 <- dims[2L]) < 12 || (dim1 <- dims[1L]) == 0) &&
-      return(cat("This is not a valid complete ichimoku object"))
+      return(cat("An incomplete or invalid ichimoku object"))
     cat(summary <- paste0("ichimoku object with dimensions (", dim1, ", ", dim2, ")"))
 
     idx <- index.ichimoku(object)

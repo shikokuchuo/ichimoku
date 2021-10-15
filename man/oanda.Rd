@@ -13,7 +13,8 @@ oanda(
   to = NULL,
   price = c("M", "B", "A"),
   server,
-  apikey
+  apikey,
+  quietly
 )
 }
 \arguments{
@@ -49,6 +50,9 @@ this has been changed by \code{\link{oanda_switch}}.}
 access token), or function that returns this string. Does not need to be
 specified if already stored by oanda_set_key(). Can also be entered
 interactively if not specified.}
+
+\item{quietly}{(optional) if set to TRUE, will suppress printing of auxiliary
+output to the console and return quietly.}
 }
 \value{
 A data.frame containing the price data requested.

@@ -157,6 +157,7 @@ The analytic capability of R can be leveraged to generate and evaluate all possi
 - `n` [default 8] number of strategies to return
 - `dir` [default 'long'] trade direction 'long' or 'short'
 - `level` [default 1] to return simple strategies. For complex strategies, set `level = 2` to return combined strategies of the form 's1 & s2' or `level = 3` to return asymmetric strategies of the form 's1 x s2'
+- `quietly` if set to TRUE, will suppress printing of additional output to the console and return quietly
 
 ```{r autostrat}
 autostrat(cloud, n = 3)
@@ -220,21 +221,31 @@ The calculation of the returns and correct pairing effectively uses up 2 periods
 
 ### `relative()`
 
-Produces a statistical summary of the latest numeric representation of the ichimoku cloud chart relative to historical values contained within the ichimoku object. This can be used to determine whether current trading falls within or outside of normal ranges.
+Produces a statistical summary of the latest numeric representation of the ichimoku cloud chart relative to historical values contained within the ichimoku object. This can aid in determining whether current trading falls within or outside of normal ranges.
+
+Takes the following optional arguments:
+
+- `order` [default FALSE] set to TRUE to order the results by the absolue 'r value'. Those with the highest relative deviation are listed first
+- `signif` [default 0.2] set a significance threshold for which if 'p' is equal or lower, the element will be starred with a '*'. Note: this value may be freely set and the default of 0.2 is arbitrary with no special significance
+- `quietly` if set to TRUE, will suppress printing of additional output to the console and return quietly
 
 ```{r relative}
-relative(cloud)[1:10, ]
+relative(cloud, signif = 0.4)[1:10, ]
 ```
 
-The mean and standard deviation of each element is calculated, with the latest values shown under 'latest'.
+'mean(X)' is the mean value for each element X, 'sd(X)' the standard deviation, and 'X[n]' the nth or latest observed values.
 
-The 'relative' or 'r value' is calculated as (latest - mean) / sd and represents a standardised (centred and scaled) measure of deviation.
+'res' is the residual X[n] - mean(X) and represents a centred measure of deviation for the latest observed value.
 
-Column 'p >= |r|' contains the empirical probability of the observed absolute 'r value' or greater.
+The 'relative' or 'r value' is calculated as res / sd(X) and represents a standardised (centred and scaled) measure of deviation for the latest observed value.
 
-Column 'E(|r|)|p' then contains the expected absolute 'r value', conditional upon being greater than equal to the observed absolute 'r value'. This provides an indication of how much further the measure may reach in more extreme cases.
+'p >= |r|' represents the empirical probability of the latest observed absolute 'r value' or greater.
 
-The elements are ordered by their absolute 'r value', so that those with the highest relative deviation are listed first.
+'p*' will display a star if 'p >= |r|' is less than or equal to the value of the argument 'signif'.
+
+'E(|res|)|p' represents the mean or expected absolute value of 'res', conditional upon the absolute 'r value' being greater than equal to the latest observed absolute 'r value'. This provides an indication by how much 'res' might increase in more extreme cases.
+
+Note: All calculations are performed on the full values, but are rounded to 2 decimal places for presentation.
 
 ## Strategy Summary Specification
 

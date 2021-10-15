@@ -4,10 +4,9 @@ grid2 <- mlgrid(cloud, y = "ret", type = "boolean", dir = "short", unique = FALS
 grid3 <- mlgrid(cloud, y = "none", type = "numeric")
 
 test_that("autostrat ok", {
-  expect_output(expect_length(expect_type(expect_invisible(autostrat(cloud, n = 2)), "list"), 2L))
-  expect_output(expect_type(autostrat(cloud, n = 1), "list"))
-  expect_output(expect_type(autostrat(cloud, n = 1, level = 3), "list"))
-  expect_warning(autostrat(cloud, n = 1, level = "a"), regexp = "'level' invalid")
+  expect_output(expect_length(expect_type(expect_invisible(autostrat(cloud, n = 2, level = 2)), "list"), 2L))
+  expect_silent(expect_type(autostrat(cloud, n = 1, dir = "short", level = 3, quietly = TRUE), "list"))
+  expect_output(expect_warning(autostrat(cloud, n = 1, level = "a"), regexp = "'level' invalid"))
   expect_error(autostrat(sample_ohlc_data), regexp = "ichimoku object")
 })
 
@@ -23,13 +22,14 @@ test_that("mlgrid ok", {
 
 test_that("relative ok", {
   expect_output(expect_s3_class(rel <- relative(cloud), "data.frame"))
-  expect_identical(dim(rel), c(37L, 6L))
+  expect_identical(dim(rel), c(37L, 8L))
   expect_length(expect_type(look(rel), "list"), 4L)
+  expect_silent(relative(cloud, order = TRUE, signif = 0.4, quietly = TRUE))
   expect_error(relative(sample_ohlc_data), regexp = "ichimoku object")
 })
 
 test_that("look ok", {
-  expect_output(stratlist <- autostrat(cloud, n = 2, dir = "short", level = 2))
+  expect_output(stratlist <- autostrat(cloud, n = 2, dir = "short"))
   expect_length(expect_type(look(cloud), "list"), 3L)
   expect_length(expect_type(look(stratlist[[1L]]), "list"), 4L)
   expect_length(expect_type(look(grid), "list"), 3L)

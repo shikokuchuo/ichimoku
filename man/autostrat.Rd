@@ -4,7 +4,7 @@
 \alias{autostrat}
 \title{Automated Ichimoku Strategies}
 \usage{
-autostrat(x, n = 8, dir = c("long", "short"), level = 1)
+autostrat(x, n = 8, dir = c("long", "short"), level = 1, quietly)
 }
 \arguments{
 \item{x}{an ichimoku object.}
@@ -15,13 +15,18 @@ autostrat(x, n = 8, dir = c("long", "short"), level = 1)
 
 \item{level}{[default 1] to return simple strategies. For complex strategies,
 set level to 2 to return combined strategies of the form 's1 & s2' or
-level to 3 to return asymmetric strategies of the form 's1 x s2'}
+level to 3 to return asymmetric strategies of the form 's1 x s2'.}
+
+\item{quietly}{(optional) if set to TRUE, will suppress printing of additional
+output to the console and return quietly.}
 }
 \value{
-Returned invisibly, a list of 'n' ichimoku objects containing strategies,
-    with attributes 'logret' (a vector of cumulative log returns for all
-    strategies) and 'summary' (a matrix of summaries for the top 'n'
-    strategies). The strategy summaries are printed to the console.
+Returned invisibly, a list of 'n' ichimoku objects containing
+    strategies, with attributes 'logret' (a vector of cumulative log returns
+    for all strategies) and 'summary' (a matrix of summaries for the top 'n'
+    strategies).
+
+    In addition, the strategy summaries are printed to the console.
 }
 \description{
 Generate a list of the top performing ichimoku cloud strategies based on
@@ -49,7 +54,7 @@ Ichimoku objects for each strategy are returned as a list. The
 \examples{
 cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 
-stratlist <- autostrat(cloud, n = 3)
+stratlist <- autostrat(cloud, n = 3, quietly = TRUE)
 look(stratlist)
 strat <- look(stratlist, which = 1)
 summary(strat)

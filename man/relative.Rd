@@ -4,36 +4,53 @@
 \alias{relative}
 \title{Relative Numeric Representation}
 \usage{
-relative(x)
+relative(x, order = FALSE, signif = 0.2, quietly)
 }
 \arguments{
 \item{x}{an ichimoku object.}
+
+\item{order}{[default FALSE] set to TRUE to order the results by the absolute
+'r value'.}
+
+\item{signif}{[default 0.2] set a significance threshold for which if 'p' is
+equal or lower, the element will be starred with a '*'.}
+
+\item{quietly}{(optional) if set to TRUE, will suppress printing of additional
+output to the console and return quietly.}
 }
 \value{
 A data frame containing a statistical summary of the latest ichimoku
-    cloud chart representation and how it relates to the historical data.
-    The elements are ordered by their absolute 'r value', so that those with
-    the highest relative deviation are listed first. The time index value for
-    'latest' and the number of observations are printed to the console.
+    cloud chart representation in relation to historical values.
+
+    In addition, the time index of the latest observed values and total
+    number of datapoints are printed to the console.
 }
 \description{
 Produce a statistical summary of the latest numeric representation of the
-    ichimoku cloud chart relative to historical values. Can be used to
-    determine whether current trading falls within or outside of normal
+    ichimoku cloud chart relative to historical values. Can help in
+    determining whether current trading falls within or outside of normal
     ranges.
 }
 \details{
-Column 'mean' is the mean value, 'sd' the standard deviation,
-    and 'latest' the latest observed values from the data.
+'mean(X)' is the mean value for each element X, 'sd(X)' the
+    standard deviation, and 'X[n]' the nth or latest observed values.
 
-    The 'relative' or 'r value' is calculated as (latest - mean) / sd and
-    represents a standardised (centred and scaled) measure of deviation.
+    'res' is the residual X[n] - mean(X) and represents a centred measure of
+    deviation for the latest observed value.
 
-    Column 'p >= |r|' contains the empirical probability of the observed
+    The 'relative' or 'r value' is calculated as res / sd(X) and represents a
+    standardised (centred and scaled) measure of deviation for the latest
+    observed value.
+
+    'p >= |r|' represents the empirical probability of the latest observed
     absolute 'r value' or greater.
 
-    Column 'E(|r|)|p' contains the expected absolute 'r value', conditional
-    upon being greater than equal to the observed absolute 'r value'.
+    'p*' will display a star if 'p >= |r|' is less than or equal to the value
+    of the argument 'signif'.
+
+    'E(|res|)|p' represents the mean or expected absolute value of 'res',
+    conditional upon the absolute 'r value' being greater than equal to the
+    latest observed absolute 'r value'.
 }
 \section{Further Details}{
 
@@ -43,6 +60,8 @@ Column 'mean' is the mean value, 'sd' the standard deviation,
 
 \examples{
 cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
-relative(cloud)
+statistics <- relative(cloud, quietly = TRUE)
+relative(cloud, signif = 0.4)
+relative(cloud, order = TRUE, signif = 0.4)
 
 }

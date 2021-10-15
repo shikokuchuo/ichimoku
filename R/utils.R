@@ -77,11 +77,7 @@ grid_dup <- function(n, omit.id) {
   }
   vec <- unlist(vec)
   if (!missing(omit.id) && isTRUE(omit.id)) {
-    vec2 <- numeric(n)
-    for (j in seq_len(n)) {
-      vec2[j] <- j + n * (j - 1)
-    }
-    vec <- c(vec, vec2)
+    vec <- c(vec, 1:n + n * (1:n - 1))
   }
   vec
 }
