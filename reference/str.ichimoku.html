@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Extract the Core Data of Ichimoku Objects — coredata • ichimoku</title>
+<title>Display the Structure of Ichimoku Objects — str.ichimoku • ichimoku</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,8 +48,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Extract the Core Data of Ichimoku Objects — coredata" />
-<meta property="og:description" content="Method for extracting the core data matrix of ichimoku objects." />
+<meta property="og:title" content="Display the Structure of Ichimoku Objects — str.ichimoku" />
+<meta property="og:description" content="Compactly display the internal structure of ichimoku objects." />
 <meta property="og:image" content="https://shikokuchuo.net/ichimoku/logo.png" />
 
 
@@ -148,30 +148,24 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Extract the Core Data of Ichimoku Objects</h1>
+    <h1>Display the Structure of Ichimoku Objects</h1>
     <small class="dont-index">Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/R/ichimoku.R'><code>R/ichimoku.R</code></a></small>
-    <div class="hidden name"><code>coredata.ichimoku.Rd</code></div>
+    <div class="hidden name"><code>str.ichimoku.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Method for extracting the core data matrix of ichimoku objects.</p>
+    <p>Compactly display the internal structure of ichimoku objects.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for ichimoku</span>
-<span class='fu'>coredata</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>fmt</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
+      <th>object</th>
       <td><p>an object of class 'ichimoku'.</p></td>
-    </tr>
-    <tr>
-      <th>fmt</th>
-      <td><p>(optional) set to TRUE to retain the index as row names of the
-returned matrix, or a character string passed on to the 'format' argument
-of <code><a href='https://rdrr.io/r/base/strptime.html'>format.POSIXct()</a></code> to format these values in a specific way.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -181,62 +175,38 @@ of <code><a href='https://rdrr.io/r/base/strptime.html'>format.POSIXct()</a></co
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A numeric matrix containing the ichimoku object data, stripped of the
-    index unless 'fmt' is specified in which case the index will be retained
-    as character values in the matrix row names.</p>
+    <p>Invisible NULL. A compact display of the structure of the object is
+    output to the console.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function is an S3 method for the generic function coredata()
-    for class 'ichimoku'. It can be invoked by calling coredata(x) on an
+    <p>This function is an S3 method for the generic function str()
+    for class 'ichimoku'. It can be invoked by calling str(x) on an
     object 'x' of class 'ichimoku'.</p>
 <p>For further details please refer to the reference vignette by calling:
     <code><a href='../articles/reference.html'>vignette("reference", package = "ichimoku")</a></code></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>cloud</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ichimoku.html'>ichimoku</a></span><span class='op'>(</span><span class='va'>sample_ohlc_data</span><span class='op'>)</span>
-<span class='fu'>coredata</span><span class='op'>(</span><span class='va'>cloud</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>101</span><span class='op'>:</span><span class='fl'>120</span>, <span class='op'>]</span>
-</div><div class='output co'>#&gt;        open  high   low close cd tenkan  kijun senkouA senkouB chikou  cloudT
-#&gt;  [1,] 122.4 122.6 121.1 121.9 -1 121.05 123.90 125.675  124.85  135.6 125.675
-#&gt;  [2,] 121.9 123.7 121.7 123.3  1 121.40 123.80 125.675  124.85  134.5 125.675
-#&gt;  [3,] 123.3 124.0 123.0 124.0  1 121.55 123.80 125.675  124.85  134.3 125.675
-#&gt;  [4,] 124.2 124.3 124.0 124.1 -1 121.75 123.65 125.975  124.85  135.9 125.975
-#&gt;  [5,] 124.1 124.1 123.4 123.9 -1 122.25 123.65 126.475  124.85  135.2 126.475
-#&gt;  [6,] 123.9 124.7 123.7 124.5  1 122.90 123.65 126.575  124.85  135.7 126.575
-#&gt;  [7,] 124.5 124.7 123.9 124.2 -1 122.90 123.60 126.250  124.85  135.4 126.250
-#&gt;  [8,] 124.2 125.2 124.0 124.7  1 123.15 123.60 126.150  124.85  135.7 126.150
-#&gt;  [9,] 124.7 129.8 124.7 129.6  1 125.45 124.45 125.675  124.85  135.6 125.675
-#&gt; [10,] 129.9 130.6 129.9 130.2  1 126.15 124.85 125.625  124.85  136.2 125.625
-#&gt; [11,] 130.2 132.5 129.7 131.6  1 127.75 125.80 125.625  124.85  136.5 125.625
-#&gt; [12,] 131.6 132.0 131.1 131.7  1 127.95 125.80 125.550  124.85  138.1 125.550
-#&gt; [13,] 131.7 133.4 131.6 133.0  1 128.40 126.25 125.425  124.85  137.8 125.425
-#&gt; [14,] 133.0 134.3 131.9 132.5 -1 129.00 126.70 125.550  124.85  139.3 125.550
-#&gt; [15,] 132.4 132.8 131.2 131.9 -1 129.10 126.70 125.650  124.85  139.3 125.650
-#&gt; [16,] 131.9 132.0 131.6 131.9  0 129.15 126.70 125.875  124.85  138.8 125.875
-#&gt; [17,] 131.9 132.3 131.1 132.0  1 129.50 126.70 125.400  124.85  137.2 125.400
-#&gt; [18,] 132.0 134.7 131.8 134.3  1 132.20 126.90 124.825  124.85  135.2 124.850
-#&gt; [19,] 134.3 134.4 132.0 132.3 -1 132.20 126.90 123.800  124.85  137.0 124.850
-#&gt; [20,] 132.3 132.8 131.5 131.8 -1 132.90 126.90 123.375  124.55  136.6 124.550
-#&gt;        cloudB
-#&gt;  [1,] 124.850
-#&gt;  [2,] 124.850
-#&gt;  [3,] 124.850
-#&gt;  [4,] 124.850
-#&gt;  [5,] 124.850
-#&gt;  [6,] 124.850
-#&gt;  [7,] 124.850
-#&gt;  [8,] 124.850
-#&gt;  [9,] 124.850
-#&gt; [10,] 124.850
-#&gt; [11,] 124.850
-#&gt; [12,] 124.850
-#&gt; [13,] 124.850
-#&gt; [14,] 124.850
-#&gt; [15,] 124.850
-#&gt; [16,] 124.850
-#&gt; [17,] 124.850
-#&gt; [18,] 124.825
-#&gt; [19,] 123.800
-#&gt; [20,] 123.375</div><div class='input'>
+    <pre class="examples"><div class='input'><span class='va'>cloud</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ichimoku.html'>ichimoku</a></span><span class='op'>(</span><span class='va'>sample_ohlc_data</span>, ticker <span class='op'>=</span> <span class='st'>"TKR"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>cloud</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; ichimoku object [2020-01-02 / 2021-02-01]
+#&gt; Matrix &lt;numeric&gt; w/ dim: (281 rows, 12 cols)
+#&gt;  dimnames[[2L]]: $open $high $low $close $cd $tenkan $kijun $senkouA $senkouB $chikou $cloudT $cloudB
+#&gt;  index: &lt;POSIXct&gt; 2020-01-02 ... 2021-02-01 
+#&gt; Attributes:
+#&gt;  periods: 9 26 52 
+#&gt;  periodicity: 1 days 
+#&gt;  ticker: TKR</div><div class='input'>
+<span class='va'>strat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='strat.html'>strat</a></span><span class='op'>(</span><span class='va'>cloud</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>strat</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; ichimoku object [2020-01-02 / 2021-02-01] w/ strat
+#&gt; Matrix &lt;numeric&gt; w/ dim: (281 rows, 19 cols)
+#&gt;  dimnames[[2L]]: $open $high $low $close $cd $tenkan $kijun $senkouA $senkouB $chikou $cloudT $cloudB $cond $posn $txn $logret $slogret $ret $sret
+#&gt;  index: &lt;POSIXct&gt; 2020-01-02 ... 2021-02-01 
+#&gt; Attributes:
+#&gt;  periods: 9 26 52 
+#&gt;  periodicity: 1 days 
+#&gt;  ticker: TKR
+#&gt;  strat: [strategy: close &gt; tenkan w/ direction: long... ]</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

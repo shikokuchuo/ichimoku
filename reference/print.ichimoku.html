@@ -49,7 +49,8 @@
   
 
 <meta property="og:title" content="Print Ichimoku Objects — print.ichimoku" />
-<meta property="og:description" content="Custom print method for ichimoku objects." />
+<meta property="og:description" content="Default print method for ichimoku objects to enable automatic plotting of the
+    ichimoku cloud chart." />
 <meta property="og:image" content="https://shikokuchuo.net/ichimoku/logo.png" />
 
 
@@ -82,7 +83,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2.13</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.3</span>
       </span>
     </div>
 
@@ -154,7 +155,8 @@
     </div>
 
     <div class="ref-description">
-    <p>Custom print method for ichimoku objects.</p>
+    <p>Default print method for ichimoku objects to enable automatic plotting of the
+    ichimoku cloud chart.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for ichimoku</span>
@@ -174,15 +176,15 @@ the ichimoku cloud chart.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>additional arguments passed along to print and plot functions.</p></td>
+      <td><p>additional arguments passed along to print() and plot() functions.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>The ichimoku object supplied (invisibly). The data is printed to the
-    console. The cloud chart is also output to the graphical device depending
-    on the relevant parameter set.</p>
+    console. The ichimoku cloud chart is also output to the graphical device
+    depending on the parameters set.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>This function is an S3 method for the generic function print() for

@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2.13</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.3</span>
       </span>
     </div>
 
@@ -250,8 +250,19 @@
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># to view chart as well as data, simply issue:</span>
 <span class="va">cloud</span></code></pre></div>
-<p>The summary method using <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> will also provide a brief description of the data:</p>
+<p>Use <code><a href="https://rdrr.io/r/utils/str.html">str()</a></code> for a compact display of the object structure:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span>
+<span class="co">#&gt; ichimoku object [2020-01-02 / 2021-02-01]</span>
+<span class="co">#&gt; Matrix &lt;numeric&gt; w/ dim: (281 rows, 12 cols)</span>
+<span class="co">#&gt;  dimnames[[2L]]: $open $high $low $close $cd $tenkan $kijun $senkouA $senkouB $chikou $cloudT $cloudB</span>
+<span class="co">#&gt;  index: &lt;POSIXct&gt; 2020-01-02 ... 2021-02-01 </span>
+<span class="co">#&gt; Attributes:</span>
+<span class="co">#&gt;  periods: 9 26 52 </span>
+<span class="co">#&gt;  periodicity: 1 days </span>
+<span class="co">#&gt;  ticker: TKR</span></code></pre></div>
+<p>The summary method using <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> will also provide a brief description of the data:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span>
 <span class="co">#&gt; ichimoku object with dimensions (281, 12)</span>
 <span class="co">#&gt; </span>
@@ -259,9 +270,9 @@
 <span class="co">#&gt; Start: 2020-01-02 00:00:00 [123]   End: 2020-12-24 00:00:00 [136]</span>
 <span class="co">#&gt;             Min: 2020-05-12 23:00:00 [119.1]</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Ticker: TKR </span>
 <span class="co">#&gt; Cloud periods: 9 26 52 </span>
-<span class="co">#&gt; Periodicity: 1 days</span></code></pre></div>
+<span class="co">#&gt; Periodicity: 1 days </span>
+<span class="co">#&gt; Ticker: TKR</span></code></pre></div>
 <p>As an ichimoku object inherits the ‘xts’ and ‘zoo’ classes, all existing methods for these classes should work seamlessly. Please refer to the section <a href="#working-with-ichimoku-objects">Working with ichimoku objects</a>.</p>
 <div id="ichimoku-ichimoku" class="section level4">
 <h4 class="hasAnchor">
@@ -273,7 +284,7 @@
 <h4 class="hasAnchor">
 <a href="#preserving-data" class="anchor"></a>Preserving Data</h4>
 <p>The input object may contain additional data not required for ichimoku analysis, such as volume etc. To retain such data in the ichimoku object specify <code>keep.data = TRUE</code> when calling <code><a href="../reference/ichimoku.html">ichimoku()</a></code>.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">kumo</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span>, keep.data <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">kumo</span><span class="op">[</span><span class="fl">100</span>,<span class="op">]</span>, plot <span class="op">=</span> <span class="cn">FALSE</span>, digits <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
@@ -290,7 +301,7 @@
 <p>When calculating the future cloud for daily data, <code><a href="../reference/ichimoku.html">ichimoku()</a></code> makes a call to the <code><a href="../reference/tradingDays.html">tradingDays()</a></code> helper function to ensure that future dates fall on trading days (i.e. not weekends or holidays). By default, New Year’s and Christmas day are defined as holidays if the ‘holidays’ argument is not specified. These defaults should be acceptable for general use.</p>
 <p>To define other dates as non-trading days, a vector of custom holidays may be supplied via a ‘holidays’ argument to <code><a href="../reference/ichimoku.html">ichimoku()</a></code> which is then passed on to the <code><a href="../reference/tradingDays.html">tradingDays()</a></code> function.</p>
 <p>If the relevant market trades continuously on a 24/7 basis, specify ‘holidays = NULL’. This will bypass the logic of <code><a href="../reference/tradingDays.html">tradingDays()</a></code> and return all dates for calculating the future cloud.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Holidays can be specified directly via a vector of dates:</span>
 <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span>, holidays <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2020-01-13"</span>, <span class="st">"2020-02-11"</span>, <span class="st">"2020-02-24"</span><span class="op">)</span><span class="op">)</span>
 
@@ -314,7 +325,7 @@
 </ul>
 <p>As the extracted objects are simple base types, they can easily be modified as required.</p>
 <p>The below shows how to faithfully re-create an ichimoku object from its components:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">index</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/index.html">index</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span>
 <span class="va">coredata</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/coredata.html">coredata</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span>
 
@@ -338,7 +349,7 @@
 <p>The default plot function produces static plots, which have the advantage of being easily exportable to pdf or image formats in high resolution.</p>
 <p>Call <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> on an ichimoku object to visualize the cloud chart.</p>
 <p>The example below demonstrates some of the arguments that can be supplied to customise the plot.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">cloud</span>, window <span class="op">=</span> <span class="st">"2020-05/"</span>, ticker <span class="op">=</span> <span class="st">"一目均衡表"</span>, subtitle <span class="op">=</span> <span class="st">"Sample Data Series"</span><span class="op">)</span></code></pre></div>
 <p><img src="reference_files/figure-html/plot2-1.png" width="672"></p>
 <p>The following arguments for customisation are shared across <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> and <code><a href="../reference/iplot.html">iplot()</a></code>:</p>
@@ -372,13 +383,13 @@
 <p>An <strong>R-type oscillator</strong> is based on the formula for Relative Strength Index (RSI). This is a single line indicator with a look-back window of the ichimoku object’s medium cloud period (default 26). The 75 and 25 levels are marked on the chart to demarcate potentially over-bought and over-sold levels.</p>
 <p>The R-type line is calculated as 100 - 100 / (1 + [26] period mean open to close gain / the absolute value of the [26] period mean open to close loss).</p>
 <p>Note that this corresponds to the usual RSI oscillator definition, although not identical as gains/losses are calculated with reference to each period’s open rather than the previous close. Note also that the R-type oscillator is calculated consistently and does not employ a roll-forward mechanism based on previous oscillator values like the RSI.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># To plot an R-type oscillator:</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">cloud</span>, type <span class="op">=</span> <span class="st">"r"</span><span class="op">)</span></code></pre></div>
 <p>An <strong>S-type oscillator</strong> is based on the formula for the stochastic indicator. This is a 2-line indicator with fast and slow lines with look-back windows corresponding to the fast and medium cloud periods respectively (default 9 and 26). The fast line is quicker to react to price changes and the slow line can be used for confirmation / divergence.</p>
 <p>The fast S-type line is calculated as 100 times the ratio of the closing price minus the [9] period low to the [9] period high minus the [9] period low. The slow S-type line is calculated as 100 times the ratio of the closing price minus the [26] period low to the [26] period high minus the [26] period low.</p>
 <p>Note the difference to the usual stochastic oscillator definition where the slow line is a 3-period moving average of the fast line.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">cloud</span>, window <span class="op">=</span> <span class="st">"2020-04-01/2020-12-01"</span>, theme <span class="op">=</span> <span class="st">"solarized"</span>, type <span class="op">=</span> <span class="st">"s"</span><span class="op">)</span></code></pre></div>
 <p><img src="reference_files/figure-html/plots-1.png" width="672"></p>
 </div>
@@ -388,7 +399,7 @@
 <p>Additional input data preserved within the ichimoku object, for example volume data, can be plotted in the sub-plot area by specifying the ‘custom’ argument. Other metrics can also be plotted if they are added as an additional column to the ichimoku object.</p>
 <p>The character string supplied to ‘custom’ is a regular expression pattern that is matched to the column name and hence does not need to match exactly, nor is case considered.</p>
 <p>To view a custom sub-plot, type must be specified as either ‘bar’ or ‘line’, otherwise the type setting will take precedence (default is ‘none’).</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">kumo</span>, window <span class="op">=</span> <span class="st">"2020-04/2020-11"</span>, theme <span class="op">=</span> <span class="st">"mono"</span>, type <span class="op">=</span> <span class="st">"bar"</span>, custom <span class="op">=</span> <span class="st">"volume"</span><span class="op">)</span></code></pre></div>
 <p><img src="reference_files/figure-html/plotbar-1.png" width="672"></p>
 <p>On a bar chart, the bar colours correspond to the candle direction.</p>
@@ -403,7 +414,7 @@
 <a href="#interactive-plots" class="anchor"></a>2. Interactive Plots</h4>
 <p>Interactive plots require the ‘shiny’ package to be installed.</p>
 <p>To produce an interactive plot, use ichimoku’s <code><a href="../reference/iplot.html">iplot()</a></code> function, which launches an R Shiny app.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># For an interactive plot:</span>
 <span class="fu"><a href="../reference/iplot.html">iplot</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span></code></pre></div>
 <p>Further arguments are optional as full customisation of the chart can be done interactively in-app, including selecting the time window, theme, chart type, custom sub-plot etc.</p>
@@ -574,7 +585,7 @@
 <h2 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h2>
 <p>Sasaki, H. 佐々木 英信 (1996), <em>一目均衡表の研究 [ichimoku kinkouhyou no kenkyuu]</em>. Tokyo, Japan: Toushi Radar.</p>
-<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.2.2, <a href="https://CRAN.R-project.org/package=ichimoku" class="uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
+<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.2.3, <a href="https://CRAN.R-project.org/package=ichimoku" class="uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
 <hr>
 </div>
   </div>

@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2.13</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.3</span>
       </span>
     </div>
 
@@ -151,9 +151,9 @@
       <small>Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="ichimoku-12213" class="section level1">
-<h1 class="page-header" data-toc-text="1.2.2.13">
-<a href="#ichimoku-12213" class="anchor"></a>ichimoku 1.2.2.13<small> Unreleased </small>
+    <div id="ichimoku-123" class="section level1">
+<h1 class="page-header" data-toc-text="1.2.3">
+<a href="#ichimoku-123" class="anchor"></a>ichimoku 1.2.3<small> Unreleased </small>
 </h1>
 <div id="new-features" class="section level4">
 <h4 class="hasAnchor">
@@ -164,11 +164,13 @@
 <code><a href="../reference/oanda_studio.html">oanda_studio()</a></code> gains the argument ‘new.process’, which when set to TRUE, starts the shiny session in a new R process, unblocking the current process and allowing continued use of the console.</li>
 <li>
 <code><a href="../reference/autostrat.html">autostrat()</a></code>, <code><a href="../reference/relative.html">relative()</a></code> and <code><a href="../reference/oanda.html">oanda()</a></code> gain the argument ‘quietly’ which suppresses additional console output if set to TRUE.</li>
+<li>
+<code><a href="../reference/mlgrid.html">mlgrid()</a></code> gains the argument <code>y = 'none'</code> for a grid with the latest values and without ‘y’.</li>
 <li>Improved time index handling for <code><a href="../reference/ichimoku.html">ichimoku()</a></code>: where conversion by <code><a href="https://rdrr.io/r/base/as.POSIXlt.html">as.POSIXct()</a></code> fails, will convert numeric values as POSIX times (with an appropriate warning).</li>
 <li>Optimised ‘ichimoku’ methods for <code><a href="../reference/coredata.html">coredata()</a></code> and <code><a href="../reference/index.html">index()</a></code> - these are no longer simple re-exports from the ‘zoo’ package.</li>
 <li>
 <code><a href="../reference/as.data.frame.ichimoku.html">as.data.frame.ichimoku()</a></code> S3 method is implemented as a marginally faster version of <code><a href="../reference/xts_df.html">xts_df()</a></code> for ichimoku objects.</li>
-<li>New custom summary method for ichimoku objects (without strategies).</li>
+<li>Implement custom <code><a href="https://rdrr.io/r/utils/str.html">str()</a></code> and <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> methods for ichimoku objects.</li>
 </ul>
 </div>
 <div id="updates" class="section level4">
@@ -234,7 +236,6 @@
 <li>Fix cases of mis-alignment of main and sub-plots, axis label formatting of custom plots.</li>
 <li>Fix issue which caused <code><a href="../reference/iplot.html">iplot()</a></code> to re-calculate the indicators when adjusting the data window.</li>
 <li>Package dependency switched from ‘gridExtra’ to ‘gtable’.</li>
-<li>Adds ‘grid’ R core package dependency.</li>
 <li>Minor performance improvements for <code><a href="../reference/ichimoku.html">ichimoku()</a></code> and other functions.</li>
 </ul>
 </div>
@@ -361,7 +362,6 @@
 <li>The following functions are no longer exported to keep the package tidy: <code><a href="../reference/grid_dup.html">grid_dup()</a></code>, <code>maxOver()</code>, <code>minOver()</code>, <code>oanda_accounts()</code>.</li>
 <li>
 <code>sample_ohlc_data</code> slightly lengthened to better demonstrate strat features.</li>
-<li>Adds ‘stats’ R core package dependency.</li>
 <li>Package now links to ‘cpp11’ headers, retiring ‘Rcpp’ package dependency.</li>
 <li>Package dependency ‘httr’ switched to ‘curl’.</li>
 <li>Miscellaneous performance optimisations.</li>
