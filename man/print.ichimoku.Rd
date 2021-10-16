@@ -12,15 +12,16 @@
 \item{plot}{[default TRUE] set to FALSE to prevent automatic plotting of
 the ichimoku cloud chart.}
 
-\item{...}{additional arguments passed along to print and plot functions.}
+\item{...}{additional arguments passed along to print() and plot() functions.}
 }
 \value{
 The ichimoku object supplied (invisibly). The data is printed to the
-    console. The cloud chart is also output to the graphical device depending
-    on the relevant parameter set.
+    console. The ichimoku cloud chart is also output to the graphical device
+    depending on the parameters set.
 }
 \description{
-Custom print method for ichimoku objects.
+Default print method for ichimoku objects to enable automatic plotting of the
+    ichimoku cloud chart.
 }
 \details{
 This function is an S3 method for the generic function print() for

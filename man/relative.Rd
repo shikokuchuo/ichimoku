@@ -27,9 +27,8 @@ A data frame containing a statistical summary of the latest ichimoku
 }
 \description{
 Produce a statistical summary of the latest numeric representation of the
-    ichimoku cloud chart relative to historical values. Can help in
-    determining whether current trading falls within or outside of normal
-    ranges.
+    ichimoku cloud chart relative to historical values. For determining
+    whether current trading falls within or outside of normal ranges.
 }
 \details{
 'mean(X)' is the mean value for each element X, 'sd(X)' the

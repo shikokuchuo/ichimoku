@@ -135,7 +135,7 @@ autostrat <- function(x,
   }
 
   attributes(list) <- list(logret = logret,
-                           summary = do.call(cbind, lapply(list, attr, which = "strat")),
+                           summary = do.call(cbind, lapply(list, attr, "strat")),
                            autostrat = TRUE)
   if (missing(quietly) || !isTRUE(quietly)) print(attr(list, "summary"))
   invisible(list)
@@ -182,8 +182,8 @@ autostrat <- function(x,
 #' @seealso \code{\link{autostrat}} which uses \code{mlgrid()} to enumerate all
 #'     valid return combinations.
 #'
-#'     \code{\link{relative}} which relates a current numeric representation to
-#'     historical values.
+#'     \code{\link{relative}} which uses \code{mlgrid()} to relate the latest
+#'     observed numeric representation to historical values.
 #'
 #' @section Further Details:
 #'
@@ -287,9 +287,8 @@ writeVectors <- function(x, pairs, p2, xlen, type) {
 #' Relative Numeric Representation
 #'
 #' Produce a statistical summary of the latest numeric representation of the
-#'     ichimoku cloud chart relative to historical values. Can help in
-#'     determining whether current trading falls within or outside of normal
-#'     ranges.
+#'     ichimoku cloud chart relative to historical values. For determining
+#'     whether current trading falls within or outside of normal ranges.
 #'
 #' @inheritParams autostrat
 #' @param order [default FALSE] set to TRUE to order the results by the absolute
@@ -359,15 +358,15 @@ relative <- function(x, order = FALSE, signif = 0.2, quietly) {
     pval[i] <- sum(exceed) / xlen
     expec[i] <- mean(abs(vec[exceed] - means[i]))
   }
+  star <- character(xwid)
+  star[pval <= signif] <- "*"
 
-  signif <- ifelse(pval <= signif, "*", "")
-
-  df <- lapply(list(means, sdevs, xn, res, rval, pval, signif, expec),
+  df <- lapply(list(means, sdevs, xn, res, rval, pval, star, expec),
                function(x) if (is.numeric(x)) round(x, digits = 2) else x)
   ordered <- !missing(order) && isTRUE(order)
   if (ordered) {
     reorder <- order(abs(rval), decreasing = TRUE)
-    df <- lapply(df, function(x) x[reorder])
+    df <- lapply(df, .subset, reorder)
   }
 
   attributes(df) <- list(names = c("mean(X)", "sd(X)", "X[n]", "res", "r value", "p >= |r|", "p*", "E(|res|)|p"),

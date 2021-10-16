@@ -1,14 +1,15 @@
-# ichimoku 1.2.2.13
+# ichimoku 1.2.3
 
 #### New features:
 
 * New `relative()` function produces a statistical summary of the latest ichimoku cloud chart numeric representation relative to historical values, for determining whether trading falls within or outside of normal ranges.
 * `oanda_studio()` gains the argument 'new.process', which when set to TRUE, starts the shiny session in a new R process, unblocking the current process and allowing continued use of the console.
 * `autostrat()`, `relative()` and `oanda()` gain the argument 'quietly' which suppresses additional console output if set to TRUE.
+* `mlgrid()` gains the argument `y = 'none'` for a grid with the latest values and without 'y'.
 * Improved time index handling for `ichimoku()`: where conversion by `as.POSIXct()` fails, will convert numeric values as POSIX times (with an appropriate warning).
 * Optimised 'ichimoku' methods for `coredata()` and `index()` - these are no longer simple re-exports from the 'zoo' package.
 * `as.data.frame.ichimoku()` S3 method is implemented as a marginally faster version of `xts_df()` for ichimoku objects.
-* New custom summary method for ichimoku objects (without strategies).
+* Implement custom `str()` and `summary()` methods for ichimoku objects.
 
 #### Updates:
 
@@ -50,7 +51,6 @@
 * Fix cases of mis-alignment of main and sub-plots, axis label formatting of custom plots.
 * Fix issue which caused `iplot()` to re-calculate the indicators when adjusting the data window.
 * Package dependency switched from 'gridExtra' to 'gtable'.
-* Adds 'grid' R core package dependency.
 * Minor performance improvements for `ichimoku()` and other functions.
 
 # ichimoku 1.2.0
@@ -126,7 +126,6 @@
 * Corrects trade success statistics for short strategies returned by `strat()`.
 * The following functions are no longer exported to keep the package tidy: `grid_dup()`, `maxOver()`, `minOver()`, `oanda_accounts()`.
 * `sample_ohlc_data` slightly lengthened to better demonstrate strat features.
-* Adds 'stats' R core package dependency.
 * Package now links to 'cpp11' headers, retiring 'Rcpp' package dependency.
 * Package dependency 'httr' switched to 'curl'.
 * Miscellaneous performance optimisations.

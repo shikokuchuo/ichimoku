@@ -73,6 +73,6 @@ str(grid)
 \code{\link{autostrat}} which uses \code{mlgrid()} to enumerate all
     valid return combinations.
 
-    \code{\link{relative}} which relates a current numeric representation to
-    historical values.
+    \code{\link{relative}} which uses \code{mlgrid()} to relate the latest
+    observed numeric representation to historical values.
 }

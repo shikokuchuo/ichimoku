@@ -65,9 +65,9 @@ test_that("print method ok", {
 })
 
 test_that("summary method for objects ok", {
-  expect_output(expect_vector(expect_invisible(summary(cloud)), ptype = "character()"))
-  expect_output(summary(cloud[0]), regexp = "incomplete or invalid")
-  expect_output(summary(cloud[, 1L]), regexp = "incomplete or invalid")
+  expect_output(expect_vector(expect_invisible(summary(cloud)), ptype = "character()"), "with dimensions")
+  expect_output(summary(cloud[0]), "Matrix")
+  expect_output(summary(cloud[, 1L]), "Matrix")
 })
 
 test_that("as.data.frame method ok", {
@@ -90,6 +90,12 @@ test_that("index method ok", {
   expect_vector(expect_s3_class(idx <- index.ichimoku(cloud), "POSIXct"), size = 281)
   expect_length(attrs <- attributes(idx), 3L)
   expect_identical(names(attrs), c("tzone", "tclass", "class"))
+})
+
+test_that("str method ok", {
+  expect_output(expect_null(expect_invisible(str(cloud))), "ichimoku object")
+  expect_output(str(cloud[0]), "ichimoku object")
+  expect_output(expect_null(expect_invisible(str(cloud[, 1L, drop = TRUE]))), "no dimensions")
 })
 
 test_that("is.ichimoku ok", {

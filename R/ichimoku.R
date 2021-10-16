@@ -297,16 +297,17 @@ ichimoku.default <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, ..
 
 #' Print Ichimoku Objects
 #'
-#' Custom print method for ichimoku objects.
+#' Default print method for ichimoku objects to enable automatic plotting of the
+#'     ichimoku cloud chart.
 #'
 #' @param x an object of class 'ichimoku'.
 #' @param plot [default TRUE] set to FALSE to prevent automatic plotting of
 #'     the ichimoku cloud chart.
-#' @param ... additional arguments passed along to print and plot functions.
+#' @param ... additional arguments passed along to print() and plot() functions.
 #'
 #' @return The ichimoku object supplied (invisibly). The data is printed to the
-#'     console. The cloud chart is also output to the graphical device depending
-#'     on the relevant parameter set.
+#'     console. The ichimoku cloud chart is also output to the graphical device
+#'     depending on the parameters set.
 #'
 #' @details This function is an S3 method for the generic function print() for
 #'     class 'ichimoku'. It can be invoked by calling print(x) on an object 'x'
@@ -336,7 +337,7 @@ print.ichimoku <- function(x, plot = TRUE, ...) {
 
 #' Summary of Ichimoku Objects and Strategies
 #'
-#' Custom summary method for ichimoku objects.
+#' Display summary information for an ichimoku object or its strategy.
 #'
 #' @param object an object of class 'ichimoku'.
 #' @param strat [default TRUE] to show the strategy summary if present. Set to
@@ -350,6 +351,10 @@ print.ichimoku <- function(x, plot = TRUE, ...) {
 #' @details This function is an S3 method for the generic function summary() for
 #'     class 'ichimoku'. It can be invoked by calling summary(x) on an object 'x'
 #'     of class 'ichimoku'.
+#'
+#'     Where a subset or partial ichimoku object is passed to summary() such
+#'     that the object summary may not render correctly, the function will fall
+#'     back to the str() method to display a compact structure of the object.
 #'
 #'     For further details please refer to the reference vignette by calling:
 #'     \code{vignette("reference", package = "ichimoku")} and the strategies
@@ -372,8 +377,8 @@ summary.ichimoku <- function(object, strat = TRUE, ...) {
 
   } else {
     dims <- attr(object, "dim")
-    (is.null(dims) || (dim2 <- dims[2L]) < 12 || (dim1 <- dims[1L]) == 0) &&
-      return(cat("An incomplete or invalid ichimoku object"))
+    (is.null(dims) || (dim1 <- dims[1L]) == 0 || (dim2 <- dims[2L]) < 12) &&
+      return(str(object))
     cat(summary <- paste0("ichimoku object with dimensions (", dim1, ", ", dim2, ")"))
 
     idx <- index.ichimoku(object)
@@ -382,15 +387,14 @@ summary.ichimoku <- function(object, strat = TRUE, ...) {
     high <- which.max(core[1:end, "high"])
     low <- which.min(core[1:end, "low"])
     dates <- format.POSIXct(c(idx[1L], idx[high], idx[low], idx[end]))
-    cat("\n\n            Max: ", dates[2L], " [", core[high, "high"], "]", sep = "")
-    cat("\nStart: ", dates[1L], " [", core[1L, "open"],
-        "]   End: ", dates[4L], " [", core[end, "close"], "]", sep = "")
-    cat("\n            Min: ", dates[3L], " [", core[low, "low"], "]", sep = "")
+    cat("\n\n            Max: ", dates[2L], " [", core[high, "high"],
+        "]\nStart: ", dates[1L], " [", core[1L, "open"],
+        "]   End: ", dates[4L], " [", core[end, "close"],
+        "]\n            Min: ", dates[3L], " [", core[low, "low"], "]", sep = "")
 
-    periodicity <- attr(object, "periodicity")
-    cat("\n\nTicker:", attr(object, "ticker"),
-        "\nCloud periods:", attr(object, "periods"), "\nPeriodicity:",
-        if (periodicity >= 86400) {
+    cat("\n\nCloud periods:", attr(object, "periods"),
+        "\nPeriodicity:",
+        if ((periodicity <- attr(object, "periodicity")) >= 86400) {
           paste0(round(periodicity / 86400, digits = 1), " days")
         } else if (periodicity >= 3600) {
           paste0(round(periodicity / 3600, digits = 1), " hours")
@@ -398,7 +402,8 @@ summary.ichimoku <- function(object, strat = TRUE, ...) {
           paste0(round(periodicity / 60, digits = 1), " mins")
         } else {
           paste0(periodicity, " secs")
-        })
+        },
+        "\nTicker:", attr(object, "ticker"))
 
     invisible(summary)
   }
@@ -534,6 +539,66 @@ index.ichimoku <- function(x, ...) {
   idx <- attr(x, "index")
   class(idx) <- c("POSIXct", "POSIXt")
   idx
+}
+
+#' Display the Structure of Ichimoku Objects
+#'
+#' Compactly display the internal structure of ichimoku objects.
+#'
+#' @param object an object of class 'ichimoku'.
+#' @param ... arguments passed to or from other methods.
+#'
+#' @return Invisible NULL. A compact display of the structure of the object is
+#'     output to the console.
+#'
+#' @details This function is an S3 method for the generic function str()
+#'     for class 'ichimoku'. It can be invoked by calling str(x) on an
+#'     object 'x' of class 'ichimoku'.
+#'
+#'     For further details please refer to the reference vignette by calling:
+#'     \code{vignette("reference", package = "ichimoku")}
+#'
+#' @examples
+#' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
+#' str(cloud)
+#'
+#' strat <- strat(cloud)
+#' str(strat)
+#'
+#' @rdname str.ichimoku
+#' @method str ichimoku
+#' @export
+#'
+str.ichimoku <- function (object, ...) {
+
+  dims <- attr(object, "dim")
+  if (is.null(dims)) {
+    cat("ichimoku object with no dimensions\n")
+
+  } else {
+    index <- index.ichimoku(object)
+    dates <- format.POSIXct(c(index[1L], index[dim1 <- dims[1L]]))
+    cat("ichimoku object [", dates[1L], " / ", dates[2L], "]", if (hasStrat(object)) " w/ strat", sep = "")
+    cat("\nMatrix <numeric> w/ dim: (", dim1, " rows, ", dims[2L], " cols)\n dimnames[[2L]]: $", sep = "")
+    cat(attr(object, "dimnames")[[2L]], sep = " $")
+    cat("\n index: <POSIXct>", dates[1L], "...", dates[2L],
+        "\nAttributes:\n periods:", attr(object, "periods"),
+        "\n periodicity:",
+        if ((periodicity <- attr(object, "periodicity")) >= 86400) {
+          paste0(round(periodicity / 86400, digits = 1), " days")
+        } else if (periodicity >= 3600) {
+          paste0(round(periodicity / 3600, digits = 1), " hours")
+        } else if (periodicity >= 60) {
+          paste0(round(periodicity / 60, digits = 1), " mins")
+        } else {
+          paste0(periodicity, " secs")
+        },
+        "\n ticker:", attr(object, "ticker"))
+    if (hasStrat(object)) cat("\n strat: [strategy: ", attr(object, "strat")["Strategy", ][[1L]],
+                              " w/ direction: ", attr(object, "strat")["Direction", ][[1L]], "... ]", sep = "")
+
+  }
+
 }
 
 #' is.ichimoku
