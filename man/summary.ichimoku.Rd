@@ -27,9 +27,8 @@ This function is an S3 method for the generic function summary() for
     class 'ichimoku'. It can be invoked by calling summary(x) on an object 'x'
     of class 'ichimoku'.
 
-    Where a subset or partial ichimoku object is passed to summary() such
-    that the object summary may not render correctly, the function will fall
-    back to the str() method to display a compact structure of the object.
+    Performs basic validation for an ichimoku object and will inform if an
+    ichimoku object contains invalid information.
 
     For further details please refer to the reference vignette by calling:
     \code{vignette("reference", package = "ichimoku")} and the strategies

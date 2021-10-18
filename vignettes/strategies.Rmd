@@ -56,10 +56,10 @@ Note: the indicator condition remains of the form c1 > c2 even for short trades.
 
 ```{r strat}
 strat <- strat(cloud, c1 = "cloudB", c2 = "kijun")
-print(strat[100:105], plot = FALSE)
+print(strat[96:100, ], plot = FALSE)
 ```
 
-The use of `strat()` returns an augmented ichimoku object. The printout above of a slice of the object (rows 100 to 105) shows that the following columns are appended:
+The use of `strat()` returns an augmented ichimoku object. The printout above of a slice of the object (rows 96 to 100) shows that the following columns are appended:
 
 - `$cond`: '1' if the indicator condition is met at the close of the the time period (note: if the indicator condition involves chikou span, the comparison will be of past periods)
 - `$posn`: '1' represents that a position is held during this time period (i.e. from the 'open' to the 'close')
@@ -245,7 +245,7 @@ The 'relative' or 'r value' is calculated as res / sd(X) and represents a standa
 
 'E(|res|)|p' represents the mean or expected absolute value of 'res', conditional upon the absolute 'r value' being greater than equal to the latest observed absolute 'r value'. This provides an indication by how much 'res' might increase in more extreme cases.
 
-Note: All calculations are performed on the full values, but are rounded to 2 decimal places for presentation.
+Note: All calculations are performed on the full values, but are rounded to 2 decimal places for final presentation.
 
 ## Strategy Summary Specification
 
@@ -285,6 +285,6 @@ Note: All calculations are performed on the full values, but are rounded to 2 de
 
 Sasaki, H. 佐々木 英信 (1996), *一目均衡表の研究 [ichimoku kinkouhyou no kenkyuu]*. Tokyo, Japan: Toushi Radar.
 
-Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.2.3, <https://CRAN.R-project.org/package=ichimoku>.
+Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.2.4, <https://CRAN.R-project.org/package=ichimoku>.
 
 ---

@@ -30,22 +30,20 @@ Note that all of the auxiliary functions are programmed for performance and are 
 
 #### tradingDays()
 
-Used to subset a vector of dates to trading days. Note: if the argument 'holidays' (or 'noholidays') is passed to `ichimoku()`, this is passed through to this function when calculating the dates for the future cloud.
+Used to subset a vector of dates to trading days. Note: if the argument 'holidays' is passed to `ichimoku()`, this is passed through to this function when calculating the dates for the future cloud.
 
 Takes the following arguments:
 
 - `x` a vector of POSIXct dates.
-- `holidays` (optional) a vector, or function which outputs a vector, of dates defined as holidays. If not specified, New Year's and Christmas day are defined as holidays by default.
-- `...` not used.
-- `noholidays` (optional) if set, bypasses the function logic and returns TRUE for all dates in 'x'.
+- `holidays` (optional) a vector, or function which outputs a vector, of dates defined as holidays. Set to NULL for a continuously-traded market. If not specified, New Year's and Christmas day are defined as holidays by default.
+- `...` other arguments not used by this function.
 
 ```{r tradingDays}
 dates <- seq(from = as.POSIXct("2020-01-01"), by = "1 day", length.out = 7)
 dates
 tradingDays(dates)
-tradingDays(dates, holidays = c("2020-01-01", "2020-01-02"))
-tradingDays(dates, noholidays = TRUE)
-
+tradingDays(dates, holidays = c("2020-01-02", "2020-01-03"))
+tradingDays(dates, holidays = NULL)
 ```
 
 #### look()
@@ -54,7 +52,7 @@ Can be used to inspect the informational attributes of R objects.
 
 For objects created by the ichimoku package, a list of attributes specific to that data type is returned.
 
-For other objects, a list of attributes that are non-standard for matrix / data.frame / xts objects is returned, or else invisible NULL if none are found.
+For other objects, a list of attributes that are non-standard for matrix / data.frame / xts objects is returned, or else invisible NULL if none are present.
 
 ```{r look}
 cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
@@ -62,7 +60,6 @@ look(cloud)
 
 grid <- mlgrid(cloud)
 look(grid)
-
 ```
 
 Can also be used to extract ichimoku objects from lists returned by `autostrat()`. Specify the argument 'which', to return the corresponding element of the list created by `autostrat()`.
@@ -72,9 +69,9 @@ stratlist <- autostrat(cloud, n = 3)
 
 # Extract the ichimoku object which is the second element of 'stratlist':
 strat <- look(stratlist, which = 2)
+
 # Inspect ichimoku object:
 look(strat)
-
 ```
 
 ## Dataframe Constructors
@@ -83,7 +80,7 @@ look(strat)
 
 Convert an 'xts' object to 'data.frame'. This function can be an order of magnitude faster than `as.data.frame()` for an 'xts' object.
 
-Note that for ichimoku objects, a marginally faster, more specific version has been implemented as the S3 method `as.data.frame.ichimoku()`. Hence using this utility on an ichimoku object is not required.
+Note that for ichimoku objects, a marginally faster, more specific version has been implemented as the S3 method for `as.data.frame()`. Hence using this utility on an ichimoku object is not necessary.
 
 Takes the following arguments:
 
@@ -121,7 +118,7 @@ str(row.names(df))
 
 #### df_trim()
 
-Trim rows containing NA values from a 'data.frame' object. This is a faster version of `stats:::na.omit()`.
+Trim rows containing NA values from a 'data.frame' object. This is a faster version of `stats::na.omit()`.
 
 Takes a single argument:
 
@@ -164,7 +161,7 @@ Takes 4 arguments:
 
 Can be used to update price dataframes retrieved by `oanda()`. The function is designed to update existing data with new values as they become available. As opposed to `df_merge()`, the data in 'new' will overwrite the data in 'old' rather than create duplicates.
 
-If the attribute specified by 'keep.attr' is present in 'new', for example the 'timestamp' in pricing data returned by `oanda()`, this is retained. If the attribute is not found in 'new', the argument has no effect. All other non-required attributes are dropped.
+If the attribute specified by 'keep.attr' is present in 'new', for example the 'timestamp' in pricing data returned by `oanda()`, this is retained. If the attribute is not found in 'new', the argument has no effect. All other non-essential attributes are dropped.
 
 ```{r dfappend}
 data1 <- sample_ohlc_data[1:8, ]
@@ -176,6 +173,6 @@ df_append(data2, data1)
 
 ## References
 
-Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.2.3, <https://CRAN.R-project.org/package=ichimoku>.
+Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.2.4, <https://CRAN.R-project.org/package=ichimoku>.
 
 ---

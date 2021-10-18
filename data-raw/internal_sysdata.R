@@ -90,6 +90,6 @@ x_oanda_instruments <- data.frame(
            "METAL","CURRENCY")
 )
 
-x_user_agent <- "r-ichimoku/1.2.3"
+x_user_agent <- "r-ichimoku/1.2.4"
 
 usethis::use_data(ichimoku_themes, x_oanda_instruments, x_user_agent, internal = TRUE, overwrite = TRUE)

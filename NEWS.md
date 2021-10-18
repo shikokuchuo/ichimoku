@@ -1,15 +1,15 @@
-# ichimoku 1.2.3
+# ichimoku 1.2.4
 
 #### New features:
 
 * New `relative()` function produces a statistical summary of the latest ichimoku cloud chart numeric representation relative to historical values, for determining whether trading falls within or outside of normal ranges.
 * `oanda_studio()` gains the argument 'new.process', which when set to TRUE, starts the shiny session in a new R process, unblocking the current process and allowing continued use of the console.
+* `mlgrid()` gains the argument `y = 'none'` for a grid with the latest cloud representation and without 'y'.
 * `autostrat()`, `relative()` and `oanda()` gain the argument 'quietly' which suppresses additional console output if set to TRUE.
-* `mlgrid()` gains the argument `y = 'none'` for a grid with the latest values and without 'y'.
 * Improved time index handling for `ichimoku()`: where conversion by `as.POSIXct()` fails, will convert numeric values as POSIX times (with an appropriate warning).
-* Optimised 'ichimoku' methods for `coredata()` and `index()` - these are no longer simple re-exports from the 'zoo' package.
-* `as.data.frame.ichimoku()` S3 method is implemented as a marginally faster version of `xts_df()` for ichimoku objects.
-* Implement custom `str()` and `summary()` methods for ichimoku objects.
+* Optimised 'ichimoku' methods for `coredata()` and `index()` generic functions.
+* 'ichimoku' method for `as.data.frame()` implemented as a marginally faster version of `xts_df()` for ichimoku objects.
+* More informative custom `str()` and `summary()` methods implemented for ichimoku objects.
 
 #### Updates:
 
@@ -30,7 +30,7 @@
 * New `oanda_quote()` function outputs the latest quote for an instrument along with intraday trading statistics to the console.
 * New `oanda_view()` function provides the latest overview of an entire market - showing the relative performance of constituents.
 * New `oanda_positions()` function provides the OANDA fxTrade position book (% longs and shorts at each price level) for certain major currency pairs.
-* `archive()` easier to use by allowing files to be chosen interactively using a system dialog - simply call with no arguments.
+* `archive()` now allows files to be chosen interactively using a system dialog - call the function with no arguments.
 * `df_append()` utility is now faster and gains the arguments 'key' and 'keep.attr'.
 
 #### Updates:

@@ -54,15 +54,15 @@ library(ichimoku)
 oanda_switch()
 ```
 
-Note: this package only contains functions for retrieving available instruments and price data. It does not contain code to implement any trading capability whatsoever. Please be aware however, that a personal access token can be used (outside of this package) for all operations on your account including placing orders and trades, and take the appropriate precautions when using your live account token.
+Note: this package only contains functions for retrieving available instruments and price data. It does not contain code to implement any trading capability whatsoever. Please be aware however, that a personal access token can be used (outside of this package) for all operations on your account including placing orders and trades, and appropriate precautions should be taken when using your live account token.
 
 ## The OANDA Functions
 
 All of the OANDA functions in the package are prefixed by 'oanda' for clarity.
 
-Functions designed primarily for interactive use may be called without any arguments, e.g. `oanda_stream()` or `oanda_view()`, in which case you will be further prompted to enter required arguments; these should be entered unquoted i.e. without any surrounding "".
+Functions may be called interactively without any arguments, e.g. `oanda_stream()` or `oanda_view()`, in which case you will be further prompted to enter required arguments; as opposed to when specifying such arguments normally, these should be entered unquoted i.e. without any surrounding "".
 
-The 'instrument' argument is case-insensitive and the delimiter can be either '_' or '-', such that both `oanda("USD_JPY")` and `oanda("usd-jpy")` would be acceptable.
+For all functions, the 'instrument' argument is case-insensitive and the delimiter can be either '_' or '-', such that both `oanda("USD_JPY")` and `oanda("usd-jpy")` would be acceptable.
 
 ### `oanda()`
 
@@ -70,17 +70,17 @@ Retrieve pricing data from the OANDA fxTrade API.
 
 The arguments to the function are phrased identically to that of the API itself where relevant:
 
-- `instrument` string containing the base currency and quote currency delimited by a '_' (e.g. "USD_JPY"). Use the `oanda_instruments()` function to return a list of all valid instruments
+- `instrument` string containing the base currency and quote currency delimited by '_' or '-' (e.g. "USD_JPY" or "usd-jpy"). Use the `oanda_instruments()` function to return a list of all valid instruments
 - `granularity` [default "D"] the granularity of the price data to fetch, one of "M", "W", "D", "H12", "H8", "H6", "H4", "H3", "H2", "H1", "M30", "M15", "M10", "M5", "M4", "M2", "M1", "S30", "S15", "S10", "S5"
 - `count` (optional) the number of periods to return. The API supports a maximum of 5000 for each individual request, and defaults to 500 if not specified. If both 'from' and 'to' are specified, 'count' is ignored, as the time range combined with 'granularity' will determine the number of periods to return
 - `from` (optional) the start of the time range for which to fetch price data, for example "2020-02-01"
 - `to` (optional) the end of the time range for which to fetch price data, for example "2020-06-30"
 - `price` [default "M"] the pricing component, one of "M" (midpoint), "B" (bid) or "A" (ask)
 - `server` (optional) Specify the "practice" or "live" server according to the account type held with OANDA. If not specified, will default to "practice", unless this has been changed by `oanda_switch()`.
-- `apikey` (optional) string containing the OANDA fxTrade API key (personal access token). This argument is designed for specifying a function that returns such a string rather than the string itself, which could be potentially unsecure. This allows other packages that provide secure storage of secrets to be used if preferred over 'keyring'
+- `apikey` (optional) string containing the OANDA fxTrade API key (personal access token). Does not need to be specified if already stored by `oanda_set_key()`. This argument is designed for specifying a function that returns such a string rather than the string itself, which could be potentially unsecure. This allows other packages that provide secure storage of secrets to be used if preferred over 'keyring'
 - `quietly` if set to TRUE, will suppress printing of output to the console and return quietly
 
-Note: if both `from` and `to` are specified and the request would result in over 5000 periods being returned, the function automatically prompts the user to confirm if multiple requests should be submitted. Unless the user response is "n" or "no", the data will proceed to be downloaded with rate limiting in place as per API best practices, and merged together into a single dataframe.
+Note: if both `from` and `to` are specified and the request would result in over 5000 periods being returned, the function prompts the user to confirm if multiple requests should be submitted. Unless the user response is "n" or "no", the data will proceed to be downloaded with rate limiting in place, and merged together into a single dataframe. The function is safe for use in non-interactive settings as in such cases the download will proceed automatically without prompting.
 
 ```{r oanda, eval=FALSE}
 oanda("USD_JPY", count = 3, from = "2010-11-01", price = "B")
@@ -93,15 +93,15 @@ oanda("USD_JPY", count = 3, from = "2010-11-01", price = "B")
 The returned object is a dataframe with the following columns:
 'time', 'open', 'high', 'low', 'close', 'volume' and 'complete'.
 
-- **volume** should normally be disregarded as this reflects the trading volume registered by OANDA and may not be reflective of the broader market
+- **volume** should be used with caution as this reflects the trading volume registered by OANDA and may not be reflective of the broader market
 
-- **complete** indicates whether the data period is complete or not. If TRUE, the values are historical and not subject to change. If FALSE, the period is ongoing and the values reflect the current snapshot and the final values may or may not differ
+- **complete** indicates whether the data period is complete or not. If TRUE, the values are historical and not subject to change. If FALSE, the period is ongoing and the values reflect the current snapshot whilst final values may or may not differ
 
 Important implementation notes:
 
 - Incorporates automatic adjustment of the timestamps to end of period, as is customary for financial data. This means that, for example, today's pricing data (incomplete trading period) will have today's date as would be expected. In contrast, the raw data from the API has a timestamp of the start of the period
 
-- The API data sometimes includes data for non-trading days with very low volumes. This is more common for older data and less so with more recent data. These may represent OTC trades that occurred over the OANDA platform, but nevertheless do not reflect market rates. These are automatically excluded from the data returned as they would otherwise produce spurious results if used with `ichimoku()`
+- The API data sometimes includes data for non-trading days with very low volumes. This is more common for older data and less so with more recent data. These may represent OTC trades that occurred over the OANDA platform, but nevertheless do not reflect market rates. These are automatically excluded from the data returned as they would otherwise produce spurious results used with `ichimoku()`
 
 ### `oanda_chart()`
 
@@ -144,7 +144,7 @@ oanda_studio()
 
 The following additional parameters can be used to customise the behaviour of the Shiny environment:
 
-- `new.process` [default FALSE] if TRUE, will start the shiny session in a new R process, unblocking the current process and allowing continued use of the R console. Note that any stdout output from the new process is discarded but stderr output - messages, warnings and errors - are still sent to the console
+- `new.process` [default FALSE] if TRUE, will start the shiny session in a new R process, unblocking the current process and allowing continued use of the R console. Note that any stdout output from the new process is discarded but stderr output - messages, warnings and errors - are still sent through to the console
 - `...` additional arguments passed to `ichimoku()` for calculating the ichimoku cloud, `autoplot()` to set chart parameters, or the 'options' argument of `shiny::shinyApp()`
 - `launch.browser` [default TRUE] If TRUE, the system’s default web browser will be launched automatically after the app is started. The value of this argument can also be a function to call with the application’s URL. To use the default Shiny viewer in RStudio, please specify `getOption("shiny.launch.browser")`
 
@@ -265,6 +265,6 @@ Calling `oanda_switch()` will also clear all cached variables.
 
 OANDA fxTrade API developer website: <https://developer.oanda.com/>.
 
-Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.2.3, <https://CRAN.R-project.org/package=ichimoku>.
+Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.2.4, <https://CRAN.R-project.org/package=ichimoku>.
 
 ---

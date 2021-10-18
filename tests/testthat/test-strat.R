@@ -26,7 +26,13 @@ test_that("hasStrat ok", {
   expect_false(hasStrat(cloud))
 })
 
+test_that("str method for strat ok", {
+  expect_output(expect_null(expect_invisible(str(strat))), "w/ strat")
+})
+
 test_that("summary method for strat ok", {
-  expect_true(inherits(summary(strat), "matrix"))
-  expect_output(expect_vector(summary(strat, strat = FALSE), ptype = "character()"))
+  expect_type(summary(strat), "list")
+  expect_output(expect_vector(summary(strat, strat = FALSE), ptype = "character()"), "with dimensions")
+  attr(strat4, "strat") <- "invalid"
+  expect_output(summary(strat4), "invalid strategy")
 })

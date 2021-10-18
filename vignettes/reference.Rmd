@@ -130,15 +130,10 @@ Optional arguments:
 ```{r ichimoku}
 cloud <- ichimoku(TKR)
 
-print(cloud[100:110,], plot = FALSE, digits = 4)
+print(cloud[100:110, ], plot = FALSE, digits = 4)
 ```
 
 A section (rows 100 to 110) of the ichimoku object is shown above. Note that print is called setting 'plot = FALSE' to return just the data to the console. The default print method for ichimoku objects also plots the cloud chart to the graphical device.
-
-```{r ichimokunotrun, eval = FALSE}
-# to view chart as well as data, simply issue:
-cloud
-```
 
 Use `str()` for a compact display of the object structure:
 
@@ -162,17 +157,17 @@ Calling `ichimoku()` on an ichimoku object containing a strategy will return the
 
 #### Preserving Data
 
-The input object may contain additional data not required for ichimoku analysis, such as volume etc. To retain such data in the ichimoku object specify `keep.data = TRUE` when calling `ichimoku()`.
+The input object may contain additional data not required for ichimoku analysis, such as volume etc. To retain such data in the ichimoku object, specify `keep.data = TRUE` when calling `ichimoku()`.
 
 ```{r ichimokupreserve}
 kumo <- ichimoku(TKR, keep.data = TRUE)
 
-print(kumo[100,], plot = FALSE, digits = 4)
+print(kumo[100, ], plot = FALSE, digits = 4)
 ```
 
-This consolidates all relevant data into a single object. There is the additional benefit that it can now be plotted as a sub-plot beneath the main ichimoku cloud chart (see [custom sub-plots](#custom-sub-plots)).
+This consolidates all relevant data into a single object. The additional data can now also be plotted as a sub-plot beneath the main ichimoku cloud chart (see [custom sub-plots](#custom-sub-plots)).
 
-Note: only numeric data or data coercible to numeric type is preserved in this way, and other types will introduce NAs. This is as ichimoku objects are based on the 'xts' format which essentially uses a numeric matrix that does not support multiple data types. Custom attributes set on the input object (such as a timestamp or data source) are also preserved.
+Note: only numeric data or data coercible to numeric type is preserved in this way, and other types will introduce NAs. This is as the core data of an ichimoku object is a numeric matrix that does not support multiple data types. Custom attributes set on the input object (such as a timestamp or data source) are also preserved.
 
 #### Defining custom holidays
 
@@ -180,7 +175,7 @@ When calculating the future cloud for daily data, `ichimoku()` makes a call to t
 
 To define other dates as non-trading days, a vector of custom holidays may be supplied via a 'holidays' argument to `ichimoku()` which is then passed on to the `tradingDays()` function.
 
-If the relevant market trades continuously on a 24/7 basis, specify 'holidays = NULL'. This will bypass the logic of `tradingDays()` and return all dates for calculating the future cloud.
+If the relevant market trades continuously on a 24/7 basis, specify 'holidays = NULL'. This will bypass the logic of `tradingDays()` and return all dates when calculating the future cloud.
 
 ```{r holidays, eval = FALSE}
 # Holidays can be specified directly via a vector of dates:
@@ -197,28 +192,27 @@ ichimoku(TKR, holidays = NULL)
 
 #### Working with ichimoku objects
 
-An optimised ichimoku S3 method for the base generic `as.data.frame()` is provided for converting an ichimoku object to a dataframe. Set the argument `keep.attrs = TRUE` to retain the attributes of the original ichimoku object.
+The following generic functions have optimised S3 methods for ichimoku objects:
 
-S3 methods for the following 'zoo' generics are also provided:
-
+- `as.data.frame()` for converting an ichimoku object to a dataframe. Set the argument `keep.attrs = TRUE` to retain the attributes of the original ichimoku object
 - `index()` to extract the index of an ichimoku object as a vector of POSIXct values
 - `coredata()` to extract the columns of an ichimoku object as a numeric matrix
 
-As the extracted objects are simple base types, they can easily be modified as required.
+As the resulting objects are simple base types, they can easily be modified as required.
 
 The below shows how to faithfully re-create an ichimoku object from its components:
 
 ```{r bind}
 index <- index(cloud)
-coredata <- coredata(cloud)
+core <- coredata(cloud)
 
-cloud2 <- ichimoku(ichimoku(cbind(index, coredata), ticker = attr(cloud, "ticker")))
+cloud2 <- ichimoku(ichimoku(cbind(index, core), ticker = attr(cloud, "ticker")))
 identical(cloud, cloud2)
 ```
 
-Note specifically that ichimoku needs to be called twice - first to convert the matrix to an ichimoku object and then again to recalculate taking into account NA values correctly. The ticker name should also be set explicitly. 
+Note specifically that ichimoku needs to be called twice - first to convert the matrix resulting from the `cbind()` operation, and then again to recalculate using the OHLC data contained within the object as the original data would have contained NAs. The ticker name should also be set explicitly as in the example. 
 
-A warning is issued about checking the validity of POSIX times, which may safely be ignored as the POSIXct values in 'index' were simply coerced to numeric during the `cbind()` operation and remain valid.
+A warning is issued about checking the validity of POSIX times, which in this case is safe to ignore as the POSIXct values in 'index' were simply coerced to numeric during the `cbind()` operation but remain valid.
 
 For additional functionality, the 'xts' package may be loaded to access a wide range of methods available for 'xts' objects, for example changing the periodicity of the data.
 
@@ -438,6 +432,6 @@ Optional (enables additional features):
 
 Sasaki, H. 佐々木 英信 (1996), *一目均衡表の研究 [ichimoku kinkouhyou no kenkyuu]*. Tokyo, Japan: Toushi Radar.
 
-Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.2.3, <https://CRAN.R-project.org/package=ichimoku>.
+Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.2.4, <https://CRAN.R-project.org/package=ichimoku>.
 
 ---

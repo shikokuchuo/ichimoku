@@ -26,6 +26,7 @@ test_that("ichimoku handles higher frequency data", {
   data$time <- seq.POSIXt(from = .POSIXct(1), by = "1 hour", length.out = 256)
   expect_s3_class(cloudhf <- ichimoku(data), "ichimoku")
   expect_s3_class(autoplot(cloudhf), "ggplot")
+  expect_output(str(cloudhf))
   expect_output(summary(cloudhf))
 })
 
@@ -60,14 +61,24 @@ test_that("ichimoku error handling ok", {
 test_that("print method ok", {
   expect_output(expect_s3_class(print(cloud), "ichimoku"))
   expect_output(expect_s3_class(print(cloud, plot = FALSE), "ichimoku"))
-  expect_output(print(cloud[, 1L, drop = TRUE]))
   expect_output(print(cloud[0]))
+  expect_output(print(cloud[, 1L, drop = TRUE]))
+})
+
+test_that("str method ok", {
+  expect_output(expect_null(expect_invisible(str(cloud))), "dimnames")
+  expect_output(str(cloud[0]), "dimnames")
+  expect_output(str(cloud[, 1L, drop = TRUE]), "no dimensions")
 })
 
 test_that("summary method for objects ok", {
   expect_output(expect_vector(expect_invisible(summary(cloud)), ptype = "character()"), "with dimensions")
-  expect_output(summary(cloud[0]), "Matrix")
-  expect_output(summary(cloud[, 1L]), "Matrix")
+  expect_output(summary(cloud[0]), "(0, 12)")
+  expect_output(summary(cloud[, 1L]), "incomplete")
+  expect_output(summary(cloud[, 1L, drop = TRUE]), "no dimensions")
+  cloud2 <- cloud
+  attr(cloud2, "periods") <- 0
+  expect_output(summary(cloud2), "invalid attributes")
 })
 
 test_that("as.data.frame method ok", {
@@ -90,12 +101,6 @@ test_that("index method ok", {
   expect_vector(expect_s3_class(idx <- index.ichimoku(cloud), "POSIXct"), size = 281)
   expect_length(attrs <- attributes(idx), 3L)
   expect_identical(names(attrs), c("tzone", "tclass", "class"))
-})
-
-test_that("str method ok", {
-  expect_output(expect_null(expect_invisible(str(cloud))), "ichimoku object")
-  expect_output(str(cloud[0]), "ichimoku object")
-  expect_output(expect_null(expect_invisible(str(cloud[, 1L, drop = TRUE]))), "no dimensions")
 })
 
 test_that("is.ichimoku ok", {
