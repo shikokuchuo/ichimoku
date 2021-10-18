@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.4</span>
       </span>
     </div>
 
@@ -151,9 +151,9 @@
       <small>Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="ichimoku-123" class="section level1">
-<h1 class="page-header" data-toc-text="1.2.3">
-<a href="#ichimoku-123" class="anchor"></a>ichimoku 1.2.3<small> Unreleased </small>
+    <div id="ichimoku-124" class="section level1">
+<h1 class="page-header" data-toc-text="1.2.4">
+<a href="#ichimoku-124" class="anchor"></a>ichimoku 1.2.4<small> 2021-10-18 </small>
 </h1>
 <div id="new-features" class="section level4">
 <h4 class="hasAnchor">
@@ -163,14 +163,13 @@
 <li>
 <code><a href="../reference/oanda_studio.html">oanda_studio()</a></code> gains the argument ‘new.process’, which when set to TRUE, starts the shiny session in a new R process, unblocking the current process and allowing continued use of the console.</li>
 <li>
+<code><a href="../reference/mlgrid.html">mlgrid()</a></code> gains the argument <code>y = 'none'</code> for a grid with the latest cloud representation and without ‘y’.</li>
+<li>
 <code><a href="../reference/autostrat.html">autostrat()</a></code>, <code><a href="../reference/relative.html">relative()</a></code> and <code><a href="../reference/oanda.html">oanda()</a></code> gain the argument ‘quietly’ which suppresses additional console output if set to TRUE.</li>
-<li>
-<code><a href="../reference/mlgrid.html">mlgrid()</a></code> gains the argument <code>y = 'none'</code> for a grid with the latest values and without ‘y’.</li>
 <li>Improved time index handling for <code><a href="../reference/ichimoku.html">ichimoku()</a></code>: where conversion by <code><a href="https://rdrr.io/r/base/as.POSIXlt.html">as.POSIXct()</a></code> fails, will convert numeric values as POSIX times (with an appropriate warning).</li>
-<li>Optimised ‘ichimoku’ methods for <code><a href="../reference/coredata.html">coredata()</a></code> and <code><a href="../reference/index.html">index()</a></code> - these are no longer simple re-exports from the ‘zoo’ package.</li>
-<li>
-<code><a href="../reference/as.data.frame.ichimoku.html">as.data.frame.ichimoku()</a></code> S3 method is implemented as a marginally faster version of <code><a href="../reference/xts_df.html">xts_df()</a></code> for ichimoku objects.</li>
-<li>Implement custom <code><a href="https://rdrr.io/r/utils/str.html">str()</a></code> and <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> methods for ichimoku objects.</li>
+<li>Optimised ‘ichimoku’ methods for <code><a href="../reference/coredata.html">coredata()</a></code> and <code><a href="../reference/index.html">index()</a></code> generic functions.</li>
+<li>‘ichimoku’ method for <code><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame()</a></code> implemented as a marginally faster version of <code><a href="../reference/xts_df.html">xts_df()</a></code> for ichimoku objects.</li>
+<li>More informative custom <code><a href="https://rdrr.io/r/utils/str.html">str()</a></code> and <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> methods implemented for ichimoku objects.</li>
 </ul>
 </div>
 <div id="updates" class="section level4">
@@ -204,7 +203,7 @@
 <li>New <code><a href="../reference/oanda_view.html">oanda_view()</a></code> function provides the latest overview of an entire market - showing the relative performance of constituents.</li>
 <li>New <code><a href="../reference/oanda_positions.html">oanda_positions()</a></code> function provides the OANDA fxTrade position book (% longs and shorts at each price level) for certain major currency pairs.</li>
 <li>
-<code><a href="../reference/archive.html">archive()</a></code> easier to use by allowing files to be chosen interactively using a system dialog - simply call with no arguments.</li>
+<code><a href="../reference/archive.html">archive()</a></code> now allows files to be chosen interactively using a system dialog - call the function with no arguments.</li>
 <li>
 <code><a href="../reference/df_append.html">df_append()</a></code> utility is now faster and gains the arguments ‘key’ and ‘keep.attr’.</li>
 </ul>

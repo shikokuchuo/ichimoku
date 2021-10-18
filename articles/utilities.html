@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.4</span>
       </span>
     </div>
 
@@ -129,17 +129,15 @@
 <div id="tradingdays" class="section level4">
 <h4 class="hasAnchor">
 <a href="#tradingdays" class="anchor"></a>tradingDays()</h4>
-<p>Used to subset a vector of dates to trading days. Note: if the argument ‘holidays’ (or ‘noholidays’) is passed to <code><a href="../reference/ichimoku.html">ichimoku()</a></code>, this is passed through to this function when calculating the dates for the future cloud.</p>
+<p>Used to subset a vector of dates to trading days. Note: if the argument ‘holidays’ is passed to <code><a href="../reference/ichimoku.html">ichimoku()</a></code>, this is passed through to this function when calculating the dates for the future cloud.</p>
 <p>Takes the following arguments:</p>
 <ul>
 <li>
 <code>x</code> a vector of POSIXct dates.</li>
 <li>
-<code>holidays</code> (optional) a vector, or function which outputs a vector, of dates defined as holidays. If not specified, New Year’s and Christmas day are defined as holidays by default.</li>
+<code>holidays</code> (optional) a vector, or function which outputs a vector, of dates defined as holidays. Set to NULL for a continuously-traded market. If not specified, New Year’s and Christmas day are defined as holidays by default.</li>
 <li>
-<code>...</code> not used.</li>
-<li>
-<code>noholidays</code> (optional) if set, bypasses the function logic and returns TRUE for all dates in ‘x’.</li>
+<code>...</code> other arguments not used by this function.</li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html">as.POSIXct</a></span><span class="op">(</span><span class="st">"2020-01-01"</span><span class="op">)</span>, by <span class="op">=</span> <span class="st">"1 day"</span>, length.out <span class="op">=</span> <span class="fl">7</span><span class="op">)</span>
@@ -148,17 +146,17 @@
 <span class="co">#&gt; [5] "2020-01-05 UTC" "2020-01-06 UTC" "2020-01-07 UTC"</span>
 <span class="fu"><a href="../reference/tradingDays.html">tradingDays</a></span><span class="op">(</span><span class="va">dates</span><span class="op">)</span>
 <span class="co">#&gt; [1] FALSE  TRUE  TRUE FALSE FALSE  TRUE  TRUE</span>
-<span class="fu"><a href="../reference/tradingDays.html">tradingDays</a></span><span class="op">(</span><span class="va">dates</span>, holidays <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2020-01-01"</span>, <span class="st">"2020-01-02"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] FALSE FALSE  TRUE FALSE FALSE  TRUE  TRUE</span>
-<span class="fu"><a href="../reference/tradingDays.html">tradingDays</a></span><span class="op">(</span><span class="va">dates</span>, noholidays <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt; [1] FALSE  TRUE  TRUE FALSE FALSE  TRUE  TRUE</span></code></pre></div>
+<span class="fu"><a href="../reference/tradingDays.html">tradingDays</a></span><span class="op">(</span><span class="va">dates</span>, holidays <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2020-01-02"</span>, <span class="st">"2020-01-03"</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [1]  TRUE FALSE FALSE FALSE FALSE  TRUE  TRUE</span>
+<span class="fu"><a href="../reference/tradingDays.html">tradingDays</a></span><span class="op">(</span><span class="va">dates</span>, holidays <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
+<span class="co">#&gt; [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE</span></code></pre></div>
 </div>
 <div id="look" class="section level4">
 <h4 class="hasAnchor">
 <a href="#look" class="anchor"></a>look()</h4>
 <p>Can be used to inspect the informational attributes of R objects.</p>
 <p>For objects created by the ichimoku package, a list of attributes specific to that data type is returned.</p>
-<p>For other objects, a list of attributes that are non-standard for matrix / data.frame / xts objects is returned, or else invisible NULL if none are found.</p>
+<p>For other objects, a list of attributes that are non-standard for matrix / data.frame / xts objects is returned, or else invisible NULL if none are present.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">sample_ohlc_data</span>, ticker <span class="op">=</span> <span class="st">"TKR"</span><span class="op">)</span>
 <span class="fu"><a href="../reference/look.html">look</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span>
@@ -225,6 +223,7 @@
 
 <span class="co"># Extract the ichimoku object which is the second element of 'stratlist':</span>
 <span class="va">strat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/look.html">look</a></span><span class="op">(</span><span class="va">stratlist</span>, which <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
+
 <span class="co"># Inspect ichimoku object:</span>
 <span class="fu"><a href="../reference/look.html">look</a></span><span class="op">(</span><span class="va">strat</span><span class="op">)</span>
 <span class="co">#&gt; $periods</span>
@@ -265,7 +264,7 @@
 <h4 class="hasAnchor">
 <a href="#xts_df" class="anchor"></a>xts_df()</h4>
 <p>Convert an ‘xts’ object to ‘data.frame’. This function can be an order of magnitude faster than <code><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame()</a></code> for an ‘xts’ object.</p>
-<p>Note that for ichimoku objects, a marginally faster, more specific version has been implemented as the S3 method <code><a href="../reference/as.data.frame.ichimoku.html">as.data.frame.ichimoku()</a></code>. Hence using this utility on an ichimoku object is not required.</p>
+<p>Note that for ichimoku objects, a marginally faster, more specific version has been implemented as the S3 method for <code><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame()</a></code>. Hence using this utility on an ichimoku object is not necessary.</p>
 <p>Takes the following arguments:</p>
 <ul>
 <li>
@@ -352,7 +351,7 @@
 <div id="df_trim" class="section level4">
 <h4 class="hasAnchor">
 <a href="#df_trim" class="anchor"></a>df_trim()</h4>
-<p>Trim rows containing NA values from a ‘data.frame’ object. This is a faster version of <code>stats:::na.omit()</code>.</p>
+<p>Trim rows containing NA values from a ‘data.frame’ object. This is a faster version of <code><a href="https://rdrr.io/r/stats/na.fail.html">stats::na.omit()</a></code>.</p>
 <p>Takes a single argument:</p>
 <ul>
 <li>
@@ -432,7 +431,7 @@
 <code>keep.attr</code> [default ‘timestamp’] name of an attribute in ‘new’ to retain if it is present, provided as a character string.</li>
 </ul>
 <p>Can be used to update price dataframes retrieved by <code><a href="../reference/oanda.html">oanda()</a></code>. The function is designed to update existing data with new values as they become available. As opposed to <code><a href="../reference/df_merge.html">df_merge()</a></code>, the data in ‘new’ will overwrite the data in ‘old’ rather than create duplicates.</p>
-<p>If the attribute specified by ‘keep.attr’ is present in ‘new’, for example the ‘timestamp’ in pricing data returned by <code><a href="../reference/oanda.html">oanda()</a></code>, this is retained. If the attribute is not found in ‘new’, the argument has no effect. All other non-required attributes are dropped.</p>
+<p>If the attribute specified by ‘keep.attr’ is present in ‘new’, for example the ‘timestamp’ in pricing data returned by <code><a href="../reference/oanda.html">oanda()</a></code>, this is retained. If the attribute is not found in ‘new’, the argument has no effect. All other non-essential attributes are dropped.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">data1</span> <span class="op">&lt;-</span> <span class="va">sample_ohlc_data</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span>, <span class="op">]</span>
 <span class="va">data1</span>
@@ -469,7 +468,7 @@
 <div id="references" class="section level2">
 <h2 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h2>
-<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.2.3, <a href="https://CRAN.R-project.org/package=ichimoku" class="uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
+<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.2.4, <a href="https://CRAN.R-project.org/package=ichimoku" class="uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
 <hr>
 </div>
   </div>

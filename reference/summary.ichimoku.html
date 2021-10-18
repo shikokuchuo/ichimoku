@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.4</span>
       </span>
     </div>
 
@@ -188,9 +188,8 @@ FALSE to show the object summary instead.</p></td>
     <p>This function is an S3 method for the generic function summary() for
     class 'ichimoku'. It can be invoked by calling summary(x) on an object 'x'
     of class 'ichimoku'.</p>
-<p>Where a subset or partial ichimoku object is passed to summary() such
-    that the object summary may not render correctly, the function will fall
-    back to the str() method to display a compact structure of the object.</p>
+<p>Performs basic validation for an ichimoku object and will inform if an
+    ichimoku object contains invalid information.</p>
 <p>For further details please refer to the reference vignette by calling:
     <code><a href='../articles/reference.html'>vignette("reference", package = "ichimoku")</a></code> and the strategies
     vignette by calling: <code><a href='../articles/strategies.html'>vignette("strategies", package = "ichimoku")</a></code></p>
@@ -198,7 +197,7 @@ FALSE to show the object summary instead.</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>cloud</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ichimoku.html'>ichimoku</a></span><span class='op'>(</span><span class='va'>sample_ohlc_data</span>, ticker <span class='op'>=</span> <span class='st'>"TKR"</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>cloud</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; ichimoku object with dimensions (281, 12)
+</div><div class='output co'>#&gt; ichimoku object with dimensions (281, 12) 
 #&gt; 
 #&gt;             Max: 2020-07-13 23:00:00 [139.7]
 #&gt; Start: 2020-01-02 00:00:00 [123]   End: 2020-12-24 00:00:00 [136]

@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.4</span>
       </span>
     </div>
 
@@ -146,14 +146,14 @@
 
 <span class="fu"><a href="../reference/oanda_switch.html">oanda_switch</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; Default OANDA server switched to 'live'</span></code></pre></div>
-<p>Note: this package only contains functions for retrieving available instruments and price data. It does not contain code to implement any trading capability whatsoever. Please be aware however, that a personal access token can be used (outside of this package) for all operations on your account including placing orders and trades, and take the appropriate precautions when using your live account token.</p>
+<p>Note: this package only contains functions for retrieving available instruments and price data. It does not contain code to implement any trading capability whatsoever. Please be aware however, that a personal access token can be used (outside of this package) for all operations on your account including placing orders and trades, and appropriate precautions should be taken when using your live account token.</p>
 </div>
 <div id="the-oanda-functions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#the-oanda-functions" class="anchor"></a>The OANDA Functions</h2>
 <p>All of the OANDA functions in the package are prefixed by ‘oanda’ for clarity.</p>
-<p>Functions designed primarily for interactive use may be called without any arguments, e.g. <code><a href="../reference/oanda_stream.html">oanda_stream()</a></code> or <code><a href="../reference/oanda_view.html">oanda_view()</a></code>, in which case you will be further prompted to enter required arguments; these should be entered unquoted i.e. without any surrounding "".</p>
-<p>The ‘instrument’ argument is case-insensitive and the delimiter can be either ’_’ or ‘-’, such that both <code><a href="../reference/oanda.html">oanda("USD_JPY")</a></code> and <code><a href="../reference/oanda.html">oanda("usd-jpy")</a></code> would be acceptable.</p>
+<p>Functions may be called interactively without any arguments, e.g. <code><a href="../reference/oanda_stream.html">oanda_stream()</a></code> or <code><a href="../reference/oanda_view.html">oanda_view()</a></code>, in which case you will be further prompted to enter required arguments; as opposed to when specifying such arguments normally, these should be entered unquoted i.e. without any surrounding "".</p>
+<p>For all functions, the ‘instrument’ argument is case-insensitive and the delimiter can be either ’_’ or ‘-’, such that both <code><a href="../reference/oanda.html">oanda("USD_JPY")</a></code> and <code><a href="../reference/oanda.html">oanda("usd-jpy")</a></code> would be acceptable.</p>
 <div id="oanda" class="section level3">
 <h3 class="hasAnchor">
 <a href="#oanda" class="anchor"></a><code>oanda()</code>
@@ -162,7 +162,7 @@
 <p>The arguments to the function are phrased identically to that of the API itself where relevant:</p>
 <ul>
 <li>
-<code>instrument</code> string containing the base currency and quote currency delimited by a ’_’ (e.g. “USD_JPY”). Use the <code><a href="../reference/oanda_instruments.html">oanda_instruments()</a></code> function to return a list of all valid instruments</li>
+<code>instrument</code> string containing the base currency and quote currency delimited by ’_’ or ‘-’ (e.g. “USD_JPY” or “usd-jpy”). Use the <code><a href="../reference/oanda_instruments.html">oanda_instruments()</a></code> function to return a list of all valid instruments</li>
 <li>
 <code>granularity</code> [default “D”] the granularity of the price data to fetch, one of “M”, “W”, “D”, “H12”, “H8”, “H6”, “H4”, “H3”, “H2”, “H1”, “M30”, “M15”, “M10”, “M5”, “M4”, “M2”, “M1”, “S30”, “S15”, “S10”, “S5”</li>
 <li>
@@ -176,11 +176,11 @@
 <li>
 <code>server</code> (optional) Specify the “practice” or “live” server according to the account type held with OANDA. If not specified, will default to “practice”, unless this has been changed by <code><a href="../reference/oanda_switch.html">oanda_switch()</a></code>.</li>
 <li>
-<code>apikey</code> (optional) string containing the OANDA fxTrade API key (personal access token). This argument is designed for specifying a function that returns such a string rather than the string itself, which could be potentially unsecure. This allows other packages that provide secure storage of secrets to be used if preferred over ‘keyring’</li>
+<code>apikey</code> (optional) string containing the OANDA fxTrade API key (personal access token). Does not need to be specified if already stored by <code><a href="../reference/oanda_set_key.html">oanda_set_key()</a></code>. This argument is designed for specifying a function that returns such a string rather than the string itself, which could be potentially unsecure. This allows other packages that provide secure storage of secrets to be used if preferred over ‘keyring’</li>
 <li>
 <code>quietly</code> if set to TRUE, will suppress printing of output to the console and return quietly</li>
 </ul>
-<p>Note: if both <code>from</code> and <code>to</code> are specified and the request would result in over 5000 periods being returned, the function automatically prompts the user to confirm if multiple requests should be submitted. Unless the user response is “n” or “no”, the data will proceed to be downloaded with rate limiting in place as per API best practices, and merged together into a single dataframe.</p>
+<p>Note: if both <code>from</code> and <code>to</code> are specified and the request would result in over 5000 periods being returned, the function prompts the user to confirm if multiple requests should be submitted. Unless the user response is “n” or “no”, the data will proceed to be downloaded with rate limiting in place, and merged together into a single dataframe. The function is safe for use in non-interactive settings as in such cases the download will proceed automatically without prompting.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/oanda.html">oanda</a></span><span class="op">(</span><span class="st">"USD_JPY"</span>, count <span class="op">=</span> <span class="fl">3</span>, from <span class="op">=</span> <span class="st">"2010-11-01"</span>, price <span class="op">=</span> <span class="st">"B"</span><span class="op">)</span>
 <span class="co">#&gt;                  time   open   high    low  close volume complete</span>
@@ -189,13 +189,13 @@
 <span class="co">#&gt; 3 2010-11-03 21:00:00 80.632 81.585 80.594 81.069  22204     TRUE</span></code></pre></div>
 <p>The returned object is a dataframe with the following columns: ‘time’, ‘open’, ‘high’, ‘low’, ‘close’, ‘volume’ and ‘complete’.</p>
 <ul>
-<li><p><strong>volume</strong> should normally be disregarded as this reflects the trading volume registered by OANDA and may not be reflective of the broader market</p></li>
-<li><p><strong>complete</strong> indicates whether the data period is complete or not. If TRUE, the values are historical and not subject to change. If FALSE, the period is ongoing and the values reflect the current snapshot and the final values may or may not differ</p></li>
+<li><p><strong>volume</strong> should be used with caution as this reflects the trading volume registered by OANDA and may not be reflective of the broader market</p></li>
+<li><p><strong>complete</strong> indicates whether the data period is complete or not. If TRUE, the values are historical and not subject to change. If FALSE, the period is ongoing and the values reflect the current snapshot whilst final values may or may not differ</p></li>
 </ul>
 <p>Important implementation notes:</p>
 <ul>
 <li><p>Incorporates automatic adjustment of the timestamps to end of period, as is customary for financial data. This means that, for example, today’s pricing data (incomplete trading period) will have today’s date as would be expected. In contrast, the raw data from the API has a timestamp of the start of the period</p></li>
-<li><p>The API data sometimes includes data for non-trading days with very low volumes. This is more common for older data and less so with more recent data. These may represent OTC trades that occurred over the OANDA platform, but nevertheless do not reflect market rates. These are automatically excluded from the data returned as they would otherwise produce spurious results if used with <code><a href="../reference/ichimoku.html">ichimoku()</a></code></p></li>
+<li><p>The API data sometimes includes data for non-trading days with very low volumes. This is more common for older data and less so with more recent data. These may represent OTC trades that occurred over the OANDA platform, but nevertheless do not reflect market rates. These are automatically excluded from the data returned as they would otherwise produce spurious results used with <code><a href="../reference/ichimoku.html">ichimoku()</a></code></p></li>
 </ul>
 </div>
 <div id="oanda_chart" class="section level3">
@@ -235,7 +235,7 @@
 <p>The following additional parameters can be used to customise the behaviour of the Shiny environment:</p>
 <ul>
 <li>
-<code>new.process</code> [default FALSE] if TRUE, will start the shiny session in a new R process, unblocking the current process and allowing continued use of the R console. Note that any stdout output from the new process is discarded but stderr output - messages, warnings and errors - are still sent to the console</li>
+<code>new.process</code> [default FALSE] if TRUE, will start the shiny session in a new R process, unblocking the current process and allowing continued use of the R console. Note that any stdout output from the new process is discarded but stderr output - messages, warnings and errors - are still sent through to the console</li>
 <li>
 <code>...</code> additional arguments passed to <code><a href="../reference/ichimoku.html">ichimoku()</a></code> for calculating the ichimoku cloud, <code><a href="../reference/autoplot.html">autoplot()</a></code> to set chart parameters, or the ‘options’ argument of <code><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html">shiny::shinyApp()</a></code>
 </li>
@@ -468,7 +468,7 @@
 <a href="#references" class="anchor"></a>References</h2>
 <p>‘OANDA’ and ‘fxTrade’ are trademarks owned by OANDA Corporation, an entity unaffiliated with the ichimoku package.</p>
 <p>OANDA fxTrade API developer website: <a href="https://developer.oanda.com/" class="uri">https://developer.oanda.com/</a>.</p>
-<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.2.3, <a href="https://CRAN.R-project.org/package=ichimoku" class="uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
+<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.2.4, <a href="https://CRAN.R-project.org/package=ichimoku" class="uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
 <hr>
 </div>
   </div>

@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.4</span>
       </span>
     </div>
 
@@ -149,29 +149,26 @@
 <p>Note: the indicator condition remains of the form c1 &gt; c2 even for short trades. Hence please take care when inverting, for example, ‘long while close &gt; tenkan’ to ‘short while close &lt; tenkan’, this should be formulated as ‘short while tenkan &gt; close’.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">strat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/strat.html">strat</a></span><span class="op">(</span><span class="va">cloud</span>, c1 <span class="op">=</span> <span class="st">"cloudB"</span>, c2 <span class="op">=</span> <span class="st">"kijun"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">strat</span><span class="op">[</span><span class="fl">100</span><span class="op">:</span><span class="fl">105</span><span class="op">]</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">strat</span><span class="op">[</span><span class="fl">96</span><span class="op">:</span><span class="fl">100</span>, <span class="op">]</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="co">#&gt;                      open  high   low close cd tenkan  kijun senkouA senkouB</span>
+<span class="co">#&gt; 2020-05-13 23:00:00 119.7 121.5 119.2 121.3  1 122.10 124.55 123.275  123.20</span>
+<span class="co">#&gt; 2020-05-14 23:00:00 121.3 122.1 120.2 121.9  1 122.05 124.55 124.575  124.35</span>
+<span class="co">#&gt; 2020-05-17 23:00:00 122.6 122.6 122.2 122.4 -1 122.05 124.55 125.200  124.85</span>
+<span class="co">#&gt; 2020-05-18 23:00:00 122.4 123.0 122.3 122.7  1 121.55 123.90 125.625  124.85</span>
 <span class="co">#&gt; 2020-05-19 23:00:00 122.7 122.7 121.8 122.4 -1 121.05 123.90 125.675  124.85</span>
-<span class="co">#&gt; 2020-05-20 23:00:00 122.4 122.6 121.1 121.9 -1 121.05 123.90 125.675  124.85</span>
-<span class="co">#&gt; 2020-05-21 23:00:00 121.9 123.7 121.7 123.3  1 121.40 123.80 125.675  124.85</span>
-<span class="co">#&gt; 2020-05-24 23:00:00 123.3 124.0 123.0 124.0  1 121.55 123.80 125.675  124.85</span>
-<span class="co">#&gt; 2020-05-25 23:00:00 124.2 124.3 124.0 124.1 -1 121.75 123.65 125.975  124.85</span>
-<span class="co">#&gt; 2020-05-26 23:00:00 124.1 124.1 123.4 123.9 -1 122.25 123.65 126.475  124.85</span>
-<span class="co">#&gt;                     chikou  cloudT cloudB cond posn txn        logret</span>
-<span class="co">#&gt; 2020-05-19 23:00:00  135.1 125.675 124.85    1    1   0 -0.0024479816</span>
-<span class="co">#&gt; 2020-05-20 23:00:00  135.6 125.675 124.85    1    1   0 -0.0040933336</span>
-<span class="co">#&gt; 2020-05-21 23:00:00  134.5 125.675 124.85    1    1   0  0.0114193737</span>
-<span class="co">#&gt; 2020-05-24 23:00:00  134.3 125.675 124.85    1    1   0  0.0072727593</span>
-<span class="co">#&gt; 2020-05-25 23:00:00  135.9 125.975 124.85    1    1   0 -0.0008054773</span>
-<span class="co">#&gt; 2020-05-26 23:00:00  135.2 126.475 124.85    1    1   0 -0.0016129036</span>
-<span class="co">#&gt;                           slogret          ret         sret</span>
-<span class="co">#&gt; 2020-05-19 23:00:00 -0.0024479816 -0.002444988 -0.002444988</span>
-<span class="co">#&gt; 2020-05-20 23:00:00 -0.0040933336 -0.004084967 -0.004084967</span>
-<span class="co">#&gt; 2020-05-21 23:00:00  0.0114193737  0.011484824  0.011484824</span>
-<span class="co">#&gt; 2020-05-24 23:00:00  0.0072727593  0.007299270  0.007299270</span>
-<span class="co">#&gt; 2020-05-25 23:00:00 -0.0008054773 -0.000805153 -0.000805153</span>
-<span class="co">#&gt; 2020-05-26 23:00:00 -0.0016129036 -0.001611604 -0.001611604</span></code></pre></div>
-<p>The use of <code><a href="../reference/strat.html">strat()</a></code> returns an augmented ichimoku object. The printout above of a slice of the object (rows 100 to 105) shows that the following columns are appended:</p>
+<span class="co">#&gt;                     chikou  cloudT cloudB cond posn txn       logret</span>
+<span class="co">#&gt; 2020-05-13 23:00:00  132.1 123.275 123.20    0    0   0  0.013278203</span>
+<span class="co">#&gt; 2020-05-14 23:00:00  133.1 124.575 124.35    0    0   0  0.010660208</span>
+<span class="co">#&gt; 2020-05-17 23:00:00  132.4 125.200 124.85    1    0   0 -0.001632653</span>
+<span class="co">#&gt; 2020-05-18 23:00:00  132.6 125.625 124.85    1    1   1  0.002447982</span>
+<span class="co">#&gt; 2020-05-19 23:00:00  135.1 125.675 124.85    1    1   0 -0.002447982</span>
+<span class="co">#&gt;                          slogret          ret         sret</span>
+<span class="co">#&gt; 2020-05-13 23:00:00  0.000000000  0.013366750  0.000000000</span>
+<span class="co">#&gt; 2020-05-14 23:00:00  0.000000000  0.010717230  0.000000000</span>
+<span class="co">#&gt; 2020-05-17 23:00:00  0.000000000 -0.001631321  0.000000000</span>
+<span class="co">#&gt; 2020-05-18 23:00:00  0.002447982  0.002450980  0.002450980</span>
+<span class="co">#&gt; 2020-05-19 23:00:00 -0.002447982 -0.002444988 -0.002444988</span></code></pre></div>
+<p>The use of <code><a href="../reference/strat.html">strat()</a></code> returns an augmented ichimoku object. The printout above of a slice of the object (rows 96 to 100) shows that the following columns are appended:</p>
 <ul>
 <li>
 <code>$cond</code>: ‘1’ if the indicator condition is met at the close of the the time period (note: if the indicator condition involves chikou span, the comparison will be of past periods)</li>
@@ -560,7 +557,7 @@
 <p>‘p &gt;= |r|’ represents the empirical probability of the latest observed absolute ‘r value’ or greater.</p>
 <p>’p*’ will display a star if ‘p &gt;= |r|’ is less than or equal to the value of the argument ‘signif’.</p>
 <p>‘E(|res|)|p’ represents the mean or expected absolute value of ‘res’, conditional upon the absolute ‘r value’ being greater than equal to the latest observed absolute ‘r value’. This provides an indication by how much ‘res’ might increase in more extreme cases.</p>
-<p>Note: All calculations are performed on the full values, but are rounded to 2 decimal places for presentation.</p>
+<p>Note: All calculations are performed on the full values, but are rounded to 2 decimal places for final presentation.</p>
 </div>
 </div>
 <div id="strategy-summary-specification" class="section level2">
@@ -587,7 +584,7 @@
 <h2 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h2>
 <p>Sasaki, H. 佐々木 英信 (1996), <em>一目均衡表の研究 [ichimoku kinkouhyou no kenkyuu]</em>. Tokyo, Japan: Toushi Radar.</p>
-<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.2.3, <a href="https://CRAN.R-project.org/package=ichimoku" class="uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
+<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.2.4, <a href="https://CRAN.R-project.org/package=ichimoku" class="uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
 <hr>
 </div>
   </div>
