@@ -58,9 +58,8 @@ iplot <- function(x,
     }
 
     tformat <- if (attr(x, "periodicity") > 80000) "%F" else "%F %T"
-    index <- index.ichimoku(x)
-    start <- index[1L]
-    end <- index[dim(x)[1L]]
+    start <- index.ichimoku(x, 1L)
+    end <- index.ichimoku(x, dim(x)[1L])
     xadj <- if (nchar(format.POSIXct(start)) > 10) -17 else 5
 
     ui <- shiny::fluidPage(
@@ -130,7 +129,7 @@ iplot <- function(x,
       )
       output$hover_x <- shiny::renderUI({
         shiny::req(input$type == "none", input$plot_hover, posi_x() > 0, posi_x() <= plen())
-        drawGuide(label = index.ichimoku(pdata())[posi_x()], left = left_px() + xadj, top = 60)
+        drawGuide(label = index.ichimoku(pdata(), posi_x()), left = left_px() + xadj, top = 60)
       })
       output$hover_y <- shiny::renderUI({
         shiny::req(input$type == "none", input$plot_hover)
@@ -138,7 +137,9 @@ iplot <- function(x,
       })
       output$infotip <- shiny::renderUI({
         shiny::req(input$type == "none", input$infotip, input$plot_hover, posi_x() > 0, posi_x() <= plen())
-        drawInfotip(sdata = pdata()[posi_x(), ], left_px = left_px(), top_px = top_px())
+        drawInfotip(sidx = index.ichimoku(pdata(), posi_x()),
+                    sdata = coredata.ichimoku(pdata())[posi_x(), ],
+                    left_px = left_px(), top_px = top_px())
       })
 
       session$onSessionEnded(function() shiny::stopApp())
@@ -169,7 +170,7 @@ drawGuide <- function(label, left, top) {
   shiny::wellPanel(
     style = paste0("position: absolute; z-index: 100; background-color: rgba(245, 245, 245, 0.85); left: ",
                    left, "px; top: ", top, "px; font-size: 0.8em; padding: 0;"),
-    shiny::HTML(paste(label))
+    shiny::HTML(as.character(label))
   )
 }
 
@@ -178,7 +179,8 @@ drawGuide <- function(label, left, top) {
 #' Internal function used by ichimoku to draw the infotip for interactive Shiny
 #'     plots.
 #'
-#' @param sdata the selected data frame row.
+#' @param sidx the selected index value.
+#' @param sdata the selected coredata row.
 #' @param left_px the horizontal cursor position in pixels.
 #' @param top_px the vertical cursor position in pixels.
 #'
@@ -186,26 +188,26 @@ drawGuide <- function(label, left, top) {
 #'
 #' @noRd
 #'
-drawInfotip <- function(sdata, left_px, top_px) {
+drawInfotip <- function(sidx, sdata, left_px, top_px) {
   shiny::wellPanel(
     style = paste0("position: absolute; z-index: 100; background-color: rgba(245, 245, 245, 0.85); left: ",
                    left_px + 50, "px; top: ", top_px + 40, "px; font-size: 0.8em; padding: 1px 5px 5px 5px;"),
     shiny::HTML(paste0("<div style='margin: 0; padding: 0; font-weight: bold'>",
-                       if (isTRUE(sdata$cd == 1)) "&#9651;<br />" else if (isTRUE(sdata$cd == -1)) "&#9660;<br />" else "&#8212;<br />",
-                       index.ichimoku(sdata),
+                       if (isTRUE(sdata["cd"] == 1)) "&#9651;<br />" else if (isTRUE(sdata["cd"] == -1)) "&#9660;<br />" else "&#8212;<br />",
+                       format.POSIXct(sidx),
                        "</div><div style='text-align: center; margin: 2px 0 0 0; padding: 0'>H: ",
-                       signif(sdata$high, digits = 5),
+                       signif(sdata["high"], digits = 5),
                        "</div><div style='margin: 0; padding: 0'>O: ",
-                       signif(sdata$open, digits = 5),
-                       "&nbsp;&nbsp;C: ", signif(sdata$close, digits = 5),
+                       signif(sdata["open"], digits = 5),
+                       "&nbsp;&nbsp;C: ", signif(sdata["close"], digits = 5),
                        "</div><div style='text-align: center; margin: 0; padding: 0'>L: ",
-                       signif(sdata$low, digits = 5),
+                       signif(sdata["low"], digits = 5),
                        "</div><div style='margin: 2px 0 0 0; padding: 0'>Tenkan: ",
-                       signif(sdata$tenkan, digits = 5),
-                       "<br />Kijun: ", signif(sdata$kijun, digits = 5),
-                       "<br />Senkou A: ", signif(sdata$senkouA, digits = 5),
-                       "<br />Senkou B: ", signif(sdata$senkouB, digits = 5),
-                       "<br />Chikou: ", signif(sdata$chikou, digits = 5), "</div>"))
+                       signif(sdata["tenkan"], digits = 5),
+                       "<br />Kijun: ", signif(sdata["kijun"], digits = 5),
+                       "<br />Senkou A: ", signif(sdata["senkouA"], digits = 5),
+                       "<br />Senkou B: ", signif(sdata["senkouB"], digits = 5),
+                       "<br />Chikou: ", signif(sdata["chikou"], digits = 5), "</div>"))
   )
 }
 

@@ -25,7 +25,7 @@
 #'
 oanda_switch <- function() {
 
-  do_oanda$switchServer()
+  do_$switchServer()
 
 }
 
@@ -37,7 +37,7 @@ oanda_switch <- function() {
 #'
 #' @noRd
 #'
-do_oanda <- function() {
+do_ <- function() {
 
   server_type <- "practice"
   livestore <- keystore <- instruments <- account <- NULL
@@ -94,7 +94,7 @@ do_oanda <- function() {
     getAccount = function(server, apikey) {
       if (is.null(account)) {
         server <- if (missing(server)) server_type else match.arg(server, c("practice", "live"))
-        if (missing(apikey)) apikey <- do_oanda$getKey(server = server)
+        if (missing(apikey)) apikey <- do_$getKey(server = server)
         url <- switch(server,
                       practice = "https://api-fxpractice.oanda.com/v3/accounts",
                       live = "https://api-fxtrade.oanda.com/v3/accounts")
@@ -112,9 +112,9 @@ do_oanda <- function() {
     getInstruments = function(server, apikey) {
       if (is.null(instruments)) {
         server <- if (missing(server)) server_type else match.arg(server, c("practice", "live"))
-        if (missing(apikey)) apikey <- do_oanda$getKey(server = server)
+        if (missing(apikey)) apikey <- do_$getKey(server = server)
         url <- paste0("https://api-fx", switch(server, practice = "practice", live = "trade"),
-                      ".oanda.com/v3/accounts/", do_oanda$getAccount(server = server, apikey = apikey),
+                      ".oanda.com/v3/accounts/", do_$getAccount(server = server, apikey = apikey),
                       "/instruments")
         h <- new_handle()
         handle_setheaders(handle = h,

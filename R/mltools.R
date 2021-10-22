@@ -342,7 +342,7 @@ relative <- function(x, order = FALSE, signif = 0.2, quietly) {
   xlen <- dims[1L]
   xwid <- dims[2L]
   cnames <- attr(grid, "names")
-  time <- index.ichimoku(x)[xlen]
+  time <- attr(grid, "row.names")[xlen]
 
   xn <- as.numeric(grid[xlen, ])
   means <- unname(unlist(lapply(grid, mean)))
@@ -372,12 +372,12 @@ relative <- function(x, order = FALSE, signif = 0.2, quietly) {
   attributes(df) <- list(names = c("mean(X)", "sd(X)", "X[n]", "res", "r value", "p >= |r|", "p*", "E(|res|)|p"),
                          class = "data.frame",
                          row.names = if (ordered) cnames[reorder] else cnames,
-                         latest = time,
+                         latest = .POSIXct(as.POSIXct(time)),
                          periods = attr(x, "periods"),
                          periodicity = attr(x, "periodicity"),
                          ticker = attr(x, "ticker"))
 
-  if (missing(quietly) || !isTRUE(quietly)) cat("Latest:", format.POSIXct(time), "| n:", xlen, "\n")
+  if (missing(quietly) || !isTRUE(quietly)) cat("Latest:", time, "| n:", xlen, "\n")
   df
 
 }

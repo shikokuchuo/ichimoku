@@ -30,16 +30,18 @@
 tradingDays <- function(x, holidays, ...) {
   if (missing(holidays)) {
     posixlt <- as.POSIXlt.POSIXct(x)
-    vec <- posixlt$wday %in% 1:5
-    vec[(posixlt$mon == 0L & posixlt$mday == 1L) | (posixlt$mon == 11L & posixlt$mday == 25L)] <- FALSE
+    vec <- .subset2(posixlt, "wday") %in% 1:5
+    vec[(.subset2(posixlt, "mon") == 0L & .subset2(posixlt, "mday") == 1L) |
+          (.subset2(posixlt, "mon") == 11L & .subset2(posixlt, "mday") == 25L)] <- FALSE
   } else if (is.null(holidays)) {
     return(rep(TRUE, length(x)))
   } else {
     posixlt <- as.POSIXlt.POSIXct(x)
-    vec <- posixlt$wday %in% 1:5
+    vec <- .subset2(posixlt, "wday") %in% 1:5
     holidays <- tryCatch(as.POSIXct(holidays), error = function(e) {
       warning("Specified holidays are invalid - reverting to defaults", call. = FALSE)
-      vec[(posixlt$mon == 0L & posixlt$mday == 1L) | (posixlt$mon == 11L & posixlt$mday == 25L)] <- FALSE
+      vec[(.subset2(posixlt, "mon") == 0L & .subset2(posixlt, "mday") == 1L) |
+            (.subset2(posixlt, "mon") == 11L & .subset2(posixlt, "mday") == 25L)] <- FALSE
       return(vec)
     })
     vec[x %in% holidays] <- FALSE
@@ -103,7 +105,7 @@ grid_dup <- function(n, omit.id) {
 #'
 df_trim <- function(x) {
   omit <- logical(dim(x)[1L])
-  for (i in 1:length(x)) {
+  for (i in seq_len(length(x))) {
     omit <- omit | is.na(x[[i]])
   }
   x[!omit, , drop = FALSE]

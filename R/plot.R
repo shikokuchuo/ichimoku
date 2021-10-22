@@ -113,7 +113,7 @@ autoplot.ichimoku <- function(object,
 
   theme <- match.arg(theme)
   pal <- ichimoku_themes[[theme]]
-  showstrat <- hasStrat(object) && isTRUE(strat)
+  showstrat <- hasStrat(object) && (missing(strat) || isTRUE(strat))
   if (missing(ticker)) ticker <- attr(object, "ticker")
   if (missing(subtitle)) {
     subtitle <- if (showstrat) paste0("Strategy: ", attr(object, "strat")["Strategy", ][[1L]])
@@ -210,14 +210,19 @@ extraplot <- function(object,
 
   } else if (type == "r") {
     p2 <- attr(object, "periods")[2L]
-    object$osc_typ_slw <- 100 - 100 / (1 + meanOver((object[, "cd"] == 1) * (object[, "close"] - object[, "open"]), p2) / meanOver((object[, "cd"] == -1) * (object[, "open"] - object[, "close"]), p2))
+    core <- coredata.ichimoku(object)
+    object$osc_typ_slw <- 100 - 100 /
+      (1 + meanOver(((cd <- core[, "cd"]) == 1) * ((close <- core[, "close"]) - (open <- core[, "open"])), p2) /
+         meanOver((cd == -1) * (open - close), p2))
 
   } else {
     periods <- attr(object, "periods")
     p1 <- periods[1L]
     p2 <- periods[2L]
-    object$osc_typ_fst <- 100 * (object[, "close"] - minOver(object[, "low"], p1)) / (maxOver(object[, "high"], p1) - minOver(object[, "low"], p1))
-    object$osc_typ_slw <- 100 * (object[, "close"] - minOver(object[, "low"], p2)) / (maxOver(object[, "high"], p2) - minOver(object[, "low"], p2))
+    core <- coredata.ichimoku(object)
+    object$osc_typ_fst <- 100 * ((close <- core[, "close"]) - minOver((low <- core[, "low"]), p1)) /
+      (maxOver((high <- core[, "high"]), p1) - minOver(low, p1))
+    object$osc_typ_slw <- 100 * (close - minOver(low, p2)) / (maxOver(high, p2) - minOver(low, p2))
   }
 
   if (!missing(window)) object <- object[window]
@@ -326,11 +331,11 @@ breaks_ichimoku <- function(data, object) {
 labels_ichimoku <- function(data, object) {
 
   function(x) {
-    labels <- .subset2(data, "index")[x]
+    labels <- .POSIXct(.subset(.subset2(data, "index"), x))
     if (attr(object, "periodicity") > 80000) {
-      format(labels, paste("%d-%b", "%Y", sep = "\n"))
+      format.POSIXct(labels, format = paste("%d-%b", "%Y", sep = "\n"))
     } else {
-      format(labels, paste("%H:%M", "%d-%b", "%Y", sep = "\n"))
+      format.POSIXct(labels, format = paste("%H:%M", "%d-%b", "%Y", sep = "\n"))
     }
   }
 }

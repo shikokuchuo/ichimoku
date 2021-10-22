@@ -81,9 +81,10 @@
 #'
 #' cloud <- ichimoku(TKR)
 #' plot(cloud)
-#' print(cloud[101:120, ], plot = FALSE)
+#' print(cloud[101:110, ], plot = FALSE)
 #'
 #' kumo <- ichimoku(TKR, ticker = "TKR Co.", periods = c(9, 26, 52), keep.data = TRUE)
+#' summary(kumo)
 #' plot(kumo, theme = "solarized", type = "bar", custom = "volume")
 #'
 #' @rdname ichimoku
@@ -141,19 +142,19 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
 
   coli <- grep("index|date|time", cnames, ignore.case = TRUE, perl = TRUE)[1L]
   if (is.na(coli)) {
-    index <- tryCatch(as.POSIXct(attr(x, "row.names")), error = function(e) {
+    index <- tryCatch(unclass(as.POSIXct(attr(x, "row.names"))), error = function(e) {
       if (is.integer(rnames <- attr(x, "row.names")) && rnames[1L] != 1L) {
         warning("Converted numeric row names as POSIX times - please check validity", call. = FALSE)
-        .POSIXct(rnames)
+        rnames
       } else {
         stop("valid date-time index not found. Perhaps check column names?", call. = FALSE)
       }
     })
   } else {
-    index <- tryCatch(as.POSIXct(.subset2(x, coli)), error = function(e) {
+    index <- tryCatch(unclass(as.POSIXct(.subset2(x, coli))), error = function(e) {
       if (is.numeric(idxcol <- .subset2(x, coli))) {
         warning("Converted numeric values in column '", cnames[coli], "' as POSIX times - please check validity", call. = FALSE)
-        .POSIXct(idxcol)
+        idxcol
       } else {
         stop("column '", cnames[coli], "' is not convertible to a POSIXct date-time format", call. = FALSE)
       }
@@ -209,23 +210,21 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
   cloudT <- pmax.int(senkouA, senkouB)
   cloudB <- pmin.int(senkouA, senkouB)
 
-  periodicity <- min(unclass(index[2:4]) - unclass(index[1:3]))
+  periodicity <- min(index[2:4] - index[1:3])
   if (periodicity == 86400) {
-    seq <- seq.POSIXt(from = index[xlen], by = periodicity, length.out = p2 + p2)[-1L]
-    future <- seq[tradingDays(seq, ...)][1:(p2 - 1L)]
+    future <- (seq <- seq.int(from = index[xlen], by = periodicity,
+                              length.out = p2 + p2)[-1L])[tradingDays(.POSIXct(seq), ...)][1:(p2 - 1L)]
   } else {
-    future <- seq.POSIXt(from = index[xlen], by = periodicity, length.out = p2)[-1L]
+    future <- seq.int(from = index[xlen], by = periodicity, length.out = p2)[-1L]
   }
-  xtsindex <- unclass(c(index, future))
-  attributes(xtsindex) <- list(tzone = Sys.getenv("TZ"), tclass = class(future))
+  xtsindex <- c(index, future)
+  attributes(xtsindex) <- list(tzone = "", tclass = c("POSIXct", "POSIXt"))
 
   lk <- kmatrix <- NULL
   if (!missing(keep.data) && isTRUE(keep.data)) {
-    cols <- c("coli", "colo", "colh", "coll", "colc", "colp")
-    used <- do.call(c, lapply(cols, function(x) {
+    used <- (used <- unlist(lapply(c("coli", "colo", "colh", "coll", "colc", "colp"), function(x) {
       if (exists(x, where = parent.frame(2L), inherits = FALSE)) get(x, pos = parent.frame(2L), inherits = FALSE)
-    }))
-    used <- used[!is.na(used)]
+    })))[!is.na(used)]
     keep <- if (!is.null(used)) cnames[-used]
     kmatrix <- do.call(cbind, lapply(.subset(x, keep), function(x) c(as.numeric(x), rep(NA, p2 - 1L))))
     lk <- look(x)
@@ -362,14 +361,13 @@ print.ichimoku <- function(x, plot = TRUE, ...) {
 #'
 str.ichimoku <- function (object, ...) {
 
-  index <- index.ichimoku(object)
   if (is.null(dims <- attr(object, "dim"))) {
     cat("ichimoku object with no dimensions")
-    dates <- format.POSIXct(c(index[1L], index[xlen <- length(index)]))
+    dates <- format.POSIXct(index.ichimoku(object, c(1L, xlen <- length(object))))
     cat("\nVector <numeric> w/ length:", xlen)
     cat("\n index: <POSIXct>", dates[1L], "...", dates[2L])
   } else {
-    dates <- format.POSIXct(c(index[1L], index[dim1 <- dims[1L]]))
+    dates <- format.POSIXct(index.ichimoku(object, c(1L, dim1 <- dims[1L])))
     cat("ichimoku object [", dates[1L], " / ", dates[2L], "]", if (hasStrat(object)) " w/ strat", sep = "")
     cat("\nMatrix <numeric> w/ dim: (", dim1, " rows, ", dims[2L], " cols)\n dimnames[[2L]]: $", sep = "")
     cat(attr(object, "dimnames")[[2L]], sep = " $")
@@ -428,7 +426,7 @@ str.ichimoku <- function (object, ...) {
 #'
 summary.ichimoku <- function(object, strat = TRUE, ...) {
 
-  if (hasStrat(object) && isTRUE(strat)) {
+  if (hasStrat(object) && (missing(strat) || isTRUE(strat))) {
     summary <- NULL
     tryCatch(attr(object, "strat")["Strategy", ],
              error = function(e) cat(summary <<- "ichimoku object with invalid strategy"))
@@ -447,12 +445,11 @@ summary.ichimoku <- function(object, strat = TRUE, ...) {
     } else {
       cat(summary <- paste0("ichimoku object with dimensions (", dim1 <- dims[1L], ", ", dim2, ")"), "\n")
       if (dim1 != 0L) {
-        idx <- index.ichimoku(object)
         core <- coredata.ichimoku(object)
         end <- sum(!is.na(core[, "close"]))
         high <- which.max(core[1:end, "high"])
         low <- which.min(core[1:end, "low"])
-        dates <- format.POSIXct(c(idx[1L], idx[high], idx[low], idx[end]))
+        dates <- format.POSIXct(index.ichimoku(object, c(1L, high, low, end)))
         cat("\n            Max: ", dates[2L], " [", core[high, "high"],
             "]\nStart: ", dates[1L], " [", core[1L, "open"],
             "]   End: ", dates[4L], " [", core[end, "close"],
@@ -583,6 +580,7 @@ NULL
 #' Method for extracting the date-time index of ichimoku objects.
 #'
 #' @param x an object of class 'ichimoku'.
+#' @param subset an integer or logical value or vector by which to subset the index.
 #' @param ... arguments passed to or from other methods.
 #'
 #' @return The date-time index of the ichimoku object as a vector of POSIXct
@@ -592,19 +590,25 @@ NULL
 #'     for class 'ichimoku'. It can be invoked by calling index(x) on an
 #'     object 'x' of class 'ichimoku'.
 #'
+#'     Subsetting by specifying the 'subset' parameter subsets using the
+#'     numerical values underlying the POSIXct times and results in a faster
+#'     operation than usual subset operators such as '['.
+#'
 #'     For further details please refer to the reference vignette by calling:
 #'     \code{vignette("reference", package = "ichimoku")}
 #'
 #' @examples
 #' cloud <- ichimoku(sample_ohlc_data)
-#' index(cloud)[101:120]
+#' index(cloud)[101:110]
+#' index(cloud, 101:110)
 #'
 #' @rdname index.ichimoku
 #' @method index ichimoku
 #' @export
 #'
-index.ichimoku <- function(x, ...) {
+index.ichimoku <- function(x, subset, ...) {
   idx <- attr(x, "index")
+  if (!missing(subset)) idx <- .subset(idx, subset)
   class(idx) <- c("POSIXct", "POSIXt")
   idx
 }

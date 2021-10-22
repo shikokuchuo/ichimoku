@@ -1,3 +1,14 @@
+# ichimoku 1.2.4.1
+
+#### Updates:
+
+* `index()` gains the parameter 'subset' for fast subsetting of ichimoku cloud indexes.
+* `archive()` now safe for use in non-interactive settings, where it no longer prompts to confirm overwriting of existing files.
+* `oanda_view()` now returns correct data types in the dataframe.
+* Fixes cases of `relative()` showing the incorrect date for 'latest'.
+* Updated internal fallback OANDA instruments table.
+* Performance enhancements to date handling across `ichimoku()` and other package functions.
+
 # ichimoku 1.2.4
 
 #### New features:

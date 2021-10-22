@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# ichimoku <img src="man/figures/logo.png" alt="ichimoku logo" style="float:right" />
+# ichimoku <img src="man/figures/logo.png" alt="ichimoku logo" align="right" />
 
 <!-- badges: start -->
 

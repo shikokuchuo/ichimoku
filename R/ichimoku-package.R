@@ -83,8 +83,8 @@ NULL
 utils::globalVariables(".data")
 
 .onLoad <- function(libname, pkgname) {
-  do_oanda <- do_oanda()
-  do_oanda <<- do_oanda
+  do_ <- do_()
+  do_ <<- do_
   invisible()
 }
 

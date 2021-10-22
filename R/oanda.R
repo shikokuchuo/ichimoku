@@ -83,8 +83,8 @@ oanda <- function(instrument,
   instrument <- sub("-", "_", toupper(force(instrument)), fixed = TRUE)
   granularity <- match.arg(granularity)
   price <- match.arg(price)
-  server <- if (missing(server)) do_oanda$getServer() else match.arg(server, c("practice", "live"))
-  if (missing(apikey)) apikey <- do_oanda$getKey(server = server)
+  server <- if (missing(server)) do_$getServer() else match.arg(server, c("practice", "live"))
+  if (missing(apikey)) apikey <- do_$getKey(server = server)
 
   if (!missing(from) && !missing(to)) {
     d1 <- tryCatch(as.POSIXct(from), error = function(e) {
@@ -183,39 +183,42 @@ getPrices <- function(instrument, granularity, count, from, to, price, server,
                                    parse_json(rawToChar(resp$content)), call. = FALSE)
 
   hdate <- strsplit(rawToChar(resp$headers), "date: | GMT", perl = TRUE)[[1L]][2L]
-  timestamp <- .POSIXct(as.POSIXct.POSIXlt(strptime(hdate, format = "%a, %d %b %Y %H:%M:%S", tz = "UTC")))
+  timestamp <- as.POSIXct.POSIXlt(strptime(hdate, format = "%a, %d %b %Y %H:%M:%S", tz = "UTC"))
   ptype <- switch(price, M = "mid", B = "bid", A = "ask")
 
   !missing(.validate) && .validate == FALSE && {
-    data <- parse_json(rawToChar(resp$content))[["candles"]][[1L]][[ptype]]
-    return(c(list(t = format.POSIXct(timestamp)), data))
+    data <- unlist(parse_json(rawToChar(resp$content))[["candles"]][[1L]][[ptype]])
+    storage.mode(data) <- "double"
+    return(c(t = unclass(timestamp), data))
   }
 
   data <- do.call(rbind, parse_json(rawToChar(resp$content))[["candles"]])
   time <- strptime(unlist(data[, "time", drop = FALSE]), format = "%Y-%m-%dT%H:%M:%S", tz = "UTC")
   if (granularity == "D") {
-    keep <- time$wday %in% 0:4
+    keep <- .subset2(time, "wday") %in% 0:4
     if (missing(.validate)) {
-      keep[time$mon == 11L & time$mday == 31L | (time$mon == 11L & time$mday == 24L)] <- FALSE
+      keep[.subset2(time, "mon") == 11L & .subset2(time, "mday") == 31L |
+             (.subset2(time, "mon") == 11L & .subset2(time, "mday") == 24L)] <- FALSE
     }
     data <- data[keep, , drop = FALSE]
-    time <- time[keep]
+    time <- .subset(as.POSIXct.POSIXlt(time), keep)
   } else if (granularity == "M") {
-    time <- as.POSIXlt.POSIXct(as.POSIXct.POSIXlt(time) + 86400)
-    time$mon <- time$mon + 1L
+    time <- as.POSIXlt.POSIXct(unclass(as.POSIXct.POSIXlt(time)) + 86400)
+    time$mon <- .subset2(time, "mon") + 1L
+    time <- unclass(as.POSIXct.POSIXlt(time))
   } else if (missing(.validate) && granularity != "W") {
-    cut <- (time$wday == 5L & time$hour > 20L) | time$wday == 6L | (time$wday == 0L & time$hour < 21L)
+    cut <- (.subset2(time, "wday") == 5L & .subset2(time, "hour") > 20L) | .subset2(time, "wday") == 6L | (.subset2(time, "wday") == 0L & .subset2(time, "hour") < 21L)
     data <- data[!cut, , drop = FALSE]
-    time <- time[!cut]
+    time <- .subset(as.POSIXct.POSIXlt(time), !cut)
   }
   periodicity <- switch(granularity,
                         M = -86400, W = 604800, D = 86400, H12 = 43200, H8 = 28800,
                         H6 = 21600, H4 = 14400, H3 = 10800, H2 = 7200, H1 = 3600,
                         M30 = 1800, M15 = 900, M10 = 600, M5 = 300, M4 = 240,
                         M2 = 120, M1 = 60, S30 = 30, S15 = 15, S10 = 10, S5 = 5)
-  time <- .POSIXct(as.POSIXct.POSIXlt(time) + periodicity)
+  time <- .POSIXct(time + periodicity)
   ohlc <- unlist(data[, ptype, drop = FALSE])
-  cnames <- attr(ohlc, "names")
+  cnames <- names(ohlc)
 
   df <- list(time,
              as.numeric(ohlc[cnames == "o"]),
@@ -229,7 +232,7 @@ getPrices <- function(instrument, granularity, count, from, to, price, server,
                          row.names = .set_row_names(length(time)),
                          instrument = instrument,
                          price = price,
-                         timestamp = timestamp,
+                         timestamp = .POSIXct(timestamp),
                          oanda = TRUE)
   df
 
@@ -284,10 +287,10 @@ oanda_stream <- function(instrument, server, apikey) {
 
   if (missing(instrument) && interactive()) instrument <- readline("Enter instrument:")
   instrument <- sub("-", "_", toupper(force(instrument)), fixed = TRUE)
-  server <- if (missing(server)) do_oanda$getServer() else match.arg(server, c("practice", "live"))
-  if (missing(apikey)) apikey <- do_oanda$getKey(server = server)
+  server <- if (missing(server)) do_$getServer() else match.arg(server, c("practice", "live"))
+  if (missing(apikey)) apikey <- do_$getKey(server = server)
   url <- paste0("https://stream-fx", switch(server, practice = "practice", live = "trade"),
-                ".oanda.com/v3/accounts/", do_oanda$getAccount(server = server, apikey = apikey),
+                ".oanda.com/v3/accounts/", do_$getAccount(server = server, apikey = apikey),
                 "/pricing/stream?instruments=", instrument)
   h <- new_handle()
   handle_setheaders(handle = h,
@@ -373,8 +376,8 @@ oanda_chart <- function(instrument,
   granularity <- match.arg(granularity)
   price <- match.arg(price)
   theme <- match.arg(theme)
-  server <- if (missing(server)) do_oanda$getServer() else match.arg(server, c("practice", "live"))
-  if (missing(apikey)) apikey <- do_oanda$getKey(server = server)
+  server <- if (missing(server)) do_$getServer() else match.arg(server, c("practice", "live"))
+  if (missing(apikey)) apikey <- do_$getKey(server = server)
   if (!is.numeric(refresh) || refresh < 1) {
     message("Specified refresh interval invalid - reverting to default of 5 secs")
     refresh <- 5
@@ -392,7 +395,7 @@ oanda_chart <- function(instrument,
     count <- 250
   }
 
-  ins <- do_oanda$getInstruments(server = server, apikey = apikey)
+  ins <- do_$getInstruments(server = server, apikey = apikey)
   ticker <- .subset2(ins, "displayName")[.subset2(ins, "name") %in% instrument]
   periodicity <- switch(granularity,
                         M = 2419200, W = 604800, D = 86400, H12 = 43200, H8 = 28800,
@@ -504,8 +507,8 @@ oanda_studio <- function(instrument = "USD_JPY",
     granularity <- match.arg(granularity)
     price <- match.arg(price)
     theme <- match.arg(theme)
-    srvr <- if (missing(server)) do_oanda$getServer() else match.arg(server, c("practice", "live"))
-    if (missing(apikey)) apikey <- do_oanda$getKey(server = srvr)
+    srvr <- if (missing(server)) do_$getServer() else match.arg(server, c("practice", "live"))
+    if (missing(apikey)) apikey <- do_$getKey(server = srvr)
     if (!is.numeric(refresh) || refresh < 1) {
       message("Specified refresh interval invalid - reverting to default of 5 secs")
       refresh <- 5
@@ -523,7 +526,7 @@ oanda_studio <- function(instrument = "USD_JPY",
       count <- 300
     }
 
-    ins <- do_oanda$getInstruments(server = srvr, apikey = apikey)
+    ins <- do_$getInstruments(server = srvr, apikey = apikey)
     dispnamevec <- .subset2(ins, "displayName")
     namevec <- .subset2(ins, "name")
 
@@ -661,7 +664,7 @@ oanda_studio <- function(instrument = "USD_JPY",
       )
       output$hover_x <- shiny::renderUI({
         shiny::req(input$plot_hover, posi_x() > 0, posi_x() <= plen())
-        drawGuide(label = index.ichimoku(pdata())[posi_x()], left = left_px() - 17, top = 45)
+        drawGuide(label = index.ichimoku(pdata(), posi_x()), left = left_px() - 17, top = 45)
       })
       output$hover_y <- shiny::renderUI({
         shiny::req(input$plot_hover)
@@ -669,7 +672,9 @@ oanda_studio <- function(instrument = "USD_JPY",
       })
       output$infotip <- shiny::renderUI({
         shiny::req(input$infotip, input$plot_hover, posi_x() > 0, posi_x() <= plen())
-        drawInfotip(sdata = pdata()[posi_x(), ], left_px = left_px(), top_px = top_px())
+        drawInfotip(sidx = index.ichimoku(pdata(), posi_x()),
+                    sdata = coredata.ichimoku(pdata())[posi_x(), ],
+                    left_px = left_px(), top_px = top_px())
       })
 
       output$savedata <- shiny::downloadHandler(filename = function() paste0(input$instrument, "_", input$granularity, "_", input$price, ".rda"),
@@ -711,7 +716,7 @@ oanda_studio <- function(instrument = "USD_JPY",
 #'
 oanda_instruments <- function(server, apikey) {
 
-  do_oanda$getInstruments(server = server, apikey = apikey)
+  do_$getInstruments(server = server, apikey = apikey)
 
 }
 
@@ -801,10 +806,10 @@ oanda_view <- function(market = c("allfx", "bonds", "commodities", "fx", "metals
   if (missing(market) && interactive()) market <- readline("Enter market [a]llfx [b]onds [c]ommodities [f]x [m]etals [s]tocks: ")
   market <- match.arg(market)
   price <- match.arg(price)
-  server <- if (missing(server)) do_oanda$getServer() else match.arg(server, c("practice", "live"))
-  if (missing(apikey)) apikey <- do_oanda$getKey(server = server)
+  server <- if (missing(server)) do_$getServer() else match.arg(server, c("practice", "live"))
+  if (missing(apikey)) apikey <- do_$getKey(server = server)
 
-  ins <- do_oanda$getInstruments(server = server, apikey = apikey)
+  ins <- do_$getInstruments(server = server, apikey = apikey)
   sel <- switch(market,
                 fx = {
                   vec <- .subset2(ins, "name")[.subset2(ins, "type") == "CURRENCY"]
@@ -827,21 +832,21 @@ oanda_view <- function(market = c("allfx", "bonds", "commodities", "fx", "metals
     if (i != xlen) Sys.sleep(0.05)
   }
   data <- do.call(rbind, data)
-  time <- unlist(data[, "t", drop = FALSE])
-  open <- unlist(data[, "o", drop = FALSE])
-  high <- unlist(data[, "h", drop = FALSE])
-  low <- unlist(data[, "l", drop = FALSE])
-  close <- unlist(data[, "c", drop = FALSE])
-  change <- round(100 * (as.numeric(close) / as.numeric(open) - 1), digits = 4L)
+  time <- .POSIXct(data[1L, "t", drop = FALSE])
+  open <- data[, "o", drop = FALSE]
+  high <- data[, "h", drop = FALSE]
+  low <- data[, "l", drop = FALSE]
+  close <- data[, "c", drop = FALSE]
+  change <- round(100 * (close / open - 1), digits = 4L)
   reorder <- order(change, decreasing = TRUE)
   df <- list(open[reorder], high[reorder], low[reorder], close[reorder], change[reorder])
   attributes(df) <- list(names = c("open", "high", "low", "last", "%chg"),
                          class = "data.frame",
                          row.names = sel[reorder],
                          price = price,
-                         timestamp = time[1L])
+                         timestamp = time)
 
-  cat("\n", time[1L], " / ", price, "\n", sep = "")
+  cat("\n", format.POSIXct(time), " / ", price, "\n", sep = "")
   print(df)
 
 }
@@ -873,12 +878,13 @@ oanda_quote <- function(instrument, price = c("M", "B", "A"), server, apikey) {
   if (missing(instrument) && interactive()) instrument <- readline("Enter instrument:")
   instrument <- sub("-", "_", toupper(force(instrument)), fixed = TRUE)
   price <- match.arg(price)
-  server <- if (missing(server)) do_oanda$getServer() else match.arg(server, c("practice", "live"))
-  if (missing(apikey)) apikey <- do_oanda$getKey(server = server)
+  server <- if (missing(server)) do_$getServer() else match.arg(server, c("practice", "live"))
+  if (missing(apikey)) apikey <- do_$getKey(server = server)
   data <- getPrices(instrument = instrument, granularity = "D", count = 1, price = price,
                     server = server, apikey = apikey, .validate = FALSE)
-  pctchg <- round(100 * (as.numeric(data[["c"]]) / as.numeric(data[["o"]]) - 1), digits = 4L)
-  cat(instrument, data[["t"]], "open:", data[["o"]], " high:", data[["h"]], " low:", data[["l"]],
+  pctchg <- round(100 * (data[["c"]] / data[["o"]] - 1), digits = 4L)
+  cat(instrument, format.POSIXct(.POSIXct(data[["t"]])),
+      "open:", data[["o"]], " high:", data[["h"]], " low:", data[["l"]],
       " last:\u001b[7m", data[["c"]], "\u001b[27m %chg:", pctchg, price)
 }
 
@@ -911,8 +917,8 @@ oanda_positions <- function(instrument, server, apikey) {
 
   if (missing(instrument) && interactive()) instrument <- readline("Enter instrument:")
   instrument <- sub("-", "_", toupper(force(instrument)), fixed = TRUE)
-  server <- if (missing(server)) do_oanda$getServer() else match.arg(server, c("practice", "live"))
-  if (missing(apikey)) apikey <- do_oanda$getKey(server = server)
+  server <- if (missing(server)) do_$getServer() else match.arg(server, c("practice", "live"))
+  if (missing(apikey)) apikey <- do_$getKey(server = server)
 
   url <- paste0("https://api-fx", switch(server, practice = "practice", live = "trade"),
                 ".oanda.com/v3/instruments/", instrument,
@@ -933,13 +939,13 @@ oanda_positions <- function(instrument, server, apikey) {
   bucketwidth <- as.numeric(data[["bucketWidth"]])
 
   buckets <- do.call(rbind, data[["buckets"]])
-  price <- as.numeric(buckets[, "price", drop = FALSE])
-  long <- as.numeric(buckets[, "longCountPercent", drop = FALSE])
-  short <- as.numeric(buckets[, "shortCountPercent", drop = FALSE])
-  df <- list(price, long, short)
+  storage.mode(buckets) <- "double"
+  df <- list(buckets[, "price"],
+             buckets[, "longCountPercent"],
+             buckets[, "shortCountPercent"])
   attributes(df) <- list(names = c("price", "long", "short"),
                          class = "data.frame",
-                         row.names = .set_row_names(length(price)),
+                         row.names = .set_row_names(dim(buckets)[1L]),
                          instrument = instrument,
                          timestamp = timestamp,
                          currentprice = currentprice,

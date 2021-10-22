@@ -93,7 +93,7 @@ test_that("coredata method ok", {
   expect_length(attrs <- attributes(core), 2L)
   expect_identical(attrs$dim, c(281L, 12L))
   expect_null(attrs$dimnames[[1L]])
-  expect_length(attrs <- attributes(coredata.ichimoku(cloud, fmt = TRUE)), 2L)
+  expect_length(attrs <- attributes(coredata(cloud, fmt = TRUE)), 2L)
   expect_vector(attrs$dimnames[[1L]], ptype = "character", size = 281)
 })
 
@@ -101,6 +101,7 @@ test_that("index method ok", {
   expect_vector(expect_s3_class(idx <- index.ichimoku(cloud), "POSIXct"), size = 281)
   expect_length(attrs <- attributes(idx), 3L)
   expect_identical(names(attrs), c("tzone", "tclass", "class"))
+  expect_vector(expect_s3_class(index(cloud, 101:110), "POSIXct"), size = 10)
 })
 
 test_that("is.ichimoku ok", {

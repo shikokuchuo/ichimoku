@@ -5,10 +5,12 @@
 \alias{index.ichimoku}
 \title{Extract the Index of Ichimoku Objects}
 \usage{
-\method{index}{ichimoku}(x, ...)
+\method{index}{ichimoku}(x, subset, ...)
 }
 \arguments{
 \item{x}{an object of class 'ichimoku'.}
+
+\item{subset}{an integer or logical value or vector by which to subset the index.}
 
 \item{...}{arguments passed to or from other methods.}
 }
@@ -24,11 +26,16 @@ This function is an S3 method for the generic function index()
     for class 'ichimoku'. It can be invoked by calling index(x) on an
     object 'x' of class 'ichimoku'.
 
+    Subsetting by specifying the 'subset' parameter subsets using the
+    numerical values underlying the POSIXct times and results in a faster
+    operation than usual subset operators such as '['.
+
     For further details please refer to the reference vignette by calling:
     \code{vignette("reference", package = "ichimoku")}
 }
 \examples{
 cloud <- ichimoku(sample_ohlc_data)
-index(cloud)[101:120]
+index(cloud)[101:110]
+index(cloud, 101:110)
 
 }

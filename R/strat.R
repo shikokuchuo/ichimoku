@@ -204,7 +204,6 @@ strat <- function(x,
 writeStrat <- function(x, strategy, dir) {
 
   p2 <- attr(x, "periods")[2L]
-  index <- index.ichimoku(x)
   core <- coredata.ichimoku(x)
   xlen <- dim(core)[1L]
   start <- xlen - sum(!is.na(core[, "posn"])) - p2 + 1L
@@ -234,8 +233,8 @@ writeStrat <- function(x, strategy, dir) {
     `Periods in market` = end - start + 1L,
     `---------------------` = "----------",
     Direction = dir,
-    Start = index[start],
-    End = index[end],
+    Start = index.ichimoku(x, start),
+    End = index.ichimoku(x, end),
     Ticker = attr(x, "ticker")
   ))
 
