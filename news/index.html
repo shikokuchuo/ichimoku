@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.4.1</span>
       </span>
     </div>
 
@@ -151,6 +151,26 @@
       <small>Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="ichimoku-1241" class="section level1">
+<h1 class="page-header" data-toc-text="1.2.4.1">
+<a href="#ichimoku-1241" class="anchor"></a>ichimoku 1.2.4.1<small> Unreleased </small>
+</h1>
+<div id="updates" class="section level4">
+<h4 class="hasAnchor">
+<a href="#updates" class="anchor"></a>Updates:</h4>
+<ul>
+<li>
+<code><a href="../reference/index.html">index()</a></code> gains the parameter ‘subset’ for fast subsetting of ichimoku cloud indexes.</li>
+<li>
+<code><a href="../reference/archive.html">archive()</a></code> now safe for use in non-interactive settings, where it no longer prompts to confirm overwriting of existing files.</li>
+<li>
+<code><a href="../reference/oanda_view.html">oanda_view()</a></code> now returns correct data types in the dataframe.</li>
+<li>Fixes cases of <code><a href="../reference/relative.html">relative()</a></code> showing the incorrect date for ‘latest’.</li>
+<li>Updated internal fallback OANDA instruments table.</li>
+<li>Performance enhancements to date handling across <code><a href="../reference/ichimoku.html">ichimoku()</a></code> and other package functions.</li>
+</ul>
+</div>
+</div>
     <div id="ichimoku-124" class="section level1">
 <h1 class="page-header" data-toc-text="1.2.4">
 <a href="#ichimoku-124" class="anchor"></a>ichimoku 1.2.4<small> 2021-10-18 </small>
@@ -172,9 +192,9 @@
 <li>More informative custom <code><a href="https://rdrr.io/r/utils/str.html">str()</a></code> and <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> methods implemented for ichimoku objects.</li>
 </ul>
 </div>
-<div id="updates" class="section level4">
+<div id="updates-1" class="section level4">
 <h4 class="hasAnchor">
-<a href="#updates" class="anchor"></a>Updates:</h4>
+<a href="#updates-1" class="anchor"></a>Updates:</h4>
 <ul>
 <li>For OANDA functions, where the ‘server’ parameter is specified, the corresponding API key will now be retrieved rather than the default, allowing for example <code><a href="../reference/oanda_studio.html">oanda_studio(server = "live", new.process = TRUE)</a></code>
 </li>
@@ -208,9 +228,9 @@
 <code><a href="../reference/df_append.html">df_append()</a></code> utility is now faster and gains the arguments ‘key’ and ‘keep.attr’.</li>
 </ul>
 </div>
-<div id="updates-1" class="section level4">
+<div id="updates-2" class="section level4">
 <h4 class="hasAnchor">
-<a href="#updates-1" class="anchor"></a>Updates:</h4>
+<a href="#updates-2" class="anchor"></a>Updates:</h4>
 <ul>
 <li>Accessibility improvements: default ‘original’ theme adjusted to accommodate colour vision deficiency.</li>
 <li>All OANDA functions now prompt for missing required arguments instead of returning errors.</li>
@@ -226,9 +246,9 @@
 <h1 class="page-header" data-toc-text="1.2.1">
 <a href="#ichimoku-121" class="anchor"></a>ichimoku 1.2.1<small> 2021-09-23 </small>
 </h1>
-<div id="updates-2" class="section level4">
+<div id="updates-3" class="section level4">
 <h4 class="hasAnchor">
-<a href="#updates-2" class="anchor"></a>Updates:</h4>
+<a href="#updates-3" class="anchor"></a>Updates:</h4>
 <ul>
 <li>Fix issue with ‘bslib’ theming after release of Shiny 1.7.0. For improved reliability, ‘bslib’ optional dependency removed.</li>
 <li>More neutral formatting of <code><a href="../reference/oanda_stream.html">oanda_stream()</a></code> output to accommodate different console colour schemes.</li>
@@ -262,9 +282,9 @@
 <li>New <code><a href="../reference/oanda_switch.html">oanda_switch()</a></code> function allows the default server to be switched from ‘practice’ to ‘live’ for the session.</li>
 </ul>
 </div>
-<div id="updates-3" class="section level4">
+<div id="updates-4" class="section level4">
 <h4 class="hasAnchor">
-<a href="#updates-3" class="anchor"></a>Updates:</h4>
+<a href="#updates-4" class="anchor"></a>Updates:</h4>
 <ul>
 <li>Adds fallback for <code><a href="../reference/oanda_instruments.html">oanda_instruments()</a></code> using an internal instruments table when the API call fails.</li>
 <li>
@@ -297,9 +317,9 @@
 <code><a href="../reference/archive.html">archive()</a></code> moves to using the native RData format, enabling any R object to be stored perfectly with sha256 verification.</li>
 </ul>
 </div>
-<div id="updates-4" class="section level4">
+<div id="updates-5" class="section level4">
 <h4 class="hasAnchor">
-<a href="#updates-4" class="anchor"></a>Updates:</h4>
+<a href="#updates-5" class="anchor"></a>Updates:</h4>
 <ul>
 <li>‘ArrowTabular’ method for <code><a href="../reference/ichimoku.html">ichimoku()</a></code> removed and ‘arrow’ optional dependency retired.</li>
 <li>Fixes data types issue affecting dataframes returned by <code><a href="../reference/oanda.html">oanda()</a></code> in v1.0.0.</li>
@@ -339,9 +359,9 @@
 <li>Re-export functions for working with ichimoku objects: <code><a href="../reference/index.html">index()</a></code>, <code><a href="../reference/coredata.html">coredata()</a></code> from ‘zoo’, and <code>xts()</code> from the ‘xts’ package.</li>
 </ul>
 </div>
-<div id="updates-5" class="section level4">
+<div id="updates-6" class="section level4">
 <h4 class="hasAnchor">
-<a href="#updates-5" class="anchor"></a>Updates:</h4>
+<a href="#updates-6" class="anchor"></a>Updates:</h4>
 <ul>
 <li>Implements caching of certain OANDA variables so that they are retrieved once and then used throughout a session.</li>
 <li>Charts of daily or lower frequency now have prettier and more usefully-aligned breaks.</li>
@@ -387,9 +407,9 @@
 <code><a href="../reference/strat.html">strat()</a></code> and <code><a href="../reference/autostrat.html">autostrat()</a></code> gain a new type/level 3 for asymmetric strategies using different indicators for position entry and exit.</li>
 </ul>
 </div>
-<div id="updates-6" class="section level4">
+<div id="updates-7" class="section level4">
 <h4 class="hasAnchor">
-<a href="#updates-6" class="anchor"></a>Updates:</h4>
+<a href="#updates-7" class="anchor"></a>Updates:</h4>
 <ul>
 <li>New dependencies on ‘httr’ and ‘jsonlite’ packages, required for the OANDA fxTrade API interface.</li>
 <li>
@@ -424,9 +444,9 @@
 <code><a href="../reference/tradingDays.html">tradingDays()</a></code> helper function to allow customisation of holidays when calculating the future cloud.</li>
 </ul>
 </div>
-<div id="updates-7" class="section level4">
+<div id="updates-8" class="section level4">
 <h4 class="hasAnchor">
-<a href="#updates-7" class="anchor"></a>Updates:</h4>
+<a href="#updates-8" class="anchor"></a>Updates:</h4>
 <ul>
 <li>Ichimoku object specification updated.</li>
 <li>Ichimoku objects now inherit ‘xts’ and ‘zoo’ classes for better integration with other econometrics and analytics packages.</li>
