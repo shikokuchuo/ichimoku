@@ -3,12 +3,16 @@
 ichimoku_themes <- list(
   original = c("#ffc6cb", "#c3dede", "#e0a9e0", "#db4525", "#1aa1a6", "#a4d1eb",
                "#00008b", "#00008b", "#00008b", "#ffffff", "#191970", "#00008b"),
+  conceptual = c("#feddbf", "#ffceba", "#f2af07", "#f81e00", "#009039", "#297bb1",
+                 "#00163c", "#00163c", "#00163c", "#e4e2cc", "#e26100", "#e26100"),
   dark = c("#ffb6c1", "#b4cdcd", "#dda0dd", "#c71585", "#40e0d0", "#b58900",
            "#eee8d5", "#fdf6e3", "#fdf6e3", "#002b36", "#eee8d5", "#fdf6e3"),
-  solarized = c("#d33682", "#eee8d5", "#6c71c4", "#cb4b16", "#859900", "#268bd2",
-                "#002b36", "#002b36", "#002b36", "#fdf6e3", "#073642", "#002b36"),
+  fresh = c("#e4eff1", "#c7dddd", "#ece5df", "#ea7504", "#528334", "#0f343a",
+            "#be8051", "#be8051", "#be8051", "#f7fbfe", "#9f613a", "#be8051"),
   mono = c("#d9d9d9", "#d7d7d7", "#d1d1d1", "#737373", "#1f1f1f", "#b8b8b8",
-           "#1a1a1a", "#1a1a1a", "#1a1a1a", "#ffffff", "#333333", "#1a1a1a")
+           "#1a1a1a", "#1a1a1a", "#1a1a1a", "#ffffff", "#333333", "#1a1a1a"),
+  solarized = c("#d33682", "#eee8d5", "#6c71c4", "#cb4b16", "#859900", "#268bd2",
+                "#002b36", "#002b36", "#002b36", "#fdf6e3", "#073642", "#002b36")
 )
 
 x_oanda_instruments <- structure(
@@ -84,3 +88,4 @@ x_oanda_instruments <- structure(
 x_user_agent <- "r-ichimoku/1.2.4"
 
 usethis::use_data(ichimoku_themes, x_oanda_instruments, x_user_agent, internal = TRUE, overwrite = TRUE)
+

@@ -29,9 +29,9 @@ oanda_switch <- function() {
 
 }
 
-#' OANDA Internal Functions
+#' ichimoku Internal Functions
 #'
-#' Encapsulates internal OANDA functions in a common environment.
+#' Encapsulates package internal functions in a common environment.
 #'
 #' @return A list of closures.
 #'
@@ -98,11 +98,11 @@ do_ <- function() {
         url <- switch(server,
                       practice = "https://api-fxpractice.oanda.com/v3/accounts",
                       live = "https://api-fxtrade.oanda.com/v3/accounts")
-        h <- new_handle()
-        handle_setheaders(handle = h,
+        handle <- new_handle()
+        handle_setheaders(handle = handle,
                           "Authorization" = paste0("Bearer ", apikey),
                           "User-Agent" = x_user_agent)
-        resp <- curl_fetch_memory(url = url, handle = h)
+        resp <- curl_fetch_memory(url = url, handle = handle)
         resp$status_code == 200L || stop("server code ", resp$status_code, " - ",
                                          parse_json(rawToChar(resp$content)), call. = FALSE)
         account <<- parse_json(rawToChar(resp$content))[["accounts"]][[1L]][["id"]]
@@ -116,11 +116,11 @@ do_ <- function() {
         url <- paste0("https://api-fx", switch(server, practice = "practice", live = "trade"),
                       ".oanda.com/v3/accounts/", do_$getAccount(server = server, apikey = apikey),
                       "/instruments")
-        h <- new_handle()
-        handle_setheaders(handle = h,
+        handle <- new_handle()
+        handle_setheaders(handle = handle,
                           "Authorization" = paste0("Bearer ", apikey),
                           "User-Agent" = x_user_agent)
-        resp <- curl_fetch_memory(url = url, handle = h)
+        resp <- curl_fetch_memory(url = url, handle = handle)
         resp$status_code == 200L || {
           warning("Server code ", resp$status_code, " - ",
                   parse_json(rawToChar(resp$content)),

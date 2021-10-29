@@ -34,10 +34,12 @@ the time range combined with 'granularity' will determine the number of
 periods to return.}
 
 \item{from}{(optional) the start of the time range for which to fetch price
-data, for example "2020-02-01".}
+data, in a format convertible to POSIXct by \code{as.POSIXct()}, for
+example "2020-02-01".}
 
 \item{to}{(optional) the end of the time range for which to fetch price data,
-for example "2020-06-30".}
+in a format convertible to POSIXct by \code{as.POSIXct()}, for example
+"2020-06-30".}
 
 \item{price}{[default "M"] pricing component, one of "M" (midpoint), "B" (bid)
 or "A" (ask).}

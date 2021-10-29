@@ -11,7 +11,7 @@ oanda_chart(
   refresh = 5,
   count = 250,
   price = c("M", "B", "A"),
-  theme = c("original", "dark", "solarized", "mono"),
+  theme = c("original", "conceptual", "dark", "fresh", "mono", "solarized"),
   server,
   apikey,
   ...,
@@ -38,8 +38,8 @@ chart to ensure a full cloud is always displayed.}
 \item{price}{[default "M"] pricing component, one of "M" (midpoint), "B" (bid)
 or "A" (ask).}
 
-\item{theme}{[default 'original'] chart theme with alternative choices of
-'dark', 'solarized' or 'mono'.}
+\item{theme}{[default 'original'] with alternative choices of 'conceptual',
+'dark', 'fresh', 'mono', or 'solarized'.}
 
 \item{server}{(optional) specify the "practice" or "live" server according to
 the account type held. If not specified, will default to "practice", unless

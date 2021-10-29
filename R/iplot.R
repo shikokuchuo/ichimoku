@@ -40,7 +40,7 @@
 iplot <- function(x,
                   ticker,
                   subtitle,
-                  theme = c("original", "dark", "solarized", "mono"),
+                  theme = c("original", "conceptual", "dark", "fresh", "mono", "solarized"),
                   strat = TRUE,
                   type = c("none", "r", "s", "bar", "line"),
                   custom,
@@ -70,8 +70,7 @@ iplot <- function(x,
       shiny::fillPage(
         padding = 20,
         shiny::plotOutput("chart", width = "100%",
-                          hover = shiny::hoverOpts(id = "plot_hover",
-                                                   delay = 80, delayType = "throttle")),
+                          hover = shiny::hoverOpts(id = "plot_hover", delay = 80, delayType = "throttle")),
         shiny::uiOutput("hover_x"), shiny::uiOutput("hover_y"), shiny::uiOutput("infotip")
         ),
       shiny::fluidRow(
@@ -83,7 +82,7 @@ iplot <- function(x,
       shiny::fluidRow(
         shiny::column(width = 2,
                       shiny::selectInput("theme", label = "Theme",
-                                         choices = c("original", "dark", "solarized", "mono"),
+                                         choices = c("original", "conceptual", "dark", "fresh", "mono", "solarized"),
                                          selected = theme, selectize = FALSE)),
         shiny::column(width = 2,
                       shiny::selectInput("type", label = "Type",

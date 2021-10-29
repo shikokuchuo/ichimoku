@@ -10,7 +10,7 @@
   window,
   ticker,
   subtitle,
-  theme = c("original", "dark", "solarized", "mono"),
+  theme = c("original", "conceptual", "dark", "fresh", "mono", "solarized"),
   strat = TRUE,
   ...
 )
@@ -28,8 +28,8 @@ will be used.}
 
 \item{subtitle}{(optional) specify a subtitle to display under the chart title.}
 
-\item{theme}{[default 'original'] with alternative choices of 'dark',
-'solarized' or 'mono'.}
+\item{theme}{[default 'original'] with alternative choices of 'conceptual',
+'dark', 'fresh', 'mono', or 'solarized'.}
 
 \item{strat}{[default TRUE] if the ichimoku object contains a strategy, the
 periods for which the strategy results in a position will be shaded, and
