@@ -83,7 +83,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.4.2</span>
       </span>
     </div>
 
@@ -199,12 +199,14 @@ periods to return.</p></td>
     <tr>
       <th>from</th>
       <td><p>(optional) the start of the time range for which to fetch price
-data, for example "2020-02-01".</p></td>
+data, in a format convertible to POSIXct by <code><a href='https://rdrr.io/r/base/as.POSIXlt.html'>as.POSIXct()</a></code>, for
+example "2020-02-01".</p></td>
     </tr>
     <tr>
       <th>to</th>
       <td><p>(optional) the end of the time range for which to fetch price data,
-for example "2020-06-30".</p></td>
+in a format convertible to POSIXct by <code><a href='https://rdrr.io/r/base/as.POSIXlt.html'>as.POSIXct()</a></code>, for example
+"2020-06-30".</p></td>
     </tr>
     <tr>
       <th>price</th>

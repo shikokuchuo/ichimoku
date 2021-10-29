@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>OANDA Position Book — oanda_positions • ichimoku</title>
+<title>OANDA Order Book — oanda_orders • ichimoku</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,8 +48,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="OANDA Position Book — oanda_positions" />
-<meta property="og:description" content="Provides a summary of the aggregate positions held by OANDA fxTrade clients
+<meta property="og:title" content="OANDA Order Book — oanda_orders" />
+<meta property="og:description" content="Provides a summary of the aggregate orders posted by OANDA fxTrade clients
     at each price level." />
 <meta property="og:image" content="https://shikokuchuo.net/ichimoku/logo.png" />
 
@@ -149,17 +149,17 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>OANDA Position Book</h1>
+    <h1>OANDA Order Book</h1>
     <small class="dont-index">Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/R/oanda.R'><code>R/oanda.R</code></a></small>
-    <div class="hidden name"><code>oanda_positions.Rd</code></div>
+    <div class="hidden name"><code>oanda_orders.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Provides a summary of the aggregate positions held by OANDA fxTrade clients
+    <p>Provides a summary of the aggregate orders posted by OANDA fxTrade clients
     at each price level.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>oanda_positions</span><span class='op'>(</span><span class='va'>instrument</span>, <span class='va'>time</span>, <span class='va'>server</span>, <span class='va'>apikey</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>oanda_orders</span><span class='op'>(</span><span class='va'>instrument</span>, <span class='va'>time</span>, <span class='va'>server</span>, <span class='va'>apikey</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -173,9 +173,9 @@ instruments.</p></td>
     </tr>
     <tr>
       <th>time</th>
-      <td><p>(optional) the time for which to retrieve the position book, in a
+      <td><p>(optional) the time for which to retrieve the order book, in a
 format convertible to POSIXct by <code><a href='https://rdrr.io/r/base/as.POSIXlt.html'>as.POSIXct()</a></code>. If not specified,
-the most recent position book will be retrieved.</p></td>
+the most recent order book will be retrieved.</p></td>
     </tr>
     <tr>
       <th>server</th>
@@ -194,20 +194,23 @@ interactively if not specified.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Invisibly, a data frame of the position book with parameters saved as
-    attributes. A chart showing the percentage long and short positions at
-    each price level is output to the graphical device.</p>
+    <p>Invisibly, a data frame of the order book with parameters saved as
+    attributes. A chart showing the percentage long and short orders at each
+    price level is output to the graphical device.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>This feature has been implemented by OANDA only for certain major
     currency pairs and should be considered experimental.</p>
+<p>Note: as certain orders are placed far from the market price, only the
+    interquartile range of order levels is shown on the chart. The returned
+    data frame does however contain the entire order book.</p>
 <p>For further details please refer to the OANDA fxTrade API vignette by
     calling: <code><a href='../articles/xoanda.html'>vignette("xoanda", package = "ichimoku")</a></code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># OANDA fxTrade API key required to run this example</span>
-<span class='fu'>oanda_positions</span><span class='op'>(</span><span class='st'>"USD_JPY"</span><span class='op'>)</span>
+<span class='fu'>oanda_orders</span><span class='op'>(</span><span class='st'>"USD_JPY"</span><span class='op'>)</span>
 <span class='op'>}</span>
 
 </div></pre>
