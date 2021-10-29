@@ -38,7 +38,7 @@ Strategies & ML
     \item{\code{\link{autostrat}}} {to automatically evaluate and rank
     top-performing strategies.}
     \item{\code{\link{mlgrid}}} {to generate a numeric representation of the
-    relationship between ichimoku cloud chart elements.}
+    ichimoku cloud chart.}
     \item{\code{\link{relative}}} {to produce a statistical summary of the
     latest ichimoku numeric representation relative to historical values.}
 }
@@ -52,6 +52,8 @@ Real-time
     the latest live data stream / quote from the OANDA fxTrade API.}
     \item{\code{\link{oanda_view}}} {for a market overview showing the
     relative performance of constituents.}
+    \item{\code{\link{oanda_orders}} / \code{\link{oanda_positions}}} {to
+    retrieve the aggregate OANDA fxTrade order / position book.}
 }
 }
 

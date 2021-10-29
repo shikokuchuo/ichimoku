@@ -87,7 +87,7 @@ autostrat(cloud, n = 3)
 
 - [`autostrat()`](https://shikokuchuo.net/ichimoku/reference/autostrat.html) - to automatically evaluate and rank top-performing strategies.
 
-- [`mlgrid()`](https://shikokuchuo.net/ichimoku/reference/mlgrid.html) - to generate a numeric representation of the relationship between ichimoku cloud chart elements.
+- [`mlgrid()`](https://shikokuchuo.net/ichimoku/reference/mlgrid.html) - to generate a numeric representation of the ichimoku cloud chart.
 
 - [`relative()`](https://shikokuchuo.net/ichimoku/reference/relative.html) - to produce a statistical summary of the latest ichimoku numeric representation relative to historical values.
 
@@ -100,6 +100,8 @@ autostrat(cloud, n = 3)
 - [`oanda_stream()`](https://shikokuchuo.net/ichimoku/reference/oanda_stream.html) / [`oanda_quote()`](https://shikokuchuo.net/ichimoku/reference/oanda_quote.html) - to obtain the latest live data stream / quote from the OANDA fxTrade API.
 
 - [`oanda_view()`](https://shikokuchuo.net/ichimoku/reference/oanda_view.html) - for a market overview showing the relative performance of constituents.
+
+- [`oanda_orders()`](https://shikokuchuo.net/ichimoku/reference/oanda_orders.html) / [`oanda_positions()`](https://shikokuchuo.net/ichimoku/reference/oanda_positions.html) - to retrieve the aggregate OANDA fxTrade order / position book.
 
 ## Vignettes
 
