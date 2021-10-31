@@ -10,7 +10,7 @@ relative(x, order = FALSE, signif = 0.2, quietly)
 \item{x}{an ichimoku object.}
 
 \item{order}{[default FALSE] set to TRUE to order the results by the absolute
-'r value'.}
+'z-score'.}
 
 \item{signif}{[default 0.2] set a significance threshold for which if 'p' is
 equal or lower, the element will be starred with a '*'.}
@@ -37,19 +37,18 @@ Produce a statistical summary of the latest numeric representation of the
     'res' is the residual X[n] - mean(X) and represents a centred measure of
     deviation for the latest observed value.
 
-    The 'relative' or 'r value' is calculated as res / sd(X) and represents a
-    standardised (centred and scaled) measure of deviation for the latest
-    observed value.
+    The 'z-score' (or standard score) is calculated as res / sd(X) and is a
+    centred and scaled measure of deviation for the latest observed value.
 
-    'p >= |r|' represents the empirical probability of the latest observed
-    absolute 'r value' or greater.
+    'p >= |z|' represents the empirical probability of the latest observed
+    absolute 'z-score' or greater.
 
-    'p*' will display a star if 'p >= |r|' is less than or equal to the value
+    'p*' will display a star if 'p >= |z|' is less than or equal to the value
     of the argument 'signif'.
 
     'E(|res|)|p' represents the mean or expected absolute value of 'res',
-    conditional upon the absolute 'r value' being greater than equal to the
-    latest observed absolute 'r value'.
+    conditional upon the absolute 'z-score' being greater than equal to the
+    latest observed absolute 'z-score'.
 }
 \section{Further Details}{
 

@@ -153,10 +153,11 @@ autostrat <- function(x,
 #' @inheritParams strat
 #' @param y [default 'logret'] choose target variable 'logret' (log returns),
 #'     'ret' (discrete returns), or 'none'.
-#' @param type [default 'boolean'] either 'boolean' or 'numeric'. 'boolean'
-#'     creates a grid of dummy variables for ichimoku indicator conditions of
-#'     the form 1 if c1 > c2, 0 otherwise. 'numeric' creates a grid of the
-#'     numeric difference c1 - c2.
+#' @param type [default 'boolean'] choose 'boolean', 'numeric' or 'z-score'.
+#'     'boolean' creates a grid of dummy variables for ichimoku indicator
+#'     conditions of the form 1 if c1 > c2, 0 otherwise. 'numeric' creates a
+#'     grid of the numeric difference c1 - c2. 'z-score' standardises the numeric
+#'     grid by the mean and standard deviation of each feature or target variable.
 #' @param unique [default TRUE] to return only unique combinations of c1 and c2.
 #'     Set to FALSE to return both c1 > c2 and c2 > c1.
 #'
@@ -164,8 +165,8 @@ autostrat <- function(x,
 #'     feature per column with the target 'y' as the first column (unless set to
 #'     'none').
 #'
-#'     The 'y' parameter and trade direction are set as atrributes. To view these,
-#'     use \code{\link{look}} on the returned object.
+#'     The 'y' parameter, trade direction and grid type are set as atrributes.
+#'     To view these, use \code{\link{look}} on the returned object.
 #'
 #' @details The date-time index corresponds to when the indicator condition is
 #'     met at the close for that period. The return is the single-period return
@@ -192,7 +193,7 @@ autostrat <- function(x,
 #'
 #' @examples
 #' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
-#' grid <- mlgrid(cloud, y = "ret", dir = "short", type = "numeric")
+#' grid <- mlgrid(cloud, y = "ret", dir = "short", type = "z-score")
 #' str(grid)
 #'
 #' @export
@@ -200,7 +201,7 @@ autostrat <- function(x,
 mlgrid <- function(x,
                    y = c("logret", "ret", "none"),
                    dir = c("long", "short"),
-                   type = c("boolean", "numeric"),
+                   type = c("boolean", "numeric", "z-score"),
                    unique = TRUE) {
 
   is.ichimoku(x) || stop("mlgrid() only works on ichimoku objects", call. = FALSE)
@@ -235,7 +236,7 @@ mlgrid <- function(x,
   }
   veclist <- writeVectors(x = core, pairs = pairs, p2 = p2, xlen = xlen, type = type)
 
-  if (!isTRUE(unique)) {
+  if (!missing(unique) && !isTRUE(unique)) {
     pairs <- list(pairs[[2L]], pairs[[1L]])
     veclistf <- writeVectors(x = core, pairs = pairs, p2 = p2, xlen = xlen, type = type)
     veclist <- c(veclist, veclistf)
@@ -246,12 +247,19 @@ mlgrid <- function(x,
   attributes(df) <- list(names = cnames,
                          class = "data.frame",
                          row.names = format.POSIXct(index.ichimoku(x)))
-  grid <- df_trim(df)
+  grid <- df <- df_trim(df)
+  if (type == "z-score") {
+    means <- unlist(lapply(df, mean))
+    sdevs <- unlist(lapply(df, sd))
+    grid <- mapply(function(x, m, s) (x - m) / s,
+                   x = df, m = means, s = sdevs, SIMPLIFY = FALSE, USE.NAMES = FALSE)
+  }
   attributes(grid) <- list(names = cnames,
                            class = "data.frame",
-                           row.names = attr(grid, "row.names"),
+                           row.names = attr(df, "row.names"),
                            y = y,
                            direction = dir,
+                           type = type,
                            ticker = attr(x, "ticker"))
   grid
 
@@ -277,7 +285,7 @@ writeVectors <- function(x, pairs, p2, xlen, type) {
     offset <- (p2 - 1L) * (c1 == "chikou" | c2 == "chikou")
     switch(type,
            boolean = as.integer(c(rep(NA, offset), (x[, c1] > x[, c2])[1:(xlen - offset)])),
-           numeric = c(rep(NA, offset), (x[, c1] - x[, c2])[1:(xlen - offset)]))
+           c(rep(NA, offset), (x[, c1] - x[, c2])[1:(xlen - offset)]))
   }, c1 = pairs[[1L]], c2 = pairs[[2L]], SIMPLIFY = FALSE, USE.NAMES = FALSE),
   do.call(c, mapply(function(c1, c2) paste0(c1, "_", c2),
                     c1 = pairs[[1L]], c2 = pairs[[2L]], SIMPLIFY = FALSE, USE.NAMES = FALSE)))
@@ -292,7 +300,7 @@ writeVectors <- function(x, pairs, p2, xlen, type) {
 #'
 #' @inheritParams autostrat
 #' @param order [default FALSE] set to TRUE to order the results by the absolute
-#'     'r value'.
+#'     'z-score'.
 #' @param signif [default 0.2] set a significance threshold for which if 'p' is
 #'     equal or lower, the element will be starred with a '*'.
 #'
@@ -308,19 +316,18 @@ writeVectors <- function(x, pairs, p2, xlen, type) {
 #'     'res' is the residual X[n] - mean(X) and represents a centred measure of
 #'     deviation for the latest observed value.
 #'
-#'     The 'relative' or 'r value' is calculated as res / sd(X) and represents a
-#'     standardised (centred and scaled) measure of deviation for the latest
-#'     observed value.
+#'     The 'z-score' (or standard score) is calculated as res / sd(X) and is a
+#'     centred and scaled measure of deviation for the latest observed value.
 #'
-#'     'p >= |r|' represents the empirical probability of the latest observed
-#'     absolute 'r value' or greater.
+#'     'p >= |z|' represents the empirical probability of the latest observed
+#'     absolute 'z-score' or greater.
 #'
-#'     'p*' will display a star if 'p >= |r|' is less than or equal to the value
+#'     'p*' will display a star if 'p >= |z|' is less than or equal to the value
 #'     of the argument 'signif'.
 #'
 #'     'E(|res|)|p' represents the mean or expected absolute value of 'res',
-#'     conditional upon the absolute 'r value' being greater than equal to the
-#'     latest observed absolute 'r value'.
+#'     conditional upon the absolute 'z-score' being greater than equal to the
+#'     latest observed absolute 'z-score'.
 #'
 #' @section Further Details:
 #'     Please refer to the strategies vignette by calling:
@@ -348,28 +355,28 @@ relative <- function(x, order = FALSE, signif = 0.2, quietly) {
   means <- unname(unlist(lapply(grid, mean)))
   sdevs <- unname(unlist(lapply(grid, sd)))
   res <- xn - means
-  rval <- res / sdevs
+  zscore <- res / sdevs
 
   expec <- pval <- numeric(xwid)
   for (i in seq_len(xwid)) {
     vec <- .subset2(grid, i)
-    rvec <- (vec - means[i]) / sdevs[i]
-    exceed <- abs(rvec) >= abs(rval[i])
+    zvec <- (vec - means[i]) / sdevs[i]
+    exceed <- abs(zvec) >= abs(zscore[i])
     pval[i] <- sum(exceed) / xlen
     expec[i] <- mean(abs(vec[exceed] - means[i]))
   }
   star <- character(xwid)
   star[pval <= signif] <- "*"
 
-  df <- lapply(list(means, sdevs, xn, res, rval, pval, star, expec),
+  df <- lapply(list(means, sdevs, xn, res, zscore, pval, star, expec),
                function(x) if (is.numeric(x)) round(x, digits = 2) else x)
   ordered <- !missing(order) && isTRUE(order)
   if (ordered) {
-    reorder <- order(abs(rval), decreasing = TRUE)
+    reorder <- order(abs(zscore), decreasing = TRUE)
     df <- lapply(df, .subset, reorder)
   }
 
-  attributes(df) <- list(names = c("mean(X)", "sd(X)", "X[n]", "res", "r value", "p >= |r|", "p*", "E(|res|)|p"),
+  attributes(df) <- list(names = c("mean(X)", "sd(X)", "X[n]", "res", "z-score", "p >= |z|", "p*", "E(|res|)|p"),
                          class = "data.frame",
                          row.names = if (ordered) cnames[reorder] else cnames,
                          latest = .POSIXct(as.POSIXct(time)),

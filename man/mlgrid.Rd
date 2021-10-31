@@ -8,7 +8,7 @@ mlgrid(
   x,
   y = c("logret", "ret", "none"),
   dir = c("long", "short"),
-  type = c("boolean", "numeric"),
+  type = c("boolean", "numeric", "z-score"),
   unique = TRUE
 )
 }
@@ -20,10 +20,11 @@ mlgrid(
 
 \item{dir}{[default 'long'] trade direction, either 'long' or 'short'.}
 
-\item{type}{[default 'boolean'] either 'boolean' or 'numeric'. 'boolean'
-creates a grid of dummy variables for ichimoku indicator conditions of
-the form 1 if c1 > c2, 0 otherwise. 'numeric' creates a grid of the
-numeric difference c1 - c2.}
+\item{type}{[default 'boolean'] choose 'boolean', 'numeric' or 'z-score'.
+'boolean' creates a grid of dummy variables for ichimoku indicator
+conditions of the form 1 if c1 > c2, 0 otherwise. 'numeric' creates a
+grid of the numeric difference c1 - c2. 'z-score' standardises the numeric
+grid by the mean and standard deviation of each feature or target variable.}
 
 \item{unique}{[default TRUE] to return only unique combinations of c1 and c2.
 Set to FALSE to return both c1 > c2 and c2 > c1.}
@@ -33,8 +34,8 @@ A data.frame in a 'tidy' format with one observation per row and one
     feature per column with the target 'y' as the first column (unless set to
     'none').
 
-    The 'y' parameter and trade direction are set as atrributes. To view these,
-    use \code{\link{look}} on the returned object.
+    The 'y' parameter, trade direction and grid type are set as atrributes.
+    To view these, use \code{\link{look}} on the returned object.
 }
 \description{
 Create a grid of ichimoku indicator conditions and next period returns. The
@@ -65,7 +66,7 @@ The date-time index corresponds to when the indicator condition is
 
 \examples{
 cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
-grid <- mlgrid(cloud, y = "ret", dir = "short", type = "numeric")
+grid <- mlgrid(cloud, y = "ret", dir = "short", type = "z-score")
 str(grid)
 
 }

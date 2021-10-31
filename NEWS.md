@@ -1,18 +1,18 @@
-# ichimoku 1.2.4.3
+# ichimoku 1.2.4.4
 
 #### New features:
 
-* New plot themes 'conceptual' and 'fresh'.
+* `mlgrid()` gains the argument `type = 'z-score'` which produces the standard score of the 'numeric' type grid. 'type' is now saved as an attribute of grids returned by `mlgrid()`.
 * New `oanda_orders()` function provides the OANDA fxTrade order book for certain major currency pairs.
 * `oanda_positions()` gains the parameter 'time' for retrieving the position book at a particular time.
-* `index()` gains the parameter 'subset' for fast subsetting of ichimoku cloud indexes
+* `index()` gains the parameter 'subset' for fast subsetting of ichimoku cloud indexes.
+* New plot themes 'conceptual' and 'fresh'.
 
 #### Updates:
 
 * `archive()` now safe for use in non-interactive settings, where it no longer prompts to confirm overwriting of existing files.
 * `oanda_view()` now returns correct data types in the dataframe.
-* Fixes cases of `relative()` showing the incorrect date for 'latest'.
-* Updated internal fallback OANDA instruments table.
+* Fixes cases of `relative()` showing the incorrect date for 'latest', along with other cosmetic changes.
 * Performance improvements to date handling across `ichimoku()` and other package functions.
 
 # ichimoku 1.2.4
