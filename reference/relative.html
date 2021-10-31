@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.4.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.4.4</span>
       </span>
     </div>
 
@@ -173,7 +173,7 @@
     <tr>
       <th>order</th>
       <td><p>[default FALSE] set to TRUE to order the results by the absolute
-'r value'.</p></td>
+'z-score'.</p></td>
     </tr>
     <tr>
       <th>signif</th>
@@ -199,16 +199,15 @@ output to the console and return quietly.</p></td>
     standard deviation, and 'X[n]' the nth or latest observed values.</p>
 <p>'res' is the residual X[n] - mean(X) and represents a centred measure of
     deviation for the latest observed value.</p>
-<p>The 'relative' or 'r value' is calculated as res / sd(X) and represents a
-    standardised (centred and scaled) measure of deviation for the latest
-    observed value.</p>
-<p>'p &gt;= |r|' represents the empirical probability of the latest observed
-    absolute 'r value' or greater.</p>
-<p>'p*' will display a star if 'p &gt;= |r|' is less than or equal to the value
+<p>The 'z-score' (or standard score) is calculated as res / sd(X) and is a
+    centred and scaled measure of deviation for the latest observed value.</p>
+<p>'p &gt;= |z|' represents the empirical probability of the latest observed
+    absolute 'z-score' or greater.</p>
+<p>'p*' will display a star if 'p &gt;= |z|' is less than or equal to the value
     of the argument 'signif'.</p>
 <p>'E(|res|)|p' represents the mean or expected absolute value of 'res',
-    conditional upon the absolute 'r value' being greater than equal to the
-    latest observed absolute 'r value'.</p>
+    conditional upon the absolute 'z-score' being greater than equal to the
+    latest observed absolute 'z-score'.</p>
     <h2 class="hasAnchor" id="further-details"><a class="anchor" href="#further-details"></a>Further Details</h2>
 
     
@@ -220,7 +219,7 @@ output to the console and return quietly.</p></td>
     <pre class="examples"><div class='input'><span class='va'>cloud</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ichimoku.html'>ichimoku</a></span><span class='op'>(</span><span class='va'>sample_ohlc_data</span>, ticker <span class='op'>=</span> <span class='st'>"TKR"</span><span class='op'>)</span>
 <span class='va'>statistics</span> <span class='op'>&lt;-</span> <span class='fu'>relative</span><span class='op'>(</span><span class='va'>cloud</span>, quietly <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 <span class='fu'>relative</span><span class='op'>(</span><span class='va'>cloud</span>, signif <span class='op'>=</span> <span class='fl'>0.4</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Latest: 2020-12-24 00:00:00 | n: 155 </div><div class='output co'>#&gt;                 mean(X) sd(X)  X[n]   res r value p &gt;= |r| p* E(|res|)|p
+</div><div class='output co'>#&gt; Latest: 2020-12-24 00:00:00 | n: 155 </div><div class='output co'>#&gt;                 mean(X) sd(X)  X[n]   res z-score p &gt;= |z| p* E(|res|)|p
 #&gt; chikou_close       1.51  6.07  7.00  5.49    0.91     0.39  *       8.53
 #&gt; chikou_high        0.79  6.09  6.60  5.81    0.95     0.36  *       8.91
 #&gt; chikou_low         2.31  6.12  7.80  5.49    0.90     0.41          8.40
@@ -258,7 +257,7 @@ output to the console and return quietly.</p></td>
 #&gt; kijun_cloudT       0.00  3.62  1.90  1.90    0.52     0.64          4.18
 #&gt; kijun_cloudB       2.48  3.86  2.05 -0.43   -0.11     0.98          3.31
 #&gt; senkouA_senkouB    1.01  2.98 -0.15 -1.16   -0.39     0.70          3.27</div><div class='input'><span class='fu'>relative</span><span class='op'>(</span><span class='va'>cloud</span>, order <span class='op'>=</span> <span class='cn'>TRUE</span>, signif <span class='op'>=</span> <span class='fl'>0.4</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Latest: 2020-12-24 00:00:00 | n: 155 </div><div class='output co'>#&gt;                 mean(X) sd(X)  X[n]   res r value p &gt;= |r| p* E(|res|)|p
+</div><div class='output co'>#&gt; Latest: 2020-12-24 00:00:00 | n: 155 </div><div class='output co'>#&gt;                 mean(X) sd(X)  X[n]   res z-score p &gt;= |z| p* E(|res|)|p
 #&gt; chikou_high        0.79  6.09  6.60  5.81    0.95     0.36  *       8.91
 #&gt; low_tenkan        -0.30  1.72  1.30  1.60    0.93     0.40  *       2.37
 #&gt; low_kijun          0.44  3.28  3.45  3.01    0.92     0.43          4.50

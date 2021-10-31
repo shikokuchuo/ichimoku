@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.4.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.4.4</span>
       </span>
     </div>
 
@@ -151,20 +151,22 @@
       <small>Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="ichimoku-1243" class="section level1">
-<h1 class="page-header" data-toc-text="1.2.4.3">
-<a href="#ichimoku-1243" class="anchor"></a>ichimoku 1.2.4.3<small> Unreleased </small>
+    <div id="ichimoku-1244" class="section level1">
+<h1 class="page-header" data-toc-text="1.2.4.4">
+<a href="#ichimoku-1244" class="anchor"></a>ichimoku 1.2.4.4<small> Unreleased </small>
 </h1>
 <div id="new-features" class="section level4">
 <h4 class="hasAnchor">
 <a href="#new-features" class="anchor"></a>New features:</h4>
 <ul>
-<li>New plot themes ‘conceptual’ and ‘fresh’.</li>
+<li>
+<code><a href="../reference/mlgrid.html">mlgrid()</a></code> gains the argument <code>type = 'z-score'</code> which produces the standard score of the ‘numeric’ type grid. ‘type’ is now saved as an attribute of grids returned by <code><a href="../reference/mlgrid.html">mlgrid()</a></code>.</li>
 <li>New <code><a href="../reference/oanda_orders.html">oanda_orders()</a></code> function provides the OANDA fxTrade order book for certain major currency pairs.</li>
 <li>
 <code><a href="../reference/oanda_positions.html">oanda_positions()</a></code> gains the parameter ‘time’ for retrieving the position book at a particular time.</li>
 <li>
-<code><a href="../reference/index.html">index()</a></code> gains the parameter ‘subset’ for fast subsetting of ichimoku cloud indexes</li>
+<code><a href="../reference/index.html">index()</a></code> gains the parameter ‘subset’ for fast subsetting of ichimoku cloud indexes.</li>
+<li>New plot themes ‘conceptual’ and ‘fresh’.</li>
 </ul>
 </div>
 <div id="updates" class="section level4">
@@ -175,8 +177,7 @@
 <code><a href="../reference/archive.html">archive()</a></code> now safe for use in non-interactive settings, where it no longer prompts to confirm overwriting of existing files.</li>
 <li>
 <code><a href="../reference/oanda_view.html">oanda_view()</a></code> now returns correct data types in the dataframe.</li>
-<li>Fixes cases of <code><a href="../reference/relative.html">relative()</a></code> showing the incorrect date for ‘latest’.</li>
-<li>Updated internal fallback OANDA instruments table.</li>
+<li>Fixes cases of <code><a href="../reference/relative.html">relative()</a></code> showing the incorrect date for ‘latest’, along with other cosmetic changes.</li>
 <li>Performance improvements to date handling across <code><a href="../reference/ichimoku.html">ichimoku()</a></code> and other package functions.</li>
 </ul>
 </div>
