@@ -157,13 +157,15 @@ autostrat <- function(x,
 #'     'boolean' creates a grid of dummy variables for ichimoku indicator
 #'     conditions of the form 1 if c1 > c2, 0 otherwise. 'numeric' creates a
 #'     grid of the numeric difference c1 - c2. 'z-score' standardises the numeric
-#'     grid by the mean and standard deviation of each feature or target variable.
+#'     grid by the mean and standard deviation of each feature.
+#' @param format [default 'dataframe'] select either 'dataframe' or 'matrix' for
+#'     the format of returned object.
 #' @param unique [default TRUE] to return only unique combinations of c1 and c2.
 #'     Set to FALSE to return both c1 > c2 and c2 > c1.
 #'
-#' @return A data.frame in a 'tidy' format with one observation per row and one
-#'     feature per column with the target 'y' as the first column (unless set to
-#'     'none').
+#' @return A data.frame or matrix in a 'tidy' format with one observation per
+#'     row and one feature per column with the target 'y' as the first column
+#'     (unless set to 'none').
 #'
 #'     The 'y' parameter, trade direction and grid type are set as atrributes.
 #'     To view these, use \code{\link{look}} on the returned object.
@@ -202,12 +204,14 @@ mlgrid <- function(x,
                    y = c("logret", "ret", "none"),
                    dir = c("long", "short"),
                    type = c("boolean", "numeric", "z-score"),
+                   format = c("dataframe", "matrix"),
                    unique = TRUE) {
 
   is.ichimoku(x) || stop("mlgrid() only works on ichimoku objects", call. = FALSE)
   y <- match.arg(y)
   dir <- match.arg(dir)
   type <- match.arg(type)
+  format <- match.arg(format)
   core <- coredata.ichimoku(x)
   xlen <- dim(core)[1L]
   p2 <- attr(x, "periods")[2L]
@@ -242,26 +246,42 @@ mlgrid <- function(x,
     veclist <- c(veclist, veclistf)
   }
 
-  df <- if (y == "none") veclist else c(list(y = target), veclist)
+  df <- switch(y, none = veclist, c(list(y = target), veclist))
   cnames <- attr(df, "names")
   attributes(df) <- list(names = cnames,
                          class = "data.frame",
                          row.names = format.POSIXct(index.ichimoku(x)))
   grid <- df <- df_trim(df)
   if (type == "z-score") {
-    means <- unlist(lapply(df, mean))
-    sdevs <- unlist(lapply(df, sd))
+    if (y != "none") grid <- .subset(grid, -1L)
+    means <- unlist(lapply(grid, mean))
+    sdevs <- unlist(lapply(grid, sd))
     grid <- mapply(function(x, m, s) (x - m) / s,
-                   x = df, m = means, s = sdevs, SIMPLIFY = FALSE, USE.NAMES = FALSE)
+                   x = grid, m = means, s = sdevs, SIMPLIFY = FALSE, USE.NAMES = FALSE)
+    if (y != "none") grid <- c(list(.subset2(df, 1L)), grid)
   }
-  attributes(grid) <- list(names = cnames,
-                           class = "data.frame",
-                           row.names = attr(df, "row.names"),
-                           y = y,
-                           direction = dir,
-                           type = type,
-                           ticker = attr(x, "ticker"))
-  grid
+
+  switch(format,
+         dataframe = {
+           attributes(grid) <- list(names = cnames,
+                                    class = "data.frame",
+                                    row.names = attr(df, "row.names"),
+                                    y = y,
+                                    direction = dir,
+                                    type = type,
+                                    ticker = attr(x, "ticker"))
+           grid
+         },
+         matrix = {
+           grid <- unlist(unname(grid))
+           attributes(grid) <- list(dim = dim(df),
+                                    dimnames = list(attr(df, "row.names"), cnames),
+                                    y = y,
+                                    direction = dir,
+                                    type = type,
+                                    ticker = attr(x, "ticker"))
+           grid
+         })
 
 }
 

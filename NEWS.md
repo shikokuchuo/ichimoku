@@ -1,8 +1,8 @@
-# ichimoku 1.2.4.4
+# ichimoku 1.2.4.5
 
 #### New features:
 
-* `mlgrid()` gains the argument `type = 'z-score'` which produces the standard score of the 'numeric' type grid. 'type' is now saved as an attribute of grids returned by `mlgrid()`.
+* `mlgrid()` gains the arguments `format`, allowing a choice of dataframe or matrix for the returned object, and `type = 'z-score'`, which produces the standard score of the 'numeric' type grid. 'type' is now an attribute of grids returned by `mlgrid()`.
 * New `oanda_orders()` function provides the OANDA fxTrade order book for certain major currency pairs.
 * `oanda_positions()` gains the parameter 'time' for retrieving the position book at a particular time.
 * `index()` gains the parameter 'subset' for fast subsetting of ichimoku cloud indexes.

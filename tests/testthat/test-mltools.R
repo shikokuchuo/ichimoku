@@ -1,7 +1,7 @@
 cloud <- ichimoku(sample_ohlc_data)
 grid <- mlgrid(cloud, y = "logret", type = "numeric")
 grid2 <- mlgrid(cloud, y = "ret", type = "boolean", dir = "short", unique = FALSE)
-grid3 <- mlgrid(cloud, y = "none", type = "z-score")
+grid3 <- mlgrid(cloud, y = "none", type = "z-score", format = "matrix")
 stratlist <- autostrat(cloud, n = 2, dir = "short", quietly = TRUE)
 
 test_that("autostrat ok", {
@@ -16,7 +16,7 @@ test_that("mlgrid ok", {
   expect_identical(dim(grid), c(153L, 38L))
   expect_s3_class(grid2, "data.frame")
   expect_identical(dim(grid2), c(153L, 75L))
-  expect_s3_class(grid3, "data.frame")
+  expect_type(grid3, "double")
   expect_identical(dim(grid3), c(155L, 37L))
   expect_error(mlgrid(sample_ohlc_data), regexp = "ichimoku object")
 })
