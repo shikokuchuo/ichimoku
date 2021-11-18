@@ -153,6 +153,8 @@ autostrat <- function(x,
 #' @inheritParams strat
 #' @param y [default 'logret'] choose target variable 'logret' (log returns),
 #'     'ret' (discrete returns), or 'none'.
+#' @param k [default 1L] integer time horizon of number of periods over which to
+#'     calculate target variable 'y'.
 #' @param type [default 'boolean'] choose 'boolean', 'numeric' or 'z-score'.
 #'     'boolean' creates a grid of dummy variables for ichimoku indicator
 #'     conditions of the form 1 if c1 > c2, 0 otherwise. 'numeric' creates a
@@ -167,11 +169,11 @@ autostrat <- function(x,
 #'     row and one feature per column with the target 'y' as the first column
 #'     (unless set to 'none').
 #'
-#'     The 'y' parameter, trade direction and grid type are set as atrributes.
-#'     To view these, use \code{\link{look}} on the returned object.
+#'     The 'y' and 'k' parameters, trade direction and grid type are set as
+#'     attributes. To view these, use \code{\link{look}} on the returned object.
 #'
 #' @details The date-time index corresponds to when the indicator condition is
-#'     met at the close for that period. The return is the single-period return
+#'     met at the close for that period. The return is the k-period return
 #'     achieved by transacting at the immediately following opening price until
 #'     the next opening price.
 #'
@@ -195,13 +197,14 @@ autostrat <- function(x,
 #'
 #' @examples
 #' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
-#' grid <- mlgrid(cloud, y = "ret", dir = "short", type = "z-score")
+#' grid <- mlgrid(cloud, y = "ret", k = 2, dir = "short", type = "z-score")
 #' str(grid)
 #'
 #' @export
 #'
 mlgrid <- function(x,
                    y = c("logret", "ret", "none"),
+                   k = 1L,
                    dir = c("long", "short"),
                    type = c("boolean", "numeric", "z-score"),
                    format = c("dataframe", "matrix"),
@@ -209,6 +212,8 @@ mlgrid <- function(x,
 
   is.ichimoku(x) || stop("mlgrid() only works on ichimoku objects", call. = FALSE)
   y <- match.arg(y)
+  is.numeric(k) || stop("invalid value supplied for argument 'k'", call. = FALSE)
+  k <- as.integer(k)
   dir <- match.arg(dir)
   type <- match.arg(type)
   format <- match.arg(format)
@@ -217,7 +222,7 @@ mlgrid <- function(x,
   p2 <- attr(x, "periods")[2L]
 
   if (y != "none") {
-    target <- c(diff(log(core[, "open"]))[2:(xlen - 1L)], NA, NA)
+    target <- c((log(core[(k + 1):xlen, "open"]) - log(core[1:(xlen - k), "open"]))[2:(xlen - k)], rep(NA, k + 1L))
     if (dir == "short") target <- -target
     if (y == "ret") target <- exp(target) - 1
   }
@@ -267,6 +272,7 @@ mlgrid <- function(x,
                                     class = "data.frame",
                                     row.names = attr(df, "row.names"),
                                     y = y,
+                                    k = k,
                                     direction = dir,
                                     type = type,
                                     ticker = attr(x, "ticker"))
@@ -277,6 +283,7 @@ mlgrid <- function(x,
            attributes(grid) <- list(dim = dim(df),
                                     dimnames = list(attr(df, "row.names"), cnames),
                                     y = y,
+                                    k = k,
                                     direction = dir,
                                     type = type,
                                     ticker = attr(x, "ticker"))

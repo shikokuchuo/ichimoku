@@ -7,6 +7,7 @@
 mlgrid(
   x,
   y = c("logret", "ret", "none"),
+  k = 1L,
   dir = c("long", "short"),
   type = c("boolean", "numeric", "z-score"),
   format = c("dataframe", "matrix"),
@@ -18,6 +19,9 @@ mlgrid(
 
 \item{y}{[default 'logret'] choose target variable 'logret' (log returns),
 'ret' (discrete returns), or 'none'.}
+
+\item{k}{[default 1L] integer time horizon of number of periods over which to
+calculate target variable 'y'.}
 
 \item{dir}{[default 'long'] trade direction, either 'long' or 'short'.}
 
@@ -38,8 +42,8 @@ A data.frame or matrix in a 'tidy' format with one observation per
     row and one feature per column with the target 'y' as the first column
     (unless set to 'none').
 
-    The 'y' parameter, trade direction and grid type are set as atrributes.
-    To view these, use \code{\link{look}} on the returned object.
+    The 'y' and 'k' parameters, trade direction and grid type are set as
+    attributes. To view these, use \code{\link{look}} on the returned object.
 }
 \description{
 Create a grid of ichimoku indicator conditions and next period returns. The
@@ -50,7 +54,7 @@ Create a grid of ichimoku indicator conditions and next period returns. The
 }
 \details{
 The date-time index corresponds to when the indicator condition is
-    met at the close for that period. The return is the single-period return
+    met at the close for that period. The return is the k-period return
     achieved by transacting at the immediately following opening price until
     the next opening price.
 
@@ -70,7 +74,7 @@ The date-time index corresponds to when the indicator condition is
 
 \examples{
 cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
-grid <- mlgrid(cloud, y = "ret", dir = "short", type = "z-score")
+grid <- mlgrid(cloud, y = "ret", k = 2, dir = "short", type = "z-score")
 str(grid)
 
 }
