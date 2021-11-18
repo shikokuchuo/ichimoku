@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.4.6</span>
       </span>
     </div>
 
@@ -184,43 +184,45 @@ attributes set on the original object.</p></td>
     validation or checking is performed.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>cloud</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ichimoku.html'>ichimoku</a></span><span class='op'>(</span><span class='va'>sample_ohlc_data</span><span class='op'>)</span>
-<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>xts_df</span><span class='op'>(</span><span class='va'>cloud</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 'data.frame':	281 obs. of  13 variables:
-#&gt;  $ index  : POSIXct, format: "2020-01-02 00:00:00" "2020-01-03 00:00:00" ...
-#&gt;  $ open   : num  123 123 123 123 124 ...
-#&gt;  $ high   : num  123 123 123 124 125 ...
-#&gt;  $ low    : num  122 123 122 123 124 ...
-#&gt;  $ close  : num  123 123 123 124 125 ...
-#&gt;  $ cd     : num  -1 1 1 1 1 1 -1 0 -1 -1 ...
-#&gt;  $ tenkan : num  NA NA NA NA NA ...
-#&gt;  $ kijun  : num  NA NA NA NA NA NA NA NA NA NA ...
-#&gt;  $ senkouA: num  NA NA NA NA NA NA NA NA NA NA ...
-#&gt;  $ senkouB: num  NA NA NA NA NA NA NA NA NA NA ...
-#&gt;  $ chikou : num  123 123 123 124 124 ...
-#&gt;  $ cloudT : num  NA NA NA NA NA NA NA NA NA NA ...
-#&gt;  $ cloudB : num  NA NA NA NA NA NA NA NA NA NA ...</div><div class='input'>
-<span class='va'>df2</span> <span class='op'>&lt;-</span> <span class='fu'>xts_df</span><span class='op'>(</span><span class='va'>cloud</span>, keep.attrs <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>df2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 'data.frame':	281 obs. of  13 variables:
-#&gt;  $ index  : POSIXct, format: "2020-01-02 00:00:00" "2020-01-03 00:00:00" ...
-#&gt;  $ open   : num  123 123 123 123 124 ...
-#&gt;  $ high   : num  123 123 123 124 125 ...
-#&gt;  $ low    : num  122 123 122 123 124 ...
-#&gt;  $ close  : num  123 123 123 124 125 ...
-#&gt;  $ cd     : num  -1 1 1 1 1 1 -1 0 -1 -1 ...
-#&gt;  $ tenkan : num  NA NA NA NA NA ...
-#&gt;  $ kijun  : num  NA NA NA NA NA NA NA NA NA NA ...
-#&gt;  $ senkouA: num  NA NA NA NA NA NA NA NA NA NA ...
-#&gt;  $ senkouB: num  NA NA NA NA NA NA NA NA NA NA ...
-#&gt;  $ chikou : num  123 123 123 124 124 ...
-#&gt;  $ cloudT : num  NA NA NA NA NA NA NA NA NA NA ...
-#&gt;  $ cloudB : num  NA NA NA NA NA NA NA NA NA NA ...
-#&gt;  - attr(*, "periods")= int [1:3] 9 26 52
-#&gt;  - attr(*, "periodicity")= num 86400
-#&gt;  - attr(*, "ticker")= chr "sample_ohlc_data"</div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>cloud</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ichimoku.html'>ichimoku</a></span><span class='op'>(</span><span class='va'>sample_ohlc_data</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>xts_df</span><span class='op'>(</span><span class='va'>cloud</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 'data.frame':	281 obs. of  13 variables:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ index  : POSIXct, format: "2020-01-02 00:00:00" "2020-01-03 00:00:00" ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ open   : num  123 123 123 123 124 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ high   : num  123 123 123 124 125 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ low    : num  122 123 122 123 124 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ close  : num  123 123 123 124 125 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ cd     : num  -1 1 1 1 1 1 -1 0 -1 -1 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ tenkan : num  NA NA NA NA NA ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ kijun  : num  NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ senkouA: num  NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ senkouB: num  NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ chikou : num  123 123 123 124 124 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ cloudT : num  NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ cloudB : num  NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>df2</span> <span class='op'>&lt;-</span> <span class='fu'>xts_df</span><span class='op'>(</span><span class='va'>cloud</span>, keep.attrs <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>df2</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 'data.frame':	281 obs. of  13 variables:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ index  : POSIXct, format: "2020-01-02 00:00:00" "2020-01-03 00:00:00" ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ open   : num  123 123 123 123 124 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ high   : num  123 123 123 124 125 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ low    : num  122 123 122 123 124 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ close  : num  123 123 123 124 125 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ cd     : num  -1 1 1 1 1 1 -1 0 -1 -1 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ tenkan : num  NA NA NA NA NA ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ kijun  : num  NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ senkouA: num  NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ senkouB: num  NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ chikou : num  123 123 123 124 124 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ cloudT : num  NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ cloudB : num  NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  - attr(*, "periods")= int [1:3] 9 26 52</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  - attr(*, "periodicity")= num 86400</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  - attr(*, "ticker")= chr "sample_ohlc_data"</span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

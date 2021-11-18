@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.4.6</span>
       </span>
     </div>
 
@@ -193,19 +193,21 @@
     <code><a href='../articles/reference.html'>vignette("reference", package = "ichimoku")</a></code></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>cloud</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ichimoku.html'>ichimoku</a></span><span class='op'>(</span><span class='va'>sample_ohlc_data</span><span class='op'>)</span>
-<span class='fu'>index</span><span class='op'>(</span><span class='va'>cloud</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>101</span><span class='op'>:</span><span class='fl'>110</span><span class='op'>]</span>
-</div><div class='output co'>#&gt;  [1] "2020-05-20 23:00:00 UTC" "2020-05-21 23:00:00 UTC"
-#&gt;  [3] "2020-05-24 23:00:00 UTC" "2020-05-25 23:00:00 UTC"
-#&gt;  [5] "2020-05-26 23:00:00 UTC" "2020-05-27 23:00:00 UTC"
-#&gt;  [7] "2020-05-28 23:00:00 UTC" "2020-05-31 23:00:00 UTC"
-#&gt;  [9] "2020-06-01 23:00:00 UTC" "2020-06-02 23:00:00 UTC"</div><div class='input'><span class='fu'>index</span><span class='op'>(</span><span class='va'>cloud</span>, <span class='fl'>101</span><span class='op'>:</span><span class='fl'>110</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;  [1] "2020-05-20 23:00:00 UTC" "2020-05-21 23:00:00 UTC"
-#&gt;  [3] "2020-05-24 23:00:00 UTC" "2020-05-25 23:00:00 UTC"
-#&gt;  [5] "2020-05-26 23:00:00 UTC" "2020-05-27 23:00:00 UTC"
-#&gt;  [7] "2020-05-28 23:00:00 UTC" "2020-05-31 23:00:00 UTC"
-#&gt;  [9] "2020-06-01 23:00:00 UTC" "2020-06-02 23:00:00 UTC"</div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>cloud</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ichimoku.html'>ichimoku</a></span><span class='op'>(</span><span class='va'>sample_ohlc_data</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>index</span><span class='op'>(</span><span class='va'>cloud</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>101</span><span class='op'>:</span><span class='fl'>110</span><span class='op'>]</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [1] "2020-05-20 23:00:00 UTC" "2020-05-21 23:00:00 UTC"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [3] "2020-05-24 23:00:00 UTC" "2020-05-25 23:00:00 UTC"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [5] "2020-05-26 23:00:00 UTC" "2020-05-27 23:00:00 UTC"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [7] "2020-05-28 23:00:00 UTC" "2020-05-31 23:00:00 UTC"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [9] "2020-06-01 23:00:00 UTC" "2020-06-02 23:00:00 UTC"</span>
+<span class='r-in'><span class='fu'>index</span><span class='op'>(</span><span class='va'>cloud</span>, <span class='fl'>101</span><span class='op'>:</span><span class='fl'>110</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [1] "2020-05-20 23:00:00 UTC" "2020-05-21 23:00:00 UTC"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [3] "2020-05-24 23:00:00 UTC" "2020-05-25 23:00:00 UTC"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [5] "2020-05-26 23:00:00 UTC" "2020-05-27 23:00:00 UTC"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [7] "2020-05-28 23:00:00 UTC" "2020-05-31 23:00:00 UTC"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [9] "2020-06-01 23:00:00 UTC" "2020-06-02 23:00:00 UTC"</span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

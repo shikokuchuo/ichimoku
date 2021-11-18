@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.4.6</span>
       </span>
     </div>
 
@@ -153,7 +153,7 @@
 <a href="#the-oanda-functions" class="anchor"></a>The OANDA Functions</h2>
 <p>All of the OANDA functions in the package are prefixed by ‘oanda’ for clarity.</p>
 <p>Functions may be called interactively without any arguments, e.g. <code><a href="../reference/oanda_stream.html">oanda_stream()</a></code> or <code><a href="../reference/oanda_view.html">oanda_view()</a></code>, in which case you will be further prompted to enter required arguments; as opposed to when specifying such arguments normally, these should be entered unquoted i.e. without any surrounding "".</p>
-<p>For all functions, the ‘instrument’ argument is case-insensitive and the delimiter can be either ’_’ or ‘-’, such that both <code><a href="../reference/oanda.html">oanda("USD_JPY")</a></code> and <code><a href="../reference/oanda.html">oanda("usd-jpy")</a></code> would be acceptable.</p>
+<p>For all functions, the ‘instrument’ argument is case-insensitive and the delimiter can be either ’_’ or ‘-’, such that both <code>oanda("USD_JPY")</code> and <code>oanda("usd-jpy")</code> would be acceptable.</p>
 <div id="oanda" class="section level3">
 <h3 class="hasAnchor">
 <a href="#oanda" class="anchor"></a><code>oanda()</code>
@@ -240,7 +240,7 @@
 <code>...</code> additional arguments passed to <code><a href="../reference/ichimoku.html">ichimoku()</a></code> for calculating the ichimoku cloud, <code><a href="../reference/autoplot.html">autoplot()</a></code> to set chart parameters, or the ‘options’ argument of <code><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html">shiny::shinyApp()</a></code>
 </li>
 <li>
-<code>launch.browser</code> [default TRUE] If TRUE, the system’s default web browser will be launched automatically after the app is started. The value of this argument can also be a function to call with the application’s URL. To use the default Shiny viewer in RStudio, please specify <code><a href="https://rdrr.io/r/base/options.html">getOption("shiny.launch.browser")</a></code>
+<code>launch.browser</code> [default TRUE] If TRUE, the system’s default web browser will be launched automatically after the app is started. The value of this argument can also be a function to call with the application’s URL. To use the default Shiny viewer in RStudio, please specify <code>getOption("shiny.launch.browser")</code>
 </li>
 </ul>
 <div id="downloading-data" class="section level4">

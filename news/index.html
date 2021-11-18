@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.4.6</span>
       </span>
     </div>
 
@@ -151,16 +151,25 @@
       <small>Source: <a href='https://github.com/shikokuchuo/ichimoku/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="ichimoku-1245" class="section level1">
-<h1 class="page-header" data-toc-text="1.2.4.5">
-<a href="#ichimoku-1245" class="anchor"></a>ichimoku 1.2.4.5<small> Unreleased </small>
+    <div id="ichimoku-1246" class="section level1">
+<h1 class="page-header" data-toc-text="1.2.4.6">
+<a href="#ichimoku-1246" class="anchor"></a>ichimoku 1.2.4.6<small> Unreleased </small>
 </h1>
 <div id="new-features" class="section level4">
 <h4 class="hasAnchor">
 <a href="#new-features" class="anchor"></a>New features:</h4>
 <ul>
 <li>
-<code><a href="../reference/mlgrid.html">mlgrid()</a></code> gains the arguments <code>format</code>, allowing a choice of dataframe or matrix for the returned object, and <code>type = 'z-score'</code>, which produces the standard score of the ‘numeric’ type grid. ‘type’ is now an attribute of grids returned by <code><a href="../reference/mlgrid.html">mlgrid()</a></code>.</li>
+<code><a href="../reference/mlgrid.html">mlgrid()</a></code> now appends attributes ‘k’ and ‘type’ to returned objects, and gains the following arguments:
+<ul>
+<li>
+<code>k</code> to specify the k-period time horizon over which to calculate target variable ‘y’.</li>
+<li>
+<code>type = 'z-score'</code> to produce the standard score of a ‘numeric’ type grid.</li>
+<li>
+<code>format</code> to choose between returning a dataframe or matrix.</li>
+</ul>
+</li>
 <li>New <code><a href="../reference/oanda_orders.html">oanda_orders()</a></code> function provides the OANDA fxTrade order book for certain major currency pairs.</li>
 <li>
 <code><a href="../reference/oanda_positions.html">oanda_positions()</a></code> gains the parameter ‘time’ for retrieving the position book at a particular time.</li>
@@ -207,7 +216,7 @@
 <h4 class="hasAnchor">
 <a href="#updates-1" class="anchor"></a>Updates:</h4>
 <ul>
-<li>For OANDA functions, where the ‘server’ parameter is specified, the corresponding API key will now be retrieved rather than the default, allowing for example <code><a href="../reference/oanda_studio.html">oanda_studio(server = "live", new.process = TRUE)</a></code>
+<li>For OANDA functions, where the ‘server’ parameter is specified, the corresponding API key will now be retrieved rather than the default, allowing for example <code>oanda_studio(server = "live", new.process = TRUE)</code>
 </li>
 <li>Improved appearance of progress indicators for <code><a href="../reference/oanda.html">oanda()</a></code> and <code><a href="../reference/oanda_view.html">oanda_view()</a></code>.</li>
 <li>
@@ -245,7 +254,7 @@
 <ul>
 <li>Accessibility improvements: default ‘original’ theme adjusted to accommodate colour vision deficiency.</li>
 <li>All OANDA functions now prompt for missing required arguments instead of returning errors.</li>
-<li>For ease of use, the ‘instrument’ argument in all OANDA functions is now case-insensitive and the delimiter may be supplied as either ’_’ or ‘-’, so both <code><a href="../reference/oanda.html">oanda("usd-jpy")</a></code> and <code><a href="../reference/oanda.html">oanda("USD_JPY")</a></code> are acceptable.</li>
+<li>For ease of use, the ‘instrument’ argument in all OANDA functions is now case-insensitive and the delimiter may be supplied as either ’_’ or ‘-’, so both <code>oanda("usd-jpy")</code> and <code>oanda("USD_JPY")</code> are acceptable.</li>
 <li>
 <code><a href="../reference/tradingDays.html">tradingDays()</a></code> argument ‘noholidays’ removed in favour of ‘holidays = NULL’. Logic changed slightly so that default holidays are applied only if ‘holidays’ is not specified.</li>
 <li>Minor performance improvements to OANDA and ML layer functions.</li>

@@ -86,7 +86,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.4.6</span>
       </span>
     </div>
 
@@ -233,7 +233,7 @@ in the input object as additional columns and/or attributes.</p></td>
 
 
 <p>Index:</p><ul>
-<li><p><code><a href='index.html'>index(object)</a></code>: date-time index [POSIXct]</p></li>
+<li><p><code>index(object)</code>: date-time index [POSIXct]</p></li>
 </ul><p>Columns [numeric]:</p><ul>
 <li><p><code>object$open</code>: opening price</p></li>
 <li><p><code>$high</code>: high price</p></li>
@@ -268,46 +268,50 @@ in the input object as additional columns and/or attributes.</p></td>
     <code><a href='../articles/reference.html'>vignette("reference", package = "ichimoku")</a></code></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>TKR</span> <span class='op'>&lt;-</span> <span class='va'>sample_ohlc_data</span>
-
-<span class='va'>cloud</span> <span class='op'>&lt;-</span> <span class='fu'>ichimoku</span><span class='op'>(</span><span class='va'>TKR</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>cloud</span><span class='op'>)</span>
-</div><div class='img'><img src='ichimoku-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>cloud</span><span class='op'>[</span><span class='fl'>101</span><span class='op'>:</span><span class='fl'>110</span>, <span class='op'>]</span>, plot <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                      open  high   low close cd tenkan  kijun senkouA senkouB
-#&gt; 2020-05-20 23:00:00 122.4 122.6 121.1 121.9 -1 121.05 123.90 125.675  124.85
-#&gt; 2020-05-21 23:00:00 121.9 123.7 121.7 123.3  1 121.40 123.80 125.675  124.85
-#&gt; 2020-05-24 23:00:00 123.3 124.0 123.0 124.0  1 121.55 123.80 125.675  124.85
-#&gt; 2020-05-25 23:00:00 124.2 124.3 124.0 124.1 -1 121.75 123.65 125.975  124.85
-#&gt; 2020-05-26 23:00:00 124.1 124.1 123.4 123.9 -1 122.25 123.65 126.475  124.85
-#&gt; 2020-05-27 23:00:00 123.9 124.7 123.7 124.5  1 122.90 123.65 126.575  124.85
-#&gt; 2020-05-28 23:00:00 124.5 124.7 123.9 124.2 -1 122.90 123.60 126.250  124.85
-#&gt; 2020-05-31 23:00:00 124.2 125.2 124.0 124.7  1 123.15 123.60 126.150  124.85
-#&gt; 2020-06-01 23:00:00 124.7 129.8 124.7 129.6  1 125.45 124.45 125.675  124.85
-#&gt; 2020-06-02 23:00:00 129.9 130.6 129.9 130.2  1 126.15 124.85 125.625  124.85
-#&gt;                     chikou  cloudT cloudB
-#&gt; 2020-05-20 23:00:00  135.6 125.675 124.85
-#&gt; 2020-05-21 23:00:00  134.5 125.675 124.85
-#&gt; 2020-05-24 23:00:00  134.3 125.675 124.85
-#&gt; 2020-05-25 23:00:00  135.9 125.975 124.85
-#&gt; 2020-05-26 23:00:00  135.2 126.475 124.85
-#&gt; 2020-05-27 23:00:00  135.7 126.575 124.85
-#&gt; 2020-05-28 23:00:00  135.4 126.250 124.85
-#&gt; 2020-05-31 23:00:00  135.7 126.150 124.85
-#&gt; 2020-06-01 23:00:00  135.6 125.675 124.85
-#&gt; 2020-06-02 23:00:00  136.2 125.625 124.85</div><div class='input'>
-<span class='va'>kumo</span> <span class='op'>&lt;-</span> <span class='fu'>ichimoku</span><span class='op'>(</span><span class='va'>TKR</span>, ticker <span class='op'>=</span> <span class='st'>"TKR Co."</span>, periods <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>9</span>, <span class='fl'>26</span>, <span class='fl'>52</span><span class='op'>)</span>, keep.data <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>kumo</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; ichimoku object with dimensions (281, 13) 
-#&gt; 
-#&gt;             Max: 2020-07-13 23:00:00 [139.7]
-#&gt; Start: 2020-01-02 00:00:00 [123]   End: 2020-12-24 00:00:00 [136]
-#&gt;             Min: 2020-05-12 23:00:00 [119.1]
-#&gt; 
-#&gt; Cloud periods: 9 26 52 
-#&gt; Periodicity: 1 days 
-#&gt; Ticker: TKR Co.</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>kumo</span>, theme <span class='op'>=</span> <span class='st'>"solarized"</span>, type <span class='op'>=</span> <span class='st'>"bar"</span>, custom <span class='op'>=</span> <span class='st'>"volume"</span><span class='op'>)</span>
-</div><div class='img'><img src='ichimoku-2.png' alt='' width='700' height='433' /></div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>TKR</span> <span class='op'>&lt;-</span> <span class='va'>sample_ohlc_data</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>cloud</span> <span class='op'>&lt;-</span> <span class='fu'>ichimoku</span><span class='op'>(</span><span class='va'>TKR</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>cloud</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='ichimoku-1.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>cloud</span><span class='op'>[</span><span class='fl'>101</span><span class='op'>:</span><span class='fl'>110</span>, <span class='op'>]</span>, plot <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                      open  high   low close cd tenkan  kijun senkouA senkouB</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2020-05-20 23:00:00 122.4 122.6 121.1 121.9 -1 121.05 123.90 125.675  124.85</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2020-05-21 23:00:00 121.9 123.7 121.7 123.3  1 121.40 123.80 125.675  124.85</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2020-05-24 23:00:00 123.3 124.0 123.0 124.0  1 121.55 123.80 125.675  124.85</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2020-05-25 23:00:00 124.2 124.3 124.0 124.1 -1 121.75 123.65 125.975  124.85</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2020-05-26 23:00:00 124.1 124.1 123.4 123.9 -1 122.25 123.65 126.475  124.85</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2020-05-27 23:00:00 123.9 124.7 123.7 124.5  1 122.90 123.65 126.575  124.85</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2020-05-28 23:00:00 124.5 124.7 123.9 124.2 -1 122.90 123.60 126.250  124.85</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2020-05-31 23:00:00 124.2 125.2 124.0 124.7  1 123.15 123.60 126.150  124.85</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2020-06-01 23:00:00 124.7 129.8 124.7 129.6  1 125.45 124.45 125.675  124.85</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2020-06-02 23:00:00 129.9 130.6 129.9 130.2  1 126.15 124.85 125.625  124.85</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                     chikou  cloudT cloudB</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2020-05-20 23:00:00  135.6 125.675 124.85</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2020-05-21 23:00:00  134.5 125.675 124.85</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2020-05-24 23:00:00  134.3 125.675 124.85</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2020-05-25 23:00:00  135.9 125.975 124.85</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2020-05-26 23:00:00  135.2 126.475 124.85</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2020-05-27 23:00:00  135.7 126.575 124.85</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2020-05-28 23:00:00  135.4 126.250 124.85</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2020-05-31 23:00:00  135.7 126.150 124.85</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2020-06-01 23:00:00  135.6 125.675 124.85</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2020-06-02 23:00:00  136.2 125.625 124.85</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>kumo</span> <span class='op'>&lt;-</span> <span class='fu'>ichimoku</span><span class='op'>(</span><span class='va'>TKR</span>, ticker <span class='op'>=</span> <span class='st'>"TKR Co."</span>, periods <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>9</span>, <span class='fl'>26</span>, <span class='fl'>52</span><span class='op'>)</span>, keep.data <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>kumo</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ichimoku object with dimensions (281, 13) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             Max: 2020-07-13 23:00:00 [139.7]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Start: 2020-01-02 00:00:00 [123]   End: 2020-12-24 00:00:00 [136]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             Min: 2020-05-12 23:00:00 [119.1]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Cloud periods: 9 26 52 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Periodicity: 1 days </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Ticker: TKR Co.</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>kumo</span>, theme <span class='op'>=</span> <span class='st'>"solarized"</span>, type <span class='op'>=</span> <span class='st'>"bar"</span>, custom <span class='op'>=</span> <span class='st'>"volume"</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='ichimoku-2.png' alt='' width='700' height='433' /></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

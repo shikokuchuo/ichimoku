@@ -83,7 +83,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.4.6</span>
       </span>
     </div>
 
@@ -179,19 +179,21 @@
     recursive types (e.g. lists).</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>, <span class='cn'>NA</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='fl'>2</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>data</span>
-</div><div class='output co'>#&gt;   c.1.4..NA. c.NA..2.5.
-#&gt; 1          1         NA
-#&gt; 2          2          2
-#&gt; 3          3          3
-#&gt; 4          4          4
-#&gt; 5         NA          5</div><div class='input'><span class='fu'>df_trim</span><span class='op'>(</span><span class='va'>data</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;   c.1.4..NA. c.NA..2.5.
-#&gt; 2          2          2
-#&gt; 3          3          3
-#&gt; 4          4          4</div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>, <span class='cn'>NA</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='fl'>2</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>data</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   c.1.4..NA. c.NA..2.5.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1          1         NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2          2          2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3          3          3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4          4          4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5         NA          5</span>
+<span class='r-in'><span class='fu'>df_trim</span><span class='op'>(</span><span class='va'>data</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   c.1.4..NA. c.NA..2.5.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2          2          2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3          3          3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4          4          4</span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

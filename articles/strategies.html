@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.4.6</span>
       </span>
     </div>
 
@@ -292,7 +292,7 @@
 <p>The benchmark returns for all periods are saved as ‘logret’ (log returns) and ‘ret’ (discrete returns).</p>
 <p>As the ichimoku object inherits the ‘xts’ class, these columns may be fed directly into other econometrics or analytics packages such as ‘PerformanceAnalytics’, as per the example below.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">PerformanceAnalytics</span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/braverock/PerformanceAnalytics">PerformanceAnalytics</a></span><span class="op">)</span>
 <span class="co"># To chart performance comparison of strategy vs benchmark, daily returns and drawdowns</span>
 <span class="fu">charts.PerformanceSummary</span><span class="op">(</span><span class="va">strat</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"sret"</span>, <span class="st">"ret"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>
 <span class="co"># For a table detailing drawdowns, including depth, length of recovery etc.</span>

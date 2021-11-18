@@ -83,7 +83,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.4.6</span>
       </span>
     </div>
 
@@ -188,181 +188,189 @@ list.</p></td>
     <code>look(x)$logret</code> and <code>look(x)$summary</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>cloud</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ichimoku.html'>ichimoku</a></span><span class='op'>(</span><span class='va'>sample_ohlc_data</span>, ticker <span class='op'>=</span> <span class='st'>"TKR"</span><span class='op'>)</span>
-<span class='fu'>look</span><span class='op'>(</span><span class='va'>cloud</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $periods
-#&gt; [1]  9 26 52
-#&gt; 
-#&gt; $periodicity
-#&gt; [1] 86400
-#&gt; 
-#&gt; $ticker
-#&gt; [1] "TKR"
-#&gt; </div><div class='input'>
-<span class='va'>stratlist</span> <span class='op'>&lt;-</span> <span class='fu'><a href='autostrat.html'>autostrat</a></span><span class='op'>(</span><span class='va'>cloud</span>, n <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                        [,1]                [,2]               
-#&gt; Strategy               "senkouB &gt; tenkan"  "cloudB &gt; tenkan"  
-#&gt; ---------------------  "----------"        "----------"       
-#&gt; Strategy cuml return % 17.49               16.08              
-#&gt; Per period mean ret %  0.0906              0.0838             
-#&gt; Periods in market      63                  51                 
-#&gt; Total trades           3                   3                  
-#&gt; Average trade length   21                  17                 
-#&gt; Trade success %        100                 100                
-#&gt; Worst trade ret %      3.64                3.16               
-#&gt; ---------------------  "----------"        "----------"       
-#&gt; Benchmark cuml ret %   5.53                5.53               
-#&gt; Per period mean ret %  0.0302              0.0302             
-#&gt; Periods in market      178                 178                
-#&gt; ---------------------  "----------"        "----------"       
-#&gt; Direction              "long"              "long"             
-#&gt; Start                  2020-04-19 23:00:00 2020-04-19 23:00:00
-#&gt; End                    2020-12-23          2020-12-23         
-#&gt; Ticker                 "TKR"               "TKR"              
-#&gt;                        [,3]               
-#&gt; Strategy               "senkouB &gt; kijun"  
-#&gt; ---------------------  "----------"       
-#&gt; Strategy cuml return % 14.1               
-#&gt; Per period mean ret %  0.0741             
-#&gt; Periods in market      64                 
-#&gt; Total trades           3                  
-#&gt; Average trade length   21.33              
-#&gt; Trade success %        100                
-#&gt; Worst trade ret %      3.49               
-#&gt; ---------------------  "----------"       
-#&gt; Benchmark cuml ret %   5.53               
-#&gt; Per period mean ret %  0.0302             
-#&gt; Periods in market      178                
-#&gt; ---------------------  "----------"       
-#&gt; Direction              "long"             
-#&gt; Start                  2020-04-19 23:00:00
-#&gt; End                    2020-12-23         
-#&gt; Ticker                 "TKR"              </div><div class='input'><span class='fu'>look</span><span class='op'>(</span><span class='va'>stratlist</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $logret
-#&gt;  senkouB_tenkan   cloudB_tenkan   senkouB_kijun    cloudB_kijun      low_tenkan 
-#&gt;     0.144869048     0.132721126     0.124552623     0.124476092     0.119988595 
-#&gt;    cloudB_close     high_tenkan      cloudB_low   senkouB_close    cloudT_kijun 
-#&gt;     0.117048881     0.112062056     0.110900734     0.110699399     0.103153955 
-#&gt;   senkouA_kijun     senkouB_low   cloudT_tenkan     cloudT_high       low_kijun 
-#&gt;     0.103077424     0.101480718     0.093961798     0.088759707     0.088503030 
-#&gt;    senkouB_high  chikou_senkouA      high_kijun  senkouA_tenkan    close_tenkan 
-#&gt;     0.086708526     0.084344426     0.083373239     0.081813876     0.079948752 
-#&gt;   tenkan_chikou    senkouA_high     cloudB_high     senkouA_low   senkouA_close 
-#&gt;     0.078961923     0.076693196     0.074642015     0.073761187     0.073712567 
-#&gt;     close_kijun   chikou_cloudT    cloudT_close    kijun_chikou      cloudT_low 
-#&gt;     0.071380845     0.069192621     0.067363085     0.066288776     0.064341171 
-#&gt;   chikou_cloudB    chikou_close    kijun_tenkan      chikou_low  chikou_senkouB 
-#&gt;     0.064291073     0.062225816     0.055091789     0.053536566     0.049139267 
-#&gt; senkouA_senkouB  senkouB_chikou     chikou_high      low_chikou     high_chikou 
-#&gt;     0.048655509     0.045949698     0.042730532     0.041552399     0.034326207 
-#&gt;    close_chikou   cloudB_chikou      low_cloudT    tenkan_kijun    chikou_kijun 
-#&gt;     0.032863149     0.030797893     0.030747795     0.030128362     0.028800189 
-#&gt;   cloudT_chikou    close_cloudT     kijun_close senkouB_senkouA    tenkan_close 
-#&gt;     0.025896344     0.024713830     0.023708120     0.023618778     0.023402736 
-#&gt;   close_senkouA     low_senkouA     high_cloudB    high_senkouA  tenkan_senkouA 
-#&gt;     0.021376398     0.021327779     0.020446951     0.018395770     0.013275089 
-#&gt;  senkouA_chikou   chikou_tenkan    high_senkouB       kijun_low     high_cloudT 
-#&gt;     0.010744539     0.010161327     0.008380439     0.006585935     0.006329258 
-#&gt;   tenkan_cloudT      kijun_high     low_senkouB     tenkan_high   kijun_senkouA 
-#&gt;     0.001127167    -0.003436078    -0.006391752    -0.007150571    -0.007988459 
-#&gt;    kijun_cloudT      low_cloudB      tenkan_low   close_senkouB    close_cloudB 
-#&gt;    -0.008064990    -0.015811768    -0.015890560    -0.018622484    -0.021959916 
-#&gt;   tenkan_cloudB    kijun_cloudB   kijun_senkouB  tenkan_senkouB 
-#&gt;    -0.037632160    -0.040858512    -0.040935043    -0.049780083 
-#&gt; 
-#&gt; $summary
-#&gt;                        [,1]                [,2]               
-#&gt; Strategy               "senkouB &gt; tenkan"  "cloudB &gt; tenkan"  
-#&gt; ---------------------  "----------"        "----------"       
-#&gt; Strategy cuml return % 17.49               16.08              
-#&gt; Per period mean ret %  0.0906              0.0838             
-#&gt; Periods in market      63                  51                 
-#&gt; Total trades           3                   3                  
-#&gt; Average trade length   21                  17                 
-#&gt; Trade success %        100                 100                
-#&gt; Worst trade ret %      3.64                3.16               
-#&gt; ---------------------  "----------"        "----------"       
-#&gt; Benchmark cuml ret %   5.53                5.53               
-#&gt; Per period mean ret %  0.0302              0.0302             
-#&gt; Periods in market      178                 178                
-#&gt; ---------------------  "----------"        "----------"       
-#&gt; Direction              "long"              "long"             
-#&gt; Start                  2020-04-19 23:00:00 2020-04-19 23:00:00
-#&gt; End                    2020-12-23          2020-12-23         
-#&gt; Ticker                 "TKR"               "TKR"              
-#&gt;                        [,3]               
-#&gt; Strategy               "senkouB &gt; kijun"  
-#&gt; ---------------------  "----------"       
-#&gt; Strategy cuml return % 14.1               
-#&gt; Per period mean ret %  0.0741             
-#&gt; Periods in market      64                 
-#&gt; Total trades           3                  
-#&gt; Average trade length   21.33              
-#&gt; Trade success %        100                
-#&gt; Worst trade ret %      3.49               
-#&gt; ---------------------  "----------"       
-#&gt; Benchmark cuml ret %   5.53               
-#&gt; Per period mean ret %  0.0302             
-#&gt; Periods in market      178                
-#&gt; ---------------------  "----------"       
-#&gt; Direction              "long"             
-#&gt; Start                  2020-04-19 23:00:00
-#&gt; End                    2020-12-23         
-#&gt; Ticker                 "TKR"              
-#&gt; </div><div class='input'>
-<span class='va'>strat</span> <span class='op'>&lt;-</span> <span class='fu'>look</span><span class='op'>(</span><span class='va'>stratlist</span>, which <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-<span class='fu'>look</span><span class='op'>(</span><span class='va'>strat</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $periods
-#&gt; [1]  9 26 52
-#&gt; 
-#&gt; $periodicity
-#&gt; [1] 86400
-#&gt; 
-#&gt; $ticker
-#&gt; [1] "TKR"
-#&gt; 
-#&gt; $strat
-#&gt;                        [,1]               
-#&gt; Strategy               "senkouB &gt; tenkan" 
-#&gt; ---------------------  "----------"       
-#&gt; Strategy cuml return % 17.49              
-#&gt; Per period mean ret %  0.0906             
-#&gt; Periods in market      63                 
-#&gt; Total trades           3                  
-#&gt; Average trade length   21                 
-#&gt; Trade success %        100                
-#&gt; Worst trade ret %      3.64               
-#&gt; ---------------------  "----------"       
-#&gt; Benchmark cuml ret %   5.53               
-#&gt; Per period mean ret %  0.0302             
-#&gt; Periods in market      178                
-#&gt; ---------------------  "----------"       
-#&gt; Direction              "long"             
-#&gt; Start                  2020-04-19 23:00:00
-#&gt; End                    2020-12-23         
-#&gt; Ticker                 "TKR"              
-#&gt; </div><div class='input'>
-<span class='va'>grid</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mlgrid.html'>mlgrid</a></span><span class='op'>(</span><span class='va'>cloud</span><span class='op'>)</span>
-<span class='fu'>look</span><span class='op'>(</span><span class='va'>grid</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $y
-#&gt; [1] "logret"
-#&gt; 
-#&gt; $direction
-#&gt; [1] "long"
-#&gt; 
-#&gt; $type
-#&gt; [1] "boolean"
-#&gt; 
-#&gt; $ticker
-#&gt; [1] "TKR"
-#&gt; </div><div class='input'>
-<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='co'># OANDA API key required to run this example</span>
-<span class='va'>prices</span> <span class='op'>&lt;-</span> <span class='fu'><a href='oanda.html'>oanda</a></span><span class='op'>(</span><span class='st'>"USD_JPY"</span><span class='op'>)</span>
-<span class='fu'>look</span><span class='op'>(</span><span class='va'>prices</span><span class='op'>)</span>
-<span class='op'>}</span>
-
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>cloud</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ichimoku.html'>ichimoku</a></span><span class='op'>(</span><span class='va'>sample_ohlc_data</span>, ticker <span class='op'>=</span> <span class='st'>"TKR"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>look</span><span class='op'>(</span><span class='va'>cloud</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $periods</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1]  9 26 52</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $periodicity</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 86400</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $ticker</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "TKR"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>stratlist</span> <span class='op'>&lt;-</span> <span class='fu'><a href='autostrat.html'>autostrat</a></span><span class='op'>(</span><span class='va'>cloud</span>, n <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                        [,1]                [,2]               </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Strategy               "senkouB &gt; tenkan"  "cloudB &gt; tenkan"  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ---------------------  "----------"        "----------"       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Strategy cuml return % 17.49               16.08              </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Per period mean ret %  0.0906              0.0838             </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Periods in market      63                  51                 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Total trades           3                   3                  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Average trade length   21                  17                 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Trade success %        100                 100                </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Worst trade ret %      3.64                3.16               </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ---------------------  "----------"        "----------"       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Benchmark cuml ret %   5.53                5.53               </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Per period mean ret %  0.0302              0.0302             </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Periods in market      178                 178                </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ---------------------  "----------"        "----------"       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Direction              "long"              "long"             </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Start                  2020-04-19 23:00:00 2020-04-19 23:00:00</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> End                    2020-12-23          2020-12-23         </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Ticker                 "TKR"               "TKR"              </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                        [,3]               </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Strategy               "senkouB &gt; kijun"  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ---------------------  "----------"       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Strategy cuml return % 14.1               </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Per period mean ret %  0.0741             </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Periods in market      64                 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Total trades           3                  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Average trade length   21.33              </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Trade success %        100                </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Worst trade ret %      3.49               </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ---------------------  "----------"       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Benchmark cuml ret %   5.53               </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Per period mean ret %  0.0302             </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Periods in market      178                </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ---------------------  "----------"       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Direction              "long"             </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Start                  2020-04-19 23:00:00</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> End                    2020-12-23         </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Ticker                 "TKR"              </span>
+<span class='r-in'><span class='fu'>look</span><span class='op'>(</span><span class='va'>stratlist</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $logret</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  senkouB_tenkan   cloudB_tenkan   senkouB_kijun    cloudB_kijun      low_tenkan </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     0.144869048     0.132721126     0.124552623     0.124476092     0.119988595 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    cloudB_close     high_tenkan      cloudB_low   senkouB_close    cloudT_kijun </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     0.117048881     0.112062056     0.110900734     0.110699399     0.103153955 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   senkouA_kijun     senkouB_low   cloudT_tenkan     cloudT_high       low_kijun </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     0.103077424     0.101480718     0.093961798     0.088759707     0.088503030 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    senkouB_high  chikou_senkouA      high_kijun  senkouA_tenkan    close_tenkan </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     0.086708526     0.084344426     0.083373239     0.081813876     0.079948752 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   tenkan_chikou    senkouA_high     cloudB_high     senkouA_low   senkouA_close </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     0.078961923     0.076693196     0.074642015     0.073761187     0.073712567 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     close_kijun   chikou_cloudT    cloudT_close    kijun_chikou      cloudT_low </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     0.071380845     0.069192621     0.067363085     0.066288776     0.064341171 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   chikou_cloudB    chikou_close    kijun_tenkan      chikou_low  chikou_senkouB </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     0.064291073     0.062225816     0.055091789     0.053536566     0.049139267 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> senkouA_senkouB  senkouB_chikou     chikou_high      low_chikou     high_chikou </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     0.048655509     0.045949698     0.042730532     0.041552399     0.034326207 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    close_chikou   cloudB_chikou      low_cloudT    tenkan_kijun    chikou_kijun </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     0.032863149     0.030797893     0.030747795     0.030128362     0.028800189 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   cloudT_chikou    close_cloudT     kijun_close senkouB_senkouA    tenkan_close </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     0.025896344     0.024713830     0.023708120     0.023618778     0.023402736 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   close_senkouA     low_senkouA     high_cloudB    high_senkouA  tenkan_senkouA </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     0.021376398     0.021327779     0.020446951     0.018395770     0.013275089 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  senkouA_chikou   chikou_tenkan    high_senkouB       kijun_low     high_cloudT </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     0.010744539     0.010161327     0.008380439     0.006585935     0.006329258 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   tenkan_cloudT      kijun_high     low_senkouB     tenkan_high   kijun_senkouA </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     0.001127167    -0.003436078    -0.006391752    -0.007150571    -0.007988459 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    kijun_cloudT      low_cloudB      tenkan_low   close_senkouB    close_cloudB </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    -0.008064990    -0.015811768    -0.015890560    -0.018622484    -0.021959916 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   tenkan_cloudB    kijun_cloudB   kijun_senkouB  tenkan_senkouB </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    -0.037632160    -0.040858512    -0.040935043    -0.049780083 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $summary</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                        [,1]                [,2]               </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Strategy               "senkouB &gt; tenkan"  "cloudB &gt; tenkan"  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ---------------------  "----------"        "----------"       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Strategy cuml return % 17.49               16.08              </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Per period mean ret %  0.0906              0.0838             </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Periods in market      63                  51                 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Total trades           3                   3                  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Average trade length   21                  17                 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Trade success %        100                 100                </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Worst trade ret %      3.64                3.16               </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ---------------------  "----------"        "----------"       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Benchmark cuml ret %   5.53                5.53               </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Per period mean ret %  0.0302              0.0302             </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Periods in market      178                 178                </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ---------------------  "----------"        "----------"       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Direction              "long"              "long"             </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Start                  2020-04-19 23:00:00 2020-04-19 23:00:00</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> End                    2020-12-23          2020-12-23         </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Ticker                 "TKR"               "TKR"              </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                        [,3]               </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Strategy               "senkouB &gt; kijun"  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ---------------------  "----------"       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Strategy cuml return % 14.1               </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Per period mean ret %  0.0741             </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Periods in market      64                 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Total trades           3                  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Average trade length   21.33              </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Trade success %        100                </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Worst trade ret %      3.49               </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ---------------------  "----------"       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Benchmark cuml ret %   5.53               </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Per period mean ret %  0.0302             </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Periods in market      178                </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ---------------------  "----------"       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Direction              "long"             </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Start                  2020-04-19 23:00:00</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> End                    2020-12-23         </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Ticker                 "TKR"              </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>strat</span> <span class='op'>&lt;-</span> <span class='fu'>look</span><span class='op'>(</span><span class='va'>stratlist</span>, which <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>look</span><span class='op'>(</span><span class='va'>strat</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $periods</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1]  9 26 52</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $periodicity</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 86400</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $ticker</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "TKR"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $strat</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                        [,1]               </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Strategy               "senkouB &gt; tenkan" </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ---------------------  "----------"       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Strategy cuml return % 17.49              </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Per period mean ret %  0.0906             </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Periods in market      63                 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Total trades           3                  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Average trade length   21                 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Trade success %        100                </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Worst trade ret %      3.64               </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ---------------------  "----------"       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Benchmark cuml ret %   5.53               </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Per period mean ret %  0.0302             </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Periods in market      178                </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ---------------------  "----------"       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Direction              "long"             </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Start                  2020-04-19 23:00:00</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> End                    2020-12-23         </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Ticker                 "TKR"              </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>grid</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mlgrid.html'>mlgrid</a></span><span class='op'>(</span><span class='va'>cloud</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>look</span><span class='op'>(</span><span class='va'>grid</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $y</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "logret"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $k</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $direction</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "long"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $type</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "boolean"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $ticker</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "TKR"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'><span class='co'># OANDA API key required to run this example</span></span>
+<span class='r-in'><span class='va'>prices</span> <span class='op'>&lt;-</span> <span class='fu'><a href='oanda.html'>oanda</a></span><span class='op'>(</span><span class='st'>"USD_JPY"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>look</span><span class='op'>(</span><span class='va'>prices</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

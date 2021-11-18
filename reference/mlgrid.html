@@ -86,7 +86,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.4.6</span>
       </span>
     </div>
 
@@ -168,6 +168,7 @@
     <pre class="usage"><span class='fu'>mlgrid</span><span class='op'>(</span>
   <span class='va'>x</span>,
   y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"logret"</span>, <span class='st'>"ret"</span>, <span class='st'>"none"</span><span class='op'>)</span>,
+  k <span class='op'>=</span> <span class='fl'>1L</span>,
   dir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"long"</span>, <span class='st'>"short"</span><span class='op'>)</span>,
   type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"boolean"</span>, <span class='st'>"numeric"</span>, <span class='st'>"z-score"</span><span class='op'>)</span>,
   format <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"dataframe"</span>, <span class='st'>"matrix"</span><span class='op'>)</span>,
@@ -185,6 +186,11 @@
       <th>y</th>
       <td><p>[default 'logret'] choose target variable 'logret' (log returns),
 'ret' (discrete returns), or 'none'.</p></td>
+    </tr>
+    <tr>
+      <th>k</th>
+      <td><p>[default 1L] integer time horizon of number of periods over which to
+calculate target variable 'y'.</p></td>
     </tr>
     <tr>
       <th>dir</th>
@@ -215,12 +221,12 @@ Set to FALSE to return both c1 &gt; c2 and c2 &gt; c1.</p></td>
     <p>A data.frame or matrix in a 'tidy' format with one observation per
     row and one feature per column with the target 'y' as the first column
     (unless set to 'none').</p>
-<p>The 'y' parameter, trade direction and grid type are set as atrributes.
-    To view these, use <code><a href='look.html'>look</a></code> on the returned object.</p>
+<p>The 'y' and 'k' parameters, trade direction and grid type are set as
+    attributes. To view these, use <code><a href='look.html'>look</a></code> on the returned object.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The date-time index corresponds to when the indicator condition is
-    met at the close for that period. The return is the single-period return
+    met at the close for that period. The return is the k-period return
     achieved by transacting at the immediately following opening price until
     the next opening price.</p>
 <p>Only valid combinations are included. This excludes any combination
@@ -244,53 +250,55 @@ Set to FALSE to return both c1 &gt; c2 and c2 &gt; c1.</p></td>
     observed numeric representation to historical values.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>cloud</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ichimoku.html'>ichimoku</a></span><span class='op'>(</span><span class='va'>sample_ohlc_data</span>, ticker <span class='op'>=</span> <span class='st'>"TKR"</span><span class='op'>)</span>
-<span class='va'>grid</span> <span class='op'>&lt;-</span> <span class='fu'>mlgrid</span><span class='op'>(</span><span class='va'>cloud</span>, y <span class='op'>=</span> <span class='st'>"ret"</span>, dir <span class='op'>=</span> <span class='st'>"short"</span>, type <span class='op'>=</span> <span class='st'>"z-score"</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>grid</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 'data.frame':	153 obs. of  38 variables:
-#&gt;  $ y              : num  -0.007246 0.000806 0.001614 -0.004819 0.002415 ...
-#&gt;  $ chikou_close   : num  -1.092 -0.796 -0.796 -0.862 -0.763 ...
-#&gt;  $ chikou_high    : num  -0.97 -0.856 -0.774 -0.757 -0.724 ...
-#&gt;  $ chikou_low     : num  -1.068 -0.872 -0.856 -0.905 -0.839 ...
-#&gt;  $ chikou_tenkan  : num  -0.788 -0.675 -0.756 -0.951 -0.886 ...
-#&gt;  $ chikou_kijun   : num  -0.634 -0.518 -0.501 -0.534 -0.434 ...
-#&gt;  $ chikou_senkouA : num  -0.327 -0.219 -0.204 -0.242 -0.169 ...
-#&gt;  $ chikou_senkouB : num  -0.71 -0.581 -0.562 -0.599 -0.489 ...
-#&gt;  $ chikou_cloudT  : num  -0.347 -0.239 -0.223 -0.254 -0.162 ...
-#&gt;  $ chikou_cloudB  : num  -0.714 -0.581 -0.562 -0.609 -0.518 ...
-#&gt;  $ close_tenkan   : num  0.785 1.095 1.039 0.644 0.616 ...
-#&gt;  $ close_kijun    : num  -0.532 -0.317 -0.241 -0.302 -0.118 ...
-#&gt;  $ close_senkouA  : num  -0.728 -0.61 -0.644 -0.762 -0.678 ...
-#&gt;  $ close_senkouB  : num  -0.845 -0.715 -0.696 -0.733 -0.622 ...
-#&gt;  $ close_cloudT   : num  -0.625 -0.503 -0.538 -0.66 -0.573 ...
-#&gt;  $ close_cloudB   : num  -0.987 -0.856 -0.837 -0.875 -0.763 ...
-#&gt;  $ high_tenkan    : num  0.698 0.794 0.857 0.411 0.38 ...
-#&gt;  $ high_kijun     : num  -0.649 -0.553 -0.409 -0.473 -0.281 ...
-#&gt;  $ high_senkouA   : num  -0.788 -0.737 -0.737 -0.857 -0.771 ...
-#&gt;  $ high_senkouB   : num  -0.908 -0.852 -0.796 -0.833 -0.72 ...
-#&gt;  $ high_cloudT    : num  -0.687 -0.634 -0.634 -0.758 -0.67 ...
-#&gt;  $ high_cloudB    : num  -1.051 -0.995 -0.938 -0.976 -0.862 ...
-#&gt;  $ low_tenkan     : num  0.36 1.028 1.493 0.854 0.65 ...
-#&gt;  $ low_kijun      : num  -0.7623 -0.3672 -0.0176 -0.2 -0.1088 ...
-#&gt;  $ low_senkouA    : num  -0.851 -0.635 -0.518 -0.701 -0.668 ...
-#&gt;  $ low_senkouB    : num  -0.981 -0.741 -0.556 -0.667 -0.611 ...
-#&gt;  $ low_cloudT     : num  -0.756 -0.531 -0.41 -0.6 -0.566 ...
-#&gt;  $ low_cloudB     : num  -1.118 -0.878 -0.693 -0.804 -0.748 ...
-#&gt;  $ tenkan_kijun   : num  -1.289 -1.227 -1.083 -0.877 -0.609 ...
-#&gt;  $ tenkan_senkouA : num  -1.046 -1.019 -1.037 -1.037 -0.937 ...
-#&gt;  $ tenkan_senkouB : num  -1.15 -1.121 -1.083 -0.985 -0.859 ...
-#&gt;  $ tenkan_cloudT  : num  -0.954 -0.925 -0.944 -0.944 -0.839 ...
-#&gt;  $ tenkan_cloudB  : num  -1.29 -1.27 -1.23 -1.13 -1 ...
-#&gt;  $ kijun_senkouA  : num  -0.709 -0.709 -0.832 -0.969 -0.996 ...
-#&gt;  $ kijun_senkouB  : num  -0.668 -0.668 -0.704 -0.704 -0.704 ...
-#&gt;  $ kijun_cloudT   : num  -0.511 -0.511 -0.634 -0.772 -0.799 ...
-#&gt;  $ kijun_cloudB   : num  -0.911 -0.911 -0.949 -0.949 -0.949 ...
-#&gt;  $ senkouA_senkouB: num  -0.0669 -0.0669 0.0332 0.2 0.2334 ...
-#&gt;  - attr(*, "y")= chr "ret"
-#&gt;  - attr(*, "direction")= chr "short"
-#&gt;  - attr(*, "type")= chr "z-score"
-#&gt;  - attr(*, "ticker")= chr "TKR"</div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>cloud</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ichimoku.html'>ichimoku</a></span><span class='op'>(</span><span class='va'>sample_ohlc_data</span>, ticker <span class='op'>=</span> <span class='st'>"TKR"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>grid</span> <span class='op'>&lt;-</span> <span class='fu'>mlgrid</span><span class='op'>(</span><span class='va'>cloud</span>, y <span class='op'>=</span> <span class='st'>"ret"</span>, k <span class='op'>=</span> <span class='fl'>2</span>, dir <span class='op'>=</span> <span class='st'>"short"</span>, type <span class='op'>=</span> <span class='st'>"z-score"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>grid</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 'data.frame':	152 obs. of  38 variables:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ y              : num  -0.00645 0.00242 -0.00321 -0.00242 -0.0016 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ chikou_close   : num  -1.086 -0.79 -0.79 -0.856 -0.757 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ chikou_high    : num  -0.964 -0.85 -0.768 -0.752 -0.719 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ chikou_low     : num  -1.061 -0.866 -0.85 -0.898 -0.833 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ chikou_tenkan  : num  -0.783 -0.67 -0.751 -0.945 -0.88 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ chikou_kijun   : num  -0.631 -0.514 -0.498 -0.531 -0.431 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ chikou_senkouA : num  -0.326 -0.218 -0.203 -0.241 -0.169 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ chikou_senkouB : num  -0.709 -0.58 -0.562 -0.599 -0.489 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ chikou_cloudT  : num  -0.345 -0.238 -0.222 -0.253 -0.161 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ chikou_cloudB  : num  -0.714 -0.581 -0.562 -0.609 -0.519 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ close_tenkan   : num  0.783 1.092 1.036 0.643 0.615 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ close_kijun    : num  -0.527 -0.313 -0.237 -0.298 -0.114 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ close_senkouA  : num  -0.724 -0.606 -0.64 -0.757 -0.673 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ close_senkouB  : num  -0.841 -0.711 -0.692 -0.729 -0.618 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ close_cloudT   : num  -0.62 -0.499 -0.534 -0.655 -0.568 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ close_cloudB   : num  -0.983 -0.852 -0.834 -0.871 -0.759 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ high_tenkan    : num  0.698 0.793 0.856 0.412 0.38 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ high_kijun     : num  -0.643 -0.548 -0.404 -0.468 -0.277 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ high_senkouA   : num  -0.784 -0.733 -0.733 -0.852 -0.767 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ high_senkouB   : num  -0.904 -0.847 -0.791 -0.829 -0.716 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ high_cloudT    : num  -0.682 -0.629 -0.629 -0.753 -0.664 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ high_cloudB    : num  -1.047 -0.99 -0.934 -0.971 -0.859 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ low_tenkan     : num  0.362 1.029 1.492 0.855 0.652 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ low_kijun      : num  -0.7564 -0.3619 -0.0129 -0.195 -0.1039 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ low_senkouA    : num  -0.846 -0.63 -0.513 -0.696 -0.663 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ low_senkouB    : num  -0.976 -0.736 -0.552 -0.662 -0.607 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ low_cloudT     : num  -0.751 -0.526 -0.405 -0.595 -0.56 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ low_cloudB     : num  -1.113 -0.873 -0.689 -0.799 -0.744 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ tenkan_kijun   : num  -1.283 -1.221 -1.077 -0.871 -0.604 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ tenkan_senkouA : num  -1.041 -1.014 -1.032 -1.032 -0.932 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ tenkan_senkouB : num  -1.145 -1.116 -1.078 -0.981 -0.855 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ tenkan_cloudT  : num  -0.948 -0.919 -0.938 -0.938 -0.833 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ tenkan_cloudB  : num  -1.29 -1.261 -1.222 -1.125 -0.999 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ kijun_senkouA  : num  -0.706 -0.706 -0.829 -0.965 -0.992 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ kijun_senkouB  : num  -0.666 -0.666 -0.702 -0.702 -0.702 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ kijun_cloudT   : num  -0.507 -0.507 -0.63 -0.767 -0.795 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ kijun_cloudB   : num  -0.909 -0.909 -0.948 -0.948 -0.948 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ senkouA_senkouB: num  -0.0681 -0.0681 0.0317 0.198 0.2312 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  - attr(*, "y")= chr "ret"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  - attr(*, "k")= int 2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  - attr(*, "direction")= chr "short"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  - attr(*, "type")= chr "z-score"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  - attr(*, "ticker")= chr "TKR"</span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.4.6</span>
       </span>
     </div>
 
@@ -201,35 +201,38 @@ if it is present, provided as a character string.</p></td>
     will overwrite the data in 'old' rather than create duplicates.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>data1</span> <span class='op'>&lt;-</span> <span class='va'>sample_ohlc_data</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>8</span>, <span class='op'>]</span>
-<span class='va'>data1</span>
-</div><div class='output co'>#&gt;         time  open  high   low close volume
-#&gt; 1 2020-01-02 123.0 123.1 122.5 122.7   1875
-#&gt; 2 2020-01-03 122.7 122.8 122.6 122.8   1479
-#&gt; 3 2020-01-06 122.8 123.4 122.4 123.3   1792
-#&gt; 4 2020-01-07 123.3 124.3 123.3 124.1   1977
-#&gt; 5 2020-01-08 124.1 124.8 124.0 124.8   2239
-#&gt; 6 2020-01-09 124.8 125.4 124.5 125.3   1842
-#&gt; 7 2020-01-10 125.3 125.3 124.8 125.2   2548
-#&gt; 8 2020-01-13 125.2 125.3 125.1 125.2   2946</div><div class='input'><span class='va'>data2</span> <span class='op'>&lt;-</span> <span class='va'>sample_ohlc_data</span><span class='op'>[</span><span class='fl'>7</span><span class='op'>:</span><span class='fl'>10</span>, <span class='op'>]</span>
-<span class='va'>data2</span>
-</div><div class='output co'>#&gt;          time  open  high   low close volume
-#&gt; 7  2020-01-10 125.3 125.3 124.8 125.2   2548
-#&gt; 8  2020-01-13 125.2 125.3 125.1 125.2   2946
-#&gt; 9  2020-01-14 125.2 125.2 124.3 124.4   2796
-#&gt; 10 2020-01-15 124.4 124.5 123.7 123.9   2879</div><div class='input'><span class='fu'>df_append</span><span class='op'>(</span><span class='va'>data2</span>, <span class='va'>data1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;          time  open  high   low close volume
-#&gt; 1  2020-01-02 123.0 123.1 122.5 122.7   1875
-#&gt; 2  2020-01-03 122.7 122.8 122.6 122.8   1479
-#&gt; 3  2020-01-06 122.8 123.4 122.4 123.3   1792
-#&gt; 4  2020-01-07 123.3 124.3 123.3 124.1   1977
-#&gt; 5  2020-01-08 124.1 124.8 124.0 124.8   2239
-#&gt; 6  2020-01-09 124.8 125.4 124.5 125.3   1842
-#&gt; 7  2020-01-10 125.3 125.3 124.8 125.2   2548
-#&gt; 8  2020-01-13 125.2 125.3 125.1 125.2   2946
-#&gt; 9  2020-01-14 125.2 125.2 124.3 124.4   2796
-#&gt; 10 2020-01-15 124.4 124.5 123.7 123.9   2879</div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>data1</span> <span class='op'>&lt;-</span> <span class='va'>sample_ohlc_data</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>8</span>, <span class='op'>]</span></span>
+<span class='r-in'><span class='va'>data1</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         time  open  high   low close volume</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 2020-01-02 123.0 123.1 122.5 122.7   1875</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2 2020-01-03 122.7 122.8 122.6 122.8   1479</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3 2020-01-06 122.8 123.4 122.4 123.3   1792</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4 2020-01-07 123.3 124.3 123.3 124.1   1977</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5 2020-01-08 124.1 124.8 124.0 124.8   2239</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6 2020-01-09 124.8 125.4 124.5 125.3   1842</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7 2020-01-10 125.3 125.3 124.8 125.2   2548</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8 2020-01-13 125.2 125.3 125.1 125.2   2946</span>
+<span class='r-in'><span class='va'>data2</span> <span class='op'>&lt;-</span> <span class='va'>sample_ohlc_data</span><span class='op'>[</span><span class='fl'>7</span><span class='op'>:</span><span class='fl'>10</span>, <span class='op'>]</span></span>
+<span class='r-in'><span class='va'>data2</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          time  open  high   low close volume</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7  2020-01-10 125.3 125.3 124.8 125.2   2548</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8  2020-01-13 125.2 125.3 125.1 125.2   2946</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9  2020-01-14 125.2 125.2 124.3 124.4   2796</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10 2020-01-15 124.4 124.5 123.7 123.9   2879</span>
+<span class='r-in'><span class='fu'>df_append</span><span class='op'>(</span><span class='va'>data2</span>, <span class='va'>data1</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          time  open  high   low close volume</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  2020-01-02 123.0 123.1 122.5 122.7   1875</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2  2020-01-03 122.7 122.8 122.6 122.8   1479</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3  2020-01-06 122.8 123.4 122.4 123.3   1792</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4  2020-01-07 123.3 124.3 123.3 124.1   1977</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5  2020-01-08 124.1 124.8 124.0 124.8   2239</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6  2020-01-09 124.8 125.4 124.5 125.3   1842</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7  2020-01-10 125.3 125.3 124.8 125.2   2548</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8  2020-01-13 125.2 125.3 125.1 125.2   2946</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9  2020-01-14 125.2 125.2 124.3 124.4   2796</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10 2020-01-15 124.4 124.5 123.7 123.9   2879</span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

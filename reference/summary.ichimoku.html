@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.4.6</span>
       </span>
     </div>
 
@@ -195,39 +195,41 @@ FALSE to show the object summary instead.</p></td>
     vignette by calling: <code><a href='../articles/strategies.html'>vignette("strategies", package = "ichimoku")</a></code></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>cloud</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ichimoku.html'>ichimoku</a></span><span class='op'>(</span><span class='va'>sample_ohlc_data</span>, ticker <span class='op'>=</span> <span class='st'>"TKR"</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>cloud</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; ichimoku object with dimensions (281, 12) 
-#&gt; 
-#&gt;             Max: 2020-07-13 23:00:00 [139.7]
-#&gt; Start: 2020-01-02 00:00:00 [123]   End: 2020-12-24 00:00:00 [136]
-#&gt;             Min: 2020-05-12 23:00:00 [119.1]
-#&gt; 
-#&gt; Cloud periods: 9 26 52 
-#&gt; Periodicity: 1 days 
-#&gt; Ticker: TKR</div><div class='input'>
-<span class='va'>strat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='strat.html'>strat</a></span><span class='op'>(</span><span class='va'>cloud</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>strat</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                        [,1]            
-#&gt; Strategy               "close &gt; tenkan"
-#&gt; ---------------------  "----------"    
-#&gt; Strategy cuml return % 8.57            
-#&gt; Per period mean ret %  0.0334          
-#&gt; Periods in market      138             
-#&gt; Total trades           20              
-#&gt; Average trade length   6.9             
-#&gt; Trade success %        35              
-#&gt; Worst trade ret %      -2.54           
-#&gt; ---------------------  "----------"    
-#&gt; Benchmark cuml ret %   9               
-#&gt; Per period mean ret %  0.035           
-#&gt; Periods in market      246             
-#&gt; ---------------------  "----------"    
-#&gt; Direction              "long"          
-#&gt; Start                  2020-01-15      
-#&gt; End                    2020-12-23      
-#&gt; Ticker                 "TKR"           </div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>cloud</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ichimoku.html'>ichimoku</a></span><span class='op'>(</span><span class='va'>sample_ohlc_data</span>, ticker <span class='op'>=</span> <span class='st'>"TKR"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>cloud</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ichimoku object with dimensions (281, 12) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             Max: 2020-07-13 23:00:00 [139.7]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Start: 2020-01-02 00:00:00 [123]   End: 2020-12-24 00:00:00 [136]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             Min: 2020-05-12 23:00:00 [119.1]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Cloud periods: 9 26 52 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Periodicity: 1 days </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Ticker: TKR</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>strat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='strat.html'>strat</a></span><span class='op'>(</span><span class='va'>cloud</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>strat</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                        [,1]            </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Strategy               "close &gt; tenkan"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ---------------------  "----------"    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Strategy cuml return % 8.57            </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Per period mean ret %  0.0334          </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Periods in market      138             </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Total trades           20              </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Average trade length   6.9             </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Trade success %        35              </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Worst trade ret %      -2.54           </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ---------------------  "----------"    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Benchmark cuml ret %   9               </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Per period mean ret %  0.035           </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Periods in market      246             </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ---------------------  "----------"    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Direction              "long"          </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Start                  2020-01-15      </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> End                    2020-12-23      </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Ticker                 "TKR"           </span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
