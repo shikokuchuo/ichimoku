@@ -1,4 +1,4 @@
-# ichimoku 1.2.4.6
+# ichimoku 1.2.4.7
 
 #### New features:
 
@@ -17,6 +17,7 @@
 * `oanda_view()` now returns correct data types in the dataframe.
 * Fixes cases of `relative()` showing the incorrect date for 'latest', along with other cosmetic changes.
 * Performance improvements to date handling across `ichimoku()` and other package functions.
+* Documentation refresh.
 
 # ichimoku 1.2.4
 

@@ -26,13 +26,13 @@ There are multiple ways to work with Ichimoku Kinko Hyo strategies using the ich
 
 First and foremost is visually, and the functions for visualization are described in the [reference vignette](reference.html).
 
-However, it is often necessary to perform analysis on the data directly, for instance to test hypotheses about the price action of a particular security under certain scenarios. Here, complications of the ichimoku system can become apparent. The Chikou span in particular poses a challenge as the position of this indicator needs to be mapped in relation to the chart elements 26 periods previously, however this then affects trading decisions at the present point in time.
+However, for performing analysis on the data directly, complications of the ichimoku system can quickly become apparent. The Chikou span in particular poses a challenge as the position of this indicator needs to be mapped in relation to the chart elements 26 periods previously, however this then affects trading decisions at the present point in time.
 
 The 'strategy layer' of the ichimoku package aims to prepare the data in a standardized format for easy further analysis. Short strategy summaries are generated automatically, but are designed to serve as a quick reference rather than a replacement for a full backtest using a package such as 'PerformanceAnalytics'.
 
 The `autostrat()` function is used to further facilitate idea generation, and leverages the computational capability of R to simultaneously test all valid indicator combinations.
 
-Past results do not imply future performance, and should always be used in conjunction with a full backtest and risk analysis.
+Past results do not imply future performance, and should always be considered in conjunction with a full backtest and risk analysis.
 
 ## Working with Strategies
 
@@ -101,7 +101,7 @@ summary(strat)
 
 The summary is designed to provide a quick overview of whether a strategy is effective / desirable:
 
-- Strategy returns are compared with the benchmark, which is simply being in the market the entire time
+- Strategy returns are compared with the benchmark, which is simply holidng a position the entire time
 - Comparing returns combined with total periods in the market can help determine if the strategy is substantially different from just taking market risk
 - Total trades along with average trade length can be used to filter out undesirable strategies that over-trade
 - Trade success % helps to characterise the consistency of the strategy or whether it relies on a small percentage of outsize returns
@@ -195,20 +195,30 @@ autostrat(cloud, n = 3, dir = "long", level = "3")
 
 The ML layer provides tools for further developing quantitative ichimoku solutions.
 
-`mlgrid()` generates a numeric representation of the relationship between ichimoku cloud chart elements. Its purpose is to provide a base grid which can then be manipulated as required before being fed into machine learning workflows.
+`mlgrid()` generates a numeric representation of the relationship between ichimoku cloud chart elements, which represent a set of stationary price features. Its purpose is to provide a base grid for machine learning workflows.
+
+The returned object is a data.frame or matrix in a 'tidy' format with one observation per row and one feature per column with the target 'y' as the first column.
 
 `mlgrid()` is used to power the `autostrat()` and `relative()` functions.
 
-The object returned by the function is a data.frame in a 'tidy' format with one observation per row and one feature per column with the target 'y' as the first column. This is a format that is compatible with many machine learning packages.
-
-Below are shown the 2 basic types of grid: 'boolean' and 'numeric', where 'boolean' produces a '1' or '0' depending on whether the condition c1_c2 (read c1 > c2) is met, whereas 'numeric' will produce the numeric difference of c1 - c2.
+The 3 basic types of grid are shown below.
+ 
+'boolean' produces a '1' or '0' depending on whether the condition c1_c2 (read c1 > c2) is met:
 
 ```{r mlgrid}
 mlgrid(cloud, y = "logret", dir = "long", type = "boolean", unique = TRUE)[100:105, 1:4]
 ```
 
+'numeric' produces the numeric difference of c1 - c2:
+
 ```{r mlgrid2}
 mlgrid(cloud, y = "ret", dir = "short", type = "numeric", unique = FALSE)[100:105, 1:4]
+```
+
+'z-score' produces the standard score of a 'numeric' type grid:
+
+```{r mlgrid3}
+mlgrid(cloud, y = "ret", dir = "short", type = "z-score", unique = FALSE)[100:105, 1:4]
 ```
 
 Note: only valid combinations are included within the grid. Any combination involving 'open' is excluded as it is in effect a lagged indicator and not contemporaneous. The following trivial or highly-collinear pairs are also excluded: {high, close} ,{low, close}, {low, high}, {cloudT, senkouA}, {cloudB, senkouA}, {cloudT, senkouB}, {cloudB, senkouB}, {cloudB, cloudT}.
@@ -244,8 +254,6 @@ The 'relative' or 'r value' is calculated as res / sd(X) and represents a standa
 'p*' will display a star if 'p >= |r|' is less than or equal to the value of the argument 'signif'.
 
 'E(|res|)|p' represents the mean or expected absolute value of 'res', conditional upon the absolute 'r value' being greater than equal to the latest observed absolute 'r value'. This provides an indication by how much 'res' might increase in more extreme cases.
-
-Note: All calculations are performed on the full values, but are rounded to 2 decimal places for final presentation.
 
 ## Strategy Summary Specification
 

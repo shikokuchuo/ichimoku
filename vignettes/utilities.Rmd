@@ -24,7 +24,7 @@ library(ichimoku)
 
 This vignette is dedicated to the auxiliary functions exported by the ichimoku package. 
 
-Note that all of the auxiliary functions are programmed for performance and are hence stripped of superfluous validation and error-checking code. If they are used outside of their intended scopes then errors can be expected. In particular, the input types must match exactly.
+Note that these auxiliary functions are programmed for performance and hence stripped of superfluous validation and error-checking code. If they are used outside of their intended scopes then errors may be expected. In particular, input types must match exactly.
 
 ## Core Auxiliary Functions
 

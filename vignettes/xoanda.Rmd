@@ -224,13 +224,17 @@ Enter market [a]llfx [b]onds [c]ommodities [f]x [m]etals [s]tocks: c
 #> CORN_USD     5.454   5.466   5.274   5.322 -2.4202
 ```
 
-### `oanda_positions()`
+### `oanda_orders()` / `oanda_positions()`
 
-Provides a summary of the aggregate positions held by OANDA fxTrade clients at each price level.
+Provides a summary of the aggregate orders/positions held by OANDA fxTrade clients at each price level.
 
-The data is returned as a dataframe, with parameters saved as attributes which can be viewed with `look()`. A chart showing the percentage long and short positions at each price level is output to the graphical device.
+'instrument' is a required argument. The latest order/position book is retrieved unless the optional argument 'time' is used to specify a time for which to retrieve the order/position book.
+
+The data is returned as a dataframe, with parameters saved as attributes which can be viewed with `look()`. A chart showing the percentage long and short orders/positions at each price level is output to the graphical device.
 
 Please note that this feature has been implemented by OANDA only for certain major currency pairs and should be considered experimental.
+
+Note also that for the order book, only the interquartile range of order levels is charted as some orders are placed very far from the market price. The returned dataframe contains the full order book nevertheless.
 
 ## Available Instruments
 
