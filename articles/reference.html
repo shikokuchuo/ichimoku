@@ -27,6 +27,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -39,18 +41,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.4.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4.7</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -81,13 +77,13 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/shikokuchuo/ichimoku/">
+  <a href="https://github.com/shikokuchuo/ichimoku/" class="external-link">
     <span class="fa fa-github"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://shikokuchuo.net/">
+  <a href="https://shikokuchuo.net/" class="external-link">
     <span class="fa fa-cube"></span>
      
   </a>
@@ -108,19 +104,19 @@
       <h1 data-toc-skip>ichimoku: Cloud Charts - The Reference Manual</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/shikokuchuo/ichimoku/blob/master/vignettes/reference.Rmd"><code>vignettes/reference.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/shikokuchuo/ichimoku/blob/HEAD/vignettes/reference.Rmd" class="external-link"><code>vignettes/reference.Rmd</code></a></small>
       <div class="hidden name"><code>reference.Rmd</code></div>
 
     </div>
 
     
     
-<div id="ichimoku-kinko-hyo" class="section level2">
-<h2 class="hasAnchor">
-<a href="#ichimoku-kinko-hyo" class="anchor"></a>Ichimoku Kinko Hyo</h2>
-<div id="definition" class="section level3">
-<h3 class="hasAnchor">
-<a href="#definition" class="anchor"></a>Definition</h3>
+<div class="section level2">
+<h2 id="ichimoku-kinko-hyo">Ichimoku Kinko Hyo<a class="anchor" aria-label="anchor" href="#ichimoku-kinko-hyo"></a>
+</h2>
+<div class="section level3">
+<h3 id="definition">Definition<a class="anchor" aria-label="anchor" href="#definition"></a>
+</h3>
 <p>The 一目均衡表 <strong>Ichimoku Kinko Hyo</strong> [cloud chart] consists of the following chart lines added to a candlestick chart:</p>
 <ol style="list-style-type: decimal">
 <li><p>転換線 <strong>Tenkan-sen</strong> [conversion line]: the mid-point of the highest high and lowest low for the past 9 periods <em>(including the current period)</em></p></li>
@@ -131,9 +127,9 @@
 </ol>
 <p>The 雲 <strong>kumo</strong> [cloud] is the area bounded by Senkou span A and Senkou span B (usually shaded on a chart).</p>
 </div>
-<div id="interpretation" class="section level3">
-<h3 class="hasAnchor">
-<a href="#interpretation" class="anchor"></a>Interpretation</h3>
+<div class="section level3">
+<h3 id="interpretation">Interpretation<a class="anchor" aria-label="anchor" href="#interpretation"></a>
+</h3>
 <p>Ichimoku Kinko Hyo can be translated as ‘one-glance equilibrium chart’. It is designed to allow the price action and market structure of financial securities to be determined visually ‘at-a-glance’.</p>
 <p>For example in a strongly upwards-trending market, the candlesticks would be above the Tenkan-sen, which would be above the Kijun-sen, which in turn would be above the cloud, and the Chikou span may not have anything above it.</p>
 <p>The lines and the cloud represent dynamic support and resistance zones relative to the price candles. Generally, the thicker the cloud, the tougher the support/resistance. In our previous example, if the price now reverts downwards, it can expect support first at the Kijun-sen, then the Tenkan-sen and finally the cloud itself.</p>
@@ -141,23 +137,23 @@
 <p>More subtle interpretations involve the Chikou span in particular and its action in relation to the cloud lines as well as the candles.</p>
 <p>It is outside the scope of this vignette to provide a full tutorial on the use of Ichimoku Kinko Hyo.</p>
 </div>
-<div id="context" class="section level3">
-<h3 class="hasAnchor">
-<a href="#context" class="anchor"></a>Context</h3>
-<p>Ichimoku analysis is the latest refinement in candlestick charting techniques, which also originated from Japan. Developed by 一目山人 <em>Ichimoku, Sanjin</em>, the pen name of 細田吾一 <em>Hosoda, Goichi</em>, his work was published in 1969 as the seminal <em>「一目均衡表」 [ichimoku kinkou hyou]</em>. It gained popularity in Japan especially after the publication of Sasaki’s <em>「一目均衡表の研究」 [ichimoku kinkouhyou no kenkyuu]</em> in 1996, and is now widely-used in technical analysis worldwide.</p>
-<p>The ichimoku time periods have traditionally been calculated as 9, 26 and 52 based on manual data analysis performed in Japan in a pre-computer age where there was a 6-day working week resulting in 26 average trading days in a month. Although this bears little relevance to the current day, the use of these time periods has persisted as an ‘industry norm’ or ‘accepted practice’. To use other periods would be meaningless in a sense as everyone uses these parameters and ‘market psychology’ can and often does create its own realities, independent of any fundamentals.</p>
+<div class="section level3">
+<h3 id="context">Context<a class="anchor" aria-label="anchor" href="#context"></a>
+</h3>
+<p>Ichimoku analysis is the latest refinement in candlestick charting techniques, which also originated from Japan. Developed by 一目山人 <em>Ichimoku, Sanjin</em>, the pen name of 細田吾一 <em>Hosoda, Goichi</em>, the work was published in 1969 as the seminal <em>「一目均衡表」 [ichimoku kinkou hyou]</em>. It gained popularity in Japan especially after the publication of Sasaki’s <em>「一目均衡表の研究」 [ichimoku kinkouhyou no kenkyuu]</em> in 1996, and is now widely-used in technical analysis worldwide.</p>
+<p>The ichimoku time periods have traditionally been calculated as 9, 26 and 52 based on manual data analysis performed in Japan in a pre-computer age where there was a 6-day working week resulting in 26 average trading days in a month. Although this bears little relevance to the current day, the use of these time periods has persisted as an ‘industry norm’ or ‘accepted practice’. To use other periods would be meaningless in a sense as ‘market psychology’ can and often does create its own realities, independent of any fundamentals.</p>
 <p>However, there is no reason for the technique not to evolve, and to reflect changing trading realities perhaps other parameters will become more relevant in the collective psychology. For this reason, the length of these periods can be freely set in the ‘ichimoku’ package. However please do so only with caution and note that using other periods invalidates the traditional interpretations of Ichimoku Kinko Hyo.</p>
 <p>Finally, the use originated with daily candlesticks, and the most valid interpretation remains for daily data. However, it is equally used today for both shorter, e.g. 4-hour or hourly, and longer, e.g. weekly or monthly, charts.</p>
 </div>
 </div>
-<div id="a-typical-workflow" class="section level2">
-<h2 class="hasAnchor">
-<a href="#a-typical-workflow" class="anchor"></a>A Typical Workflow</h2>
+<div class="section level2">
+<h2 id="a-typical-workflow">A Typical Workflow<a class="anchor" aria-label="anchor" href="#a-typical-workflow"></a>
+</h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://shikokuchuo.net/ichimoku/">ichimoku</a></span><span class="op">)</span></code></pre></div>
-<div id="data" class="section level3">
-<h3 class="hasAnchor">
-<a href="#data" class="anchor"></a>Data</h3>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shikokuchuo.net/ichimoku/">ichimoku</a></span><span class="op">)</span></code></pre></div>
+<div class="section level3">
+<h3 id="data">Data<a class="anchor" aria-label="anchor" href="#data"></a>
+</h3>
 <p>ichimoku works with data frames and tabular data. The <code><a href="../reference/ichimoku.html">ichimoku()</a></code> function handles as input xts, data.frame, data.table, tibble, tsibble, matrix, and other data.frame compatible objects.</p>
 <p>ichimoku incorporates an interface with the OANDA fxTrade API to return data for major currencies, metals, commodities, government bonds and stock indices. Please refer to the <a href="xoanda.html">OANDA vignette</a>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
@@ -166,17 +162,17 @@
 <p>ichimoku has been designed to be fully pipeable and interfaces well with other R packages that return financial data. An example is shown below.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Using R 4.1's new pipe operator:</span>
-<span class="fu">quantmod</span><span class="fu">::</span><span class="fu">getSymbols</span><span class="op">(</span><span class="st">"C"</span><span class="op">)</span> |&gt; <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span>
+<span class="fu">quantmod</span><span class="fu">::</span><span class="fu">getSymbols</span><span class="op">(</span><span class="st">"C"</span><span class="op">)</span> |&gt; <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co"># Or equally using the 'magrittr' pipe:</span>
-<span class="fu">quantmod</span><span class="fu">::</span><span class="fu">getSymbols</span><span class="op">(</span><span class="st">"C"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<div id="input-data-requirements" class="section level4">
-<h4 class="hasAnchor">
-<a href="#input-data-requirements" class="anchor"></a>Input data requirements</h4>
+<span class="fu">quantmod</span><span class="fu">::</span><span class="fu">getSymbols</span><span class="op">(</span><span class="st">"C"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<div class="section level4">
+<h4 id="input-data-requirements">Input data requirements<a class="anchor" aria-label="anchor" href="#input-data-requirements"></a>
+</h4>
 <p>The requirement on the input data is minimal: a series of prices indexed by valid date-times.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Sample OHLC price data is assigned to data frame 'TKR':</span>
 <span class="va">TKR</span> <span class="op">&lt;-</span> <span class="va">sample_ohlc_data</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">TKR</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">TKR</span><span class="op">)</span>
 <span class="co">#&gt;         time  open  high   low close volume</span>
 <span class="co">#&gt; 1 2020-01-02 123.0 123.1 122.5 122.7   1875</span>
 <span class="co">#&gt; 2 2020-01-03 122.7 122.8 122.6 122.8   1479</span>
@@ -203,9 +199,9 @@
 <p><strong>Note on data retrieval:</strong> it is optimal to retrieve data starting from further back than the period being analysed. This is as certain cloud lines are calculated using up to 52 values and then plotted ahead up to 26 periods, and hence there will be only be a full chart with all of the ichimoku cloud values from the 78th observation onwards (using default cloud periods). Call <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on the full dataset and then subset the data window when plotting to ensure that there is a full cloud for the entire chart.</p>
 </div>
 </div>
-<div id="ichimoku" class="section level3">
-<h3 class="hasAnchor">
-<a href="#ichimoku" class="anchor"></a>ichimoku()</h3>
+<div class="section level3">
+<h3 id="ichimoku">ichimoku()<a class="anchor" aria-label="anchor" href="#ichimoku"></a>
+</h3>
 <p><code><a href="../reference/ichimoku.html">ichimoku()</a></code> is the main function of the ichimoku package. It takes the input data object and returns an ichimoku object, which inherits the classes ‘ichimoku’, ‘xts’ and ‘zoo’. For further details, please refer to the <a href="#ichimoku-object-specification">ichimoku object specification</a>.</p>
 <p>Optional arguments:</p>
 <ul>
@@ -221,7 +217,7 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">[</span><span class="fl">100</span><span class="op">:</span><span class="fl">110</span>, <span class="op">]</span>, plot <span class="op">=</span> <span class="cn">FALSE</span>, digits <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">[</span><span class="fl">100</span><span class="op">:</span><span class="fl">110</span>, <span class="op">]</span>, plot <span class="op">=</span> <span class="cn">FALSE</span>, digits <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
 <span class="co">#&gt;                      open  high   low close cd tenkan kijun senkouA senkouB</span>
 <span class="co">#&gt; 2020-05-19 23:00:00 122.7 122.7 121.8 122.4 -1  121.0 123.9   125.7   124.8</span>
 <span class="co">#&gt; 2020-05-20 23:00:00 122.4 122.6 121.1 121.9 -1  121.0 123.9   125.7   124.8</span>
@@ -247,9 +243,9 @@
 <span class="co">#&gt; 2020-06-01 23:00:00  135.6  125.7  124.8</span>
 <span class="co">#&gt; 2020-06-02 23:00:00  136.2  125.6  124.8</span></code></pre></div>
 <p>A section (rows 100 to 110) of the ichimoku object is shown above. Note that print is called setting ‘plot = FALSE’ to return just the data to the console. The default print method for ichimoku objects also plots the cloud chart to the graphical device.</p>
-<p>Use <code><a href="https://rdrr.io/r/utils/str.html">str()</a></code> for a compact display of the object structure:</p>
+<p>Use <code><a href="https://rdrr.io/r/utils/str.html" class="external-link">str()</a></code> for a compact display of the object structure:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span>
 <span class="co">#&gt; ichimoku object [2020-01-02 / 2021-02-01]</span>
 <span class="co">#&gt; Matrix &lt;numeric&gt; w/ dim: (281 rows, 12 cols)</span>
 <span class="co">#&gt;  dimnames[[2L]]: $open $high $low $close $cd $tenkan $kijun $senkouA $senkouB $chikou $cloudT $cloudB</span>
@@ -258,9 +254,9 @@
 <span class="co">#&gt;  periods: 9 26 52 </span>
 <span class="co">#&gt;  periodicity: 1 days </span>
 <span class="co">#&gt;  ticker: TKR</span></code></pre></div>
-<p>The summary method using <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> will also provide a brief description of the data:</p>
+<p>The summary method using <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> will also provide a brief description of the data:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span>
 <span class="co">#&gt; ichimoku object with dimensions (281, 12) </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;             Max: 2020-07-13 23:00:00 [139.7]</span>
@@ -271,20 +267,20 @@
 <span class="co">#&gt; Periodicity: 1 days </span>
 <span class="co">#&gt; Ticker: TKR</span></code></pre></div>
 <p>As an ichimoku object inherits the ‘xts’ and ‘zoo’ classes, all existing methods for these classes should work seamlessly. Please refer to the section <a href="#working-with-ichimoku-objects">Working with ichimoku objects</a>.</p>
-<div id="ichimoku-ichimoku" class="section level4">
-<h4 class="hasAnchor">
-<a href="#ichimoku-ichimoku" class="anchor"></a>ichimoku.ichimoku()</h4>
+<div class="section level4">
+<h4 id="ichimoku-ichimoku">ichimoku.ichimoku()<a class="anchor" aria-label="anchor" href="#ichimoku-ichimoku"></a>
+</h4>
 <p><code><a href="../reference/ichimoku.html">ichimoku()</a></code> may be used on an ichimoku object to re-calculate the cloud values using the price data contained within. If ‘ticker’ is specified as an argument, this will overwrite the ticker stored in the original ichimoku object.</p>
 <p>Calling <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on an ichimoku object containing a strategy will return the ichimoku object to its original state without the strategy unless <code>keep.data = TRUE</code> is specified. See the <a href="strategies.html">strategies vignette</a> for information on strategies.</p>
 </div>
-<div id="preserving-data" class="section level4">
-<h4 class="hasAnchor">
-<a href="#preserving-data" class="anchor"></a>Preserving Data</h4>
+<div class="section level4">
+<h4 id="preserving-data">Preserving Data<a class="anchor" aria-label="anchor" href="#preserving-data"></a>
+</h4>
 <p>The input object may contain additional data not required for ichimoku analysis, such as volume etc. To retain such data in the ichimoku object, specify <code>keep.data = TRUE</code> when calling <code><a href="../reference/ichimoku.html">ichimoku()</a></code>.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">kumo</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span>, keep.data <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">kumo</span><span class="op">[</span><span class="fl">100</span>, <span class="op">]</span>, plot <span class="op">=</span> <span class="cn">FALSE</span>, digits <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">kumo</span><span class="op">[</span><span class="fl">100</span>, <span class="op">]</span>, plot <span class="op">=</span> <span class="cn">FALSE</span>, digits <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
 <span class="co">#&gt;                      open  high   low close cd tenkan kijun senkouA senkouB</span>
 <span class="co">#&gt; 2020-05-19 23:00:00 122.7 122.7 121.8 122.4 -1    121 123.9   125.7   124.8</span>
 <span class="co">#&gt;                     chikou cloudT cloudB volume</span>
@@ -292,15 +288,15 @@
 <p>This consolidates all relevant data into a single object. The additional data can now also be plotted as a sub-plot beneath the main ichimoku cloud chart (see <a href="#custom-sub-plots">custom sub-plots</a>).</p>
 <p>Note: only numeric data or data coercible to numeric type is preserved in this way, and other types will introduce NAs. This is as the core data of an ichimoku object is a numeric matrix that does not support multiple data types. Custom attributes set on the input object (such as a timestamp or data source) are also preserved.</p>
 </div>
-<div id="defining-custom-holidays" class="section level4">
-<h4 class="hasAnchor">
-<a href="#defining-custom-holidays" class="anchor"></a>Defining custom holidays</h4>
+<div class="section level4">
+<h4 id="defining-custom-holidays">Defining custom holidays<a class="anchor" aria-label="anchor" href="#defining-custom-holidays"></a>
+</h4>
 <p>When calculating the future cloud for daily data, <code><a href="../reference/ichimoku.html">ichimoku()</a></code> makes a call to the <code><a href="../reference/tradingDays.html">tradingDays()</a></code> helper function to ensure that future dates fall on trading days (i.e. not weekends or holidays). By default, New Year’s and Christmas day are defined as holidays if the ‘holidays’ argument is not specified. These defaults should be acceptable for general use.</p>
 <p>To define other dates as non-trading days, a vector of custom holidays may be supplied via a ‘holidays’ argument to <code><a href="../reference/ichimoku.html">ichimoku()</a></code> which is then passed on to the <code><a href="../reference/tradingDays.html">tradingDays()</a></code> function.</p>
 <p>If the relevant market trades continuously on a 24/7 basis, specify ‘holidays = NULL’. This will bypass the logic of <code><a href="../reference/tradingDays.html">tradingDays()</a></code> and return all dates when calculating the future cloud.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Holidays can be specified directly via a vector of dates:</span>
-<span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span>, holidays <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2020-01-13"</span>, <span class="st">"2020-02-11"</span>, <span class="st">"2020-02-24"</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span>, holidays <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2020-01-13"</span>, <span class="st">"2020-02-11"</span>, <span class="st">"2020-02-24"</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># Or via a functions that returns a vector of dates (e.g. from the 'timeDate' package):</span>
 <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span>, holidays <span class="op">=</span> <span class="fu">timeDate</span><span class="fu">::</span><span class="fu">holidayLONDON</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
@@ -309,48 +305,48 @@
 <span class="co"># For a market that trades 24/7:</span>
 <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span>, holidays <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="working-with-ichimoku-objects" class="section level4">
-<h4 class="hasAnchor">
-<a href="#working-with-ichimoku-objects" class="anchor"></a>Working with ichimoku objects</h4>
+<div class="section level4">
+<h4 id="working-with-ichimoku-objects">Working with ichimoku objects<a class="anchor" aria-label="anchor" href="#working-with-ichimoku-objects"></a>
+</h4>
 <p>The following generic functions have optimised S3 methods for ichimoku objects:</p>
 <ul>
 <li>
-<code><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame()</a></code> for converting an ichimoku object to a dataframe. Set the argument <code>keep.attrs = TRUE</code> to retain the attributes of the original ichimoku object</li>
+<code><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame()</a></code> for converting an ichimoku object to a dataframe. Set the argument <code>keep.attrs = TRUE</code> to retain the attributes of the original ichimoku object</li>
 <li>
-<code><a href="../reference/index.html">index()</a></code> to extract the index of an ichimoku object as a vector of POSIXct values</li>
+<code><a href="../reference/index.ichimoku.html">index()</a></code> to extract the index of an ichimoku object as a vector of POSIXct values</li>
 <li>
-<code><a href="../reference/coredata.html">coredata()</a></code> to extract the columns of an ichimoku object as a numeric matrix</li>
+<code><a href="../reference/coredata.ichimoku.html">coredata()</a></code> to extract the columns of an ichimoku object as a numeric matrix</li>
 </ul>
 <p>As the resulting objects are simple base types, they can easily be modified as required.</p>
 <p>The below shows how to faithfully re-create an ichimoku object from its components:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">index</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/index.html">index</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span>
-<span class="va">core</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/coredata.html">coredata</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">index</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/index.ichimoku.html">index</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span>
+<span class="va">core</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/coredata.ichimoku.html">coredata</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span>
 
-<span class="va">cloud2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">index</span>, <span class="va">core</span><span class="op">)</span>, ticker <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html">attr</a></span><span class="op">(</span><span class="va">cloud</span>, <span class="st">"ticker"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="va">cloud2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">index</span>, <span class="va">core</span><span class="op">)</span>, ticker <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">cloud</span>, <span class="st">"ticker"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; Warning: Converted numeric values in column 'index' as POSIX times - please</span>
 <span class="co">#&gt; check validity</span>
-<span class="fu"><a href="https://rdrr.io/r/base/identical.html">identical</a></span><span class="op">(</span><span class="va">cloud</span>, <span class="va">cloud2</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="va">cloud</span>, <span class="va">cloud2</span><span class="op">)</span>
 <span class="co">#&gt; [1] TRUE</span></code></pre></div>
-<p>Note specifically that ichimoku needs to be called twice - first to convert the matrix resulting from the <code><a href="https://rdrr.io/r/base/cbind.html">cbind()</a></code> operation, and then again to recalculate using the OHLC data contained within the object as the original data would have contained NAs. The ticker name should also be set explicitly as in the example.</p>
-<p>A warning is issued about checking the validity of POSIX times, which in this case is safe to ignore as the POSIXct values in ‘index’ were simply coerced to numeric during the <code><a href="https://rdrr.io/r/base/cbind.html">cbind()</a></code> operation but remain valid.</p>
+<p>Note specifically that ichimoku needs to be called twice - first to convert the matrix resulting from the <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind()</a></code> operation, and then again to recalculate using the OHLC data contained within the object as the original data would have contained NAs. The ticker name should also be set explicitly as in the example.</p>
+<p>A warning is issued about checking the validity of POSIX times, which in this case is safe to ignore as the POSIXct values in ‘index’ were simply coerced to numeric during the <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind()</a></code> operation but remain valid.</p>
 <p>For additional functionality, the ‘xts’ package may be loaded to access a wide range of methods available for ‘xts’ objects, for example changing the periodicity of the data.</p>
 </div>
 </div>
-<div id="plot" class="section level3">
-<h3 class="hasAnchor">
-<a href="#plot" class="anchor"></a>plot()</h3>
+<div class="section level3">
+<h3 id="plot">plot()<a class="anchor" aria-label="anchor" href="#plot"></a>
+</h3>
 <p>ichimoku offers the choice of 2 visualization systems: static (default) and interactive (reactive charts using R Shiny).</p>
-<div id="static-plots" class="section level4">
-<h4 class="hasAnchor">
-<a href="#static-plots" class="anchor"></a>1. Static Plots</h4>
+<div class="section level4">
+<h4 id="static-plots">1. Static Plots<a class="anchor" aria-label="anchor" href="#static-plots"></a>
+</h4>
 <p>The default plot function produces static plots, which have the advantage of being easily exportable to pdf or image formats in high resolution.</p>
-<p>Call <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> on an ichimoku object to visualize the cloud chart.</p>
+<p>Call <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> on an ichimoku object to visualize the cloud chart.</p>
 <p>The example below demonstrates some of the arguments that can be supplied to customise the plot.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">cloud</span>, window <span class="op">=</span> <span class="st">"2020-05/"</span>, ticker <span class="op">=</span> <span class="st">"一目均衡表"</span>, subtitle <span class="op">=</span> <span class="st">"Sample Data Series"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">cloud</span>, window <span class="op">=</span> <span class="st">"2020-05/"</span>, ticker <span class="op">=</span> <span class="st">"一目均衡表"</span>, subtitle <span class="op">=</span> <span class="st">"Sample Data Series"</span><span class="op">)</span></code></pre></div>
 <p><img src="reference_files/figure-html/plot2-1.png" width="672"></p>
-<p>The following arguments for customisation are shared across <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> and <code><a href="../reference/iplot.html">iplot()</a></code>:</p>
+<p>The following arguments for customisation are shared across <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> and <code><a href="../reference/iplot.html">iplot()</a></code>:</p>
 <ul>
 <li>
 <code>window</code> (optional) indispensable in a proper workflow. <code><a href="../reference/ichimoku.html">ichimoku()</a></code> is run on a larger dataset than that of interest and at the visualization stage the data is subset to the window of interest. Supply as an ISO-8601 compatible range string in the format used for ‘xts’ objects, for example the range ‘2020-02-15/2020-08-15’ or ‘2020-02-15/’ (from 15 Feb 2020) or ‘/2020-08’ (until end-Aug 2020) or simply ‘2020’ to select all of the year 2020</li>
@@ -359,7 +355,7 @@
 <li>
 <code>subtitle</code> (optional) used to specify a subtitle to display under the chart title</li>
 <li>
-<code>theme</code> [default ‘original’] the following themes are also available: ‘dark’, ‘solarized’ and ‘mono’</li>
+<code>theme</code> [default ‘original’] with alternative choices of ‘conceptual’, ‘dark’, ‘fresh’, ‘mono’, or ‘solarized’</li>
 <li>
 <code>strat</code> [default TRUE] if true, the periods for which a strategy results in a market position will be shaded (if the ichimoku object contains a strategy) with the strategy printed as the chart sustitle (if not otherwise specified). See the <a href="strategies.html">strategies vignette</a> for more information on working with strategies.</li>
 <li>
@@ -367,15 +363,15 @@
 <li>
 <code>custom</code> (optional) character string (containing a regular expression) matching the column name of the variable to be displayed as sub-plot. Specify <code>type = 'bar'</code> or <code>type = 'line'</code>, otherwise other type settings will take precedence.</li>
 </ul>
-<p><code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> takes additional parameters as follows:</p>
+<p><code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> takes additional parameters as follows:</p>
 <ul>
 <li>
 <code>...</code> additional arguments passed along to the print method for ‘ggplot’ objects when <code>type = 'none'</code>.</li>
 </ul>
 </div>
-<div id="oscillators" class="section level4">
-<h4 class="hasAnchor">
-<a href="#oscillators" class="anchor"></a>Oscillators</h4>
+<div class="section level4">
+<h4 id="oscillators">Oscillators<a class="anchor" aria-label="anchor" href="#oscillators"></a>
+</h4>
 <p>Although Ichimoku Kinko Hyo is considered a complete charting system, it can at times be useful to pair it with an oscillator.</p>
 <p>By specifying <code>type = "r"</code> or <code>type = "s"</code>, the corresponding type of oscillator will be shown beneath the main ichimoku cloud chart.</p>
 <p>An <strong>R-type oscillator</strong> is based on the formula for Relative Strength Index (RSI). This is a single line indicator with a look-back window of the ichimoku object’s medium cloud period (default 26). The 75 and 25 levels are marked on the chart to demarcate potentially over-bought and over-sold levels.</p>
@@ -383,33 +379,33 @@
 <p>Note that this corresponds to the usual RSI oscillator definition, although not identical as gains/losses are calculated with reference to each period’s open rather than the previous close. Note also that the R-type oscillator is calculated consistently and does not employ a roll-forward mechanism based on previous oscillator values like the RSI.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># To plot an R-type oscillator:</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">cloud</span>, type <span class="op">=</span> <span class="st">"r"</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">cloud</span>, type <span class="op">=</span> <span class="st">"r"</span><span class="op">)</span></code></pre></div>
 <p>An <strong>S-type oscillator</strong> is based on the formula for the stochastic indicator. This is a 2-line indicator with fast and slow lines with look-back windows corresponding to the fast and medium cloud periods respectively (default 9 and 26). The fast line is quicker to react to price changes and the slow line can be used for confirmation / divergence.</p>
 <p>The fast S-type line is calculated as 100 times the ratio of the closing price minus the [9] period low to the [9] period high minus the [9] period low. The slow S-type line is calculated as 100 times the ratio of the closing price minus the [26] period low to the [26] period high minus the [26] period low.</p>
 <p>Note the difference to the usual stochastic oscillator definition where the slow line is a 3-period moving average of the fast line.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">cloud</span>, window <span class="op">=</span> <span class="st">"2020-04-01/2020-12-01"</span>, theme <span class="op">=</span> <span class="st">"solarized"</span>, type <span class="op">=</span> <span class="st">"s"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">cloud</span>, window <span class="op">=</span> <span class="st">"2020-04-01/2020-12-01"</span>, theme <span class="op">=</span> <span class="st">"solarized"</span>, type <span class="op">=</span> <span class="st">"s"</span><span class="op">)</span></code></pre></div>
 <p><img src="reference_files/figure-html/plots-1.png" width="672"></p>
 </div>
-<div id="custom-sub-plots" class="section level4">
-<h4 class="hasAnchor">
-<a href="#custom-sub-plots" class="anchor"></a>Custom Sub-plots</h4>
+<div class="section level4">
+<h4 id="custom-sub-plots">Custom Sub-plots<a class="anchor" aria-label="anchor" href="#custom-sub-plots"></a>
+</h4>
 <p>Additional input data preserved within the ichimoku object, for example volume data, can be plotted in the sub-plot area by specifying the ‘custom’ argument. Other metrics can also be plotted if they are added as an additional column to the ichimoku object.</p>
 <p>The character string supplied to ‘custom’ is a regular expression pattern that is matched to the column name and hence does not need to match exactly, nor is case considered.</p>
 <p>To view a custom sub-plot, type must be specified as either ‘bar’ or ‘line’, otherwise the type setting will take precedence (default is ‘none’).</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">kumo</span>, window <span class="op">=</span> <span class="st">"2020-04/2020-11"</span>, theme <span class="op">=</span> <span class="st">"mono"</span>, type <span class="op">=</span> <span class="st">"bar"</span>, custom <span class="op">=</span> <span class="st">"volume"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">kumo</span>, window <span class="op">=</span> <span class="st">"2020-04/2020-11"</span>, theme <span class="op">=</span> <span class="st">"mono"</span>, type <span class="op">=</span> <span class="st">"bar"</span>, custom <span class="op">=</span> <span class="st">"volume"</span><span class="op">)</span></code></pre></div>
 <p><img src="reference_files/figure-html/plotbar-1.png" width="672"></p>
 <p>On a bar chart, the bar colours correspond to the candle direction.</p>
 </div>
-<div id="further-options" class="section level4">
-<h4 class="hasAnchor">
-<a href="#further-options" class="anchor"></a>Further Options</h4>
-<p>Internally, ichimoku’s <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> method is a wrapper for <code><a href="../reference/autoplot.html">autoplot()</a></code> and <code><a href="../reference/extraplot.html">extraplot()</a></code>. As <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> returns the original ichimoku object (invisibly), to access the actual plot objects requires those functions to be called directly. <code><a href="../reference/autoplot.html">autoplot()</a></code> returns a ggplot2 object and <code><a href="../reference/extraplot.html">extraplot()</a></code> returns a gtable object.</p>
+<div class="section level4">
+<h4 id="further-options">Further Options<a class="anchor" aria-label="anchor" href="#further-options"></a>
+</h4>
+<p>Internally, ichimoku’s <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> method is a wrapper for <code><a href="../reference/autoplot.ichimoku.html">autoplot()</a></code> and <code><a href="../reference/extraplot.html">extraplot()</a></code>. As <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> returns the original ichimoku object (invisibly), to access the actual plot objects requires those functions to be called directly. <code><a href="../reference/autoplot.ichimoku.html">autoplot()</a></code> returns a ggplot2 object and <code><a href="../reference/extraplot.html">extraplot()</a></code> returns a gtable object.</p>
 </div>
-<div id="interactive-plots" class="section level4">
-<h4 class="hasAnchor">
-<a href="#interactive-plots" class="anchor"></a>2. Interactive Plots</h4>
+<div class="section level4">
+<h4 id="interactive-plots">2. Interactive Plots<a class="anchor" aria-label="anchor" href="#interactive-plots"></a>
+</h4>
 <p>Interactive plots require the ‘shiny’ package to be installed.</p>
 <p>To produce an interactive plot, use ichimoku’s <code><a href="../reference/iplot.html">iplot()</a></code> function, which launches an R Shiny app.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
@@ -424,55 +420,55 @@
 <p><code><a href="../reference/iplot.html">iplot()</a></code> takes the following additional parameters for customisation:</p>
 <ul>
 <li>
-<code>...</code> additional parameters passed along to the ‘options’ argument of <code><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html">shiny::shinyApp()</a></code>.</li>
+<code>...</code> additional parameters passed along to the ‘options’ argument of <code><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shiny::shinyApp()</a></code>.</li>
 <li>
 <code>launch.browser</code> [default TRUE] If TRUE, the system’s default web browser will be launched automatically after the app is started. The value of this argument can also be a function to call with the application’s URL. To use the default Shiny viewer in RStudio, specify <code>getOption("shiny.launch.browser")</code>.</li>
 </ul>
 </div>
-<div id="implementation-notes" class="section level4">
-<h4 class="hasAnchor">
-<a href="#implementation-notes" class="anchor"></a>Implementation notes</h4>
+<div class="section level4">
+<h4 id="implementation-notes">Implementation notes<a class="anchor" aria-label="anchor" href="#implementation-notes"></a>
+</h4>
 <p>The column names of the ichimoku object are automatically populated in a drop-down menu, and a selection can be made to view any variable as a custom sub-plot. Chart type must be set to either ‘bar’ or ‘line’, otherwise the type setting will take precedence.</p>
 <p>The cursor infotip and guides are available for a chart type of ‘none’ but are not implemented for charts with sub-plots.</p>
 </div>
 </div>
-<div id="archive" class="section level3">
-<h3 class="hasAnchor">
-<a href="#archive" class="anchor"></a>archive()</h3>
+<div class="section level3">
+<h3 id="archive">archive()<a class="anchor" aria-label="anchor" href="#archive"></a>
+</h3>
 <p>After completing an analysis, the resulting objects can be stored directly to disk. The function <code><a href="../reference/archive.html">archive()</a></code> combines R’s native serialisation capability with cryptographic verification of data integrity.</p>
-<p>Archive files created by this function are stored in the native RData format for maximum portability and reliability. They may be read using the base R <code><a href="https://rdrr.io/r/base/load.html">load()</a></code> function on machines without ‘ichimoku’ installed.</p>
-<div id="writing" class="section level4">
-<h4 class="hasAnchor">
-<a href="#writing" class="anchor"></a>Writing</h4>
+<p>Archive files created by this function are stored in the native RData format for maximum portability and reliability. They may be read using the base R <code><a href="https://rdrr.io/r/base/load.html" class="external-link">load()</a></code> function on machines without ‘ichimoku’ installed.</p>
+<div class="section level4">
+<h4 id="writing">Writing<a class="anchor" aria-label="anchor" href="#writing"></a>
+</h4>
 <p><code><a href="../reference/archive.html">archive()</a></code> for write operations will take 2 arguments: the object to be written, and the file path/name of the file to be stored. A confirmation is printed to the console that the file has been written.</p>
 </div>
-<div id="reading" class="section level4">
-<h4 class="hasAnchor">
-<a href="#reading" class="anchor"></a>Reading</h4>
+<div class="section level4">
+<h4 id="reading">Reading<a class="anchor" aria-label="anchor" href="#reading"></a>
+</h4>
 <p><code><a href="../reference/archive.html">archive()</a></code> for read operations takes a single argument: the file path/name of the file to be read. Alternatively, if no arguments are specified, a system dialog will be opened allowing a file to be chosen interactively. The return value of the function can be assigned to an object. A confirmation is printed to the console once the file has been read.</p>
 </div>
-<div id="data-integrity-verification" class="section level4">
-<h4 class="hasAnchor">
-<a href="#data-integrity-verification" class="anchor"></a>Data Integrity Verification</h4>
+<div class="section level4">
+<h4 id="data-integrity-verification">Data Integrity Verification<a class="anchor" aria-label="anchor" href="#data-integrity-verification"></a>
+</h4>
 <p>Data integrity verification is performed by the cryptographic-grade sha256 hashing algorithm from the ‘openssl’ package. If ‘openssl’ is not available, the archive function still works in all respects but without the authentication capability.</p>
 <p>When an archive is written, the serialised object is hashed and the hash is also stored in the archive. The sha256 hash value is printed to the console as confirmation.</p>
 <p>When an archive is read back, the sha256 hash of the restored object is checked against the hash of the original stored in the archive. If identical, a ‘data verified’ message is printed to the console along with the authenticated sha256 hash.</p>
 </div>
 </div>
 </div>
-<div id="supplementary-information" class="section level2">
-<h2 class="hasAnchor">
-<a href="#supplementary-information" class="anchor"></a>Supplementary Information</h2>
-<div id="data-validation" class="section level3">
-<h3 class="hasAnchor">
-<a href="#data-validation" class="anchor"></a>Data validation</h3>
+<div class="section level2">
+<h2 id="supplementary-information">Supplementary Information<a class="anchor" aria-label="anchor" href="#supplementary-information"></a>
+</h2>
+<div class="section level3">
+<h3 id="data-validation">Data validation<a class="anchor" aria-label="anchor" href="#data-validation"></a>
+</h3>
 <p>ichimoku performs the following data validation steps before attempting to compute the cloud values. Failure at any step causes <code><a href="../reference/ichimoku.html">ichimoku()</a></code> to halt.</p>
 <ol style="list-style-type: decimal">
 <li>Searches column names of the data object for the first column containing ‘index’, ‘date’ or ‘time’ (not case-dependent).</li>
 </ol>
 <ul>
-<li><p><em>If found:</em> will attempt to convert the column to POSIXct by <code><a href="https://rdrr.io/r/base/as.POSIXlt.html">as.POSIXct()</a></code>. If this fails, will check if the column is numeric and if so convert it to POSIXct by assuming the numeric value is a valid unix/POSIX time (a warning is issued to check the validity in case the numeric value is not a valid POSIX time)</p></li>
-<li><p><em>If not found:</em> will attempt to convert the row names to POSIXct by <code><a href="https://rdrr.io/r/base/as.POSIXlt.html">as.POSIXct()</a></code>. If this fails, will check if the row names are integer values that are not just the default row names for data frames, and if so convert it to POSIXct by assuming the numeric value is a valid unix/POSIX time (a warning is issued to check the validity in case the numeric value is not a valid POSIX time)</p></li>
+<li><p><em>If found:</em> will attempt to convert the column to POSIXct by <code><a href="https://rdrr.io/r/base/as.POSIXlt.html" class="external-link">as.POSIXct()</a></code>. If this fails, will check if the column is numeric and if so convert it to POSIXct by assuming the numeric value is a valid unix/POSIX time (a warning is issued to check the validity in case the numeric value is not a valid POSIX time)</p></li>
+<li><p><em>If not found:</em> will attempt to convert the row names to POSIXct by <code><a href="https://rdrr.io/r/base/as.POSIXlt.html" class="external-link">as.POSIXct()</a></code>. If this fails, will check if the row names are integer values that are not just the default row names for data frames, and if so convert it to POSIXct by assuming the numeric value is a valid unix/POSIX time (a warning is issued to check the validity in case the numeric value is not a valid POSIX time)</p></li>
 <li><p>Note: ‘xts’ objects are always indexed by a valid timestamp and ichimoku handles this automatically</p></li>
 </ul>
 <ol start="2" style="list-style-type: decimal">
@@ -494,9 +490,9 @@
 <li><p>There are NA values within the price data. This will affect the algorithm calculating the cloud lines in the window immediately following such NA values. Please check the data and manually correct NA values before invoking <code><a href="../reference/ichimoku.html">ichimoku()</a></code></p></li>
 </ul>
 </div>
-<div id="ichimoku-object-specification" class="section level3">
-<h3 class="hasAnchor">
-<a href="#ichimoku-object-specification" class="anchor"></a>ichimoku object specification</h3>
+<div class="section level3">
+<h3 id="ichimoku-object-specification">ichimoku object specification<a class="anchor" aria-label="anchor" href="#ichimoku-object-specification"></a>
+</h3>
 <ul>
 <li>Index:
 <ul>
@@ -544,21 +540,21 @@
 </li>
 </ul>
 </div>
-<div id="api-modifications" class="section level3">
-<h3 class="hasAnchor">
-<a href="#api-modifications" class="anchor"></a>API modifications</h3>
-<div id="since-version-0-x" class="section level4">
-<h4 class="hasAnchor">
-<a href="#since-version-0-x" class="anchor"></a>Since version 0.x</h4>
+<div class="section level3">
+<h3 id="api-modifications">API modifications<a class="anchor" aria-label="anchor" href="#api-modifications"></a>
+</h3>
+<div class="section level4">
+<h4 id="since-version-0-x">Since version 0.x<a class="anchor" aria-label="anchor" href="#since-version-0-x"></a>
+</h4>
 <ul>
 <li>ichimoku objects created in v0.x will no longer work correctly in v1.x and later of the package. To ensure compatibility with the ichimoku object specification v1, please upgrade to the latest package version and run <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on previously-created objects to re-create them according to the new specification (data is preserved)</li>
 </ul>
 </div>
 </div>
 </div>
-<div id="dependencies" class="section level2">
-<h2 class="hasAnchor">
-<a href="#dependencies" class="anchor"></a>Dependencies</h2>
+<div class="section level2">
+<h2 id="dependencies">Dependencies<a class="anchor" aria-label="anchor" href="#dependencies"></a>
+</h2>
 <p>ichimoku currently has the following external package dependencies:</p>
 <ul>
 <li>curl - for interfacing with external APIs</li>
@@ -579,11 +575,11 @@
 <li>shiny - for interactive and live visualizations</li>
 </ul>
 </div>
-<div id="references" class="section level2">
-<h2 class="hasAnchor">
-<a href="#references" class="anchor"></a>References</h2>
+<div class="section level2">
+<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
 <p>Sasaki, H. 佐々木 英信 (1996), <em>一目均衡表の研究 [ichimoku kinkouhyou no kenkyuu]</em>. Tokyo, Japan: Toushi Radar.</p>
-<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.2.4, <a href="https://CRAN.R-project.org/package=ichimoku" class="uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
+<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.2.4, <a href="https://CRAN.R-project.org/package=ichimoku" class="external-link uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
 <hr>
 </div>
   </div>
@@ -599,11 +595,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Charlie Gao.</p>
+  <p></p>
+<p>Developed by Charlie Gao.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
       </footer>
@@ -611,6 +609,8 @@
 
   
 
+
+  
 
   </body>
 </html>

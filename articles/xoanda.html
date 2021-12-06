@@ -27,6 +27,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -39,18 +41,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.4.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4.7</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -81,13 +77,13 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/shikokuchuo/ichimoku/">
+  <a href="https://github.com/shikokuchuo/ichimoku/" class="external-link">
     <span class="fa fa-github"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://shikokuchuo.net/">
+  <a href="https://shikokuchuo.net/" class="external-link">
     <span class="fa fa-cube"></span>
      
   </a>
@@ -108,55 +104,55 @@
       <h1 data-toc-skip>ichimoku: The OANDA fxTrade API</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/shikokuchuo/ichimoku/blob/master/vignettes/xoanda.Rmd"><code>vignettes/xoanda.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/shikokuchuo/ichimoku/blob/HEAD/vignettes/xoanda.Rmd" class="external-link"><code>vignettes/xoanda.Rmd</code></a></small>
       <div class="hidden name"><code>xoanda.Rmd</code></div>
 
     </div>
 
     
     
-<div id="about-oanda-fxtrade" class="section level2">
-<h2 class="hasAnchor">
-<a href="#about-oanda-fxtrade" class="anchor"></a>About OANDA fxTrade</h2>
+<div class="section level2">
+<h2 id="about-oanda-fxtrade">About OANDA fxTrade<a class="anchor" aria-label="anchor" href="#about-oanda-fxtrade"></a>
+</h2>
 <p>ichimoku contains an interface, or binding for the R language, to the OANDA fxTrade API.</p>
 <p>OANDA is a primary source of foreign exchange data used by corporations and governments around the world. The API can be used for retrieving historical and live streaming price data for major currencies, metals, commodities, government bonds and stock indices.</p>
 <p>As an example of the financial data that is available: OHLC pricing data can be obtained for major forex pairs from the start of 2005 with granularity ranging from 5 seconds to monthly. For the total list of over 120 covered instruments please refer to the <a href="#available-instruments">Available Instruments</a> section below.</p>
 <p>Please note that ‘OANDA’ and ‘fxTrade’ are trademarks owned by OANDA Corporation, an entity unaffiliated with the ichimoku package.</p>
 </div>
-<div id="registering-with-oanda" class="section level2">
-<h2 class="hasAnchor">
-<a href="#registering-with-oanda" class="anchor"></a>Registering with OANDA</h2>
+<div class="section level2">
+<h2 id="registering-with-oanda">Registering with OANDA<a class="anchor" aria-label="anchor" href="#registering-with-oanda"></a>
+</h2>
 <p>The OANDA fxTrade API, as distinct to other OANDA data sources, is based upon its retail and professional trading offering of the same name. As such, access to the API requires an fxTrade account with OANDA and agreement to their API terms of use.</p>
-<p>Registering for a ‘demo’ or ‘practice’ account is entirely free at the time of writing and provides full access to the API. For registering an account, the following URL may be used: <a href="https://www.oanda.com/forex-trading/" class="uri">https://www.oanda.com/forex-trading/</a>.</p>
+<p>Registering for a ‘demo’ or ‘practice’ account is entirely free at the time of writing and provides full access to the API. For registering an account, the following URL may be used: <a href="https://www.oanda.com/forex-trading/" class="external-link uri">https://www.oanda.com/forex-trading/</a>.</p>
 <p>After successful registration, a link can be found on your OANDA fxTrade account profile page ‘Manage API Access’ (My Account -&gt; My Services -&gt; Manage API Access). From there, a personal access token to use with the OANDA API can be generated, as well as revoked. This access token will enable all the OANDA functions in this package.</p>
 </div>
-<div id="setting-your-oanda-api-key" class="section level2">
-<h2 class="hasAnchor">
-<a href="#setting-your-oanda-api-key" class="anchor"></a>Setting your OANDA API Key</h2>
+<div class="section level2">
+<h2 id="setting-your-oanda-api-key">Setting your OANDA API Key<a class="anchor" aria-label="anchor" href="#setting-your-oanda-api-key"></a>
+</h2>
 <p>If the ‘keyring’ package is installed, the OANDA API key (personal access token) can be set once and saved in your system credential store by using <code><a href="../reference/oanda_set_key.html">oanda_set_key()</a></code>. This will enable it to be retrieved automatically for all subsequent sessions.</p>
 <p>Separate keys can be set for practice and live accounts; please choose the correct account type when prompted.</p>
 <p>If an access token is revoked and re-generated, please remember to set the API key again through the <code><a href="../reference/oanda_set_key.html">oanda_set_key()</a></code> function.</p>
 </div>
-<div id="using-a-live-account" class="section level2">
-<h2 class="hasAnchor">
-<a href="#using-a-live-account" class="anchor"></a>Using a Live Account</h2>
+<div class="section level2">
+<h2 id="using-a-live-account">Using a Live Account<a class="anchor" aria-label="anchor" href="#using-a-live-account"></a>
+</h2>
 <p>If you are using an access token for a live (real money) account, you will want to call <code><a href="../reference/oanda_switch.html">oanda_switch()</a></code> at the beginning of each session; this switches the default server from the practice server to the live server. Settings will only persist until the end of the session.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://shikokuchuo.net/ichimoku/">ichimoku</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shikokuchuo.net/ichimoku/">ichimoku</a></span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/oanda_switch.html">oanda_switch</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; Default OANDA server switched to 'live'</span></code></pre></div>
 <p>Note: this package only contains functions for retrieving available instruments and price data. It does not contain code to implement any trading capability whatsoever. Please be aware however, that a personal access token can be used (outside of this package) for all operations on your account including placing orders and trades, and appropriate precautions should be taken when using your live account token.</p>
 </div>
-<div id="the-oanda-functions" class="section level2">
-<h2 class="hasAnchor">
-<a href="#the-oanda-functions" class="anchor"></a>The OANDA Functions</h2>
+<div class="section level2">
+<h2 id="the-oanda-functions">The OANDA Functions<a class="anchor" aria-label="anchor" href="#the-oanda-functions"></a>
+</h2>
 <p>All of the OANDA functions in the package are prefixed by ‘oanda’ for clarity.</p>
 <p>Functions may be called interactively without any arguments, e.g. <code><a href="../reference/oanda_stream.html">oanda_stream()</a></code> or <code><a href="../reference/oanda_view.html">oanda_view()</a></code>, in which case you will be further prompted to enter required arguments; as opposed to when specifying such arguments normally, these should be entered unquoted i.e. without any surrounding "".</p>
 <p>For all functions, the ‘instrument’ argument is case-insensitive and the delimiter can be either ’_’ or ‘-’, such that both <code>oanda("USD_JPY")</code> and <code>oanda("usd-jpy")</code> would be acceptable.</p>
-<div id="oanda" class="section level3">
-<h3 class="hasAnchor">
-<a href="#oanda" class="anchor"></a><code>oanda()</code>
+<div class="section level3">
+<h3 id="oanda">
+<code>oanda()</code><a class="anchor" aria-label="anchor" href="#oanda"></a>
 </h3>
 <p>Retrieve pricing data from the OANDA fxTrade API.</p>
 <p>The arguments to the function are phrased identically to that of the API itself where relevant:</p>
@@ -198,9 +194,9 @@
 <li><p>The API data sometimes includes data for non-trading days with very low volumes. This is more common for older data and less so with more recent data. These may represent OTC trades that occurred over the OANDA platform, but nevertheless do not reflect market rates. These are automatically excluded from the data returned as they would otherwise produce spurious results used with <code><a href="../reference/ichimoku.html">ichimoku()</a></code></p></li>
 </ul>
 </div>
-<div id="oanda_chart" class="section level3">
-<h3 class="hasAnchor">
-<a href="#oanda_chart" class="anchor"></a><code>oanda_chart()</code>
+<div class="section level3">
+<h3 id="oanda_chart">
+<code>oanda_chart()</code><a class="anchor" aria-label="anchor" href="#oanda_chart"></a>
 </h3>
 <p>Create an updating real-time Ichimoku cloud chart. The refresh rate can be set for the chart to be updated down to every second. A plot of the ichimoku chart for the price data requested is output to the graphical device at each refresh interval.</p>
 <p>The arguments are identical to <code><a href="../reference/oanda.html">oanda()</a></code> above with the addition of:</p>
@@ -208,7 +204,7 @@
 <li>
 <code>refresh</code> [default 5] set the refresh rate of the chart in seconds, with a minimum of 1</li>
 <li>
-<code>...</code> additional parameters passed onto <code><a href="../reference/ichimoku.html">ichimoku()</a></code> for calculating the ichimoku cloud or <code><a href="../reference/autoplot.html">autoplot()</a></code> to set chart parameters</li>
+<code>...</code> additional parameters passed onto <code><a href="../reference/ichimoku.html">ichimoku()</a></code> for calculating the ichimoku cloud or <code><a href="../reference/autoplot.ichimoku.html">autoplot()</a></code> to set chart parameters</li>
 <li>
 <code>periods</code> [default c(9L, 26L, 52L)] a vector defining the length of periods used for the cloud. This parameter should not normally be modified as using other values would be invalid in the context of traditional Ichimoku analysis</li>
 </ul>
@@ -223,9 +219,9 @@
 <code class="sourceCode R"><span class="co"># To access the data, simply assign the return value to an object:</span>
 <span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/oanda_chart.html">oanda_chart</a></span><span class="op">(</span><span class="st">"XPD_USD"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="oanda_studio" class="section level3">
-<h3 class="hasAnchor">
-<a href="#oanda_studio" class="anchor"></a><code>oanda_studio()</code>
+<div class="section level3">
+<h3 id="oanda_studio">
+<code>oanda_studio()</code><a class="anchor" aria-label="anchor" href="#oanda_studio"></a>
 </h3>
 <p>Create an interactive R Shiny session for working with real-time Ichimoku cloud charts. Provides a live analysis environment where parameters may be set interactively as required. The cursor infotip provides ready access to the data directly from the chart.</p>
 <p>As all parameters can be set interactively in-app, <code><a href="../reference/oanda_studio.html">oanda_studio()</a></code> may be called without specifying any arguments. Otherwise, parameters may be set beforehand in the same way as <code><a href="../reference/oanda_chart.html">oanda_chart()</a></code>.</p>
@@ -237,15 +233,15 @@
 <li>
 <code>new.process</code> [default FALSE] if TRUE, will start the shiny session in a new R process, unblocking the current process and allowing continued use of the R console. Note that any stdout output from the new process is discarded but stderr output - messages, warnings and errors - are still sent through to the console</li>
 <li>
-<code>...</code> additional arguments passed to <code><a href="../reference/ichimoku.html">ichimoku()</a></code> for calculating the ichimoku cloud, <code><a href="../reference/autoplot.html">autoplot()</a></code> to set chart parameters, or the ‘options’ argument of <code><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html">shiny::shinyApp()</a></code>
+<code>...</code> additional arguments passed to <code><a href="../reference/ichimoku.html">ichimoku()</a></code> for calculating the ichimoku cloud, <code><a href="../reference/autoplot.ichimoku.html">autoplot()</a></code> to set chart parameters, or the ‘options’ argument of <code><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shiny::shinyApp()</a></code>
 </li>
 <li>
 <code>launch.browser</code> [default TRUE] If TRUE, the system’s default web browser will be launched automatically after the app is started. The value of this argument can also be a function to call with the application’s URL. To use the default Shiny viewer in RStudio, please specify <code>getOption("shiny.launch.browser")</code>
 </li>
 </ul>
-<div id="downloading-data" class="section level4">
-<h4 class="hasAnchor">
-<a href="#downloading-data" class="anchor"></a>Downloading Data</h4>
+<div class="section level4">
+<h4 id="downloading-data">Downloading Data<a class="anchor" aria-label="anchor" href="#downloading-data"></a>
+</h4>
 <p>The ichimoku object underlying the live cloud chart can be saved by selecting the Data Archive button.</p>
 <p>This button uses <code><a href="../reference/archive.html">archive()</a></code> to save the ichimoku object to disk. The filename will be of the form: <code>instrument_granularity_price.rda</code>, e.g. <code>SUGAR_USD_D_A.rda</code>. If confirmed, the file is saved to the browser’s default download location. Note that files with the same name are not overwritten but instead the filename is made unique.</p>
 <p>To read back the file, use <code><a href="../reference/archive.html">archive()</a></code>:</p>
@@ -257,9 +253,9 @@
 <span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/archive.html">archive</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 </div>
 </div>
-<div id="oanda_stream" class="section level3">
-<h3 class="hasAnchor">
-<a href="#oanda_stream" class="anchor"></a><code>oanda_stream()</code>
+<div class="section level3">
+<h3 id="oanda_stream">
+<code>oanda_stream()</code><a class="anchor" aria-label="anchor" href="#oanda_stream"></a>
 </h3>
 <p>Connect to the OANDA fxTrade streaming API and stream a list of prices generated by OANDA.</p>
 <p>Requires a single argument, the ‘instrument’ to stream data for.</p>
@@ -278,9 +274,9 @@
 <li>Pricing windows for different connections to the price stream are not all aligned in the same way (i.e. they are not all aligned to the top of the second). This means that during periods of rapid price movement, different subscribers may observe different prices depending on their alignment</li>
 </ul>
 </div>
-<div id="oanda_quote" class="section level3">
-<h3 class="hasAnchor">
-<a href="#oanda_quote" class="anchor"></a><code>oanda_quote()</code>
+<div class="section level3">
+<h3 id="oanda_quote">
+<code>oanda_quote()</code><a class="anchor" aria-label="anchor" href="#oanda_quote"></a>
 </h3>
 <p>A convenience function that outputs to the console the latest one-line price quote for an instrument.</p>
 <p>The output format is as follows: instrument, timestamp, daily open, high, low and last prices, daily percentage change (from the open), and the pricing component (M for mid, B for bid, A for ask).</p>
@@ -288,9 +284,9 @@
 <code class="sourceCode R"><span class="fu"><a href="../reference/oanda_quote.html">oanda_quote</a></span><span class="op">(</span><span class="st">"USD_JPY"</span><span class="op">)</span>
 <span class="co">#&gt; USD_JPY 2021-10-05 16:29:44 open: 110.931  high: 111.564  low: 110.871  last: 111.398  %chg: 0.421 M</span></code></pre></div>
 </div>
-<div id="oanda_view" class="section level3">
-<h3 class="hasAnchor">
-<a href="#oanda_view" class="anchor"></a><code>oanda_view()</code>
+<div class="section level3">
+<h3 id="oanda_view">
+<code>oanda_view()</code><a class="anchor" aria-label="anchor" href="#oanda_view"></a>
 </h3>
 <p>Prints a snapshot overview of the selected market, showing the relative performance of all constituents.</p>
 <p>The available markets are : ‘allfx’ for all available currencies, ‘bonds’ for government bonds, ‘commodities’ for commodities, ‘fx’ for major currency pairs, ‘metals’ for metals and ‘stocks’ for global stock markets. As partial matching is enabled, it is possible to type just the first letter e.g. ‘c’ for commodities.</p>
@@ -310,150 +306,152 @@
 <span id="cb9-13"><a href="#cb9-13"></a><span class="co">#&gt; WHEAT_USD    7.280   7.304   7.054   7.104 -2.4176</span></span>
 <span id="cb9-14"><a href="#cb9-14"></a><span class="co">#&gt; CORN_USD     5.454   5.466   5.274   5.322 -2.4202</span></span></code></pre></div>
 </div>
-<div id="oanda_positions" class="section level3">
-<h3 class="hasAnchor">
-<a href="#oanda_positions" class="anchor"></a><code>oanda_positions()</code>
+<div class="section level3">
+<h3 id="oanda_orders-oanda_positions">
+<code>oanda_orders()</code> / <code>oanda_positions()</code><a class="anchor" aria-label="anchor" href="#oanda_orders-oanda_positions"></a>
 </h3>
-<p>Provides a summary of the aggregate positions held by OANDA fxTrade clients at each price level.</p>
-<p>The data is returned as a dataframe, with parameters saved as attributes which can be viewed with <code><a href="../reference/look.html">look()</a></code>. A chart showing the percentage long and short positions at each price level is output to the graphical device.</p>
+<p>Provides a summary of the aggregate orders/positions held by OANDA fxTrade clients at each price level.</p>
+<p>‘instrument’ is a required argument. The latest order/position book is retrieved unless the optional argument ‘time’ is used to specify a time for which to retrieve the order/position book.</p>
+<p>The data is returned as a dataframe, with parameters saved as attributes which can be viewed with <code><a href="../reference/look.html">look()</a></code>. A chart showing the percentage long and short orders/positions at each price level is output to the graphical device.</p>
 <p>Please note that this feature has been implemented by OANDA only for certain major currency pairs and should be considered experimental.</p>
+<p>Note also that for the order book, only the interquartile range of order levels is charted as some orders are placed very far from the market price. The returned dataframe contains the full order book nevertheless.</p>
 </div>
 </div>
-<div id="available-instruments" class="section level2">
-<h2 class="hasAnchor">
-<a href="#available-instruments" class="anchor"></a>Available Instruments</h2>
+<div class="section level2">
+<h2 id="available-instruments">Available Instruments<a class="anchor" aria-label="anchor" href="#available-instruments"></a>
+</h2>
 <p>The list of financial instruments available for your account may be retrieved by <code><a href="../reference/oanda_instruments.html">oanda_instruments()</a></code>. The available instruments are also automatically populated as an input in <code><a href="../reference/oanda_studio.html">oanda_studio()</a></code>.</p>
 <p>The list below serves as a reference only and may differ from those actually available for your account type and/or country/region.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/oanda_instruments.html">oanda_instruments</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt;           name     displayName     type
-#&gt; 1    AU200_AUD   Australia 200      CFD
-#&gt; 2      AUD_CAD         AUD/CAD CURRENCY
-#&gt; 3      AUD_CHF         AUD/CHF CURRENCY
-#&gt; 4      AUD_HKD         AUD/HKD CURRENCY
-#&gt; 5      AUD_JPY         AUD/JPY CURRENCY
-#&gt; 6      AUD_NZD         AUD/NZD CURRENCY
-#&gt; 7      AUD_SGD         AUD/SGD CURRENCY
-#&gt; 8      AUD_USD         AUD/USD CURRENCY
-#&gt; 9      BCO_USD Brent Crude Oil      CFD
-#&gt; 10     CAD_CHF         CAD/CHF CURRENCY
-#&gt; 11     CAD_HKD         CAD/HKD CURRENCY
-#&gt; 12     CAD_JPY         CAD/JPY CURRENCY
-#&gt; 13     CAD_SGD         CAD/SGD CURRENCY
-#&gt; 14     CHF_HKD         CHF/HKD CURRENCY
-#&gt; 15     CHF_JPY         CHF/JPY CURRENCY
-#&gt; 16     CHF_ZAR         CHF/ZAR CURRENCY
-#&gt; 17    CN50_USD       China A50      CFD
-#&gt; 18    CORN_USD            Corn      CFD
-#&gt; 19  DE10YB_EUR            Bund      CFD
-#&gt; 20    DE30_EUR      Germany 30      CFD
-#&gt; 21    EU50_EUR       Europe 50      CFD
-#&gt; 22     EUR_AUD         EUR/AUD CURRENCY
-#&gt; 23     EUR_CAD         EUR/CAD CURRENCY
-#&gt; 24     EUR_CHF         EUR/CHF CURRENCY
-#&gt; 25     EUR_CZK         EUR/CZK CURRENCY
-#&gt; 26     EUR_DKK         EUR/DKK CURRENCY
-#&gt; 27     EUR_GBP         EUR/GBP CURRENCY
-#&gt; 28     EUR_HKD         EUR/HKD CURRENCY
-#&gt; 29     EUR_HUF         EUR/HUF CURRENCY
-#&gt; 30     EUR_JPY         EUR/JPY CURRENCY
-#&gt; 31     EUR_NOK         EUR/NOK CURRENCY
-#&gt; 32     EUR_NZD         EUR/NZD CURRENCY
-#&gt; 33     EUR_PLN         EUR/PLN CURRENCY
-#&gt; 34     EUR_SEK         EUR/SEK CURRENCY
-#&gt; 35     EUR_SGD         EUR/SGD CURRENCY
-#&gt; 36     EUR_TRY         EUR/TRY CURRENCY
-#&gt; 37     EUR_USD         EUR/USD CURRENCY
-#&gt; 38     EUR_ZAR         EUR/ZAR CURRENCY
-#&gt; 39    FR40_EUR       France 40      CFD
-#&gt; 40     GBP_AUD         GBP/AUD CURRENCY
-#&gt; 41     GBP_CAD         GBP/CAD CURRENCY
-#&gt; 42     GBP_CHF         GBP/CHF CURRENCY
-#&gt; 43     GBP_HKD         GBP/HKD CURRENCY
-#&gt; 44     GBP_JPY         GBP/JPY CURRENCY
-#&gt; 45     GBP_NZD         GBP/NZD CURRENCY
-#&gt; 46     GBP_PLN         GBP/PLN CURRENCY
-#&gt; 47     GBP_SGD         GBP/SGD CURRENCY
-#&gt; 48     GBP_USD         GBP/USD CURRENCY
-#&gt; 49     GBP_ZAR         GBP/ZAR CURRENCY
-#&gt; 50    HK33_HKD    Hong Kong 33      CFD
-#&gt; 51     HKD_JPY         HKD/JPY CURRENCY
-#&gt; 52    IN50_USD        India 50      CFD
-#&gt; 53   JP225_USD       Japan 225      CFD
-#&gt; 54  NAS100_USD      US Nas 100      CFD
-#&gt; 55  NATGAS_USD     Natural Gas      CFD
-#&gt; 56    NL25_EUR  Netherlands 25      CFD
-#&gt; 57     NZD_CAD         NZD/CAD CURRENCY
-#&gt; 58     NZD_CHF         NZD/CHF CURRENCY
-#&gt; 59     NZD_HKD         NZD/HKD CURRENCY
-#&gt; 60     NZD_JPY         NZD/JPY CURRENCY
-#&gt; 61     NZD_SGD         NZD/SGD CURRENCY
-#&gt; 62     NZD_USD         NZD/USD CURRENCY
-#&gt; 63    SG30_SGD    Singapore 30      CFD
-#&gt; 64     SGD_CHF         SGD/CHF CURRENCY
-#&gt; 65     SGD_JPY         SGD/JPY CURRENCY
-#&gt; 66   SOYBN_USD        Soybeans      CFD
-#&gt; 67  SPX500_USD      US SPX 500      CFD
-#&gt; 68   SUGAR_USD           Sugar      CFD
-#&gt; 69     TRY_JPY         TRY/JPY CURRENCY
-#&gt; 70    TWIX_USD    Taiwan Index      CFD
-#&gt; 71   UK100_GBP          UK 100      CFD
-#&gt; 72  UK10YB_GBP     UK 10Y Gilt      CFD
-#&gt; 73  US2000_USD    US Russ 2000      CFD
-#&gt; 74    US30_USD   US Wall St 30      CFD
-#&gt; 75  USB02Y_USD    US 2Y T-Note      CFD
-#&gt; 76  USB05Y_USD    US 5Y T-Note      CFD
-#&gt; 77  USB10Y_USD   US 10Y T-Note      CFD
-#&gt; 78  USB30Y_USD       US T-Bond      CFD
-#&gt; 79     USD_CAD         USD/CAD CURRENCY
-#&gt; 80     USD_CHF         USD/CHF CURRENCY
-#&gt; 81     USD_CNH         USD/CNH CURRENCY
-#&gt; 82     USD_CZK         USD/CZK CURRENCY
-#&gt; 83     USD_DKK         USD/DKK CURRENCY
-#&gt; 84     USD_HKD         USD/HKD CURRENCY
-#&gt; 85     USD_HUF         USD/HUF CURRENCY
-#&gt; 86     USD_INR         USD/INR CURRENCY
-#&gt; 87     USD_JPY         USD/JPY CURRENCY
-#&gt; 88     USD_MXN         USD/MXN CURRENCY
-#&gt; 89     USD_NOK         USD/NOK CURRENCY
-#&gt; 90     USD_PLN         USD/PLN CURRENCY
-#&gt; 91     USD_SEK         USD/SEK CURRENCY
-#&gt; 92     USD_SGD         USD/SGD CURRENCY
-#&gt; 93     USD_THB         USD/THB CURRENCY
-#&gt; 94     USD_TRY         USD/TRY CURRENCY
-#&gt; 95     USD_ZAR         USD/ZAR CURRENCY
-#&gt; 96   WHEAT_USD           Wheat      CFD
-#&gt; 97   WTICO_USD  West Texas Oil      CFD
-#&gt; 98     XAG_AUD      Silver/AUD    METAL
-#&gt; 99     XAG_CAD      Silver/CAD    METAL
-#&gt; 100    XAG_CHF      Silver/CHF    METAL
-#&gt; 101    XAG_EUR      Silver/EUR    METAL
-#&gt; 102    XAG_GBP      Silver/GBP    METAL
-#&gt; 103    XAG_HKD      Silver/HKD    METAL
-#&gt; 104    XAG_JPY      Silver/JPY    METAL
-#&gt; 105    XAG_NZD      Silver/NZD    METAL
-#&gt; 106    XAG_SGD      Silver/SGD    METAL
-#&gt; 107    XAG_USD          Silver    METAL
-#&gt; 108    XAU_AUD        Gold/AUD    METAL
-#&gt; 109    XAU_CAD        Gold/CAD    METAL
-#&gt; 110    XAU_CHF        Gold/CHF    METAL
-#&gt; 111    XAU_EUR        Gold/EUR    METAL
-#&gt; 112    XAU_GBP        Gold/GBP    METAL
-#&gt; 113    XAU_HKD        Gold/HKD    METAL
-#&gt; 114    XAU_JPY        Gold/JPY    METAL
-#&gt; 115    XAU_NZD        Gold/NZD    METAL
-#&gt; 116    XAU_SGD        Gold/SGD    METAL
-#&gt; 117    XAU_USD            Gold    METAL
-#&gt; 118    XAU_XAG     Gold/Silver    METAL
-#&gt; 119    XCU_USD          Copper      CFD
-#&gt; 120    XPD_USD       Palladium      CFD
-#&gt; 121    XPT_USD        Platinum      CFD
-#&gt; 122    ZAR_JPY         ZAR/JPY CURRENCY</code></pre>
+<pre><code><span class="co">#&gt;           name     displayName     type</span>
+<span class="co">#&gt; 1    AU200_AUD   Australia 200      CFD</span>
+<span class="co">#&gt; 2      AUD_CAD         AUD/CAD CURRENCY</span>
+<span class="co">#&gt; 3      AUD_CHF         AUD/CHF CURRENCY</span>
+<span class="co">#&gt; 4      AUD_HKD         AUD/HKD CURRENCY</span>
+<span class="co">#&gt; 5      AUD_JPY         AUD/JPY CURRENCY</span>
+<span class="co">#&gt; 6      AUD_NZD         AUD/NZD CURRENCY</span>
+<span class="co">#&gt; 7      AUD_SGD         AUD/SGD CURRENCY</span>
+<span class="co">#&gt; 8      AUD_USD         AUD/USD CURRENCY</span>
+<span class="co">#&gt; 9      BCO_USD Brent Crude Oil      CFD</span>
+<span class="co">#&gt; 10     CAD_CHF         CAD/CHF CURRENCY</span>
+<span class="co">#&gt; 11     CAD_HKD         CAD/HKD CURRENCY</span>
+<span class="co">#&gt; 12     CAD_JPY         CAD/JPY CURRENCY</span>
+<span class="co">#&gt; 13     CAD_SGD         CAD/SGD CURRENCY</span>
+<span class="co">#&gt; 14     CHF_HKD         CHF/HKD CURRENCY</span>
+<span class="co">#&gt; 15     CHF_JPY         CHF/JPY CURRENCY</span>
+<span class="co">#&gt; 16     CHF_ZAR         CHF/ZAR CURRENCY</span>
+<span class="co">#&gt; 17    CN50_USD       China A50      CFD</span>
+<span class="co">#&gt; 18    CORN_USD            Corn      CFD</span>
+<span class="co">#&gt; 19  DE10YB_EUR            Bund      CFD</span>
+<span class="co">#&gt; 20    DE30_EUR      Germany 30      CFD</span>
+<span class="co">#&gt; 21    EU50_EUR       Europe 50      CFD</span>
+<span class="co">#&gt; 22     EUR_AUD         EUR/AUD CURRENCY</span>
+<span class="co">#&gt; 23     EUR_CAD         EUR/CAD CURRENCY</span>
+<span class="co">#&gt; 24     EUR_CHF         EUR/CHF CURRENCY</span>
+<span class="co">#&gt; 25     EUR_CZK         EUR/CZK CURRENCY</span>
+<span class="co">#&gt; 26     EUR_DKK         EUR/DKK CURRENCY</span>
+<span class="co">#&gt; 27     EUR_GBP         EUR/GBP CURRENCY</span>
+<span class="co">#&gt; 28     EUR_HKD         EUR/HKD CURRENCY</span>
+<span class="co">#&gt; 29     EUR_HUF         EUR/HUF CURRENCY</span>
+<span class="co">#&gt; 30     EUR_JPY         EUR/JPY CURRENCY</span>
+<span class="co">#&gt; 31     EUR_NOK         EUR/NOK CURRENCY</span>
+<span class="co">#&gt; 32     EUR_NZD         EUR/NZD CURRENCY</span>
+<span class="co">#&gt; 33     EUR_PLN         EUR/PLN CURRENCY</span>
+<span class="co">#&gt; 34     EUR_SEK         EUR/SEK CURRENCY</span>
+<span class="co">#&gt; 35     EUR_SGD         EUR/SGD CURRENCY</span>
+<span class="co">#&gt; 36     EUR_TRY         EUR/TRY CURRENCY</span>
+<span class="co">#&gt; 37     EUR_USD         EUR/USD CURRENCY</span>
+<span class="co">#&gt; 38     EUR_ZAR         EUR/ZAR CURRENCY</span>
+<span class="co">#&gt; 39    FR40_EUR       France 40      CFD</span>
+<span class="co">#&gt; 40     GBP_AUD         GBP/AUD CURRENCY</span>
+<span class="co">#&gt; 41     GBP_CAD         GBP/CAD CURRENCY</span>
+<span class="co">#&gt; 42     GBP_CHF         GBP/CHF CURRENCY</span>
+<span class="co">#&gt; 43     GBP_HKD         GBP/HKD CURRENCY</span>
+<span class="co">#&gt; 44     GBP_JPY         GBP/JPY CURRENCY</span>
+<span class="co">#&gt; 45     GBP_NZD         GBP/NZD CURRENCY</span>
+<span class="co">#&gt; 46     GBP_PLN         GBP/PLN CURRENCY</span>
+<span class="co">#&gt; 47     GBP_SGD         GBP/SGD CURRENCY</span>
+<span class="co">#&gt; 48     GBP_USD         GBP/USD CURRENCY</span>
+<span class="co">#&gt; 49     GBP_ZAR         GBP/ZAR CURRENCY</span>
+<span class="co">#&gt; 50    HK33_HKD    Hong Kong 33      CFD</span>
+<span class="co">#&gt; 51     HKD_JPY         HKD/JPY CURRENCY</span>
+<span class="co">#&gt; 52    IN50_USD        India 50      CFD</span>
+<span class="co">#&gt; 53   JP225_USD       Japan 225      CFD</span>
+<span class="co">#&gt; 54  NAS100_USD      US Nas 100      CFD</span>
+<span class="co">#&gt; 55  NATGAS_USD     Natural Gas      CFD</span>
+<span class="co">#&gt; 56    NL25_EUR  Netherlands 25      CFD</span>
+<span class="co">#&gt; 57     NZD_CAD         NZD/CAD CURRENCY</span>
+<span class="co">#&gt; 58     NZD_CHF         NZD/CHF CURRENCY</span>
+<span class="co">#&gt; 59     NZD_HKD         NZD/HKD CURRENCY</span>
+<span class="co">#&gt; 60     NZD_JPY         NZD/JPY CURRENCY</span>
+<span class="co">#&gt; 61     NZD_SGD         NZD/SGD CURRENCY</span>
+<span class="co">#&gt; 62     NZD_USD         NZD/USD CURRENCY</span>
+<span class="co">#&gt; 63    SG30_SGD    Singapore 30      CFD</span>
+<span class="co">#&gt; 64     SGD_CHF         SGD/CHF CURRENCY</span>
+<span class="co">#&gt; 65     SGD_JPY         SGD/JPY CURRENCY</span>
+<span class="co">#&gt; 66   SOYBN_USD        Soybeans      CFD</span>
+<span class="co">#&gt; 67  SPX500_USD      US SPX 500      CFD</span>
+<span class="co">#&gt; 68   SUGAR_USD           Sugar      CFD</span>
+<span class="co">#&gt; 69     TRY_JPY         TRY/JPY CURRENCY</span>
+<span class="co">#&gt; 70    TWIX_USD    Taiwan Index      CFD</span>
+<span class="co">#&gt; 71   UK100_GBP          UK 100      CFD</span>
+<span class="co">#&gt; 72  UK10YB_GBP     UK 10Y Gilt      CFD</span>
+<span class="co">#&gt; 73  US2000_USD    US Russ 2000      CFD</span>
+<span class="co">#&gt; 74    US30_USD   US Wall St 30      CFD</span>
+<span class="co">#&gt; 75  USB02Y_USD    US 2Y T-Note      CFD</span>
+<span class="co">#&gt; 76  USB05Y_USD    US 5Y T-Note      CFD</span>
+<span class="co">#&gt; 77  USB10Y_USD   US 10Y T-Note      CFD</span>
+<span class="co">#&gt; 78  USB30Y_USD       US T-Bond      CFD</span>
+<span class="co">#&gt; 79     USD_CAD         USD/CAD CURRENCY</span>
+<span class="co">#&gt; 80     USD_CHF         USD/CHF CURRENCY</span>
+<span class="co">#&gt; 81     USD_CNH         USD/CNH CURRENCY</span>
+<span class="co">#&gt; 82     USD_CZK         USD/CZK CURRENCY</span>
+<span class="co">#&gt; 83     USD_DKK         USD/DKK CURRENCY</span>
+<span class="co">#&gt; 84     USD_HKD         USD/HKD CURRENCY</span>
+<span class="co">#&gt; 85     USD_HUF         USD/HUF CURRENCY</span>
+<span class="co">#&gt; 86     USD_INR         USD/INR CURRENCY</span>
+<span class="co">#&gt; 87     USD_JPY         USD/JPY CURRENCY</span>
+<span class="co">#&gt; 88     USD_MXN         USD/MXN CURRENCY</span>
+<span class="co">#&gt; 89     USD_NOK         USD/NOK CURRENCY</span>
+<span class="co">#&gt; 90     USD_PLN         USD/PLN CURRENCY</span>
+<span class="co">#&gt; 91     USD_SEK         USD/SEK CURRENCY</span>
+<span class="co">#&gt; 92     USD_SGD         USD/SGD CURRENCY</span>
+<span class="co">#&gt; 93     USD_THB         USD/THB CURRENCY</span>
+<span class="co">#&gt; 94     USD_TRY         USD/TRY CURRENCY</span>
+<span class="co">#&gt; 95     USD_ZAR         USD/ZAR CURRENCY</span>
+<span class="co">#&gt; 96   WHEAT_USD           Wheat      CFD</span>
+<span class="co">#&gt; 97   WTICO_USD  West Texas Oil      CFD</span>
+<span class="co">#&gt; 98     XAG_AUD      Silver/AUD    METAL</span>
+<span class="co">#&gt; 99     XAG_CAD      Silver/CAD    METAL</span>
+<span class="co">#&gt; 100    XAG_CHF      Silver/CHF    METAL</span>
+<span class="co">#&gt; 101    XAG_EUR      Silver/EUR    METAL</span>
+<span class="co">#&gt; 102    XAG_GBP      Silver/GBP    METAL</span>
+<span class="co">#&gt; 103    XAG_HKD      Silver/HKD    METAL</span>
+<span class="co">#&gt; 104    XAG_JPY      Silver/JPY    METAL</span>
+<span class="co">#&gt; 105    XAG_NZD      Silver/NZD    METAL</span>
+<span class="co">#&gt; 106    XAG_SGD      Silver/SGD    METAL</span>
+<span class="co">#&gt; 107    XAG_USD          Silver    METAL</span>
+<span class="co">#&gt; 108    XAU_AUD        Gold/AUD    METAL</span>
+<span class="co">#&gt; 109    XAU_CAD        Gold/CAD    METAL</span>
+<span class="co">#&gt; 110    XAU_CHF        Gold/CHF    METAL</span>
+<span class="co">#&gt; 111    XAU_EUR        Gold/EUR    METAL</span>
+<span class="co">#&gt; 112    XAU_GBP        Gold/GBP    METAL</span>
+<span class="co">#&gt; 113    XAU_HKD        Gold/HKD    METAL</span>
+<span class="co">#&gt; 114    XAU_JPY        Gold/JPY    METAL</span>
+<span class="co">#&gt; 115    XAU_NZD        Gold/NZD    METAL</span>
+<span class="co">#&gt; 116    XAU_SGD        Gold/SGD    METAL</span>
+<span class="co">#&gt; 117    XAU_USD            Gold    METAL</span>
+<span class="co">#&gt; 118    XAU_XAG     Gold/Silver    METAL</span>
+<span class="co">#&gt; 119    XCU_USD          Copper      CFD</span>
+<span class="co">#&gt; 120    XPD_USD       Palladium      CFD</span>
+<span class="co">#&gt; 121    XPT_USD        Platinum      CFD</span>
+<span class="co">#&gt; 122    ZAR_JPY         ZAR/JPY CURRENCY</span></code></pre>
 <p>Note: the above table is saved as internal package data and used as a fallback if the API call fails. In such a case, a warning is issued once per session as subsequent calls will return the cached list.</p>
 </div>
-<div id="caching-implementation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#caching-implementation" class="anchor"></a>Caching Implementation</h2>
+<div class="section level2">
+<h2 id="caching-implementation">Caching Implementation<a class="anchor" aria-label="anchor" href="#caching-implementation"></a>
+</h2>
 <p>The package retrieves the following once only during a session (the first time they are used) and caches the variables for further use:</p>
 <ul>
 <li>OANDA fxTrade API key</li>
@@ -463,12 +461,12 @@
 <p>If for any reason these become invalid or outdated, please re-load the package (or restart your R session) to enable these variables to be refreshed.</p>
 <p>Calling <code><a href="../reference/oanda_switch.html">oanda_switch()</a></code> will also clear all cached variables.</p>
 </div>
-<div id="references" class="section level2">
-<h2 class="hasAnchor">
-<a href="#references" class="anchor"></a>References</h2>
+<div class="section level2">
+<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
 <p>‘OANDA’ and ‘fxTrade’ are trademarks owned by OANDA Corporation, an entity unaffiliated with the ichimoku package.</p>
-<p>OANDA fxTrade API developer website: <a href="https://developer.oanda.com/" class="uri">https://developer.oanda.com/</a>.</p>
-<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.2.4, <a href="https://CRAN.R-project.org/package=ichimoku" class="uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
+<p>OANDA fxTrade API developer website: <a href="https://developer.oanda.com/" class="external-link uri">https://developer.oanda.com/</a>.</p>
+<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.2.4, <a href="https://CRAN.R-project.org/package=ichimoku" class="external-link uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
 <hr>
 </div>
   </div>
@@ -484,11 +482,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Charlie Gao.</p>
+  <p></p>
+<p>Developed by Charlie Gao.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
       </footer>
@@ -496,6 +496,8 @@
 
   
 
+
+  
 
   </body>
 </html>

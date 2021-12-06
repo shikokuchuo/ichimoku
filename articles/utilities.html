@@ -27,6 +27,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -39,18 +41,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.4.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4.7</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -81,13 +77,13 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/shikokuchuo/ichimoku/">
+  <a href="https://github.com/shikokuchuo/ichimoku/" class="external-link">
     <span class="fa fa-github"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://shikokuchuo.net/">
+  <a href="https://shikokuchuo.net/" class="external-link">
     <span class="fa fa-cube"></span>
      
   </a>
@@ -108,7 +104,7 @@
       <h1 data-toc-skip>ichimoku: Auxiliary Functions</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/shikokuchuo/ichimoku/blob/master/vignettes/utilities.Rmd"><code>vignettes/utilities.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/shikokuchuo/ichimoku/blob/HEAD/vignettes/utilities.Rmd" class="external-link"><code>vignettes/utilities.Rmd</code></a></small>
       <div class="hidden name"><code>utilities.Rmd</code></div>
 
     </div>
@@ -116,19 +112,19 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://shikokuchuo.net/ichimoku/">ichimoku</a></span><span class="op">)</span></code></pre></div>
-<div id="introduction" class="section level2">
-<h2 class="hasAnchor">
-<a href="#introduction" class="anchor"></a>Introduction</h2>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shikokuchuo.net/ichimoku/">ichimoku</a></span><span class="op">)</span></code></pre></div>
+<div class="section level2">
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h2>
 <p>This vignette is dedicated to the auxiliary functions exported by the ichimoku package.</p>
-<p>Note that all of the auxiliary functions are programmed for performance and are hence stripped of superfluous validation and error-checking code. If they are used outside of their intended scopes then errors can be expected. In particular, the input types must match exactly.</p>
+<p>Note that these auxiliary functions are programmed for performance and hence stripped of superfluous validation and error-checking code. If they are used outside of their intended scopes then errors may be expected. In particular, input types must match exactly.</p>
 </div>
-<div id="core-auxiliary-functions" class="section level2">
-<h2 class="hasAnchor">
-<a href="#core-auxiliary-functions" class="anchor"></a>Core Auxiliary Functions</h2>
-<div id="tradingdays" class="section level4">
-<h4 class="hasAnchor">
-<a href="#tradingdays" class="anchor"></a>tradingDays()</h4>
+<div class="section level2">
+<h2 id="core-auxiliary-functions">Core Auxiliary Functions<a class="anchor" aria-label="anchor" href="#core-auxiliary-functions"></a>
+</h2>
+<div class="section level4">
+<h4 id="tradingdays">tradingDays()<a class="anchor" aria-label="anchor" href="#tradingdays"></a>
+</h4>
 <p>Used to subset a vector of dates to trading days. Note: if the argument ‘holidays’ is passed to <code><a href="../reference/ichimoku.html">ichimoku()</a></code>, this is passed through to this function when calculating the dates for the future cloud.</p>
 <p>Takes the following arguments:</p>
 <ul>
@@ -140,20 +136,20 @@
 <code>...</code> other arguments not used by this function.</li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">dates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html">as.POSIXct</a></span><span class="op">(</span><span class="st">"2020-01-01"</span><span class="op">)</span>, by <span class="op">=</span> <span class="st">"1 day"</span>, length.out <span class="op">=</span> <span class="fl">7</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">dates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html" class="external-link">as.POSIXct</a></span><span class="op">(</span><span class="st">"2020-01-01"</span><span class="op">)</span>, by <span class="op">=</span> <span class="st">"1 day"</span>, length.out <span class="op">=</span> <span class="fl">7</span><span class="op">)</span>
 <span class="va">dates</span>
 <span class="co">#&gt; [1] "2020-01-01 UTC" "2020-01-02 UTC" "2020-01-03 UTC" "2020-01-04 UTC"</span>
 <span class="co">#&gt; [5] "2020-01-05 UTC" "2020-01-06 UTC" "2020-01-07 UTC"</span>
 <span class="fu"><a href="../reference/tradingDays.html">tradingDays</a></span><span class="op">(</span><span class="va">dates</span><span class="op">)</span>
 <span class="co">#&gt; [1] FALSE  TRUE  TRUE FALSE FALSE  TRUE  TRUE</span>
-<span class="fu"><a href="../reference/tradingDays.html">tradingDays</a></span><span class="op">(</span><span class="va">dates</span>, holidays <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2020-01-02"</span>, <span class="st">"2020-01-03"</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="../reference/tradingDays.html">tradingDays</a></span><span class="op">(</span><span class="va">dates</span>, holidays <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2020-01-02"</span>, <span class="st">"2020-01-03"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; [1]  TRUE FALSE FALSE FALSE FALSE  TRUE  TRUE</span>
 <span class="fu"><a href="../reference/tradingDays.html">tradingDays</a></span><span class="op">(</span><span class="va">dates</span>, holidays <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
 <span class="co">#&gt; [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE</span></code></pre></div>
 </div>
-<div id="look" class="section level4">
-<h4 class="hasAnchor">
-<a href="#look" class="anchor"></a>look()</h4>
+<div class="section level4">
+<h4 id="look">look()<a class="anchor" aria-label="anchor" href="#look"></a>
+</h4>
 <p>Can be used to inspect the informational attributes of R objects.</p>
 <p>For objects created by the ichimoku package, a list of attributes specific to that data type is returned.</p>
 <p>For other objects, a list of attributes that are non-standard for matrix / data.frame / xts objects is returned, or else invisible NULL if none are present.</p>
@@ -263,14 +259,14 @@
 <span class="co">#&gt; Ticker                 "TKR"</span></code></pre></div>
 </div>
 </div>
-<div id="dataframe-constructors" class="section level2">
-<h2 class="hasAnchor">
-<a href="#dataframe-constructors" class="anchor"></a>Dataframe Constructors</h2>
-<div id="xts_df" class="section level4">
-<h4 class="hasAnchor">
-<a href="#xts_df" class="anchor"></a>xts_df()</h4>
-<p>Convert an ‘xts’ object to ‘data.frame’. This function can be an order of magnitude faster than <code><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame()</a></code> for an ‘xts’ object.</p>
-<p>Note that for ichimoku objects, a marginally faster, more specific version has been implemented as the S3 method for <code><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame()</a></code>. Hence using this utility on an ichimoku object is not necessary.</p>
+<div class="section level2">
+<h2 id="dataframe-constructors">Dataframe Constructors<a class="anchor" aria-label="anchor" href="#dataframe-constructors"></a>
+</h2>
+<div class="section level4">
+<h4 id="xts_df">xts_df()<a class="anchor" aria-label="anchor" href="#xts_df"></a>
+</h4>
+<p>Convert an ‘xts’ object to ‘data.frame’. This function can be an order of magnitude faster than <code><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame()</a></code> for an ‘xts’ object.</p>
+<p>Note that for ichimoku objects, a marginally faster, more specific version has been implemented as the S3 method for <code><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame()</a></code>. Hence using this utility on an ichimoku object is not necessary.</p>
 <p>Takes the following arguments:</p>
 <ul>
 <li>
@@ -281,7 +277,7 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">sample_ohlc_data</span><span class="op">)</span>
 <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/xts_df.html">xts_df</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>
 <span class="co">#&gt; 'data.frame':    281 obs. of  13 variables:</span>
 <span class="co">#&gt;  $ index  : POSIXct, format: "2020-01-02 00:00:00" "2020-01-03 00:00:00" ...</span>
 <span class="co">#&gt;  $ open   : num  123 123 123 123 124 ...</span>
@@ -299,7 +295,7 @@
 
 <span class="co"># Preserving custom attributes:</span>
 <span class="va">df2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/xts_df.html">xts_df</a></span><span class="op">(</span><span class="va">cloud</span>, keep.attrs <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">df2</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">df2</span><span class="op">)</span>
 <span class="co">#&gt; 'data.frame':    281 obs. of  13 variables:</span>
 <span class="co">#&gt;  $ index  : POSIXct, format: "2020-01-02 00:00:00" "2020-01-03 00:00:00" ...</span>
 <span class="co">#&gt;  $ open   : num  123 123 123 123 124 ...</span>
@@ -318,10 +314,10 @@
 <span class="co">#&gt;  - attr(*, "periodicity")= num 86400</span>
 <span class="co">#&gt;  - attr(*, "ticker")= chr "sample_ohlc_data"</span></code></pre></div>
 </div>
-<div id="matrix_df" class="section level4">
-<h4 class="hasAnchor">
-<a href="#matrix_df" class="anchor"></a>matrix_df()</h4>
-<p>Convert a matrix to ‘data.frame’. This function can be twice as fast as <code><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame()</a></code> for a matrix.</p>
+<div class="section level4">
+<h4 id="matrix_df">matrix_df()<a class="anchor" aria-label="anchor" href="#matrix_df"></a>
+</h4>
+<p>Convert a matrix to ‘data.frame’. This function can be twice as fast as <code><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame()</a></code> for a matrix.</p>
 <p>Takes the following arguments:</p>
 <ul>
 <li>
@@ -331,9 +327,9 @@
 </ul>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">sample_ohlc_data</span><span class="op">)</span>
-<span class="va">mcloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span>
+<span class="va">mcloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span>
 <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/matrix_df.html">matrix_df</a></span><span class="op">(</span><span class="va">mcloud</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>
 <span class="co">#&gt; 'data.frame':    281 obs. of  12 variables:</span>
 <span class="co">#&gt;  $ open   : num  123 123 123 123 124 ...</span>
 <span class="co">#&gt;  $ high   : num  123 123 123 124 125 ...</span>
@@ -347,24 +343,24 @@
 <span class="co">#&gt;  $ chikou : num  123 123 123 124 124 ...</span>
 <span class="co">#&gt;  $ cloudT : num  NA NA NA NA NA NA NA NA NA NA ...</span>
 <span class="co">#&gt;  $ cloudB : num  NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/row.names.html">row.names</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/row.names.html" class="external-link">row.names</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt;  chr [1:281] "2020-01-02 00:00:00" "2020-01-03 00:00:00" ...</span></code></pre></div>
 </div>
 </div>
-<div id="dataframe-utilities" class="section level2">
-<h2 class="hasAnchor">
-<a href="#dataframe-utilities" class="anchor"></a>Dataframe Utilities</h2>
-<div id="df_trim" class="section level4">
-<h4 class="hasAnchor">
-<a href="#df_trim" class="anchor"></a>df_trim()</h4>
-<p>Trim rows containing NA values from a ‘data.frame’ object. This is a faster version of <code><a href="https://rdrr.io/r/stats/na.fail.html">stats::na.omit()</a></code>.</p>
+<div class="section level2">
+<h2 id="dataframe-utilities">Dataframe Utilities<a class="anchor" aria-label="anchor" href="#dataframe-utilities"></a>
+</h2>
+<div class="section level4">
+<h4 id="df_trim">df_trim()<a class="anchor" aria-label="anchor" href="#df_trim"></a>
+</h4>
+<p>Trim rows containing NA values from a ‘data.frame’ object. This is a faster version of <code><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">stats::na.omit()</a></code>.</p>
 <p>Takes a single argument:</p>
 <ul>
 <li>
 <code>x</code> the data.frame to trim.</li>
 </ul>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, <span class="cn">NA</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, <span class="cn">NA</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span>
 <span class="va">data</span>
 <span class="co">#&gt;   c.1.4..NA. c.NA..2.5.</span>
 <span class="co">#&gt; 1          1         NA</span>
@@ -378,9 +374,9 @@
 <span class="co">#&gt; 3          3          3</span>
 <span class="co">#&gt; 4          4          4</span></code></pre></div>
 </div>
-<div id="df_merge" class="section level4">
-<h4 class="hasAnchor">
-<a href="#df_merge" class="anchor"></a>df_merge()</h4>
+<div class="section level4">
+<h4 id="df_merge">df_merge()<a class="anchor" aria-label="anchor" href="#df_merge"></a>
+</h4>
 <p>Full join on an arbitrary number of ‘data.frame’ objects passed as arguments, preserving all unique entries. Can be used to combine historical time series data where each observation is indexed by a unique timestamp and all periods are complete.</p>
 <p>Takes an arbitrary number of arguments:</p>
 <ul>
@@ -421,9 +417,9 @@
 <span class="co">#&gt; 9  2020-01-14 125.2 125.2 124.3 124.4   2796</span>
 <span class="co">#&gt; 10 2020-01-15 124.4 124.5 123.7 123.9   2879</span></code></pre></div>
 </div>
-<div id="df_append" class="section level4">
-<h4 class="hasAnchor">
-<a href="#df_append" class="anchor"></a>df_append()</h4>
+<div class="section level4">
+<h4 id="df_append">df_append()<a class="anchor" aria-label="anchor" href="#df_append"></a>
+</h4>
 <p>Update a ‘data.frame’ object with new data. Can be used to append new updated time series data to an existing dataframe, where each observation is indexed by a unique timestamp/identifier in a key column.</p>
 <p>Takes 4 arguments:</p>
 <ul>
@@ -471,10 +467,10 @@
 <span class="co">#&gt; 10 2020-01-15 124.4 124.5 123.7 123.9   2879</span></code></pre></div>
 </div>
 </div>
-<div id="references" class="section level2">
-<h2 class="hasAnchor">
-<a href="#references" class="anchor"></a>References</h2>
-<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.2.4, <a href="https://CRAN.R-project.org/package=ichimoku" class="uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
+<div class="section level2">
+<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
+<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.2.4, <a href="https://CRAN.R-project.org/package=ichimoku" class="external-link uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
 <hr>
 </div>
   </div>
@@ -490,11 +486,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Charlie Gao.</p>
+  <p></p>
+<p>Developed by Charlie Gao.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
       </footer>
@@ -502,6 +500,8 @@
 
   
 
+
+  
 
   </body>
 </html>

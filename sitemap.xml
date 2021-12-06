@@ -1,7 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://shikokuchuo.net/ichimoku/404.html</loc>
+  </url>
+  <url>
+    <loc>https://shikokuchuo.net/ichimoku/LICENSE.html</loc>
+  </url>
+  <url>
+    <loc>https://shikokuchuo.net/ichimoku/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://shikokuchuo.net/ichimoku/articles/reference.html</loc>
+  </url>
+  <url>
+    <loc>https://shikokuchuo.net/ichimoku/articles/strategies.html</loc>
+  </url>
+  <url>
+    <loc>https://shikokuchuo.net/ichimoku/articles/utilities.html</loc>
+  </url>
+  <url>
+    <loc>https://shikokuchuo.net/ichimoku/articles/xoanda.html</loc>
+  </url>
+  <url>
+    <loc>https://shikokuchuo.net/ichimoku/authors.html</loc>
+  </url>
+  <url>
     <loc>https://shikokuchuo.net/ichimoku/index.html</loc>
+  </url>
+  <url>
+    <loc>https://shikokuchuo.net/ichimoku/news/index.html</loc>
   </url>
   <url>
     <loc>https://shikokuchuo.net/ichimoku/reference/archive.html</loc>
@@ -41,6 +68,9 @@
   </url>
   <url>
     <loc>https://shikokuchuo.net/ichimoku/reference/ichimoku.html</loc>
+  </url>
+  <url>
+    <loc>https://shikokuchuo.net/ichimoku/reference/index.html</loc>
   </url>
   <url>
     <loc>https://shikokuchuo.net/ichimoku/reference/index.ichimoku.html</loc>
@@ -122,17 +152,5 @@
   </url>
   <url>
     <loc>https://shikokuchuo.net/ichimoku/reference/xts_df.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/articles/reference.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/articles/strategies.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/articles/utilities.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/articles/xoanda.html</loc>
   </url>
 </urlset>

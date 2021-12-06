@@ -37,6 +37,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -49,18 +51,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.4.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4.7</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
@@ -91,13 +87,13 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/shikokuchuo/ichimoku/">
+  <a href="https://github.com/shikokuchuo/ichimoku/" class="external-link">
     <span class="fa fa-github"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://shikokuchuo.net/">
+  <a href="https://shikokuchuo.net/" class="external-link">
     <span class="fa fa-cube"></span>
      
   </a>
@@ -114,38 +110,37 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="ichimoku-" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#ichimoku-" class="anchor"></a>ichimoku <img src="reference/figures/logo.png" alt="ichimoku logo" align="right">
+<div class="section level1">
+<div class="page-header"><h1 id="ichimoku-">ichimoku <img src="reference/figures/logo.png" alt="ichimoku logo" align="right"><a class="anchor" aria-label="anchor" href="#ichimoku-"></a>
 </h1></div>
 <!-- badges: start -->
 
 <p>Visualization and Tools for Ichimoku Kinko Hyo Strategies</p>
-<p>An implementation of ‘Ichimoku Kinko Hyo’, also commonly known as ‘cloud charts’. Static and interactive visualizations with tools for creating, backtesting and development of quantitative ‘ichimoku’ strategies. As described in Sasaki (1996, <a href="ISBN:4925152009" class="uri">ISBN:4925152009</a>), the technique is a refinement on candlestick charting, originating from Japan and now in widespread use in technical analysis worldwide. Translating as ‘one-glance equilibrium chart’, it allows the price action and market structure of financial securities to be determined ‘at-a-glance’. Incorporates an interface with the OANDA fxTrade API <a href="https://developer.oanda.com/" class="uri">https://developer.oanda.com/</a> for retrieving historical and live streaming price data for major currencies, metals, commodities, government bonds and stock indices.</p>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
+<p>An implementation of ‘Ichimoku Kinko Hyo’, also commonly known as ‘cloud charts’. Static and interactive visualizations with tools for creating, backtesting and development of quantitative ‘ichimoku’ strategies. As described in Sasaki (1996, <a href="ISBN:4925152009" class="uri">ISBN:4925152009</a>), the technique is a refinement on candlestick charting, originating from Japan and now in widespread use in technical analysis worldwide. Translating as ‘one-glance equilibrium chart’, it allows the price action and market structure of financial securities to be determined ‘at-a-glance’. Incorporates an interface with the OANDA fxTrade API <a href="https://developer.oanda.com/" class="external-link uri">https://developer.oanda.com/</a> for retrieving historical and live streaming price data for major currencies, metals, commodities, government bonds and stock indices.</p>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
 <p>Install the released version of ichimoku from CRAN:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"ichimoku"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"ichimoku"</span><span class="op">)</span></code></pre></div>
 <p>Or the latest development version from rOpenSci R-universe:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"ichimoku"</span>, repos <span class="op">=</span> <span class="st">"https://shikokuchuo.r-universe.dev"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"ichimoku"</span>, repos <span class="op">=</span> <span class="st">"https://shikokuchuo.r-universe.dev"</span><span class="op">)</span></code></pre></div>
 <p>Or the latest development version from the Github source:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"shikokuchuo/ichimoku"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"shikokuchuo/ichimoku"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="example" class="section level2">
-<h2 class="hasAnchor">
-<a href="#example" class="anchor"></a>Example</h2>
+<div class="section level2">
+<h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
+</h2>
 <p>Load package and sample price data:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://shikokuchuo.net/ichimoku/">ichimoku</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shikokuchuo.net/ichimoku/">ichimoku</a></span><span class="op">)</span>
 <span class="va">TKR</span> <span class="op">&lt;-</span> <span class="va">sample_ohlc_data</span></code></pre></div>
-<p>Simply <code><a href="reference/ichimoku.html">ichimoku()</a></code> and <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code>:</p>
+<p>Simply <code><a href="reference/ichimoku.html">ichimoku()</a></code> and <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code>:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">cloud</span>, window <span class="op">=</span> <span class="st">"2020-05/"</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">cloud</span>, window <span class="op">=</span> <span class="st">"2020-05/"</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-ichimoku-1.png" alt="ichimoku kinko hyo"><!-- alt="ichimoku kinko hyo" --></p>
 <p><code><a href="reference/autostrat.html">autostrat()</a></code> to automatically evaluate and rank top-performing strategies:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -170,12 +165,12 @@
 <span class="co">#&gt; End                    2020-12-23         2020-12-23        2020-12-23       </span>
 <span class="co">#&gt; Ticker                 "TKR"              "TKR"             "TKR"</span></code></pre></div>
 </div>
-<div id="principal-ichimoku-functions" class="section level2">
-<h2 class="hasAnchor">
-<a href="#principal-ichimoku-functions" class="anchor"></a>Principal ichimoku functions</h2>
-<div id="data--visualization" class="section level4">
-<h4 class="hasAnchor">
-<a href="#data--visualization" class="anchor"></a>Data &amp; Visualization</h4>
+<div class="section level2">
+<h2 id="principal-ichimoku-functions">Principal ichimoku functions<a class="anchor" aria-label="anchor" href="#principal-ichimoku-functions"></a>
+</h2>
+<div class="section level4">
+<h4 id="data--visualization">Data &amp; Visualization<a class="anchor" aria-label="anchor" href="#data--visualization"></a>
+</h4>
 <ul>
 <li><p><a href="https://shikokuchuo.net/ichimoku/reference/ichimoku.html"><code>ichimoku()</code></a> - to create an ichimoku object from price data.</p></li>
 <li><p><a href="https://shikokuchuo.net/ichimoku/reference/plot.ichimoku.html"><code>plot()</code></a> / <a href="https://shikokuchuo.net/ichimoku/reference/iplot.html"><code>iplot()</code></a> - to plot (interactive) cloud charts from ichimoku objects.</p></li>
@@ -183,9 +178,9 @@
 <li><p><a href="https://shikokuchuo.net/ichimoku/reference/oanda.html"><code>oanda()</code></a> - to retrieve price data from the OANDA fxTrade API.</p></li>
 </ul>
 </div>
-<div id="strategies--ml" class="section level4">
-<h4 class="hasAnchor">
-<a href="#strategies--ml" class="anchor"></a>Strategies &amp; ML</h4>
+<div class="section level4">
+<h4 id="strategies--ml">Strategies &amp; ML<a class="anchor" aria-label="anchor" href="#strategies--ml"></a>
+</h4>
 <ul>
 <li><p><a href="https://shikokuchuo.net/ichimoku/reference/strat.html"><code>strat()</code></a> - to augment an ichimoku object with a strategy, including combined and asymmetric strategies.</p></li>
 <li><p><a href="https://shikokuchuo.net/ichimoku/reference/autostrat.html"><code>autostrat()</code></a> - to automatically evaluate and rank top-performing strategies.</p></li>
@@ -193,9 +188,9 @@
 <li><p><a href="https://shikokuchuo.net/ichimoku/reference/relative.html"><code>relative()</code></a> - to produce a statistical summary of the latest ichimoku numeric representation relative to historical values.</p></li>
 </ul>
 </div>
-<div id="real-time" class="section level4">
-<h4 class="hasAnchor">
-<a href="#real-time" class="anchor"></a>Real-time</h4>
+<div class="section level4">
+<h4 id="real-time">Real-time<a class="anchor" aria-label="anchor" href="#real-time"></a>
+</h4>
 <ul>
 <li><p><a href="https://shikokuchuo.net/ichimoku/reference/oanda_chart.html"><code>oanda_chart()</code></a> - to plot real-time ichimoku cloud charts using OANDA data.</p></li>
 <li><p><a href="https://shikokuchuo.net/ichimoku/reference/oanda_studio.html"><code>oanda_studio()</code></a> - a complete live analysis environment using OANDA data implemented in R Shiny.</p></li>
@@ -205,79 +200,83 @@
 </ul>
 </div>
 </div>
-<div id="vignettes" class="section level2">
-<h2 class="hasAnchor">
-<a href="#vignettes" class="anchor"></a>Vignettes</h2>
+<div class="section level2">
+<h2 id="vignettes">Vignettes<a class="anchor" aria-label="anchor" href="#vignettes"></a>
+</h2>
 <p>Long-form documentation links:</p>
 <p>{ 1 } <a href="https://shikokuchuo.net/ichimoku/articles/reference.html">Cloud Charts - The Reference Manual</a></p>
 <p>{ 2 } <a href="https://shikokuchuo.net/ichimoku/articles/strategies.html">Beyond Visualization - Quantitative Strategies</a></p>
 <p>{ 3 } <a href="https://shikokuchuo.net/ichimoku/articles/utilities.html">Auxiliary Functions</a></p>
 <p>{ 4 } <a href="https://shikokuchuo.net/ichimoku/articles/xoanda.html">The OANDA fxTrade API</a></p>
 </div>
-<div id="references" class="section level2">
-<h2 class="hasAnchor">
-<a href="#references" class="anchor"></a>References</h2>
+<div class="section level2">
+<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
 <p>Sasaki, H. 佐々木 英信 (1996), <em>一目均衡表の研究 [ichimoku kinkouhyou no kenkyuu]</em>. Tokyo, Japan: Toushi Radar.</p>
 <p>‘OANDA’ and ‘fxTrade’ are trademarks owned by OANDA Corporation, an entity unaffiliated with the ichimoku package.</p>
-<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.2.4, <a href="https://CRAN.R-project.org/package=ichimoku" class="uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
+<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.2.4, <a href="https://CRAN.R-project.org/package=ichimoku" class="external-link uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
 <p>–</p>
 <p>◈ ichimoku R package: <a href="https://shikokuchuo.net/ichimoku/" class="uri">https://shikokuchuo.net/ichimoku/</a>.</p>
-<p>Listed CRAN Finance Task View: <a href="https://CRAN.R-project.org/view=Finance" class="uri">https://CRAN.R-project.org/view=Finance</a>.</p>
+<p>Listed CRAN Finance Task View: <a href="https://CRAN.R-project.org/view=Finance" class="external-link uri">https://CRAN.R-project.org/view=Finance</a>.</p>
 </div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=ichimoku">https://​cloud.r-project.org/​package=ichimoku</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/shikokuchuo/ichimoku/">https://​github.com/​shikokuchuo/​ichimoku/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/shikokuchuo/ichimoku/issues">https://​github.com/​shikokuchuo/​ichimoku/​issues</a>
-</li>
+<li><a href="https://cloud.r-project.org/package=ichimoku" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/shikokuchuo/ichimoku/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/shikokuchuo/ichimoku/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
 <li><small>GPL (&gt;= 3)</small></li>
 </ul>
 </div>
+
+
 <div class="citation">
-<h2>Citation</h2>
+<h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li><a href="authors.html">Citing ichimoku</a></li>
-</ul>
-</div>
-<div class="developers">
-<h2>Developers</h2>
-<ul class="list-unstyled">
-<li>Charlie Gao <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-0750-061X" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li><a href="authors.html#citation">Citing ichimoku</a></li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="developers">
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li><a href="https://CRAN.R-project.org/package=ichimoku"><img src="https://www.r-pkg.org/badges/version/ichimoku?color=0b800e" alt="CRAN Status"></a></li>
-<li><a href="https://shikokuchuo.r-universe.dev/"><img src="https://shikokuchuo.r-universe.dev/badges/ichimoku?color=6bd54f" alt="r-universe"></a></li>
-<li><a href="https://github.com/shikokuchuo/ichimoku/actions/workflows/R-CMD-check.yaml"><img src="https://github.com/shikokuchuo/ichimoku/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
-<li><a href="https://app.codecov.io/gh/shikokuchuo/ichimoku"><img src="https://codecov.io/gh/shikokuchuo/ichimoku/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li>Charlie Gao <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-0750-061X" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 </ul>
 </div>
+
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://CRAN.R-project.org/package=ichimoku" class="external-link"><img src="https://www.r-pkg.org/badges/version/ichimoku?color=0b800e" alt="CRAN Status"></a></li>
+<li><a href="https://shikokuchuo.r-universe.dev/" class="external-link"><img src="https://shikokuchuo.r-universe.dev/badges/ichimoku?color=6bd54f" alt="r-universe"></a></li>
+<li><a href="https://github.com/shikokuchuo/ichimoku/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/shikokuchuo/ichimoku/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://app.codecov.io/gh/shikokuchuo/ichimoku" class="external-link"><img src="https://codecov.io/gh/shikokuchuo/ichimoku/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
+</ul>
 </div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Charlie Gao.</p>
+  <p></p>
+<p>Developed by Charlie Gao.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
       </footer>
@@ -285,6 +284,8 @@
 
   
 
+
+  
 
   </body>
 </html>
