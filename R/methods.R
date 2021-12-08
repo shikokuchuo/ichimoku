@@ -18,14 +18,11 @@
 #'     class 'ichimoku'. It can be invoked by calling print(x) on an object 'x'
 #'     of class 'ichimoku'.
 #'
-#'     For further details please refer to the reference vignette by calling:
-#'     \code{vignette("reference", package = "ichimoku")}
-#'
 #' @examples
 #' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 #'
-#' print(cloud, max = 110, digits = 4)
-#' print(cloud[100:110,], plot = FALSE, digits = 4)
+#' print(cloud)
+#' print(cloud, plot = FALSE, n = 20)
 #'
 #' @method print ichimoku
 #' @export
@@ -35,9 +32,44 @@ print.ichimoku <- function(x, plot = TRUE, ...) {
   if (missing(plot) || isTRUE(plot)) tryCatch(plot.ichimoku(x, ...),
                                               error = function(e) invisible(),
                                               warning = function(w) invisible())
-  NextMethod()
+
+  if (is.null(dim(x))) {
+    NextMethod()
+  } else {
+    tbl <- as_tibble.ichimoku(x)
+    orig <- getOption("pillar.sigfig")
+    options(pillar.sigfig = 5)
+    out <- capture.output(print(tbl, ...))
+    options(pillar.sigfig = orig)
+    cat(out[-1L], sep = "\n")
+  }
+
   invisible(x)
 
+}
+
+#' Print More Rows of Ichimoku Objects
+#'
+#' After calling or invoking the default print method for ichimoku objects, the
+#'     console output will display \code{# ... with x more rows} if the entire data
+#'     does not fit on-screen. Call \code{more()} to display up to 100 more rows.
+#'
+#' @return The ichimoku object originally printed (invisibly) or else invisible
+#'     NULL (if the last returned object was not an ichimoku object). The
+#'     ichimoku object data is printed to the console and the cloud chart is
+#'     output to the graphical device.
+#'
+#' @examples
+#' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
+#'
+#' cloud
+#' more()
+#'
+#' @export
+#'
+more <- function() {
+  is.ichimoku(lv <- .Last.value) || return(invisible())
+  print(lv, n = 100)
 }
 
 #' Display the Structure of Ichimoku Objects
@@ -53,9 +85,6 @@ print.ichimoku <- function(x, plot = TRUE, ...) {
 #' @details This function is an S3 method for the generic function str()
 #'     for class 'ichimoku'. It can be invoked by calling str(x) on an
 #'     object 'x' of class 'ichimoku'.
-#'
-#'     For further details please refer to the reference vignette by calling:
-#'     \code{vignette("reference", package = "ichimoku")}
 #'
 #' @examples
 #' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
@@ -75,13 +104,14 @@ str.ichimoku <- function (object, ...) {
     cat("ichimoku object with no dimensions\nVector <numeric> w/ length:", xlen)
   } else {
     dates <- format.POSIXct(index.ichimoku(object, c(1L, dim1 <- dims[1L])))
-    cat("ichimoku object [", dates[1L], " / ", dates[2L], "]", if (hasStrat(object)) " w/ strat",
-        "\nMatrix <numeric> w/ dim: (", dim1, " rows, ", dims[2L], " cols)\n dimnames[[2L]]: $", sep = "")
+    cat("ichimoku object [", dates[1L], " / ", dates[2L], "] (",
+        dim1, ", ", dims[2L], ")", if (hasStrat(object)) " w/ strat",
+        "\n <double> $", sep = "")
     cat(attr(object, "dimnames")[[2L]], sep = " $")
   }
   cat("\n index: <POSIXct>", dates[1L], "...", dates[2L],
-      "\nAttributes:\n periods:", attr(object, "periods"),
-      "\n periodicity:",
+      "\n attributes:\n  periods:", attr(object, "periods"),
+      "\n  periodicity:",
       if ((periodicity <- attr(object, "periodicity")) >= 86400) {
         paste0(round(periodicity / 86400, digits = 1), " days")
       } else if (periodicity >= 3600) {
@@ -91,8 +121,8 @@ str.ichimoku <- function (object, ...) {
       } else {
         paste0(periodicity, " secs")
       },
-      "\n ticker:", attr(object, "ticker"), "\n")
-  if (hasStrat(object)) cat(" strat: [strategy: ", attr(object, "strat")["Strategy", ][[1L]],
+      "\n  ticker:", attr(object, "ticker"), "\n")
+  if (hasStrat(object)) cat("  strat: [strategy: ", attr(object, "strat")["Strategy", ][[1L]],
                             " w/ direction: ", attr(object, "strat")["Direction", ][[1L]], "... ]\n", sep = "")
 
 }
@@ -116,10 +146,6 @@ str.ichimoku <- function (object, ...) {
 #'
 #'     Performs basic validation for an ichimoku object and will inform if an
 #'     ichimoku object contains invalid information.
-#'
-#'     For further details please refer to the reference vignette by calling:
-#'     \code{vignette("reference", package = "ichimoku")} and the strategies
-#'     vignette by calling: \code{vignette("strategies", package = "ichimoku")}
 #'
 #' @examples
 #' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
@@ -200,9 +226,6 @@ summary.ichimoku <- function(object, strat = TRUE, ...) {
 #'     as.data.frame() for class 'ichimoku'. It can be invoked by calling
 #'     as.data.frame(x) on an object 'x' of class 'ichimoku'.
 #'
-#'     For further details please refer to the reference vignette by calling:
-#'     \code{vignette("reference", package = "ichimoku")}
-#'
 #' @examples
 #' cloud <- ichimoku(sample_ohlc_data)
 #' df <- as.data.frame(cloud)
@@ -230,6 +253,53 @@ as.data.frame.ichimoku <- function(x, row.names, optional, keep.attrs, ...) {
   df
 }
 
+#' @name as_tibble
+#' @rdname as_tibble.ichimoku
+#' @export
+NULL
+
+#' Convert ichimoku to tibble
+#'
+#' An optimised 'ichimoku' to 'tibble' constructor.
+#'
+#' @param x an object of class 'ichimoku'.
+#' @param keep.attrs (optional) if set to TRUE, will preserve any custom
+#'     attributes set on the original object.
+#' @param ... arguments passed to or from other methods.
+#'
+#' @return A 'tibble' with S3 classes of 'tbl_df', 'tbl' and 'data.frame'. The
+#'     ichimoku object index is preserved as the first column with header 'index'.
+#'
+#' @details This function is an S3 method for the generic function
+#'     as_tibble() for class 'ichimoku'. It can be invoked by calling
+#'     as_tibble(x) on an object 'x' of class 'ichimoku'.
+#'
+#' @examples
+#' cloud <- ichimoku(sample_ohlc_data)
+#' tbl <- as_tibble(cloud)
+#' str(tbl)
+#'
+#' tbl2 <- as_tibble(cloud, keep.attrs = TRUE)
+#' look(tbl2)
+#'
+#' @method as_tibble ichimoku
+#' @export
+#'
+as_tibble.ichimoku <- function(x, keep.attrs, ...) {
+  core <- coredata.ichimoku(x)
+  dims <- dim(core)
+  len <- dims[2L]
+  df <- vector(mode = "list", length = len + 1L)
+  df[[1L]] <- index.ichimoku(x)
+  for (i in seq_len(len)) {
+    df[[i + 1L]] <- core[, i]
+  }
+  attributes(df) <- c(list(names = c("index", dimnames(core)[[2L]])),
+                      if (!missing(keep.attrs) && isTRUE(keep.attrs)) look(x))
+  new_tibble(df)
+
+}
+
 #' @name coredata
 #' @rdname coredata.ichimoku
 #' @export
@@ -252,9 +322,6 @@ NULL
 #' @details This function is an S3 method for the generic function coredata()
 #'     for class 'ichimoku'. It can be invoked by calling coredata(x) on an
 #'     object 'x' of class 'ichimoku'.
-#'
-#'     For further details please refer to the reference vignette by calling:
-#'     \code{vignette("reference", package = "ichimoku")}
 #'
 #' @examples
 #' cloud <- ichimoku(sample_ohlc_data)
@@ -300,9 +367,6 @@ NULL
 #'     Subsetting by specifying the 'subset' parameter subsets using the
 #'     numerical values underlying the POSIXct times and results in a faster
 #'     operation than usual subset operators such as '['.
-#'
-#'     For further details please refer to the reference vignette by calling:
-#'     \code{vignette("reference", package = "ichimoku")}
 #'
 #' @examples
 #' cloud <- ichimoku(sample_ohlc_data)

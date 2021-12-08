@@ -29,9 +29,6 @@ This function is an S3 method for the generic function index()
     Subsetting by specifying the 'subset' parameter subsets using the
     numerical values underlying the POSIXct times and results in a faster
     operation than usual subset operators such as '['.
-
-    For further details please refer to the reference vignette by calling:
-    \code{vignette("reference", package = "ichimoku")}
 }
 \examples{
 cloud <- ichimoku(sample_ohlc_data)

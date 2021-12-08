@@ -1,7 +1,9 @@
-# ichimoku 1.2.4.7
+# ichimoku 1.2.4.8
 
 #### New features:
 
+* Major enhancement to the printing of ichimoku objects by utilising the 'tibble' print method (adds dependency on the 'tibble' package), paired with the `more()` function for quick printing of further rows.
+* Optimised `as_tibble` method implemented for ichimoku objects.
 * `mlgrid()` now appends attributes 'k' and 'type' to returned objects, and gains the following arguments:
   - `k` to specify the k-period time horizon over which to calculate target variable 'y'.
   - `type = 'z-score'` to produce the standard score of a 'numeric' type grid.
@@ -13,6 +15,7 @@
 
 #### Updates:
 
+* Minor enhancements to the `str()` method.
 * `archive()` now safe for use in non-interactive settings, where it no longer prompts to confirm overwriting of existing files.
 * `oanda_view()` now returns correct data types in the dataframe.
 * Fixes cases of `relative()` showing the incorrect date for 'latest', along with other cosmetic changes.

@@ -27,14 +27,11 @@ Default print method for ichimoku objects to enable automatic plotting of the
 This function is an S3 method for the generic function print() for
     class 'ichimoku'. It can be invoked by calling print(x) on an object 'x'
     of class 'ichimoku'.
-
-    For further details please refer to the reference vignette by calling:
-    \code{vignette("reference", package = "ichimoku")}
 }
 \examples{
 cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 
-print(cloud, max = 110, digits = 4)
-print(cloud[100:110,], plot = FALSE, digits = 4)
+print(cloud)
+print(cloud, plot = FALSE, n = 20)
 
 }

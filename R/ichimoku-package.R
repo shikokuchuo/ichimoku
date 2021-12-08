@@ -74,7 +74,8 @@
 #' @importFrom gtable gtable gtable_add_grob
 #' @importFrom jsonlite parse_json
 #' @importFrom stats na.omit sd setNames
-#' @importFrom utils str
+#' @importFrom tibble as_tibble new_tibble
+#' @importFrom utils capture.output str
 #' @importFrom xts endpoints
 #' @importFrom zoo coredata index
 #'

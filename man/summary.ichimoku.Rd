@@ -29,10 +29,6 @@ This function is an S3 method for the generic function summary() for
 
     Performs basic validation for an ichimoku object and will inform if an
     ichimoku object contains invalid information.
-
-    For further details please refer to the reference vignette by calling:
-    \code{vignette("reference", package = "ichimoku")} and the strategies
-    vignette by calling: \code{vignette("strategies", package = "ichimoku")}
 }
 \examples{
 cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")

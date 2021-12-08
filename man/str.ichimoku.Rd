@@ -22,9 +22,6 @@ Compactly display the internal structure of ichimoku objects.
 This function is an S3 method for the generic function str()
     for class 'ichimoku'. It can be invoked by calling str(x) on an
     object 'x' of class 'ichimoku'.
-
-    For further details please refer to the reference vignette by calling:
-    \code{vignette("reference", package = "ichimoku")}
 }
 \examples{
 cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
