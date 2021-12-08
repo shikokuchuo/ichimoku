@@ -284,3 +284,92 @@ df_append <- function(new, old, key = "time", keep.attr = "timestamp") {
   df
 }
 
+#' Print More Rows of Ichimoku Objects
+#'
+#' After calling or invoking the default print method for ichimoku objects, the
+#'     console output will display \code{# ... with x more rows} if the entire
+#'     data does not fit on-screen. Call \code{more()} to show up to 100 more rows.
+#'
+#' @return The ichimoku object originally printed (invisibly) or else invisible
+#'     NULL (if the last returned object was not an ichimoku object). The
+#'     ichimoku object data is printed to the console.
+#'
+#' @examples
+#' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
+#'
+#' cloud
+#' more()
+#'
+#' @export
+#'
+more <- function() {
+  is.ichimoku(lv <- .Last.value) || return(invisible())
+  print(lv, plot = FALSE, n = 100)
+}
+
+#' Look at Informational Attributes
+#'
+#' Inspect the informational attributes of objects.
+#'
+#' @param x an object (optional). If x is not supplied, \code{\link{.Last.value}}
+#'     will be used instead.
+#'
+#' @return For objects created by the ichimoku package, a list of attributes
+#'     specific to that data type.
+#'
+#'     For other objects, a list of non-standard attributes for matrix /
+#'     data.frame / xts classes, or else invisible NULL if none are present.
+#'
+#' @details Note: autostrat list attributes may be accessed directly using
+#'     \code{look(x)$logret} and \code{look(x)$summary}.
+#'
+#' @examples
+#' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
+#' look(cloud)
+#'
+#' stratlist <- autostrat(cloud, n = 3)
+#' look(stratlist)
+#'
+#' strat <- stratlist[[1]]
+#' look(strat)
+#'
+#' grid <- mlgrid(cloud)
+#' look(grid)
+#'
+#' \dontrun{
+#' # OANDA API key required to run this example
+#' prices <- oanda("USD_JPY")
+#' look(prices)
+#' }
+#'
+#' @export
+#'
+look <- function(x) {
+
+  if (missing(x)) x <- .Last.value
+  lk <- attributes(x)
+  lk <- lk[!names(lk) %in% c("dim", "dimnames", "names", "row.names", "index", "class", "oanda")]
+  if (length(lk)) lk else invisible()
+
+}
+
+#' is.ichimoku
+#'
+#' A function for checking if an object is an ichimoku object.
+#'
+#' @param x an object.
+#'
+#' @return A logical value of TRUE if 'x' is of class 'ichimoku', otherwise FALSE.
+#'
+#' @examples
+#' cloud <- ichimoku(sample_ohlc_data)
+#'
+#' # TRUE:
+#' is.ichimoku(cloud)
+#' # FALSE:
+#' is.ichimoku(sample_ohlc_data)
+#'
+#' @export
+#'
+is.ichimoku <- function(x) inherits(x, "ichimoku")
+

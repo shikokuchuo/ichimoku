@@ -163,7 +163,7 @@ The analytic capability of R can be leveraged to generate and evaluate all possi
 autostrat(cloud, n = 3)
 ```
 
-The output of `autostrat()` is a list of ichimoku objects. Each object can be accessed by its position in the list e.g. `[[1]]` for the first object, or by using `look()` specifying the parameter 'which'.
+The output of `autostrat()` is a list of ichimoku objects. Each object can be accessed by its position in the list e.g. `[[1]]` for the first object.
 
 The metadata is also saved as attributes to the list and can be accessed by the function `look()`:
 

@@ -1,4 +1,4 @@
-# ichimoku 1.2.4.8
+# ichimoku 1.2.4.9
 
 #### New features:
 
@@ -15,6 +15,7 @@
 
 #### Updates:
 
+* Simplification of the `look()` utility by removing the 'which' argument. To access the ichimoku objects in autostrat lists, subset directly using for example `[[1]]`. For ease of use interactively, takes .Last.value when no arguments are supplied.
 * Minor enhancements to the `str()` method.
 * `archive()` now safe for use in non-interactive settings, where it no longer prompts to confirm overwriting of existing files.
 * `oanda_view()` now returns correct data types in the dataframe.

@@ -48,30 +48,6 @@ print.ichimoku <- function(x, plot = TRUE, ...) {
 
 }
 
-#' Print More Rows of Ichimoku Objects
-#'
-#' After calling or invoking the default print method for ichimoku objects, the
-#'     console output will display \code{# ... with x more rows} if the entire data
-#'     does not fit on-screen. Call \code{more()} to display up to 100 more rows.
-#'
-#' @return The ichimoku object originally printed (invisibly) or else invisible
-#'     NULL (if the last returned object was not an ichimoku object). The
-#'     ichimoku object data is printed to the console and the cloud chart is
-#'     output to the graphical device.
-#'
-#' @examples
-#' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
-#'
-#' cloud
-#' more()
-#'
-#' @export
-#'
-more <- function() {
-  is.ichimoku(lv <- .Last.value) || return(invisible())
-  print(lv, n = 100)
-}
-
 #' Display the Structure of Ichimoku Objects
 #'
 #' Compactly display the internal structure of ichimoku objects.
@@ -289,14 +265,16 @@ as_tibble.ichimoku <- function(x, keep.attrs, ...) {
   core <- coredata.ichimoku(x)
   dims <- dim(core)
   len <- dims[2L]
-  df <- vector(mode = "list", length = len + 1L)
-  df[[1L]] <- index.ichimoku(x)
+  tbl <- vector(mode = "list", length = len + 1L)
+  tbl[[1L]] <- index.ichimoku(x)
   for (i in seq_len(len)) {
-    df[[i + 1L]] <- core[, i]
+    tbl[[i + 1L]] <- core[, i]
   }
-  attributes(df) <- c(list(names = c("index", dimnames(core)[[2L]])),
-                      if (!missing(keep.attrs) && isTRUE(keep.attrs)) look(x))
-  new_tibble(df)
+  attributes(tbl) <- c(list(class = c("tbl_df", "tbl", "data.frame"),
+                            row.names = .set_row_names(dims[1L]),
+                            names = c("index", dimnames(core)[[2L]])),
+                       if (!missing(keep.attrs) && isTRUE(keep.attrs)) look(x))
+  tbl
 
 }
 
@@ -383,24 +361,4 @@ index.ichimoku <- function(x, subset, ...) {
   class(idx) <- c("POSIXct", "POSIXt")
   idx
 }
-
-#' is.ichimoku
-#'
-#' A function for checking if an object is an ichimoku object.
-#'
-#' @param x an object.
-#'
-#' @return A logical value of TRUE if 'x' is of class 'ichimoku', otherwise FALSE.
-#'
-#' @examples
-#' cloud <- ichimoku(sample_ohlc_data)
-#'
-#' # TRUE:
-#' is.ichimoku(cloud)
-#' # FALSE:
-#' is.ichimoku(sample_ohlc_data)
-#'
-#' @export
-#'
-is.ichimoku <- function(x) inherits(x, "ichimoku")
 

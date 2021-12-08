@@ -42,8 +42,7 @@ Ichimoku objects for each strategy are returned as a list. The
     list.
 
     Each individual ichimoku object may be accessed via its position in the
-    list, e.g. [[1]] for the 1st item, or by using \code{\link{look}}
-    specifying the parameter 'which'.
+    list, e.g. [[1]] for the 1st item.
 }
 \section{Further Details}{
 
@@ -56,7 +55,7 @@ cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 
 stratlist <- autostrat(cloud, n = 3, quietly = TRUE)
 look(stratlist)
-strat <- look(stratlist, which = 1)
+strat <- stratlist[[2]]
 summary(strat)
 
 autostrat(cloud, n = 1, dir = "short", level = 2)

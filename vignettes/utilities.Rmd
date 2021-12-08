@@ -58,20 +58,11 @@ For other objects, a list of attributes that are non-standard for matrix / data.
 cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 look(cloud)
 
+strat <- strat(cloud)
+look(strat)
+
 grid <- mlgrid(cloud)
 look(grid)
-```
-
-Can also be used to extract ichimoku objects from lists returned by `autostrat()`. Specify the argument 'which', to return the corresponding element of the list created by `autostrat()`.
-
-```{r look2}
-stratlist <- autostrat(cloud, n = 3)
-
-# Extract the ichimoku object which is the second element of 'stratlist':
-strat <- look(stratlist, which = 2)
-
-# Inspect ichimoku object:
-look(strat)
 ```
 
 ## Dataframe Constructors
