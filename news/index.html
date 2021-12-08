@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4.9</span>
       </span>
     </div>
 
@@ -73,9 +73,9 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.2.4.8" id="ichimoku-1248">ichimoku 1.2.4.8<a class="anchor" aria-label="anchor" href="#ichimoku-1248"></a></h2>
+<h2 class="page-header" data-toc-text="1.2.4.9" id="ichimoku-1249">ichimoku 1.2.4.9<a class="anchor" aria-label="anchor" href="#ichimoku-1249"></a></h2>
 <div class="section level5">
-<h5 id="new-features-1-2-4-8">New features:<a class="anchor" aria-label="anchor" href="#new-features-1-2-4-8"></a></h5>
+<h5 id="new-features-1-2-4-9">New features:<a class="anchor" aria-label="anchor" href="#new-features-1-2-4-9"></a></h5>
 <ul><li>Major enhancement to the printing of ichimoku objects by utilising the ‘tibble’ print method (adds dependency on the ‘tibble’ package), paired with the <code><a href="../reference/more.html">more()</a></code> function for quick printing of further rows.</li>
 <li>Optimised <code>as_tibble</code> method implemented for ichimoku objects.</li>
 <li>
@@ -95,8 +95,9 @@
 <li>New plot themes ‘conceptual’ and ‘fresh’.</li>
 </ul></div>
 <div class="section level5">
-<h5 id="updates-1-2-4-8">Updates:<a class="anchor" aria-label="anchor" href="#updates-1-2-4-8"></a></h5>
-<ul><li>Minor enhancements to the <code><a href="https://rdrr.io/r/utils/str.html" class="external-link">str()</a></code> method.</li>
+<h5 id="updates-1-2-4-9">Updates:<a class="anchor" aria-label="anchor" href="#updates-1-2-4-9"></a></h5>
+<ul><li>Simplification of the <code><a href="../reference/look.html">look()</a></code> utility by removing the ‘which’ argument. To access the ichimoku objects in autostrat lists, subset directly using for example <code>[[1]]</code>. For ease of use interactively, takes .Last.value when no arguments are supplied.</li>
+<li>Minor enhancements to the <code><a href="https://rdrr.io/r/utils/str.html" class="external-link">str()</a></code> method.</li>
 <li>
 <code><a href="../reference/archive.html">archive()</a></code> now safe for use in non-interactive settings, where it no longer prompts to confirm overwriting of existing files.</li>
 <li>

@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4.9</span>
       </span>
     </div>
 
@@ -165,6 +165,38 @@
 <span class="co">#&gt; $ticker</span>
 <span class="co">#&gt; [1] "TKR"</span>
 
+<span class="va">strat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/strat.html">strat</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span>
+<span class="fu"><a href="../reference/look.html">look</a></span><span class="op">(</span><span class="va">strat</span><span class="op">)</span>
+<span class="co">#&gt; $periods</span>
+<span class="co">#&gt; [1]  9 26 52</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $periodicity</span>
+<span class="co">#&gt; [1] 86400</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $ticker</span>
+<span class="co">#&gt; [1] "TKR"</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $strat</span>
+<span class="co">#&gt;                        [,1]            </span>
+<span class="co">#&gt; Strategy               "close &gt; tenkan"</span>
+<span class="co">#&gt; ---------------------  "----------"    </span>
+<span class="co">#&gt; Strategy cuml return % 8.57            </span>
+<span class="co">#&gt; Per period mean ret %  0.0334          </span>
+<span class="co">#&gt; Periods in market      138             </span>
+<span class="co">#&gt; Total trades           20              </span>
+<span class="co">#&gt; Average trade length   6.9             </span>
+<span class="co">#&gt; Trade success %        35              </span>
+<span class="co">#&gt; Worst trade ret %      -2.54           </span>
+<span class="co">#&gt; ---------------------  "----------"    </span>
+<span class="co">#&gt; Benchmark cuml ret %   9               </span>
+<span class="co">#&gt; Per period mean ret %  0.035           </span>
+<span class="co">#&gt; Periods in market      246             </span>
+<span class="co">#&gt; ---------------------  "----------"    </span>
+<span class="co">#&gt; Direction              "long"          </span>
+<span class="co">#&gt; Start                  2020-01-15      </span>
+<span class="co">#&gt; End                    2020-12-23      </span>
+<span class="co">#&gt; Ticker                 "TKR"</span>
+
 <span class="va">grid</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mlgrid.html">mlgrid</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span>
 <span class="fu"><a href="../reference/look.html">look</a></span><span class="op">(</span><span class="va">grid</span><span class="op">)</span>
 <span class="co">#&gt; $y</span>
@@ -181,82 +213,6 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $ticker</span>
 <span class="co">#&gt; [1] "TKR"</span></code></pre></div>
-<p>Can also be used to extract ichimoku objects from lists returned by <code><a href="../reference/autostrat.html">autostrat()</a></code>. Specify the argument ‘which’, to return the corresponding element of the list created by <code><a href="../reference/autostrat.html">autostrat()</a></code>.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">stratlist</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/autostrat.html">autostrat</a></span><span class="op">(</span><span class="va">cloud</span>, n <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
-<span class="co">#&gt;                        [,1]                [,2]               </span>
-<span class="co">#&gt; Strategy               "senkouB &gt; tenkan"  "cloudB &gt; tenkan"  </span>
-<span class="co">#&gt; ---------------------  "----------"        "----------"       </span>
-<span class="co">#&gt; Strategy cuml return % 17.49               16.08              </span>
-<span class="co">#&gt; Per period mean ret %  0.0906              0.0838             </span>
-<span class="co">#&gt; Periods in market      63                  51                 </span>
-<span class="co">#&gt; Total trades           3                   3                  </span>
-<span class="co">#&gt; Average trade length   21                  17                 </span>
-<span class="co">#&gt; Trade success %        100                 100                </span>
-<span class="co">#&gt; Worst trade ret %      3.64                3.16               </span>
-<span class="co">#&gt; ---------------------  "----------"        "----------"       </span>
-<span class="co">#&gt; Benchmark cuml ret %   5.53                5.53               </span>
-<span class="co">#&gt; Per period mean ret %  0.0302              0.0302             </span>
-<span class="co">#&gt; Periods in market      178                 178                </span>
-<span class="co">#&gt; ---------------------  "----------"        "----------"       </span>
-<span class="co">#&gt; Direction              "long"              "long"             </span>
-<span class="co">#&gt; Start                  2020-04-19 23:00:00 2020-04-19 23:00:00</span>
-<span class="co">#&gt; End                    2020-12-23          2020-12-23         </span>
-<span class="co">#&gt; Ticker                 "TKR"               "TKR"              </span>
-<span class="co">#&gt;                        [,3]               </span>
-<span class="co">#&gt; Strategy               "senkouB &gt; kijun"  </span>
-<span class="co">#&gt; ---------------------  "----------"       </span>
-<span class="co">#&gt; Strategy cuml return % 14.1               </span>
-<span class="co">#&gt; Per period mean ret %  0.0741             </span>
-<span class="co">#&gt; Periods in market      64                 </span>
-<span class="co">#&gt; Total trades           3                  </span>
-<span class="co">#&gt; Average trade length   21.33              </span>
-<span class="co">#&gt; Trade success %        100                </span>
-<span class="co">#&gt; Worst trade ret %      3.49               </span>
-<span class="co">#&gt; ---------------------  "----------"       </span>
-<span class="co">#&gt; Benchmark cuml ret %   5.53               </span>
-<span class="co">#&gt; Per period mean ret %  0.0302             </span>
-<span class="co">#&gt; Periods in market      178                </span>
-<span class="co">#&gt; ---------------------  "----------"       </span>
-<span class="co">#&gt; Direction              "long"             </span>
-<span class="co">#&gt; Start                  2020-04-19 23:00:00</span>
-<span class="co">#&gt; End                    2020-12-23         </span>
-<span class="co">#&gt; Ticker                 "TKR"</span>
-
-<span class="co"># Extract the ichimoku object which is the second element of 'stratlist':</span>
-<span class="va">strat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/look.html">look</a></span><span class="op">(</span><span class="va">stratlist</span>, which <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
-
-<span class="co"># Inspect ichimoku object:</span>
-<span class="fu"><a href="../reference/look.html">look</a></span><span class="op">(</span><span class="va">strat</span><span class="op">)</span>
-<span class="co">#&gt; $periods</span>
-<span class="co">#&gt; [1]  9 26 52</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $periodicity</span>
-<span class="co">#&gt; [1] 86400</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $ticker</span>
-<span class="co">#&gt; [1] "TKR"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $strat</span>
-<span class="co">#&gt;                        [,1]               </span>
-<span class="co">#&gt; Strategy               "cloudB &gt; tenkan"  </span>
-<span class="co">#&gt; ---------------------  "----------"       </span>
-<span class="co">#&gt; Strategy cuml return % 16.08              </span>
-<span class="co">#&gt; Per period mean ret %  0.0838             </span>
-<span class="co">#&gt; Periods in market      51                 </span>
-<span class="co">#&gt; Total trades           3                  </span>
-<span class="co">#&gt; Average trade length   17                 </span>
-<span class="co">#&gt; Trade success %        100                </span>
-<span class="co">#&gt; Worst trade ret %      3.16               </span>
-<span class="co">#&gt; ---------------------  "----------"       </span>
-<span class="co">#&gt; Benchmark cuml ret %   5.53               </span>
-<span class="co">#&gt; Per period mean ret %  0.0302             </span>
-<span class="co">#&gt; Periods in market      178                </span>
-<span class="co">#&gt; ---------------------  "----------"       </span>
-<span class="co">#&gt; Direction              "long"             </span>
-<span class="co">#&gt; Start                  2020-04-19 23:00:00</span>
-<span class="co">#&gt; End                    2020-12-23         </span>
-<span class="co">#&gt; Ticker                 "TKR"</span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -274,7 +230,7 @@
 <li>
 <code>keep.attrs</code> (optional) if set to TRUE, will preserve any custom attributes set on the original object.</li>
 </ul>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">sample_ohlc_data</span><span class="op">)</span>
 <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/xts_df.html">xts_df</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>
@@ -325,7 +281,7 @@
 <li>
 <code>keep.attrs</code> (optional) if set to TRUE, will preserve any custom attributes set on the original object.</li>
 </ul>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">sample_ohlc_data</span><span class="op">)</span>
 <span class="va">mcloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span>
 <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/matrix_df.html">matrix_df</a></span><span class="op">(</span><span class="va">mcloud</span><span class="op">)</span>
@@ -359,7 +315,7 @@
 <li>
 <code>x</code> the data.frame to trim.</li>
 </ul>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, <span class="cn">NA</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span>
 <span class="va">data</span>
 <span class="co">#&gt;   c.1.4..NA. c.NA..2.5.</span>
@@ -384,7 +340,7 @@
 <code>...</code> data.frame objects to combine.</li>
 </ul>
 <p>Can be used to join price dataframes retrieved by <code><a href="../reference/oanda.html">oanda()</a></code>. The function is designed to join complete historical data. If the data to be merged contains data with incomplete periods, all entries are preserved rather than updated. If incomplete periods are detected within the data, a warning is issued, and the resulting dataframe should be manually inspected in case it contains unwanted duplicates. Use <code><a href="../reference/df_append.html">df_append()</a></code> for updating dataframes with new values.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">data1</span> <span class="op">&lt;-</span> <span class="va">sample_ohlc_data</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span>, <span class="op">]</span>
 <span class="va">data1</span>
 <span class="co">#&gt;         time  open  high   low close volume</span>
@@ -434,7 +390,7 @@
 </ul>
 <p>Can be used to update price dataframes retrieved by <code><a href="../reference/oanda.html">oanda()</a></code>. The function is designed to update existing data with new values as they become available. As opposed to <code><a href="../reference/df_merge.html">df_merge()</a></code>, the data in ‘new’ will overwrite the data in ‘old’ rather than create duplicates.</p>
 <p>If the attribute specified by ‘keep.attr’ is present in ‘new’, for example the ‘timestamp’ in pricing data returned by <code><a href="../reference/oanda.html">oanda()</a></code>, this is retained. If the attribute is not found in ‘new’, the argument has no effect. All other non-essential attributes are dropped.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">data1</span> <span class="op">&lt;-</span> <span class="va">sample_ohlc_data</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span>, <span class="op">]</span>
 <span class="va">data1</span>
 <span class="co">#&gt;         time  open  high   low close volume</span>

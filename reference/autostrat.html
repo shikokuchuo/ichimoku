@@ -20,7 +20,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4.9</span>
       </span>
     </div>
 
@@ -119,8 +119,7 @@ output to the console and return quietly.</p></dd>
     information may be retrieved by using <code><a href="look.html">look</a></code> on the returned
     list.</p>
 <p>Each individual ichimoku object may be accessed via its position in the
-    list, e.g. [[1]] for the 1st item, or by using <code><a href="look.html">look</a></code>
-    specifying the parameter 'which'.</p>
+    list, e.g. [[1]] for the 1st item.</p>
     </div>
     <div id="further-details">
     <h2>Further Details</h2>
@@ -208,18 +207,18 @@ output to the console and return quietly.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> End                    2020-12-23         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Ticker                 "TKR"              </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="va">strat</span> <span class="op">&lt;-</span> <span class="fu"><a href="look.html">look</a></span><span class="op">(</span><span class="va">stratlist</span>, which <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">strat</span> <span class="op">&lt;-</span> <span class="va">stratlist</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">strat</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                        [,1]               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Strategy               "senkouB &gt; tenkan" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Strategy               "cloudB &gt; tenkan"  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------  "----------"       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Strategy cuml return % 17.49              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Per period mean ret %  0.0906             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Periods in market      63                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Strategy cuml return % 16.08              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Per period mean ret %  0.0838             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Periods in market      51                 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Total trades           3                  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Average trade length   21                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Average trade length   17                 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Trade success %        100                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Worst trade ret %      3.64               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Worst trade ret %      3.16               </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------  "----------"       </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Benchmark cuml ret %   5.53               </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Per period mean ret %  0.0302             </span>
