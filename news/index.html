@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4.8</span>
       </span>
     </div>
 
@@ -73,10 +73,12 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.2.4.7" id="ichimoku-1247">ichimoku 1.2.4.7<a class="anchor" aria-label="anchor" href="#ichimoku-1247"></a></h2>
+<h2 class="page-header" data-toc-text="1.2.4.8" id="ichimoku-1248">ichimoku 1.2.4.8<a class="anchor" aria-label="anchor" href="#ichimoku-1248"></a></h2>
 <div class="section level5">
-<h5 id="new-features-1-2-4-7">New features:<a class="anchor" aria-label="anchor" href="#new-features-1-2-4-7"></a></h5>
-<ul><li>
+<h5 id="new-features-1-2-4-8">New features:<a class="anchor" aria-label="anchor" href="#new-features-1-2-4-8"></a></h5>
+<ul><li>Major enhancement to the printing of ichimoku objects by utilising the ‘tibble’ print method (adds dependency on the ‘tibble’ package), paired with the <code><a href="../reference/more.html">more()</a></code> function for quick printing of further rows.</li>
+<li>Optimised <code>as_tibble</code> method implemented for ichimoku objects.</li>
+<li>
 <code><a href="../reference/mlgrid.html">mlgrid()</a></code> now appends attributes ‘k’ and ‘type’ to returned objects, and gains the following arguments:
 <ul><li>
 <code>k</code> to specify the k-period time horizon over which to calculate target variable ‘y’.</li>
@@ -93,8 +95,9 @@
 <li>New plot themes ‘conceptual’ and ‘fresh’.</li>
 </ul></div>
 <div class="section level5">
-<h5 id="updates-1-2-4-7">Updates:<a class="anchor" aria-label="anchor" href="#updates-1-2-4-7"></a></h5>
-<ul><li>
+<h5 id="updates-1-2-4-8">Updates:<a class="anchor" aria-label="anchor" href="#updates-1-2-4-8"></a></h5>
+<ul><li>Minor enhancements to the <code><a href="https://rdrr.io/r/utils/str.html" class="external-link">str()</a></code> method.</li>
+<li>
 <code><a href="../reference/archive.html">archive()</a></code> now safe for use in non-interactive settings, where it no longer prompts to confirm overwriting of existing files.</li>
 <li>
 <code><a href="../reference/oanda_view.html">oanda_view()</a></code> now returns correct data types in the dataframe.</li>

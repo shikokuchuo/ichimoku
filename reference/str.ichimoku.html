@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4.8</span>
       </span>
     </div>
 
@@ -99,34 +99,30 @@
     <p>This function is an S3 method for the generic function str()
     for class 'ichimoku'. It can be invoked by calling str(x) on an
     object 'x' of class 'ichimoku'.</p>
-<p>For further details please refer to the reference vignette by calling:
-    <code><a href="../articles/reference.html">vignette("reference", package = "ichimoku")</a></code></p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">sample_ohlc_data</span>, ticker <span class="op">=</span> <span class="st">"TKR"</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ichimoku object [2020-01-02 / 2021-02-01]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Matrix &lt;numeric&gt; w/ dim: (281 rows, 12 cols)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  dimnames[[2L]]: $open $high $low $close $cd $tenkan $kijun $senkouA $senkouB $chikou $cloudT $cloudB</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ichimoku object [2020-01-02 / 2021-02-01] (281, 12)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  &lt;double&gt; $open $high $low $close $cd $tenkan $kijun $senkouA $senkouB $chikou $cloudT $cloudB</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  index: &lt;POSIXct&gt; 2020-01-02 ... 2021-02-01 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Attributes:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  periods: 9 26 52 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  periodicity: 1 days </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  ticker: TKR </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  attributes:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   periods: 9 26 52 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   periodicity: 1 days </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ticker: TKR </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">strat</span> <span class="op">&lt;-</span> <span class="fu"><a href="strat.html">strat</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">strat</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ichimoku object [2020-01-02 / 2021-02-01] w/ strat</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Matrix &lt;numeric&gt; w/ dim: (281 rows, 19 cols)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  dimnames[[2L]]: $open $high $low $close $cd $tenkan $kijun $senkouA $senkouB $chikou $cloudT $cloudB $cond $posn $txn $logret $slogret $ret $sret</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ichimoku object [2020-01-02 / 2021-02-01] (281, 19) w/ strat</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  &lt;double&gt; $open $high $low $close $cd $tenkan $kijun $senkouA $senkouB $chikou $cloudT $cloudB $cond $posn $txn $logret $slogret $ret $sret</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  index: &lt;POSIXct&gt; 2020-01-02 ... 2021-02-01 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Attributes:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  periods: 9 26 52 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  periodicity: 1 days </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  ticker: TKR </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  strat: [strategy: close &gt; tenkan w/ direction: long... ]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  attributes:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   periods: 9 26 52 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   periodicity: 1 days </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ticker: TKR </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   strat: [strategy: close &gt; tenkan w/ direction: long... ]</span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>

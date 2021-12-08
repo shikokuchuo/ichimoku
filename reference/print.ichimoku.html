@@ -18,7 +18,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4.8</span>
       </span>
     </div>
 
@@ -105,62 +105,53 @@ the ichimoku cloud chart.</p></dd>
     <p>This function is an S3 method for the generic function print() for
     class 'ichimoku'. It can be invoked by calling print(x) on an object 'x'
     of class 'ichimoku'.</p>
-<p>For further details please refer to the reference vignette by calling:
-    <code><a href="../articles/reference.html">vignette("reference", package = "ichimoku")</a></code></p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">sample_ohlc_data</span>, ticker <span class="op">=</span> <span class="st">"TKR"</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">cloud</span>, max <span class="op">=</span> <span class="fl">110</span>, digits <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span></span>
 <span class="r-plt img"><img src="print.ichimoku-1.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                      open  high   low close cd tenkan kijun senkouA senkouB</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2020-01-02 00:00:00 123.0 123.1 122.5 122.7 -1     NA    NA      NA      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2020-01-03 00:00:00 122.7 122.8 122.6 122.8  1     NA    NA      NA      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2020-01-06 00:00:00 122.8 123.4 122.4 123.3  1     NA    NA      NA      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2020-01-07 00:00:00 123.3 124.3 123.3 124.1  1     NA    NA      NA      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2020-01-08 00:00:00 124.1 124.8 124.0 124.8  1     NA    NA      NA      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2020-01-09 00:00:00 124.8 125.4 124.5 125.3  1     NA    NA      NA      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2020-01-10 00:00:00 125.3 125.3 124.8 125.2 -1     NA    NA      NA      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2020-01-13 00:00:00 125.2 125.3 125.1 125.2  0     NA    NA      NA      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2020-01-14 00:00:00 125.2 125.2 124.3 124.4 -1  123.9    NA      NA      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     chikou cloudT cloudB</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2020-01-02 00:00:00  122.8     NA     NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2020-01-03 00:00:00  122.9     NA     NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2020-01-06 00:00:00  123.0     NA     NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2020-01-07 00:00:00  123.9     NA     NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2020-01-08 00:00:00  123.6     NA     NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2020-01-09 00:00:00  122.5     NA     NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2020-01-10 00:00:00  122.6     NA     NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2020-01-13 00:00:00  123.0     NA     NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2020-01-14 00:00:00  123.1     NA     NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [ reached getOption("max.print") -- omitted 272 rows ]</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">[</span><span class="fl">100</span><span class="op">:</span><span class="fl">110</span>,<span class="op">]</span>, plot <span class="op">=</span> <span class="cn">FALSE</span>, digits <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                      open  high   low close cd tenkan kijun senkouA senkouB</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2020-05-19 23:00:00 122.7 122.7 121.8 122.4 -1  121.0 123.9   125.7   124.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2020-05-20 23:00:00 122.4 122.6 121.1 121.9 -1  121.0 123.9   125.7   124.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2020-05-21 23:00:00 121.9 123.7 121.7 123.3  1  121.4 123.8   125.7   124.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2020-05-24 23:00:00 123.3 124.0 123.0 124.0  1  121.5 123.8   125.7   124.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2020-05-25 23:00:00 124.2 124.3 124.0 124.1 -1  121.8 123.6   126.0   124.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2020-05-26 23:00:00 124.1 124.1 123.4 123.9 -1  122.2 123.6   126.5   124.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2020-05-27 23:00:00 123.9 124.7 123.7 124.5  1  122.9 123.6   126.6   124.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2020-05-28 23:00:00 124.5 124.7 123.9 124.2 -1  122.9 123.6   126.2   124.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2020-05-31 23:00:00 124.2 125.2 124.0 124.7  1  123.2 123.6   126.1   124.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2020-06-01 23:00:00 124.7 129.8 124.7 129.6  1  125.5 124.5   125.7   124.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2020-06-02 23:00:00 129.9 130.6 129.9 130.2  1  126.2 124.8   125.6   124.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     chikou cloudT cloudB</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2020-05-19 23:00:00  135.1  125.7  124.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2020-05-20 23:00:00  135.6  125.7  124.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2020-05-21 23:00:00  134.5  125.7  124.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2020-05-24 23:00:00  134.3  125.7  124.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2020-05-25 23:00:00  135.9  126.0  124.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2020-05-26 23:00:00  135.2  126.5  124.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2020-05-27 23:00:00  135.7  126.6  124.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2020-05-28 23:00:00  135.4  126.2  124.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2020-05-31 23:00:00  135.7  126.1  124.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2020-06-01 23:00:00  135.6  125.7  124.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2020-06-02 23:00:00  136.2  125.6  124.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    index                open  high   low close    cd tenkan kijun senkouA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2020-01-02 <span style="color: #949494;">00:00:00</span> 123   123.1 122.5 122.7    -<span style="color: #BB0000;">1</span>   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2020-01-03 <span style="color: #949494;">00:00:00</span> 122.7 122.8 122.6 122.8     1   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2020-01-06 <span style="color: #949494;">00:00:00</span> 122.8 123.4 122.4 123.3     1   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2020-01-07 <span style="color: #949494;">00:00:00</span> 123.3 124.3 123.3 124.1     1   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2020-01-08 <span style="color: #949494;">00:00:00</span> 124.1 124.8 124   124.8     1   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2020-01-09 <span style="color: #949494;">00:00:00</span> 124.8 125.4 124.5 125.3     1   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2020-01-10 <span style="color: #949494;">00:00:00</span> 125.3 125.3 124.8 125.2    -<span style="color: #BB0000;">1</span>   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2020-01-13 <span style="color: #949494;">00:00:00</span> 125.2 125.3 125.1 125.2     0   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2020-01-14 <span style="color: #949494;">00:00:00</span> 125.2 125.2 124.3 124.4    -<span style="color: #BB0000;">1</span>  123.9    <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2020-01-15 <span style="color: #949494;">00:00:00</span> 124.4 124.5 123.7 123.9    -<span style="color: #BB0000;">1</span>  123.9    <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 271 more rows, and 4 more variables: senkouB &lt;dbl&gt;, chikou &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   cloudT &lt;dbl&gt;, cloudB &lt;dbl&gt;</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">cloud</span>, plot <span class="op">=</span> <span class="cn">FALSE</span>, n <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    index                open  high   low close    cd tenkan kijun senkouA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2020-01-02 <span style="color: #949494;">00:00:00</span> 123   123.1 122.5 122.7    -<span style="color: #BB0000;">1</span>  <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2020-01-03 <span style="color: #949494;">00:00:00</span> 122.7 122.8 122.6 122.8     1  <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2020-01-06 <span style="color: #949494;">00:00:00</span> 122.8 123.4 122.4 123.3     1  <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2020-01-07 <span style="color: #949494;">00:00:00</span> 123.3 124.3 123.3 124.1     1  <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2020-01-08 <span style="color: #949494;">00:00:00</span> 124.1 124.8 124   124.8     1  <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2020-01-09 <span style="color: #949494;">00:00:00</span> 124.8 125.4 124.5 125.3     1  <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2020-01-10 <span style="color: #949494;">00:00:00</span> 125.3 125.3 124.8 125.2    -<span style="color: #BB0000;">1</span>  <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2020-01-13 <span style="color: #949494;">00:00:00</span> 125.2 125.3 125.1 125.2     0  <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2020-01-14 <span style="color: #949494;">00:00:00</span> 125.2 125.2 124.3 124.4    -<span style="color: #BB0000;">1</span> 123.9     <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2020-01-15 <span style="color: #949494;">00:00:00</span> 124.4 124.5 123.7 123.9    -<span style="color: #BB0000;">1</span> 123.9     <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> 2020-01-16 <span style="color: #949494;">00:00:00</span> 123.9 124.4 123.8 124.2     1 123.9     <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> 2020-01-17 <span style="color: #949494;">00:00:00</span> 124.2 124.3 123   123.5    -<span style="color: #BB0000;">1</span> 124.2     <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> 2020-01-20 <span style="color: #949494;">00:00:00</span> 123.5 123.8 123.1 123.2    -<span style="color: #BB0000;">1</span> 124.2     <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> 2020-01-21 <span style="color: #949494;">00:00:00</span> 123.6 123.6 123.4 123.6     0 124.2     <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">15</span> 2020-01-22 <span style="color: #949494;">00:00:00</span> 123.5 124   123.3 123.5     0 124.15    <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">16</span> 2020-01-23 <span style="color: #949494;">00:00:00</span> 123.5 124.5 123.3 124.3     1 124.15    <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">17</span> 2020-01-24 <span style="color: #949494;">00:00:00</span> 124.3 124.4 124   124.2    -<span style="color: #BB0000;">1</span> 124.1     <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">18</span> 2020-01-27 <span style="color: #949494;">00:00:00</span> 124.2 124.2 122.7 123      -<span style="color: #BB0000;">1</span> 123.6     <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">19</span> 2020-01-28 <span style="color: #949494;">00:00:00</span> 123   123.6 122.7 123.1     1 123.6     <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">20</span> 2020-01-29 <span style="color: #949494;">00:00:00</span> 123.1 123.3 123.1 123.2     1 123.6     <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 261 more rows, and 4 more variables: senkouB &lt;dbl&gt;, chikou &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   cloudT &lt;dbl&gt;, cloudB &lt;dbl&gt;</span></span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>
