@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4.10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4.11</span>
       </span>
     </div>
 
@@ -73,11 +73,11 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.2.4.10" id="ichimoku-12410">ichimoku 1.2.4.10<a class="anchor" aria-label="anchor" href="#ichimoku-12410"></a></h2>
+<h2 class="page-header" data-toc-text="1.2.4.11" id="ichimoku-12411">ichimoku 1.2.4.11<a class="anchor" aria-label="anchor" href="#ichimoku-12411"></a></h2>
 <div class="section level5">
-<h5 id="new-features-1-2-4-10">New features:<a class="anchor" aria-label="anchor" href="#new-features-1-2-4-10"></a></h5>
+<h5 id="new-features-1-2-4-11">New features:<a class="anchor" aria-label="anchor" href="#new-features-1-2-4-11"></a></h5>
 <ul><li>Enhancement to the printing of ichimoku objects by utilising the ‘tibble’ print method (adds dependency on ‘tibble’ package), paired with <code><a href="../reference/more.html">more()</a></code> for quick printing of further rows.</li>
-<li>Optimised <code>as_tibble</code> method implemented for ichimoku objects.</li>
+<li>Optimised <code><a href="../reference/as_tibble.ichimoku.html">as_tibble()</a></code> method implemented for ichimoku objects.</li>
 <li>
 <code><a href="../reference/mlgrid.html">mlgrid()</a></code> now appends attributes ‘k’ and ‘type’ to returned objects, and gains the following arguments:
 <ul><li>
@@ -95,8 +95,8 @@
 <li>New plot themes ‘conceptual’ and ‘fresh’.</li>
 </ul></div>
 <div class="section level5">
-<h5 id="updates-1-2-4-10">Updates:<a class="anchor" aria-label="anchor" href="#updates-1-2-4-10"></a></h5>
-<ul><li>Simplification of <code><a href="../reference/look.html">look()</a></code> by removing the ‘which’ argument. To access ichimoku objects in autostrat lists, subset the list directly. Now takes .Last.value when no arguments are supplied for ease of use interactively.</li>
+<h5 id="updates-1-2-4-11">Updates:<a class="anchor" aria-label="anchor" href="#updates-1-2-4-11"></a></h5>
+<ul><li>Simplification of <code><a href="../reference/look.html">look()</a></code> by removing the ‘which’ argument. To extract ichimoku objects in autostrat lists, subset the list directly. The object argument is now optional, accessing .Last.value otherwise.</li>
 <li>Minor enhancements to the <code><a href="https://rdrr.io/r/utils/str.html" class="external-link">str()</a></code> method.</li>
 <li>
 <code><a href="../reference/archive.html">archive()</a></code> now safe for use in non-interactive settings, where it no longer prompts to confirm overwriting of existing files.</li>
