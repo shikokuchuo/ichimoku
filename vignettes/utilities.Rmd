@@ -50,6 +50,8 @@ tradingDays(dates, holidays = NULL)
 
 Can be used to inspect the informational attributes of R objects.
 
+Takes an object as an optional argument. Called without an argument, `.Last.value` will be used instead.
+
 For objects created by the ichimoku package, a list of attributes specific to that data type is returned.
 
 For other objects, a list of attributes that are non-standard for matrix / data.frame / xts objects is returned, or else invisible NULL if none are present.

@@ -7,7 +7,7 @@
 look(x)
 }
 \arguments{
-\item{x}{an object (optional). If x is not supplied, \code{\link{.Last.value}}
+\item{x}{an object (optional). If 'x' is not supplied, \code{\link{.Last.value}}
 will be used instead.}
 }
 \value{

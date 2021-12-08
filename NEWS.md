@@ -1,9 +1,9 @@
-# ichimoku 1.2.4.10
+# ichimoku 1.2.4.11
 
 #### New features:
 
 * Enhancement to the printing of ichimoku objects by utilising the 'tibble' print method (adds dependency on 'tibble' package), paired with `more()` for quick printing of further rows.
-* Optimised `as_tibble` method implemented for ichimoku objects.
+* Optimised `as_tibble()` method implemented for ichimoku objects.
 * `mlgrid()` now appends attributes 'k' and 'type' to returned objects, and gains the following arguments:
   - `k` to specify the k-period time horizon over which to calculate target variable 'y'.
   - `type = 'z-score'` to produce the standard score of a 'numeric' type grid.
@@ -15,7 +15,7 @@
 
 #### Updates:
 
-* Simplification of `look()` by removing the 'which' argument. To access ichimoku objects in autostrat lists, subset the list directly. Now takes .Last.value when no arguments are supplied for ease of use interactively.
+* Simplification of `look()` by removing the 'which' argument. To extract ichimoku objects in autostrat lists, subset the list directly. The object argument is now optional, accessing .Last.value otherwise.
 * Minor enhancements to the `str()` method.
 * `archive()` now safe for use in non-interactive settings, where it no longer prompts to confirm overwriting of existing files.
 * `oanda_view()` now returns correct data types in the dataframe.

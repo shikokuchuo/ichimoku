@@ -67,6 +67,7 @@ test_that("print method ok", {
 
 test_that("more ok", {
   expect_null(expect_invisible(more()))
+  expect_null(expect_invisible(more(20)))
 })
 
 test_that("str method ok", {

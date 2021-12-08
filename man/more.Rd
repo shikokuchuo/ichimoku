@@ -4,22 +4,27 @@
 \alias{more}
 \title{Print More Rows of Ichimoku Objects}
 \usage{
-more()
+more(n)
+}
+\arguments{
+\item{n}{a parameter (optional) passed on to the argument 'n' of
+\code{\link[tibble]{print.tbl}} controlling the number of rows to show.
+Defaults to 100.}
 }
 \value{
-The ichimoku object originally printed (invisibly) or else invisible
-    NULL (if the last returned object was not an ichimoku object). The
-    ichimoku object data is printed to the console.
+The ichimoku object contained in \code{\link{.Last.value}} (invisibly)
+    or else invisible NULL (if .Last.value is not an ichimoku object).
+    The ichimoku object data is printed to the console.
 }
 \description{
 After calling or invoking the default print method for ichimoku objects, the
-    console output will display \code{# ... with x more rows} if the entire
-    data does not fit on-screen. Call \code{more()} to show up to 100 more rows.
+    console output will display \code{# … with x more rows} if the entire
+    data does not fit on-screen. Call \code{more()} to display more rows.
 }
 \examples{
 cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
-
 cloud
 more()
+more(20)
 
 }

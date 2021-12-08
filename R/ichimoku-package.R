@@ -85,17 +85,9 @@ NULL
 
 utils::globalVariables(".data")
 
-.pillar_sigfig <- NULL
-
 .onLoad <- function(libname, pkgname) {
   do_ <- do_()
   do_ <<- do_
-  .pillar_sigfig <- getOption("pillar.sigfig")
-  .pillar_sigfig <<- .pillar_sigfig
-  if (isTRUE(.pillar_sigfig < 5)) options(pillar.sigfig = 5)
-}
-
-.onUnload <- function(libpath) {
-  options(pillar.sigfig = .pillar_sigfig)
+  invisible()
 }
 

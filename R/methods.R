@@ -38,7 +38,10 @@ print.ichimoku <- function(x, plot = TRUE, ...) {
     NextMethod()
   } else {
     tbl <- as_tibble.ichimoku(x, class = "ichimoku_print")
+    pillar_sigfig <- getOption("pillar.sigfig")
+    if (is.null(pillar_sigfig) || pillar_sigfig < 5) options(pillar.sigfig = 5)
     print(tbl, ...)
+    options(pillar.sigfig = pillar_sigfig)
   }
 
   invisible(x)

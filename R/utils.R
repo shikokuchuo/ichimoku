@@ -287,31 +287,37 @@ df_append <- function(new, old, key = "time", keep.attr = "timestamp") {
 #' Print More Rows of Ichimoku Objects
 #'
 #' After calling or invoking the default print method for ichimoku objects, the
-#'     console output will display \code{# ... with x more rows} if the entire
-#'     data does not fit on-screen. Call \code{more()} to show up to 100 more rows.
+#'     console output will display \code{# … with x more rows} if the entire
+#'     data does not fit on-screen. Call \code{more()} to display more rows.
 #'
-#' @return The ichimoku object originally printed (invisibly) or else invisible
-#'     NULL (if the last returned object was not an ichimoku object). The
-#'     ichimoku object data is printed to the console.
+#' @param n a parameter (optional) passed on to the argument 'n' of
+#'     \code{\link[tibble]{print.tbl}} controlling the number of rows to show.
+#'     Defaults to 100.
+#'
+#' @return The ichimoku object contained in \code{\link{.Last.value}} (invisibly)
+#'     or else invisible NULL (if .Last.value is not an ichimoku object).
+#'     The ichimoku object data is printed to the console.
 #'
 #' @examples
 #' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
-#'
 #' cloud
 #' more()
+#' more(20)
 #'
 #' @export
 #'
-more <- function() {
+more <- function(n) {
+
   is.ichimoku(lv <- .Last.value) || return(invisible())
-  print(lv, plot = FALSE, n = 100)
+  print(lv, plot = FALSE, n = if (missing(n)) 100 else n)
+
 }
 
 #' Look at Informational Attributes
 #'
 #' Inspect the informational attributes of objects.
 #'
-#' @param x an object (optional). If x is not supplied, \code{\link{.Last.value}}
+#' @param x an object (optional). If 'x' is not supplied, \code{\link{.Last.value}}
 #'     will be used instead.
 #'
 #' @return For objects created by the ichimoku package, a list of attributes
@@ -346,8 +352,7 @@ more <- function() {
 #'
 look <- function(x) {
 
-  if (missing(x)) x <- .Last.value
-  lk <- attributes(x)
+  lk <- attributes(if (missing(x)) .Last.value else x)
   lk <- lk[!names(lk) %in% c("dim", "dimnames", "names", "row.names", "index", "class", "oanda")]
   if (length(lk)) lk else invisible()
 
