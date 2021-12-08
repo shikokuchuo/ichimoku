@@ -66,7 +66,7 @@ library(ichimoku)
 
 ### Data
 
-ichimoku works with data frames and tabular data. The `ichimoku()` function handles as input xts, data.frame, data.table, tibble, tsibble, matrix, and other data.frame compatible objects.
+ichimoku works with data frames and tabular data. The `ichimoku()` function handles as input xts, data.frame, data.table, tibble, matrix, and other data.frame compatible objects.
 
 ichimoku incorporates an interface with the OANDA fxTrade API to return data for major currencies, metals, commodities, government bonds and stock indices. Please refer to the [OANDA vignette](xoanda.html).
 
@@ -410,17 +410,14 @@ There may however still be other issues with the input data that prevent cloud v
 
 ichimoku currently has the following external package dependencies:
 
-- curl - for interfacing with external APIs
-- ggplot2 - the R graphics system for visualization
-- gtable - for arranging grid graphics objects
-- jsonlite - for parsing JSON data retrieved from external APIs
+- ggplot2, gtable - for graphics and visualization
 - tibble - for enhanced printing of ichimoku objects
-- xts - ichimoku objects are based on the 'xts' format for time series
-- zoo - 'xts' is built on 'zoo' technology
+- xts, zoo - for enhanced time series methods
+- curl, jsonlite - for interfacing with external APIs
 
 Compile time:
 
-- cpp11 - provides the C++ headers for various ichimoku internal functions
+- cpp11 - provides the C++ headers for various internal calculation functions
 
 Optional (enables additional features):
 

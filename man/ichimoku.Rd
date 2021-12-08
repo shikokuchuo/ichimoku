@@ -23,7 +23,7 @@ ichimoku(x, ...)
 }
 \arguments{
 \item{x}{a data.frame or other compatible object, which includes xts,
-data.table, tibble, tsibble, and matrix.}
+data.table, tibble, and matrix.}
 
 \item{...}{additional arguments, for instance 'holidays', passed along to
 \code{\link{tradingDays}} for calculating the future cloud on daily data.}

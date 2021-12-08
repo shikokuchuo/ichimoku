@@ -1,6 +1,6 @@
 ## code to prepare internal sysdata
 
-ichimoku_themes <- list(
+.ichimoku_themes <- list(
   original = c("#ffc6cb", "#c3dede", "#e0a9e0", "#db4525", "#1aa1a6", "#a4d1eb",
                "#00008b", "#00008b", "#00008b", "#ffffff", "#191970", "#00008b"),
   conceptual = c("#feddbf", "#ffceba", "#f2af07", "#f81e00", "#009039", "#297bb1",
@@ -15,7 +15,7 @@ ichimoku_themes <- list(
                 "#002b36", "#002b36", "#002b36", "#fdf6e3", "#073642", "#002b36")
 )
 
-x_oanda_instruments <- structure(
+.oanda_instruments <- structure(
   list(name = c("AU200_AUD", "AUD_CAD", "AUD_CHF", "AUD_HKD",
                 "AUD_JPY", "AUD_NZD", "AUD_SGD", "AUD_USD", "BCO_USD", "CAD_CHF",
                 "CAD_HKD", "CAD_JPY", "CAD_SGD", "CHF_HKD", "CHF_JPY", "CHF_ZAR",
@@ -85,7 +85,7 @@ x_oanda_instruments <- structure(
   row.names = c(NA, -122L)
   )
 
-x_user_agent <- "r-ichimoku/1.2.4"
+.user_agent <- "r-ichimoku/1.2.4"
 
-usethis::use_data(ichimoku_themes, x_oanda_instruments, x_user_agent, internal = TRUE, overwrite = TRUE)
+usethis::use_data(.ichimoku_themes, .oanda_instruments, .user_agent, internal = TRUE, overwrite = TRUE)
 

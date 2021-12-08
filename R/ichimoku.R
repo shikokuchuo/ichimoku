@@ -9,7 +9,7 @@
 #'     values for the cloud top and cloud base.
 #'
 #' @param x a data.frame or other compatible object, which includes xts,
-#'     data.table, tibble, tsibble, and matrix.
+#'     data.table, tibble, and matrix.
 #' @param ticker (optional) specify a ticker to identify the instrument,
 #'     otherwise this is set to the name of the input object.
 #' @param periods [default c(9L, 26L, 52L)] a vector defining the length of

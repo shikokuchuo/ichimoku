@@ -101,7 +101,7 @@ do_ <- function() {
         handle <- new_handle()
         handle_setheaders(handle = handle,
                           "Authorization" = paste0("Bearer ", apikey),
-                          "User-Agent" = x_user_agent)
+                          "User-Agent" = .user_agent)
         resp <- curl_fetch_memory(url = url, handle = handle)
         resp$status_code == 200L || stop("server code ", resp$status_code, " - ",
                                          parse_json(rawToChar(resp$content)), call. = FALSE)
@@ -119,14 +119,14 @@ do_ <- function() {
         handle <- new_handle()
         handle_setheaders(handle = handle,
                           "Authorization" = paste0("Bearer ", apikey),
-                          "User-Agent" = x_user_agent)
+                          "User-Agent" = .user_agent)
         resp <- curl_fetch_memory(url = url, handle = handle)
         resp$status_code == 200L || {
           warning("Server code ", resp$status_code, " - ",
                   parse_json(rawToChar(resp$content)),
                   "\nInstruments list could not be retrieved - falling back to internal data",
                   "\nCached instruments list will be used for the rest of the session", call. = FALSE)
-          instruments <<- x_oanda_instruments
+          instruments <<- .oanda_instruments
           return(instruments)
         }
         vec <- unlist(parse_json(rawToChar(resp$content))[["instruments"]])

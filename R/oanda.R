@@ -176,7 +176,7 @@ getPrices <- function(instrument, granularity, count, from, to, price, server,
   handle_setheaders(handle = handle,
                     "Authorization" = paste0("Bearer ", apikey),
                     "Accept-Datetime-Format" = "UNIX",
-                    "User-Agent" = x_user_agent)
+                    "User-Agent" = .user_agent)
   resp <- curl_fetch_memory(url = url, handle = handle)
 
   resp$status_code == 200L || stop("server code ", resp$status_code, " - ",
@@ -296,7 +296,7 @@ oanda_stream <- function(instrument, server, apikey) {
   handle_setheaders(handle = handle,
                     "Authorization" = paste0("Bearer ", apikey),
                     "Accept-Datetime-Format" = "RFC3339",
-                    "User-Agent" = x_user_agent)
+                    "User-Agent" = .user_agent)
 
   message("Streaming data... Press 'Esc' to return")
   on.exit(expr = return(invisible()))
@@ -933,7 +933,7 @@ oanda_positions <- function(instrument, time, server, apikey) {
   handle_setheaders(handle = handle,
                     "Authorization" = paste0("Bearer ", apikey),
                     "Accept-Datetime-Format" = "UNIX",
-                    "User-Agent" = x_user_agent)
+                    "User-Agent" = .user_agent)
   resp <- curl_fetch_memory(url = url, handle = handle)
 
   resp$status_code == 200L || stop("server code ", resp$status_code, " - ",
@@ -1023,7 +1023,7 @@ oanda_orders <- function(instrument, time, server, apikey) {
   handle_setheaders(handle = handle,
                     "Authorization" = paste0("Bearer ", apikey),
                     "Accept-Datetime-Format" = "UNIX",
-                    "User-Agent" = x_user_agent)
+                    "User-Agent" = .user_agent)
   resp <- curl_fetch_memory(url = url, handle = handle)
 
   resp$status_code == 200L || stop("server code ", resp$status_code, " - ",

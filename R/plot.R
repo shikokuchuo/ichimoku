@@ -110,7 +110,7 @@ autoplot.ichimoku <- function(object,
                               ...) {
 
   theme <- match.arg(theme)
-  pal <- ichimoku_themes[[theme]]
+  pal <- .ichimoku_themes[[theme]]
   showstrat <- hasStrat(object) && (missing(strat) || isTRUE(strat))
   if (missing(ticker)) ticker <- attr(object, "ticker")
   if (missing(subtitle)) {
@@ -186,7 +186,7 @@ extraplot <- function(object,
 
   type <- match.arg(type)
   theme <- match.arg(theme)
-  pal <- ichimoku_themes[[theme]]
+  pal <- .ichimoku_themes[[theme]]
   aplot <- autoplot.ichimoku(object = object, window = window, ticker = ticker,
                              subtitle = subtitle, theme = theme, strat = strat)
 

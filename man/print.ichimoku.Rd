@@ -12,7 +12,8 @@
 \item{plot}{[default TRUE] set to FALSE to prevent automatic plotting of
 the ichimoku cloud chart.}
 
-\item{...}{additional arguments passed along to print() and plot() functions.}
+\item{...}{additional arguments passed along to \code{\link[tibble]{print.tbl}}
+and \code{\link{plot.ichimoku}} functions.}
 }
 \value{
 The ichimoku object supplied (invisibly). The data is printed to the

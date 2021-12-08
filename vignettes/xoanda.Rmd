@@ -246,7 +246,7 @@ The list below serves as a reference only and may differ from those actually ava
 oanda_instruments()
 ```
 ```{r ins, echo=FALSE}
-print(ichimoku:::x_oanda_instruments)
+print(ichimoku:::.oanda_instruments)
 ```
 
 Note: the above table is saved as internal package data and used as a fallback if the API call fails. In such a case, a warning is issued once per session as subsequent calls will return the cached list.

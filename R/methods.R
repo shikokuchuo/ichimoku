@@ -8,7 +8,8 @@
 #' @param x an object of class 'ichimoku'.
 #' @param plot [default TRUE] set to FALSE to prevent automatic plotting of
 #'     the ichimoku cloud chart.
-#' @param ... additional arguments passed along to print() and plot() functions.
+#' @param ... additional arguments passed along to \code{\link[tibble]{print.tbl}}
+#'     and \code{\link{plot.ichimoku}} functions.
 #'
 #' @return The ichimoku object supplied (invisibly). The data is printed to the
 #'     console. The ichimoku cloud chart is also output to the graphical device
@@ -36,16 +37,30 @@ print.ichimoku <- function(x, plot = TRUE, ...) {
   if (is.null(dim(x))) {
     NextMethod()
   } else {
-    tbl <- as_tibble.ichimoku(x)
-    orig <- getOption("pillar.sigfig")
-    options(pillar.sigfig = 5)
-    out <- capture.output(print(tbl, ...))
-    options(pillar.sigfig = orig)
-    cat(out[-1L], sep = "\n")
+    tbl <- as_tibble.ichimoku(x, class = "ichimoku_print")
+    print(tbl, ...)
   }
 
   invisible(x)
 
+}
+
+#' Class ichimoku_print tbl-sum Method
+#'
+#' Default tbl-sum method for ichimoku_print objects. Used for enhanced printing
+#'     of ichimoku objects.
+#'
+#' @param x an object of class 'ichimoku_print'.
+#' @param ... arguments passed to or from other methods.
+#'
+#' @return The character vector to be printed.
+#'
+#' @method tbl_sum ichimoku_print
+#' @noRd
+#' @export
+#'
+tbl_sum.ichimoku_print <- function(x, ...) {
+  c("ichimoku object" = "use more() to display more rows, look() to inspect attributes")
 }
 
 #' Display the Structure of Ichimoku Objects
@@ -239,6 +254,8 @@ NULL
 #' An optimised 'ichimoku' to 'tibble' constructor.
 #'
 #' @param x an object of class 'ichimoku'.
+#' @param class (optional) as a character vector, subclasses to assign to the
+#'     new object.
 #' @param keep.attrs (optional) if set to TRUE, will preserve any custom
 #'     attributes set on the original object.
 #' @param ... arguments passed to or from other methods.
@@ -256,12 +273,12 @@ NULL
 #' str(tbl)
 #'
 #' tbl2 <- as_tibble(cloud, keep.attrs = TRUE)
-#' look(tbl2)
+#' str(tbl2)
 #'
 #' @method as_tibble ichimoku
 #' @export
 #'
-as_tibble.ichimoku <- function(x, keep.attrs, ...) {
+as_tibble.ichimoku <- function(x, class, keep.attrs, ...) {
   core <- coredata.ichimoku(x)
   dims <- dim(core)
   len <- dims[2L]
@@ -270,7 +287,8 @@ as_tibble.ichimoku <- function(x, keep.attrs, ...) {
   for (i in seq_len(len)) {
     tbl[[i + 1L]] <- core[, i]
   }
-  attributes(tbl) <- c(list(class = c("tbl_df", "tbl", "data.frame"),
+  attributes(tbl) <- c(list(class = c(if (!missing(class)) class,
+                                      "tbl_df", "tbl", "data.frame"),
                             row.names = .set_row_names(dims[1L]),
                             names = c("index", dimnames(core)[[2L]])),
                        if (!missing(keep.attrs) && isTRUE(keep.attrs)) look(x))

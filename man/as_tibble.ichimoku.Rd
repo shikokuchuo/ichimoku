@@ -5,10 +5,13 @@
 \alias{as_tibble.ichimoku}
 \title{Convert ichimoku to tibble}
 \usage{
-\method{as_tibble}{ichimoku}(x, keep.attrs, ...)
+\method{as_tibble}{ichimoku}(x, class, keep.attrs, ...)
 }
 \arguments{
 \item{x}{an object of class 'ichimoku'.}
+
+\item{class}{(optional) as a character vector, subclasses to assign to the
+new object.}
 
 \item{keep.attrs}{(optional) if set to TRUE, will preserve any custom
 attributes set on the original object.}
@@ -33,6 +36,6 @@ tbl <- as_tibble(cloud)
 str(tbl)
 
 tbl2 <- as_tibble(cloud, keep.attrs = TRUE)
-look(tbl2)
+str(tbl2)
 
 }
