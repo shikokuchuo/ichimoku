@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4.10</span>
       </span>
     </div>
 
@@ -154,7 +154,7 @@
 <div class="section level3">
 <h3 id="data">Data<a class="anchor" aria-label="anchor" href="#data"></a>
 </h3>
-<p>ichimoku works with data frames and tabular data. The <code><a href="../reference/ichimoku.html">ichimoku()</a></code> function handles as input xts, data.frame, data.table, tibble, tsibble, matrix, and other data.frame compatible objects.</p>
+<p>ichimoku works with data frames and tabular data. The <code><a href="../reference/ichimoku.html">ichimoku()</a></code> function handles as input xts, data.frame, data.table, tibble, matrix, and other data.frame compatible objects.</p>
 <p>ichimoku incorporates an interface with the OANDA fxTrade API to return data for major currencies, metals, commodities, government bonds and stock indices. Please refer to the <a href="xoanda.html">OANDA vignette</a>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># ichimoku can create clouds directly from OANDA data, for example:</span>
@@ -218,18 +218,20 @@
 <code class="sourceCode R"><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">cloud</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+<span class="co">#&gt; <span style="color: #949494;"># ichimoku object: use more() to display more rows, look() to inspect</span></span>
+<span class="co"><span style="color: #949494;">#&gt; #   attributes</span></span>
 <span class="co">#&gt;    index                open  high   low close    cd tenkan kijun senkouA</span>
 <span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 2020-01-02 <span style="color: #949494;">00:00:00</span> 123   123.1 122.5 122.7    -<span style="color: #BB0000;">1</span>   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 2020-01-03 <span style="color: #949494;">00:00:00</span> 122.7 122.8 122.6 122.8     1   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 2020-01-06 <span style="color: #949494;">00:00:00</span> 122.8 123.4 122.4 123.3     1   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 2020-01-07 <span style="color: #949494;">00:00:00</span> 123.3 124.3 123.3 124.1     1   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 2020-01-08 <span style="color: #949494;">00:00:00</span> 124.1 124.8 124   124.8     1   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 2020-01-09 <span style="color: #949494;">00:00:00</span> 124.8 125.4 124.5 125.3     1   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 2020-01-10 <span style="color: #949494;">00:00:00</span> 125.3 125.3 124.8 125.2    -<span style="color: #BB0000;">1</span>   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 2020-01-13 <span style="color: #949494;">00:00:00</span> 125.2 125.3 125.1 125.2     0   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 2020-01-14 <span style="color: #949494;">00:00:00</span> 125.2 125.2 124.3 124.4    -<span style="color: #BB0000;">1</span>  123.9    <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 2020-01-15 <span style="color: #949494;">00:00:00</span> 124.4 124.5 123.7 123.9    -<span style="color: #BB0000;">1</span>  123.9    <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 2020-01-02 <span style="color: #949494;">00:00:00</span>  123   123.  122.  123.    -<span style="color: #BB0000;">1</span>    <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 2020-01-03 <span style="color: #949494;">00:00:00</span>  123.  123.  123.  123.     1    <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 2020-01-06 <span style="color: #949494;">00:00:00</span>  123.  123.  122.  123.     1    <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 2020-01-07 <span style="color: #949494;">00:00:00</span>  123.  124.  123.  124.     1    <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 2020-01-08 <span style="color: #949494;">00:00:00</span>  124.  125.  124   125.     1    <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 2020-01-09 <span style="color: #949494;">00:00:00</span>  125.  125.  124.  125.     1    <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 2020-01-10 <span style="color: #949494;">00:00:00</span>  125.  125.  125.  125.    -<span style="color: #BB0000;">1</span>    <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 2020-01-13 <span style="color: #949494;">00:00:00</span>  125.  125.  125.  125.     0    <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 2020-01-14 <span style="color: #949494;">00:00:00</span>  125.  125.  124.  124.    -<span style="color: #BB0000;">1</span>   124.    <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 2020-01-15 <span style="color: #949494;">00:00:00</span>  124.  124.  124.  124.    -<span style="color: #BB0000;">1</span>   124.    <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
 <span class="co">#&gt; <span style="color: #949494;"># … with 271 more rows, and 4 more variables: senkouB &lt;dbl&gt;, chikou &lt;dbl&gt;,</span></span>
 <span class="co">#&gt; <span style="color: #949494;">#   cloudT &lt;dbl&gt;, cloudB &lt;dbl&gt;</span></span></code></pre></div>
 <p>The returned output is designed to fit the screen; call <code><a href="../reference/more.html">more()</a></code> to display up to 100 more rows. Note that above, print is called setting ‘plot = FALSE’ to return just the data to the console. The default print method for ichimoku objects also plots the cloud chart to the graphical device.</p>
@@ -270,6 +272,8 @@
 <code class="sourceCode R"><span class="va">kumo</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span>, keep.data <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">kumo</span><span class="op">[</span>, <span class="st">"volume"</span><span class="op">]</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+<span class="co">#&gt; <span style="color: #949494;"># ichimoku object: use more() to display more rows, look() to inspect</span></span>
+<span class="co"><span style="color: #949494;">#&gt; #   attributes</span></span>
 <span class="co">#&gt;    index               volume</span>
 <span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
 <span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 2020-01-02 <span style="color: #949494;">00:00:00</span>   <span style="text-decoration: underline;">1</span>875</span>
@@ -556,17 +560,14 @@
 </h2>
 <p>ichimoku currently has the following external package dependencies:</p>
 <ul>
-<li>curl - for interfacing with external APIs</li>
-<li>ggplot2 - the R graphics system for visualization</li>
-<li>gtable - for arranging grid graphics objects</li>
-<li>jsonlite - for parsing JSON data retrieved from external APIs</li>
+<li>ggplot2, gtable - for graphics and visualization</li>
 <li>tibble - for enhanced printing of ichimoku objects</li>
-<li>xts - ichimoku objects are based on the ‘xts’ format for time series</li>
-<li>zoo - ‘xts’ is built on ‘zoo’ technology</li>
+<li>xts, zoo - for enhanced time series methods</li>
+<li>curl, jsonlite - for interfacing with external APIs</li>
 </ul>
 <p>Compile time:</p>
 <ul>
-<li>cpp11 - provides the C++ headers for various ichimoku internal functions</li>
+<li>cpp11 - provides the C++ headers for various internal calculation functions</li>
 </ul>
 <p>Optional (enables additional features):</p>
 <ul>
