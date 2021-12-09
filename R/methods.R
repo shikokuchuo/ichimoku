@@ -34,7 +34,7 @@ print.ichimoku <- function(x, plot = TRUE, ...) {
                                               error = function(e) invisible(),
                                               warning = function(w) invisible())
 
-  if (is.null(dim(x))) {
+  if (is.null(attr(x, "dim"))) {
     NextMethod()
   } else {
     tbl <- as_tibble.ichimoku(x, class = "ichimoku_print")
@@ -232,19 +232,28 @@ summary.ichimoku <- function(object, strat = TRUE, ...) {
 #' @export
 #'
 as.data.frame.ichimoku <- function(x, row.names, optional, keep.attrs, ...) {
-  core <- coredata.ichimoku(x)
-  dims <- dim(core)
+
+  lk <- if (!missing(keep.attrs) && isTRUE(keep.attrs)) look(x)
+  index <- index.ichimoku(x)
+  dn <- c("index", attr(x, "dimnames")[[2L]])
+  dims <- attr(x, "dim")
+  xlen <- dims[1L]
   len <- dims[2L]
+  start <- 0:(len-1) * xlen + 1L
+  end <- 1:len * xlen
+
+  attributes(x) <- NULL
   df <- vector(mode = "list", length = len + 1L)
-  df[[1L]] <- index.ichimoku(x)
+  df[[1L]] <- index
   for (i in seq_len(len)) {
-    df[[i + 1L]] <- core[, i]
+    df[[i + 1L]] <- x[start[i]:end[i]]
   }
-  attributes(df) <- c(list(names = c("index", dimnames(core)[[2L]]),
+  attributes(df) <- c(list(names = dn,
                            class = "data.frame",
-                           row.names = .set_row_names(dims[1L])),
-                      if (!missing(keep.attrs) && isTRUE(keep.attrs)) look(x))
+                           row.names = .set_row_names(xlen)),
+                      lk)
   df
+
 }
 
 #' @name as_tibble
@@ -282,19 +291,26 @@ NULL
 #' @export
 #'
 as_tibble.ichimoku <- function(x, class, keep.attrs, ...) {
-  core <- coredata.ichimoku(x)
-  dims <- dim(core)
+
+  lk <- if (!missing(keep.attrs) && isTRUE(keep.attrs)) look(x)
+  index <- index.ichimoku(x)
+  dn <- c("index", attr(x, "dimnames")[[2L]])
+  dims <- attr(x, "dim")
+  xlen <- dims[1L]
   len <- dims[2L]
+  start <- 0:(len-1) * xlen + 1L
+  end <- 1:len * xlen
+
+  attributes(x) <- NULL
   tbl <- vector(mode = "list", length = len + 1L)
-  tbl[[1L]] <- index.ichimoku(x)
+  tbl[[1L]] <- index
   for (i in seq_len(len)) {
-    tbl[[i + 1L]] <- core[, i]
+    tbl[[i + 1L]] <- x[start[i]:end[i]]
   }
-  attributes(tbl) <- c(list(class = c(if (!missing(class)) class,
-                                      "tbl_df", "tbl", "data.frame"),
-                            row.names = .set_row_names(dims[1L]),
-                            names = c("index", dimnames(core)[[2L]])),
-                       if (!missing(keep.attrs) && isTRUE(keep.attrs)) look(x))
+  attributes(tbl) <- c(list(class = c(if (!missing(class)) class, "tbl_df", "tbl", "data.frame"),
+                            row.names = .set_row_names(xlen),
+                            names = dn),
+                       lk)
   tbl
 
 }

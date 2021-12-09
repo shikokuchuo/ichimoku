@@ -1,4 +1,4 @@
-# ichimoku 1.2.4.11
+# ichimoku 1.2.4.12
 
 #### New features:
 
@@ -20,7 +20,7 @@
 * `archive()` now safe for use in non-interactive settings, where it no longer prompts to confirm overwriting of existing files.
 * `oanda_view()` now returns correct data types in the dataframe.
 * Fixes cases of `relative()` showing the incorrect date for 'latest', along with other cosmetic changes.
-* Performance improvements to date handling across `ichimoku()` and other package functions.
+* General performance improvements to date handling and dataframe conversions.
 * Documentation refresh.
 
 # ichimoku 1.2.4
