@@ -136,10 +136,13 @@ do_ <- function() {
         dispName <- vec[cnames == "displayName"]
         type <- vec[cnames == "type"]
         reorder <- order(name)
-        df <- list(name[reorder], dispName[reorder], type[reorder])
-        attributes(df) <- list(names = c("name", "displayName", "type"),
-                               class = "data.frame",
-                               row.names = .set_row_names(length(reorder)))
+        df <- `attributes<-`(list(name[reorder],
+                                  dispName[reorder],
+                                  type[reorder]),
+                             list(names = c("name", "displayName", "type"),
+                                  class = "data.frame",
+                                  row.names = .set_row_names(length(reorder)))
+        )
         instruments <<- df
       }
       instruments

@@ -1,4 +1,4 @@
-# ichimoku 1.2.4.12
+# ichimoku 1.2.4.13
 
 #### New features:
 
@@ -9,6 +9,8 @@
   - `type = 'z-score'` to produce the standard score of a 'numeric' type grid.
   - `format` to choose between returning a dataframe or matrix.
 * New `oanda_orders()` function provides the OANDA fxTrade order book for certain major currency pairs.
+* Major revamp of `oanda_stream()` which has a much improved interface and now renders the stream as a structured dataframe.
+* `oanda_chart()` and `oanda_stream()` gain the argument 'limit' which imposes a time limit for the function execution after which data at the end of the session is returned automatically.
 * `oanda_positions()` gains the parameter 'time' for retrieving the position book at a particular time.
 * `index()` gains the parameter 'subset' for fast subsetting of ichimoku cloud indexes.
 * New plot themes 'conceptual' and 'fresh'.

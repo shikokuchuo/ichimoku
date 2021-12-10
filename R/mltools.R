@@ -264,29 +264,28 @@ mlgrid <- function(x,
     if (y != "none") grid <- c(list(.subset2(df, 1L)), grid)
   }
 
-  switch(format,
-         dataframe = {
-           attributes(grid) <- list(names = cnames,
+  grid <- switch(
+    format,
+    dataframe = `attributes<-`(grid,
+                               list(names = cnames,
                                     class = "data.frame",
                                     row.names = attr(df, "row.names"),
                                     y = y,
                                     k = k,
                                     direction = dir,
                                     type = type,
-                                    ticker = attr(x, "ticker"))
-           grid
-         },
-         matrix = {
-           grid <- unlist(unname(grid))
-           attributes(grid) <- list(dim = dim(df),
-                                    dimnames = list(attr(df, "row.names"), cnames),
-                                    y = y,
-                                    k = k,
-                                    direction = dir,
-                                    type = type,
-                                    ticker = attr(x, "ticker"))
-           grid
-         })
+                                    ticker = attr(x, "ticker"))),
+    matrix = `attributes<-`(unlist(unname(grid)),
+                            list(dim = dim(df),
+                                 dimnames = list(attr(df, "row.names"), cnames),
+                                 y = y,
+                                 k = k,
+                                 direction = dir,
+                                 type = type,
+                                 ticker = attr(x, "ticker")))
+    )
+
+  grid
 
 }
 
@@ -306,7 +305,7 @@ mlgrid <- function(x,
 #'
 writeVectors <- function(x, pairs, p2, xlen, type) {
 
-  setNames(mapply(function(c1, c2) {
+  `names<-`(mapply(function(c1, c2) {
     offset <- (p2 - 1L) * (c1 == "chikou" | c2 == "chikou")
     switch(type,
            boolean = as.integer(c(rep(NA, offset), (x[, c1] > x[, c2])[1:(xlen - offset)])),

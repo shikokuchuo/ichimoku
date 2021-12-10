@@ -12,6 +12,7 @@ oanda_chart(
   count = 250,
   price = c("M", "B", "A"),
   theme = c("original", "conceptual", "dark", "fresh", "mono", "solarized"),
+  limit,
   server,
   apikey,
   ...,
@@ -40,6 +41,10 @@ or "A" (ask).}
 
 \item{theme}{[default 'original'] with alternative choices of 'conceptual',
 'dark', 'fresh', 'mono', or 'solarized'.}
+
+\item{limit}{(optional) specify a time in minutes by which to limit the
+session. The session will end with data returned automatically after the
+specified time has elapsed.}
 
 \item{server}{(optional) specify the "practice" or "live" server according to
 the account type held. If not specified, will default to "practice", unless

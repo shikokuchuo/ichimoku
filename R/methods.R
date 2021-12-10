@@ -34,7 +34,7 @@ print.ichimoku <- function(x, plot = TRUE, ...) {
                                               error = function(e) invisible(),
                                               warning = function(w) invisible())
 
-  if (is.null(attr(x, "dim"))) {
+  if (is.null(dims <- attr(x, "dim")) || dims[1L] == 0L) {
     NextMethod()
   } else {
     tbl <- as_tibble.ichimoku(x, class = "ichimoku_print")

@@ -90,7 +90,7 @@
 #' @rdname ichimoku
 #' @export
 #'
-ichimoku <- function(x, ...) UseMethod("ichimoku")
+ichimoku <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, ...) UseMethod("ichimoku")
 
 #' @rdname ichimoku
 #' @method ichimoku ichimoku
@@ -217,8 +217,7 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
   } else {
     future <- seq.int(from = index[xlen], by = periodicity, length.out = p2)[-1L]
   }
-  xtsindex <- c(index, future)
-  attributes(xtsindex) <- list(tzone = "", tclass = c("POSIXct", "POSIXt"))
+  xtsindex <- `attributes<-`(c(index, future), list(tzone = "", tclass = c("POSIXct", "POSIXt")))
 
   lk <- kmatrix <- NULL
   if (!missing(keep.data) && isTRUE(keep.data)) {

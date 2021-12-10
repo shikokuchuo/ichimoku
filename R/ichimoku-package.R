@@ -63,8 +63,7 @@
 #'     \url{https://CRAN.R-project.org/package=ichimoku}.
 #'
 #' @useDynLib ichimoku, .registration = TRUE
-#' @importFrom curl curl_fetch_memory curl_fetch_stream handle_setheaders
-#'     new_handle
+#' @importFrom curl curl curl_fetch_memory handle_setheaders new_handle
 #' @importFrom ggplot2 aes autoplot coord_flip element_blank element_line
 #'     element_rect element_text geom_col geom_line geom_rect geom_ribbon
 #'     geom_segment geom_vline ggplot ggplotGrob guides labs margin rel
@@ -72,10 +71,10 @@
 #'     scale_y_continuous theme theme_grey %+replace%
 #' @importFrom grid grid.draw grid.newpage unit
 #' @importFrom gtable gtable gtable_add_grob
-#' @importFrom jsonlite parse_json
-#' @importFrom stats na.omit sd setNames
+#' @importFrom jsonlite parse_json stream_in
+#' @importFrom stats na.omit sd
 #' @importFrom tibble as_tibble tbl_sum
-#' @importFrom utils capture.output str
+#' @importFrom utils str
 #' @importFrom xts endpoints
 #' @importFrom zoo coredata index
 #'

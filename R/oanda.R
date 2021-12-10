@@ -187,8 +187,7 @@ getPrices <- function(instrument, granularity, count, from, to, price, server,
   ptype <- switch(price, M = "mid", B = "bid", A = "ask")
 
   !missing(.validate) && .validate == FALSE && {
-    data <- unlist(parse_json(rawToChar(resp$content))[["candles"]][[1L]][[ptype]])
-    storage.mode(data) <- "double"
+    data <- `storage.mode<-`(unlist(parse_json(rawToChar(resp$content))[["candles"]][[1L]][[ptype]]), "double")
     return(c(t = unclass(timestamp), data))
   }
 
@@ -220,20 +219,22 @@ getPrices <- function(instrument, granularity, count, from, to, price, server,
   ohlc <- unlist(data[, ptype, drop = FALSE])
   cnames <- names(ohlc)
 
-  df <- list(time,
-             as.numeric(ohlc[cnames == "o"]),
-             as.numeric(ohlc[cnames == "h"]),
-             as.numeric(ohlc[cnames == "l"]),
-             as.numeric(ohlc[cnames == "c"]),
-             unlist(data[, "volume", drop = FALSE]),
-             unlist(data[, "complete", drop = FALSE]))
-  attributes(df) <- list(names = c("time", "open", "high", "low", "close", "volume", "complete"),
-                         class = "data.frame",
-                         row.names = .set_row_names(length(time)),
-                         instrument = instrument,
-                         price = price,
-                         timestamp = .POSIXct(timestamp),
-                         oanda = TRUE)
+  df <- `attributes<-`(
+    list(time,
+         as.numeric(ohlc[cnames == "o"]),
+         as.numeric(ohlc[cnames == "h"]),
+         as.numeric(ohlc[cnames == "l"]),
+         as.numeric(ohlc[cnames == "c"]),
+         unlist(data[, "volume", drop = FALSE]),
+         unlist(data[, "complete", drop = FALSE])),
+    list(names = c("time", "open", "high", "low", "close", "volume", "complete"),
+         class = "data.frame",
+         row.names = .set_row_names(length(time)),
+         instrument = instrument,
+         price = price,
+         timestamp = .POSIXct(timestamp),
+         oanda = TRUE))
+
   df
 
 }
@@ -245,31 +246,43 @@ getPrices <- function(instrument, granularity, count, from, to, price, server,
 #'     Streaming API.
 #'
 #' @inheritParams oanda
+#' @param display [default 7L] integer rows of data to display in the console
+#'     at any one time.
+#' @param limit (optional) specify a time in minutes by which to limit the
+#'     streaming session. The session will end with data returned automatically
+#'     after the specified time has elapsed.
 #'
-#' @return Invisible NULL on function exit. The streaming data is output as text
-#'     to the console.
+#' @return Returned invisibly, a dataframe containing the data for the streaming
+#'     session on function exit. The latest rows of the dataframe are printed to
+#'     the console, as governed by the 'display' argument.
 #'
 #' @details This function connects to the OANDA fxTrade Streaming API. Use the
-#'     'Esc' key to stop the stream.
+#'     'Esc' key to stop the stream and return the session data.
 #'
-#'     The output contains ANSI escape codes for console formatting, but
-#'     otherwise represents the raw feed without omission. Note that as this is
-#'     a raw stream, returned times are in UTC.
+#'     All returned times are in UTC. 'b' and 'a' used in column headings are
+#'     abbreviations to denote 'bid' and 'ask' respectively.
+#'
+#'     Note: only messages of type 'PRICE' are processed. Messages of type
+#'     'HEARTBEAT' consisting of only a timestamp are discarded.
 #'
 #' @section Streaming Data:
 #'
-#'     Get a stream of Account Prices starting from when the request is made.
-#'     This pricing stream does not include every single price created for the
-#'     Account, but instead will provide at most 4 prices per second (every
-#'     250 milliseconds) for each instrument being requested. If more than one
-#'     price is created for an instrument during the 250 millisecond window,
-#'     only the price in effect at the end of the window is sent. This means
-#'     that during periods of rapid price movement, subscribers to this stream
-#'     will not be sent every price. Pricing windows for different connections
-#'     to the price stream are not all aligned in the same way (i.e. they are
-#'     not all aligned to the top of the second). This means that during
-#'     periods of rapid price movement, different subscribers may observe
-#'     different prices depending on their alignment.
+#'     Summarised from the streaming API documentation:
+#'
+#'     \itemize{
+#'     \item{Pricing stream does not include every single price created for the
+#'     Account}
+#'     \item{At most 4 prices are sent per second (every 250 milliseconds) for
+#'     each instrument}
+#'     \item{If more than one price is created during the 250 millisecond window,
+#'     only the price in effect at the end of the window is sent}
+#'     \item{This means that during periods of rapid price movement, not every
+#'     price is sent}
+#'     \item{Pricing windows for different connections to the stream are not all
+#'     aligned in the same way (e.g. to the top of the second)}
+#'     \item{This means that during periods of rapid price movement, different
+#'     prices may be observed depending on the alignment for the connection}
+#'     }
 #'
 #' @section Further Details:
 #'     Please refer to the OANDA fxTrade API vignette by calling:
@@ -278,12 +291,12 @@ getPrices <- function(instrument, granularity, count, from, to, price, server,
 #' @examples
 #' \dontrun{
 #' # OANDA fxTrade API key required to run this example
-#' oanda_stream("USD_JPY")
+#' data <- oanda_stream("USD_JPY", display = 7L)
 #' }
 #'
 #' @export
 #'
-oanda_stream <- function(instrument, server, apikey) {
+oanda_stream <- function(instrument, display = 7L, limit, server, apikey) {
 
   if (missing(instrument) && interactive()) instrument <- readline("Enter instrument:")
   instrument <- sub("-", "_", toupper(force(instrument)), fixed = TRUE)
@@ -298,17 +311,36 @@ oanda_stream <- function(instrument, server, apikey) {
                     "Accept-Datetime-Format" = "RFC3339",
                     "User-Agent" = .user_agent)
 
-  message("Streaming data... Press 'Esc' to return")
-  on.exit(expr = return(invisible()))
-  curl_fetch_stream(url = url, handle = handle, fun = function(x) {
-    stream <- sub("close", "\u001b[27m\nclose",
-                  sub("asks:", "\u001b[27m asks:\u001b[7m ",
-                      sub("bids:", "\nbids:\u001b[7m ",
-                          gsub(",", "  ",
-                               gsub('"|{|}|\\[|\\]', "", rawToChar(x), perl = TRUE),
-                               fixed = TRUE), fixed = TRUE), fixed = TRUE), fixed = TRUE)
-    cat(stream)
+  dattrs <- list(names = c("type", "time", "bid.price", "b.liquidity",
+                           "ask.price", "a.liquidity", "closeout.b", "closeout.a",
+                           "status", "tradable", "instrument"),
+                 row.names = 1L,
+                 class = "data.frame")
+  data <- `attributes<-`(vector(mode = "list", length = 11L), dattrs)
+
+  on.exit(expr = {
+    data[["bid.price"]] <- as.numeric(.subset2(data, "bid.price"))
+    data[["ask.price"]] <- as.numeric(.subset2(data, "ask.price"))
+    data[["closeout.b"]] <- as.numeric(.subset2(data, "closeout.b"))
+    data[["closeout.a"]] <- as.numeric(.subset2(data, "closeout.a"))
+    data[["b.liquidity"]] <- as.integer(.subset2(data, "b.liquidity"))
+    data[["a.liquidity"]] <- as.integer(.subset2(data, "a.liquidity"))
+    data[["tradable"]] <- as.logical(.subset2(data, "tradable"))
+    return(invisible(data))
   })
+  if (!missing(limit) && is.numeric(limit)) setTimeLimit(elapsed = limit * 60, transient = TRUE)
+
+  con <- curl(url = url, handle = handle)
+  stream_in(con = con, pagesize = 1, verbose = FALSE, handler = function(x) {
+    .subset2(x, 1L) == "PRICE" || return()
+    x <- `attributes<-`(unlist(x), dattrs)
+    data <<- df_append(x, data)
+    start = max(1L, (end <- dim(data)[1L]) - display + 1L)
+    cat("\014")
+    message("Streaming data... Press 'Esc' to return")
+    print.data.frame(data[start:end, ])
+  })
+
 }
 
 #' OANDA Real-time Cloud Charts
@@ -325,6 +357,9 @@ oanda_stream <- function(instrument, server, apikey) {
 #' @param count [default 250] the number of periods to return. The API supports
 #'     a maximum of 5000. Note that fewer periods are actually shown on the
 #'     chart to ensure a full cloud is always displayed.
+#' @param limit (optional) specify a time in minutes by which to limit the
+#'     session. The session will end with data returned automatically after the
+#'     specified time has elapsed.
 #' @param ... additional arguments passed along to \code{\link{ichimoku}} for
 #'     calculating the ichimoku cloud or \code{\link{autoplot}} to set chart
 #'     parameters.
@@ -365,6 +400,7 @@ oanda_chart <- function(instrument,
                         count = 250,
                         price = c("M", "B", "A"),
                         theme = c("original", "conceptual", "dark", "fresh", "mono", "solarized"),
+                        limit,
                         server,
                         apikey,
                         ...,
@@ -415,6 +451,7 @@ oanda_chart <- function(instrument,
 
   message("Chart updating every ", refresh, " secs in graphical device... Press 'Esc' to return")
   on.exit(expr = return(invisible(pdata)))
+  if (!missing(limit) && is.numeric(limit)) setTimeLimit(elapsed = limit * 60, transient = TRUE)
   while (TRUE) {
     pdata <- ichimoku.data.frame(data, periods = periods, ...)[minlen:(xlen + p2 - 1L), ]
     subtitle <- paste(instrument, ptype, "price [", data$close[xlen],
@@ -840,12 +877,16 @@ oanda_view <- function(market = c("allfx", "bonds", "commodities", "fx", "metals
   close <- data[, "c", drop = FALSE]
   change <- round(100 * (close / open - 1), digits = 4L)
   reorder <- order(change, decreasing = TRUE)
-  df <- list(open[reorder], high[reorder], low[reorder], close[reorder], change[reorder])
-  attributes(df) <- list(names = c("open", "high", "low", "last", "%chg"),
-                         class = "data.frame",
-                         row.names = sel[reorder],
-                         price = price,
-                         timestamp = time)
+  df <- `attributes<-`(list(open[reorder],
+                            high[reorder],
+                            low[reorder],
+                            change[reorder]),
+                       list(names = c("open", "high", "low", "last", "%chg"),
+                            class = "data.frame",
+                            row.names = sel[reorder],
+                            price = price,
+                            timestamp = time)
+                       )
 
   cat("\n", format.POSIXct(time), " / ", price, "\n", sep = "")
   print(df)
@@ -944,18 +985,17 @@ oanda_positions <- function(instrument, time, server, apikey) {
   timestamp <- .POSIXct(data[["unixTime"]])
   bucketwidth <- as.numeric(data[["bucketWidth"]])
 
-  buckets <- do.call(rbind, data[["buckets"]])
-  storage.mode(buckets) <- "double"
-  df <- list(buckets[, "price"],
-             buckets[, "longCountPercent"],
-             buckets[, "shortCountPercent"])
-  attributes(df) <- list(names = c("price", "long", "short"),
-                         class = "data.frame",
-                         row.names = .set_row_names(dim(buckets)[1L]),
-                         instrument = instrument,
-                         timestamp = timestamp,
-                         currentprice = currentprice,
-                         bucketwidth = bucketwidth)
+  buckets <- `storage.mode<-`(do.call(rbind, data[["buckets"]]), "double")
+  df <- `attributes<-`(list(buckets[, "price"],
+                            buckets[, "longCountPercent"],
+                            buckets[, "shortCountPercent"]),
+                       list(names = c("price", "long", "short"),
+                            class = "data.frame",
+                            row.names = .set_row_names(dim(buckets)[1L]),
+                            instrument = instrument,
+                            timestamp = timestamp,
+                            currentprice = currentprice,
+                            bucketwidth = bucketwidth))
 
   layers <- list(
     geom_col(aes(x = .data$price, y = .data$long),
@@ -1034,19 +1074,18 @@ oanda_orders <- function(instrument, time, server, apikey) {
   timestamp <- .POSIXct(data[["unixTime"]])
   bucketwidth <- as.numeric(data[["bucketWidth"]])
 
-  buckets <- do.call(rbind, data[["buckets"]])
+  buckets <- `storage.mode<-`(do.call(rbind, data[["buckets"]]), "double")
   xlen <- dim(buckets)[1L]
-  storage.mode(buckets) <- "double"
-  df <- list(buckets[, "price"],
-             buckets[, "longCountPercent"],
-             buckets[, "shortCountPercent"])
-  attributes(df) <- list(names = c("price", "long", "short"),
-                         class = "data.frame",
-                         row.names = .set_row_names(xlen),
-                         instrument = instrument,
-                         timestamp = timestamp,
-                         currentprice = currentprice,
-                         bucketwidth = bucketwidth)
+  df <- `attributes<-`(list(buckets[, "price"],
+                            buckets[, "longCountPercent"],
+                            buckets[, "shortCountPercent"]),
+                       list(names = c("price", "long", "short"),
+                            class = "data.frame",
+                            row.names = .set_row_names(xlen),
+                            instrument = instrument,
+                            timestamp = timestamp,
+                            currentprice = currentprice,
+                            bucketwidth = bucketwidth))
 
   pdata <- df[trunc(xlen * 0.25):trunc(xlen * 0.75), ]
 

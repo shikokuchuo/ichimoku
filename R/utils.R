@@ -277,10 +277,9 @@ df_append <- function(new, old, key = "time", keep.attr = "timestamp") {
   for (i in seq_len(len)) {
     df[[i]] <- c(.subset2(old, i)[keep], .subset2(new, i))
   }
-  attributes(df) <- list(names = cnames,
-                         class = "data.frame",
-                         row.names = .set_row_names(length(df[[1L]])))
-  attr(df, keep.attr) <- attr(new, keep.attr)
+  df <- `attributes<-`(df, `names<-`(
+    list(cnames, "data.frame", .set_row_names(length(df[[1L]])), attr(new, keep.attr)),
+    c("names", "class", "row.names", keep.attr)))
   df
 }
 
