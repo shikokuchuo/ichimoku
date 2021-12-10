@@ -19,7 +19,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4.12</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4.13</span>
       </span>
     </div>
 
@@ -82,7 +82,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">oanda_stream</span><span class="op">(</span><span class="va">instrument</span>, <span class="va">server</span>, <span class="va">apikey</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">oanda_stream</span><span class="op">(</span><span class="va">instrument</span>, display <span class="op">=</span> <span class="fl">7L</span>, <span class="va">limit</span>, <span class="va">server</span>, <span class="va">apikey</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -92,6 +92,13 @@
 delimited by '_' or '-' (e.g. "USD_JPY" or "usd-jpy"). Use the
 <code><a href="oanda_instruments.html">oanda_instruments</a></code> function to return a list of all valid
 instruments.</p></dd>
+<dt>display</dt>
+<dd><p>[default 7L] integer rows of data to display in the console
+at any one time.</p></dd>
+<dt>limit</dt>
+<dd><p>(optional) specify a time in minutes by which to limit the
+streaming session. The session will end with data returned automatically
+after the specified time has elapsed.</p></dd>
 <dt>server</dt>
 <dd><p>(optional) specify the "practice" or "live" server according to
 the account type held. If not specified, will default to "practice", unless
@@ -104,35 +111,38 @@ interactively if not specified.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Invisible NULL on function exit. The streaming data is output as text
-    to the console.</p>
+    <p>Returned invisibly, a dataframe containing the data for the streaming
+    session on function exit. The latest rows of the dataframe are printed to
+    the console, as governed by the 'display' argument.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
     <p>This function connects to the OANDA fxTrade Streaming API. Use the
-    'Esc' key to stop the stream.</p>
-<p>The output contains ANSI escape codes for console formatting, but
-    otherwise represents the raw feed without omission. Note that as this is
-    a raw stream, returned times are in UTC.</p>
+    'Esc' key to stop the stream and return the session data.</p>
+<p>All returned times are in UTC. 'b' and 'a' used in column headings are
+    abbreviations to denote 'bid' and 'ask' respectively.</p>
+<p>Note: only messages of type 'PRICE' are processed. Messages of type
+    'HEARTBEAT' consisting of only a timestamp are discarded.</p>
     </div>
     <div id="streaming-data">
     <h2>Streaming Data</h2>
     
 
 
-<p>Get a stream of Account Prices starting from when the request is made.
-    This pricing stream does not include every single price created for the
-    Account, but instead will provide at most 4 prices per second (every
-    250 milliseconds) for each instrument being requested. If more than one
-    price is created for an instrument during the 250 millisecond window,
-    only the price in effect at the end of the window is sent. This means
-    that during periods of rapid price movement, subscribers to this stream
-    will not be sent every price. Pricing windows for different connections
-    to the price stream are not all aligned in the same way (i.e. they are
-    not all aligned to the top of the second). This means that during
-    periods of rapid price movement, different subscribers may observe
-    different prices depending on their alignment.</p>
-    </div>
+<p>Summarised from the streaming API documentation:</p>
+<p></p><ul><li><p>Pricing stream does not include every single price created for the
+    Account</p></li>
+<li><p>At most 4 prices are sent per second (every 250 milliseconds) for
+    each instrument</p></li>
+<li><p>If more than one price is created during the 250 millisecond window,
+    only the price in effect at the end of the window is sent</p></li>
+<li><p>This means that during periods of rapid price movement, not every
+    price is sent</p></li>
+<li><p>Pricing windows for different connections to the stream are not all
+    aligned in the same way (e.g. to the top of the second)</p></li>
+<li><p>This means that during periods of rapid price movement, different
+    prices may be observed depending on the alignment for the connection</p></li>
+</ul></div>
     <div id="further-details">
     <h2>Further Details</h2>
     
@@ -145,7 +155,7 @@ interactively if not specified.</p></dd>
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in"><span class="co"># OANDA fxTrade API key required to run this example</span></span>
-<span class="r-in"><span class="fu">oanda_stream</span><span class="op">(</span><span class="st">"USD_JPY"</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">oanda_stream</span><span class="op">(</span><span class="st">"USD_JPY"</span>, display <span class="op">=</span> <span class="fl">7L</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>
 <span class="r-in"></span>
 </code></pre></div>

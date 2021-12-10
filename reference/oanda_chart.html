@@ -19,7 +19,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4.12</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4.13</span>
       </span>
     </div>
 
@@ -90,6 +90,7 @@
   count <span class="op">=</span> <span class="fl">250</span>,
   price <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"M"</span>, <span class="st">"B"</span>, <span class="st">"A"</span><span class="op">)</span>,
   theme <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"original"</span>, <span class="st">"conceptual"</span>, <span class="st">"dark"</span>, <span class="st">"fresh"</span>, <span class="st">"mono"</span>, <span class="st">"solarized"</span><span class="op">)</span>,
+  <span class="va">limit</span>,
   <span class="va">server</span>,
   <span class="va">apikey</span>,
   <span class="va">...</span>,
@@ -121,6 +122,10 @@ or "A" (ask).</p></dd>
 <dt>theme</dt>
 <dd><p>[default 'original'] with alternative choices of 'conceptual',
 'dark', 'fresh', 'mono', or 'solarized'.</p></dd>
+<dt>limit</dt>
+<dd><p>(optional) specify a time in minutes by which to limit the
+session. The session will end with data returned automatically after the
+specified time has elapsed.</p></dd>
 <dt>server</dt>
 <dd><p>(optional) specify the "practice" or "live" server according to
 the account type held. If not specified, will default to "practice", unless

@@ -21,7 +21,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4.12</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4.13</span>
       </span>
     </div>
 
@@ -86,7 +86,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">ichimoku</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">ichimoku</span><span class="op">(</span><span class="va">x</span>, <span class="va">ticker</span>, periods <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">9L</span>, <span class="fl">26L</span>, <span class="fl">52L</span><span class="op">)</span>, <span class="va">keep.data</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for ichimoku</span>
 <span class="fu">ichimoku</span><span class="op">(</span><span class="va">x</span>, <span class="va">ticker</span>, periods <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">9L</span>, <span class="fl">26L</span>, <span class="fl">52L</span><span class="op">)</span>, <span class="va">keep.data</span>, <span class="va">...</span><span class="op">)</span>
@@ -109,9 +109,6 @@
     <dl><dt>x</dt>
 <dd><p>a data.frame or other compatible object, which includes xts,
 data.table, tibble, and matrix.</p></dd>
-<dt>...</dt>
-<dd><p>additional arguments, for instance 'holidays', passed along to
-<code><a href="tradingDays.html">tradingDays</a></code> for calculating the future cloud on daily data.</p></dd>
 <dt>ticker</dt>
 <dd><p>(optional) specify a ticker to identify the instrument,
 otherwise this is set to the name of the input object.</p></dd>
@@ -123,6 +120,9 @@ ichimoku analysis.</p></dd>
 <dt>keep.data</dt>
 <dd><p>(optional) set to TRUE to retain additional data present
 in the input object as additional columns and/or attributes.</p></dd>
+<dt>...</dt>
+<dd><p>additional arguments, for instance 'holidays', passed along to
+<code><a href="tradingDays.html">tradingDays</a></code> for calculating the future cloud on daily data.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
