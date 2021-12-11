@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4.13</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4.14</span>
       </span>
     </div>
 
@@ -322,18 +322,19 @@
 <p>The first retrieved timestamp and the pricing component are printed, followed by the dataframe showing similar data to <code><a href="../reference/oanda_quote.html">oanda_quote()</a></code> for all instruments in the selected market. The data is ordered by the daily percentage change, from the most positive to the most negative.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw">oanda_view</span>()</span>
 <span id="cb9-2"><a href="#cb9-2"></a>Enter market [a]llfx [b]onds [c]ommodities [f]x [m]etals [s]tocks<span class="op">:</span><span class="st"> </span>c</span>
-<span id="cb9-3"><a href="#cb9-3"></a><span class="co">#&gt; Retrieving commodities [.........]</span></span>
-<span id="cb9-4"><a href="#cb9-4"></a><span class="co">#&gt; 2021-10-13 23:42:58 / M</span></span>
-<span id="cb9-5"><a href="#cb9-5"></a><span class="co">#&gt;               open    high     low    last    %chg</span></span>
-<span id="cb9-6"><a href="#cb9-6"></a><span class="co">#&gt; TWIX_USD     654.0   658.4   644.6   657.6  0.5505</span></span>
-<span id="cb9-7"><a href="#cb9-7"></a><span class="co">#&gt; WTICO_USD   80.614  80.819  80.589  80.779  0.2047</span></span>
-<span id="cb9-8"><a href="#cb9-8"></a><span class="co">#&gt; XCU_USD    4.47846 4.49068 4.47821 4.48719  0.1949</span></span>
-<span id="cb9-9"><a href="#cb9-9"></a><span class="co">#&gt; BCO_USD     83.871  83.879  83.858  83.873  0.0024</span></span>
-<span id="cb9-10"><a href="#cb9-10"></a><span class="co">#&gt; SOYBN_USD   12.113  12.237  11.966  12.091 -0.1816</span></span>
-<span id="cb9-11"><a href="#cb9-11"></a><span class="co">#&gt; NATGAS_USD   5.644   5.649   5.616   5.630 -0.2481</span></span>
-<span id="cb9-12"><a href="#cb9-12"></a><span class="co">#&gt; SUGAR_USD  0.19468 0.19530 0.19230 0.19242 -1.1609</span></span>
-<span id="cb9-13"><a href="#cb9-13"></a><span class="co">#&gt; WHEAT_USD    7.280   7.304   7.054   7.104 -2.4176</span></span>
-<span id="cb9-14"><a href="#cb9-14"></a><span class="co">#&gt; CORN_USD     5.454   5.466   5.274   5.322 -2.4202</span></span></code></pre></div>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="co">#&gt; Retrieving commodities [..........]</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="co">#&gt; 2021-12-11 01:58:21 / M</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="co">#&gt;                  open      high        low       last    %chg</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="co">#&gt; NATGAS_USD    3.76200    3.9260    3.72400    3.85200  2.3923</span></span>
+<span id="cb9-7"><a href="#cb9-7"></a><span class="co">#&gt; BCO_USD      74.52600   76.2310   74.32600   75.88000  1.8168</span></span>
+<span id="cb9-8"><a href="#cb9-8"></a><span class="co">#&gt; WTICO_USD    70.91200   72.5540   70.55400   72.19000  1.8022</span></span>
+<span id="cb9-9"><a href="#cb9-9"></a><span class="co">#&gt; WHEAT_USD     7.67200    7.7710    7.57100    7.72700  0.7169</span></span>
+<span id="cb9-10"><a href="#cb9-10"></a><span class="co">#&gt; XPT_USD     930.20200  939.6000  924.29400  936.43800  0.6704</span></span>
+<span id="cb9-11"><a href="#cb9-11"></a><span class="co">#&gt; SOYBN_USD    12.63500   12.7580   12.58800   12.67800  0.3403</span></span>
+<span id="cb9-12"><a href="#cb9-12"></a><span class="co">#&gt; SUGAR_USD     0.19274    0.1948    0.19176    0.19334  0.3113</span></span>
+<span id="cb9-13"><a href="#cb9-13"></a><span class="co">#&gt; CORN_USD      5.89800    5.9410    5.86800    5.90200  0.0678</span></span>
+<span id="cb9-14"><a href="#cb9-14"></a><span class="co">#&gt; XCU_USD       4.30292    4.3479    4.26536    4.28361 -0.4488</span></span>
+<span id="cb9-15"><a href="#cb9-15"></a><span class="co">#&gt; XPD_USD    1805.14800 1815.1260 1729.61100 1752.81200 -2.8993</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="oanda_orders-oanda_positions">
@@ -367,115 +368,119 @@
 <span class="co">#&gt; 11     CAD_HKD         CAD/HKD CURRENCY</span>
 <span class="co">#&gt; 12     CAD_JPY         CAD/JPY CURRENCY</span>
 <span class="co">#&gt; 13     CAD_SGD         CAD/SGD CURRENCY</span>
-<span class="co">#&gt; 14     CHF_HKD         CHF/HKD CURRENCY</span>
-<span class="co">#&gt; 15     CHF_JPY         CHF/JPY CURRENCY</span>
-<span class="co">#&gt; 16     CHF_ZAR         CHF/ZAR CURRENCY</span>
-<span class="co">#&gt; 17    CN50_USD       China A50      CFD</span>
-<span class="co">#&gt; 18    CORN_USD            Corn      CFD</span>
-<span class="co">#&gt; 19  DE10YB_EUR            Bund      CFD</span>
-<span class="co">#&gt; 20    DE30_EUR      Germany 30      CFD</span>
-<span class="co">#&gt; 21    EU50_EUR       Europe 50      CFD</span>
-<span class="co">#&gt; 22     EUR_AUD         EUR/AUD CURRENCY</span>
-<span class="co">#&gt; 23     EUR_CAD         EUR/CAD CURRENCY</span>
-<span class="co">#&gt; 24     EUR_CHF         EUR/CHF CURRENCY</span>
-<span class="co">#&gt; 25     EUR_CZK         EUR/CZK CURRENCY</span>
-<span class="co">#&gt; 26     EUR_DKK         EUR/DKK CURRENCY</span>
-<span class="co">#&gt; 27     EUR_GBP         EUR/GBP CURRENCY</span>
-<span class="co">#&gt; 28     EUR_HKD         EUR/HKD CURRENCY</span>
-<span class="co">#&gt; 29     EUR_HUF         EUR/HUF CURRENCY</span>
-<span class="co">#&gt; 30     EUR_JPY         EUR/JPY CURRENCY</span>
-<span class="co">#&gt; 31     EUR_NOK         EUR/NOK CURRENCY</span>
-<span class="co">#&gt; 32     EUR_NZD         EUR/NZD CURRENCY</span>
-<span class="co">#&gt; 33     EUR_PLN         EUR/PLN CURRENCY</span>
-<span class="co">#&gt; 34     EUR_SEK         EUR/SEK CURRENCY</span>
-<span class="co">#&gt; 35     EUR_SGD         EUR/SGD CURRENCY</span>
-<span class="co">#&gt; 36     EUR_TRY         EUR/TRY CURRENCY</span>
-<span class="co">#&gt; 37     EUR_USD         EUR/USD CURRENCY</span>
-<span class="co">#&gt; 38     EUR_ZAR         EUR/ZAR CURRENCY</span>
-<span class="co">#&gt; 39    FR40_EUR       France 40      CFD</span>
-<span class="co">#&gt; 40     GBP_AUD         GBP/AUD CURRENCY</span>
-<span class="co">#&gt; 41     GBP_CAD         GBP/CAD CURRENCY</span>
-<span class="co">#&gt; 42     GBP_CHF         GBP/CHF CURRENCY</span>
-<span class="co">#&gt; 43     GBP_HKD         GBP/HKD CURRENCY</span>
-<span class="co">#&gt; 44     GBP_JPY         GBP/JPY CURRENCY</span>
-<span class="co">#&gt; 45     GBP_NZD         GBP/NZD CURRENCY</span>
-<span class="co">#&gt; 46     GBP_PLN         GBP/PLN CURRENCY</span>
-<span class="co">#&gt; 47     GBP_SGD         GBP/SGD CURRENCY</span>
-<span class="co">#&gt; 48     GBP_USD         GBP/USD CURRENCY</span>
-<span class="co">#&gt; 49     GBP_ZAR         GBP/ZAR CURRENCY</span>
-<span class="co">#&gt; 50    HK33_HKD    Hong Kong 33      CFD</span>
-<span class="co">#&gt; 51     HKD_JPY         HKD/JPY CURRENCY</span>
-<span class="co">#&gt; 52    IN50_USD        India 50      CFD</span>
-<span class="co">#&gt; 53   JP225_USD       Japan 225      CFD</span>
-<span class="co">#&gt; 54  NAS100_USD      US Nas 100      CFD</span>
-<span class="co">#&gt; 55  NATGAS_USD     Natural Gas      CFD</span>
-<span class="co">#&gt; 56    NL25_EUR  Netherlands 25      CFD</span>
-<span class="co">#&gt; 57     NZD_CAD         NZD/CAD CURRENCY</span>
-<span class="co">#&gt; 58     NZD_CHF         NZD/CHF CURRENCY</span>
-<span class="co">#&gt; 59     NZD_HKD         NZD/HKD CURRENCY</span>
-<span class="co">#&gt; 60     NZD_JPY         NZD/JPY CURRENCY</span>
-<span class="co">#&gt; 61     NZD_SGD         NZD/SGD CURRENCY</span>
-<span class="co">#&gt; 62     NZD_USD         NZD/USD CURRENCY</span>
-<span class="co">#&gt; 63    SG30_SGD    Singapore 30      CFD</span>
-<span class="co">#&gt; 64     SGD_CHF         SGD/CHF CURRENCY</span>
-<span class="co">#&gt; 65     SGD_JPY         SGD/JPY CURRENCY</span>
-<span class="co">#&gt; 66   SOYBN_USD        Soybeans      CFD</span>
-<span class="co">#&gt; 67  SPX500_USD      US SPX 500      CFD</span>
-<span class="co">#&gt; 68   SUGAR_USD           Sugar      CFD</span>
-<span class="co">#&gt; 69     TRY_JPY         TRY/JPY CURRENCY</span>
-<span class="co">#&gt; 70    TWIX_USD    Taiwan Index      CFD</span>
-<span class="co">#&gt; 71   UK100_GBP          UK 100      CFD</span>
-<span class="co">#&gt; 72  UK10YB_GBP     UK 10Y Gilt      CFD</span>
-<span class="co">#&gt; 73  US2000_USD    US Russ 2000      CFD</span>
-<span class="co">#&gt; 74    US30_USD   US Wall St 30      CFD</span>
-<span class="co">#&gt; 75  USB02Y_USD    US 2Y T-Note      CFD</span>
-<span class="co">#&gt; 76  USB05Y_USD    US 5Y T-Note      CFD</span>
-<span class="co">#&gt; 77  USB10Y_USD   US 10Y T-Note      CFD</span>
-<span class="co">#&gt; 78  USB30Y_USD       US T-Bond      CFD</span>
-<span class="co">#&gt; 79     USD_CAD         USD/CAD CURRENCY</span>
-<span class="co">#&gt; 80     USD_CHF         USD/CHF CURRENCY</span>
-<span class="co">#&gt; 81     USD_CNH         USD/CNH CURRENCY</span>
-<span class="co">#&gt; 82     USD_CZK         USD/CZK CURRENCY</span>
-<span class="co">#&gt; 83     USD_DKK         USD/DKK CURRENCY</span>
-<span class="co">#&gt; 84     USD_HKD         USD/HKD CURRENCY</span>
-<span class="co">#&gt; 85     USD_HUF         USD/HUF CURRENCY</span>
-<span class="co">#&gt; 86     USD_INR         USD/INR CURRENCY</span>
-<span class="co">#&gt; 87     USD_JPY         USD/JPY CURRENCY</span>
-<span class="co">#&gt; 88     USD_MXN         USD/MXN CURRENCY</span>
-<span class="co">#&gt; 89     USD_NOK         USD/NOK CURRENCY</span>
-<span class="co">#&gt; 90     USD_PLN         USD/PLN CURRENCY</span>
-<span class="co">#&gt; 91     USD_SEK         USD/SEK CURRENCY</span>
-<span class="co">#&gt; 92     USD_SGD         USD/SGD CURRENCY</span>
-<span class="co">#&gt; 93     USD_THB         USD/THB CURRENCY</span>
-<span class="co">#&gt; 94     USD_TRY         USD/TRY CURRENCY</span>
-<span class="co">#&gt; 95     USD_ZAR         USD/ZAR CURRENCY</span>
-<span class="co">#&gt; 96   WHEAT_USD           Wheat      CFD</span>
-<span class="co">#&gt; 97   WTICO_USD  West Texas Oil      CFD</span>
-<span class="co">#&gt; 98     XAG_AUD      Silver/AUD    METAL</span>
-<span class="co">#&gt; 99     XAG_CAD      Silver/CAD    METAL</span>
-<span class="co">#&gt; 100    XAG_CHF      Silver/CHF    METAL</span>
-<span class="co">#&gt; 101    XAG_EUR      Silver/EUR    METAL</span>
-<span class="co">#&gt; 102    XAG_GBP      Silver/GBP    METAL</span>
-<span class="co">#&gt; 103    XAG_HKD      Silver/HKD    METAL</span>
-<span class="co">#&gt; 104    XAG_JPY      Silver/JPY    METAL</span>
-<span class="co">#&gt; 105    XAG_NZD      Silver/NZD    METAL</span>
-<span class="co">#&gt; 106    XAG_SGD      Silver/SGD    METAL</span>
-<span class="co">#&gt; 107    XAG_USD          Silver    METAL</span>
-<span class="co">#&gt; 108    XAU_AUD        Gold/AUD    METAL</span>
-<span class="co">#&gt; 109    XAU_CAD        Gold/CAD    METAL</span>
-<span class="co">#&gt; 110    XAU_CHF        Gold/CHF    METAL</span>
-<span class="co">#&gt; 111    XAU_EUR        Gold/EUR    METAL</span>
-<span class="co">#&gt; 112    XAU_GBP        Gold/GBP    METAL</span>
-<span class="co">#&gt; 113    XAU_HKD        Gold/HKD    METAL</span>
-<span class="co">#&gt; 114    XAU_JPY        Gold/JPY    METAL</span>
-<span class="co">#&gt; 115    XAU_NZD        Gold/NZD    METAL</span>
-<span class="co">#&gt; 116    XAU_SGD        Gold/SGD    METAL</span>
-<span class="co">#&gt; 117    XAU_USD            Gold    METAL</span>
-<span class="co">#&gt; 118    XAU_XAG     Gold/Silver    METAL</span>
-<span class="co">#&gt; 119    XCU_USD          Copper      CFD</span>
-<span class="co">#&gt; 120    XPD_USD       Palladium      CFD</span>
-<span class="co">#&gt; 121    XPT_USD        Platinum      CFD</span>
-<span class="co">#&gt; 122    ZAR_JPY         ZAR/JPY CURRENCY</span></code></pre>
+<span class="co">#&gt; 14    CH20_CHF  Switzerland 20      CFD</span>
+<span class="co">#&gt; 15     CHF_HKD         CHF/HKD CURRENCY</span>
+<span class="co">#&gt; 16     CHF_JPY         CHF/JPY CURRENCY</span>
+<span class="co">#&gt; 17     CHF_ZAR         CHF/ZAR CURRENCY</span>
+<span class="co">#&gt; 18  CHINAH_HKD  China H Shares      CFD</span>
+<span class="co">#&gt; 19    CN50_USD       China A50      CFD</span>
+<span class="co">#&gt; 20    CORN_USD            Corn      CFD</span>
+<span class="co">#&gt; 21  DE10YB_EUR            Bund      CFD</span>
+<span class="co">#&gt; 22    DE30_EUR      Germany 30      CFD</span>
+<span class="co">#&gt; 23   ESPIX_EUR        Spain 35      CFD</span>
+<span class="co">#&gt; 24    EU50_EUR       Europe 50      CFD</span>
+<span class="co">#&gt; 25     EUR_AUD         EUR/AUD CURRENCY</span>
+<span class="co">#&gt; 26     EUR_CAD         EUR/CAD CURRENCY</span>
+<span class="co">#&gt; 27     EUR_CHF         EUR/CHF CURRENCY</span>
+<span class="co">#&gt; 28     EUR_CZK         EUR/CZK CURRENCY</span>
+<span class="co">#&gt; 29     EUR_DKK         EUR/DKK CURRENCY</span>
+<span class="co">#&gt; 30     EUR_GBP         EUR/GBP CURRENCY</span>
+<span class="co">#&gt; 31     EUR_HKD         EUR/HKD CURRENCY</span>
+<span class="co">#&gt; 32     EUR_HUF         EUR/HUF CURRENCY</span>
+<span class="co">#&gt; 33     EUR_JPY         EUR/JPY CURRENCY</span>
+<span class="co">#&gt; 34     EUR_NOK         EUR/NOK CURRENCY</span>
+<span class="co">#&gt; 35     EUR_NZD         EUR/NZD CURRENCY</span>
+<span class="co">#&gt; 36     EUR_PLN         EUR/PLN CURRENCY</span>
+<span class="co">#&gt; 37     EUR_SEK         EUR/SEK CURRENCY</span>
+<span class="co">#&gt; 38     EUR_SGD         EUR/SGD CURRENCY</span>
+<span class="co">#&gt; 39     EUR_TRY         EUR/TRY CURRENCY</span>
+<span class="co">#&gt; 40     EUR_USD         EUR/USD CURRENCY</span>
+<span class="co">#&gt; 41     EUR_ZAR         EUR/ZAR CURRENCY</span>
+<span class="co">#&gt; 42    FR40_EUR       France 40      CFD</span>
+<span class="co">#&gt; 43     GBP_AUD         GBP/AUD CURRENCY</span>
+<span class="co">#&gt; 44     GBP_CAD         GBP/CAD CURRENCY</span>
+<span class="co">#&gt; 45     GBP_CHF         GBP/CHF CURRENCY</span>
+<span class="co">#&gt; 46     GBP_HKD         GBP/HKD CURRENCY</span>
+<span class="co">#&gt; 47     GBP_JPY         GBP/JPY CURRENCY</span>
+<span class="co">#&gt; 48     GBP_NZD         GBP/NZD CURRENCY</span>
+<span class="co">#&gt; 49     GBP_PLN         GBP/PLN CURRENCY</span>
+<span class="co">#&gt; 50     GBP_SGD         GBP/SGD CURRENCY</span>
+<span class="co">#&gt; 51     GBP_USD         GBP/USD CURRENCY</span>
+<span class="co">#&gt; 52     GBP_ZAR         GBP/ZAR CURRENCY</span>
+<span class="co">#&gt; 53    HK33_HKD    Hong Kong 33      CFD</span>
+<span class="co">#&gt; 54     HKD_JPY         HKD/JPY CURRENCY</span>
+<span class="co">#&gt; 55    IN50_USD        India 50      CFD</span>
+<span class="co">#&gt; 56   JP225_USD       Japan 225      CFD</span>
+<span class="co">#&gt; 57  JP225Y_JPY Japan 225 (JPY)      CFD</span>
+<span class="co">#&gt; 58  NAS100_USD      US Nas 100      CFD</span>
+<span class="co">#&gt; 59  NATGAS_USD     Natural Gas      CFD</span>
+<span class="co">#&gt; 60    NL25_EUR  Netherlands 25      CFD</span>
+<span class="co">#&gt; 61     NZD_CAD         NZD/CAD CURRENCY</span>
+<span class="co">#&gt; 62     NZD_CHF         NZD/CHF CURRENCY</span>
+<span class="co">#&gt; 63     NZD_HKD         NZD/HKD CURRENCY</span>
+<span class="co">#&gt; 64     NZD_JPY         NZD/JPY CURRENCY</span>
+<span class="co">#&gt; 65     NZD_SGD         NZD/SGD CURRENCY</span>
+<span class="co">#&gt; 66     NZD_USD         NZD/USD CURRENCY</span>
+<span class="co">#&gt; 67    SG30_SGD    Singapore 30      CFD</span>
+<span class="co">#&gt; 68     SGD_CHF         SGD/CHF CURRENCY</span>
+<span class="co">#&gt; 69     SGD_JPY         SGD/JPY CURRENCY</span>
+<span class="co">#&gt; 70   SOYBN_USD        Soybeans      CFD</span>
+<span class="co">#&gt; 71  SPX500_USD      US SPX 500      CFD</span>
+<span class="co">#&gt; 72   SUGAR_USD           Sugar      CFD</span>
+<span class="co">#&gt; 73     TRY_JPY         TRY/JPY CURRENCY</span>
+<span class="co">#&gt; 74    TWIX_USD    Taiwan Index      CFD</span>
+<span class="co">#&gt; 75   UK100_GBP          UK 100      CFD</span>
+<span class="co">#&gt; 76  UK10YB_GBP     UK 10Y Gilt      CFD</span>
+<span class="co">#&gt; 77  US2000_USD    US Russ 2000      CFD</span>
+<span class="co">#&gt; 78    US30_USD   US Wall St 30      CFD</span>
+<span class="co">#&gt; 79  USB02Y_USD    US 2Y T-Note      CFD</span>
+<span class="co">#&gt; 80  USB05Y_USD    US 5Y T-Note      CFD</span>
+<span class="co">#&gt; 81  USB10Y_USD   US 10Y T-Note      CFD</span>
+<span class="co">#&gt; 82  USB30Y_USD       US T-Bond      CFD</span>
+<span class="co">#&gt; 83     USD_CAD         USD/CAD CURRENCY</span>
+<span class="co">#&gt; 84     USD_CHF         USD/CHF CURRENCY</span>
+<span class="co">#&gt; 85     USD_CNH         USD/CNH CURRENCY</span>
+<span class="co">#&gt; 86     USD_CZK         USD/CZK CURRENCY</span>
+<span class="co">#&gt; 87     USD_DKK         USD/DKK CURRENCY</span>
+<span class="co">#&gt; 88     USD_HKD         USD/HKD CURRENCY</span>
+<span class="co">#&gt; 89     USD_HUF         USD/HUF CURRENCY</span>
+<span class="co">#&gt; 90     USD_INR         USD/INR CURRENCY</span>
+<span class="co">#&gt; 91     USD_JPY         USD/JPY CURRENCY</span>
+<span class="co">#&gt; 92     USD_MXN         USD/MXN CURRENCY</span>
+<span class="co">#&gt; 93     USD_NOK         USD/NOK CURRENCY</span>
+<span class="co">#&gt; 94     USD_PLN         USD/PLN CURRENCY</span>
+<span class="co">#&gt; 95     USD_SEK         USD/SEK CURRENCY</span>
+<span class="co">#&gt; 96     USD_SGD         USD/SGD CURRENCY</span>
+<span class="co">#&gt; 97     USD_THB         USD/THB CURRENCY</span>
+<span class="co">#&gt; 98     USD_TRY         USD/TRY CURRENCY</span>
+<span class="co">#&gt; 99     USD_ZAR         USD/ZAR CURRENCY</span>
+<span class="co">#&gt; 100  WHEAT_USD           Wheat      CFD</span>
+<span class="co">#&gt; 101  WTICO_USD  West Texas Oil      CFD</span>
+<span class="co">#&gt; 102    XAG_AUD      Silver/AUD    METAL</span>
+<span class="co">#&gt; 103    XAG_CAD      Silver/CAD    METAL</span>
+<span class="co">#&gt; 104    XAG_CHF      Silver/CHF    METAL</span>
+<span class="co">#&gt; 105    XAG_EUR      Silver/EUR    METAL</span>
+<span class="co">#&gt; 106    XAG_GBP      Silver/GBP    METAL</span>
+<span class="co">#&gt; 107    XAG_HKD      Silver/HKD    METAL</span>
+<span class="co">#&gt; 108    XAG_JPY      Silver/JPY    METAL</span>
+<span class="co">#&gt; 109    XAG_NZD      Silver/NZD    METAL</span>
+<span class="co">#&gt; 110    XAG_SGD      Silver/SGD    METAL</span>
+<span class="co">#&gt; 111    XAG_USD          Silver    METAL</span>
+<span class="co">#&gt; 112    XAU_AUD        Gold/AUD    METAL</span>
+<span class="co">#&gt; 113    XAU_CAD        Gold/CAD    METAL</span>
+<span class="co">#&gt; 114    XAU_CHF        Gold/CHF    METAL</span>
+<span class="co">#&gt; 115    XAU_EUR        Gold/EUR    METAL</span>
+<span class="co">#&gt; 116    XAU_GBP        Gold/GBP    METAL</span>
+<span class="co">#&gt; 117    XAU_HKD        Gold/HKD    METAL</span>
+<span class="co">#&gt; 118    XAU_JPY        Gold/JPY    METAL</span>
+<span class="co">#&gt; 119    XAU_NZD        Gold/NZD    METAL</span>
+<span class="co">#&gt; 120    XAU_SGD        Gold/SGD    METAL</span>
+<span class="co">#&gt; 121    XAU_USD            Gold    METAL</span>
+<span class="co">#&gt; 122    XAU_XAG     Gold/Silver    METAL</span>
+<span class="co">#&gt; 123    XCU_USD          Copper      CFD</span>
+<span class="co">#&gt; 124    XPD_USD       Palladium      CFD</span>
+<span class="co">#&gt; 125    XPT_USD        Platinum      CFD</span>
+<span class="co">#&gt; 126    ZAR_JPY         ZAR/JPY CURRENCY</span></code></pre>
 <p>Note: the above table is saved as internal package data and used as a fallback if the API call fails. In such a case, a warning is issued once per session as subsequent calls will return the cached list.</p>
 </div>
 <div class="section level2">
