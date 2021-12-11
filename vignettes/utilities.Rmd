@@ -73,7 +73,7 @@ look(grid)
 
 Convert an 'xts' object to 'data.frame'. This function can be an order of magnitude faster than `as.data.frame()` for an 'xts' object.
 
-Note that for ichimoku objects, a marginally faster, more specific version has been implemented as the S3 method for `as.data.frame()`. Hence using this utility on an ichimoku object is not necessary.
+Note that for ichimoku objects, a slightly faster, more specific version has been implemented as the S3 method for `as.data.frame()`. Hence using this utility on an ichimoku object is not necessary.
 
 Takes the following arguments:
 

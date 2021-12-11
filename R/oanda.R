@@ -233,7 +233,8 @@ getPrices <- function(instrument, granularity, count, from, to, price, server,
          instrument = instrument,
          price = price,
          timestamp = .POSIXct(timestamp),
-         oanda = TRUE))
+         oanda = TRUE)
+  )
 
   df
 
@@ -854,12 +855,12 @@ oanda_view <- function(market = c("allfx", "bonds", "commodities", "fx", "metals
                   vec[-grep("CNH|CZK|DKK|HKD|HUF|INR|MXN|NOK|PLN|SGD|SEK|THB|TRY|ZAR", vec, perl = TRUE)]
                 },
                 allfx = .subset2(ins, "name")[.subset2(ins, "type") == "CURRENCY"],
-                stocks = .subset2(ins, "name")[grep("25|30|33|40|50|100|200|225", .subset2(ins, "displayName"), perl = TRUE)],
-                bonds = .subset2(ins, "name")[grep("2Y|5Y|10Y|30Y", .subset2(ins, "name"), perl = TRUE)],
+                stocks = .subset2(ins, "name")[grep("20|25|30|33|35|40|50|100|200|225|Shares|Index", .subset2(ins, "displayName"), perl = TRUE)],
+                bonds = .subset2(ins, "name")[grep("02Y|05Y|10Y|30Y", .subset2(ins, "name"), perl = TRUE)],
                 metals = .subset2(ins, "name")[.subset2(ins, "type") == "METAL"],
                 commodities = {
-                  ins <- ins[.subset2(ins, "type") == "CFD", ]
-                  (vec <- .subset2(ins, "name"))[-grep("[0-9]+", vec, perl = TRUE)]
+                  vec <- .subset2(ins, "name")[.subset2(ins, "type") == "CFD"]
+                  vec[-grep("[0-9]+|EUR|HKD|TWI", vec, perl = TRUE)]
                 })
   xlen <- length(sel)
   data <- vector(mode = "list", length = xlen)
@@ -877,16 +878,14 @@ oanda_view <- function(market = c("allfx", "bonds", "commodities", "fx", "metals
   close <- data[, "c", drop = FALSE]
   change <- round(100 * (close / open - 1), digits = 4L)
   reorder <- order(change, decreasing = TRUE)
-  df <- `attributes<-`(list(open[reorder],
-                            high[reorder],
-                            low[reorder],
-                            change[reorder]),
-                       list(names = c("open", "high", "low", "last", "%chg"),
-                            class = "data.frame",
-                            row.names = sel[reorder],
-                            price = price,
-                            timestamp = time)
-                       )
+  df <- `attributes<-`(
+    list(open[reorder], high[reorder], low[reorder], close[reorder], change[reorder]),
+    list(names = c("open", "high", "low", "last", "%chg"),
+         class = "data.frame",
+         row.names = sel[reorder],
+         price = price,
+         timestamp = time)
+  )
 
   cat("\n", format.POSIXct(time), " / ", price, "\n", sep = "")
   print(df)

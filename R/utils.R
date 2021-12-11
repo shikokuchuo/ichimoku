@@ -73,7 +73,7 @@ tradingDays <- function(x, holidays, ...) {
 #' @export
 #'
 grid_dup <- function(n, omit.id) {
-  vec <- vector(mode = "list", length = n - 1)
+  vec <- vector(mode = "list", length = n - 1L)
   for (i in seq_len(n - 1)) {
     vec[[i]] <- i * n + 1:i
   }
@@ -180,9 +180,8 @@ matrix_df <- function(x, keep.attrs) {
   dnames <- dimnames(x)
   mat <- unname(x)
   dims <- dim(mat)
-  len <- dims[2L]
-  df <- vector(mode = "list", length = len)
-  for (i in seq_len(len)) {
+  df <- vector(mode = "list", length = dims[2L])
+  for (i in seq_along(df)) {
     df[[i]] <- mat[, i]
   }
   attributes(df) <- c(list(names = dnames[[2L]],
@@ -272,9 +271,8 @@ df_merge <- function(...) {
 df_append <- function(new, old, key = "time", keep.attr = "timestamp") {
   keep <- !.subset2(old, key) %in% .subset2(new, key)
   cnames <- attr(new, "names")
-  len <- length(new)
-  df <- vector(mode = "list", length = len)
-  for (i in seq_len(len)) {
+  df <- vector(mode = "list", length = length(new))
+  for (i in seq_along(df)) {
     df[[i]] <- c(.subset2(old, i)[keep], .subset2(new, i))
   }
   df <- `attributes<-`(df, `names<-`(
@@ -287,11 +285,12 @@ df_append <- function(new, old, key = "time", keep.attr = "timestamp") {
 #'
 #' After calling or invoking the default print method for ichimoku objects, the
 #'     console output will display \code{# … with x more rows} if the entire
-#'     data does not fit on-screen. Call \code{more()} to display more rows.
+#'     data does not fit on-screen. Use \code{more()} to display more rows.
 #'
 #' @param n a parameter (optional) passed on to the argument 'n' of
 #'     \code{\link[tibble]{print.tbl}} controlling the number of rows to show.
-#'     Defaults to 100.
+#'     Defaults to 100. Normally an integer, but supply a character string such
+#'     as 'a' to print all rows.
 #'
 #' @return The ichimoku object contained in \code{\link{.Last.value}} (invisibly)
 #'     or else invisible NULL (if .Last.value is not an ichimoku object).

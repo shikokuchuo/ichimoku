@@ -136,9 +136,7 @@ do_ <- function() {
         dispName <- vec[cnames == "displayName"]
         type <- vec[cnames == "type"]
         reorder <- order(name)
-        df <- `attributes<-`(list(name[reorder],
-                                  dispName[reorder],
-                                  type[reorder]),
+        df <- `attributes<-`(list(name[reorder], dispName[reorder], type[reorder]),
                              list(names = c("name", "displayName", "type"),
                                   class = "data.frame",
                                   row.names = .set_row_names(length(reorder)))

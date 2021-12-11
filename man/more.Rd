@@ -9,7 +9,8 @@ more(n)
 \arguments{
 \item{n}{a parameter (optional) passed on to the argument 'n' of
 \code{\link[tibble]{print.tbl}} controlling the number of rows to show.
-Defaults to 100.}
+Defaults to 100. Normally an integer, but supply a character string such
+as 'a' to print all rows.}
 }
 \value{
 The ichimoku object contained in \code{\link{.Last.value}} (invisibly)
@@ -19,7 +20,7 @@ The ichimoku object contained in \code{\link{.Last.value}} (invisibly)
 \description{
 After calling or invoking the default print method for ichimoku objects, the
     console output will display \code{# … with x more rows} if the entire
-    data does not fit on-screen. Call \code{more()} to display more rows.
+    data does not fit on-screen. Use \code{more()} to display more rows.
 }
 \examples{
 cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
