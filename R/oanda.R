@@ -111,7 +111,7 @@ oanda <- function(instrument,
                       price = price, server = server, apikey = apikey)
 
     } else {
-      bounds <- d1 + interval * 0:requests/requests
+      bounds <- d1 + interval * 0:requests / requests
       continue <- if (interactive()) readline(prompt = paste0("Max of 5000 data periods per request. ",
                                                               requests, " requests will be made. Continue? [Y/n] ")) else ""
       continue %in% c("n", "N", "no", "NO") && stop("Request cancelled by user", call. = FALSE)
@@ -123,7 +123,6 @@ oanda <- function(instrument,
                                from = strftime(bounds[i], format = "%Y-%m-%dT%H:%M:%S"),
                                to = strftime(bounds[i + 1L], format = "%Y-%m-%dT%H:%M:%S"),
                                price = price, server = server, apikey = apikey)
-        if (i != requests) Sys.sleep(0.5)
       }
       if (output) cat("\nMerging data partitions... ")
       df <- do.call(df_merge, list)
@@ -338,7 +337,8 @@ oanda_stream <- function(instrument, display = 7L, limit, server, apikey) {
     .subset2(x, 1L) == "PRICE" || return()
     x <- `attributes<-`(unlist(x), dattrs)
     data <<- df_append(old = data, new = x)
-    start = max(1L, (end <- dim(data)[1L]) - display + 1L)
+    end <- dim(data)[1L]
+    start <- max(1L, end - display + 1L)
     cat("\014")
     message("Streaming data... Press 'Esc' to return")
     print.data.frame(data[start:end, ])
@@ -538,7 +538,7 @@ oanda_studio <- function(instrument = "USD_JPY",
 
     isTRUE(new.process) && {
       mc <- match.call()
-      mc$new.process <- NULL
+      mc[["new.process"]] <- NULL
       return(system2(command = "R", args = c("-e", paste0("'ichimoku::", deparse(mc), "'")),
                      stdout = NULL, stderr = "", wait = FALSE))
     }
@@ -870,7 +870,6 @@ oanda_view <- function(market = c("allfx", "bonds", "commodities", "fx", "metals
     cat("\rRetrieving ", market, " [", rep(".", i), rep(" ", xlen - i), "]", sep = "")
     data[[i]] <- getPrices(instrument = sel[i], granularity = "D", count = 1, price = price,
                            server = server, apikey = apikey, .validate = FALSE)
-    if (i != xlen) Sys.sleep(0.05)
   }
   data <- do.call(rbind, data)
   time <- .POSIXct(data[1L, "t", drop = FALSE])

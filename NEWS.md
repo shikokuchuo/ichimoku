@@ -1,4 +1,4 @@
-# ichimoku 1.2.4.15
+# ichimoku 1.2.4.16
 
 #### New features:
 
@@ -12,6 +12,7 @@
 * Major revamp of `oanda_stream()` which has a much improved interface and now renders the stream as a structured dataframe.
 * `oanda_chart()` and `oanda_stream()` gain the argument 'limit' which imposes a time limit for the session after which data is returned automatically.
 * `oanda_positions()` gains the parameter 'time' for retrieving the position book at a particular time.
+* `archive()` gains the ability to save files interactively using a system dialog - call the function with an object, leaving the second argument empty e.g. `archive(object, )`.
 * `index()` gains the parameter 'subset' for fast subsetting of ichimoku cloud indexes.
 * New plot themes 'conceptual' and 'fresh'.
 

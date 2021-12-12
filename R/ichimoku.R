@@ -168,7 +168,7 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
     colp <- grep("price|value|close", cnames, ignore.case = TRUE, perl = TRUE)[1L]
     is.na(colp) && stop("price data not found. Perhaps check column names?", call. = FALSE)
     close <- as.numeric(.subset2(x, colp))
-    open <- c(NA, close[1:(xlen - 1L)])
+    open <- c(NA, `length<-`(close, xlen - 1L))
     high <- pmax.int(open, close)
     low <- pmin.int(open, close)
     warning("OHLC data not found - using pseudo-OHLC data constructed from '", cnames[colp],
@@ -182,7 +182,7 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
     if (is.na(colo)) {
       warning("Opening prices not found - using previous closing prices as substitute",
               "\nThis affects the candles but not the calculation of the cloud chart", call. = FALSE)
-      open <- c(NA, close[1:(xlen - 1L)])
+      open <- c(NA, `length<-`(close, xlen - 1L))
     } else {
       open <- as.numeric(.subset2(x, colo))
     }
@@ -206,14 +206,16 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
   kijun <- (maxOver(high, p2) + minOver(low, p2)) / 2
   senkouA <- (tenkan + kijun) / 2
   senkouB <- (maxOver(high, p3) + minOver(low, p3)) / 2
-  chikou <- c(close[p2:xlen], rep(NA, p2 - 1L))
+  chikou <- `length<-`(close[p2:xlen], xlen)
   cloudT <- pmax.int(senkouA, senkouB)
   cloudB <- pmin.int(senkouA, senkouB)
 
   periodicity <- min(index[2:4] - index[1:3])
   if (periodicity == 86400) {
-    future <- (future <- seq.int(from = index[xlen], by = periodicity, length.out = p2 + p2
-                                 )[-1L])[tradingDays(.POSIXct(future), ...)][1:(p2 - 1L)]
+    future <- `length<-`(
+      (future <- seq.int(from = index[xlen], by = periodicity,
+                         length.out = p2 + p2)[-1L])[tradingDays(.POSIXct(future), ...)],
+      p2 - 1L)
   } else {
     future <- seq.int(from = index[xlen], by = periodicity, length.out = p2)[-1L]
   }
@@ -230,16 +232,16 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
     lk$periods <- lk$periodicity <- lk$ticker <- NULL
   }
 
-  kumo <- cbind(open = c(open, rep(NA, p2 - 1L)),
-                high = c(high, rep(NA, p2 - 1L)),
-                low = c(low, rep(NA, p2 - 1L)),
-                close = c(close, rep(NA, p2 - 1L)),
-                cd = c(cd, rep(NA, p2 - 1L)),
-                tenkan = c(tenkan, rep(NA, p2 - 1L)),
-                kijun = c(kijun, rep(NA, p2 - 1L)),
+  kumo <- cbind(open = `length<-`(open, xlen + p2 - 1L),
+                high = `length<-`(high, xlen + p2 - 1L),
+                low = `length<-`(low, xlen + p2 - 1L),
+                close = `length<-`(close, xlen + p2 - 1L),
+                cd = `length<-`(cd, xlen + p2 - 1L),
+                tenkan = `length<-`(tenkan, xlen + p2 - 1L),
+                kijun = `length<-`(kijun, xlen + p2 - 1L),
                 senkouA = c(rep(NA, p2 - 1L), senkouA),
                 senkouB = c(rep(NA, p2 - 1L), senkouB),
-                chikou = c(chikou, rep(NA, p2 - 1L)),
+                chikou = `length<-`(chikou, xlen + p2 - 1L),
                 cloudT = c(rep(NA, p2 - 1L), cloudT),
                 cloudB = c(rep(NA, p2 - 1L), cloudB),
                 kmatrix)

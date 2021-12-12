@@ -239,7 +239,7 @@ as.data.frame.ichimoku <- function(x, row.names, optional, keep.attrs, ...) {
   dims <- attr(x, "dim")
   xlen <- dims[1L]
   len <- dims[2L]
-  start <- 0:(len-1) * xlen + 1L
+  start <- 0:(len - 1) * xlen + 1L
   end <- 1:len * xlen
 
   attributes(x) <- NULL
@@ -298,7 +298,7 @@ as_tibble.ichimoku <- function(x, class, keep.attrs, ...) {
   dims <- attr(x, "dim")
   xlen <- dims[1L]
   len <- dims[2L]
-  start <- 0:(len-1) * xlen + 1L
+  start <- 0:(len - 1) * xlen + 1L
   end <- 1:len * xlen
 
   attributes(x) <- NULL

@@ -18,8 +18,8 @@ test_that("mlgrid ok", {
   expect_identical(dim(grid2), c(153L, 75L))
   expect_type(grid3, "double")
   expect_identical(dim(grid3), c(151L, 38L))
+  expect_warning(mlgrid(cloud, k = NA), regexp = "'k' invalid")
   expect_error(mlgrid(sample_ohlc_data), regexp = "ichimoku object")
-  expect_error(mlgrid(cloud, k = NA), regexp = "invalid value")
 })
 
 test_that("relative ok", {

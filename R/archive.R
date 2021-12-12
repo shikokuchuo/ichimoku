@@ -21,9 +21,11 @@
 #'     assigned to an object. A confirmation message is issued if the file read
 #'     operation has been successful.
 #'
-#'     For write operations: specify both 'object' and 'file'. 'object' will be
-#'     written to 'file'. A confirmation message is issued if the file write
-#'     operation has been successful.
+#'     For write operations: specify both 'object' and 'file'. If only 'object'
+#'     is specified and 'file' is left empty (see examples), a system dialog
+#'     will be opened allowing the file save location to be chosen interactively.
+#'     'object' will be written to 'file'. A confirmation message is issued if
+#'     the file write operation has been successful.
 #'
 #' @section Data Verification:
 #'
@@ -52,8 +54,13 @@
 #' unlink(file)
 #'
 #' if (interactive()) {
-#' # Only run example in interactive R sessions
+#' # Only run examples in interactive R sessions
+#'
+#' # Read file to 'object' using system dialog:
 #' object <- archive()
+#'
+#' # Write 'cloud' to file using system dialog:
+#' archive(cloud, )
 #' }
 #'
 #' @export
@@ -62,23 +69,27 @@ archive <- function(..., object, file) {
 
   if (missing(object) && missing(file)) {
 
-    dots <- list(...)
+    dots <- substitute(alist(...))
     dlen <- length(dots)
 
-    if (dlen == 1L) {
-      file <- dots[[1L]]
-      readArchive(file = file)
-
-    } else if (dlen == 2L) {
-      object <- dots[[1L]]
-      file <- dots[[2L]]
-      writeArchive(object = object, file = file)
-
-    } else if (dlen == 0L && interactive()) {
+    if (dlen == 1L && interactive()) {
       readArchive(file = file.choose())
 
+    } else if (dlen == 2L) {
+      readArchive(file = if (is.symbol(dots2 <- dots[[2L]])) get(dots2, pos = parent.frame()) else dots2)
+
+    } else if (dlen == 3L) {
+      writeArchive(object = get(dots[[2L]], pos = parent.frame()),
+                   file = if ((dots3 <- dots[[3L]]) == "" && interactive()) {
+                     file.choose(new = TRUE)
+                   } else if (is.symbol(dots3)) {
+                     get(dots3, pos = parent.frame())
+                   } else {
+                     dots3
+                   })
+
     } else {
-      stop(dlen, " arguments passed to archive() which requires 1 or 2",
+      stop(dlen - 1L, " arguments passed to archive() which requires 1 or 2",
            "\nFor read operations specify 'file' only, write operations both 'object' and 'file'", call. = FALSE)
     }
 
@@ -91,7 +102,11 @@ archive <- function(..., object, file) {
     }
 
   } else {
-    stop("in archive(object, file): 'object' specified without 'file'", call. = FALSE)
+    if (interactive()) {
+      writeArchive(object = object, file = file.choose(new = TRUE))
+    } else {
+      stop("in archive(object, file): 'object' specified without 'file'", call. = FALSE)
+    }
   }
 
 }

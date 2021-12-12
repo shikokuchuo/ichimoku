@@ -31,9 +31,11 @@ For read operations: specify only 'file', or alternatively if no
     assigned to an object. A confirmation message is issued if the file read
     operation has been successful.
 
-    For write operations: specify both 'object' and 'file'. 'object' will be
-    written to 'file'. A confirmation message is issued if the file write
-    operation has been successful.
+    For write operations: specify both 'object' and 'file'. If only 'object'
+    is specified and 'file' is left empty (see examples), a system dialog
+    will be opened allowing the file save location to be chosen interactively.
+    'object' will be written to 'file'. A confirmation message is issued if
+    the file write operation has been successful.
 }
 \section{Data Verification}{
 
@@ -66,8 +68,13 @@ restored <- archive(file)
 unlink(file)
 
 if (interactive()) {
-# Only run example in interactive R sessions
+# Only run examples in interactive R sessions
+
+# Read file to 'object' using system dialog:
 object <- archive()
+
+# Write 'cloud' to file using system dialog:
+archive(cloud, )
 }
 
 }

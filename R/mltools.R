@@ -151,8 +151,8 @@ autostrat <- function(x,
 #' @inheritParams strat
 #' @param y [default 'logret'] choose target variable 'logret' (log returns),
 #'     'ret' (discrete returns), or 'none'.
-#' @param k [default 1L] integer time horizon of number of periods over which to
-#'     calculate target variable 'y'.
+#' @param k [default 1L] number of periods time horizon over which to calculate
+#'     target variable 'y'.
 #' @param type [default 'boolean'] choose 'boolean', 'numeric' or 'z-score'.
 #'     'boolean' creates a grid of dummy variables for ichimoku indicator
 #'     conditions of the form 1 if c1 > c2, 0 otherwise. 'numeric' creates a
@@ -210,8 +210,14 @@ mlgrid <- function(x,
 
   is.ichimoku(x) || stop("mlgrid() only works on ichimoku objects", call. = FALSE)
   y <- match.arg(y)
-  is.numeric(k) || stop("invalid value supplied for argument 'k'", call. = FALSE)
-  k <- as.integer(k)
+  if (!missing(k)) {
+    if (is.numeric(k) && k >= 1L) {
+      k <- as.integer(k)
+    } else {
+      warning("Specified value for 'k' invalid - reverting to default of 1L", call. = FALSE)
+      k <- 1L
+    }
+  }
   dir <- match.arg(dir)
   type <- match.arg(type)
   format <- match.arg(format)

@@ -74,7 +74,7 @@ tradingDays <- function(x, holidays, ...) {
 #'
 grid_dup <- function(n, omit.id) {
   vec <- vector(mode = "list", length = n - 1L)
-  for (i in seq_len(n - 1)) {
+  for (i in seq_along(vec)) {
     vec[[i]] <- i * n + 1:i
   }
   vec <- unlist(vec)

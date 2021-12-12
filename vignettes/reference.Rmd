@@ -328,11 +328,25 @@ Archive files created by this function are stored in the native RData format for
 
 #### Writing
 
-`archive()` for write operations will take 2 arguments: the object to be written, and the file path/name of the file to be stored. A confirmation is printed to the console that the file has been written.
+`archive()` for write operations will take 2 arguments: the object to be written, and the file path/name of the file to be stored. If the second argument is left empty, a system dialog will be opened allowing the file save location to be set interactively. A confirmation is printed to the console that the file has been written.
+
+```{r archivew, eval=FALSE}
+# Write object to file:
+archive(object, "path/filename")
+# Leave second argument empty to choose file save location from a system dialog:
+archive(object, )
+```
 
 #### Reading
 
 `archive()` for read operations takes a single argument: the file path/name of the file to be read. Alternatively, if no arguments are specified, a system dialog will be opened allowing a file to be chosen interactively. The return value of the function can be assigned to an object. A confirmation is printed to the console once the file has been read.
+
+```{r archiver, eval=FALSE}
+# Read from file to object:
+object <- archive("path/filename")
+# Choose a file from an interactive system dialog:
+object <- archive()
+```
 
 #### Data Integrity Verification
 

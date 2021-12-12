@@ -20,8 +20,8 @@ mlgrid(
 \item{y}{[default 'logret'] choose target variable 'logret' (log returns),
 'ret' (discrete returns), or 'none'.}
 
-\item{k}{[default 1L] integer time horizon of number of periods over which to
-calculate target variable 'y'.}
+\item{k}{[default 1L] number of periods time horizon over which to calculate
+target variable 'y'.}
 
 \item{dir}{[default 'long'] trade direction, either 'long' or 'short'.}
 
