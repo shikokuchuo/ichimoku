@@ -18,7 +18,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4.15</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4.16</span>
       </span>
     </div>
 
@@ -106,9 +106,11 @@ or read from.</p></dd>
     to be chosen interactively. 'file' is read and the return value may be
     assigned to an object. A confirmation message is issued if the file read
     operation has been successful.</p>
-<p>For write operations: specify both 'object' and 'file'. 'object' will be
-    written to 'file'. A confirmation message is issued if the file write
-    operation has been successful.</p>
+<p>For write operations: specify both 'object' and 'file'. If only 'object'
+    is specified and 'file' is left empty (see examples), a system dialog
+    will be opened allowing the file save location to be chosen interactively.
+    'object' will be written to 'file'. A confirmation message is issued if
+    the file write operation has been successful.</p>
     </div>
     <div id="data-verification">
     <h2>Data Verification</h2>
@@ -137,18 +139,23 @@ or read from.</p></dd>
 <span class="r-in"><span class="va">file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu">archive</span><span class="op">(</span><span class="va">cloud</span>, <span class="va">file</span><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Archive written to '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp9ULvTA/file1aa363953bfd'</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Archive written to '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp55szhV/file1c7379096939'</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> sha256: 409f5a27ce0388ddd3d803a262cb41074685ce0fc369230defcf476bbdbd611d</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">restored</span> <span class="op">&lt;-</span> <span class="fu">archive</span><span class="op">(</span><span class="va">file</span><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Archive read from '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp9ULvTA/file1aa363953bfd'</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Archive read from '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp55szhV/file1c7379096939'</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Data verified by sha256: 409f5a27ce0388ddd3d803a262cb41074685ce0fc369230defcf476bbdbd611d</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink</a></span><span class="op">(</span><span class="va">file</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="co"># Only run example in interactive R sessions</span></span>
+<span class="r-in"><span class="co"># Only run examples in interactive R sessions</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co"># Read file to 'object' using system dialog:</span></span>
 <span class="r-in"><span class="va">object</span> <span class="op">&lt;-</span> <span class="fu">archive</span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co"># Write 'cloud' to file using system dialog:</span></span>
+<span class="r-in"><span class="fu">archive</span><span class="op">(</span><span class="va">cloud</span>, <span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>
 <span class="r-in"></span>
 </code></pre></div>

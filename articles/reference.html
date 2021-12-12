@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4.15</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4.16</span>
       </span>
     </div>
 
@@ -443,12 +443,22 @@
 <div class="section level4">
 <h4 id="writing">Writing<a class="anchor" aria-label="anchor" href="#writing"></a>
 </h4>
-<p><code><a href="../reference/archive.html">archive()</a></code> for write operations will take 2 arguments: the object to be written, and the file path/name of the file to be stored. A confirmation is printed to the console that the file has been written.</p>
+<p><code><a href="../reference/archive.html">archive()</a></code> for write operations will take 2 arguments: the object to be written, and the file path/name of the file to be stored. If the second argument is left empty, a system dialog will be opened allowing the file save location to be set interactively. A confirmation is printed to the console that the file has been written.</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Write object to file:</span>
+<span class="fu"><a href="../reference/archive.html">archive</a></span><span class="op">(</span><span class="va">object</span>, <span class="st">"path/filename"</span><span class="op">)</span>
+<span class="co"># Leave second argument empty to choose file save location from a system dialog:</span>
+<span class="fu"><a href="../reference/archive.html">archive</a></span><span class="op">(</span><span class="va">object</span>, <span class="op">)</span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="reading">Reading<a class="anchor" aria-label="anchor" href="#reading"></a>
 </h4>
 <p><code><a href="../reference/archive.html">archive()</a></code> for read operations takes a single argument: the file path/name of the file to be read. Alternatively, if no arguments are specified, a system dialog will be opened allowing a file to be chosen interactively. The return value of the function can be assigned to an object. A confirmation is printed to the console once the file has been read.</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Read from file to object:</span>
+<span class="va">object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/archive.html">archive</a></span><span class="op">(</span><span class="st">"path/filename"</span><span class="op">)</span>
+<span class="co"># Choose a file from an interactive system dialog:</span>
+<span class="va">object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/archive.html">archive</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="data-integrity-verification">Data Integrity Verification<a class="anchor" aria-label="anchor" href="#data-integrity-verification"></a>
