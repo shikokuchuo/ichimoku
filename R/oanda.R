@@ -301,6 +301,7 @@ oanda_stream <- function(instrument, display = 7L, limit, server, apikey) {
 
   if (missing(instrument) && interactive()) instrument <- readline("Enter instrument:")
   instrument <- sub("-", "_", toupper(force(instrument)), fixed = TRUE)
+  if (!missing(display) && !is.numeric(display) || display < 1L) display <- 7L
   server <- if (missing(server)) do_$getServer() else match.arg(server, c("practice", "live"))
   if (missing(apikey)) apikey <- do_$getKey(server = server)
   url <- paste0("https://stream-fx", switch(server, practice = "practice", live = "trade"),
@@ -329,13 +330,14 @@ oanda_stream <- function(instrument, display = 7L, limit, server, apikey) {
     data[["tradable"]] <- as.logical(.subset2(data, "tradable"))
     return(invisible(data))
   })
+
   if (!missing(limit) && is.numeric(limit)) setTimeLimit(elapsed = limit * 60, transient = TRUE)
 
   con <- curl(url = url, handle = handle)
   stream_in(con = con, pagesize = 1, verbose = FALSE, handler = function(x) {
     .subset2(x, 1L) == "PRICE" || return()
     x <- `attributes<-`(unlist(x), dattrs)
-    data <<- df_append(x, data)
+    data <<- df_append(old = data, new = x)
     start = max(1L, (end <- dim(data)[1L]) - display + 1L)
     cat("\014")
     message("Streaming data... Press 'Esc' to return")
@@ -465,7 +467,7 @@ oanda_chart <- function(instrument,
                          count = ceiling(refresh / periodicity) + 1,
                          price = price, server = server, apikey = apikey,
                          .validate = TRUE)
-    data <- df_append(new = newdata, old = data)
+    data <- df_append(old = data, new = newdata)
     dlen <- dim(data)[1L]
     if (dlen > xlen) data <- data[(dlen - xlen + 1L):dlen, ]
   }
@@ -666,13 +668,13 @@ oanda_studio <- function(instrument = "USD_JPY",
       shiny::observeEvent(newdata(), {
 
         if (unclass(attr(datastore(), "timestamp")) > unclass(attr(idata(), "timestamp"))) {
-          df <- df_append(new = newdata(), old = datastore())
+          df <- df_append(old = datastore(), new = newdata())
           dlen <- dim(df)[1L]
           if (dlen > input$count) df <- df[(dlen - input$count + 1L):dlen, ]
           datastore(df)
 
         } else {
-          df <- df_append(new = newdata(), old = idata())
+          df <- df_append(old = idata(), new = newdata())
           dlen <- dim(df)[1L]
           if (dlen > input$count) df <- df[(dlen - input$count + 1L):dlen, ]
           datastore(df)

@@ -1,4 +1,4 @@
-# ichimoku 1.2.4.14
+# ichimoku 1.2.4.15
 
 #### New features:
 
@@ -19,8 +19,9 @@
 
 * Simplification of `look()` by removing the 'which' argument. To extract ichimoku objects in autostrat lists, subset the list directly. The object argument is now optional, accessing .Last.value otherwise.
 * Minor enhancements to the `str()` method.
+* `df_append()` argument order for 'old' and 'new' swapped to allow for chaining with the pipe operator.
 * `archive()` now safe for use in non-interactive settings, where it no longer prompts to confirm overwriting of existing files.
-* `oanda_view()` now returns correct data types in the dataframe.
+* `oanda_view()` updated for new instruments and now returns correct data types in the dataframe.
 * Fixes cases of `relative()` showing the incorrect date for 'latest', along with other cosmetic changes.
 * General performance improvements to date handling and dataframe conversions.
 * Documentation refresh.

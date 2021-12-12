@@ -240,8 +240,8 @@ df_merge <- function(...) {
 #'     time series data to an existing dataframe, where each observation is
 #'     indexed by a unique timestamp/identifier in a key column.
 #'
-#' @param new data.frame object containing new data.
 #' @param old data.frame object containing existing data.
+#' @param new data.frame object containing new data.
 #' @param key [default 'time'] column name used as key, provided as a character
 #'     string.
 #' @param keep.attr [default 'timestamp'] name of an attribute in 'new' to retain
@@ -264,11 +264,11 @@ df_merge <- function(...) {
 #' data1
 #' data2 <- sample_ohlc_data[7:10, ]
 #' data2
-#' df_append(data2, data1)
+#' df_append(data1, data2)
 #'
 #' @export
 #'
-df_append <- function(new, old, key = "time", keep.attr = "timestamp") {
+df_append <- function(old, new, key = "time", keep.attr = "timestamp") {
   keep <- !.subset2(old, key) %in% .subset2(new, key)
   cnames <- attr(new, "names")
   df <- vector(mode = "list", length = length(new))

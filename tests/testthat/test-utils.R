@@ -39,11 +39,11 @@ test_that("df_merge ok", {
 })
 
 test_that("df_append ok", {
-  expect_identical(dim(df_append(new <- sample_ohlc_data[4:10, ], old <- sample_ohlc_data[1:6, ])), c(10L, 6L))
+  expect_identical(dim(df_append(old <- sample_ohlc_data[1:6, ], new <- sample_ohlc_data[4:10, ])), c(10L, 6L))
   attr(new, "timestamp") <- .POSIXct(1)
-  expect_identical(attr(df_append(new, old), "timestamp"), attr(new, "timestamp"))
+  expect_identical(attr(df_append(old, new), "timestamp"), attr(new, "timestamp"))
   attr(new, "special") <- "test"
-  expect_identical(attr(df_append(new, old, keep.attr = "special"), "special"), attr(new, "special"))
+  expect_identical(attr(df_append(old, new, keep.attr = "special"), "special"), attr(new, "special"))
 })
 
 test_that("internal window functions ok", {
