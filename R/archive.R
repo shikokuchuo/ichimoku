@@ -79,14 +79,27 @@ archive <- function(..., object, file) {
       readArchive(file = if (is.symbol(dots2 <- dots[[2L]])) get(dots2, pos = parent.frame()) else dots2)
 
     } else if (dlen == 3L) {
-      writeArchive(object = get(dots[[2L]], pos = parent.frame()),
-                   file = if ((dots3 <- dots[[3L]]) == "" && interactive()) {
-                     file.choose(new = TRUE)
-                   } else if (is.symbol(dots3)) {
-                     get(dots3, pos = parent.frame())
-                   } else {
-                     dots3
-                   })
+      if ((dots2 <- dots[[2L]]) == "") {
+        readArchive(file = if ((dots3 <- dots[[3L]]) == "") {
+          interactive() || stop("Empty arguments for both 'object' and 'file' passed to archive()",
+                                "\nFor read operations specify 'file' only, write operations both 'object' and 'file'", call. = FALSE)
+          file.choose()
+        } else if (is.symbol(dots3)) {
+          get(dots3, pos = parent.frame())
+        } else {
+          dots3
+        })
+
+      } else {
+        writeArchive(object = if (is.symbol(dots2 <- dots[[2L]])) get(dots2, pos = parent.frame()) else dots2,
+                     file = if ((dots3 <- dots[[3L]]) == "" && interactive()) {
+                       file.choose(new = TRUE)
+                     } else if (is.symbol(dots3)) {
+                       get(dots3, pos = parent.frame())
+                     } else {
+                       dots3
+                     })
+      }
 
     } else {
       stop(dlen - 1L, " arguments passed to archive() which requires 1 or 2",

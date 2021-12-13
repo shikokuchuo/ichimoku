@@ -166,6 +166,6 @@ df_append(data1, data2)
 
 ## References
 
-Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.2.4, <https://CRAN.R-project.org/package=ichimoku>.
+Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.2.5, <https://CRAN.R-project.org/package=ichimoku>.
 
 ---

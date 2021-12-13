@@ -293,6 +293,6 @@ The 'relative' or 'r value' is calculated as res / sd(X) and represents a standa
 
 Sasaki, H. 佐々木 英信 (1996), *一目均衡表の研究 [ichimoku kinkouhyou no kenkyuu]*. Tokyo, Japan: Toushi Radar.
 
-Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.2.4, <https://CRAN.R-project.org/package=ichimoku>.
+Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.2.5, <https://CRAN.R-project.org/package=ichimoku>.
 
 ---

@@ -87,7 +87,7 @@
   row.names = c(NA, -126L)
 )
 
-.user_agent <- "r-ichimoku/1.2.4"
+.user_agent <- "r-ichimoku/1.2.5"
 
 usethis::use_data(.ichimoku_themes, .oanda_instruments, .user_agent, internal = TRUE, overwrite = TRUE)
 
