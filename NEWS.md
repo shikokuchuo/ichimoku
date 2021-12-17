@@ -1,3 +1,9 @@
+# ichimoku 1.2.5.1
+
+#### Updates:
+
+* `look()`, `as.data.frame()`, `as_tibble()`, `index()`, rolling mean, and POSIXct classing functions re-implemented in C.
+
 # ichimoku 1.2.5
 
 #### New features:

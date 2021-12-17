@@ -69,7 +69,6 @@ unlink(file)
 
 if (interactive()) {
 # Only run examples in interactive R sessions
-
 # Read file to 'object' using system dialog:
 object <- archive()
 

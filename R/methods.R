@@ -37,7 +37,7 @@ print.ichimoku <- function(x, plot = TRUE, ...) {
   if (is.null(dims <- attr(x, "dim")) || dims[1L] == 0L) {
     NextMethod()
   } else {
-    tbl <- as_tibble.ichimoku(x, class = "ichimoku_print")
+    tbl <- .Call(`_ichimoku_tbl`, x, 4L)
     pillar_sigfig <- getOption("pillar.sigfig")
     if (is.null(pillar_sigfig) || pillar_sigfig < 5) options(pillar.sigfig = 5)
     print(tbl, ...)
@@ -48,21 +48,21 @@ print.ichimoku <- function(x, plot = TRUE, ...) {
 
 }
 
-#' Class ichimoku_print tbl-sum Method
+#' Class ichimoku_tbl tbl-sum Method
 #'
-#' Default tbl-sum method for ichimoku_print objects. Used for enhanced printing
+#' Default tbl-sum method for 'ichimoku_tbl' objects. Used for enhanced printing
 #'     of ichimoku objects.
 #'
-#' @param x an object of class 'ichimoku_print'.
+#' @param x an object of class 'ichimoku_tbl'.
 #' @param ... arguments passed to or from other methods.
 #'
 #' @return The character vector to be printed.
 #'
-#' @method tbl_sum ichimoku_print
+#' @method tbl_sum ichimoku_tbl
 #' @noRd
 #' @export
 #'
-tbl_sum.ichimoku_print <- function(x, ...) {
+tbl_sum.ichimoku_tbl <- function(x, ...) {
   c("ichimoku object" = "use more() to display more rows, look() to inspect attributes")
 }
 
@@ -233,25 +233,10 @@ summary.ichimoku <- function(object, strat = TRUE, ...) {
 #'
 as.data.frame.ichimoku <- function(x, row.names, optional, keep.attrs, ...) {
 
-  lk <- if (!missing(keep.attrs) && isTRUE(keep.attrs)) look(x)
-  index <- index.ichimoku(x)
-  dn <- c("index", attr(x, "dimnames")[[2L]])
-  dims <- attr(x, "dim")
-  xlen <- dims[1L]
-  len <- dims[2L]
-  start <- 0:(len - 1) * xlen + 1L
-  end <- 1:len * xlen
-
-  attributes(x) <- NULL
-  df <- vector(mode = "list", length = len + 1L)
-  df[[1L]] <- index
-  for (i in seq_len(len)) {
-    df[[i + 1L]] <- x[start[i]:end[i]]
+  df <- .Call(`_ichimoku_tbl`, x, 1L)
+  if (!missing(keep.attrs) && isTRUE(keep.attrs)) {
+    attributes(df) <- c(attributes(df), .Call(`_ichimoku_look`, x))
   }
-  attributes(df) <- c(list(names = dn,
-                           class = "data.frame",
-                           row.names = .set_row_names(xlen)),
-                      lk)
   df
 
 }
@@ -292,25 +277,10 @@ NULL
 #'
 as_tibble.ichimoku <- function(x, class, keep.attrs, ...) {
 
-  lk <- if (!missing(keep.attrs) && isTRUE(keep.attrs)) look(x)
-  index <- index.ichimoku(x)
-  dn <- c("index", attr(x, "dimnames")[[2L]])
-  dims <- attr(x, "dim")
-  xlen <- dims[1L]
-  len <- dims[2L]
-  start <- 0:(len - 1) * xlen + 1L
-  end <- 1:len * xlen
-
-  attributes(x) <- NULL
-  tbl <- vector(mode = "list", length = len + 1L)
-  tbl[[1L]] <- index
-  for (i in seq_len(len)) {
-    tbl[[i + 1L]] <- x[start[i]:end[i]]
+  tbl <- .Call(`_ichimoku_tbl`, x, 3L)
+  if (!missing(keep.attrs) && isTRUE(keep.attrs)) {
+    attributes(tbl) <- c(attributes(tbl), .Call(`_ichimoku_look`, x))
   }
-  attributes(tbl) <- c(list(class = c(if (!missing(class)) class, "tbl_df", "tbl", "data.frame"),
-                            row.names = .set_row_names(xlen),
-                            names = dn),
-                       lk)
   tbl
 
 }
@@ -395,7 +365,6 @@ NULL
 index.ichimoku <- function(x, subset, ...) {
   idx <- attr(x, "index")
   if (!missing(subset)) idx <- .subset(idx, subset)
-  class(idx) <- c("POSIXct", "POSIXt")
-  idx
+  .Call(`_ichimoku_psxct`, idx)
 }
 

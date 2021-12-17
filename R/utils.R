@@ -138,17 +138,22 @@ df_trim <- function(x) {
 #'
 xts_df <- function(x, keep.attrs) {
   core <- coredata(x)
+  dn2 <- dimnames(core)[[2L]]
   dims <- dim(core)
+  xlen <- dims[1L]
   len <- dims[2L]
+  start <- 0:(len - 1) * xlen + 1L
+  end <- 1:len * xlen
+  attributes(core) <- NULL
   df <- vector(mode = "list", length = len + 1L)
   df[[1L]] <- index(x)
   for (i in seq_len(len)) {
-    df[[i + 1L]] <- core[, i]
+    df[[i + 1L]] <- core[start[i]:end[i]]
   }
-  attributes(df) <- c(list(names = c("index", dimnames(core)[[2L]]),
+  attributes(df) <- c(list(names = c("index", dn2),
                            class = "data.frame",
-                           row.names = .set_row_names(dims[1L])),
-                      if (!missing(keep.attrs) && isTRUE(keep.attrs)) look(x))
+                           row.names = .set_row_names(xlen)),
+                      if (!missing(keep.attrs) && isTRUE(keep.attrs)) .Call(`_ichimoku_look`, x))
   df
 }
 
@@ -177,17 +182,22 @@ xts_df <- function(x, keep.attrs) {
 #' @export
 #'
 matrix_df <- function(x, keep.attrs) {
-  dnames <- dimnames(x)
-  mat <- unname(x)
-  dims <- dim(mat)
-  df <- vector(mode = "list", length = dims[2L])
+  lk <- if (!missing(keep.attrs) && isTRUE(keep.attrs)) .Call(`_ichimoku_look`, x)
+  dn <- dimnames(x)
+  dims <- dim(x)
+  xlen <- dims[1L]
+  len <- dims[2L]
+  start <- 0:(len - 1) * xlen + 1L
+  end <- 1:len * xlen
+  attributes(x) <- NULL
+  df <- vector(mode = "list", length = len)
   for (i in seq_along(df)) {
-    df[[i]] <- mat[, i]
+    df[[i]] <- x[start[i]:end[i]]
   }
-  attributes(df) <- c(list(names = dnames[[2L]],
+  attributes(df) <- c(list(names = dn[[2L]],
                            class = "data.frame",
-                           row.names = if (is.null(dnames[[1L]])) .set_row_names(dims[1L]) else dnames[[1L]]),
-                      if (!missing(keep.attrs) && isTRUE(keep.attrs)) look(x))
+                           row.names = if (is.null(dn[[1L]])) .set_row_names(xlen) else dn[[1L]]),
+                      lk)
   df
 }
 
@@ -318,10 +328,10 @@ more <- function(n) {
 #' @param x an object (optional). If 'x' is not supplied, \code{\link{.Last.value}}
 #'     will be used instead.
 #'
-#' @return For objects created by the ichimoku package, a list of attributes
+#' @return For objects created by the ichimoku package, a pairlist of attributes
 #'     specific to that data type.
 #'
-#'     For other objects, a list of non-standard attributes for matrix /
+#'     For other objects, a pairlist of non-standard attributes for matrix /
 #'     data.frame / xts classes, or else invisible NULL if none are present.
 #'
 #' @details Note: autostrat list attributes may be accessed directly using
@@ -349,11 +359,9 @@ more <- function(n) {
 #' @export
 #'
 look <- function(x) {
-
-  lk <- attributes(if (missing(x)) .Last.value else x)
-  lk <- lk[!names(lk) %in% c("dim", "dimnames", "names", "row.names", "index", "class", "oanda")]
+  if (missing(x)) x <- .Last.value
+  lk <- .Call(`_ichimoku_look`, x)
   if (length(lk)) lk else invisible()
-
 }
 
 #' is.ichimoku

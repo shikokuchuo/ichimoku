@@ -1,4 +1,4 @@
-// ichimoku - Window Functions: modified from code with the following license:
+// ichimoku - Window Functions -------------------------------------------------
 
 /*
  Based on http://opensource.org/licenses/MIT
@@ -25,70 +25,56 @@
 #include "cpp11/doubles.hpp"
 
 [[cpp11::register]]
-cpp11::doubles maxOver(const cpp11::doubles& x, int window) {
+cpp11::doubles maxOver(const cpp11::doubles& x, const int window) {
 
-  int n = x.size(), w1 = window - 1;
+  const int n = x.size(), w1 = window - 1;
   cpp11::writable::doubles vec(n);
+  std::deque<std::pair<int, long double> > q;
 
-  std::deque<std::pair<long double, int>> deck;
   for (int i = 0; i < n; ++i) {
-      while (!deck.empty() && deck.back().first <= x[i])
-        deck.pop_back();
-    deck.push_back(std::make_pair(x[i], i));
-
-    while(deck.front().second <= i - window)
-      deck.pop_front();
-
-    long double max = deck.front().first;
+    while (!q.empty() && q.back().second <= x[i]) {
+      q.pop_back();
+    }
+    q.push_back(std::make_pair(i, x[i]));
+    while(q.front().first <= i - window) {
+      q.pop_front();
+    }
+    long double max = q.front().second;
     if (i >= w1) {
       vec[i] = max;
     } else {
       vec[i] = NA_REAL;
     }
   }
+
   return vec;
+
 }
 
 [[cpp11::register]]
-cpp11::doubles minOver(const cpp11::doubles& x, int window) {
+cpp11::doubles minOver(const cpp11::doubles& x, const int window) {
 
-  int n = x.size(), w1 = window - 1;
+  const int n = x.size(), w1 = window - 1;
   cpp11::writable::doubles vec(n);
+  std::deque<std::pair<int, long double> > q;
 
-  std::deque<std::pair<long double, int>> deck;
   for (int i = 0; i < n; ++i) {
-      while (!deck.empty() && deck.back().first >= x[i])
-        deck.pop_back();
-    deck.push_back(std::make_pair(x[i], i));
-
-    while(deck.front().second <= i - window)
-      deck.pop_front();
-
-    long double min = deck.front().first;
+    while (!q.empty() && q.back().second >= x[i]) {
+      q.pop_back();
+    }
+    q.push_back(std::make_pair(i, x[i]));
+    while(q.front().first <= i - window) {
+      q.pop_front();
+    }
+    long double min = q.front().second;
     if (i >= w1) {
       vec[i] = min;
     } else {
       vec[i] = NA_REAL;
     }
   }
-  return vec;
-}
 
-[[cpp11::register]]
-cpp11::doubles meanOver(const cpp11::doubles& x, int window) {
-
-  int n = x.size(), w1 = window - 1;
-  cpp11::writable::doubles vec(n);
-  long double sum = 0;
-  for (int i = 0; i < n; ++i) {
-    sum += x[i];
-    if (i >= w1) {
-      vec[i] = sum / window;
-      sum -= x[i - w1];
-    } else {
-      vec[i] = NA_REAL;
-    }
-  }
   return vec;
+
 }
 

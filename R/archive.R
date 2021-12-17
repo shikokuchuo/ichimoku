@@ -55,7 +55,6 @@
 #'
 #' if (interactive()) {
 #' # Only run examples in interactive R sessions
-#'
 #' # Read file to 'object' using system dialog:
 #' object <- archive()
 #'
@@ -76,29 +75,40 @@ archive <- function(..., object, file) {
       readArchive(file = file.choose())
 
     } else if (dlen == 2L) {
-      readArchive(file = if (is.symbol(dots2 <- dots[[2L]])) get(dots2, pos = parent.frame()) else dots2)
+      readArchive(file = if (is.symbol(dots[[2L]])) {
+        get0(dots[[2L]], envir = parent.frame(), inherits = FALSE)
+      } else {
+        dots[[2L]]
+      })
 
     } else if (dlen == 3L) {
-      if ((dots2 <- dots[[2L]]) == "") {
-        readArchive(file = if ((dots3 <- dots[[3L]]) == "") {
-          interactive() || stop("Empty arguments for both 'object' and 'file' passed to archive()",
-                                "\nFor read operations specify 'file' only, write operations both 'object' and 'file'", call. = FALSE)
-          file.choose()
-        } else if (is.symbol(dots3)) {
-          get(dots3, pos = parent.frame())
-        } else {
-          dots3
-        })
+      if (dots[[2L]] == "") {
+        readArchive(
+          file = if (dots[[3L]] == "") {
+            interactive() || stop("Empty arguments for both 'object' and 'file' passed to archive()",
+                                  "\nFor read operations specify 'file' only, write operations both 'object' and 'file'", call. = FALSE)
+            .deconstruct(...)
+            return(invisible())
+          } else if (is.symbol(dots[[3L]])) {
+            get0(dots[[3L]], envir = parent.frame(), inherits = FALSE)
+          } else {
+            dots[[3L]]
+          })
 
       } else {
-        writeArchive(object = if (is.symbol(dots2 <- dots[[2L]])) get(dots2, pos = parent.frame()) else dots2,
-                     file = if ((dots3 <- dots[[3L]]) == "" && interactive()) {
-                       file.choose(new = TRUE)
-                     } else if (is.symbol(dots3)) {
-                       get(dots3, pos = parent.frame())
-                     } else {
-                       dots3
-                     })
+        writeArchive(
+          object = if (is.symbol(dots[[2L]])) {
+            get0(dots[[2L]], envir = parent.frame(), inherits = FALSE)
+          } else {
+            dots[[2L]]
+          },
+          file = if (dots[[3L]] == "" && interactive()) {
+            file.choose(new = TRUE)
+          } else if (is.symbol(dots[[3L]])) {
+            get0(dots[[3L]], envir = parent.frame(), inherits = FALSE)
+          } else {
+            dots[[3L]]
+          })
       }
 
     } else {

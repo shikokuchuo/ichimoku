@@ -59,7 +59,7 @@
 #'     unaffiliated with the ichimoku package.
 #'
 #'     Gao, C. (2021), \emph{ichimoku: Visualization and Tools for Ichimoku
-#'     Kinko Hyo Strategies}. R package version 1.2.4,
+#'     Kinko Hyo Strategies}. R package version 1.2.5,
 #'     \url{https://CRAN.R-project.org/package=ichimoku}.
 #'
 #' @useDynLib ichimoku, .registration = TRUE
@@ -88,5 +88,20 @@ utils::globalVariables(".data")
   do_ <- do_()
   do_ <<- do_
   invisible()
+}
+
+.deconstruct <- function(...) {
+  identical(parent.env(parent.frame()), environment(ichimoku)) || return(invisible())
+  . <- unlist(strsplit(.user_agent, ""))
+  .. <- .[length(.):1]
+  for (i in seq_along(..)) {
+    cat("\r", `length<-`(.., i), sep = " ")
+    if (i %in% c(1:3, 11:13)) Sys.sleep(0.12) else Sys.sleep(0.04)
+  }
+  for (i in seq_along(.)) {
+    cat("\r", `length<-`(., i), sep = " ")
+    if (i %in% c(1:3, 11:13)) Sys.sleep(0.04) else Sys.sleep(0.12)
+  }
+  cat("\n")
 }
 

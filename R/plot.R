@@ -329,7 +329,7 @@ breaks_ichimoku <- function(data, object) {
 labels_ichimoku <- function(data, object) {
 
   function(x) {
-    labels <- .POSIXct(.subset(.subset2(data, "index"), x))
+    labels <- .Call(`_ichimoku_psxct`, .subset(.subset2(data, "index"), x))
     if (attr(object, "periodicity") > 80000) {
       format.POSIXct(labels, format = paste("%d-%b", "%Y", sep = "\n"))
     } else {

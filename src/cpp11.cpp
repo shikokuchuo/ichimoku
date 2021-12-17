@@ -5,33 +5,35 @@
 #include "cpp11/declarations.hpp"
 #include <R_ext/Visibility.h>
 
-// windowfn.cpp
-cpp11::doubles maxOver(const cpp11::doubles& x, int window);
+// window.cpp
+cpp11::doubles maxOver(const cpp11::doubles& x, const int window);
 extern "C" SEXP _ichimoku_maxOver(SEXP x, SEXP window) {
   BEGIN_CPP11
-    return cpp11::as_sexp(maxOver(cpp11::as_cpp<cpp11::decay_t<const cpp11::doubles&>>(x), cpp11::as_cpp<cpp11::decay_t<int>>(window)));
+    return cpp11::as_sexp(maxOver(cpp11::as_cpp<cpp11::decay_t<const cpp11::doubles&>>(x), cpp11::as_cpp<cpp11::decay_t<const int>>(window)));
   END_CPP11
 }
-// windowfn.cpp
-cpp11::doubles minOver(const cpp11::doubles& x, int window);
+// window.cpp
+cpp11::doubles minOver(const cpp11::doubles& x, const int window);
 extern "C" SEXP _ichimoku_minOver(SEXP x, SEXP window) {
   BEGIN_CPP11
-    return cpp11::as_sexp(minOver(cpp11::as_cpp<cpp11::decay_t<const cpp11::doubles&>>(x), cpp11::as_cpp<cpp11::decay_t<int>>(window)));
-  END_CPP11
-}
-// windowfn.cpp
-cpp11::doubles meanOver(const cpp11::doubles& x, int window);
-extern "C" SEXP _ichimoku_meanOver(SEXP x, SEXP window) {
-  BEGIN_CPP11
-    return cpp11::as_sexp(meanOver(cpp11::as_cpp<cpp11::decay_t<const cpp11::doubles&>>(x), cpp11::as_cpp<cpp11::decay_t<int>>(window)));
+    return cpp11::as_sexp(minOver(cpp11::as_cpp<cpp11::decay_t<const cpp11::doubles&>>(x), cpp11::as_cpp<cpp11::decay_t<const int>>(window)));
   END_CPP11
 }
 
 extern "C" {
+/* .Call calls */
+extern SEXP _ichimoku_look(SEXP);
+extern SEXP _ichimoku_meanOver(SEXP, SEXP);
+extern SEXP _ichimoku_psxct(SEXP);
+extern SEXP _ichimoku_tbl(SEXP, SEXP);
+
 static const R_CallMethodDef CallEntries[] = {
+    {"_ichimoku_look",     (DL_FUNC) &_ichimoku_look,     1},
     {"_ichimoku_maxOver",  (DL_FUNC) &_ichimoku_maxOver,  2},
     {"_ichimoku_meanOver", (DL_FUNC) &_ichimoku_meanOver, 2},
     {"_ichimoku_minOver",  (DL_FUNC) &_ichimoku_minOver,  2},
+    {"_ichimoku_psxct",    (DL_FUNC) &_ichimoku_psxct,    1},
+    {"_ichimoku_tbl",      (DL_FUNC) &_ichimoku_tbl,      2},
     {NULL, NULL, 0}
 };
 }

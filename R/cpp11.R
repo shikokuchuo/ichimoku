@@ -7,7 +7,3 @@ maxOver <- function(x, window) {
 minOver <- function(x, window) {
   .Call(`_ichimoku_minOver`, x, window)
 }
-
-meanOver <- function(x, window) {
-  .Call(`_ichimoku_meanOver`, x, window)
-}

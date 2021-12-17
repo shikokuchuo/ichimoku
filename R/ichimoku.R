@@ -214,7 +214,7 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
   if (periodicity == 86400) {
     future <- `length<-`(
       (future <- seq.int(from = index[xlen], by = periodicity,
-                         length.out = p2 + p2)[-1L])[tradingDays(.POSIXct(future), ...)],
+                         length.out = p2 + p2)[-1L])[tradingDays(.Call(`_ichimoku_psxct`, future), ...)],
       p2 - 1L)
   } else {
     future <- seq.int(from = index[xlen], by = periodicity, length.out = p2)[-1L]
@@ -223,12 +223,14 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
 
   lk <- kmatrix <- NULL
   if (!missing(keep.data) && isTRUE(keep.data)) {
-    used <- (used <- unlist(lapply(c("coli", "colo", "colh", "coll", "colc", "colp"), function(x) {
-      if (exists(x, where = parent.frame(2L), inherits = FALSE)) get(x, pos = parent.frame(2L), inherits = FALSE)
-    })))[!is.na(used)]
+    used <- (used <- unlist(
+      lapply(c("coli", "colo", "colh", "coll", "colc", "colp"), function(x) {
+        get0(x, envir = parent.frame(2L), inherits = FALSE)
+      })
+    ))[!is.na(used)]
     keep <- if (!is.null(used)) cnames[-used]
-    kmatrix <- do.call(cbind, lapply(.subset(x, keep), function(x) c(as.numeric(x), rep(NA, p2 - 1L))))
-    lk <- look(x)
+    kmatrix <- do.call(cbind, lapply(.subset(x, keep), function(x) `length<-`(as.numeric(x), xlen + p2 - 1L)))
+    lk <- .Call(`_ichimoku_look`, x)
     lk$periods <- lk$periodicity <- lk$ticker <- NULL
   }
 
