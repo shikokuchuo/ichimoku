@@ -75,11 +75,7 @@ archive <- function(..., object, file) {
       readArchive(file = file.choose())
 
     } else if (dlen == 2L) {
-      readArchive(file = if (is.symbol(dots[[2L]])) {
-        get0(dots[[2L]], envir = parent.frame(), inherits = FALSE)
-      } else {
-        dots[[2L]]
-      })
+      readArchive(file = ..1)
 
     } else if (dlen == 3L) {
       if (dots[[2L]] == "") {
@@ -89,26 +85,19 @@ archive <- function(..., object, file) {
                                   "\nFor read operations specify 'file' only, write operations both 'object' and 'file'", call. = FALSE)
             .deconstruct(...)
             return(invisible())
-          } else if (is.symbol(dots[[3L]])) {
-            get0(dots[[3L]], envir = parent.frame(), inherits = FALSE)
           } else {
-            dots[[3L]]
-          })
-
+            ..2
+          }
+        )
       } else {
         writeArchive(
-          object = if (is.symbol(dots[[2L]])) {
-            get0(dots[[2L]], envir = parent.frame(), inherits = FALSE)
-          } else {
-            dots[[2L]]
-          },
+          object = ..1,
           file = if (dots[[3L]] == "" && interactive()) {
             file.choose(new = TRUE)
-          } else if (is.symbol(dots[[3L]])) {
-            get0(dots[[3L]], envir = parent.frame(), inherits = FALSE)
           } else {
-            dots[[3L]]
-          })
+            ..2
+          }
+        )
       }
 
     } else {
@@ -217,3 +206,7 @@ readArchive <- function(file) {
 
 }
 
+icc <- function(..., object, file) {
+  dots <- substitute(alist(...))
+  dots
+}
