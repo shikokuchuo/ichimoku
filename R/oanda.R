@@ -872,7 +872,7 @@ oanda_view <- function(market = c("allfx", "bonds", "commodities", "fx", "metals
                            server = server, apikey = apikey, .validate = FALSE)
   }
   data <- do.call(rbind, data)
-  time <- .Call(`_ichimoku_psxct`, data[1L, "t", drop = FALSE])
+  time <- psxct(data[1L, "t", drop = FALSE])
   open <- data[, "o", drop = FALSE]
   high <- data[, "h", drop = FALSE]
   low <- data[, "l", drop = FALSE]
@@ -926,7 +926,7 @@ oanda_quote <- function(instrument, price = c("M", "B", "A"), server, apikey) {
   data <- getPrices(instrument = instrument, granularity = "D", count = 1, price = price,
                     server = server, apikey = apikey, .validate = FALSE)
   pctchg <- round(100 * (data[["c"]] / data[["o"]] - 1), digits = 4L)
-  cat(instrument, format.POSIXct(.Call(`_ichimoku_psxct`, data[["t"]])),
+  cat(instrument, format.POSIXct(psxct(data[["t"]])),
       "open:", data[["o"]], " high:", data[["h"]], " low:", data[["l"]],
       " last:\u001b[7m", data[["c"]], "\u001b[27m %chg:", pctchg, price)
 
@@ -982,7 +982,7 @@ oanda_positions <- function(instrument, time, server, apikey) {
 
   data <- parse_json(rawToChar(resp$content))[["positionBook"]]
   currentprice <- as.numeric(data[["price"]])
-  timestamp <- .Call(`_ichimoku_psxct`, data[["unixTime"]])
+  timestamp <- psxct(data[["unixTime"]])
   bucketwidth <- as.numeric(data[["bucketWidth"]])
 
   buckets <- `storage.mode<-`(do.call(rbind, data[["buckets"]]), "double")
@@ -1071,7 +1071,7 @@ oanda_orders <- function(instrument, time, server, apikey) {
 
   data <- parse_json(rawToChar(resp$content))[["orderBook"]]
   currentprice <- as.numeric(data[["price"]])
-  timestamp <- .Call(`_ichimoku_psxct`, data[["unixTime"]])
+  timestamp <- psxct(data[["unixTime"]])
   bucketwidth <- as.numeric(data[["bucketWidth"]])
 
   buckets <- `storage.mode<-`(do.call(rbind, data[["buckets"]]), "double")

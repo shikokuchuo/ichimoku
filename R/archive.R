@@ -206,7 +206,3 @@ readArchive <- function(file) {
 
 }
 
-icc <- function(..., object, file) {
-  dots <- substitute(alist(...))
-  dots
-}

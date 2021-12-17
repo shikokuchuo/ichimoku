@@ -237,7 +237,7 @@ df_merge <- function(...) {
     attributes(merge) <- c(attributes(merge),
                            list(instrument = attr(dots[[1L]], "instrument"),
                                 price = attr(dots[[1L]], "price"),
-                                timestamp = .POSIXct(max(unlist(lapply(dots, attr, "timestamp")))),
+                                timestamp = .Call(`_ichimoku_psxct`, max(unlist(lapply(dots, attr, "timestamp")))),
                                 oanda = TRUE))
     if (FALSE %in% .subset2(merge, "complete")) warning("Incomplete periods in merged dataframe - please check for possible duplicates", call. = FALSE)
   }

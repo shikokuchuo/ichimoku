@@ -20,3 +20,21 @@ meanOver <- function(x, window) {
   .Call(`_ichimoku_meanOver`, x, window)
 }
 
+#' Make POSIXct
+#'
+#' Utility function to convert a UNIX time integer into a POSIXct variable by
+#'     appending the appropriate class attribute.
+#'
+#' @param x an integer vector representing the UNIX/POSIX time since the epoch.
+#'
+#' @return A vector of class 'POSIXct' and 'POSIXt'.
+#'
+#' @details This is the equivalent of .POSIXct available in the base namespace,
+#'     re-implemented in C code for performance.
+#'
+#' @noRd
+#'
+psxct <- function(x) {
+  .Call(`_ichimoku_psxct`, x)
+}
+

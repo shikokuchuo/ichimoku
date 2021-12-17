@@ -5,7 +5,7 @@
 #include <R.h>
 #include <Rinternals.h>
 
-SEXP _ichimoku_meanOver(SEXP x, SEXP window) {
+SEXP _ichimoku_meanOver(const SEXP x, const SEXP window) {
 
   const R_xlen_t n = Rf_xlength(x), w = Rf_asInteger(window), w1 = w - 1;
   SEXP vec = PROTECT(Rf_allocVector(REALSXP, n));
@@ -74,7 +74,7 @@ static void *c_get_data(SEXP x, size_t *widthptr) {
 
 }
 
-SEXP _ichimoku_tbl(SEXP x, SEXP type) {
+SEXP _ichimoku_tbl(const SEXP x, const SEXP type) {
 
   SEXP dims = PROTECT(Rf_getAttrib(x, R_DimSymbol));
   R_xlen_t xlen, xwid;
@@ -91,10 +91,10 @@ SEXP _ichimoku_tbl(SEXP x, SEXP type) {
   }
   UNPROTECT(1);
 
-  SEXP out = PROTECT(Rf_allocVector(VECSXP, xwid + 1));
+  SEXP tbl = PROTECT(Rf_allocVector(VECSXP, xwid + 1));
 
   SEXP index = PROTECT(_ichimoku_psxct(Rf_getAttrib(x, Rf_install("index"))));
-  SET_VECTOR_ELT(out, 0, index);
+  SET_VECTOR_ELT(tbl, 0, index);
   UNPROTECT(1);
 
   size_t eltsize;
@@ -102,7 +102,7 @@ SEXP _ichimoku_tbl(SEXP x, SEXP type) {
   size_t colsize = xlen * eltsize;
   for (R_xlen_t j = 1; j <= xwid; j++) {
     SEXP col = PROTECT(Rf_allocVector(REALSXP, xlen));
-    SET_VECTOR_ELT(out, j, col);
+    SET_VECTOR_ELT(tbl, j, col);
     char *dst = c_get_data(col, NULL);
     memcpy(dst, src, colsize);
     src += colsize;
@@ -116,28 +116,28 @@ SEXP _ichimoku_tbl(SEXP x, SEXP type) {
   for (R_xlen_t i = 0; i < dlen; i++) {
     SET_STRING_ELT(names, i + 1, STRING_ELT(dn2, i));
   }
-  Rf_setAttrib(out, R_NamesSymbol, names);
+  Rf_setAttrib(tbl, R_NamesSymbol, names);
   UNPROTECT(2);
 
   const int typ = Rf_asInteger(type);
-  SEXP cls = PROTECT(Rf_allocVector(STRSXP, typ));
+  SEXP clss = PROTECT(Rf_allocVector(STRSXP, typ));
   switch (typ) {
   case 1:
-    SET_STRING_ELT(cls, 0, Rf_mkChar("data.frame"));
+    SET_STRING_ELT(clss, 0, Rf_mkChar("data.frame"));
     break;
   case 3:
-    SET_STRING_ELT(cls, 0, Rf_mkChar("tbl_df"));
-    SET_STRING_ELT(cls, 1, Rf_mkChar("tbl"));
-    SET_STRING_ELT(cls, 2, Rf_mkChar("data.frame"));
+    SET_STRING_ELT(clss, 0, Rf_mkChar("tbl_df"));
+    SET_STRING_ELT(clss, 1, Rf_mkChar("tbl"));
+    SET_STRING_ELT(clss, 2, Rf_mkChar("data.frame"));
     break;
   case 4:
-    SET_STRING_ELT(cls, 0, Rf_mkChar("ichimoku_tbl"));
-    SET_STRING_ELT(cls, 1, Rf_mkChar("tbl_df"));
-    SET_STRING_ELT(cls, 2, Rf_mkChar("tbl"));
-    SET_STRING_ELT(cls, 3, Rf_mkChar("data.frame"));
+    SET_STRING_ELT(clss, 0, Rf_mkChar("ichimoku_tbl"));
+    SET_STRING_ELT(clss, 1, Rf_mkChar("tbl_df"));
+    SET_STRING_ELT(clss, 2, Rf_mkChar("tbl"));
+    SET_STRING_ELT(clss, 3, Rf_mkChar("data.frame"));
     break;
   }
-  Rf_setAttrib(out, R_ClassSymbol, cls);
+  Rf_setAttrib(tbl, R_ClassSymbol, clss);
   UNPROTECT(1);
 
   SEXP rownames;
@@ -150,11 +150,11 @@ SEXP _ichimoku_tbl(SEXP x, SEXP type) {
     REAL(rownames)[0] = NA_REAL;
     REAL(rownames)[1] = -(double)xlen;
   }
-  Rf_setAttrib(out, R_RowNamesSymbol, rownames);
+  Rf_setAttrib(tbl, R_RowNamesSymbol, rownames);
   UNPROTECT(1);
 
   UNPROTECT(1);
-  return out;
+  return tbl;
 
 }
 
