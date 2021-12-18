@@ -1,10 +1,11 @@
-// ichimoku - Functions Utilising R's C API ------------------------------------
+/* ichimoku - Functions Utilising R's C API --------------------------------- */
 
 #define R_NO_REMAP
 #include <string.h>
 #include <R.h>
 #include <Rinternals.h>
 
+/* cfunctions: meanOver() */
 SEXP _ichimoku_meanOver(const SEXP x, const SEXP window) {
 
   const R_xlen_t n = Rf_xlength(x), w = Rf_asInteger(window), w1 = w - 1;
@@ -28,6 +29,7 @@ SEXP _ichimoku_meanOver(const SEXP x, const SEXP window) {
 
 }
 
+/* cfunctions: look() */
 SEXP _ichimoku_look(SEXP x) {
 
   x = PROTECT(Rf_shallow_duplicate(x));
@@ -49,19 +51,20 @@ SEXP _ichimoku_look(SEXP x) {
 
 }
 
+/* cfunctions: psxct() */
 SEXP _ichimoku_psxct(SEXP x) {
 
-  x = PROTECT(Rf_shallow_duplicate(x));
   SEXP posix = PROTECT(Rf_allocVector(STRSXP, 2));
   SET_STRING_ELT(posix, 0, Rf_mkChar("POSIXct"));
   SET_STRING_ELT(posix, 1, Rf_mkChar("POSIXt"));
   Rf_setAttrib(x, R_ClassSymbol, posix);
 
-  UNPROTECT(2);
+  UNPROTECT(1);
   return x;
 
 }
 
+/* internal: for _ichimoku_tbl */
 static void *c_get_data(SEXP x, size_t *widthptr) {
 
   void *ptr = NULL;
@@ -74,16 +77,16 @@ static void *c_get_data(SEXP x, size_t *widthptr) {
 
 }
 
+/* cfunctions: NA */
 SEXP _ichimoku_tbl(const SEXP x, const SEXP type) {
 
-  SEXP dims = PROTECT(Rf_getAttrib(x, R_DimSymbol));
   R_xlen_t xlen, xwid;
+  const SEXP dims = PROTECT(Rf_getAttrib(x, R_DimSymbol));
   switch (TYPEOF(dims)) {
   case INTSXP:
     xlen = INTEGER(dims)[0];
     xwid = INTEGER(dims)[1];
     break;
-
   case REALSXP:
     xlen = REAL(dims)[0];
     xwid = REAL(dims)[1];
@@ -93,7 +96,8 @@ SEXP _ichimoku_tbl(const SEXP x, const SEXP type) {
 
   SEXP tbl = PROTECT(Rf_allocVector(VECSXP, xwid + 1));
 
-  SEXP index = PROTECT(_ichimoku_psxct(Rf_getAttrib(x, Rf_install("index"))));
+  SEXP index = PROTECT(Rf_shallow_duplicate(Rf_getAttrib(x, Rf_install("index"))));
+  index = _ichimoku_psxct(index);
   SET_VECTOR_ELT(tbl, 0, index);
   UNPROTECT(1);
 
@@ -109,7 +113,7 @@ SEXP _ichimoku_tbl(const SEXP x, const SEXP type) {
     UNPROTECT(1);
   }
 
-  SEXP dn2 = PROTECT(VECTOR_ELT(Rf_getAttrib(x, R_DimNamesSymbol), 1));
+  const SEXP dn2 = PROTECT(VECTOR_ELT(Rf_getAttrib(x, R_DimNamesSymbol), 1));
   R_xlen_t dlen = Rf_xlength(dn2);
   SEXP names = PROTECT(Rf_allocVector(STRSXP, dlen + 1));
   SET_STRING_ELT(names, 0, Rf_mkChar("index"));

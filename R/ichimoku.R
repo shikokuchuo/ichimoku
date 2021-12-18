@@ -213,8 +213,8 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
   periodicity <- min(index[2:4] - index[1:3])
   if (periodicity == 86400) {
     future <- `length<-`(
-      (future <- seq.int(from = index[xlen], by = periodicity,
-                         length.out = p2 + p2)[-1L])[tradingDays(.Call(`_ichimoku_psxct`, future), ...)],
+      (future <- seq.int(from = index[xlen] + periodicity, by = periodicity,
+                         length.out = p2 + p2))[tradingDays(.Call(`_ichimoku_psxct`, future), ...)],
       p2 - 1L)
   } else {
     future <- seq.int(from = index[xlen], by = periodicity, length.out = p2)[-1L]

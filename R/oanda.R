@@ -214,7 +214,7 @@ getPrices <- function(instrument, granularity, count, from, to, price, server,
                         H6 = 21600, H4 = 14400, H3 = 10800, H2 = 7200, H1 = 3600,
                         M30 = 1800, M15 = 900, M10 = 600, M5 = 300, M4 = 240,
                         M2 = 120, M1 = 60, S30 = 30, S15 = 15, S10 = 10, S5 = 5)
-  time <- .Call(`_ichimoku_psxct`, time + periodicity)
+  time <- psxct(time + periodicity)
   ohlc <- unlist(data[, ptype, drop = FALSE])
   cnames <- names(ohlc)
 
@@ -231,7 +231,7 @@ getPrices <- function(instrument, granularity, count, from, to, price, server,
          row.names = .set_row_names(length(time)),
          instrument = instrument,
          price = price,
-         timestamp = .Call(`_ichimoku_psxct`, timestamp),
+         timestamp = psxct(timestamp),
          oanda = TRUE)
   )
 
