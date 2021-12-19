@@ -86,12 +86,15 @@ SEXP _ichimoku_tbl(const SEXP x, const SEXP type) {
   SET_VECTOR_ELT(tbl, 0, index);
   UNPROTECT(1);
 
-  const void *src = REAL(x);
+  void *srcptr = NULL, *dstptr = NULL;
+  srcptr = REAL(x);
+  const char *src = srcptr;
   size_t vecsize = xlen * sizeof(double);
   for (R_xlen_t j = 1; j <= xwid; j++) {
     SEXP vec = PROTECT(Rf_allocVector(REALSXP, xlen));
     SET_VECTOR_ELT(tbl, j, vec);
-    void *dst = REAL(vec);
+    dstptr = REAL(vec);
+    char *dst = dstptr;
     memcpy(dst, src, vecsize);
     src += vecsize;
     UNPROTECT(1);
