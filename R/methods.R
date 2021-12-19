@@ -367,3 +367,4 @@ index.ichimoku <- function(x, subset, ...) {
   if (!missing(subset)) idx <- .subset(idx, subset)
   `class<-`(idx, c("POSIXct", "POSIXt"))
 }
+

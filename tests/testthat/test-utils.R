@@ -47,7 +47,7 @@ test_that("df_append ok", {
 })
 
 test_that("internal window functions ok", {
-  expect_identical(minOver(as.numeric(1:6), 3), c(NA, NA, 1, 2, 3, 4))
-  expect_identical(maxOver(as.numeric(1:6), 3), c(NA, NA, 3, 4, 5, 6))
-  expect_identical(meanOver(as.numeric(1:6), 3), c(NA, NA, 2, 3, 4, 5))
+  expect_identical(minOver(as.numeric(1:6), 3L), c(NA, NA, 1, 2, 3, 4))
+  expect_identical(maxOver(as.numeric(1:6), 3L), c(NA, NA, 3, 4, 5, 6))
+  expect_identical(meanOver(as.numeric(1:6), 3L), c(NA, NA, 2, 3, 4, 5))
 })

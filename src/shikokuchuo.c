@@ -8,7 +8,7 @@
 /* cfunctions: meanOver() */
 SEXP _ichimoku_meanOver(const SEXP x, const SEXP window) {
 
-  const R_xlen_t n = Rf_xlength(x), w = Rf_asInteger(window), w1 = w - 1;
+  const R_xlen_t n = XLENGTH(x), w = SCALAR_IVAL(window), w1 = w - 1;
   SEXP vec = PROTECT(Rf_allocVector(REALSXP, n));
   const double *px = REAL(x);
   double *pvec = REAL(vec);
@@ -35,19 +35,16 @@ SEXP _ichimoku_look(SEXP x) {
   x = PROTECT(Rf_shallow_duplicate(x));
   SEXP ax = PROTECT(ATTRIB(x));
 
-  while(ax != R_NilValue) {
+  for (ax = ATTRIB(x); ax != R_NilValue; ax = CDR(ax)) {
     const SEXP tag = TAG(ax);
     if (tag == R_NamesSymbol || tag == R_RowNamesSymbol ||
         tag == R_DimSymbol || tag == R_DimNamesSymbol ||
-        tag == R_ClassSymbol || !strcmp(CHAR(PRINTNAME(tag)), "index")) {
+        tag == R_ClassSymbol || !strcmp(CHAR(PRINTNAME(tag)), "index"))
       Rf_setAttrib(x, tag, R_NilValue);
-    }
-    ax = CDR(ax);
   }
 
-  ax = ATTRIB(x);
   UNPROTECT(2);
-  return ax;
+  return ATTRIB(x);
 
 }
 
@@ -61,19 +58,6 @@ SEXP _ichimoku_psxct(SEXP x) {
 
   UNPROTECT(1);
   return x;
-
-}
-
-/* internal: for _ichimoku_tbl */
-static void *c_get_data(SEXP x, size_t *widthptr) {
-
-  void *ptr = NULL;
-  ptr = REAL(x);
-
-  if (widthptr) {
-    *widthptr = sizeof(double);
-  }
-  return ptr;
 
 }
 
@@ -101,20 +85,19 @@ SEXP _ichimoku_tbl(const SEXP x, const SEXP type) {
   SET_VECTOR_ELT(tbl, 0, index);
   UNPROTECT(1);
 
-  size_t eltsize;
-  const char *src = c_get_data(x, &eltsize);
-  size_t colsize = xlen * eltsize;
+  const void *src = REAL(x);
+  size_t colsize = xlen * sizeof(double);
   for (R_xlen_t j = 1; j <= xwid; j++) {
     SEXP col = PROTECT(Rf_allocVector(REALSXP, xlen));
     SET_VECTOR_ELT(tbl, j, col);
-    char *dst = c_get_data(col, NULL);
+    void *dst = REAL(col);
     memcpy(dst, src, colsize);
     src += colsize;
     UNPROTECT(1);
   }
 
   const SEXP dn2 = PROTECT(VECTOR_ELT(Rf_getAttrib(x, R_DimNamesSymbol), 1));
-  R_xlen_t dlen = Rf_xlength(dn2);
+  R_xlen_t dlen = XLENGTH(dn2);
   SEXP names = PROTECT(Rf_allocVector(STRSXP, dlen + 1));
   SET_STRING_ELT(names, 0, Rf_mkChar("index"));
   for (R_xlen_t i = 0; i < dlen; i++) {
@@ -123,7 +106,7 @@ SEXP _ichimoku_tbl(const SEXP x, const SEXP type) {
   Rf_setAttrib(tbl, R_NamesSymbol, names);
   UNPROTECT(2);
 
-  const int typ = Rf_asInteger(type);
+  const int typ = SCALAR_IVAL(type);
   SEXP clss = PROTECT(Rf_allocVector(STRSXP, typ));
   switch (typ) {
   case 1:

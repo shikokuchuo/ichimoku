@@ -20,7 +20,6 @@ meanOver <- function(x, window) {
   .Call(`_ichimoku_meanOver`, x, window)
 }
 
-
 #' Look at Informational Attributes
 #'
 #' Inspect the informational attributes of objects.
