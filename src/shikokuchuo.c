@@ -8,7 +8,8 @@
 /* cfunctions: meanOver() */
 SEXP _ichimoku_meanOver(const SEXP x, const SEXP window) {
 
-  const R_xlen_t n = XLENGTH(x), w = SCALAR_IVAL(window), w1 = w - 1;
+  const R_xlen_t n = XLENGTH(x);
+  const int w = INTEGER_ELT(window, 0), w1 = w - 1;
   SEXP vec = PROTECT(Rf_allocVector(REALSXP, n));
   const double *px = REAL(x);
   double *pvec = REAL(vec);
@@ -86,13 +87,13 @@ SEXP _ichimoku_tbl(const SEXP x, const SEXP type) {
   UNPROTECT(1);
 
   const void *src = REAL(x);
-  size_t colsize = xlen * sizeof(double);
+  size_t vecsize = xlen * sizeof(double);
   for (R_xlen_t j = 1; j <= xwid; j++) {
-    SEXP col = PROTECT(Rf_allocVector(REALSXP, xlen));
-    SET_VECTOR_ELT(tbl, j, col);
-    void *dst = REAL(col);
-    memcpy(dst, src, colsize);
-    src += colsize;
+    SEXP vec = PROTECT(Rf_allocVector(REALSXP, xlen));
+    SET_VECTOR_ELT(tbl, j, vec);
+    void *dst = REAL(vec);
+    memcpy(dst, src, vecsize);
+    src += vecsize;
     UNPROTECT(1);
   }
 
@@ -106,7 +107,7 @@ SEXP _ichimoku_tbl(const SEXP x, const SEXP type) {
   Rf_setAttrib(tbl, R_NamesSymbol, names);
   UNPROTECT(2);
 
-  const int typ = SCALAR_IVAL(type);
+  const int typ = INTEGER_ELT(type, 0);
   SEXP clss = PROTECT(Rf_allocVector(STRSXP, typ));
   switch (typ) {
   case 1:
