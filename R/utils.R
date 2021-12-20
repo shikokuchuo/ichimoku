@@ -237,7 +237,7 @@ df_merge <- function(...) {
     attributes(merge) <- c(attributes(merge),
                            list(instrument = attr(dots[[1L]], "instrument"),
                                 price = attr(dots[[1L]], "price"),
-                                timestamp = psxct(max(unlist(lapply(dots, attr, "timestamp")))),
+                                timestamp = .Call(`_ichimoku_psxct`, max(unlist(lapply(dots, attr, "timestamp")))),
                                 oanda = TRUE))
     if (FALSE %in% .subset2(merge, "complete")) warning("Incomplete periods in merged dataframe - please check for possible duplicates", call. = FALSE)
   }
@@ -289,6 +289,49 @@ df_append <- function(old, new, key = "time", keep.attr = "timestamp") {
     list(cnames, "data.frame", .set_row_names(length(df[[1L]])), attr(new, keep.attr)),
     c("names", "class", "row.names", keep.attr)))
   df
+}
+
+#' Look at Informational Attributes
+#'
+#' Inspect the informational attributes of objects.
+#'
+#' @param x an object (optional). If 'x' is not supplied, \code{\link{.Last.value}}
+#'     will be used instead.
+#'
+#' @return For objects created by the ichimoku package, a pairlist of attributes
+#'     specific to that data type.
+#'
+#'     For other objects, a pairlist of non-standard attributes for matrix /
+#'     data.frame / xts classes, or else invisible NULL if none are present.
+#'
+#' @details Note: autostrat list attributes may be accessed directly using
+#'     \code{look(x)$logret} and \code{look(x)$summary}.
+#'
+#' @examples
+#' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
+#' look(cloud)
+#'
+#' stratlist <- autostrat(cloud, n = 3)
+#' look(stratlist)
+#'
+#' strat <- stratlist[[1]]
+#' look(strat)
+#'
+#' grid <- mlgrid(cloud)
+#' look(grid)
+#'
+#' \dontrun{
+#' # OANDA API key required to run this example
+#' prices <- oanda("USD_JPY")
+#' look(prices)
+#' }
+#'
+#' @export
+#'
+look <- function(x) {
+  if (missing(x)) x <- .Last.value
+  lk <- .Call(`_ichimoku_look`, x)
+  if (length(lk)) lk else invisible()
 }
 
 #' Print More Rows of Ichimoku Objects

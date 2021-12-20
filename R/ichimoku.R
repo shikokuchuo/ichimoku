@@ -202,22 +202,22 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
   cd <- numeric(xlen)
   cd[open < close] <- 1
   cd[open > close] <- -1
-  tenkan <- (maxOver(high, p1) + minOver(low, p1)) / 2
-  kijun <- (maxOver(high, p2) + minOver(low, p2)) / 2
+  tenkan <- (.Call(`_ichimoku_maxOver`, high, p1) + .Call(`_ichimoku_minOver`, low, p1)) / 2
+  kijun <- (.Call(`_ichimoku_maxOver`, high, p2) + .Call(`_ichimoku_minOver`, low, p2)) / 2
   senkouA <- (tenkan + kijun) / 2
-  senkouB <- (maxOver(high, p3) + minOver(low, p3)) / 2
+  senkouB <- (.Call(`_ichimoku_maxOver`, high, p3) + .Call(`_ichimoku_minOver`, low, p3)) / 2
   chikou <- `length<-`(close[p2:xlen], xlen)
   cloudT <- pmax.int(senkouA, senkouB)
   cloudB <- pmin.int(senkouA, senkouB)
 
-  periodicity <- min(index[2:4] - index[1:3])
+  periodicity <- min(index[2:4] - `length<-`(index, 3L))
   if (periodicity == 86400) {
     future <- `length<-`(
       (future <- seq.int(from = index[xlen] + periodicity, by = periodicity,
-                         length.out = p2 + p2))[tradingDays(.Call(`_ichimoku_psxct`, future), ...)],
+                         length.out = p2 + p2))[tradingDays(future, ...)],
       p2 - 1L)
   } else {
-    future <- seq.int(from = index[xlen], by = periodicity, length.out = p2)[-1L]
+    future <- seq.int(from = index[xlen] + periodicity, by = periodicity, length.out = p2 - 1L)
   }
   xtsindex <- `attributes<-`(c(index, future), list(tzone = "", tclass = c("POSIXct", "POSIXt")))
 

@@ -1,9 +1,10 @@
-# ichimoku 1.2.5.7
+# ichimoku 1.2.5.8
 
 #### Updates:
 
-* `look()`, `as.data.frame()`, `as_tibble()`, rolling mean, and POSIXct classing functions re-implemented in C.
+* `look()`, `as.data.frame()`, `as_tibble()`, internal rolling mean and POSIXct classing functions re-implemented in C.
 * Fixes `archive()` to work correctly on R-oldrel (4.0).
+* Further performance improvements to `ichimoku()`.
 
 # ichimoku 1.2.5
 

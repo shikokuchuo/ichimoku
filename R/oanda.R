@@ -214,7 +214,7 @@ getPrices <- function(instrument, granularity, count, from, to, price, server,
                         H6 = 21600, H4 = 14400, H3 = 10800, H2 = 7200, H1 = 3600,
                         M30 = 1800, M15 = 900, M10 = 600, M5 = 300, M4 = 240,
                         M2 = 120, M1 = 60, S30 = 30, S15 = 15, S10 = 10, S5 = 5)
-  time <- psxct(time + periodicity)
+  time <- .Call(`_ichimoku_psxct`, time + periodicity)
   ohlc <- unlist(data[, ptype, drop = FALSE])
   cnames <- names(ohlc)
 
@@ -231,7 +231,7 @@ getPrices <- function(instrument, granularity, count, from, to, price, server,
          row.names = .set_row_names(length(time)),
          instrument = instrument,
          price = price,
-         timestamp = psxct(timestamp),
+         timestamp = .Call(`_ichimoku_psxct`, timestamp),
          oanda = TRUE)
   )
 
@@ -872,7 +872,7 @@ oanda_view <- function(market = c("allfx", "bonds", "commodities", "fx", "metals
                            server = server, apikey = apikey, .validate = FALSE)
   }
   data <- do.call(rbind, data)
-  time <- psxct(data[1L, "t", drop = FALSE])
+  time <- .Call(`_ichimoku_psxct`, data[1L, "t", drop = FALSE])
   open <- data[, "o", drop = FALSE]
   high <- data[, "h", drop = FALSE]
   low <- data[, "l", drop = FALSE]
@@ -926,7 +926,7 @@ oanda_quote <- function(instrument, price = c("M", "B", "A"), server, apikey) {
   data <- getPrices(instrument = instrument, granularity = "D", count = 1, price = price,
                     server = server, apikey = apikey, .validate = FALSE)
   pctchg <- round(100 * (data[["c"]] / data[["o"]] - 1), digits = 4L)
-  cat(instrument, format.POSIXct(psxct(data[["t"]])),
+  cat(instrument, format.POSIXct(.Call(`_ichimoku_psxct`, data[["t"]])),
       "open:", data[["o"]], " high:", data[["h"]], " low:", data[["l"]],
       " last:\u001b[7m", data[["c"]], "\u001b[27m %chg:", pctchg, price)
 
@@ -982,7 +982,7 @@ oanda_positions <- function(instrument, time, server, apikey) {
 
   data <- parse_json(rawToChar(resp$content))[["positionBook"]]
   currentprice <- as.numeric(data[["price"]])
-  timestamp <- psxct(data[["unixTime"]])
+  timestamp <- .Call(`_ichimoku_psxct`, data[["unixTime"]])
   bucketwidth <- as.numeric(data[["bucketWidth"]])
 
   buckets <- `storage.mode<-`(do.call(rbind, data[["buckets"]]), "double")
@@ -1071,7 +1071,7 @@ oanda_orders <- function(instrument, time, server, apikey) {
 
   data <- parse_json(rawToChar(resp$content))[["orderBook"]]
   currentprice <- as.numeric(data[["price"]])
-  timestamp <- psxct(data[["unixTime"]])
+  timestamp <- .Call(`_ichimoku_psxct`, data[["unixTime"]])
   bucketwidth <- as.numeric(data[["bucketWidth"]])
 
   buckets <- `storage.mode<-`(do.call(rbind, data[["buckets"]]), "double")

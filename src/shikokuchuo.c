@@ -1,11 +1,10 @@
 /* ichimoku - Functions Utilising R's C API --------------------------------- */
 
 #define R_NO_REMAP
-#include <string.h>
 #include <R.h>
 #include <Rinternals.h>
 
-/* cfunctions: meanOver() */
+/* rolling mean over a window */
 SEXP _ichimoku_meanOver(const SEXP x, const SEXP window) {
 
   const R_xlen_t n = XLENGTH(x);
@@ -30,7 +29,7 @@ SEXP _ichimoku_meanOver(const SEXP x, const SEXP window) {
 
 }
 
-/* cfunctions: look() */
+/* look - inspect informational attributes */
 SEXP _ichimoku_look(SEXP x) {
 
   x = PROTECT(Rf_shallow_duplicate(x));
@@ -49,7 +48,7 @@ SEXP _ichimoku_look(SEXP x) {
 
 }
 
-/* cfunctions: psxct() */
+/* class object as POSIXct (in-place) */
 SEXP _ichimoku_psxct(SEXP x) {
 
   SEXP posix = PROTECT(Rf_allocVector(STRSXP, 2));
@@ -62,7 +61,7 @@ SEXP _ichimoku_psxct(SEXP x) {
 
 }
 
-/* cfunctions: NA */
+/* ichimoku to data.frame / tibble converter */
 SEXP _ichimoku_tbl(const SEXP x, const SEXP type) {
 
   R_xlen_t xlen, xwid;
@@ -111,24 +110,24 @@ SEXP _ichimoku_tbl(const SEXP x, const SEXP type) {
   UNPROTECT(2);
 
   const int typ = INTEGER_ELT(type, 0);
-  SEXP clss = PROTECT(Rf_allocVector(STRSXP, typ));
+  SEXP klass = PROTECT(Rf_allocVector(STRSXP, typ));
   switch (typ) {
   case 1:
-    SET_STRING_ELT(clss, 0, Rf_mkChar("data.frame"));
+    SET_STRING_ELT(klass, 0, Rf_mkChar("data.frame"));
     break;
   case 3:
-    SET_STRING_ELT(clss, 0, Rf_mkChar("tbl_df"));
-    SET_STRING_ELT(clss, 1, Rf_mkChar("tbl"));
-    SET_STRING_ELT(clss, 2, Rf_mkChar("data.frame"));
+    SET_STRING_ELT(klass, 0, Rf_mkChar("tbl_df"));
+    SET_STRING_ELT(klass, 1, Rf_mkChar("tbl"));
+    SET_STRING_ELT(klass, 2, Rf_mkChar("data.frame"));
     break;
   case 4:
-    SET_STRING_ELT(clss, 0, Rf_mkChar("ichimoku_tbl"));
-    SET_STRING_ELT(clss, 1, Rf_mkChar("tbl_df"));
-    SET_STRING_ELT(clss, 2, Rf_mkChar("tbl"));
-    SET_STRING_ELT(clss, 3, Rf_mkChar("data.frame"));
+    SET_STRING_ELT(klass, 0, Rf_mkChar("ichimoku_tbl"));
+    SET_STRING_ELT(klass, 1, Rf_mkChar("tbl_df"));
+    SET_STRING_ELT(klass, 2, Rf_mkChar("tbl"));
+    SET_STRING_ELT(klass, 3, Rf_mkChar("data.frame"));
     break;
   }
-  Rf_setAttrib(tbl, R_ClassSymbol, clss);
+  Rf_setAttrib(tbl, R_ClassSymbol, klass);
   UNPROTECT(1);
 
   SEXP rownames;

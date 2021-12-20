@@ -210,17 +210,22 @@ extraplot <- function(object,
     p2 <- attr(object, "periods")[2L]
     core <- coredata.ichimoku(object)
     object$osc_typ_slw <- 100 - 100 /
-      (1 + meanOver(((cd <- core[, "cd"]) == 1) * ((close <- core[, "close"]) - (open <- core[, "open"])), p2) /
-         meanOver((cd == -1) * (open - close), p2))
+      (1 + .Call(`_ichimoku_meanOver`,
+                 ((cd <- core[, "cd"]) == 1) * ((close <- core[, "close"]) - (open <- core[, "open"])),
+                 p2) /
+         .Call(`_ichimoku_meanOver`, (cd == -1) * (open - close), p2))
 
   } else {
     periods <- attr(object, "periods")
     p1 <- periods[1L]
     p2 <- periods[2L]
     core <- coredata.ichimoku(object)
-    object$osc_typ_fst <- 100 * ((close <- core[, "close"]) - minOver((low <- core[, "low"]), p1)) /
-      (maxOver((high <- core[, "high"]), p1) - minOver(low, p1))
-    object$osc_typ_slw <- 100 * (close - minOver(low, p2)) / (maxOver(high, p2) - minOver(low, p2))
+    object$osc_typ_fst <- 100 *
+      ((close <- core[, "close"]) - .Call(`_ichimoku_minOver`, (low <- core[, "low"]), p1)) /
+      (.Call(`_ichimoku_maxOver`, (high <- core[, "high"]), p1) - .Call(`_ichimoku_minOver`, low, p1))
+    object$osc_typ_slw <- 100 *
+      (close - .Call(`_ichimoku_minOver`, low, p2)) /
+      (.Call(`_ichimoku_maxOver`, high, p2) - .Call(`_ichimoku_minOver`, low, p2))
   }
 
   if (!missing(window)) object <- object[window]
@@ -329,7 +334,7 @@ breaks_ichimoku <- function(data, object) {
 labels_ichimoku <- function(data, object) {
 
   function(x) {
-    labels <- psxct(.subset(.subset2(data, "index"), x))
+    labels <- .Call(`_ichimoku_psxct`, .subset(.subset2(data, "index"), x))
     if (attr(object, "periodicity") > 80000) {
       format.POSIXct(labels, format = paste("%d-%b", "%Y", sep = "\n"))
     } else {
