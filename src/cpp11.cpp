@@ -22,12 +22,16 @@ extern "C" SEXP _ichimoku_minOver(SEXP x, SEXP window) {
 
 extern "C" {
 /* .Call calls */
+extern SEXP _ichimoku_create(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+extern SEXP _ichimoku_df(SEXP);
 extern SEXP _ichimoku_look(SEXP);
 extern SEXP _ichimoku_meanOver(SEXP, SEXP);
 extern SEXP _ichimoku_psxct(SEXP);
 extern SEXP _ichimoku_tbl(SEXP, SEXP);
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_ichimoku_create",   (DL_FUNC) &_ichimoku_create,   6},
+    {"_ichimoku_df",       (DL_FUNC) &_ichimoku_df,       1},
     {"_ichimoku_look",     (DL_FUNC) &_ichimoku_look,     1},
     {"_ichimoku_maxOver",  (DL_FUNC) &_ichimoku_maxOver,  2},
     {"_ichimoku_meanOver", (DL_FUNC) &_ichimoku_meanOver, 2},

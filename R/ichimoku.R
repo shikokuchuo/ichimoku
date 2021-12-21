@@ -219,10 +219,11 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
   } else {
     future <- seq.int(from = index[xlen] + periodicity, by = periodicity, length.out = p2 - 1L)
   }
-  xtsindex <- `attributes<-`(c(index, future), list(tzone = "", tclass = c("POSIXct", "POSIXt")))
+  xtsindex <- c(index, future)
 
-  lk <- kmatrix <- NULL
-  if (!missing(keep.data) && isTRUE(keep.data)) {
+  if (missing(keep.data) || !isTRUE(keep.data)) {
+    x <- kmatrix <- NULL
+  } else {
     used <- (used <- unlist(
       lapply(c("coli", "colo", "colh", "coll", "colc", "colp"), function(x) {
         get0(x, envir = parent.frame(2L), inherits = FALSE)
@@ -230,8 +231,6 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
     ))[!is.na(used)]
     keep <- if (!is.null(used)) cnames[-used]
     kmatrix <- do.call(cbind, lapply(.subset(x, keep), function(x) `length<-`(as.numeric(x), xlen + p2 - 1L)))
-    lk <- .Call(`_ichimoku_look`, x)
-    lk$periods <- lk$periodicity <- lk$ticker <- NULL
   }
 
   kumo <- cbind(open = `length<-`(open, xlen + p2 - 1L),
@@ -247,14 +246,8 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
                 cloudT = c(rep(NA, p2 - 1L), cloudT),
                 cloudB = c(rep(NA, p2 - 1L), cloudB),
                 kmatrix)
-  attributes(kumo) <- c(attributes(kumo),
-                        list(index = xtsindex,
-                             class = c("ichimoku", "xts", "zoo"),
-                             periods = periods,
-                             periodicity = periodicity,
-                             ticker = ticker),
-                        lk)
-  kumo
+
+  .Call(`_ichimoku_create`, kumo, xtsindex, periods, periodicity, ticker, x)
 
 }
 

@@ -118,9 +118,7 @@ autoplot.ichimoku <- function(object,
   }
 
   if (!missing(window)) object <- object[window]
-  data <- as.data.frame.ichimoku(object)
-  data$idx <- attr(data, "row.names")
-  data$cd <- as.character(.subset2(data, "cd"))
+  data <- .Call(`_ichimoku_df`, object)
 
   layers <- list(
     if (showstrat) {
@@ -229,8 +227,7 @@ extraplot <- function(object,
   }
 
   if (!missing(window)) object <- object[window]
-  data <- as.data.frame.ichimoku(object)
-  data$idx <- attr(data, "row.names")
+  data <- .Call(`_ichimoku_df`, object)
 
   if (type == "r" || type == "s") {
     layers <- list(
@@ -247,7 +244,6 @@ extraplot <- function(object,
 
     cols <- cnames[sel]
     llen <- nchar(as.character(trunc(max(.subset2(data, cols), na.rm = TRUE))))
-    data$cd <- as.character(.subset2(data, "cd"))
 
     layers <- list(
       if (type == "line") {
