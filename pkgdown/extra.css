@@ -3,56 +3,58 @@
 body {
   color:#02141c;
   font-family:'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-weight:400
+  font-weight:400;
+  font-size:14px;
 }
 footer {
   color: #02141c
 }
-.navbar-default .navbar-link {
- color:#02141c
-}
+.navbar-default .navbar-link,
 .navbar-default .navbar-nav>li>a {
- color:#02141c
-}
-.dropdown-menu>li>a {
- color:#02141c
-}
-a {
- color:#dd424c;
- text-decoration:none
+  color:#02141c
 }
 .navbar-default .navbar-nav>li>a:hover,
 .navbar-default .navbar-nav>li>a:focus {
- color:#dd424c;
- background-color:transparent
+  color:#dd424c;
+  background-color:transparent
 }
 .navbar-default .navbar-nav>.active>a,
 .navbar-default .navbar-nav>.active>a:hover,
 .navbar-default .navbar-nav>.active>a:focus {
- color:#dd424c;
- background-color:transparent
+  color:#dd424c;
+  background-color:transparent
+}
+.dropdown-menu {
+  font-size: 14px;
+}
+.dropdown-menu>li>a {
+  color:#02141c
+}
+a {
+  color:#dd424c;
+  text-decoration:none
 }
 .dropdown-menu>li>a:hover,
 .dropdown-menu>li>a:focus {
- color:#ffffff;
- text-decoration:none;
- background-color:#dd424c
+  color:#ffffff;
+  text-decoration:none;
+  background-color:#dd424c
 }
 .dropdown-menu>.active>a,
 .dropdown-menu>.active>a:hover,
 .dropdown-menu>.active>a:focus {
- color:#ffffff;
- text-decoration:none;
- background-color:#dd424c;
- outline:0
+  color:#ffffff;
+  text-decoration:none;
+  background-color:#dd424c;
+  outline:0
 }
 .label-default {
- background-color:#02141c
+  background-color:#02141c
 }
 code,
 kbd,
 pre,
 samp {
- font-family:Inconsolata,Menlo,Monaco,Consolas,monospace;
- font-size:100%
+  font-family:Inconsolata,Menlo,Monaco,Consolas,monospace;
+  font-size:100%
 }

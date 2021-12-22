@@ -153,7 +153,8 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
   } else {
     index <- tryCatch(unclass(as.POSIXct(.subset2(x, coli))), error = function(e) {
       if (is.numeric(idxcol <- .subset2(x, coli))) {
-        warning("Converted numeric values in column '", cnames[coli], "' as POSIX times - please check validity", call. = FALSE)
+        warning("Converted numeric values in column '", cnames[coli],
+                "' as POSIX times - please check validity", call. = FALSE)
         idxcol
       } else {
         stop("column '", cnames[coli], "' is not convertible to a POSIXct date-time format", call. = FALSE)
@@ -212,10 +213,8 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
 
   periodicity <- min(index[2:4] - `length<-`(index, 3L))
   if (periodicity == 86400) {
-    future <- `length<-`(
-      (future <- seq.int(from = index[xlen] + periodicity, by = periodicity,
-                         length.out = p2 + p2))[tradingDays(future, ...)],
-      p2 - 1L)
+    future <- seq.int(from = index[xlen] + periodicity, by = periodicity, length.out = p2 + p2)
+    future <- `length<-`(future[tradingDays(future, ...)], p2 - 1L)
   } else {
     future <- seq.int(from = index[xlen] + periodicity, by = periodicity, length.out = p2 - 1L)
   }
@@ -224,13 +223,13 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
   if (missing(keep.data) || !isTRUE(keep.data)) {
     x <- kmatrix <- NULL
   } else {
-    used <- (used <- unlist(
-      lapply(c("coli", "colo", "colh", "coll", "colc", "colp"), function(x) {
-        get0(x, envir = parent.frame(2L), inherits = FALSE)
-      })
-    ))[!is.na(used)]
+    used <- unlist(lapply(c("coli", "colo", "colh", "coll", "colc", "colp"), function(x) {
+      get0(x, envir = parent.frame(2L), inherits = FALSE)
+    }))
+    used <- used[!is.na(used)]
     keep <- if (!is.null(used)) cnames[-used]
-    kmatrix <- do.call(cbind, lapply(.subset(x, keep), function(x) `length<-`(as.numeric(x), xlen + p2 - 1L)))
+    kmatrix <- do.call(cbind, lapply(.subset(x, keep),
+                                     function(x) `length<-`(as.numeric(x), xlen + p2 - 1L)))
   }
 
   kumo <- cbind(open = `length<-`(open, xlen + p2 - 1L),

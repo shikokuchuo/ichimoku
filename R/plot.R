@@ -223,7 +223,7 @@ extraplot <- function(object,
       warning("For type = 'bar' or 'line': required argument 'custom' not specified", call. = FALSE)
       return(print(aplot))
     }
-    cnames <- dimnames(object)[[2L]]
+    cnames <- attr(object, "dimnames")[[2L]]
     sel <- grep(custom, cnames, ignore.case = TRUE, perl = TRUE)[1L]
     is.na(sel) && {
       warning("Specified value '", custom, "' for 'custom' does not match any columns", call. = FALSE)

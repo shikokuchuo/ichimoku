@@ -457,7 +457,7 @@ oanda_chart <- function(instrument,
   if (!missing(limit) && is.numeric(limit)) setTimeLimit(elapsed = limit * 60, transient = TRUE)
   while (TRUE) {
     pdata <- ichimoku.data.frame(data, periods = periods, ...)[minlen:(xlen + p2 - 1L), ]
-    subtitle <- paste(instrument, ptype, "price [", data$close[xlen],
+    subtitle <- paste(instrument, ptype, "price [", .subset2(data, "close")[xlen],
                       "] at", attr(data, "timestamp"), "| Chart:", ctype,
                       "| Cmplt:", .subset2(data, "complete")[xlen])
     plot.ichimoku(pdata, ticker = ticker, subtitle = subtitle, theme = theme,
@@ -694,7 +694,7 @@ oanda_studio <- function(instrument = "USD_JPY",
                                                    periods = periods, ...)[minlen:(xlen() + p2 - 1L), ])
       plen <- shiny::reactive(xlen() + p2 - minlen)
       ticker <- shiny::reactive(paste(dispname(), "  |", input$instrument, ptype(), "price [",
-                                      data()$close[xlen()], "] at", attr(data(), "timestamp"),
+                                      .subset2(data(), "close")[xlen()], "] at", attr(data(), "timestamp"),
                                       "| Chart:", ctype(), "| Cmplt:",
                                       .subset2(data(), "complete")[xlen()]))
 

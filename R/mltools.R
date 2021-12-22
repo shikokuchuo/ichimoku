@@ -375,9 +375,8 @@ relative <- function(x, order = FALSE, signif = 0.2, quietly) {
 
   is.ichimoku(x) || stop("relative() only works on ichimoku objects", call. = FALSE)
   grid <- mlgrid(x, y = "none", type = "numeric")
-  dims <- dim(grid)
-  xlen <- dims[1L]
-  xwid <- dims[2L]
+  xlen <- dim(grid)[1L]
+  xwid <- dim(grid)[2L]
   cnames <- attr(grid, "names")
   time <- attr(grid, "row.names")[xlen]
 

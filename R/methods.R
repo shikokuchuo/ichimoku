@@ -36,6 +36,7 @@ print.ichimoku <- function(x, plot = TRUE, ...) {
 
   if (is.null(dims <- attr(x, "dim")) || dims[1L] == 0L) {
     NextMethod()
+
   } else {
     tbl <- .Call(`_ichimoku_tbl`, x, 4L)
     pillar_sigfig <- getOption("pillar.sigfig")
@@ -93,13 +94,15 @@ tbl_sum.ichimoku_tbl <- function(x, ...) {
 #'
 str.ichimoku <- function (object, ...) {
 
-  if (is.null(dims <- attr(object, "dim"))) {
-    dates <- format.POSIXct(index.ichimoku(object, c(1L, xlen <- length(object))))
+  dims <- attr(object, "dim")
+  if (is.null(dims)) {
+    xlen <- length(object)
+    dates <- format.POSIXct(index.ichimoku(object, c(1L, xlen)))
     cat("ichimoku object with no dimensions\nVector <numeric> w/ length:", xlen)
   } else {
-    dates <- format.POSIXct(index.ichimoku(object, c(1L, dim1 <- dims[1L])))
+    dates <- format.POSIXct(index.ichimoku(object, c(1L, dims[1L])))
     cat("ichimoku object [", dates[1L], " / ", dates[2L], "] (",
-        dim1, ", ", dims[2L], ")", if (hasStrat(object)) " w/ strat",
+        dims[1L], ", ", dims[2L], ")", if (hasStrat(object)) " w/ strat",
         "\n <double> $", sep = "")
     cat(attr(object, "dimnames")[[2L]], sep = " $")
   }
@@ -164,14 +167,15 @@ summary.ichimoku <- function(object, strat = TRUE, ...) {
        !is.numeric(periodicity <- attr(object, "periodicity")) || length(periodicity) != 1L) && {
          cat(summary <- "ichimoku object with invalid attributes")
       return(invisible(summary))
-    }
-    if (is.null(dims <- attr(object, "dim"))) {
+       }
+    dims <- attr(object, "dim")
+    if (is.null(dims)) {
       cat(summary <- "ichimoku object with no dimensions", "\n")
-    } else if ((dim2 <- dims[2L]) < 12L) {
+    } else if (dims[2L] < 12L) {
       cat(summary <- "incomplete ichimoku object (partial or subset)", "\n")
     } else {
-      cat(summary <- paste0("ichimoku object with dimensions (", dim1 <- dims[1L], ", ", dim2, ")"), "\n")
-      if (dim1 != 0L) {
+      cat(summary <- paste0("ichimoku object with dimensions (", dims[1L], ", ", dims[2L], ")"), "\n")
+      if (dims[1L] != 0L) {
         core <- coredata.ichimoku(object)
         end <- sum(!is.na(core[, "close"]))
         high <- which.max(core[1:end, "high"])

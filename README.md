@@ -42,12 +42,6 @@ Or the latest development version from rOpenSci R-universe:
 install.packages("ichimoku", repos = "https://shikokuchuo.r-universe.dev")
 ```
 
-Or the latest development version from the Github source:
-
-``` r
-remotes::install_github("shikokuchuo/ichimoku")
-```
-
 ## Example
 
 Load package and sample price data:
