@@ -122,25 +122,51 @@ autoplot.ichimoku <- function(object,
 
   layers <- list(
     if (showstrat) {
-      geom_rect(aes(xmin = .data$posn * (.data$idx - 0.5), xmax = .data$posn * (.data$idx + 0.5),
-                    ymin = -Inf, ymax = Inf), fill = pal[1L], alpha = 0.2, na.rm = TRUE)
+      layer(geom = GeomRect, mapping = aes(xmin = .data$posn * (.data$idx - 0.5),
+                                           xmax = .data$posn * (.data$idx + 0.5),
+                                           ymin = -Inf, ymax = Inf),
+            stat = StatIdentity, position = PositionIdentity,
+            params = list(na.rm = TRUE, fill = pal[1L], alpha = 0.2),
+            inherit.aes = TRUE, check.aes = FALSE, check.param = FALSE)
     },
     if (!all(is.na(.subset2(data, "senkouB")))) {
-      geom_ribbon(aes(ymax = .data$senkouA, ymin = .data$senkouB),
-                  fill = pal[1L], alpha = 0.6, na.rm = TRUE)
+      layer(geom = GeomRibbon, mapping = aes(ymax = .data$senkouA, ymin = .data$senkouB),
+            stat = StatIdentity, position = PositionIdentity,
+            params = list(na.rm = TRUE, outline.type = "both", fill = pal[1L], alpha = 0.6),
+            inherit.aes = TRUE, check.aes = FALSE, check.param = FALSE)
     },
-    geom_line(aes(y = .data$senkouB), color = pal[2L], alpha = 0.6, na.rm = TRUE),
-    geom_line(aes(y = .data$senkouA), color = pal[3L], alpha = 0.6, na.rm = TRUE),
-    geom_line(aes(y = .data$kijun), color = pal[5L], na.rm = TRUE),
-    geom_line(aes(y = .data$tenkan), color = pal[4L], na.rm = TRUE),
-    geom_segment(aes(xend = .data$idx, y = .data$high, yend = .data$low, color = .data$cd),
-                 size = 0.3, na.rm = TRUE),
-    geom_rect(aes(xmin = .data$idx - 0.4, xmax = .data$idx + 0.4, ymin = .data$open,
-                  ymax = .data$close, color = .data$cd, fill = .data$cd),
-              size = 0.3, na.rm = TRUE),
-    geom_line(aes(y = .data$chikou), color = pal[6L], na.rm = TRUE),
-    scale_x_continuous(breaks = breaks_ichimoku(data = data, object = object),
-                       labels = labels_ichimoku(data = data, object = object)),
+    layer(geom = GeomLine, mapping = aes(y = .data$senkouB),
+          stat = StatIdentity, position = PositionIdentity,
+          params = list(na.rm = TRUE, colour = pal[2L], alpha = 0.6),
+          inherit.aes = TRUE, check.aes = FALSE, check.param = FALSE),
+    layer(geom = GeomLine, mapping = aes(y = .data$senkouA),
+          stat = StatIdentity, position = PositionIdentity,
+          params = list(na.rm = TRUE, colour = pal[3L], alpha = 0.6),
+          inherit.aes = TRUE, check.aes = FALSE, check.param = FALSE),
+    layer(geom = GeomLine, mapping = aes(y = .data$kijun),
+          stat = StatIdentity, position = PositionIdentity,
+          params = list(na.rm = TRUE, colour = pal[5L]),
+          inherit.aes = TRUE, check.aes = FALSE, check.param = FALSE),
+    layer(geom = GeomLine, mapping = aes(y = .data$tenkan),
+          stat = StatIdentity, position = PositionIdentity,
+          params = list(na.rm = TRUE, colour = pal[4L]),
+          inherit.aes = TRUE, check.aes = FALSE, check.param = FALSE),
+    layer(geom = GeomSegment, mapping = aes(xend = .data$idx, y = .data$high,
+                                            yend = .data$low, colour = .data$cd),
+          stat = StatIdentity, position = PositionIdentity,
+          params = list(na.rm = TRUE, size = 0.3),
+          inherit.aes = TRUE, check.aes = FALSE, check.param = FALSE),
+    layer(geom = GeomRect, mapping = aes(xmin = .data$idx - 0.4, xmax = .data$idx + 0.4,
+                                         ymin = .data$open, ymax = .data$close,
+                                         colour = .data$cd, fill = .data$cd),
+          stat = StatIdentity, position = PositionIdentity,
+          params = list(na.rm = TRUE, size = 0.3),
+          inherit.aes = TRUE, check.aes = FALSE, check.param = FALSE),
+    layer(geom = GeomLine, mapping = aes(y = .data$chikou),
+          stat = StatIdentity, position = PositionIdentity,
+          params = list(na.rm = TRUE, colour = pal[6L]),
+          inherit.aes = TRUE, check.aes = FALSE, check.param = FALSE),
+    scale_x_continuous(breaks = breaks_ichimoku(object), labels = labels_ichimoku(object)),
     scale_y_continuous(breaks = function(x) pretty.default(x, n = 9L)),
     scale_color_manual(values = c("1" = pal[7L], "-1" = pal[8L], "0" = pal[9L])),
     scale_fill_manual(values = c("1" = pal[10L], "-1" = pal[11L], "0" = pal[12L])),
@@ -148,7 +174,7 @@ autoplot.ichimoku <- function(object,
     switch(theme, dark = theme_ichimoku_dark(), theme_ichimoku_light())
   )
 
-  ggplot(data = data, aes(x = .data$idx)) + layers
+  ggplot(data = data, mapping = aes(x = .data$idx)) + layers
 
 }
 
@@ -230,10 +256,17 @@ extraplot <- function(object,
   data <- .Call(`_ichimoku_df`, object)
 
   if (type == "r" || type == "s") {
+
     layers <- list(
-      geom_line(aes(y = .data$osc_typ_slw), color = pal[5L], alpha = 0.8, na.rm = TRUE),
-      if (type == "s") geom_line(aes(y = .data$osc_typ_fst), color = pal[4L], alpha = 0.7, na.rm = TRUE),
-      scale_x_continuous(breaks = breaks_ichimoku(data = data, object = object), labels = NULL),
+      layer(geom = GeomLine, mapping = aes(y = .data$osc_typ_slw),
+            stat = StatIdentity, position = PositionIdentity,
+            params = list(na.rm = TRUE, colour = pal[5L], alpha = 0.8),
+            inherit.aes = TRUE, check.aes = FALSE, check.param = FALSE),
+      if (type == "s") layer(geom = GeomLine, mapping = aes(y = .data$osc_typ_fst),
+                             stat = StatIdentity, position = PositionIdentity,
+                             params = list(na.rm = TRUE, colour = pal[4L], alpha = 0.7),
+                             inherit.aes = TRUE, check.aes = FALSE, check.param = FALSE),
+      scale_x_continuous(breaks = breaks_ichimoku(object), labels = NULL),
       scale_y_continuous(breaks = c(0, 25, 50, 75, 100), limits = c(0, 100), expand = c(0,0)),
       labs(x = NULL, y = switch(type, r = "R-type", s = "S-type")),
       switch(theme, dark = theme_ichimoku_dark(), theme_ichimoku_light()),
@@ -247,13 +280,19 @@ extraplot <- function(object,
 
     layers <- list(
       if (type == "line") {
-        geom_line(aes(y = .data[[cols]]), color = pal[7L], alpha = 0.8, na.rm = TRUE)
+        layer(geom = GeomLine, mapping = aes(y = .data[[cols]]),
+              stat = StatIdentity, position = PositionIdentity,
+              params = list(na.rm = TRUE, colour = pal[7L], alpha = 0.8),
+              inherit.aes = TRUE, check.aes = FALSE, check.param = FALSE)
       } else {
-        geom_rect(aes(xmin = .data$idx - 0.4, xmax = .data$idx + 0.4, ymin = 0,
-                      ymax = .data[[cols]], color = .data$cd, fill = .data$cd),
-                  size = 0.3, alpha = 0.8, na.rm = TRUE)
+        layer(geom = GeomRect, mapping = aes(xmin = .data$idx - 0.4, xmax = .data$idx + 0.4,
+                                             ymin = 0, ymax = .data[[cols]],
+                                             colour = .data$cd, fill = .data$cd),
+              stat = StatIdentity, position = PositionIdentity,
+              params = list(na.rm = TRUE, size = 0.3, alpha = 0.8),
+              inherit.aes = TRUE, check.aes = FALSE, check.param = FALSE)
       },
-      scale_x_continuous(breaks = breaks_ichimoku(data = data, object = object), labels = NULL),
+      scale_x_continuous(breaks = breaks_ichimoku(object), labels = NULL),
       scale_y_continuous(),
       scale_color_manual(values = c("1" = pal[7L], "-1" = pal[8L], "0" = pal[9L])),
       scale_fill_manual(values = c("1" = pal[10L], "-1" = pal[11L], "0" = pal[12L])),
@@ -264,7 +303,7 @@ extraplot <- function(object,
     )
   }
 
-  subplot <- ggplot(data = data, aes(x = .data$idx)) + layers
+  subplot <- ggplot(data = data, mapping = aes(x = .data$idx)) + layers
 
   gp <- ggplotGrob(aplot + labs(x = NULL))
   gs <- ggplotGrob(subplot)
@@ -281,15 +320,15 @@ extraplot <- function(object,
 #'
 #' Internal function used to create custom pretty breaks for ggplot2.
 #'
-#' @param data the data frame used by ggplot2.
-#' @param object the original ichimoku object.
+#' @param object an ichimoku object.
 #'
 #' @return A vector of integer values representing the break locations.
 #'
 #' @noRd
 #'
-breaks_ichimoku <- function(data, object) {
+breaks_ichimoku <- function(object) {
 
+  xlen = attr(object, "dim")[1L]
   if (attr(object, "periodicity") > 80000) {
     len <- length(endpoints(object, on = "months"))
     if (len < 100L) {
@@ -305,11 +344,11 @@ breaks_ichimoku <- function(data, object) {
       if (cond) breaks <- breaks[-length(breaks)]
       if (cond2) breaks <- breaks[-1L]
     }
-    if (breaks[length(breaks)] > dim(object)[1L]) breaks[length(breaks)] <- breaks[length(breaks)] - 1L
+    if (breaks[length(breaks)] > xlen) breaks[length(breaks)] <- breaks[length(breaks)] - 1L
 
   } else {
-    breaks <- pretty.default(.subset2(data, "idx"), n = 9L) + 1
-    if (breaks[length(breaks)] > dim(object)[1L]) breaks <- breaks[-length(breaks)]
+    breaks <- pretty.default(seq_len(xlen), n = 9L) + 1
+    if (breaks[length(breaks)] > xlen) breaks <- breaks[-length(breaks)]
   }
 
   breaks
@@ -320,17 +359,16 @@ breaks_ichimoku <- function(data, object) {
 #'
 #' Internal function used to create custom break labels for ggplot2.
 #'
-#' @param data the data frame used by ggplot2.
-#' @param object the original ichimoku object.
+#' @param object an ichimoku object.
 #'
 #' @return A vector of character labels corresponding to the breaks.
 #'
 #' @noRd
 #'
-labels_ichimoku <- function(data, object) {
+labels_ichimoku <- function(object) {
 
   function(x) {
-    labels <- .Call(`_ichimoku_psxct`, .subset(.subset2(data, "index"), x))
+    labels <- .Call(`_ichimoku_psxct`, .subset(attr(object, "index"), x))
     if (attr(object, "periodicity") > 80000) {
       format.POSIXct(labels, format = paste("%d-%b", "%Y", sep = "\n"))
     } else {

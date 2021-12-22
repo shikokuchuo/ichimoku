@@ -147,8 +147,8 @@ SEXP _ichimoku_tbl(const SEXP x, const SEXP type) {
 }
 
 /* internal function used by ichimoku() */
-SEXP _ichimoku_create(SEXP kumo, SEXP xtsindex, SEXP periods,
-                      SEXP periodicity, SEXP ticker, SEXP x) {
+SEXP _ichimoku_create(SEXP kumo, SEXP xtsindex, const SEXP periods,
+                      const SEXP periodicity, const SEXP ticker, const SEXP x) {
 
   SEXP tzone = PROTECT(Rf_ScalarString(Rf_mkChar("")));
   Rf_setAttrib(xtsindex, Rf_install("tzone"), tzone);

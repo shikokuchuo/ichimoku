@@ -59,7 +59,7 @@ iplot <- function(x,
 
     tformat <- if (attr(x, "periodicity") > 80000) "%F" else "%F %T"
     start <- index.ichimoku(x, 1L)
-    end <- index.ichimoku(x, dim(x)[1L])
+    end <- index.ichimoku(x, attr(x, "dim")[1L])
     xadj <- if (nchar(format.POSIXct(start)) > 10) -17 else 5
 
     ui <- shiny::fluidPage(
@@ -115,7 +115,7 @@ iplot <- function(x,
       posi_x <- shiny::reactive(round(input$plot_hover$x, digits = 0))
 
       pdata <- shiny::reactive(x[window()])
-      plen <- shiny::reactive(dim(pdata())[1L])
+      plen <- shiny::reactive(attr(pdata(), "dim")[1L])
 
       output$chart <- shiny::renderPlot(
         if (input$type == "none") {

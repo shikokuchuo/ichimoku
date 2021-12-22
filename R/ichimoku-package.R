@@ -65,10 +65,11 @@
 #' @useDynLib ichimoku, .registration = TRUE
 #' @importFrom curl curl curl_fetch_memory handle_setheaders new_handle
 #' @importFrom ggplot2 aes autoplot coord_flip element_blank element_line
-#'     element_rect element_text geom_col geom_line geom_rect geom_ribbon
-#'     geom_segment geom_vline ggplot ggplotGrob guides labs margin rel
-#'     scale_color_manual scale_fill_manual scale_x_continuous
-#'     scale_y_continuous theme theme_grey %+replace%
+#'     element_rect element_text GeomCol GeomLine GeomRect GeomRibbon
+#'     GeomSegment GeomVline ggplot ggplotGrob guides labs layer margin
+#'     PositionIdentity rel scale_color_manual scale_fill_manual
+#'     scale_x_continuous scale_y_continuous StatIdentity theme theme_grey
+#'     %+replace%
 #' @importFrom grid grid.draw grid.newpage unit
 #' @importFrom gtable gtable gtable_add_grob
 #' @importFrom jsonlite parse_json stream_in
