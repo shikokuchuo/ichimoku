@@ -105,7 +105,7 @@ grid_dup <- function(n, omit.id) {
 #'
 df_trim <- function(x) {
   omit <- logical(dim(x)[1L])
-  for (i in seq_len(length(x))) {
+  for (i in seq_along(x)) {
     omit <- omit | is.na(x[[i]])
   }
   x[!omit, , drop = FALSE]
@@ -139,9 +139,8 @@ df_trim <- function(x) {
 xts_df <- function(x, keep.attrs) {
   core <- coredata(x)
   dn2 <- dimnames(core)[[2L]]
-  dims <- dim(core)
-  xlen <- dims[1L]
-  len <- dims[2L]
+  xlen <- dim(core)[1L]
+  len <- dim(core)[2L]
   start <- 0:(len - 1) * xlen + 1L
   end <- 1:len * xlen
   attributes(core) <- NULL
@@ -184,9 +183,8 @@ xts_df <- function(x, keep.attrs) {
 matrix_df <- function(x, keep.attrs) {
   lk <- if (!missing(keep.attrs) && isTRUE(keep.attrs)) .Call(`_ichimoku_look`, x)
   dn <- dimnames(x)
-  dims <- dim(x)
-  xlen <- dims[1L]
-  len <- dims[2L]
+  xlen <- dim(x)[1L]
+  len <- dim(x)[2L]
   start <- 0:(len - 1) * xlen + 1L
   end <- 1:len * xlen
   attributes(x) <- NULL

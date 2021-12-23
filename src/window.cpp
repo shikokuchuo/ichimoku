@@ -1,4 +1,4 @@
-// ichimoku - Window Functions -------------------------------------------------
+// ichimoku - Window Functions - Adapted from code with the following licence: -
 
 /*
  Based on http://opensource.org/licenses/MIT

@@ -1,4 +1,4 @@
-# ichimoku 1.2.5.11
+# ichimoku 1.2.5.12
 
 #### Updates:
 

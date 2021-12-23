@@ -8,7 +8,7 @@
 SEXP _ichimoku_meanOver(const SEXP x, const SEXP window) {
 
   const R_xlen_t n = XLENGTH(x);
-  const int w = INTEGER_ELT(window, 0), w1 = w - 1;
+  const int w = INTEGER(window)[0], w1 = w - 1;
   SEXP vec = PROTECT(Rf_allocVector(REALSXP, n));
   const double *px = REAL(x);
   double *pvec = REAL(vec);
@@ -107,7 +107,7 @@ SEXP _ichimoku_tbl(const SEXP x, const SEXP type) {
   Rf_namesgets(tbl, names);
   UNPROTECT(2);
 
-  const int typ = INTEGER_ELT(type, 0);
+  const int typ = INTEGER(type)[0];
   SEXP klass = PROTECT(Rf_allocVector(STRSXP, typ));
   switch (typ) {
   case 1:

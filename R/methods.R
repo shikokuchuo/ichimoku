@@ -34,10 +34,12 @@ print.ichimoku <- function(x, plot = TRUE, ...) {
                                               error = function(e) invisible(),
                                               warning = function(w) invisible())
 
-  if (is.null(dims <- attr(x, "dim")) || dims[1L] == 0L) {
+  if (is.null(attr(x, "dim")) || attr(x, "dim")[1L] == 0L) {
+
     NextMethod()
 
   } else {
+
     tbl <- .Call(`_ichimoku_tbl`, x, 4L)
     pillar_sigfig <- getOption("pillar.sigfig")
     if (is.null(pillar_sigfig) || pillar_sigfig < 5) options(pillar.sigfig = 5)
@@ -59,12 +61,14 @@ print.ichimoku <- function(x, plot = TRUE, ...) {
 #'
 #' @return The character vector to be printed.
 #'
-#' @method tbl_sum ichimoku_tbl
 #' @noRd
+#' @method tbl_sum ichimoku_tbl
 #' @export
 #'
 tbl_sum.ichimoku_tbl <- function(x, ...) {
+
   c("ichimoku object" = "use more() to display more rows, look() to inspect attributes")
+
 }
 
 #' Display the Structure of Ichimoku Objects
