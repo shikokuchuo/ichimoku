@@ -62,7 +62,7 @@
 #'     Kinko Hyo Strategies}. R package version 1.2.5,
 #'     \url{https://CRAN.R-project.org/package=ichimoku}.
 #'
-#' @useDynLib ichimoku, .registration = TRUE
+#' @useDynLib ichimoku, .registration = TRUE, .fixes = "ichimoku"
 #' @importFrom curl curl curl_fetch_memory handle_setheaders new_handle
 #' @importFrom ggplot2 aes autoplot coord_flip element_blank element_line
 #'     element_rect element_text GeomCol GeomLine GeomRect GeomRibbon

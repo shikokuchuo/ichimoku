@@ -203,10 +203,10 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
   cd <- numeric(xlen)
   cd[open < close] <- 1
   cd[open > close] <- -1
-  tenkan <- (.Call(`_ichimoku_maxOver`, high, p1) + .Call(`_ichimoku_minOver`, low, p1)) / 2
-  kijun <- (.Call(`_ichimoku_maxOver`, high, p2) + .Call(`_ichimoku_minOver`, low, p2)) / 2
+  tenkan <- (.Call(ichimoku_wmax, high, p1) + .Call(ichimoku_wmin, low, p1)) / 2
+  kijun <- (.Call(ichimoku_wmax, high, p2) + .Call(ichimoku_wmin, low, p2)) / 2
   senkouA <- (tenkan + kijun) / 2
-  senkouB <- (.Call(`_ichimoku_maxOver`, high, p3) + .Call(`_ichimoku_minOver`, low, p3)) / 2
+  senkouB <- (.Call(ichimoku_wmax, high, p3) + .Call(ichimoku_wmin, low, p3)) / 2
   chikou <- `length<-`(close[p2:xlen], xlen)
   cloudT <- pmax.int(senkouA, senkouB)
   cloudB <- pmin.int(senkouA, senkouB)
@@ -246,7 +246,7 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
                 cloudB = c(rep(NA, p2 - 1L), cloudB),
                 kmatrix)
 
-  .Call(`_ichimoku_create`, kumo, xtsindex, periods, periodicity, ticker, x)
+  .Call(ichimoku_create, kumo, xtsindex, periods, periodicity, ticker, x)
 
 }
 

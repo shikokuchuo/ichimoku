@@ -118,7 +118,7 @@ autoplot.ichimoku <- function(object,
   }
 
   if (!missing(window)) object <- object[window]
-  data <- .Call(`_ichimoku_df`, object)
+  data <- .Call(ichimoku_df, object)
 
   layers <- list(
     if (showstrat) {
@@ -234,10 +234,10 @@ extraplot <- function(object,
     p2 <- attr(object, "periods")[2L]
     core <- coredata.ichimoku(object)
     object$osc_typ_slw <- 100 - 100 /
-      (1 + .Call(`_ichimoku_meanOver`,
+      (1 + .Call(ichimoku_wmean,
                  ((cd <- core[, "cd"]) == 1) * ((close <- core[, "close"]) - (open <- core[, "open"])),
                  p2) /
-         .Call(`_ichimoku_meanOver`, (cd == -1) * (open - close), p2))
+         .Call(ichimoku_wmean, (cd == -1) * (open - close), p2))
 
   } else {
     periods <- attr(object, "periods")
@@ -245,15 +245,15 @@ extraplot <- function(object,
     p2 <- periods[2L]
     core <- coredata.ichimoku(object)
     object$osc_typ_fst <- 100 *
-      ((close <- core[, "close"]) - .Call(`_ichimoku_minOver`, (low <- core[, "low"]), p1)) /
-      (.Call(`_ichimoku_maxOver`, (high <- core[, "high"]), p1) - .Call(`_ichimoku_minOver`, low, p1))
+      ((close <- core[, "close"]) - .Call(ichimoku_wmin, (low <- core[, "low"]), p1)) /
+      (.Call(ichimoku_wmax, (high <- core[, "high"]), p1) - .Call(ichimoku_wmin, low, p1))
     object$osc_typ_slw <- 100 *
-      (close - .Call(`_ichimoku_minOver`, low, p2)) /
-      (.Call(`_ichimoku_maxOver`, high, p2) - .Call(`_ichimoku_minOver`, low, p2))
+      (close - .Call(ichimoku_wmin, low, p2)) /
+      (.Call(ichimoku_wmax, high, p2) - .Call(ichimoku_wmin, low, p2))
   }
 
   if (!missing(window)) object <- object[window]
-  data <- .Call(`_ichimoku_df`, object)
+  data <- .Call(ichimoku_df, object)
 
   if (type == "r" || type == "s") {
 
@@ -368,7 +368,7 @@ breaks_ichimoku <- function(object) {
 labels_ichimoku <- function(object) {
 
   function(x) {
-    labels <- .Call(`_ichimoku_psxct`, .subset(attr(object, "index"), x))
+    labels <- .Call(ichimoku_psxct, .subset(attr(object, "index"), x))
     if (attr(object, "periodicity") > 80000) {
       format.POSIXct(labels, format = paste("%d-%b", "%Y", sep = "\n"))
     } else {

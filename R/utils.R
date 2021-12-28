@@ -152,7 +152,7 @@ xts_df <- function(x, keep.attrs) {
   attributes(df) <- c(list(names = c("index", dn2),
                            class = "data.frame",
                            row.names = .set_row_names(xlen)),
-                      if (!missing(keep.attrs) && isTRUE(keep.attrs)) .Call(`_ichimoku_look`, x))
+                      if (!missing(keep.attrs) && isTRUE(keep.attrs)) .Call(ichimoku_look, x))
   df
 }
 
@@ -181,7 +181,7 @@ xts_df <- function(x, keep.attrs) {
 #' @export
 #'
 matrix_df <- function(x, keep.attrs) {
-  lk <- if (!missing(keep.attrs) && isTRUE(keep.attrs)) .Call(`_ichimoku_look`, x)
+  lk <- if (!missing(keep.attrs) && isTRUE(keep.attrs)) .Call(ichimoku_look, x)
   dn <- dimnames(x)
   xlen <- dim(x)[1L]
   len <- dim(x)[2L]
@@ -235,7 +235,7 @@ df_merge <- function(...) {
     attributes(merge) <- c(attributes(merge),
                            list(instrument = attr(dots[[1L]], "instrument"),
                                 price = attr(dots[[1L]], "price"),
-                                timestamp = .Call(`_ichimoku_psxct`, max(unlist(lapply(dots, attr, "timestamp")))),
+                                timestamp = .Call(ichimoku_psxct, max(unlist(lapply(dots, attr, "timestamp")))),
                                 oanda = TRUE))
     if (FALSE %in% .subset2(merge, "complete")) warning("Incomplete periods in merged dataframe - please check for possible duplicates", call. = FALSE)
   }
@@ -328,7 +328,7 @@ df_append <- function(old, new, key = "time", keep.attr = "timestamp") {
 #'
 look <- function(x) {
   if (missing(x)) x <- .Last.value
-  lk <- .Call(`_ichimoku_look`, x)
+  lk <- .Call(ichimoku_look, x)
   if (length(lk)) lk else invisible()
 }
 

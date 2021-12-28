@@ -1,8 +1,11 @@
-# ichimoku 1.2.5.12
+# ichimoku 1.2.5.13
 
 #### Updates:
 
-* `look()`, `as.data.frame()`, `as_tibble()`, internal rolling mean and POSIXct classing functions re-implemented in C.
+* Dependency on C++ compiler (and 'cpp11' package) retired.
+* Internal rolling min/max/mean functions re-implemented in C for performance.
+* `ichimoku()`, `look()`, `as.data.frame()` and `as_tibble()` now amongst functions which call C code internally.
+* Fixes `oanda_stream()` for when multiple bid/ask liquidity levels are returned in the stream.
 * Fixes `archive()` to work correctly on R-oldrel (4.0).
 * Further performance enhancements to `ichimoku()` and plot functions.
 

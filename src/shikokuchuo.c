@@ -3,22 +3,75 @@
 #define R_NO_REMAP
 #include <R.h>
 #include <Rinternals.h>
+#include <R_ext/Visibility.h>
 
-/* rolling mean over a window */
-SEXP _ichimoku_meanOver(const SEXP x, const SEXP window) {
+/* rolling max over a window */
+SEXP _wmax(const SEXP x, const SEXP window) {
 
   const R_xlen_t n = XLENGTH(x);
   const int w = INTEGER(window)[0], w1 = w - 1;
   SEXP vec = PROTECT(Rf_allocVector(REALSXP, n));
   const double *px = REAL(x);
   double *pvec = REAL(vec);
-  long double sum = 0;
+
+  for (R_xlen_t i = 0; i < w1; i++) {
+    pvec[i] = NA_REAL;
+  }
+  for (R_xlen_t i = w1; i < n; i++) {
+    double s = px[i];
+    for (int j = 1; j < w; j++) {
+      if (px[i - j] > s)
+        s = px[i - j];
+    }
+    pvec[i] = s;
+  }
+
+  UNPROTECT(1);
+  return vec;
+
+}
+
+/* rolling min over a window */
+SEXP _wmin(const SEXP x, const SEXP window) {
+
+  const R_xlen_t n = XLENGTH(x);
+  const int w = INTEGER(window)[0], w1 = w - 1;
+  SEXP vec = PROTECT(Rf_allocVector(REALSXP, n));
+  const double *px = REAL(x);
+  double *pvec = REAL(vec);
+
+  for (R_xlen_t i = 0; i < w1; i++) {
+    pvec[i] = NA_REAL;
+  }
+  for (R_xlen_t i = w1; i < n; i++) {
+    double s = px[i];
+    for (int j = 1; j < w; j++) {
+      if (px[i - j] < s)
+        s = px[i - j];
+    }
+    pvec[i] = s;
+  }
+
+  UNPROTECT(1);
+  return vec;
+
+}
+
+/* rolling mean over a window */
+SEXP _wmean(const SEXP x, const SEXP window) {
+
+  const R_xlen_t n = XLENGTH(x);
+  const int w = INTEGER(window)[0], w1 = w - 1;
+  SEXP vec = PROTECT(Rf_allocVector(REALSXP, n));
+  const double *px = REAL(x);
+  double *pvec = REAL(vec);
+  long double s = 0;
 
   for (R_xlen_t i = 0; i < n; i++) {
-    sum += px[i];
+    s += px[i];
     if (i >= w1) {
-      pvec[i] = sum / w;
-      sum -= px[i - w1];
+      pvec[i] = s / w;
+      s -= px[i - w1];
     } else {
       pvec[i] = NA_REAL;
     }
@@ -30,7 +83,7 @@ SEXP _ichimoku_meanOver(const SEXP x, const SEXP window) {
 }
 
 /* look - inspect informational attributes */
-SEXP _ichimoku_look(const SEXP x) {
+SEXP _look(const SEXP x) {
 
   SEXP ax, y = PROTECT(Rf_ScalarInteger(0));
 
@@ -47,7 +100,7 @@ SEXP _ichimoku_look(const SEXP x) {
 }
 
 /* class object as POSIXct (in-place) */
-SEXP _ichimoku_psxct(SEXP x) {
+SEXP _psxct(SEXP x) {
 
   SEXP posix = PROTECT(Rf_allocVector(STRSXP, 2));
   SET_STRING_ELT(posix, 0, Rf_mkChar("POSIXct"));
@@ -60,7 +113,7 @@ SEXP _ichimoku_psxct(SEXP x) {
 }
 
 /* ichimoku to data.frame / tibble converter */
-SEXP _ichimoku_tbl(const SEXP x, const SEXP type) {
+SEXP _tbl(const SEXP x, const SEXP type) {
 
   R_xlen_t xlen, xwid;
   const SEXP dims = PROTECT(Rf_getAttrib(x, R_DimSymbol));
@@ -79,7 +132,7 @@ SEXP _ichimoku_tbl(const SEXP x, const SEXP type) {
   SEXP tbl = PROTECT(Rf_allocVector(VECSXP, xwid + 1));
 
   SEXP index = PROTECT(Rf_shallow_duplicate(Rf_getAttrib(x, Rf_install("index"))));
-  index = _ichimoku_psxct(index);
+  index = _psxct(index);
   SET_VECTOR_ELT(tbl, 0, index);
   UNPROTECT(1);
 
@@ -147,7 +200,7 @@ SEXP _ichimoku_tbl(const SEXP x, const SEXP type) {
 }
 
 /* internal function used by ichimoku() */
-SEXP _ichimoku_create(SEXP kumo, SEXP xtsindex, const SEXP periods,
+SEXP _create(SEXP kumo, SEXP xtsindex, const SEXP periods,
                       const SEXP periodicity, const SEXP ticker, const SEXP x) {
 
   SEXP tzone = PROTECT(Rf_ScalarString(Rf_mkChar("")));
@@ -188,7 +241,7 @@ SEXP _ichimoku_create(SEXP kumo, SEXP xtsindex, const SEXP periods,
 }
 
 /* special ichimoku to data.frame converter for plots */
-SEXP _ichimoku_df(const SEXP x) {
+SEXP _df(const SEXP x) {
 
   R_xlen_t xlen, xwid;
   const SEXP dims = PROTECT(Rf_getAttrib(x, R_DimSymbol));
@@ -207,7 +260,7 @@ SEXP _ichimoku_df(const SEXP x) {
   SEXP df = PROTECT(Rf_allocVector(VECSXP, xwid + 2));
 
   SEXP index = PROTECT(Rf_shallow_duplicate(Rf_getAttrib(x, Rf_install("index"))));
-  index = _ichimoku_psxct(index);
+  index = _psxct(index);
   SET_VECTOR_ELT(df, 0, index);
   UNPROTECT(1);
 
@@ -263,5 +316,24 @@ SEXP _ichimoku_df(const SEXP x) {
   UNPROTECT(2);
   return df;
 
+}
+
+
+static const R_CallMethodDef CallEntries[] = {
+  {"_create", (DL_FUNC) &_create, 6},
+  {"_df", (DL_FUNC) &_df, 1},
+  {"_tbl", (DL_FUNC) &_tbl, 2},
+  {"_look", (DL_FUNC) &_look, 1},
+  {"_psxct", (DL_FUNC) &_psxct, 1},
+  {"_wmax", (DL_FUNC) &_wmax, 2},
+  {"_wmean", (DL_FUNC) &_wmean, 2},
+  {"_wmin", (DL_FUNC) &_wmin, 2},
+  {NULL, NULL, 0}
+};
+
+void attribute_visible R_init_ichimoku(DllInfo* dll) {
+  R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
+  R_useDynamicSymbols(dll, FALSE);
+  R_forceSymbols(dll, TRUE);
 }
 

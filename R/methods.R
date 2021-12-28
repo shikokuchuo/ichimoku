@@ -40,7 +40,7 @@ print.ichimoku <- function(x, plot = TRUE, ...) {
 
   } else {
 
-    tbl <- .Call(`_ichimoku_tbl`, x, 4L)
+    tbl <- .Call(ichimoku_tbl, x, 4L)
     pillar_sigfig <- getOption("pillar.sigfig")
     if (is.null(pillar_sigfig) || pillar_sigfig < 5) options(pillar.sigfig = 5)
     print(tbl, ...)
@@ -241,9 +241,9 @@ summary.ichimoku <- function(object, strat = TRUE, ...) {
 #'
 as.data.frame.ichimoku <- function(x, row.names, optional, keep.attrs, ...) {
 
-  df <- .Call(`_ichimoku_tbl`, x, 1L)
+  df <- .Call(ichimoku_tbl, x, 1L)
   if (!missing(keep.attrs) && isTRUE(keep.attrs)) {
-    attributes(df) <- c(attributes(df), .Call(`_ichimoku_look`, x))
+    attributes(df) <- c(attributes(df), .Call(ichimoku_look, x))
   }
   df
 
@@ -285,9 +285,9 @@ NULL
 #'
 as_tibble.ichimoku <- function(x, class, keep.attrs, ...) {
 
-  tbl <- .Call(`_ichimoku_tbl`, x, 3L)
+  tbl <- .Call(ichimoku_tbl, x, 3L)
   if (!missing(keep.attrs) && isTRUE(keep.attrs)) {
-    attributes(tbl) <- c(attributes(tbl), .Call(`_ichimoku_look`, x))
+    attributes(tbl) <- c(attributes(tbl), .Call(ichimoku_look, x))
   }
   tbl
 
