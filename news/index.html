@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.5.12</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.5.13</span>
       </span>
     </div>
 
@@ -73,11 +73,14 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.2.5.12" id="ichimoku-12512">ichimoku 1.2.5.12<a class="anchor" aria-label="anchor" href="#ichimoku-12512"></a></h2>
+<h2 class="page-header" data-toc-text="1.2.5.13" id="ichimoku-12513">ichimoku 1.2.5.13<a class="anchor" aria-label="anchor" href="#ichimoku-12513"></a></h2>
 <div class="section level5">
-<h5 id="updates-1-2-5-12">Updates:<a class="anchor" aria-label="anchor" href="#updates-1-2-5-12"></a></h5>
-<ul><li>
-<code><a href="../reference/look.html">look()</a></code>, <code><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame()</a></code>, <code><a href="../reference/as_tibble.ichimoku.html">as_tibble()</a></code>, internal rolling mean and POSIXct classing functions re-implemented in C.</li>
+<h5 id="updates-1-2-5-13">Updates:<a class="anchor" aria-label="anchor" href="#updates-1-2-5-13"></a></h5>
+<ul><li>Dependency on C++ compiler (and ‘cpp11’ package) retired.</li>
+<li>Internal rolling min/max/mean functions re-implemented in C for performance.</li>
+<li>
+<code><a href="../reference/ichimoku.html">ichimoku()</a></code>, <code><a href="../reference/look.html">look()</a></code>, <code><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame()</a></code> and <code><a href="../reference/as_tibble.ichimoku.html">as_tibble()</a></code> now amongst functions which call C code internally.</li>
+<li>Fixes <code><a href="../reference/oanda_stream.html">oanda_stream()</a></code> for when multiple bid/ask liquidity levels are returned in the stream.</li>
 <li>Fixes <code><a href="../reference/archive.html">archive()</a></code> to work correctly on R-oldrel (4.0).</li>
 <li>Further performance enhancements to <code><a href="../reference/ichimoku.html">ichimoku()</a></code> and plot functions.</li>
 </ul></div>
