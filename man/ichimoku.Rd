@@ -102,6 +102,10 @@ Calling an ichimoku object automatically invokes its print method,
     If only single series price data is supplied, a \emph{pseudo} OHLC series
     is generated and a \emph{pseudo} cloud chart is returned.
 
+    A faster technical utility version of this function is available in
+    \code{\link{.ichimoku}} for use when the data is already in the required
+    format.
+
     Please refer to the reference vignette by calling:
     \code{vignette("reference", package = "ichimoku")}
 }

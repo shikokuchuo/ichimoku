@@ -4,16 +4,12 @@ strat <- strat(cloud)
 test_that("autoplot ok", {
   expect_s3_class(autoplot(cloud, ticker = "TKR Co.", theme = "solarized"), "ggplot")
   expect_s3_class(autoplot(strat, subtitle = "Test", theme = "mono"), "ggplot")
-})
-
-test_that("extraplot ok", {
-  expect_s3_class(extraplot(cloud, window = "2020-04/", type = "s"), "gtable")
-  expect_s3_class(extraplot(strat, theme = "original", type = "r", custom = "nonexist"), "gtable")
-  expect_s3_class(extraplot(strat, type = "line", custom = "posn"), "gtable")
-  expect_s3_class(extraplot(cloud, type = "bar", custom = "vol"), "gtable")
-  expect_warning(expect_s3_class(extraplot(cloud, theme = "fresh"), "ggplot"), "'type' not specified")
-  expect_warning(expect_s3_class(extraplot(cloud, type = "line"), "ggplot"), "'custom' not specified")
-  expect_warning(expect_s3_class(extraplot(cloud, type = "bar", custom = "vix"), "ggplot"), "does not match")
+  expect_s3_class(autoplot(cloud, window = "2020-04/", theme = "fresh", type = "s"), "ggplot")
+  expect_s3_class(autoplot(strat, theme = "original", type = "r", custom = "nonexist"), "ggplot")
+  expect_s3_class(autoplot(strat, type = "line", custom = "posn"), "ggplot")
+  expect_s3_class(autoplot(cloud, type = "bar", custom = "vol"), "ggplot")
+  expect_warning(expect_s3_class(autoplot(cloud, type = "line"), "ggplot"), "'custom' not specified")
+  expect_warning(expect_s3_class(autoplot(cloud, type = "bar", custom = "vix"), "ggplot"), "does not match")
 })
 
 test_that("ichimoku plot method ok", {

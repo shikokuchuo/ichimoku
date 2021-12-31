@@ -70,7 +70,7 @@ iplot <- function(x,
       shiny::fillPage(
         padding = 20,
         shiny::plotOutput("chart", width = "100%",
-                          hover = shiny::hoverOpts(id = "plot_hover", delay = 80, delayType = "throttle")),
+                          hover = shiny::hoverOpts(id = "plot_hover", delay = 100, delayType = "throttle")),
         shiny::uiOutput("hover_x"), shiny::uiOutput("hover_y"), shiny::uiOutput("infotip")
         ),
       shiny::fluidRow(
@@ -114,31 +114,27 @@ iplot <- function(x,
       top_px <- shiny::reactive(input$plot_hover$coords_css$y)
       posi_x <- shiny::reactive(round(input$plot_hover$x, digits = 0))
 
-      pdata <- shiny::reactive(x[window()])
+      pdata <- shiny::reactive(create_data(x, window = window(), type = input$type))
       plen <- shiny::reactive(attr(pdata(), "dim")[1L])
 
       output$chart <- shiny::renderPlot(
-        if (input$type == "none") {
-          autoplot.ichimoku(pdata(), ticker = input$ticker, subtitle = input$subtitle,
-                            theme = input$theme, strat = input$strat)
-        } else {
-          extraplot(x, window = window(), ticker = input$ticker, subtitle = input$subtitle,
-                    theme = input$theme, strat = input$strat, type = input$type, custom = input$custom)
-        }
+        plot_ichimoku(pdata(), ticker = input$ticker, subtitle = input$subtitle,
+                      theme = input$theme, strat = input$strat, type = input$type, custom = input$custom)
       )
       output$hover_x <- shiny::renderUI({
-        shiny::req(input$type == "none", input$plot_hover, posi_x() > 0, posi_x() <= plen())
+        shiny::req(input$plot_hover, posi_x() > 0, posi_x() <= plen())
         drawGuide(label = index.ichimoku(pdata(), posi_x()), left = left_px() + xadj, top = 60)
       })
       output$hover_y <- shiny::renderUI({
-        shiny::req(input$type == "none", input$plot_hover)
+        shiny::req(input$plot_hover)
         drawGuide(label = signif(input$plot_hover$y, digits = 5), left = 75, top = top_px() + 11)
       })
       output$infotip <- shiny::renderUI({
-        shiny::req(input$type == "none", input$infotip, input$plot_hover, posi_x() > 0, posi_x() <= plen())
+        shiny::req(input$infotip, input$plot_hover, posi_x() > 0, posi_x() <= plen())
         drawInfotip(sidx = index.ichimoku(pdata(), posi_x()),
                     sdata = coredata.ichimoku(pdata())[posi_x(), ],
-                    left_px = left_px(), top_px = top_px())
+                    left = left_px(), top = top_px(),
+                    type = input$type, custom = input$custom)
       })
 
       session$onSessionEnded(function() shiny::stopApp())
@@ -175,38 +171,50 @@ drawGuide <- function(label, left, top) {
 
 #' drawInfotip
 #'
-#' Internal function used by ichimoku to draw the infotip for interactive Shiny
+#' Internal function used by ichimoku to draw the Infotip for interactive Shiny
 #'     plots.
 #'
 #' @param sidx the selected index value.
 #' @param sdata the selected coredata row.
-#' @param left_px the horizontal cursor position in pixels.
-#' @param top_px the vertical cursor position in pixels.
+#' @param left the horizontal cursor position in pixels.
+#' @param top the vertical cursor position in pixels.
+#' @param type the type of subplot.
+#' @param custom the column name of custom subplot (if applicable).
 #'
 #' @return An object of class 'shiny.tag' comprising the HTML to be rendered.
 #'
 #' @noRd
 #'
-drawInfotip <- function(sidx, sdata, left_px, top_px) {
+drawInfotip <- function(sidx, sdata, left, top, type, custom = NULL) {
   shiny::wellPanel(
-    style = paste0("position: absolute; z-index: 100; background-color: rgba(245, 245, 245, 0.85); left: ",
-                   left_px + 50, "px; top: ", top_px + 40, "px; font-size: 0.8em; padding: 1px 5px 5px 5px;"),
+    style = paste0("position: absolute; z-index: 100; background-color: rgba(245, 245, 245, 0.8); left: ",
+                   left + 60, "px; top: ", top + 45, "px; font-size: 0.8em; padding: 1px 5px 5px 5px;"),
     shiny::HTML(paste0("<div style='margin: 0; padding: 0; font-weight: bold'>",
-                       if (isTRUE(sdata["cd"] == 1)) "&#9651;<br />" else if (isTRUE(sdata["cd"] == -1)) "&#9660;<br />" else "&#8212;<br />",
+                       if (isTRUE(sdata[["cd"]] == 1)) "&#9651;<br />" else if (isTRUE(sdata[["cd"]] == -1)) "&#9660;<br />" else "&#8212;<br />",
                        format.POSIXct(sidx),
                        "</div><div style='text-align: center; margin: 2px 0 0 0; padding: 0'>H: ",
-                       signif(sdata["high"], digits = 5),
+                       signif(sdata[["high"]], digits = 5),
                        "</div><div style='margin: 0; padding: 0'>O: ",
-                       signif(sdata["open"], digits = 5),
-                       "&nbsp;&nbsp;C: ", signif(sdata["close"], digits = 5),
+                       signif(sdata[["open"]], digits = 5),
+                       "&nbsp;&nbsp;C: ", signif(sdata[["close"]], digits = 5),
                        "</div><div style='text-align: center; margin: 0; padding: 0'>L: ",
-                       signif(sdata["low"], digits = 5),
+                       signif(sdata[["low"]], digits = 5),
                        "</div><div style='margin: 2px 0 0 0; padding: 0'>Tenkan: ",
-                       signif(sdata["tenkan"], digits = 5),
-                       "<br />Kijun: ", signif(sdata["kijun"], digits = 5),
-                       "<br />Senkou A: ", signif(sdata["senkouA"], digits = 5),
-                       "<br />Senkou B: ", signif(sdata["senkouB"], digits = 5),
-                       "<br />Chikou: ", signif(sdata["chikou"], digits = 5), "</div>"))
+                       signif(sdata[["tenkan"]], digits = 5),
+                       "<br />Kijun: ", signif(sdata[["kijun"]], digits = 5),
+                       "<br />Senkou A: ", signif(sdata[["senkouA"]], digits = 5),
+                       "<br />Senkou B: ", signif(sdata[["senkouB"]], digits = 5),
+                       "<br />Chikou: ", signif(sdata[["chikou"]], digits = 5),
+                       switch(
+                         type,
+                         r = paste0("<br />R-indicator: ", signif(100 * sdata[["osc_typ_slw"]], digits = 3)),
+                         s = paste0("<br />S-fast: ", signif(100 * sdata[["osc_typ_fst"]], digits = 3),
+                                    "<br />S-slow: ", signif(100 * sdata[["osc_typ_slw"]], digits = 3)),
+                         line = ,
+                         bar = paste0("<br />", custom, " : ", signif(sdata[[custom]], digits = 5)),
+                         NULL
+                       ),
+                       "</div>"))
   )
 }
 

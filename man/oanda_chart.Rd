@@ -12,6 +12,7 @@ oanda_chart(
   count = 250,
   price = c("M", "B", "A"),
   theme = c("original", "conceptual", "dark", "fresh", "mono", "solarized"),
+  type = c("none", "r", "s"),
   limit,
   server,
   apikey,
@@ -41,6 +42,10 @@ or "A" (ask).}
 
 \item{theme}{[default 'original'] with alternative choices of 'conceptual',
 'dark', 'fresh', 'mono', or 'solarized'.}
+
+\item{type}{[default 'none'] type of sub-plot to display beneath the ichimoku
+cloud chart, with a choice of 'none', 'r' or 's' for the corresponding
+oscillator type.}
 
 \item{limit}{(optional) specify a time in minutes by which to limit the
 session. The session will end with data returned automatically after the

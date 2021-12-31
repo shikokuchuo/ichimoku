@@ -12,6 +12,7 @@ oanda_studio(
   count = 300,
   price = c("M", "B", "A"),
   theme = c("original", "conceptual", "dark", "fresh", "mono", "solarized"),
+  type = c("none", "r", "s"),
   server,
   apikey,
   new.process = FALSE,
@@ -41,6 +42,10 @@ or "A" (ask).}
 
 \item{theme}{[default 'original'] with alternative choices of 'conceptual',
 'dark', 'fresh', 'mono', or 'solarized'.}
+
+\item{type}{[default 'none'] type of sub-plot to display beneath the ichimoku
+cloud chart, with a choice of 'none', 'r' or 's' for the corresponding
+oscillator type.}
 
 \item{server}{(optional) specify the "practice" or "live" server according to
 the account type held. If not specified, will default to "practice", unless

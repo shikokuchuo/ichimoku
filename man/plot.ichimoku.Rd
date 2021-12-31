@@ -47,7 +47,7 @@ Specify \code{type = 'bar'} or \code{type = 'line'}, otherwise other type
 settings will take precedence.}
 
 \item{...}{additional arguments passed along to the print method for 'ggplot'
-objects when \code{type = 'none'}.}
+objects.}
 }
 \value{
 The ichimoku object supplied (invisibly). The requested plot is output

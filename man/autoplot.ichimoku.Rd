@@ -12,6 +12,8 @@
   subtitle,
   theme = c("original", "conceptual", "dark", "fresh", "mono", "solarized"),
   strat = TRUE,
+  type = c("none", "r", "s", "bar", "line"),
+  custom,
   ...
 )
 }
@@ -35,6 +37,15 @@ will be used.}
 periods for which the strategy results in a position will be shaded, and
 the strategy printed as the chart subtitle (if not otherwise specified).
 Set to FALSE to turn off this behaviour.}
+
+\item{type}{[default 'none'] type of sub-plot to display beneath the ichimoku
+cloud chart, with a choice of 'none', 'r' or 's' for the corresponding
+oscillator type, and 'bar' or 'line' for custom plots.}
+
+\item{custom}{(optional) character string (containing a regular expression)
+matching the column name of the variable to be displayed as sub-plot.
+Specify \code{type = 'bar'} or \code{type = 'line'}, otherwise other type
+settings will take precedence.}
 
 \item{...}{other arguments not used by this method.}
 }

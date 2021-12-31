@@ -348,6 +348,9 @@ oanda_stream <- function(instrument, display = 7L, limit, server, apikey) {
 #' @param count [default 250] the number of periods to return. The API supports
 #'     a maximum of 5000. Note that fewer periods are actually shown on the
 #'     chart to ensure a full cloud is always displayed.
+#' @param type [default 'none'] type of sub-plot to display beneath the ichimoku
+#'     cloud chart, with a choice of 'none', 'r' or 's' for the corresponding
+#'     oscillator type.
 #' @param limit (optional) specify a time in minutes by which to limit the
 #'     session. The session will end with data returned automatically after the
 #'     specified time has elapsed.
@@ -391,6 +394,7 @@ oanda_chart <- function(instrument,
                         count = 250,
                         price = c("M", "B", "A"),
                         theme = c("original", "conceptual", "dark", "fresh", "mono", "solarized"),
+                        type = c("none", "r", "s"),
                         limit,
                         server,
                         apikey,
@@ -402,6 +406,7 @@ oanda_chart <- function(instrument,
   granularity <- match.arg(granularity)
   price <- match.arg(price)
   theme <- match.arg(theme)
+  type <- match.arg(type)
   server <- if (missing(server)) do_$getServer() else match.arg(server, c("practice", "live"))
   if (missing(apikey)) apikey <- do_$getKey(server = server)
   if (!is.numeric(refresh) || refresh < 1) {
@@ -444,12 +449,11 @@ oanda_chart <- function(instrument,
   on.exit(expr = return(invisible(pdata)))
   if (!missing(limit) && is.numeric(limit)) setTimeLimit(elapsed = limit * 60, transient = TRUE)
   while (TRUE) {
-    pdata <- ichimoku.data.frame(data, periods = periods, ...)[minlen:(xlen + p2 - 1L), ]
+    pdata <- create_data(.ichimoku(data, periods = periods, ...), type = type)[minlen:(xlen + p2 - 1L), ]
     subtitle <- paste(instrument, ptype, "price [", .subset2(data, "close")[xlen],
                       "] at", attr(data, "timestamp"), "| Chart:", ctype,
                       "| Cmplt:", .subset2(data, "complete")[xlen])
-    plot.ichimoku(pdata, ticker = ticker, subtitle = subtitle, theme = theme,
-                  newpage = FALSE, ...)
+    print(plot_ichimoku(pdata, ticker = ticker, subtitle = subtitle, theme = theme, type = type), newpage = FALSE, ...)
     Sys.sleep(refresh)
     newdata <- getPrices(instrument = instrument, granularity = granularity,
                          count = ceiling(refresh / periodicity) + 1,
@@ -515,6 +519,7 @@ oanda_studio <- function(instrument = "USD_JPY",
                          count = 300,
                          price = c("M", "B", "A"),
                          theme = c("original", "conceptual", "dark", "fresh", "mono", "solarized"),
+                         type = c("none", "r", "s"),
                          server,
                          apikey,
                          new.process = FALSE,
@@ -534,6 +539,7 @@ oanda_studio <- function(instrument = "USD_JPY",
     granularity <- match.arg(granularity)
     price <- match.arg(price)
     theme <- match.arg(theme)
+    type <- match.arg(type)
     srvr <- if (missing(server)) do_$getServer() else match.arg(server, c("practice", "live"))
     if (missing(apikey)) apikey <- do_$getKey(server = srvr)
     if (!is.numeric(refresh) || refresh < 1) {
@@ -565,7 +571,7 @@ oanda_studio <- function(instrument = "USD_JPY",
       shiny::fillPage(
         padding = 20,
         shiny::plotOutput("chart", width = "100%",
-                          hover = shiny::hoverOpts(id = "plot_hover", delay = 80, delayType = "throttle")),
+                          hover = shiny::hoverOpts(id = "plot_hover", delay = 100, delayType = "throttle")),
         shiny::uiOutput("hover_x"), shiny::uiOutput("hover_y"), shiny::uiOutput("infotip")
       ),
       shiny::fluidRow(
@@ -573,10 +579,14 @@ oanda_studio <- function(instrument = "USD_JPY",
         )
       ),
       shiny::fluidRow(
-        shiny::column(width = 2,
+        shiny::column(width = 1,
                       shiny::selectInput("theme", label = "Theme",
                                          choices = c("original", "conceptual", "dark", "fresh", "mono", "solarized"),
                                          selected = theme, selectize = FALSE)),
+        shiny::column(width = 1,
+                      shiny::selectInput("type", label = "Indicator",
+                                         choices = c("none", "r", "s"),
+                                         selected = type, selectize = FALSE)),
         shiny::column(width = 2,
                       shiny::selectInput("instrument", label = "Instrument",
                                          choices = ins$name,
@@ -678,8 +688,9 @@ oanda_studio <- function(instrument = "USD_JPY",
         }
       })
       xlen <- shiny::reactive(dim(data())[1L])
-      pdata <- shiny::reactive(ichimoku.data.frame(data(), ticker = input$instrument,
-                                                   periods = periods, ...)[minlen:(xlen() + p2 - 1L), ])
+      pdata <- shiny::reactive(
+        create_data(.ichimoku(data(), ticker = input$instrument, periods = periods, ...),
+                    type = input$type)[minlen:(xlen() + p2 - 1L), ])
       plen <- shiny::reactive(xlen() + p2 - minlen)
       ticker <- shiny::reactive(paste(dispname(), "  |", input$instrument, ptype(), "price [",
                                       .subset2(data(), "close")[xlen()], "] at", attr(data(), "timestamp"),
@@ -687,7 +698,7 @@ oanda_studio <- function(instrument = "USD_JPY",
                                       .subset2(data(), "complete")[xlen()]))
 
       output$chart <- shiny::renderPlot(
-        autoplot.ichimoku(pdata(), ticker = ticker(), theme = input$theme, ...)
+        plot_ichimoku(pdata(), ticker = ticker(), theme = input$theme, type = input$type, ...)
       )
       output$hover_x <- shiny::renderUI({
         shiny::req(input$plot_hover, posi_x() > 0, posi_x() <= plen())
@@ -701,7 +712,8 @@ oanda_studio <- function(instrument = "USD_JPY",
         shiny::req(input$infotip, input$plot_hover, posi_x() > 0, posi_x() <= plen())
         drawInfotip(sidx = index.ichimoku(pdata(), posi_x()),
                     sdata = coredata.ichimoku(pdata())[posi_x(), ],
-                    left_px = left_px(), top_px = top_px())
+                    left = left_px(), top = top_px(),
+                    type = input$type)
       })
 
       output$savedata <- shiny::downloadHandler(filename = function() paste0(input$instrument, "_", input$granularity, "_", input$price, ".rda"),

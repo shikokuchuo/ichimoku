@@ -59,19 +59,17 @@
 #'     unaffiliated with the ichimoku package.
 #'
 #'     Gao, C. (2021), \emph{ichimoku: Visualization and Tools for Ichimoku
-#'     Kinko Hyo Strategies}. R package version 1.2.5,
+#'     Kinko Hyo Strategies}. R package version 1.2.99,
 #'     \url{https://CRAN.R-project.org/package=ichimoku}.
 #'
 #' @useDynLib ichimoku, .registration = TRUE, .fixes = "ichimoku"
 #' @importFrom curl curl curl_fetch_memory handle_setheaders new_handle
 #' @importFrom ggplot2 aes autoplot coord_flip element_blank element_line
 #'     element_rect element_text GeomCol GeomLine GeomRect GeomRibbon
-#'     GeomSegment GeomVline ggplot ggplotGrob guides labs layer margin
+#'     GeomSegment GeomVline ggplot ggplotGrob ggproto guides labs layer margin
 #'     PositionIdentity rel scale_color_manual scale_fill_manual
-#'     scale_x_continuous scale_y_continuous StatIdentity theme theme_grey
+#'     scale_x_continuous scale_y_continuous Stat StatIdentity theme theme_grey
 #'     %+replace%
-#' @importFrom grid grid.draw grid.newpage unit
-#' @importFrom gtable gtable gtable_add_grob
 #' @importFrom jsonlite parse_json stream_in
 #' @importFrom stats na.omit sd
 #' @importFrom tibble as_tibble tbl_sum

@@ -12,13 +12,13 @@ SEXP _wmax(const SEXP x, const SEXP window) {
   const int w = INTEGER(window)[0], w1 = w - 1;
   SEXP vec = PROTECT(Rf_allocVector(REALSXP, n));
   const double *px = REAL(x);
-  double *pvec = REAL(vec);
+  double *pvec = REAL(vec), s = 0;
 
-  for (R_xlen_t i = 0; i < w1; i++) {
+  for (int i = 0; i < w1; i++) {
     pvec[i] = NA_REAL;
   }
   for (R_xlen_t i = w1; i < n; i++) {
-    double s = px[i];
+    s = px[i];
     for (int j = 1; j < w; j++) {
       if (px[i - j] > s)
         s = px[i - j];
@@ -38,13 +38,13 @@ SEXP _wmin(const SEXP x, const SEXP window) {
   const int w = INTEGER(window)[0], w1 = w - 1;
   SEXP vec = PROTECT(Rf_allocVector(REALSXP, n));
   const double *px = REAL(x);
-  double *pvec = REAL(vec);
+  double *pvec = REAL(vec), s = 0;
 
-  for (R_xlen_t i = 0; i < w1; i++) {
+  for (int i = 0; i < w1; i++) {
     pvec[i] = NA_REAL;
   }
   for (R_xlen_t i = w1; i < n; i++) {
-    double s = px[i];
+    s = px[i];
     for (int j = 1; j < w; j++) {
       if (px[i - j] < s)
         s = px[i - j];
@@ -67,14 +67,14 @@ SEXP _wmean(const SEXP x, const SEXP window) {
   double *pvec = REAL(vec);
   long double s = 0;
 
-  for (R_xlen_t i = 0; i < n; i++) {
+  for (int i = 0; i < w1; i++) {
     s += px[i];
-    if (i >= w1) {
-      pvec[i] = s / w;
-      s -= px[i - w1];
-    } else {
-      pvec[i] = NA_REAL;
-    }
+    pvec[i] = NA_REAL;
+  }
+  for (R_xlen_t i = w1; i < n; i++) {
+    s += px[i];
+    pvec[i] = s / w;
+    s -= px[i - w1];
   }
 
   UNPROTECT(1);
