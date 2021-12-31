@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.5.13</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.99</span>
       </span>
     </div>
 
@@ -86,6 +86,8 @@
   <span class="va">subtitle</span>,
   theme <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"original"</span>, <span class="st">"conceptual"</span>, <span class="st">"dark"</span>, <span class="st">"fresh"</span>, <span class="st">"mono"</span>, <span class="st">"solarized"</span><span class="op">)</span>,
   strat <span class="op">=</span> <span class="cn">TRUE</span>,
+  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"none"</span>, <span class="st">"r"</span>, <span class="st">"s"</span>, <span class="st">"bar"</span>, <span class="st">"line"</span><span class="op">)</span>,
+  <span class="va">custom</span>,
   <span class="va">...</span>
 <span class="op">)</span></code></pre></div>
     </div>
@@ -112,6 +114,15 @@ will be used.</p></dd>
 periods for which the strategy results in a position will be shaded, and
 the strategy printed as the chart subtitle (if not otherwise specified).
 Set to FALSE to turn off this behaviour.</p></dd>
+<dt>type</dt>
+<dd><p>[default 'none'] type of sub-plot to display beneath the ichimoku
+cloud chart, with a choice of 'none', 'r' or 's' for the corresponding
+oscillator type, and 'bar' or 'line' for custom plots.</p></dd>
+<dt>custom</dt>
+<dd><p>(optional) character string (containing a regular expression)
+matching the column name of the variable to be displayed as sub-plot.
+Specify <code>type = 'bar'</code> or <code>type = 'line'</code>, otherwise other type
+settings will take precedence.</p></dd>
 <dt>...</dt>
 <dd><p>other arguments not used by this method.</p></dd>
 </dl></div>
