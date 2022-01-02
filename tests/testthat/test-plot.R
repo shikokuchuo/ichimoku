@@ -10,6 +10,7 @@ test_that("autoplot ok", {
   expect_s3_class(autoplot(cloud, type = "bar", custom = "vol"), "ggplot")
   expect_warning(expect_s3_class(autoplot(cloud, type = "line"), "ggplot"), "'custom' not specified")
   expect_warning(expect_s3_class(autoplot(cloud, type = "bar", custom = "vix"), "ggplot"), "does not match")
+  expect_error(autoplot(cloud[, 1:3]), "plot incomplete")
 })
 
 test_that("ichimoku plot method ok", {

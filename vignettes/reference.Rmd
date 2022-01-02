@@ -284,8 +284,6 @@ To view a custom sub-plot, type must be specified as either 'bar' or 'line', oth
 plot(kumo, window = "2020-04/2020-11", theme = "mono", type = "bar", custom = "volume")
 ```
 
-On a bar chart, the bar colours correspond to the candle direction.
-
 #### Further Options
 
 Internally, ichimoku's `plot()` method is a wrapper for `autoplot()`. To access the ggplot2 object, call `autoplot()` directly as `plot()` returns the original ichimoku object (invisibly).

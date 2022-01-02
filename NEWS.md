@@ -1,4 +1,4 @@
-# ichimoku 1.2.99.7
+# ichimoku 1.2.99.8
 
 #### New features:
 
@@ -11,6 +11,7 @@
 
 * Dependency on C++ compiler, 'cpp11'  and 'gtable' packages retired.
 * Internal rolling min/max/mean functions re-implemented directly in C.
+* Added `LinkingTo: xts` to mark use of C function exported from that package (although not strictly necessary).
 * `ichimoku()`, `mlgrid()`, `look()`, `as.data.frame()` and `as_tibble()` now amongst functions which call C code internally.
 * `df_trim()` and `extraplot()` removed as no longer required.
 * Fixes `oanda_stream()` for when multiple bid/ask liquidity levels are returned in the stream.

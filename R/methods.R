@@ -30,7 +30,8 @@
 #'
 print.ichimoku <- function(x, plot = TRUE, ...) {
 
-  if (is.null(attr(x, "dim")) || attr(x, "dim")[1L] == 0L) {
+  dims <- attr(x, "dim")
+  if (is.null(dims) || dims[1L] == 0L) {
 
     NextMethod()
 
@@ -42,9 +43,8 @@ print.ichimoku <- function(x, plot = TRUE, ...) {
     print(tbl, ...)
     options(pillar.sigfig = pillar_sigfig)
 
-    if (missing(plot) || isTRUE(plot)) tryCatch(plot.ichimoku(x, ...),
-                                                error = function(e) invisible(),
-                                                warning = function(w) invisible())
+    dims[2L] < 12L && return(invisible(x))
+    if (missing(plot) || isTRUE(plot)) plot.ichimoku(x, ...)
   }
 
   invisible(x)

@@ -261,6 +261,9 @@ SEXP _df(const SEXP x) {
   }
   UNPROTECT(1);
 
+  if (xwid < 12)
+    return(R_NilValue);
+
   SEXP df = PROTECT(Rf_allocVector(VECSXP, xwid + 2));
 
   SEXP index = PROTECT(Rf_shallow_duplicate(Rf_getAttrib(x, xts_IndexSymbol)));
@@ -322,7 +325,7 @@ SEXP _df(const SEXP x) {
 
 }
 
-/* import na_omit_xts from the package 'xts' */
+/* imports from the package 'xts' */
 SEXP _naomit(SEXP x) {
   static SEXP(*fun)(SEXP) = NULL;
   fun = (SEXP(*)(SEXP)) R_GetCCallable("xts", "na_omit_xts");
