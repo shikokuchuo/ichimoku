@@ -255,43 +255,44 @@ mlgrid <- function(x,
     veclist <- c(veclist, veclistf)
   }
 
-  df <- switch(y, none = veclist, c(list(y = target), veclist))
-  cnames <- attr(df, "names")
-  attributes(df) <- list(names = cnames,
-                         class = "data.frame",
-                         row.names = format.POSIXct(index.ichimoku(x)))
-  grid <- df <- df_trim(df)
+  veclist <- switch(y, none = veclist, c(list(y = target), veclist))
+  grid <- do.call(cbind, veclist)
+  dimnames(grid)[[1L]] <- format.POSIXct(index.ichimoku(x))
+  grid <- .Call(ichimoku_naomit, grid)
+
   if (type == "z-score") {
-    if (y != "none") grid <- .subset(grid, -1L)
-    means <- unlist(lapply(grid, mean))
-    sdevs <- unlist(lapply(grid, sd))
-    grid <- mapply(function(x, m, s) (x - m) / s,
-                   x = grid, m = means, s = sdevs, SIMPLIFY = FALSE, USE.NAMES = FALSE)
-    if (y != "none") grid <- c(list(.subset2(df, 1L)), grid)
+    if (y != "none") {
+      idx <- grid[, 1L, drop = FALSE]
+      grid <- grid[, -1L]
+    }
+    dim1 <- dim(grid)[1L]
+    dim2 <- dim(grid)[2L]
+    means <- .colMeans(grid, dim1, dim2)
+    sdevs <- unname(apply(grid, 2, sd))
+    grid <- t((t(grid) - means) / sdevs)
+    if (y != "none") grid <- cbind(idx, grid)
   }
 
-  grid <- switch(
+  switch(
     format,
-    dataframe = `attributes<-`(grid,
-                               list(names = cnames,
+    dataframe = `attributes<-`(matrix_df(grid),
+                               list(names = attr(grid, "dimnames")[[2L]],
                                     class = "data.frame",
-                                    row.names = attr(df, "row.names"),
+                                    row.names = attr(grid, "dimnames")[[1L]],
                                     y = y,
                                     k = k,
                                     direction = dir,
                                     type = type,
                                     ticker = attr(x, "ticker"))),
-    matrix = `attributes<-`(unlist(unname(grid)),
-                            list(dim = dim(df),
-                                 dimnames = list(attr(df, "row.names"), cnames),
+    matrix = `attributes<-`(grid,
+                            list(dim = attr(grid, "dim"),
+                                 dimnames = attr(grid, "dimnames"),
                                  y = y,
                                  k = k,
                                  direction = dir,
                                  type = type,
                                  ticker = attr(x, "ticker")))
-    )
-
-  grid
+  )
 
 }
 

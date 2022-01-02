@@ -32,7 +32,7 @@ Create an ichimoku object containing values for all components of the
     values for the cloud top and cloud base.
 }
 \details{
-A faster version of \code{\link{ichimoku}}, which can be used when
+A faster version of \code{\link{ichimoku}} which can be used when
     the data is a dataframe in the prescribed format. Does not support the
     argument 'keep.data'.
 }

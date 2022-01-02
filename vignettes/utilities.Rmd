@@ -109,20 +109,6 @@ str(row.names(df))
 
 ## Dataframe Utilities
 
-#### df_trim()
-
-Trim rows containing NA values from a 'data.frame' object. This is a faster version of `stats::na.omit()`.
-
-Takes a single argument:
-
-- `x`  the data.frame to trim.
-
-```{r dftrim}
-data <- data.frame(c(1:4, NA), c(NA, 2:5))
-data
-df_trim(data)
-```
-
 #### df_merge()
 
 Full join on an arbitrary number of 'data.frame' objects passed as arguments, preserving all unique entries. Can be used to combine historical time series data where each observation is indexed by a unique timestamp and all periods are complete.
@@ -166,6 +152,6 @@ df_append(data1, data2)
 
 ## References
 
-Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.2.5, <https://CRAN.R-project.org/package=ichimoku>.
+Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.2.99, <https://CRAN.R-project.org/package=ichimoku>.
 
 ---

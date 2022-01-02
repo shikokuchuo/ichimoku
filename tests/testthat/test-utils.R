@@ -26,10 +26,6 @@ test_that("matrix_df ok", {
   expect_identical(attr(matrix_df(mat, keep.attrs = TRUE), "special"), "set")
 })
 
-test_that("df_trim ok", {
-  expect_identical(dim(df_trim(data.frame(c(1:4, NA), c(NA, 2:5)))), c(3L, 2L))
-})
-
 test_that("df_merge ok", {
   expect_identical(dim(merge <- df_merge(sample_ohlc_data[1:6, ], sample_ohlc_data[4:10, ])), c(10L, 6L))
   attr(merge, "oanda") <- TRUE

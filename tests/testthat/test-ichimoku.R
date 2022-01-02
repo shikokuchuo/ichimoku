@@ -123,4 +123,5 @@ test_that("is.ichimoku ok", {
 
 test_that(".ichimoku ok", {
   expect_identical(.ichimoku(sample_ohlc_data, ticker = "TKR"), cloud)
+  expect_identical(attr(.ichimoku(sample_ohlc_data), "ticker"), "sample_ohlc_data")
 })

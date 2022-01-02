@@ -302,7 +302,7 @@ ichimoku.default <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, ..
 #'     column and numeric OHLC pricing data as the second through fifth columns.
 #' @inheritParams ichimoku
 #'
-#' @details A faster version of \code{\link{ichimoku}}, which can be used when
+#' @details A faster version of \code{\link{ichimoku}} which can be used when
 #'     the data is a dataframe in the prescribed format. Does not support the
 #'     argument 'keep.data'.
 #'

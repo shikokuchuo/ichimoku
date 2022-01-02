@@ -288,7 +288,7 @@ On a bar chart, the bar colours correspond to the candle direction.
 
 #### Further Options
 
-Internally, ichimoku's `plot()` method is a wrapper for `autoplot()` and `extraplot()`. As `plot()` returns the original ichimoku object (invisibly), to access the actual plot objects requires those functions to be called directly. `autoplot()` returns a ggplot2 object and `extraplot()` returns a gtable object.
+Internally, ichimoku's `plot()` method is a wrapper for `autoplot()`. To access the ggplot2 object, call `autoplot()` directly as `plot()` returns the original ichimoku object (invisibly).
 
 #### 2. Interactive Plots
 
@@ -317,8 +317,6 @@ The chart provides intuitive access to the data provided by the cursor infotip:
 #### Implementation notes
 
 The column names of the ichimoku object are automatically populated in a drop-down menu, and a selection can be made to view any variable as a custom sub-plot. Chart type must be set to either 'bar' or 'line', otherwise the type setting will take precedence.
-
-The cursor infotip and guides are available for a chart type of 'none' but are not implemented for charts with sub-plots.
 
 ### archive()
 
@@ -424,14 +422,10 @@ There may however still be other issues with the input data that prevent cloud v
 
 ichimoku currently has the following external package dependencies:
 
-- ggplot2, gtable - for graphics and visualization
+- ggplot2 - for graphics and visualization
 - tibble - for enhanced printing of ichimoku objects
 - xts, zoo - for enhanced time series methods
 - curl, jsonlite - for interfacing with external APIs
-
-Compile time:
-
-- cpp11 - provides the C++ headers for various internal calculation functions
 
 Optional (enables additional features):
 
@@ -443,6 +437,6 @@ Optional (enables additional features):
 
 Sasaki, H. 佐々木 英信 (1996), *一目均衡表の研究 [ichimoku kinkouhyou no kenkyuu]*. Tokyo, Japan: Toushi Radar.
 
-Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.2.5, <https://CRAN.R-project.org/package=ichimoku>.
+Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.2.99, <https://CRAN.R-project.org/package=ichimoku>.
 
 ---

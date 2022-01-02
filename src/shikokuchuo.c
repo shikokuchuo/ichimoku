@@ -5,6 +5,10 @@
 #include <Rinternals.h>
 #include <R_ext/Visibility.h>
 
+/* define globals */
+SEXP xts_IndexSymbol, xts_IndexTclassSymbol, xts_IndexTzoneSymbol;
+SEXP ichimoku_PeriodsSymbol, ichimoku_PeriodicitySymbol, ichimoku_TickerSymbol;
+
 /* rolling max over a window */
 SEXP _wmax(const SEXP x, const SEXP window) {
 
@@ -90,7 +94,7 @@ SEXP _look(const SEXP x) {
   for (ax = ATTRIB(x); ax != R_NilValue; ax = CDR(ax)) {
     if (TAG(ax) != R_NamesSymbol && TAG(ax) != R_RowNamesSymbol &&
         TAG(ax) != R_DimSymbol && TAG(ax) != R_DimNamesSymbol &&
-        TAG(ax) != R_ClassSymbol && strcmp(CHAR(PRINTNAME(TAG(ax))), "index"))
+        TAG(ax) != R_ClassSymbol && TAG(ax) != xts_IndexSymbol)
       Rf_setAttrib(y, TAG(ax), CAR(ax));
   }
 
@@ -115,7 +119,7 @@ SEXP _psxct(SEXP x) {
 /* ichimoku to data.frame / tibble converter */
 SEXP _tbl(const SEXP x, const SEXP type) {
 
-  R_xlen_t xlen, xwid;
+  R_xlen_t xlen = 0, xwid = 0;
   const SEXP dims = PROTECT(Rf_getAttrib(x, R_DimSymbol));
   switch (TYPEOF(dims)) {
   case INTSXP:
@@ -131,7 +135,7 @@ SEXP _tbl(const SEXP x, const SEXP type) {
 
   SEXP tbl = PROTECT(Rf_allocVector(VECSXP, xwid + 1));
 
-  SEXP index = PROTECT(Rf_shallow_duplicate(Rf_getAttrib(x, Rf_install("index"))));
+  SEXP index = PROTECT(Rf_shallow_duplicate(Rf_getAttrib(x, xts_IndexSymbol)));
   index = _psxct(index);
   SET_VECTOR_ELT(tbl, 0, index);
   UNPROTECT(1);
@@ -201,15 +205,15 @@ SEXP _tbl(const SEXP x, const SEXP type) {
 
 /* internal function used by ichimoku() */
 SEXP _create(SEXP kumo, SEXP xtsindex, const SEXP periods,
-                      const SEXP periodicity, const SEXP ticker, const SEXP x) {
+             const SEXP periodicity, const SEXP ticker, const SEXP x) {
 
   SEXP tzone = PROTECT(Rf_ScalarString(Rf_mkChar("")));
-  Rf_setAttrib(xtsindex, Rf_install("tzone"), tzone);
+  Rf_setAttrib(xtsindex, xts_IndexTzoneSymbol, tzone);
   SEXP tclass = PROTECT(Rf_allocVector(STRSXP, 2));
   SET_STRING_ELT(tclass, 0, Rf_mkChar("POSIXct"));
   SET_STRING_ELT(tclass, 1, Rf_mkChar("POSIXt"));
-  Rf_setAttrib(xtsindex, Rf_install("tclass"), tclass);
-  Rf_setAttrib(kumo, Rf_install("index"), xtsindex);
+  Rf_setAttrib(xtsindex, xts_IndexTclassSymbol, tclass);
+  Rf_setAttrib(kumo, xts_IndexSymbol, xtsindex);
   UNPROTECT(2);
 
   SEXP klass = PROTECT(Rf_allocVector(STRSXP, 3));
@@ -219,19 +223,19 @@ SEXP _create(SEXP kumo, SEXP xtsindex, const SEXP periods,
   Rf_classgets(kumo, klass);
   UNPROTECT(1);
 
-  Rf_setAttrib(kumo, Rf_install("periods"), periods);
-  Rf_setAttrib(kumo, Rf_install("periodicity"), periodicity);
-  Rf_setAttrib(kumo, Rf_install("ticker"), ticker);
+  Rf_setAttrib(kumo, ichimoku_PeriodsSymbol, periods);
+  Rf_setAttrib(kumo, ichimoku_PeriodicitySymbol, periodicity);
+  Rf_setAttrib(kumo, ichimoku_TickerSymbol, ticker);
 
   if (x != R_NilValue) {
     SEXP ax;
     for (ax = ATTRIB(x); ax != R_NilValue; ax = CDR(ax)) {
       if (TAG(ax) != R_NamesSymbol && TAG(ax) != R_RowNamesSymbol &&
           TAG(ax) != R_DimSymbol && TAG(ax) != R_DimNamesSymbol &&
-          TAG(ax) != R_ClassSymbol && strcmp(CHAR(PRINTNAME(TAG(ax))), "index") &&
-          strcmp(CHAR(PRINTNAME(TAG(ax))), "periods") &&
-          strcmp(CHAR(PRINTNAME(TAG(ax))), "periodicity") &&
-          strcmp(CHAR(PRINTNAME(TAG(ax))), "ticker"))
+          TAG(ax) != R_ClassSymbol && TAG(ax) != xts_IndexSymbol &&
+          TAG(ax) != ichimoku_PeriodsSymbol &&
+          TAG(ax) != ichimoku_PeriodicitySymbol &&
+          TAG(ax) != ichimoku_TickerSymbol)
         Rf_setAttrib(kumo, TAG(ax), CAR(ax));
     }
   }
@@ -243,7 +247,7 @@ SEXP _create(SEXP kumo, SEXP xtsindex, const SEXP periods,
 /* special ichimoku to data.frame converter for plots */
 SEXP _df(const SEXP x) {
 
-  R_xlen_t xlen, xwid;
+  R_xlen_t xlen = 0, xwid = 0;
   const SEXP dims = PROTECT(Rf_getAttrib(x, R_DimSymbol));
   switch (TYPEOF(dims)) {
   case INTSXP:
@@ -259,7 +263,7 @@ SEXP _df(const SEXP x) {
 
   SEXP df = PROTECT(Rf_allocVector(VECSXP, xwid + 2));
 
-  SEXP index = PROTECT(Rf_shallow_duplicate(Rf_getAttrib(x, Rf_install("index"))));
+  SEXP index = PROTECT(Rf_shallow_duplicate(Rf_getAttrib(x, xts_IndexSymbol)));
   index = _psxct(index);
   SET_VECTOR_ELT(df, 0, index);
   UNPROTECT(1);
@@ -318,6 +322,21 @@ SEXP _df(const SEXP x) {
 
 }
 
+/* import na_omit_xts from the package 'xts' */
+SEXP _naomit(SEXP x) {
+  static SEXP(*fun)(SEXP) = NULL;
+  fun = (SEXP(*)(SEXP)) R_GetCCallable("xts", "na_omit_xts");
+  return fun(x);
+}
+
+static void RegisterSymbols(void) {
+  xts_IndexSymbol = Rf_install("index");
+  xts_IndexTclassSymbol = Rf_install("tclass");
+  xts_IndexTzoneSymbol = Rf_install("tzone");
+  ichimoku_PeriodsSymbol = Rf_install("periods");
+  ichimoku_PeriodicitySymbol = Rf_install("periodicity");
+  ichimoku_TickerSymbol = Rf_install("ticker");
+}
 
 static const R_CallMethodDef CallEntries[] = {
   {"_create", (DL_FUNC) &_create, 6},
@@ -328,10 +347,12 @@ static const R_CallMethodDef CallEntries[] = {
   {"_wmax", (DL_FUNC) &_wmax, 2},
   {"_wmean", (DL_FUNC) &_wmean, 2},
   {"_wmin", (DL_FUNC) &_wmin, 2},
+  {"_naomit", (DL_FUNC) &_naomit, 1},
   {NULL, NULL, 0}
 };
 
 void attribute_visible R_init_ichimoku(DllInfo* dll) {
+  RegisterSymbols();
   R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
   R_useDynamicSymbols(dll, FALSE);
   R_forceSymbols(dll, TRUE);

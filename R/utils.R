@@ -84,33 +84,6 @@ grid_dup <- function(n, omit.id) {
   vec
 }
 
-#' Trim Dataframe Rows with NA Values
-#'
-#' Trim rows containing NA values from a 'data.frame' object. An efficient
-#'     version of \code{stats::na.omit()} with no data validation or checking.
-#'
-#' @param x the data.frame to trim.
-#'
-#' @return The data.frame 'x' with rows containing NA values removed.
-#'
-#' @details Works only where the columns contain atomic (e.g. numeric) and not
-#'     recursive types (e.g. lists).
-#'
-#' @examples
-#' data <- data.frame(c(1:4, NA), c(NA, 2:5))
-#' data
-#' df_trim(data)
-#'
-#' @export
-#'
-df_trim <- function(x) {
-  omit <- logical(dim(x)[1L])
-  for (i in seq_along(x)) {
-    omit <- omit | is.na(x[[i]])
-  }
-  x[!omit, , drop = FALSE]
-}
-
 #' Convert xts to data.frame
 #'
 #' An optimised 'xts' to 'data.frame' constructor.
