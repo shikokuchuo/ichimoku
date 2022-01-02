@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.99</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.99.7</span>
       </span>
     </div>
 
@@ -404,7 +404,7 @@
 <div class="section level4">
 <h4 id="further-options">Further Options<a class="anchor" aria-label="anchor" href="#further-options"></a>
 </h4>
-<p>Internally, ichimoku’s <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> method is a wrapper for <code><a href="../reference/autoplot.ichimoku.html">autoplot()</a></code> and <code>extraplot()</code>. As <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> returns the original ichimoku object (invisibly), to access the actual plot objects requires those functions to be called directly. <code><a href="../reference/autoplot.ichimoku.html">autoplot()</a></code> returns a ggplot2 object and <code>extraplot()</code> returns a gtable object.</p>
+<p>Internally, ichimoku’s <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> method is a wrapper for <code><a href="../reference/autoplot.ichimoku.html">autoplot()</a></code>. To access the ggplot2 object, call <code><a href="../reference/autoplot.ichimoku.html">autoplot()</a></code> directly as <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> returns the original ichimoku object (invisibly).</p>
 </div>
 <div class="section level4">
 <h4 id="interactive-plots">2. Interactive Plots<a class="anchor" aria-label="anchor" href="#interactive-plots"></a>
@@ -432,7 +432,6 @@
 <h4 id="implementation-notes">Implementation notes<a class="anchor" aria-label="anchor" href="#implementation-notes"></a>
 </h4>
 <p>The column names of the ichimoku object are automatically populated in a drop-down menu, and a selection can be made to view any variable as a custom sub-plot. Chart type must be set to either ‘bar’ or ‘line’, otherwise the type setting will take precedence.</p>
-<p>The cursor infotip and guides are available for a chart type of ‘none’ but are not implemented for charts with sub-plots.</p>
 </div>
 </div>
 <div class="section level3">
@@ -570,14 +569,10 @@
 </h2>
 <p>ichimoku currently has the following external package dependencies:</p>
 <ul>
-<li>ggplot2, gtable - for graphics and visualization</li>
+<li>ggplot2 - for graphics and visualization</li>
 <li>tibble - for enhanced printing of ichimoku objects</li>
 <li>xts, zoo - for enhanced time series methods</li>
 <li>curl, jsonlite - for interfacing with external APIs</li>
-</ul>
-<p>Compile time:</p>
-<ul>
-<li>cpp11 - provides the C++ headers for various internal calculation functions</li>
 </ul>
 <p>Optional (enables additional features):</p>
 <ul>
@@ -590,7 +585,7 @@
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
 <p>Sasaki, H. 佐々木 英信 (1996), <em>一目均衡表の研究 [ichimoku kinkouhyou no kenkyuu]</em>. Tokyo, Japan: Toushi Radar.</p>
-<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.2.5, <a href="https://CRAN.R-project.org/package=ichimoku" class="external-link uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
+<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.2.99, <a href="https://CRAN.R-project.org/package=ichimoku" class="external-link uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
 <hr>
 </div>
   </div>

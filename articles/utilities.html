@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.99</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.99.7</span>
       </span>
     </div>
 
@@ -308,30 +308,6 @@
 <h2 id="dataframe-utilities">Dataframe Utilities<a class="anchor" aria-label="anchor" href="#dataframe-utilities"></a>
 </h2>
 <div class="section level4">
-<h4 id="df_trim">df_trim()<a class="anchor" aria-label="anchor" href="#df_trim"></a>
-</h4>
-<p>Trim rows containing NA values from a ‘data.frame’ object. This is a faster version of <code><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">stats::na.omit()</a></code>.</p>
-<p>Takes a single argument:</p>
-<ul>
-<li>
-<code>x</code> the data.frame to trim.</li>
-</ul>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, <span class="cn">NA</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span>
-<span class="va">data</span>
-<span class="co">#&gt;   c.1.4..NA. c.NA..2.5.</span>
-<span class="co">#&gt; 1          1         NA</span>
-<span class="co">#&gt; 2          2          2</span>
-<span class="co">#&gt; 3          3          3</span>
-<span class="co">#&gt; 4          4          4</span>
-<span class="co">#&gt; 5         NA          5</span>
-<span class="fu"><a href="../reference/df_trim.html">df_trim</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>
-<span class="co">#&gt;   c.1.4..NA. c.NA..2.5.</span>
-<span class="co">#&gt; 2          2          2</span>
-<span class="co">#&gt; 3          3          3</span>
-<span class="co">#&gt; 4          4          4</span></code></pre></div>
-</div>
-<div class="section level4">
 <h4 id="df_merge">df_merge()<a class="anchor" aria-label="anchor" href="#df_merge"></a>
 </h4>
 <p>Full join on an arbitrary number of ‘data.frame’ objects passed as arguments, preserving all unique entries. Can be used to combine historical time series data where each observation is indexed by a unique timestamp and all periods are complete.</p>
@@ -341,7 +317,7 @@
 <code>...</code> data.frame objects to combine.</li>
 </ul>
 <p>Can be used to join price dataframes retrieved by <code><a href="../reference/oanda.html">oanda()</a></code>. The function is designed to join complete historical data. If the data to be merged contains data with incomplete periods, all entries are preserved rather than updated. If incomplete periods are detected within the data, a warning is issued, and the resulting dataframe should be manually inspected in case it contains unwanted duplicates. Use <code><a href="../reference/df_append.html">df_append()</a></code> for updating dataframes with new values.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">data1</span> <span class="op">&lt;-</span> <span class="va">sample_ohlc_data</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span>, <span class="op">]</span>
 <span class="va">data1</span>
 <span class="co">#&gt;         time  open  high   low close volume</span>
@@ -391,7 +367,7 @@
 </ul>
 <p>Can be used to update price dataframes retrieved by <code><a href="../reference/oanda.html">oanda()</a></code>. The function is designed to update existing data with new values as they become available. As opposed to <code><a href="../reference/df_merge.html">df_merge()</a></code>, the data in ‘new’ will overwrite the data in ‘old’ rather than create duplicates.</p>
 <p>If the attribute specified by ‘keep.attr’ is present in ‘new’, for example the ‘timestamp’ in pricing data returned by <code><a href="../reference/oanda.html">oanda()</a></code>, this is retained. If the attribute is not found in ‘new’, the argument has no effect. All other non-essential attributes are dropped.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">data1</span> <span class="op">&lt;-</span> <span class="va">sample_ohlc_data</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span>, <span class="op">]</span>
 <span class="va">data1</span>
 <span class="co">#&gt;         time  open  high   low close volume</span>
@@ -427,7 +403,7 @@
 <div class="section level2">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.2.5, <a href="https://CRAN.R-project.org/package=ichimoku" class="external-link uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
+<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.2.99, <a href="https://CRAN.R-project.org/package=ichimoku" class="external-link uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
 <hr>
 </div>
   </div>
