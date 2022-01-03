@@ -163,7 +163,7 @@ create_data <- function(object, window, type) {
 plot_ichimoku <- function(object, ticker, subtitle, theme, strat, type, custom, ...) {
 
   data <- .Call(ichimoku_df, object)
-  is.null(data) && stop("attempt to plot incomplete (partial or subset) ichimoku object", call. = FALSE)
+  missing(data) && stop("attempt to plot incomplete (partial or subset) ichimoku object", call. = FALSE)
   pal <- .ichimoku_themes[[theme]]
   showstrat <- hasStrat(object) && isTRUE(strat)
   if (missing(ticker)) ticker <- attr(object, "ticker")

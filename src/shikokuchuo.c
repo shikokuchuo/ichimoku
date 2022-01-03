@@ -262,7 +262,7 @@ SEXP _df(const SEXP x) {
   UNPROTECT(1);
 
   if (xwid < 12)
-    return(R_NilValue);
+    return(R_MissingArg);
 
   SEXP df = PROTECT(Rf_allocVector(VECSXP, xwid + 2));
 
