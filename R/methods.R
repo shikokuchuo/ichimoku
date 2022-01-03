@@ -32,21 +32,14 @@ print.ichimoku <- function(x, plot = TRUE, ...) {
 
   dims <- attr(x, "dim")
   if (is.null(dims) || dims[1L] == 0L) {
-
     NextMethod()
-
   } else {
-
-    tbl <- .Call(ichimoku_tbl, x, 4L)
     pillar_sigfig <- getOption("pillar.sigfig")
     if (is.null(pillar_sigfig) || pillar_sigfig < 5) options(pillar.sigfig = 5)
-    print(tbl, ...)
+    print(.Call(ichimoku_tbl, x, 4L), ...)
     options(pillar.sigfig = pillar_sigfig)
-
-    dims[2L] < 12L && return(invisible(x))
-    if (missing(plot) || isTRUE(plot)) plot.ichimoku(x, ...)
+    if (dims[2L] >= 12L && (missing(plot) || isTRUE(plot))) plot.ichimoku(x, ...)
   }
-
   invisible(x)
 
 }
@@ -241,11 +234,11 @@ summary.ichimoku <- function(object, strat = TRUE, ...) {
 #'
 as.data.frame.ichimoku <- function(x, row.names, optional, keep.attrs, ...) {
 
-  df <- .Call(ichimoku_tbl, x, 1L)
-  if (!missing(keep.attrs) && isTRUE(keep.attrs)) {
-    attributes(df) <- c(attributes(df), .Call(ichimoku_look, x))
+  if (missing(keep.attrs) || !isTRUE(keep.attrs)) {
+    .Call(ichimoku_tbl, x, 1L)
+  } else {
+    .Call(ichimoku_tbl, x, 5L)
   }
-  df
 
 }
 
@@ -285,11 +278,11 @@ NULL
 #'
 as_tibble.ichimoku <- function(x, class, keep.attrs, ...) {
 
-  tbl <- .Call(ichimoku_tbl, x, 3L)
-  if (!missing(keep.attrs) && isTRUE(keep.attrs)) {
-    attributes(tbl) <- c(attributes(tbl), .Call(ichimoku_look, x))
+  if (missing(keep.attrs) || !isTRUE(keep.attrs)) {
+    .Call(ichimoku_tbl, x, 3L)
+  } else {
+    .Call(ichimoku_tbl, x, 15L)
   }
-  tbl
 
 }
 
@@ -325,7 +318,8 @@ NULL
 #' @export
 #'
 coredata.ichimoku <- function(x, fmt, ...) {
-  attributes(x) <- if (missing(fmt)) {
+
+  `attributes<-`(x, if (missing(fmt)) {
     list(dim = attr(x, "dim"), dimnames = attr(x, "dimnames"))
   } else if (is.null(attr(x, "dim"))) {
     list(names = if (is.character(fmt)) format.POSIXct(index.ichimoku(x), format = fmt) else format.POSIXct(index.ichimoku(x)))
@@ -333,8 +327,8 @@ coredata.ichimoku <- function(x, fmt, ...) {
     list(dim = attr(x, "dim"),
          dimnames = list(if (is.character(fmt)) format.POSIXct(index.ichimoku(x), format = fmt) else format.POSIXct(index.ichimoku(x)),
                          attr(x, "dimnames")[[2L]]))
-  }
-  x
+  })
+
 }
 
 #' @name index
@@ -371,8 +365,12 @@ NULL
 #' @export
 #'
 index.ichimoku <- function(x, subset, ...) {
-  idx <- attr(x, "index")
-  if (!missing(subset)) idx <- .subset(idx, subset)
-  `class<-`(idx, c("POSIXct", "POSIXt"))
+
+  if (missing(subset)) {
+    `class<-`(attr(x, "index"), c("POSIXct", "POSIXt"))
+  } else {
+    `class<-`(.subset(attr(x, "index"), subset), c("POSIXct", "POSIXt"))
+  }
+
 }
 

@@ -13,6 +13,7 @@ SEXP ichimoku_PeriodsSymbol, ichimoku_PeriodicitySymbol, ichimoku_TickerSymbol;
 SEXP _wmax(const SEXP x, const SEXP window) {
 
   const R_xlen_t n = XLENGTH(x);
+
   const int w = INTEGER(window)[0], w1 = w - 1;
   SEXP vec = PROTECT(Rf_allocVector(REALSXP, n));
   const double *px = REAL(x);
@@ -119,6 +120,11 @@ SEXP _psxct(SEXP x) {
 /* ichimoku to data.frame / tibble converter */
 SEXP _tbl(const SEXP x, const SEXP type) {
 
+  int typ = INTEGER(type)[0];
+  const int keepattrs = typ % 5 == 0 ? 1 : 0;
+  if (keepattrs)
+    typ /= 5;
+
   R_xlen_t xlen = 0, xwid = 0;
   const SEXP dims = PROTECT(Rf_getAttrib(x, R_DimSymbol));
   switch (TYPEOF(dims)) {
@@ -164,7 +170,6 @@ SEXP _tbl(const SEXP x, const SEXP type) {
   Rf_namesgets(tbl, names);
   UNPROTECT(2);
 
-  const int typ = INTEGER(type)[0];
   SEXP klass = PROTECT(Rf_allocVector(STRSXP, typ));
   switch (typ) {
   case 1:
@@ -197,6 +202,16 @@ SEXP _tbl(const SEXP x, const SEXP type) {
   }
   Rf_setAttrib(tbl, R_RowNamesSymbol, rownames);
   UNPROTECT(1);
+
+  if (keepattrs) {
+    SEXP ax;
+    for (ax = ATTRIB(x); ax != R_NilValue; ax = CDR(ax)) {
+      if (TAG(ax) != R_NamesSymbol && TAG(ax) != R_RowNamesSymbol &&
+          TAG(ax) != R_DimSymbol && TAG(ax) != R_DimNamesSymbol &&
+          TAG(ax) != R_ClassSymbol && TAG(ax) != xts_IndexSymbol)
+        Rf_setAttrib(tbl, TAG(ax), CAR(ax));
+    }
+  }
 
   UNPROTECT(1);
   return tbl;
@@ -344,13 +359,13 @@ static void RegisterSymbols(void) {
 static const R_CallMethodDef CallEntries[] = {
   {"_create", (DL_FUNC) &_create, 6},
   {"_df", (DL_FUNC) &_df, 1},
-  {"_tbl", (DL_FUNC) &_tbl, 2},
   {"_look", (DL_FUNC) &_look, 1},
+  {"_naomit", (DL_FUNC) &_naomit, 1},
   {"_psxct", (DL_FUNC) &_psxct, 1},
+  {"_tbl", (DL_FUNC) &_tbl, 2},
   {"_wmax", (DL_FUNC) &_wmax, 2},
   {"_wmean", (DL_FUNC) &_wmean, 2},
   {"_wmin", (DL_FUNC) &_wmin, 2},
-  {"_naomit", (DL_FUNC) &_naomit, 1},
   {NULL, NULL, 0}
 };
 
