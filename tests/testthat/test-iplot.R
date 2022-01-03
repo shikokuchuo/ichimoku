@@ -4,6 +4,7 @@ test_that("iplot Shiny functions ok", {
   strat <- strat(cloud)
   expect_s3_class(iplot(strat, theme = "dark", type = "bar", custom = "ret"), "shiny.appobj")
   expect_error(iplot(sample_ohlc_data), regexp = "ichimoku object")
+  expect_error(iplot(cloud[, 1:3]), "plot incomplete")
   shiny::testServer(iplot(cloud), {
     session$setInputs(type = "none", plot_hover = list(x = 2, y = 125, coords_css = list(x = 200, y = 200)),
                       infotip = TRUE)

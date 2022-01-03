@@ -50,6 +50,8 @@ iplot <- function(x,
   if (requireNamespace("shiny", quietly = TRUE)) {
 
     is.ichimoku(x) || stop("iplot() only works with ichimoku objects", call. = FALSE)
+    dims <- attr(x, "dim")
+    dims[2L] >= 12L || stop("attempt to plot incomplete (partial or subset) ichimoku object", call. = FALSE)
     theme <- match.arg(theme)
     type <- match.arg(type)
     if (missing(ticker)) ticker <- attr(x, "ticker")
@@ -59,7 +61,7 @@ iplot <- function(x,
 
     tformat <- if (attr(x, "periodicity") > 80000) "%F" else "%F %T"
     start <- index.ichimoku(x, 1L)
-    end <- index.ichimoku(x, attr(x, "dim")[1L])
+    end <- index.ichimoku(x, dims[1L])
     xadj <- if (nchar(format.POSIXct(start)) > 10) -17 else 5
 
     ui <- shiny::fluidPage(

@@ -340,6 +340,14 @@ SEXP _df(const SEXP x) {
 
 }
 
+/* ichimoku index method */
+SEXP _index(SEXP x) {
+  SEXP idx = PROTECT(Rf_shallow_duplicate(Rf_getAttrib(x, xts_IndexSymbol)));
+  idx = _psxct(idx);
+  UNPROTECT(1);
+  return idx;
+}
+
 /* imports from the package 'xts' */
 SEXP _naomit(SEXP x) {
   static SEXP(*fun)(SEXP) = NULL;
@@ -359,6 +367,7 @@ static void RegisterSymbols(void) {
 static const R_CallMethodDef CallEntries[] = {
   {"_create", (DL_FUNC) &_create, 6},
   {"_df", (DL_FUNC) &_df, 1},
+  {"_index", (DL_FUNC) &_index, 1},
   {"_look", (DL_FUNC) &_look, 1},
   {"_naomit", (DL_FUNC) &_naomit, 1},
   {"_psxct", (DL_FUNC) &_psxct, 1},
