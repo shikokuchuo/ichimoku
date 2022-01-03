@@ -122,11 +122,10 @@ xts_df <- function(x, keep.attrs) {
   for (i in seq_len(len)) {
     df[[i + 1L]] <- core[start[i]:end[i]]
   }
-  attributes(df) <- c(list(names = c("index", dn2),
-                           class = "data.frame",
-                           row.names = .set_row_names(xlen)),
-                      if (!missing(keep.attrs) && isTRUE(keep.attrs)) .Call(ichimoku_look, x))
-  df
+  `attributes<-`(df, c(list(names = c("index", dn2),
+                            class = "data.frame",
+                            row.names = .set_row_names(xlen)),
+                       if (!missing(keep.attrs) && isTRUE(keep.attrs)) .Call(ichimoku_look, x)))
 }
 
 #' Convert matrix to data.frame
@@ -165,11 +164,10 @@ matrix_df <- function(x, keep.attrs) {
   for (i in seq_along(df)) {
     df[[i]] <- x[start[i]:end[i]]
   }
-  attributes(df) <- c(list(names = dn[[2L]],
-                           class = "data.frame",
-                           row.names = if (is.null(dn[[1L]])) .set_row_names(xlen) else dn[[1L]]),
-                      lk)
-  df
+  `attributes<-`(df, c(list(names = dn[[2L]],
+                            class = "data.frame",
+                            row.names = if (is.null(dn[[1L]])) .set_row_names(xlen) else dn[[1L]]),
+                       lk))
 }
 
 #' Merge Dataframes
@@ -256,10 +254,9 @@ df_append <- function(old, new, key = "time", keep.attr = "timestamp") {
   for (i in seq_along(df)) {
     df[[i]] <- c(.subset2(old, i)[keep], .subset2(new, i))
   }
-  df <- `attributes<-`(df, `names<-`(
+  `attributes<-`(df, `names<-`(
     list(cnames, "data.frame", .set_row_names(length(df[[1L]])), attr(new, keep.attr)),
     c("names", "class", "row.names", keep.attr)))
-  df
 }
 
 #' Look at Informational Attributes

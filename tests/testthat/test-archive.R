@@ -26,6 +26,6 @@ test_that("archive functions ok", {
   x_archive_sha256 <- "010101010101"
   file <- tempfile()
   save(object, x_archive_sha256, file = file)
-  expect_warning(restored <- archive(file), "does not match the original")
+  expect_warning(expect_message(restored <- archive(file), "Archive read"), "does not match the original")
   unlink(file)
 })
