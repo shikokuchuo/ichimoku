@@ -235,7 +235,7 @@ Produces a statistical summary of the latest numeric representation of the ichim
 
 Takes the following optional arguments:
 
-- `order` [default FALSE] set to TRUE to order the results by the absolue 'r value'. Those with the highest relative deviation are listed first
+- `order` [default FALSE] set to TRUE to order the results by the absolute 'z-score'. Those with the highest values are listed first
 - `signif` [default 0.2] set a significance threshold for which if 'p' is equal or lower, the element will be starred with a '*'. Note: this value may be freely set and the default of 0.2 is arbitrary with no special significance
 - `quietly` if set to TRUE, will suppress printing of additional output to the console and return quietly
 
@@ -247,13 +247,13 @@ relative(cloud, signif = 0.4)[1:10, ]
 
 'res' is the residual X[n] - mean(X) and represents a centred measure of deviation for the latest observed value.
 
-The 'relative' or 'r value' is calculated as res / sd(X) and represents a standardised (centred and scaled) measure of deviation for the latest observed value.
+The 'z-score' (or standard score) is calculated as res / sd(X) and is a centred and scaled measure of deviation for the latest observed value.
 
-'p >= |r|' represents the empirical probability of the latest observed absolute 'r value' or greater.
+'p >= |z|' represents the empirical probability of the latest observed absolute 'z-score' or greater.
 
-'p*' will display a star if 'p >= |r|' is less than or equal to the value of the argument 'signif'.
+'p*' will display a star if 'p >= |z|' is less than or equal to the value of the argument 'signif'.
 
-'E(|res|)|p' represents the mean or expected absolute value of 'res', conditional upon the absolute 'r value' being greater than equal to the latest observed absolute 'r value'. This provides an indication by how much 'res' might increase in more extreme cases.
+'E(|res|)|p' represents the mean or expected absolute value of 'res', conditional upon the absolute 'z-score' being greater than equal to the latest observed absolute 'z-score'. This provides an indication by how much 'res' might increase in more extreme cases.
 
 ## Strategy Summary Specification
 
@@ -293,6 +293,6 @@ The 'relative' or 'r value' is calculated as res / sd(X) and represents a standa
 
 Sasaki, H. 佐々木 英信 (1996), *一目均衡表の研究 [ichimoku kinkouhyou no kenkyuu]*. Tokyo, Japan: Toushi Radar.
 
-Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.2.5, <https://CRAN.R-project.org/package=ichimoku>.
+Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.2.99, <https://CRAN.R-project.org/package=ichimoku>.
 
 ---

@@ -348,6 +348,23 @@ SEXP _index(SEXP x) {
   return idx;
 }
 
+/* ichimoku coredata method */
+SEXP _coredata(const SEXP x) {
+  SEXP core = PROTECT(R_shallow_duplicate_attr(x));
+  SET_ATTRIB(core, R_NilValue);
+  SET_OBJECT(core, 0);
+  Rf_dimgets(core, Rf_getAttrib(x, R_DimSymbol));
+  Rf_dimnamesgets(core, Rf_getAttrib(x, R_DimNamesSymbol));
+
+  UNPROTECT(1);
+  return core;
+}
+
+/* expose R_MissingArg */
+SEXP _missingarg(void) {
+  return R_MissingArg;
+}
+
 /* imports from the package 'xts' */
 SEXP _naomit(SEXP x) {
   static SEXP(*fun)(SEXP) = NULL;
@@ -365,10 +382,12 @@ static void RegisterSymbols(void) {
 }
 
 static const R_CallMethodDef CallEntries[] = {
+  {"_coredata", (DL_FUNC) &_coredata, 1},
   {"_create", (DL_FUNC) &_create, 6},
   {"_df", (DL_FUNC) &_df, 1},
   {"_index", (DL_FUNC) &_index, 1},
   {"_look", (DL_FUNC) &_look, 1},
+  {"_missingarg", (DL_FUNC) &_missingarg, 0},
   {"_naomit", (DL_FUNC) &_naomit, 1},
   {"_psxct", (DL_FUNC) &_psxct, 1},
   {"_tbl", (DL_FUNC) &_tbl, 2},

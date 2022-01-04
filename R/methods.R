@@ -319,15 +319,19 @@ NULL
 #'
 coredata.ichimoku <- function(x, fmt, ...) {
 
-  `attributes<-`(x, if (missing(fmt)) {
-    list(dim = attr(x, "dim"), dimnames = attr(x, "dimnames"))
+  if (missing(fmt)) {
+    .Call(ichimoku_coredata, x)
   } else if (is.null(attr(x, "dim"))) {
-    list(names = if (is.character(fmt)) format.POSIXct(index.ichimoku(x), format = fmt) else format.POSIXct(index.ichimoku(x)))
+    `attributes<-`(
+      x,
+      list(names = if (is.character(fmt)) format.POSIXct(index.ichimoku(x), format = fmt) else format.POSIXct(index.ichimoku(x))))
   } else {
-    list(dim = attr(x, "dim"),
-         dimnames = list(if (is.character(fmt)) format.POSIXct(index.ichimoku(x), format = fmt) else format.POSIXct(index.ichimoku(x)),
-                         attr(x, "dimnames")[[2L]]))
-  })
+    `attributes<-`(
+      x,
+      list(dim = attr(x, "dim"),
+           dimnames = list(if (is.character(fmt)) format.POSIXct(index.ichimoku(x), format = fmt) else format.POSIXct(index.ichimoku(x)),
+                           attr(x, "dimnames")[[2L]])))
+  }
 
 }
 

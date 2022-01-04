@@ -44,17 +44,14 @@ install.packages("ichimoku", repos = "https://shikokuchuo.r-universe.dev")
 
 ## Example
 
-Load package and sample price data:
-
 ``` r
 library(ichimoku)
-TKR <- sample_ohlc_data
 ```
 
 Simply `ichimoku()` and `plot()`:
 
 ``` r
-cloud <- ichimoku(TKR)
+cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 plot(cloud, window = "2020-05/")
 ```
 

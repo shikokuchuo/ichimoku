@@ -1,18 +1,18 @@
-# ichimoku 1.2.99.12
+# ichimoku 1.2.99.13
 
 #### New features:
 
 * This is a development preview of version 1.3.
 * Subplots now feature on the same chart and values can be read via the infotip in `iplot()`.
 * R/S-type indicators now an option for `oanda_chart()` and `oanda_studio()`.
-* `.ichimoku()` introduced as a faster technical utility version of `ichimoku()` for use when data is already in the required format. 
+* `.ichimoku()` introduced as a faster technical utility version of `ichimoku()` for use when data is already in the prescribed format. 
 
 #### Updates:
 
 * Dependency on C++ compiler, 'cpp11'  and 'gtable' packages retired.
 * Internal rolling min/max/mean functions re-implemented directly in C.
 * Added `LinkingTo: xts` to mark use of C function exported from that package (although not strictly necessary).
-* `ichimoku()`, `mlgrid()`, `look()`, `index()`, `as.data.frame()` and `as_tibble()` now amongst functions which call C code internally.
+* Functions `ichimoku()`, `mlgrid()`, `look()` and methods for `index()`, `coredata()`, `as.data.frame()` and `as_tibble()` now call C code internally.
 * `df_trim()` and `extraplot()` removed as no longer required.
 * Fixes `oanda_stream()` for when multiple bid/ask liquidity levels are returned in the stream.
 * Fixes `archive()` to work correctly on R-oldrel (4.0).

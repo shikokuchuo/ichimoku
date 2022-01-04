@@ -83,8 +83,7 @@ archive <- function(..., object, file) {
           file = if (dots[[3L]] == "") {
             interactive() || stop("Empty arguments for both 'object' and 'file' passed to archive()",
                                   "\nFor read operations specify 'file' only, write operations both 'object' and 'file'", call. = FALSE)
-            .deconstruct(...)
-            return(invisible())
+            return(.deconstruct(...))
           } else {
             ..2
           }

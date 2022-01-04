@@ -313,7 +313,7 @@ mlgrid <- function(x,
 writeVectors <- function(x, pairs, p2, xlen, type) {
 
   `names<-`(mapply(function(c1, c2) {
-    offset <- (p2 - 1L) * (c1 == "chikou" | c2 == "chikou")
+    offset <- (p2 - 1L) * (c1 == "chikou" || c2 == "chikou")
     switch(type,
            boolean = as.integer(c(rep(NA, offset), (x[, c1] > x[, c2])[1:(xlen - offset)])),
            c(rep(NA, offset), (x[, c1] - x[, c2])[1:(xlen - offset)]))
