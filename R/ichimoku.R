@@ -203,6 +203,7 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
   p2 <- periods[2L]
   p3 <- periods[3L]
   xlen > p2 || stop("dataset must be longer than the medium cloud period '", p2, "'", call. = FALSE)
+  clen <- xlen + p2 - 1L
 
   cd <- numeric(xlen)
   cd[open < close] <- 1
@@ -211,7 +212,6 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
   kijun <- (.Call(ichimoku_wmax, high, p2) + .Call(ichimoku_wmin, low, p2)) / 2
   senkouA <- (tenkan + kijun) / 2
   senkouB <- (.Call(ichimoku_wmax, high, p3) + .Call(ichimoku_wmin, low, p3)) / 2
-  chikou <- `length<-`(close[p2:xlen], xlen)
   cloudT <- pmax.int(senkouA, senkouB)
   cloudB <- pmin.int(senkouA, senkouB)
 
@@ -233,19 +233,19 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
     used <- used[!is.na(used)]
     keep <- if (!is.null(used)) cnames[-used]
     kmatrix <- do.call(cbind, lapply(.subset(x, keep),
-                                     function(x) `length<-`(as.numeric(x), xlen + p2 - 1L)))
+                                     function(x) `length<-`(as.numeric(x), clen)))
   }
 
-  kumo <- cbind(open = `length<-`(open, xlen + p2 - 1L),
-                high = `length<-`(high, xlen + p2 - 1L),
-                low = `length<-`(low, xlen + p2 - 1L),
-                close = `length<-`(close, xlen + p2 - 1L),
-                cd = `length<-`(cd, xlen + p2 - 1L),
-                tenkan = `length<-`(tenkan, xlen + p2 - 1L),
-                kijun = `length<-`(kijun, xlen + p2 - 1L),
+  kumo <- cbind(open = `length<-`(open, clen),
+                high = `length<-`(high, clen),
+                low = `length<-`(low, clen),
+                close = `length<-`(close, clen),
+                cd = `length<-`(cd, clen),
+                tenkan = `length<-`(tenkan, clen),
+                kijun = `length<-`(kijun, clen),
                 senkouA = c(rep(NA, p2 - 1L), senkouA),
                 senkouB = c(rep(NA, p2 - 1L), senkouB),
-                chikou = `length<-`(chikou, xlen + p2 - 1L),
+                chikou = `length<-`(close[p2:xlen], clen),
                 cloudT = c(rep(NA, p2 - 1L), cloudT),
                 cloudB = c(rep(NA, p2 - 1L), cloudB),
                 kmatrix)
@@ -326,6 +326,7 @@ ichimoku.default <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, ..
   p2 <- periods[2L]
   p3 <- periods[3L]
   xlen > p2 || stop("dataset must be longer than the medium cloud period '", p2, "'", call. = FALSE)
+  clen <- xlen + p2 - 1L
 
   index <- unclass(.subset2(x, 1L))
   open <- .subset2(x, 2L)
@@ -339,7 +340,6 @@ ichimoku.default <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, ..
   kijun <- (.Call(ichimoku_wmax, high, p2) + .Call(ichimoku_wmin, low, p2)) / 2
   senkouA <- (tenkan + kijun) / 2
   senkouB <- (.Call(ichimoku_wmax, high, p3) + .Call(ichimoku_wmin, low, p3)) / 2
-  chikou <- `length<-`(close[p2:xlen], xlen)
   cloudT <- pmax.int(senkouA, senkouB)
   cloudB <- pmin.int(senkouA, senkouB)
 
@@ -353,16 +353,16 @@ ichimoku.default <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, ..
   xtsindex <- c(index, future)
   x <- NULL
 
-  kumo <- cbind(open = `length<-`(open, xlen + p2 - 1L),
-                high = `length<-`(high, xlen + p2 - 1L),
-                low = `length<-`(low, xlen + p2 - 1L),
-                close = `length<-`(close, xlen + p2 - 1L),
-                cd = `length<-`(cd, xlen + p2 - 1L),
-                tenkan = `length<-`(tenkan, xlen + p2 - 1L),
-                kijun = `length<-`(kijun, xlen + p2 - 1L),
+  kumo <- cbind(open = `length<-`(open, clen),
+                high = `length<-`(high, clen),
+                low = `length<-`(low, clen),
+                close = `length<-`(close, clen),
+                cd = `length<-`(cd, clen),
+                tenkan = `length<-`(tenkan, clen),
+                kijun = `length<-`(kijun, clen),
                 senkouA = c(rep(NA, p2 - 1L), senkouA),
                 senkouB = c(rep(NA, p2 - 1L), senkouB),
-                chikou = `length<-`(chikou, xlen + p2 - 1L),
+                chikou = `length<-`(close[p2:xlen], clen),
                 cloudT = c(rep(NA, p2 - 1L), cloudT),
                 cloudB = c(rep(NA, p2 - 1L), cloudB))
 

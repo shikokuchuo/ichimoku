@@ -5,9 +5,13 @@
 #include <Rinternals.h>
 #include <R_ext/Visibility.h>
 
-/* define globals */
-SEXP xts_IndexSymbol, xts_IndexTclassSymbol, xts_IndexTzoneSymbol;
-SEXP ichimoku_PeriodsSymbol, ichimoku_PeriodicitySymbol, ichimoku_TickerSymbol;
+/* define internal symbols */
+SEXP xts_IndexSymbol;
+SEXP xts_IndexTclassSymbol;
+SEXP xts_IndexTzoneSymbol;
+SEXP ichimoku_PeriodsSymbol;
+SEXP ichimoku_PeriodicitySymbol;
+SEXP ichimoku_TickerSymbol;
 
 /* rolling max over a window */
 SEXP _wmax(const SEXP x, const SEXP window) {
