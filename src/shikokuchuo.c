@@ -319,7 +319,7 @@ SEXP _df(const SEXP x) {
   Rf_namesgets(df, names);
   UNPROTECT(2);
 
-  SEXP klass = PROTECT(Rf_ScalarString(Rf_mkChar("data.frame")));
+  SEXP klass = PROTECT(Rf_mkString("data.frame"));
   Rf_classgets(df, klass);
   UNPROTECT(1);
 

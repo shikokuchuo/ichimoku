@@ -36,8 +36,8 @@ print.ichimoku <- function(x, plot = TRUE, ...) {
   } else {
     pillar_sigfig <- getOption("pillar.sigfig")
     if (is.null(pillar_sigfig) || pillar_sigfig < 5) options(pillar.sigfig = 5)
+    on.exit(expr = options(pillar.sigfig = pillar_sigfig))
     print(.Call(ichimoku_tbl, x, 4L), ...)
-    options(pillar.sigfig = pillar_sigfig)
     if (dims[2L] >= 12L && (missing(plot) || isTRUE(plot))) plot.ichimoku(x, ...)
   }
   invisible(x)
