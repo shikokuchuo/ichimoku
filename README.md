@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# ichimoku <img src="man/figures/logo.png" alt="ichimoku logo" align="right" />
+# ichimoku <a href="https://shikokuchuo.net/ichimoku/" alt="ichimoku"><img src="man/figures/logo.png" alt="ichimoku logo" align="right" /></a>
 
 <!-- badges: start -->
 
@@ -88,59 +88,58 @@ autostrat(cloud, n = 3)
 
 #### Data & Visualization
 
--   [`ichimoku()`](https://shikokuchuo.net/ichimoku/reference/ichimoku.html) -
+  - [`ichimoku()`](https://shikokuchuo.net/ichimoku/reference/ichimoku.html) - 
     to create an ichimoku object from price data.
 
--   [`plot()`](https://shikokuchuo.net/ichimoku/reference/plot.ichimoku.html)
-    /
-    [`iplot()`](https://shikokuchuo.net/ichimoku/reference/iplot.html) -
+  - [`plot()`](https://shikokuchuo.net/ichimoku/reference/plot.ichimoku.html)
+    / [`iplot()`](https://shikokuchuo.net/ichimoku/reference/iplot.html) - 
     to plot (interactive) cloud charts from ichimoku objects.
 
--   [`archive()`](https://shikokuchuo.net/ichimoku/reference/archive.html) -
+  - [`archive()`](https://shikokuchuo.net/ichimoku/reference/archive.html) - 
     for reading/writing objects to/from archive files with data
     verification.
 
--   [`oanda()`](https://shikokuchuo.net/ichimoku/reference/oanda.html) -
+  - [`oanda()`](https://shikokuchuo.net/ichimoku/reference/oanda.html) -
     to retrieve price data from the OANDA fxTrade API.
 
 #### Strategies & ML
 
--   [`strat()`](https://shikokuchuo.net/ichimoku/reference/strat.html) -
+  - [`strat()`](https://shikokuchuo.net/ichimoku/reference/strat.html) -
     to augment an ichimoku object with a strategy, including combined
     and asymmetric strategies.
 
--   [`autostrat()`](https://shikokuchuo.net/ichimoku/reference/autostrat.html) -
+  - [`autostrat()`](https://shikokuchuo.net/ichimoku/reference/autostrat.html) - 
     to automatically evaluate and rank top-performing strategies.
 
--   [`mlgrid()`](https://shikokuchuo.net/ichimoku/reference/mlgrid.html) -
+  - [`mlgrid()`](https://shikokuchuo.net/ichimoku/reference/mlgrid.html) - 
     to generate a numeric representation of the ichimoku cloud chart.
 
--   [`relative()`](https://shikokuchuo.net/ichimoku/reference/relative.html) -
+  - [`relative()`](https://shikokuchuo.net/ichimoku/reference/relative.html) - 
     to produce a statistical summary of the latest ichimoku numeric
     representation relative to historical values.
 
 #### Real-time
 
--   [`oanda_chart()`](https://shikokuchuo.net/ichimoku/reference/oanda_chart.html) -
+  - [`oanda_chart()`](https://shikokuchuo.net/ichimoku/reference/oanda_chart.html) - 
     to plot real-time ichimoku cloud charts using OANDA data.
 
--   [`oanda_studio()`](https://shikokuchuo.net/ichimoku/reference/oanda_studio.html) -
-    a complete live analysis environment using OANDA data implemented in
-    R Shiny.
+  - [`oanda_studio()`](https://shikokuchuo.net/ichimoku/reference/oanda_studio.html) - 
+    a complete live analysis environment using OANDA data implemented
+    in R Shiny.
 
--   [`oanda_stream()`](https://shikokuchuo.net/ichimoku/reference/oanda_stream.html)
+  - [`oanda_stream()`](https://shikokuchuo.net/ichimoku/reference/oanda_stream.html) - 
     /
-    [`oanda_quote()`](https://shikokuchuo.net/ichimoku/reference/oanda_quote.html) -
-    to obtain the latest live data stream / quote from the OANDA fxTrade
-    API.
+    [`oanda_quote()`](https://shikokuchuo.net/ichimoku/reference/oanda_quote.html) - 
+    to obtain the latest live data stream / quote from the OANDA
+    fxTrade API.
 
--   [`oanda_view()`](https://shikokuchuo.net/ichimoku/reference/oanda_view.html) -
+  - [`oanda_view()`](https://shikokuchuo.net/ichimoku/reference/oanda_view.html) - 
     for a market overview showing the relative performance of
     constituents.
 
--   [`oanda_orders()`](https://shikokuchuo.net/ichimoku/reference/oanda_orders.html)
+  - [`oanda_orders()`](https://shikokuchuo.net/ichimoku/reference/oanda_orders.html)
     /
-    [`oanda_positions()`](https://shikokuchuo.net/ichimoku/reference/oanda_positions.html) -
+    [`oanda_positions()`](https://shikokuchuo.net/ichimoku/reference/oanda_positions.html) - 
     to retrieve the aggregate OANDA fxTrade order / position book.
 
 ## Vignettes
@@ -161,8 +160,8 @@ API](https://shikokuchuo.net/ichimoku/articles/xoanda.html)
 
 ## References
 
-Sasaki, H. 佐々木 英信 (1996), *一目均衡表の研究 [ichimoku kinkouhyou
-no kenkyuu]*. Tokyo, Japan: Toushi Radar.
+Sasaki, H. 佐々木 英信 (1996), *一目均衡表の研究 [ichimoku kinkouhyou no kenkyuu]*.
+Tokyo, Japan: Toushi Radar.
 
 ‘OANDA’ and ‘fxTrade’ are trademarks owned by OANDA Corporation, an
 entity unaffiliated with the ichimoku package.
