@@ -532,7 +532,10 @@ oanda_studio <- function(instrument = "USD_JPY",
     isTRUE(new.process) && {
       mc <- match.call()
       mc[["new.process"]] <- NULL
-      return(system2(command = "R", args = c("-e", paste0("'ichimoku::", deparse(mc), "'")),
+      cmd <- switch(.subset2(.Platform, "OS.type"),
+                    unix = paste0(R.home("bin"), "/R"),
+                    windows = paste0(R.home("bin"), "/R.exe"))
+      return(system2(command = cmd, args = c("-e", shQuote(paste0("ichimoku::", deparse(mc)))),
                      stdout = NULL, stderr = "", wait = FALSE))
     }
     if (!missing(instrument)) instrument <- sub("-", "_", toupper(force(instrument)), fixed = TRUE)

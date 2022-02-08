@@ -1,4 +1,4 @@
-# ichimoku 1.2.99.16
+# ichimoku 1.2.99.17
 
 #### New features:
 
@@ -14,6 +14,7 @@
 * Added `LinkingTo: xts` to mark use of C function exported from that package (although not strictly necessary).
 * Functions `ichimoku()`, `mlgrid()`, `look()` and methods for `index()`, `coredata()`, `as.data.frame()` and `as_tibble()` now call C code internally.
 * `df_trim()` and `extraplot()` removed as no longer required.
+* `new.process = TRUE` for `oanda_studio()` now more portable and should work under Windows.
 * Fixes `oanda_stream()` for when multiple bid/ask liquidity levels are returned in the stream.
 * Fixes `archive()` to work correctly on R-oldrel (4.0).
 * Further performance enhancements to `ichimoku()`, `mlgrid()` and plot functions.
