@@ -533,8 +533,8 @@ oanda_studio <- function(instrument = "USD_JPY",
       mc <- match.call()
       mc[["new.process"]] <- NULL
       cmd <- switch(.subset2(.Platform, "OS.type"),
-                    unix = paste0(R.home("bin"), "/R"),
-                    windows = paste0(R.home("bin"), "/R.exe"))
+                    unix = paste0(R.home("bin"), "/Rscript"),
+                    windows = paste0(R.home("bin"), "/Rscript.exe"))
       return(system2(command = cmd, args = c("-e", shQuote(paste0("ichimoku::", deparse(mc)))),
                      stdout = NULL, stderr = "", wait = FALSE))
     }
