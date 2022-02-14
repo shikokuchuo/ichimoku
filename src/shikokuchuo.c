@@ -150,15 +150,14 @@ SEXP _tbl(const SEXP x, const SEXP type) {
   SET_VECTOR_ELT(tbl, 0, index);
   UNPROTECT(1);
 
-  void *srcptr = NULL, *dstptr = NULL;
-  srcptr = REAL(x);
-  const char *src = srcptr;
+  void *srcptr = REAL(x);
+  unsigned char *src = srcptr;
   size_t vecsize = xlen * sizeof(double);
   for (R_xlen_t j = 1; j <= xwid; j++) {
     SEXP vec = PROTECT(Rf_allocVector(REALSXP, xlen));
     SET_VECTOR_ELT(tbl, j, vec);
-    dstptr = REAL(vec);
-    char *dst = dstptr;
+    void *dstptr = REAL(vec);
+    unsigned char *dst = dstptr;
     memcpy(dst, src, vecsize);
     src += vecsize;
     UNPROTECT(1);
@@ -290,15 +289,14 @@ SEXP _df(const SEXP x) {
   SET_VECTOR_ELT(df, 0, index);
   UNPROTECT(1);
 
-  void *srcptr = NULL, *dstptr = NULL;
-  srcptr = REAL(x);
-  const char *src = srcptr;
+  void *srcptr = REAL(x);
+  unsigned char *src = srcptr;
   size_t vecsize = xlen * sizeof(double);
   for (R_xlen_t j = 1; j <= xwid; j++) {
     SEXP vec = PROTECT(Rf_allocVector(REALSXP, xlen));
     SET_VECTOR_ELT(df, j, vec);
-    dstptr = REAL(vec);
-    char *dst = dstptr;
+    void *dstptr = REAL(vec);
+    unsigned char *dst = dstptr;
     memcpy(dst, src, vecsize);
     src += vecsize;
     UNPROTECT(1);
