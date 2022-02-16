@@ -1,8 +1,8 @@
-# ichimoku 1.2.99.19
+# ichimoku 1.2.99.20
 
 #### New features:
 
-* This is a development preview of version 1.3.
+* This is a release candidate for version 1.3.
 * Subplots now feature on the same chart and values can be read via the infotip in `iplot()`.
 * R/S-type indicators now an option for `oanda_chart()` and `oanda_studio()`.
 * `.ichimoku()` introduced as a faster technical utility version of `ichimoku()` for use when data is already in the prescribed format. 

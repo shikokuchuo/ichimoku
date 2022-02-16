@@ -536,7 +536,7 @@ oanda_studio <- function(instrument = "USD_JPY",
                     unix = paste0(R.home("bin"), "/Rscript"),
                     windows = paste0(R.home("bin"), "/Rscript.exe"))
       return(system2(command = cmd, args = c("-e", shQuote(paste0("ichimoku::", deparse(mc)))),
-                     stdout = NULL, stderr = "", wait = FALSE))
+                     stdout = NULL, stderr = NULL, wait = FALSE))
     }
     if (!missing(instrument)) instrument <- sub("-", "_", toupper(force(instrument)), fixed = TRUE)
     granularity <- match.arg(granularity)
