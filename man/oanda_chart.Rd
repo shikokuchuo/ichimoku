@@ -47,7 +47,7 @@ or "A" (ask).}
 cloud chart, with a choice of 'none', 'r' or 's' for the corresponding
 oscillator type.}
 
-\item{limit}{(optional) specify a time in minutes by which to limit the
+\item{limit}{(optional) specify a time in seconds by which to limit the
 session. The session will end with data returned automatically after the
 specified time has elapsed.}
 

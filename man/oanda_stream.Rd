@@ -15,7 +15,7 @@ instruments.}
 \item{display}{[default 7L] integer rows of data to display in the console
 at any one time.}
 
-\item{limit}{(optional) specify a time in minutes by which to limit the
+\item{limit}{(optional) specify a time in seconds by which to limit the
 streaming session. The session will end with data returned automatically
 after the specified time has elapsed.}
 

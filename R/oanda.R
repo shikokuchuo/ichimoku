@@ -248,7 +248,7 @@ getPrices <- function(instrument, granularity, count, from, to, price, server,
 #' @inheritParams oanda
 #' @param display [default 7L] integer rows of data to display in the console
 #'     at any one time.
-#' @param limit (optional) specify a time in minutes by which to limit the
+#' @param limit (optional) specify a time in seconds by which to limit the
 #'     streaming session. The session will end with data returned automatically
 #'     after the specified time has elapsed.
 #'
@@ -309,22 +309,27 @@ oanda_stream <- function(instrument, display = 7L, limit, server, apikey) {
   handle <- new_handle()
   handle_setheaders(handle = handle,
                     "Authorization" = paste0("Bearer ", apikey),
-                    "Accept-Datetime-Format" = "RFC3339",
+                    "Accept-Datetime-Format" = "UNIX",
                     "User-Agent" = .user_agent)
 
-  data <- vector(mode = "list", length = 11L)
+  data <- NULL
   on.exit(expr = {
     data[["closeoutBid"]] <- as.numeric(.subset2(data, "closeoutBid"))
     data[["closeoutAsk"]] <- as.numeric(.subset2(data, "closeoutAsk"))
     return(invisible(data))
   })
 
-  if (!missing(limit) && is.numeric(limit)) setTimeLimit(elapsed = limit * 60, transient = TRUE)
+  if (!missing(limit) && is.numeric(limit)) setTimeLimit(elapsed = limit, transient = TRUE)
 
   con <- curl(url = url, handle = handle)
-  stream_in(con = con, pagesize = 1, verbose = FALSE, handler = function(x) {
-    .subset2(x, 1L) == "PRICE" || return()
-    data <<- df_append(old = data, new = x)
+  stream_in(con = con, pagesize = 1L, verbose = FALSE, handler = function(x) {
+    .subset2(x, "type") == "PRICE" || return()
+    x[["time"]] <- .POSIXct(as.numeric(.subset2(x, "time")))
+    if (is.null(data)) {
+      data <<- x
+    } else {
+      data <<- df_append(old = data, new = x)
+    }
     end <- dim(data)[1L]
     start <- max(1L, end - display + 1L)
     cat("\014")
@@ -351,7 +356,7 @@ oanda_stream <- function(instrument, display = 7L, limit, server, apikey) {
 #' @param type [default 'none'] type of sub-plot to display beneath the ichimoku
 #'     cloud chart, with a choice of 'none', 'r' or 's' for the corresponding
 #'     oscillator type.
-#' @param limit (optional) specify a time in minutes by which to limit the
+#' @param limit (optional) specify a time in seconds by which to limit the
 #'     session. The session will end with data returned automatically after the
 #'     specified time has elapsed.
 #' @param ... additional arguments passed along to \code{\link{ichimoku}} for
@@ -447,7 +452,7 @@ oanda_chart <- function(instrument,
 
   message("Chart updating every ", refresh, " secs in graphical device... Press 'Esc' to return")
   on.exit(expr = return(invisible(pdata)))
-  if (!missing(limit) && is.numeric(limit)) setTimeLimit(elapsed = limit * 60, transient = TRUE)
+  if (!missing(limit) && is.numeric(limit)) setTimeLimit(elapsed = limit, transient = TRUE)
   while (TRUE) {
     pdata <- create_data(.ichimoku(data, periods = periods, ...), type = type)[minlen:(xlen + p2 - 1L), ]
     subtitle <- paste(instrument, ptype, "price [", .subset2(data, "close")[xlen],
