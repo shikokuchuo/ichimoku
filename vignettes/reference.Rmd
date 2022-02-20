@@ -274,11 +274,11 @@ plot(cloud, window = "2020-04-01/2020-12-01", theme = "solarized", type = "s")
 
 #### Custom Sub-plots
 
-Additional input data preserved within the ichimoku object, for example volume data, can be plotted in the sub-plot area by specifying the 'custom' argument. Other metrics can also be plotted if they are added as an additional column to the ichimoku object.
+Additional data preserved within the ichimoku object, for example volume data, can be plotted as a sub-plot by specifying the 'custom' argument.
 
 The character string supplied to 'custom' is a regular expression pattern that is matched to the column name and hence does not need to match exactly, nor is case considered.
 
-To view a custom sub-plot, type must be specified as either 'bar' or 'line', otherwise the type setting will take precedence (default is 'none').
+To view a custom sub-plot, type must be specified as either 'bar' or 'line' as the type setting takes precedence (with a default of 'none').
 
 ```{r plotbar}
 plot(kumo, window = "2020-04/2020-11", theme = "mono", type = "bar", custom = "volume")
@@ -299,7 +299,7 @@ To produce an interactive plot, use ichimoku's `iplot()` function, which launche
 iplot(cloud)
 ```
 
-Further arguments are optional as full customisation of the chart can be done interactively in-app, including selecting the time window, theme, chart type, custom sub-plot etc.
+Further arguments are optional as full customisation of the chart can be done interactively in-app, including selecting the time window, theme, chart type, sub-plot etc.
 
 The chart provides intuitive access to the data provided by the cursor infotip:
 
@@ -314,7 +314,7 @@ The chart provides intuitive access to the data provided by the cursor infotip:
 
 #### Implementation notes
 
-The column names of the ichimoku object are automatically populated in a drop-down menu, and a selection can be made to view any variable as a custom sub-plot. Chart type must be set to either 'bar' or 'line', otherwise the type setting will take precedence.
+The column names of the ichimoku object are automatically populated in a drop-down menu, and a selection can be made to view any variable as a custom sub-plot. Chart type must be set to either 'bar' or 'line' as the type setting takes precedence.
 
 ### archive()
 

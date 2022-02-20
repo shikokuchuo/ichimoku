@@ -1,4 +1,4 @@
-# ichimoku 1.2.99.21
+# ichimoku 1.2.99.22
 
 #### New features:
 
@@ -18,6 +18,7 @@
 * Fixes `oanda_stream()` for when multiple bid/ask liquidity levels are returned in the stream. Improvement to the handling of timestamps, now rendered as POSIXct.
 * Fixes `archive()` to work correctly on R-oldrel (4.0).
 * Further performance enhancements to `ichimoku()`, `mlgrid()` and plot functions.
+* Documentation refresh.
 
 # ichimoku 1.2.5
 

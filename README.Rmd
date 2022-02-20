@@ -16,8 +16,8 @@ knitr::opts_chunk$set(
 # ichimoku <a href="https://shikokuchuo.net/ichimoku/" alt="ichimoku"><img src="man/figures/logo.png" alt="ichimoku logo" align="right" /></a>
 
 <!-- badges: start -->
-[![CRAN Status](https://www.r-pkg.org/badges/version/ichimoku?color=0b800e)](https://CRAN.R-project.org/package=ichimoku)
-[![r-universe](https://shikokuchuo.r-universe.dev/badges/ichimoku?color=6bd54f)](https://shikokuchuo.r-universe.dev/)
+[![CRAN Status](https://www.r-pkg.org/badges/version/ichimoku?color=00008b)](https://CRAN.R-project.org/package=ichimoku)
+[![r-universe](https://shikokuchuo.r-universe.dev/badges/ichimoku?color=a4d1eb)](https://shikokuchuo.r-universe.dev/)
 [![R-CMD-check](https://github.com/shikokuchuo/ichimoku/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/shikokuchuo/ichimoku/actions/workflows/R-CMD-check.yaml)
 [![Codecov test coverage](https://codecov.io/gh/shikokuchuo/ichimoku/branch/main/graph/badge.svg)](https://app.codecov.io/gh/shikokuchuo/ichimoku)
 <!-- badges: end -->

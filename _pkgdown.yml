@@ -1,7 +1,4 @@
 url: https://shikokuchuo.net/ichimoku/
-template:
-  params:
-    bootswatch: simplex
 navbar:
   right:
   - icon: fa-github
