@@ -12,13 +12,12 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/simplex/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<meta property="og:title" content="ichimoku: Cloud Charts - The Reference Manual">
+<script src="../pkgdown.js"></script><meta property="og:title" content="ichimoku: Cloud Charts - The Reference Manual">
 <meta property="og:description" content="ichimoku">
 <meta property="og:image" content="https://shikokuchuo.net/ichimoku/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -41,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.99.21</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.99.22</span>
       </span>
     </div>
 
@@ -393,9 +392,9 @@
 <div class="section level4">
 <h4 id="custom-sub-plots">Custom Sub-plots<a class="anchor" aria-label="anchor" href="#custom-sub-plots"></a>
 </h4>
-<p>Additional input data preserved within the ichimoku object, for example volume data, can be plotted in the sub-plot area by specifying the ‘custom’ argument. Other metrics can also be plotted if they are added as an additional column to the ichimoku object.</p>
+<p>Additional data preserved within the ichimoku object, for example volume data, can be plotted as a sub-plot by specifying the ‘custom’ argument.</p>
 <p>The character string supplied to ‘custom’ is a regular expression pattern that is matched to the column name and hence does not need to match exactly, nor is case considered.</p>
-<p>To view a custom sub-plot, type must be specified as either ‘bar’ or ‘line’, otherwise the type setting will take precedence (default is ‘none’).</p>
+<p>To view a custom sub-plot, type must be specified as either ‘bar’ or ‘line’ as the type setting takes precedence (with a default of ‘none’).</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">kumo</span>, window <span class="op">=</span> <span class="st">"2020-04/2020-11"</span>, theme <span class="op">=</span> <span class="st">"mono"</span>, type <span class="op">=</span> <span class="st">"bar"</span>, custom <span class="op">=</span> <span class="st">"volume"</span><span class="op">)</span></code></pre></div>
 <p><img src="reference_files/figure-html/plotbar-1.png" width="672"></p>
@@ -413,7 +412,7 @@
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># For an interactive plot:</span>
 <span class="fu"><a href="../reference/iplot.html">iplot</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span></code></pre></div>
-<p>Further arguments are optional as full customisation of the chart can be done interactively in-app, including selecting the time window, theme, chart type, custom sub-plot etc.</p>
+<p>Further arguments are optional as full customisation of the chart can be done interactively in-app, including selecting the time window, theme, chart type, sub-plot etc.</p>
 <p>The chart provides intuitive access to the data provided by the cursor infotip:</p>
 <ul>
 <li>hover over the chart to read off data values at any given point in time</li>
@@ -430,7 +429,7 @@
 <div class="section level4">
 <h4 id="implementation-notes">Implementation notes<a class="anchor" aria-label="anchor" href="#implementation-notes"></a>
 </h4>
-<p>The column names of the ichimoku object are automatically populated in a drop-down menu, and a selection can be made to view any variable as a custom sub-plot. Chart type must be set to either ‘bar’ or ‘line’, otherwise the type setting will take precedence.</p>
+<p>The column names of the ichimoku object are automatically populated in a drop-down menu, and a selection can be made to view any variable as a custom sub-plot. Chart type must be set to either ‘bar’ or ‘line’ as the type setting takes precedence.</p>
 </div>
 </div>
 <div class="section level3">
