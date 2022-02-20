@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.99.20</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.99.21</span>
       </span>
     </div>
 
@@ -73,26 +73,26 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.2.99.20" id="ichimoku-129920">ichimoku 1.2.99.20<a class="anchor" aria-label="anchor" href="#ichimoku-129920"></a></h2>
+<h2 class="page-header" data-toc-text="1.2.99.21" id="ichimoku-129921">ichimoku 1.2.99.21<a class="anchor" aria-label="anchor" href="#ichimoku-129921"></a></h2>
 <div class="section level5">
-<h5 id="new-features-1-2-99-20">New features:<a class="anchor" aria-label="anchor" href="#new-features-1-2-99-20"></a></h5>
-<ul><li>This is a release candidate for version 1.3.</li>
-<li>Subplots now feature on the same chart and values can be read via the infotip in <code><a href="../reference/iplot.html">iplot()</a></code>.</li>
+<h5 id="new-features-1-2-99-21">New features:<a class="anchor" aria-label="anchor" href="#new-features-1-2-99-21"></a></h5>
+<ul><li>Subplots now feature on the same chart and values can be read via the infotip in <code><a href="../reference/iplot.html">iplot()</a></code> or <code><a href="../reference/oanda_studio.html">oanda_studio()</a></code>.</li>
 <li>R/S-type indicators now an option for <code><a href="../reference/oanda_chart.html">oanda_chart()</a></code> and <code><a href="../reference/oanda_studio.html">oanda_studio()</a></code>.</li>
 <li>
 <code><a href="../reference/dot-ichimoku.html">.ichimoku()</a></code> introduced as a faster technical utility version of <code><a href="../reference/ichimoku.html">ichimoku()</a></code> for use when data is already in the prescribed format.</li>
 </ul></div>
 <div class="section level5">
-<h5 id="updates-1-2-99-20">Updates:<a class="anchor" aria-label="anchor" href="#updates-1-2-99-20"></a></h5>
+<h5 id="updates-1-2-99-21">Updates:<a class="anchor" aria-label="anchor" href="#updates-1-2-99-21"></a></h5>
 <ul><li>Dependency on C++ compiler, ‘cpp11’ and ‘gtable’ packages retired.</li>
+<li>Added <code>LinkingTo: xts</code> to mark use of C function exported from ‘xts’.</li>
 <li>Internal rolling min/max/mean functions re-implemented directly in C.</li>
-<li>Added <code>LinkingTo: xts</code> to mark use of C function exported from that package (although not strictly necessary).</li>
-<li>Functions <code><a href="../reference/ichimoku.html">ichimoku()</a></code>, <code><a href="../reference/mlgrid.html">mlgrid()</a></code>, <code><a href="../reference/look.html">look()</a></code> and methods for <code><a href="../reference/index.ichimoku.html">index()</a></code>, <code><a href="../reference/coredata.ichimoku.html">coredata()</a></code>, <code><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame()</a></code> and <code><a href="../reference/as_tibble.ichimoku.html">as_tibble()</a></code> now call C code internally.</li>
+<li>Various ichimoku functions now call C code internally.</li>
 <li>
 <code>df_trim()</code> and <code>extraplot()</code> removed as no longer required.</li>
+<li>The ‘limit’ argument for <code><a href="../reference/oanda_chart.html">oanda_chart()</a></code> and <code><a href="../reference/oanda_stream.html">oanda_stream()</a></code> has been changed to accept a time in seconds.</li>
 <li>
-<code>new.process = TRUE</code> for <code><a href="../reference/oanda_studio.html">oanda_studio()</a></code> now more portable and should work under Windows.</li>
-<li>Fixes <code><a href="../reference/oanda_stream.html">oanda_stream()</a></code> for when multiple bid/ask liquidity levels are returned in the stream.</li>
+<code>new.process = TRUE</code> for <code><a href="../reference/oanda_studio.html">oanda_studio()</a></code> now more portable and works under Windows.</li>
+<li>Fixes <code><a href="../reference/oanda_stream.html">oanda_stream()</a></code> for when multiple bid/ask liquidity levels are returned in the stream. Improvement to the handling of timestamps, now rendered as POSIXct.</li>
 <li>Fixes <code><a href="../reference/archive.html">archive()</a></code> to work correctly on R-oldrel (4.0).</li>
 <li>Further performance enhancements to <code><a href="../reference/ichimoku.html">ichimoku()</a></code>, <code><a href="../reference/mlgrid.html">mlgrid()</a></code> and plot functions.</li>
 </ul></div>
