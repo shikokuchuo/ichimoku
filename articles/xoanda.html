@@ -17,7 +17,8 @@
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="ichimoku: The OANDA fxTrade API">
+<script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
+<meta property="og:title" content="ichimoku: The OANDA fxTrade API">
 <meta property="og:description" content="ichimoku">
 <meta property="og:image" content="https://shikokuchuo.net/ichimoku/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -40,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.99.22</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.0</span>
       </span>
     </div>
 
@@ -113,15 +114,15 @@
 <div class="section level2">
 <h2 id="about-oanda-fxtrade">About OANDA fxTrade<a class="anchor" aria-label="anchor" href="#about-oanda-fxtrade"></a>
 </h2>
-<p>ichimoku contains an interface, or binding for the R language, to the OANDA fxTrade API.</p>
+<p>ichimoku provides an R language interface to the OANDA fxTrade API.</p>
 <p>OANDA is a primary source of foreign exchange data used by corporations and governments around the world. The API can be used for retrieving historical and live streaming price data for major currencies, metals, commodities, government bonds and stock indices.</p>
-<p>As an example of the financial data that is available: OHLC pricing data can be obtained for major forex pairs from the start of 2005 with granularity ranging from 5 seconds to monthly. For the total list of over 120 covered instruments please refer to the <a href="#available-instruments">Available Instruments</a> section below.</p>
+<p>As an example of available financial data: OHLC prices for major forex pairs can be obtained from the start of 2005 with granularity ranging from 5 seconds to monthly. For the total list of over 120 covered instruments please refer to the <a href="#available-instruments">Available Instruments</a> section below.</p>
 <p>Please note that ‘OANDA’ and ‘fxTrade’ are trademarks owned by OANDA Corporation, an entity unaffiliated with the ichimoku package.</p>
 </div>
 <div class="section level2">
 <h2 id="registering-with-oanda">Registering with OANDA<a class="anchor" aria-label="anchor" href="#registering-with-oanda"></a>
 </h2>
-<p>The OANDA fxTrade API, as distinct to other OANDA data sources, is based upon its retail and professional trading offering of the same name. As such, access to the API requires an fxTrade account with OANDA and agreement to their API terms of use.</p>
+<p>The OANDA fxTrade API, as distinct to other OANDA data sources, is based upon its retail / professional trading offering of the same name. As such, access to the API requires an fxTrade account with OANDA and agreement to their API terms of use.</p>
 <p>Registering for a ‘demo’ or ‘practice’ account is entirely free at the time of writing and provides full access to the API. For registering an account, the following URL may be used: <a href="https://www.oanda.com/forex-trading/" class="external-link uri">https://www.oanda.com/forex-trading/</a>.</p>
 <p>After successful registration, a link can be found on your OANDA fxTrade account profile page ‘Manage API Access’ (My Account -&gt; My Services -&gt; Manage API Access). From there, a personal access token to use with the OANDA API can be generated, as well as revoked. This access token will enable all the OANDA functions in this package.</p>
 </div>
@@ -175,7 +176,7 @@
 <li>
 <code>quietly</code> if set to TRUE, will suppress printing of output to the console and return quietly</li>
 </ul>
-<p>Note: if both <code>from</code> and <code>to</code> are specified and the request would result in over 5000 periods being returned, the function prompts the user to confirm if multiple requests should be submitted. Unless the user response is “n” or “no”, the data will proceed to be downloaded with rate limiting in place, and merged together into a single dataframe. The function is safe for use in non-interactive settings as in such cases the download will proceed automatically without prompting.</p>
+<p>Note: if both <code>from</code> and <code>to</code> are specified and the request would result in over 5000 periods being returned, the function prompts the user to confirm if multiple requests should be submitted. Unless the user response is “n” or “no”, the data will proceed to be downloaded in batches and merged together into a single dataframe. The function is safe for use in non-interactive settings as in such cases the download will proceed automatically without prompting.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/oanda.html">oanda</a></span><span class="op">(</span><span class="st">"USD_JPY"</span>, count <span class="op">=</span> <span class="fl">3</span>, from <span class="op">=</span> <span class="st">"2010-11-01"</span>, price <span class="op">=</span> <span class="st">"B"</span><span class="op">)</span>
 <span class="co">#&gt;                  time   open   high    low  close volume complete</span>
@@ -190,7 +191,7 @@
 <p>Important implementation notes:</p>
 <ul>
 <li><p>Incorporates automatic adjustment of the timestamps to end of period, as is customary for financial data. This means that, for example, today’s pricing data (incomplete trading period) will have today’s date as would be expected. In contrast, the raw data from the API has a timestamp of the start of the period</p></li>
-<li><p>The API data sometimes includes data for non-trading days with very low volumes. This is more common for older data and less so with more recent data. These may represent OTC trades that occurred over the OANDA platform, but nevertheless do not reflect market rates. These are automatically excluded from the data returned as they would otherwise produce spurious results used with <code><a href="../reference/ichimoku.html">ichimoku()</a></code></p></li>
+<li><p>The API data sometimes includes data for non-trading days with very low volumes. This is more common for older data and less so with more recent data. These may represent OTC trades that occurred over the OANDA platform, but nevertheless do not reflect market rates. These are automatically excluded from the data returned as they would otherwise produce spurious results when used with <code><a href="../reference/ichimoku.html">ichimoku()</a></code></p></li>
 </ul>
 </div>
 <div class="section level3">
@@ -203,7 +204,7 @@
 <li>
 <code>refresh</code> [default 5] set the refresh rate of the chart in seconds, with a minimum of 1</li>
 <li>
-<code>limit</code> (optional) specify a time in minutes by which to limit the session. The session will end with data returned automatically after the specified time has elapsed</li>
+<code>limit</code> (optional) specify a time in seconds by which to limit the session. The session will end with data returned automatically after the specified time has elapsed</li>
 <li>
 <code>...</code> additional parameters passed onto <code><a href="../reference/ichimoku.html">ichimoku()</a></code> for calculating the ichimoku cloud or <code><a href="../reference/autoplot.ichimoku.html">autoplot()</a></code> to set chart parameters</li>
 <li>
@@ -266,31 +267,30 @@
 <li>
 <code>display</code> [default 7L] specify an integer to customise the number of rows to display in the console at any one time</li>
 <li>
-<code>limit</code> (optional) specify a time in minutes by which to limit the streaming session. The session will end with data returned automatically after the specified time has elapsed</li>
+<code>limit</code> (optional) specify a time in seconds by which to limit the streaming session. The session will end with data returned automatically after the specified time has elapsed</li>
 </ul>
 <p>The ‘server’ and ‘apikey’ arguments are also available if required.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Streaming session will end with data automatically returned after 15 mins as set by 'limit':</span>
-<span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/oanda_stream.html">oanda_stream</a></span><span class="op">(</span><span class="st">"UK10YB_GBP"</span>, limit <span class="op">=</span> <span class="fl">15</span><span class="op">)</span>
+<code class="sourceCode R"><span class="co"># Streaming session will end with data automatically returned after 600 secs (10 mins):</span>
+<span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/oanda_stream.html">oanda_stream</a></span><span class="op">(</span><span class="st">"UK10YB_GBP"</span>, limit <span class="op">=</span> <span class="fl">600</span><span class="op">)</span>
 <span class="co">#&gt; Streaming data... Press 'Esc' to return</span>
-<span class="co">#&gt;    type                           time bid.price b.liquidity ask.price a.liquidity closeout.b closeout.a</span>
-<span class="co">#&gt; 1 PRICE 2021-12-10T10:21:05.102768669Z   128.057       10000   128.087       10000    128.057    128.087</span>
-<span class="co">#&gt; 2 PRICE 2021-12-10T10:21:54.853095391Z   128.057       10000   128.097       10000    128.057    128.097</span>
-<span class="co">#&gt; 3 PRICE 2021-12-10T10:21:56.678923090Z   128.067       10000   128.097       10000    128.067    128.097</span>
-<span class="co">#&gt; 4 PRICE 2021-12-10T10:21:58.959780877Z   128.057       10000   128.087       10000    128.057    128.087</span>
-<span class="co">#&gt; 5 PRICE 2021-12-10T10:21:59.001234626Z   128.067       10000   128.097       10000    128.067    128.097</span>
-<span class="co">#&gt; 6 PRICE 2021-12-10T10:22:01.827068694Z   128.067       10000   128.097       10000    128.067    128.097</span>
-<span class="co">#&gt; 7 PRICE 2021-12-10T10:22:05.130294655Z   128.067       10000   128.097       10000    128.067    128.097</span>
-<span class="co">#&gt;      status tradable instrument</span>
-<span class="co">#&gt; 1 tradeable     TRUE UK10YB_GBP</span>
-<span class="co">#&gt; 2 tradeable     TRUE UK10YB_GBP</span>
-<span class="co">#&gt; 3 tradeable     TRUE UK10YB_GBP</span>
-<span class="co">#&gt; 4 tradeable     TRUE UK10YB_GBP</span>
-<span class="co">#&gt; 5 tradeable     TRUE UK10YB_GBP</span>
-<span class="co">#&gt; 6 tradeable     TRUE UK10YB_GBP</span>
-<span class="co">#&gt; 7 tradeable     TRUE UK10YB_GBP</span></code></pre></div>
-<p>Use the ‘Esc’ key to stop the stream and return the session data. Please remember to assign the return value to an object if you wish to retain the data.</p>
-<p>All returned times are in UTC. ‘b’ and ‘a’ used in column headings are abbreviations to denote ‘bid’ and ‘ask’ respectively.</p>
+<span class="co">#&gt;    type                time           bids           asks closeoutBid closeoutAsk    status tradeable</span>
+<span class="co">#&gt; 1 PRICE 2022-02-21 12:31:20 121.712, 10000 121.742, 10000     121.712     121.742 tradeable      TRUE</span>
+<span class="co">#&gt; 2 PRICE 2022-02-21 12:31:37 121.722, 10000 121.752, 10000     121.722     121.752 tradeable      TRUE</span>
+<span class="co">#&gt; 3 PRICE 2022-02-21 12:31:52 121.712, 10000 121.742, 10000     121.712     121.742 tradeable      TRUE</span>
+<span class="co">#&gt; 4 PRICE 2022-02-21 12:32:12 121.722, 10000 121.752, 10000     121.722     121.752 tradeable      TRUE</span>
+<span class="co">#&gt; 5 PRICE 2022-02-21 12:32:15 121.712, 10000 121.742, 10000     121.712     121.742 tradeable      TRUE</span>
+<span class="co">#&gt; 6 PRICE 2022-02-21 12:32:27 121.722, 10000 121.752, 10000     121.722     121.752 tradeable      TRUE</span>
+<span class="co">#&gt; 7 PRICE 2022-02-21 12:33:24 121.712, 10000 121.742, 10000     121.712     121.742 tradeable      TRUE</span>
+<span class="co">#&gt;   instrument</span>
+<span class="co">#&gt; 1 UK10YB_GBP</span>
+<span class="co">#&gt; 2 UK10YB_GBP</span>
+<span class="co">#&gt; 3 UK10YB_GBP</span>
+<span class="co">#&gt; 4 UK10YB_GBP</span>
+<span class="co">#&gt; 5 UK10YB_GBP</span>
+<span class="co">#&gt; 6 UK10YB_GBP</span>
+<span class="co">#&gt; 7 UK10YB_GBP</span></code></pre></div>
+<p>Use the ‘Esc’ key to stop the stream and return the session data. Assign the return value to an object if you wish to retain the data.</p>
 <p>Note: only messages of type ‘PRICE’ are processed. Messages of type ‘HEARTBEAT’ consisting of only a timestamp are discarded.</p>
 <p>The following should be noted from the streaming API documentation:</p>
 <ul>
@@ -342,6 +342,9 @@
 <p>Provides a summary of the aggregate orders/positions held by OANDA fxTrade clients at each price level.</p>
 <p>‘instrument’ is a required argument. The latest order/position book is retrieved unless the optional argument ‘time’ is used to specify a time for which to retrieve the order/position book.</p>
 <p>The data is returned as a dataframe, with parameters saved as attributes which can be viewed with <code><a href="../reference/look.html">look()</a></code>. A chart showing the percentage long and short orders/positions at each price level is output to the graphical device.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/oanda_positions.html">oanda_positions</a></span><span class="op">(</span><span class="st">"GBP_JPY"</span><span class="op">)</span></code></pre></div>
+<p><img src="xoanda_files/figure-html/oandaposchart-1.png" width="672"></p>
 <p>Please note that this feature has been implemented by OANDA only for certain major currency pairs and should be considered experimental.</p>
 <p>Note also that for the order book, only the interquartile range of order levels is charted as some orders are placed very far from the market price. The returned dataframe contains the full order book nevertheless.</p>
 </div>
@@ -351,7 +354,7 @@
 </h2>
 <p>The list of financial instruments available for your account may be retrieved by <code><a href="../reference/oanda_instruments.html">oanda_instruments()</a></code>. The available instruments are also automatically populated as an input in <code><a href="../reference/oanda_studio.html">oanda_studio()</a></code>.</p>
 <p>The list below serves as a reference only and may differ from those actually available for your account type and/or country/region.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/oanda_instruments.html">oanda_instruments</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">#&gt;           name     displayName     type</span>
 <span class="co">#&gt; 1    AU200_AUD   Australia 200      CFD</span>
@@ -480,7 +483,7 @@
 <span class="co">#&gt; 124    XPD_USD       Palladium      CFD</span>
 <span class="co">#&gt; 125    XPT_USD        Platinum      CFD</span>
 <span class="co">#&gt; 126    ZAR_JPY         ZAR/JPY CURRENCY</span></code></pre>
-<p>Note: the above table is saved as internal package data and used as a fallback if the API call fails. In such a case, a warning is issued once per session as subsequent calls will return the cached list.</p>
+<p>Note: the above table is saved as internal package data and used as a fallback if the instruments API call fails. In such a case, a warning is issued once per session as subsequent calls will return the cached list.</p>
 </div>
 <div class="section level2">
 <h2 id="caching-implementation">Caching Implementation<a class="anchor" aria-label="anchor" href="#caching-implementation"></a>
@@ -499,7 +502,7 @@
 </h2>
 <p>‘OANDA’ and ‘fxTrade’ are trademarks owned by OANDA Corporation, an entity unaffiliated with the ichimoku package.</p>
 <p>OANDA fxTrade API developer website: <a href="https://developer.oanda.com/" class="external-link uri">https://developer.oanda.com/</a>.</p>
-<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.2.5, <a href="https://CRAN.R-project.org/package=ichimoku" class="external-link uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
+<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.3.0, <a href="https://CRAN.R-project.org/package=ichimoku" class="external-link uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
 <hr>
 </div>
   </div>

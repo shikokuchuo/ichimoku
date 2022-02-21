@@ -17,7 +17,8 @@
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="ichimoku: Cloud Charts - The Reference Manual">
+<script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
+<meta property="og:title" content="ichimoku: Cloud Charts - The Reference Manual">
 <meta property="og:description" content="ichimoku">
 <meta property="og:image" content="https://shikokuchuo.net/ichimoku/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -40,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.99.22</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.0</span>
       </span>
     </div>
 
@@ -116,7 +117,7 @@
 <div class="section level3">
 <h3 id="definition">Definition<a class="anchor" aria-label="anchor" href="#definition"></a>
 </h3>
-<p>The 一目均衡表 <strong>Ichimoku Kinko Hyo</strong> [cloud chart] consists of the following chart lines added to a candlestick chart:</p>
+<p>The 一目均衡表 <strong>Ichimoku Kinko Hyo</strong> [cloud chart] consists of the following lines added to a candlestick chart:</p>
 <ol style="list-style-type: decimal">
 <li><p>転換線 <strong>Tenkan-sen</strong> [conversion line]: the mid-point of the highest high and lowest low for the past 9 periods <em>(including the current period)</em></p></li>
 <li><p>基準線 <strong>Kijun-sen</strong> [base line]: the mid-point of the highest high and lowest low for the past 26 periods <em>(including the current period)</em></p></li>
@@ -130,8 +131,8 @@
 <h3 id="interpretation">Interpretation<a class="anchor" aria-label="anchor" href="#interpretation"></a>
 </h3>
 <p>Ichimoku Kinko Hyo can be translated as ‘one-glance equilibrium chart’. It is designed to allow the price action and market structure of financial securities to be determined visually ‘at-a-glance’.</p>
-<p>For example in a strongly upwards-trending market, the candlesticks would be above the Tenkan-sen, which would be above the Kijun-sen, which in turn would be above the cloud, and the Chikou span may not have anything above it.</p>
-<p>The lines and the cloud represent dynamic support and resistance zones relative to the price candles. Generally, the thicker the cloud, the tougher the support/resistance. In our previous example, if the price now reverts downwards, it can expect support first at the Kijun-sen, then the Tenkan-sen and finally the cloud itself.</p>
+<p>For example in a strongly upwards-trending market, the current candlesticks would be above the Tenkan-sen, which would be above the Kijun-sen, which in turn would be above the cloud, and the Chikou span may not have anything above it.</p>
+<p>The lines and the cloud represent dynamic support and resistance zones relative to the price candles. Generally, the thicker the cloud, the tougher the support/resistance. In our previous example, if the price now reverts downwards, it can expect support first at the Tenkan-sen, then the Kijun-sen and finally the cloud itself.</p>
 <p>When the price enters the cloud, i.e. it is between the cloud base and cloud top, it is an important area to gauge whether there is sufficient momentum for the price to break through the cloud or whether the cloud eventually provokes a reversal.</p>
 <p>More subtle interpretations involve the Chikou span in particular and its action in relation to the cloud lines as well as the candles.</p>
 <p>It is outside the scope of this vignette to provide a full tutorial on the use of Ichimoku Kinko Hyo.</p>
@@ -139,9 +140,9 @@
 <div class="section level3">
 <h3 id="context">Context<a class="anchor" aria-label="anchor" href="#context"></a>
 </h3>
-<p>Ichimoku analysis is the latest refinement in candlestick charting techniques, which also originated from Japan. Developed by 一目山人 <em>Ichimoku, Sanjin</em>, the pen name of 細田吾一 <em>Hosoda, Goichi</em>, the work was published in 1969 as the seminal <em>「一目均衡表」 [ichimoku kinkou hyou]</em>. It gained popularity in Japan especially after the publication of Sasaki’s <em>「一目均衡表の研究」 [ichimoku kinkouhyou no kenkyuu]</em> in 1996, and is now widely-used in technical analysis worldwide.</p>
-<p>The ichimoku time periods have traditionally been calculated as 9, 26 and 52 based on manual data analysis performed in Japan in a pre-computer age where there was a 6-day working week resulting in 26 average trading days in a month. Although this bears little relevance to the current day, the use of these time periods has persisted as an ‘industry norm’ or ‘accepted practice’. To use other periods would be meaningless in a sense as ‘market psychology’ can and often does create its own realities, independent of any fundamentals.</p>
-<p>However, there is no reason for the technique not to evolve, and to reflect changing trading realities perhaps other parameters will become more relevant in the collective psychology. For this reason, the length of these periods can be freely set in the ‘ichimoku’ package. However please do so only with caution and note that using other periods invalidates the traditional interpretations of Ichimoku Kinko Hyo.</p>
+<p>Ichimoku analysis is the latest refinement in candlestick charting techniques, which also originated from Japan. Developed by 一目山人 <em>Ichimoku, Sanjin</em>, the alias of 細田吾一 <em>Hosoda, Goichi</em>, the work was published in 1969 as the seminal <em>「一目均衡表」 [ichimoku kinkou hyou]</em>. It gained popularity in Japan especially after the publication of Sasaki’s <em>「一目均衡表の研究」 [ichimoku kinkouhyou no kenkyuu]</em> in 1996, and is now widely-used in technical analysis worldwide.</p>
+<p>The ichimoku time periods have traditionally been calculated as 9, 26 and 52 based on manual data analysis performed in Japan in a pre-computer age where there was a 6-day working week resulting in 26 average trading days in a month. Although this bears little resemblance to the current day, the use of these time periods has persisted as an ‘accepted practice’. To use other periods would be meaningless in a sense as ‘market psychology’ can and often does create its own realities, independent of any fundamentals.</p>
+<p>However, there is no reason for the technique not to evolve, and to reflect changing trading realities perhaps other parameters will become more relevant in the collective psychology. For this reason, the length of these periods can be set as parameters in the ‘ichimoku’ package. However please do so only with caution and note that using other periods invalidates the traditional interpretations of Ichimoku Kinko Hyo.</p>
 <p>Finally, the use originated with daily candlesticks, and the most valid interpretation remains for daily data. However, it is equally used today for both shorter, e.g. 4-hour or hourly, and longer, e.g. weekly or monthly, charts.</p>
 </div>
 </div>
@@ -167,7 +168,7 @@
 <div class="section level4">
 <h4 id="input-data-requirements">Input data requirements<a class="anchor" aria-label="anchor" href="#input-data-requirements"></a>
 </h4>
-<p>The requirement on the input data is minimal: a series of prices indexed by valid date-times.</p>
+<p>The requirement on the input data is minimal: a series of prices indexed by valid timestamps.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Sample OHLC price data is assigned to data frame 'TKR':</span>
 <span class="va">TKR</span> <span class="op">&lt;-</span> <span class="va">sample_ohlc_data</span>
@@ -186,7 +187,7 @@
 </ul>
 <p><strong>Open/High/Low/Close (OHLC) data</strong> should always be used where available.</p>
 <ul>
-<li><p>In columns with names containing ‘open’, ‘high’, ‘low’ and ‘close’. These do not have to be nicely-formatted as in the example above and could also contain other text such as the ticker name. For further details see the section <a href="#data-validation">data validation</a></p></li>
+<li><p>In columns with names containing ‘open’, ‘high’, ‘low’ and ‘close’. These are searched as regular expression patterns in the column names. For further details see the section <a href="#data-validation">data validation</a></p></li>
 <li><p>If only HLC price data is available, the opening price will be taken to be the closing price of the previous period. <em>This means that the candlesticks will not be accurate, but calculation of the cloud lines is not affected</em></p></li>
 </ul>
 <p><strong>Single series price data</strong> can also be used for producing an <em>pseudo</em> cloud chart if, for example, OHLC data is not available or because the price is a calculated price such as VWAP.</p>
@@ -233,7 +234,7 @@
 <span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 2020-01-15 <span style="color: #949494;">00:00:00</span> 124.4 124.5 123.7 123.9    -<span style="color: #BB0000;">1</span>  123.9    <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
 <span class="co">#&gt; <span style="color: #949494;"># … with 271 more rows, and 4 more variables: senkouB &lt;dbl&gt;, chikou &lt;dbl&gt;,</span></span>
 <span class="co">#&gt; <span style="color: #949494;">#   cloudT &lt;dbl&gt;, cloudB &lt;dbl&gt;</span></span></code></pre></div>
-<p>The returned output is designed to fit the screen; call <code><a href="../reference/more.html">more()</a></code> to display up to 100 more rows. Note that above, print is called setting ‘plot = FALSE’ to return just the data to the console. The default print method for ichimoku objects also plots the cloud chart to the graphical device.</p>
+<p>The returned output is designed to fit the screen; call <code><a href="../reference/more.html">more()</a></code> to display up to 100 more rows. Note that above, print is called setting ‘plot = FALSE’ to only return the data to the console. The default print method for ichimoku objects also plots the cloud chart to the graphical device.</p>
 <p>Use <code><a href="https://rdrr.io/r/utils/str.html" class="external-link">str()</a></code> for a compact display of the object structure:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span>
@@ -320,7 +321,7 @@
 <li>
 <code><a href="../reference/coredata.ichimoku.html">coredata()</a></code> to extract the columns of an ichimoku object as a numeric matrix</li>
 </ul>
-<p>The below shows how to faithfully re-create an ichimoku object from its components:</p>
+<p>The below shows how to re-create an ichimoku object from its components:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">index</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/index.ichimoku.html">index</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span>
 <span class="va">core</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/coredata.ichimoku.html">coredata</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span>
@@ -331,7 +332,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="va">cloud</span>, <span class="va">cloud2</span><span class="op">)</span>
 <span class="co">#&gt; [1] TRUE</span></code></pre></div>
 <p>Note specifically that ichimoku needs to be called twice - first to convert the matrix resulting from the <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind()</a></code> operation, and then again to recalculate using the OHLC data contained within the object as the original data would have contained NAs. The ticker name should also be set explicitly as in the example.</p>
-<p>A warning is issued about checking the validity of POSIX times, which in this case is safe to ignore as the POSIXct values in ‘index’ were simply coerced to numeric during the <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind()</a></code> operation but remain valid.</p>
+<p>A warning is issued about checking the validity of POSIX times, which in this case is safe to ignore as the POSIXct values in ‘index’ were simply coerced to numeric during the <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind()</a></code> operation and are valid.</p>
 <p>For additional functionality, the ‘xts’ package may be loaded to access a wide range of methods available for ‘xts’ objects, for example changing the periodicity of the data.</p>
 </div>
 </div>
@@ -376,7 +377,7 @@
 </h4>
 <p>Although Ichimoku Kinko Hyo is considered a complete charting system, it can at times be useful to pair it with an oscillator.</p>
 <p>By specifying <code>type = "r"</code> or <code>type = "s"</code>, the corresponding type of oscillator will be shown beneath the main ichimoku cloud chart.</p>
-<p>An <strong>R-type oscillator</strong> is based on the formula for Relative Strength Index (RSI). This is a single line indicator with a look-back window of the ichimoku object’s medium cloud period (default 26). The 75 and 25 levels are marked on the chart to demarcate potentially over-bought and over-sold levels.</p>
+<p>An <strong>R-type oscillator</strong> is based on the formula for Relative Strength Index (RSI). This is a single line indicator with a look-back window of the ichimoku object’s medium cloud period (default 26).</p>
 <p>The R-type line is calculated as 100 - 100 / (1 + [26] period mean open to close gain / the absolute value of the [26] period mean open to close loss).</p>
 <p>Note that this corresponds to the usual RSI oscillator definition, although not identical as gains/losses are calculated with reference to each period’s open rather than the previous close. Note also that the R-type oscillator is calculated consistently and does not employ a roll-forward mechanism based on previous oscillator values like the RSI.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
@@ -413,7 +414,7 @@
 <code class="sourceCode R"><span class="co"># For an interactive plot:</span>
 <span class="fu"><a href="../reference/iplot.html">iplot</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span></code></pre></div>
 <p>Further arguments are optional as full customisation of the chart can be done interactively in-app, including selecting the time window, theme, chart type, sub-plot etc.</p>
-<p>The chart provides intuitive access to the data provided by the cursor infotip:</p>
+<p>The cursor infotip provides intuitive access to the data:</p>
 <ul>
 <li>hover over the chart to read off data values at any given point in time</li>
 <li>cursor guides provide easy calibration of date/time and price levels</li>
@@ -478,7 +479,7 @@
 </ol>
 <ul>
 <li><p><em>If found:</em> will attempt to convert the column to POSIXct by <code><a href="https://rdrr.io/r/base/as.POSIXlt.html" class="external-link">as.POSIXct()</a></code>. If this fails, will check if the column is numeric and if so convert it to POSIXct by assuming the numeric value is a valid unix/POSIX time (a warning is issued to check the validity in case the numeric value is not a valid POSIX time)</p></li>
-<li><p><em>If not found:</em> will attempt to convert the row names to POSIXct by <code><a href="https://rdrr.io/r/base/as.POSIXlt.html" class="external-link">as.POSIXct()</a></code>. If this fails, will check if the row names are integer values that are not just the default row names for data frames, and if so convert it to POSIXct by assuming the numeric value is a valid unix/POSIX time (a warning is issued to check the validity in case the numeric value is not a valid POSIX time)</p></li>
+<li><p><em>If not found:</em> will attempt to convert the row names to POSIXct by <code><a href="https://rdrr.io/r/base/as.POSIXlt.html" class="external-link">as.POSIXct()</a></code>. If this fails, will check if the row names are integer values that are not just the default row names for data frames, and if so convert it to POSIXct by assuming the numeric value is a valid unix/POSIX time (a warning is issued to check the validity of POSIX times constructed in this way)</p></li>
 <li><p>Note: ‘xts’ objects are always indexed by a valid timestamp and ichimoku handles this automatically</p></li>
 </ul>
 <ol start="2" style="list-style-type: decimal">
@@ -491,7 +492,7 @@
 <ol start="3" style="list-style-type: decimal">
 <li>Checks that the dataset is longer than the medium cloud period. If this is not the case then none of the cloud lines can be calculated</li>
 </ol>
-<p>There may however still be other issues with the input data that prevent cloud values from being computed, not handled explicitly by <code><a href="../reference/ichimoku.html">ichimoku()</a></code>. For example, if:</p>
+<p>There may however still be issues with the input data that prevent cloud values from being computed, that are not handled explicitly by <code><a href="../reference/ichimoku.html">ichimoku()</a></code>. For example, if:</p>
 <ul>
 <li><p>The date-time index is in a headerless column, or in a column where the name does not contain ‘index’, ‘date’ or ‘time’ (not case-dependent). Please rename the column to ‘index’ in such cases</p></li>
 <li><p>The correct date-time index is in the row names, or index of an ‘xts’ object, but there are also columns that contains the word ‘index’, ‘date’ or ‘time’. Please rename the columns that do not serve as the date-time index so that the correct date-time index can be detected</p></li>
@@ -557,7 +558,7 @@
 <h4 id="since-version-0-x">Since version 0.x<a class="anchor" aria-label="anchor" href="#since-version-0-x"></a>
 </h4>
 <ul>
-<li>ichimoku objects created in v0.x will no longer work correctly in v1.x and later of the package. To ensure compatibility with the ichimoku object specification v1, please upgrade to the latest package version and run <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on previously-created objects to re-create them according to the new specification (data is preserved)</li>
+<li>ichimoku objects created in v0.x are no longer accepted in v1.0.0 and later of the package. To ensure compatibility with the ichimoku object specification v1, please upgrade to the latest package version and run <code><a href="../reference/ichimoku.html">ichimoku()</a></code> on previously-created objects to re-create them according to the new specification (data is preserved)</li>
 </ul>
 </div>
 </div>
@@ -583,7 +584,7 @@
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
 <p>Sasaki, H. 佐々木 英信 (1996), <em>一目均衡表の研究 [ichimoku kinkouhyou no kenkyuu]</em>. Tokyo, Japan: Toushi Radar.</p>
-<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.2.99, <a href="https://CRAN.R-project.org/package=ichimoku" class="external-link uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
+<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.3.0, <a href="https://CRAN.R-project.org/package=ichimoku" class="external-link uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
 <hr>
 </div>
   </div>
