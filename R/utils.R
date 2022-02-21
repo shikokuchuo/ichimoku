@@ -223,8 +223,8 @@ df_merge <- function(...) {
 #' @param new data.frame object containing new data.
 #' @param key [default 'time'] column name used as key, provided as a character
 #'     string.
-#' @param keep.attr [default 'timestamp'] name of an attribute in 'new' to retain
-#'     if it is present, provided as a character string.
+#' @param keep.attr [default 'timestamp'] name of an attribute in 'new' to
+#'     retain, if present, provided as a character string.
 #'
 #' @return A data.frame of the existing data appended with the new data. If the
 #'     data in 'new' contains data with the same value for the key column as 'old',

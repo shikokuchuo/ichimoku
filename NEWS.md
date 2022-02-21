@@ -1,21 +1,20 @@
-# ichimoku 1.2.99.22
+# ichimoku 1.3.0
 
 #### New features:
 
-* Subplots now feature on the same chart and values can be read via the infotip in `iplot()` or `oanda_studio()`.
+* Sub-plots now feature on the same chart and values can be read via the infotip in `iplot()` or `oanda_studio()`.
 * R/S-type indicators now an option for `oanda_chart()` and `oanda_studio()`.
 * `.ichimoku()` introduced as a faster technical utility version of `ichimoku()` for use when data is already in the prescribed format. 
 
 #### Updates:
 
 * Dependency on C++ compiler, 'cpp11'  and 'gtable' packages retired.
-* Added `LinkingTo: xts` to mark use of C function exported from 'xts'.
-* Internal rolling min/max/mean functions re-implemented directly in C.
-* Various ichimoku functions now call C code internally.
+* Internal rolling min/max/mean functions re-implemented directly in C; various ichimoku functions now call C code internally.
+* Added `LinkingTo: xts` for use of C function exported from 'xts'.
 * `df_trim()` and `extraplot()` removed as no longer required.
-* The 'limit' argument for `oanda_chart()` and `oanda_stream()` has been changed to accept a time in seconds.
+* The 'limit' argument for `oanda_chart()` and `oanda_stream()` changed to accept a time in seconds rather than minutes.
 * `new.process = TRUE` for `oanda_studio()` now more portable and works under Windows.
-* Fixes `oanda_stream()` for when multiple bid/ask liquidity levels are returned in the stream. Improvement to the handling of timestamps, now rendered as POSIXct.
+* Fixes `oanda_stream()` for when multiple bid/ask liquidity levels are returned in the stream. Returned dataframe now in a revised tidier format with correct data types for ease of further processing.
 * Fixes `archive()` to work correctly on R-oldrel (4.0).
 * Further performance enhancements to `ichimoku()`, `mlgrid()` and plot functions.
 * Documentation refresh.

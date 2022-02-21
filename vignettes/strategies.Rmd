@@ -28,11 +28,11 @@ First and foremost is visually, and the functions for visualization are describe
 
 However, for performing analysis on the data directly, complications of the ichimoku system can quickly become apparent. The Chikou span in particular poses a challenge as the position of this indicator needs to be mapped in relation to the chart elements 26 periods previously, however this then affects trading decisions at the present point in time.
 
-The 'strategy layer' of the ichimoku package aims to prepare the data in a standardized format for easy further analysis. Short strategy summaries are generated automatically, but are designed to serve as a quick reference rather than a replacement for a full backtest using a package such as 'PerformanceAnalytics'.
+The 'strategy layer' of the ichimoku package aims to prepare the data in a standardized format for ease of further analysis. Short strategy summaries are generated automatically, but are designed to serve as a quick reference rather than a replacement for a full backtest using a package such as 'PerformanceAnalytics'.
 
 The `autostrat()` function is used to further facilitate idea generation, and leverages the computational capability of R to simultaneously test all valid indicator combinations.
 
-Past results do not imply future performance, and should always be considered in conjunction with a full backtest and risk analysis.
+Risk warning: past results are not necessarily indicative of future performance, and should always be considered within the context of a comprehensive risk analysis framework.
 
 ## Working with Strategies
 
@@ -52,14 +52,14 @@ To test a simple strategy with an indicator condition of the form 'long (or shor
 
 Here 'c1' and 'c2' are the quoted column names of the ichimoku object representing either candlestick values e.g. 'close' or cloud values e.g. 'tenkan'.
 
-Note: the indicator condition remains of the form c1 > c2 even for short trades. Hence please take care when inverting, for example, 'long while close > tenkan' to 'short while close < tenkan', this should be formulated as 'short while tenkan > close'.
+Note: the indicator condition remains of the form c1 > c2 even for short trades. Hence please take care, for example, when inverting 'long while close > tenkan' to 'short while close < tenkan', this should actually be formulated as 'short while tenkan > close'.
 
 ```{r strat}
 strat <- strat(cloud, c1 = "cloudB", c2 = "kijun")
 print(strat[100:105, ], plot = FALSE, width = 180)
 ```
 
-The use of `strat()` returns an augmented ichimoku object. The printout above of a slice of the object (rows 96 to 100) shows that the following columns are appended:
+The use of `strat()` returns an augmented ichimoku object. The printout above of a slice of the object (rows 100 to 105) shows that the following columns are appended:
 
 - `$cond`: '1' if the indicator condition is met at the close of the the time period (note: if the indicator condition involves chikou span, the comparison will be of past periods)
 - `$posn`: '1' represents that a position is held during this time period (i.e. from the 'open' to the 'close')
@@ -79,7 +79,7 @@ All events are aligned to their correct time periods, which are taken to be from
 
 - 'cond' refers to if the condition is satisfied at the 'close' of the period
 - 'posn' refers to whether a position is held at the 'close' of the period
-- 'txn' refers to if there has been a transaction during the period (in this case occurring at the 'open')
+- 'txn' refers to if there has been a transaction during the period (occurring at the 'open')
 
 ### 2b. Complex strategies using `strat()` 
 
@@ -101,7 +101,7 @@ summary(strat)
 
 The summary is designed to provide a quick overview of whether a strategy is effective / desirable:
 
-- Strategy returns are compared with the benchmark, which is simply holidng a position the entire time
+- Strategy returns are compared with the benchmark, which is simply holidng a position throughout the period
 - Comparing returns combined with total periods in the market can help determine if the strategy is substantially different from just taking market risk
 - Total trades along with average trade length can be used to filter out undesirable strategies that over-trade
 - Trade success % helps to characterise the consistency of the strategy or whether it relies on a small percentage of outsize returns
@@ -138,7 +138,7 @@ The strategy returns are saved within the ichimoku object in the columns 'slogre
 
 The benchmark returns for all periods are saved as 'logret' (log returns) and 'ret' (discrete returns).
 
-As the ichimoku object inherits the 'xts' class, these columns may be fed directly into other econometrics or analytics packages such as 'PerformanceAnalytics', as per the example below.
+As the ichimoku object inherits the 'xts' class, these columns may be fed directly into other econometrics or time series analysis packages such as 'PerformanceAnalytics', as per the example below.
 
 ```{r perfana, eval=FALSE}
 library(PerformanceAnalytics)
@@ -163,7 +163,7 @@ The analytic capability of R can be leveraged to generate and evaluate all possi
 autostrat(cloud, n = 3)
 ```
 
-The output of `autostrat()` is a list of ichimoku objects. Each object can be accessed by its position in the list e.g. `[[1]]` for the first object.
+The output of `autostrat()` is a list of ichimoku objects. Each object may be accessed by its position in the list e.g. `[[1]]` for the first object.
 
 The metadata is also saved as attributes to the list and can be accessed by the function `look()`:
 
@@ -285,14 +285,14 @@ The 'z-score' (or standard score) is calculated as res / sd(X) and is a centred 
 
 **Ticker**: The ticker saved in the ichimoku object
 
-**Start/end**: The start and end dates of the backtest. These dates will differ for different cloud lines depending on how many periods it takes to calculate them, or if involving the chikou, shifting back a number of periods
+**Start/end**: The start and end dates of the backtest. These dates will differ for different cloud lines depending on how many periods it takes to calculate them
 
-**Direction**: 'long' or 'short' trade direction as can be set via the argument 'dir' to strat(). Only single direction strategies are considered
+**Direction**: 'long' or 'short' trade direction as can be set via the argument 'dir'. Only single direction strategies are considered
 
 ## References
 
 Sasaki, H. 佐々木 英信 (1996), *一目均衡表の研究 [ichimoku kinkouhyou no kenkyuu]*. Tokyo, Japan: Toushi Radar.
 
-Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.2.99, <https://CRAN.R-project.org/package=ichimoku>.
+Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.3.0, <https://CRAN.R-project.org/package=ichimoku>.
 
 ---

@@ -225,7 +225,7 @@ SEXP _tbl(const SEXP x, const SEXP type) {
 SEXP _create(SEXP kumo, SEXP xtsindex, const SEXP periods,
              const SEXP periodicity, const SEXP ticker, const SEXP x) {
 
-  SEXP tzone = PROTECT(Rf_ScalarString(Rf_mkChar("")));
+  SEXP tzone = PROTECT(Rf_mkString(""));
   Rf_setAttrib(xtsindex, xts_IndexTzoneSymbol, tzone);
   SEXP tclass = PROTECT(Rf_allocVector(STRSXP, 2));
   SET_STRING_ELT(tclass, 0, Rf_mkChar("POSIXct"));

@@ -136,11 +136,11 @@ Takes 4 arguments:
 - `old`  data.frame object containing existing data.
 - `new`  data.frame object containing new data.
 - `key`  [default 'time'] column name used as key provided as a character string.
-- `keep.attr`  [default 'timestamp'] name of an attribute in 'new' to retain if it is present, provided as a character string.
+- `keep.attr`  [default 'timestamp'] name of an attribute in 'new' to retain, if present, provided as a character string.
 
 Can be used to update price dataframes retrieved by `oanda()`. The function is designed to update existing data with new values as they become available. As opposed to `df_merge()`, the data in 'new' will overwrite the data in 'old' rather than create duplicates.
 
-If the attribute specified by 'keep.attr' is present in 'new', for example the 'timestamp' in pricing data returned by `oanda()`, this is retained. If the attribute is not found in 'new', the argument has no effect. All other non-essential attributes are dropped.
+If the attribute specified by 'keep.attr' is present in 'new', for example the 'timestamp' in pricing data returned by `oanda()`, this is retained. If the attribute is not found in 'new', the argument has no effect. All other custom attributes are dropped.
 
 ```{r dfappend}
 data1 <- sample_ohlc_data[1:8, ]
@@ -152,6 +152,6 @@ df_append(data1, data2)
 
 ## References
 
-Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.2.99, <https://CRAN.R-project.org/package=ichimoku>.
+Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.3.0, <https://CRAN.R-project.org/package=ichimoku>.
 
 ---

@@ -20,17 +20,17 @@ knitr::opts_chunk$set(
 
 ## About OANDA fxTrade
 
-ichimoku contains an interface, or binding for the R language, to the OANDA fxTrade API.
+ichimoku provides an R language interface to the OANDA fxTrade API.
 
 OANDA is a primary source of foreign exchange data used by corporations and governments around the world. The API can be used for retrieving historical and live streaming price data for major currencies, metals, commodities, government bonds and stock indices.
 
-As an example of the financial data that is available: OHLC pricing data can be obtained for major forex pairs from the start of 2005 with granularity ranging from 5 seconds to monthly. For the total list of over 120 covered instruments please refer to the [Available Instruments](#available-instruments) section below.
+As an example of available financial data: OHLC prices for major forex pairs can be obtained from the start of 2005 with granularity ranging from 5 seconds to monthly. For the total list of over 120 covered instruments please refer to the [Available Instruments](#available-instruments) section below.
 
 Please note that 'OANDA' and 'fxTrade' are trademarks owned by OANDA Corporation, an entity unaffiliated with the ichimoku package.
 
 ## Registering with OANDA
 
-The OANDA fxTrade API, as distinct to other OANDA data sources, is based upon its retail and professional trading offering of the same name. As such, access to the API requires an fxTrade account with OANDA and agreement to their API terms of use. 
+The OANDA fxTrade API, as distinct to other OANDA data sources, is based upon its retail / professional trading offering of the same name. As such, access to the API requires an fxTrade account with OANDA and agreement to their API terms of use. 
 
 Registering for a 'demo' or 'practice' account is entirely free at the time of writing and provides full access to the API. For registering an account, the following URL may be used: <https://www.oanda.com/forex-trading/>.
 
@@ -80,7 +80,7 @@ The arguments to the function are phrased identically to that of the API itself 
 - `apikey` (optional) string containing the OANDA fxTrade API key (personal access token). Does not need to be specified if already stored by `oanda_set_key()`. This argument is designed for specifying a function that returns such a string rather than the string itself, which could be potentially unsecure. This allows other packages that provide secure storage of secrets to be used if preferred over 'keyring'
 - `quietly` if set to TRUE, will suppress printing of output to the console and return quietly
 
-Note: if both `from` and `to` are specified and the request would result in over 5000 periods being returned, the function prompts the user to confirm if multiple requests should be submitted. Unless the user response is "n" or "no", the data will proceed to be downloaded with rate limiting in place, and merged together into a single dataframe. The function is safe for use in non-interactive settings as in such cases the download will proceed automatically without prompting.
+Note: if both `from` and `to` are specified and the request would result in over 5000 periods being returned, the function prompts the user to confirm if multiple requests should be submitted. Unless the user response is "n" or "no", the data will proceed to be downloaded in batches and merged together into a single dataframe. The function is safe for use in non-interactive settings as in such cases the download will proceed automatically without prompting.
 
 ```{r oanda, eval=FALSE}
 oanda("USD_JPY", count = 3, from = "2010-11-01", price = "B")
@@ -101,7 +101,7 @@ Important implementation notes:
 
 - Incorporates automatic adjustment of the timestamps to end of period, as is customary for financial data. This means that, for example, today's pricing data (incomplete trading period) will have today's date as would be expected. In contrast, the raw data from the API has a timestamp of the start of the period
 
-- The API data sometimes includes data for non-trading days with very low volumes. This is more common for older data and less so with more recent data. These may represent OTC trades that occurred over the OANDA platform, but nevertheless do not reflect market rates. These are automatically excluded from the data returned as they would otherwise produce spurious results used with `ichimoku()`
+- The API data sometimes includes data for non-trading days with very low volumes. This is more common for older data and less so with more recent data. These may represent OTC trades that occurred over the OANDA platform, but nevertheless do not reflect market rates. These are automatically excluded from the data returned as they would otherwise produce spurious results when used with `ichimoku()`
 
 ### `oanda_chart()`
 
@@ -110,7 +110,7 @@ Create an updating real-time Ichimoku cloud chart. The refresh rate can be set f
 The arguments are identical to `oanda()` above with the addition of:
 
 - `refresh` [default 5] set the refresh rate of the chart in seconds, with a minimum of 1
-- `limit` (optional) specify a time in minutes by which to limit the session. The session will end with data returned automatically after the specified time has elapsed
+- `limit` (optional) specify a time in seconds by which to limit the session. The session will end with data returned automatically after the specified time has elapsed
 - `...` additional parameters passed onto `ichimoku()` for calculating the ichimoku cloud or `autoplot()` to set chart parameters
 - `periods` [default c(9L, 26L, 52L)] a vector defining the length of periods used for the cloud. This parameter should not normally be modified as using other values would be invalid in the context of traditional Ichimoku analysis
 
@@ -173,35 +173,33 @@ The arguments are as follows:
 
 - `instrument` the instrument to stream data for
 - `display` [default 7L] specify an integer to customise the number of rows to display in the console at any one time
-- `limit` (optional) specify a time in minutes by which to limit the streaming session. The session will end with data returned automatically after the specified time has elapsed
+- `limit` (optional) specify a time in seconds by which to limit the streaming session. The session will end with data returned automatically after the specified time has elapsed
 
 The 'server' and 'apikey' arguments are also available if required.
 
 ```{r oandastream, eval=FALSE}
-# Streaming session will end with data automatically returned after 15 mins as set by 'limit':
-data <- oanda_stream("UK10YB_GBP", limit = 15)
+# Streaming session will end with data automatically returned after 600 secs (10 mins):
+data <- oanda_stream("UK10YB_GBP", limit = 600)
 #> Streaming data... Press 'Esc' to return
-#>    type                           time bid.price b.liquidity ask.price a.liquidity closeout.b closeout.a
-#> 1 PRICE 2021-12-10T10:21:05.102768669Z   128.057       10000   128.087       10000    128.057    128.087
-#> 2 PRICE 2021-12-10T10:21:54.853095391Z   128.057       10000   128.097       10000    128.057    128.097
-#> 3 PRICE 2021-12-10T10:21:56.678923090Z   128.067       10000   128.097       10000    128.067    128.097
-#> 4 PRICE 2021-12-10T10:21:58.959780877Z   128.057       10000   128.087       10000    128.057    128.087
-#> 5 PRICE 2021-12-10T10:21:59.001234626Z   128.067       10000   128.097       10000    128.067    128.097
-#> 6 PRICE 2021-12-10T10:22:01.827068694Z   128.067       10000   128.097       10000    128.067    128.097
-#> 7 PRICE 2021-12-10T10:22:05.130294655Z   128.067       10000   128.097       10000    128.067    128.097
-#>      status tradable instrument
-#> 1 tradeable     TRUE UK10YB_GBP
-#> 2 tradeable     TRUE UK10YB_GBP
-#> 3 tradeable     TRUE UK10YB_GBP
-#> 4 tradeable     TRUE UK10YB_GBP
-#> 5 tradeable     TRUE UK10YB_GBP
-#> 6 tradeable     TRUE UK10YB_GBP
-#> 7 tradeable     TRUE UK10YB_GBP
+#>    type                time           bids           asks closeoutBid closeoutAsk    status tradeable
+#> 1 PRICE 2022-02-21 12:31:20 121.712, 10000 121.742, 10000     121.712     121.742 tradeable      TRUE
+#> 2 PRICE 2022-02-21 12:31:37 121.722, 10000 121.752, 10000     121.722     121.752 tradeable      TRUE
+#> 3 PRICE 2022-02-21 12:31:52 121.712, 10000 121.742, 10000     121.712     121.742 tradeable      TRUE
+#> 4 PRICE 2022-02-21 12:32:12 121.722, 10000 121.752, 10000     121.722     121.752 tradeable      TRUE
+#> 5 PRICE 2022-02-21 12:32:15 121.712, 10000 121.742, 10000     121.712     121.742 tradeable      TRUE
+#> 6 PRICE 2022-02-21 12:32:27 121.722, 10000 121.752, 10000     121.722     121.752 tradeable      TRUE
+#> 7 PRICE 2022-02-21 12:33:24 121.712, 10000 121.742, 10000     121.712     121.742 tradeable      TRUE
+#>   instrument
+#> 1 UK10YB_GBP
+#> 2 UK10YB_GBP
+#> 3 UK10YB_GBP
+#> 4 UK10YB_GBP
+#> 5 UK10YB_GBP
+#> 6 UK10YB_GBP
+#> 7 UK10YB_GBP
 ```
 
-Use the 'Esc' key to stop the stream and return the session data. Please remember to assign the return value to an object if you wish to retain the data.
-
-All returned times are in UTC. 'b' and 'a' used in column headings are abbreviations to denote 'bid' and 'ask' respectively.
+Use the 'Esc' key to stop the stream and return the session data. Assign the return value to an object if you wish to retain the data.
 
 Note: only messages of type 'PRICE' are processed. Messages of type 'HEARTBEAT' consisting of only a timestamp are discarded.
 
@@ -259,6 +257,301 @@ Provides a summary of the aggregate orders/positions held by OANDA fxTrade clien
 
 The data is returned as a dataframe, with parameters saved as attributes which can be viewed with `look()`. A chart showing the percentage long and short orders/positions at each price level is output to the graphical device.
 
+```{r oandapos, eval=FALSE}
+df <- oanda_positions("GBP_JPY")
+```
+
+```{r oandaposchart, echo=FALSE}
+
+df <- structure(list(price = c(124.75, 124.85, 124.9, 124.95, 125.05, 
+125.2, 125.25, 125.3, 125.35, 125.4, 125.5, 125.6, 125.7, 125.85, 
+126, 126.2, 126.4, 126.5, 126.55, 126.65, 126.7, 126.75, 126.85, 
+126.9, 126.95, 127, 127.05, 127.1, 127.15, 127.2, 127.25, 127.3, 
+127.35, 127.4, 127.45, 127.5, 127.55, 127.6, 127.65, 127.7, 127.75, 
+127.85, 127.9, 127.95, 128, 128.05, 128.1, 128.15, 128.2, 128.25, 
+128.3, 128.35, 128.4, 128.45, 128.5, 128.55, 128.6, 128.65, 128.7, 
+128.75, 128.8, 128.85, 128.9, 128.95, 129, 129.05, 129.1, 129.15, 
+129.2, 129.25, 129.3, 129.35, 129.4, 129.45, 129.5, 129.55, 129.6, 
+129.65, 129.7, 129.75, 129.8, 129.85, 129.9, 129.95, 130, 130.05, 
+130.1, 130.15, 130.2, 130.25, 130.3, 130.35, 130.4, 130.45, 130.5, 
+130.55, 130.6, 130.65, 130.7, 130.75, 130.8, 130.85, 130.9, 130.95, 
+131, 131.05, 131.1, 131.15, 131.2, 131.25, 131.3, 131.35, 131.4, 
+131.45, 131.5, 131.55, 131.6, 131.65, 131.7, 131.75, 131.8, 131.85, 
+131.9, 131.95, 132, 132.05, 132.1, 132.15, 132.2, 132.25, 132.3, 
+132.35, 132.4, 132.45, 132.5, 132.55, 132.6, 132.65, 132.7, 132.75, 
+132.8, 132.85, 132.9, 132.95, 133, 133.05, 133.1, 133.15, 133.2, 
+133.25, 133.3, 133.35, 133.4, 133.45, 133.5, 133.55, 133.6, 133.65, 
+133.7, 133.75, 133.8, 133.85, 133.9, 133.95, 134, 134.05, 134.1, 
+134.15, 134.2, 134.25, 134.3, 134.35, 134.4, 134.45, 134.5, 134.55, 
+134.6, 134.65, 134.7, 134.75, 134.8, 134.85, 134.9, 134.95, 135, 
+135.05, 135.1, 135.15, 135.2, 135.25, 135.3, 135.35, 135.4, 135.45, 
+135.5, 135.55, 135.6, 135.65, 135.7, 135.75, 135.8, 135.85, 135.9, 
+135.95, 136, 136.05, 136.1, 136.15, 136.2, 136.25, 136.3, 136.35, 
+136.4, 136.45, 136.5, 136.55, 136.6, 136.65, 136.7, 136.75, 136.8, 
+136.85, 136.9, 136.95, 137, 137.05, 137.1, 137.15, 137.2, 137.25, 
+137.3, 137.35, 137.4, 137.45, 137.5, 137.55, 137.6, 137.65, 137.7, 
+137.75, 137.8, 137.85, 137.9, 137.95, 138, 138.05, 138.1, 138.15, 
+138.2, 138.25, 138.3, 138.35, 138.4, 138.45, 138.5, 138.55, 138.6, 
+138.65, 138.7, 138.75, 138.8, 138.85, 138.9, 138.95, 139, 139.05, 
+139.1, 139.15, 139.2, 139.25, 139.3, 139.35, 139.4, 139.45, 139.5, 
+139.55, 139.6, 139.65, 139.7, 139.75, 139.8, 139.85, 139.9, 139.95, 
+140, 140.05, 140.1, 140.15, 140.2, 140.25, 140.3, 140.35, 140.4, 
+140.45, 140.5, 140.55, 140.6, 140.65, 140.7, 140.75, 140.8, 140.85, 
+140.9, 140.95, 141, 141.05, 141.1, 141.15, 141.2, 141.25, 141.3, 
+141.35, 141.4, 141.45, 141.5, 141.55, 141.6, 141.65, 141.7, 141.75, 
+141.8, 141.85, 141.9, 141.95, 142, 142.05, 142.1, 142.15, 142.2, 
+142.25, 142.3, 142.35, 142.4, 142.45, 142.5, 142.55, 142.6, 142.65, 
+142.7, 142.75, 142.8, 142.85, 142.9, 142.95, 143, 143.05, 143.1, 
+143.15, 143.2, 143.25, 143.3, 143.35, 143.4, 143.45, 143.5, 143.55, 
+143.6, 143.65, 143.7, 143.75, 143.8, 143.85, 143.9, 143.95, 144, 
+144.05, 144.1, 144.15, 144.2, 144.25, 144.3, 144.35, 144.4, 144.45, 
+144.5, 144.55, 144.6, 144.65, 144.7, 144.75, 144.8, 144.85, 144.9, 
+144.95, 145, 145.05, 145.1, 145.15, 145.2, 145.25, 145.3, 145.35, 
+145.4, 145.45, 145.5, 145.55, 145.6, 145.65, 145.7, 145.75, 145.8, 
+145.85, 145.9, 145.95, 146, 146.05, 146.1, 146.15, 146.2, 146.25, 
+146.3, 146.35, 146.4, 146.45, 146.5, 146.55, 146.6, 146.65, 146.7, 
+146.75, 146.8, 146.85, 146.9, 146.95, 147, 147.05, 147.1, 147.15, 
+147.2, 147.25, 147.3, 147.35, 147.4, 147.45, 147.5, 147.55, 147.6, 
+147.65, 147.7, 147.75, 147.8, 147.85, 147.9, 147.95, 148, 148.05, 
+148.1, 148.15, 148.2, 148.25, 148.3, 148.35, 148.4, 148.45, 148.5, 
+148.55, 148.6, 148.65, 148.7, 148.75, 148.8, 148.85, 148.9, 148.95, 
+149, 149.05, 149.1, 149.15, 149.2, 149.25, 149.3, 149.35, 149.4, 
+149.45, 149.5, 149.55, 149.6, 149.65, 149.7, 149.75, 149.8, 149.85, 
+149.9, 149.95, 150, 150.05, 150.1, 150.15, 150.2, 150.25, 150.3, 
+150.35, 150.4, 150.45, 150.5, 150.55, 150.6, 150.65, 150.7, 150.75, 
+150.8, 150.85, 150.9, 150.95, 151, 151.05, 151.1, 151.15, 151.2, 
+151.25, 151.3, 151.35, 151.4, 151.45, 151.5, 151.55, 151.6, 151.65, 
+151.7, 151.75, 151.8, 151.85, 151.9, 151.95, 152, 152.05, 152.1, 
+152.15, 152.2, 152.25, 152.3, 152.35, 152.4, 152.45, 152.5, 152.55, 
+152.6, 152.65, 152.7, 152.75, 152.8, 152.85, 152.9, 152.95, 153, 
+153.05, 153.1, 153.15, 153.2, 153.25, 153.3, 153.35, 153.4, 153.45, 
+153.5, 153.55, 153.6, 153.65, 153.7, 153.75, 153.8, 153.85, 153.9, 
+153.95, 154, 154.05, 154.1, 154.15, 154.2, 154.25, 154.3, 154.35, 
+154.4, 154.45, 154.5, 154.55, 154.6, 154.65, 154.7, 154.75, 154.8, 
+154.85, 154.9, 154.95, 155, 155.05, 155.1, 155.15, 155.2, 155.25, 
+155.3, 155.35, 155.4, 155.45, 155.5, 155.55, 155.6, 155.65, 155.7, 
+155.75, 155.8, 155.85, 155.9, 155.95, 156, 156.05, 156.1, 156.15, 
+156.2, 156.25, 156.3, 156.35, 156.4, 156.45, 156.5, 156.55, 156.6, 
+156.65, 156.7, 156.75, 156.8, 156.85, 156.9, 156.95, 157, 157.05, 
+157.1, 157.15, 157.2, 157.25, 157.3, 157.35, 157.4, 157.45, 157.5, 
+157.55, 157.6, 157.65, 157.7, 157.75, 157.8, 157.85, 157.9, 157.95, 
+158, 158.05, 158.1, 158.15, 158.2, 158.3, 158.4, 158.6, 158.65, 
+158.7, 158.85, 158.9, 159, 159.15, 159.25, 159.3, 159.35, 159.45, 
+159.6, 159.7, 159.75, 159.8, 159.85, 159.95, 160, 160.1, 160.15, 
+160.2, 160.35, 160.4, 160.45, 160.5, 160.55, 160.6, 160.7, 160.75, 
+160.85, 160.95, 161.05, 161.1, 161.2, 161.25, 161.35, 161.45, 
+161.55, 161.6, 161.65, 161.7, 161.8, 161.9, 161.95, 162, 162.2, 
+162.3, 162.45, 162.7, 162.75, 162.85, 162.95, 163.6, 163.65, 
+163.85, 165.05, 165.1, 165.25, 165.75, 166.7, 167.75, 168.4, 
+169.15, 169.9, 170.35, 171.75, 172.05, 172.85, 175.9, 176.05, 
+177.25, 178.1, 179.5, 179.7, 179.8, 182.6, 182.75, 182.8, 182.85, 
+182.95, 183, 183.35, 183.55, 184.25, 184.3, 185.15, 185.3, 186.65, 
+186.7, 186.75, 186.8, 187.7, 187.85), long = c(0.014, 0, 0.007, 
+0.007, 0, 0.007, 0, 0, 0, 0.007, 0.007, 0.007, 0.007, 0.007, 
+0.014, 0.007, 0.007, 0, 0.014, 0.014, 0.007, 0.007, 0.007, 0.014, 
+0.0281, 0.0211, 0.014, 0.014, 0.0281, 0.0211, 0.007, 0.014, 0.0211, 
+0.014, 0.007, 0.007, 0.007, 0.0351, 0.014, 0.0351, 0.007, 0.007, 
+0.0211, 0.014, 0.014, 0.0211, 0.0351, 0.0211, 0.0211, 0.007, 
+0.0561, 0.0281, 0.0211, 0.0281, 0.0491, 0.014, 0.014, 0.0281, 
+0.007, 0.007, 0.0281, 0.014, 0.0211, 0.007, 0.0351, 0.0281, 0.0281, 
+0.0211, 0.014, 0.0351, 0.0211, 0.0561, 0.0421, 0.0351, 0.0211, 
+0.0281, 0.0351, 0.0281, 0.0211, 0.014, 0.0351, 0.0281, 0.0561, 
+0, 0.0211, 0.014, 0.0211, 0.0211, 0.0211, 0.0211, 0.0281, 0.0211, 
+0.0491, 0.0632, 0.007, 0.0281, 0.0491, 0.0281, 0.0702, 0.0281, 
+0.0211, 0.0632, 0.0632, 0.0561, 0.0561, 0.0632, 0.0772, 0.0772, 
+0.0351, 0.0421, 0.0491, 0.0281, 0.0421, 0.0632, 0.0421, 0.0561, 
+0.0421, 0.0351, 0.0561, 0.0421, 0.0421, 0.0912, 0.0491, 0.0702, 
+0.0632, 0.0561, 0.0421, 0.0632, 0.0842, 0.1333, 0.0632, 0.0561, 
+0.1123, 0.0912, 0.0702, 0.0702, 0.0842, 0.0912, 0.0632, 0.0702, 
+0.0912, 0.2175, 0.0982, 0.1614, 0.2386, 0.0491, 0.0772, 0.0632, 
+0.0982, 0.1263, 0.0632, 0.0912, 0.0982, 0.0772, 0.0351, 0.0211, 
+0.0702, 0.0632, 0.0281, 0.0772, 0.0421, 0.0702, 0.0561, 0.0491, 
+0.0702, 0.0912, 0.1123, 0.1263, 0.1333, 0.1123, 0.1404, 0.1053, 
+0.1263, 0.1474, 0.0912, 0.1263, 0.1474, 0.1614, 0.1404, 0.1193, 
+0.1263, 0.1193, 0.0842, 0.1333, 0.1684, 0.0982, 0.1123, 0.1825, 
+0.1404, 0.1404, 0.1825, 0.0912, 0.0982, 0.0561, 0.1474, 0.1123, 
+0.1123, 0.1614, 0.0912, 0.1895, 0.1614, 0.1474, 0.1263, 0.1684, 
+0.1263, 0.1474, 0.1544, 0.1193, 0.1123, 0.1333, 0.1053, 0.1474, 
+0.0912, 0.1263, 0.0632, 0.1333, 0.1263, 0.1263, 0.0982, 0.0632, 
+0.0772, 0.1404, 0.1193, 0.1474, 0.1614, 0.0842, 0.0982, 0.0912, 
+0.1053, 0.0912, 0.1193, 0.0632, 0.0842, 0.0912, 0.0772, 0.1474, 
+0.1123, 0.0982, 0.1123, 0.0842, 0.1404, 0.0702, 0.0982, 0.1544, 
+0.0561, 0.1193, 0.1123, 0.1053, 0.1333, 0.0772, 0.0912, 0.0842, 
+0.1123, 0.0842, 0.0912, 0.1544, 0.0982, 0.1404, 0.0772, 0.0772, 
+0.0982, 0.1263, 0.1123, 0.0772, 0.1053, 0.1614, 0.1193, 0.1053, 
+0.1895, 0.1474, 0.1263, 0.1333, 0.1263, 0.1895, 0.1825, 0.1614, 
+0.1754, 0.1123, 0.1404, 0.1263, 0.2035, 0.2526, 0.1544, 0.2105, 
+0.2035, 0.1123, 0.2667, 0.1263, 0.2035, 0.1684, 0.1544, 0.1965, 
+0.1544, 0.1684, 0.1263, 0.1193, 0.0842, 0.0842, 0.1193, 0.1263, 
+0.1193, 0.1333, 0.1474, 0.1754, 0.1263, 0.1474, 0.1053, 0.1193, 
+0.1053, 0.1123, 0.0702, 0.1333, 0.0982, 0.0772, 0.1333, 0.1263, 
+0.1123, 0.1614, 0.0842, 0.1333, 0.1193, 0.1404, 0.1193, 0.1053, 
+0.1123, 0.1684, 0.1333, 0.1123, 0.0982, 0.1544, 0.1123, 0.1333, 
+0.0982, 0.1474, 0.1474, 0.1544, 0.1193, 0.1544, 0.1123, 0.1404, 
+0.1123, 0.1684, 0.1404, 0.1263, 0.1544, 0.0632, 0.1263, 0.1263, 
+0.1123, 0.1825, 0.1825, 0.1263, 0.1053, 0.1404, 0.1123, 0.1404, 
+0.1193, 0.0632, 0.0772, 0.0702, 0.0421, 0.0912, 0.1614, 0.0632, 
+0.0912, 0.1263, 0.0912, 0.1333, 0.0772, 0.0561, 0.0982, 0.1263, 
+0.0632, 0.0702, 0.1123, 0.1263, 0.1333, 0.0982, 0.0982, 0.2316, 
+0.0982, 0.1193, 0.1263, 0.0842, 0.1053, 0.1193, 0.0772, 0.0632, 
+0.1474, 0.0632, 0.1053, 0.0421, 0.1123, 0.1263, 0.1544, 0.1193, 
+0.1123, 0.0912, 0.0632, 0.0982, 0.1053, 0.1053, 0.0842, 0.0702, 
+0.1263, 0.0842, 0.0912, 0.0702, 0.1123, 0.1333, 0.0982, 0.0702, 
+0.0842, 0.0982, 0.0912, 0.0702, 0.0421, 0.0912, 0.1193, 0.1123, 
+0.0912, 0.0491, 0.0842, 0.0421, 0.0702, 0.0491, 0.0281, 0.1053, 
+0.0702, 0.1053, 0.0561, 0.1474, 0.0421, 0.1474, 0.1053, 0.0772, 
+0.0702, 0.0702, 0.0842, 0.0912, 0.1053, 0.0702, 0.1544, 0.0842, 
+0.1193, 0.0842, 0.0842, 0.0561, 0.1333, 0.1263, 0.1404, 0.1193, 
+0.0702, 0.0632, 0.0632, 0.1123, 0.0912, 0.0632, 0.0702, 0.0982, 
+0.0772, 0.1123, 0.1404, 0.1193, 0.0772, 0.1404, 0.0491, 0.0772, 
+0.0842, 0.0982, 0.0772, 0.1053, 0.1263, 0.1474, 0.1684, 0.0561, 
+0.0561, 0.1053, 0.1333, 0.1404, 0.1544, 0.1404, 0.1333, 0.1825, 
+0.1123, 0.0982, 0.1614, 0.1614, 0.1544, 0.1404, 0.1193, 0.2456, 
+0.2035, 0.2246, 0.2246, 0.2667, 0.1825, 0.1333, 0.2246, 0.2105, 
+0.1614, 0.1333, 0.0912, 0.1053, 0.1825, 0.1474, 0.1895, 0.2105, 
+0.2035, 0.2035, 0.1895, 0.1754, 0.2386, 0.3018, 0.1754, 0.2105, 
+0.1614, 0.1825, 0.2456, 0.1895, 0.1965, 0.2667, 0.1614, 0.1895, 
+0.1474, 0.2667, 0.1895, 0.1053, 0.1263, 0.0982, 0.0421, 0.1053, 
+0.1754, 0.1053, 0.1263, 0.1754, 0.1333, 0.2105, 0.1263, 0.0702, 
+0.0912, 0.1404, 0.1193, 0.1754, 0.1333, 0.1123, 0.0702, 0.1123, 
+0.1053, 0.0912, 0.0982, 0.0842, 0.0842, 0.1123, 0.0772, 0.0842, 
+0.1825, 0.2246, 0.1053, 0.1333, 0.1123, 0.0982, 0.1053, 0.1544, 
+0.1193, 0.1333, 0.1754, 0.1333, 0.1965, 0.1544, 0.0842, 0.0842, 
+0.0772, 0.0772, 0.0421, 0.0912, 0.0632, 0.0421, 0.0421, 0.0421, 
+0.0421, 0.0491, 0.1123, 0.1333, 0.1404, 0.0912, 0.0561, 0.0632, 
+0.0772, 0.0632, 0.0421, 0.0702, 0.0421, 0.0632, 0.0421, 0.0211, 
+0.0491, 0.0351, 0.0351, 0.0421, 0.0421, 0.0351, 0.0702, 0.0772, 
+0.0842, 0.0702, 0.0281, 0.0702, 0.0351, 0.0281, 0.014, 0.0351, 
+0.0421, 0.0211, 0.0281, 0.0421, 0.014, 0.0211, 0.014, 0.014, 
+0.0421, 0.0281, 0.0421, 0.0351, 0.0772, 0.014, 0.0281, 0.0211, 
+0.0421, 0.0421, 0.0351, 0.0421, 0.007, 0.007, 0.0281, 0.0351, 
+0.014, 0.0281, 0.007, 0.0211, 0.007, 0.014, 0.014, 0.007, 0.0211, 
+0.0211, 0.0351, 0.014, 0.007, 0, 0, 0.007, 0.007, 0, 0.007, 0.007, 
+0.007, 0, 0, 0.007, 0.007, 0.007, 0, 0.014, 0.007, 0, 0, 0.007, 
+0.007, 0, 0.007, 0, 0.014, 0, 0.007, 0, 0, 0.014, 0.007, 0.007, 
+0, 0, 0, 0.007, 0.007, 0, 0.007, 0.007, 0, 0.007, 0, 0, 0.007, 
+0.007, 0.014, 0.014, 0.014, 0.007, 0, 0, 0.007, 0, 0, 0, 0.007, 
+0.007, 0, 0.007, 0, 0.007, 0.007, 0.007, 0, 0, 0, 0, 0.007, 0, 
+0.007, 0.007, 0.007, 0.007, 0, 0.007, 0.007, 0.007, 0, 0.007, 
+0.014, 0.007, 0.007, 0, 0, 0.007, 0.007, 0.007, 0, 0.007, 0.007, 
+0.014, 0.0211, 0, 0.007, 0.007), short = c(0, 0.007, 0, 0.007, 
+0.007, 0, 0.014, 0.007, 0.007, 0, 0.007, 0, 0, 0, 0.007, 0, 0, 
+0.007, 0.007, 0, 0.014, 0.007, 0.007, 0.007, 0.014, 0.007, 0, 
+0.007, 0.0211, 0.007, 0.007, 0.007, 0.007, 0, 0, 0.007, 0.007, 
+0.014, 0.014, 0.014, 0, 0.007, 0.0211, 0.007, 0.014, 0.014, 0.007, 
+0.0281, 0.0211, 0.0421, 0.0281, 0.014, 0.0211, 0.0491, 0.007, 
+0, 0.007, 0.014, 0.014, 0.0211, 0, 0.014, 0.0211, 0.014, 0.014, 
+0.0281, 0, 0.0281, 0.0281, 0.0351, 0.0211, 0.014, 0.0351, 0, 
+0.0491, 0.014, 0.0211, 0.0281, 0, 0.0211, 0.014, 0.007, 0.0211, 
+0.014, 0.0351, 0.014, 0.0211, 0.014, 0, 0.0211, 0.0211, 0.0281, 
+0.014, 0.0211, 0.014, 0.007, 0.0421, 0.0281, 0.0351, 0.014, 0.0211, 
+0.0211, 0.0491, 0.0351, 0.0281, 0.0421, 0.0351, 0.0421, 0.0491, 
+0.0351, 0.0561, 0.007, 0.0211, 0.0281, 0.0561, 0.0351, 0.0491, 
+0.0351, 0.0491, 0.0421, 0.0281, 0.0702, 0.0772, 0.0421, 0.0491, 
+0.0421, 0.0421, 0.0912, 0.0211, 0.0421, 0.0561, 0.0421, 0.0702, 
+0.0561, 0.0702, 0.0772, 0.0561, 0.0842, 0.0702, 0.0772, 0.0772, 
+0.0702, 0.0772, 0.1053, 0.0351, 0.0842, 0.0421, 0.0351, 0.0421, 
+0.0421, 0.0281, 0.0351, 0.0561, 0.007, 0.0632, 0.0772, 0.0281, 
+0.0281, 0.0491, 0.0491, 0.0421, 0.0491, 0.0632, 0.0351, 0.0772, 
+0.0772, 0.0772, 0.0491, 0.0351, 0.0491, 0.0702, 0.0491, 0.0842, 
+0.0491, 0.1053, 0.1474, 0.0842, 0.0491, 0.0561, 0.0772, 0.0772, 
+0.0561, 0.0632, 0.0561, 0.1053, 0.0632, 0.1123, 0.0491, 0.0982, 
+0.0702, 0.0842, 0.2035, 0.0842, 0.0702, 0.0772, 0.0632, 0.0351, 
+0.0632, 0.0632, 0.0702, 0.0842, 0.1123, 0.0632, 0.0421, 0.0772, 
+0.0772, 0.0772, 0.0772, 0.0421, 0.0561, 0.0211, 0.0351, 0.0912, 
+0.0281, 0.0561, 0.0561, 0.0351, 0.0702, 0.0632, 0.0772, 0.0912, 
+0.0632, 0.0772, 0.0421, 0.0632, 0.0561, 0.0702, 0.0281, 0.0281, 
+0.0421, 0.0632, 0.0421, 0.0561, 0.0842, 0.0561, 0.0632, 0.0772, 
+0.0632, 0.0842, 0.0561, 0.0982, 0.0632, 0.0982, 0.0702, 0.0561, 
+0.0491, 0.0982, 0.0702, 0.0702, 0.0211, 0.0421, 0.0351, 0.0561, 
+0.0982, 0.1193, 0.0912, 0.0912, 0.0912, 0.0772, 0.0632, 0.0982, 
+0.0632, 0.0772, 0.0982, 0.0632, 0.0632, 0.0772, 0.0421, 0.0772, 
+0.0421, 0.1404, 0.1474, 0.1053, 0.0912, 0.1544, 0.1263, 0.1053, 
+0.1193, 0.1614, 0.0632, 0.1123, 0.0982, 0.1263, 0.1825, 0.1474, 
+0.1193, 0.0702, 0.0912, 0.0491, 0.1263, 0.0912, 0.1123, 0.1193, 
+0.0772, 0.0702, 0.0702, 0.0772, 0.0281, 0.0912, 0.0421, 0.1123, 
+0.1193, 0.0632, 0.0281, 0.0561, 0.0772, 0.0772, 0.0842, 0.0491, 
+0.0772, 0.0491, 0.0702, 0.0912, 0.0702, 0.0982, 0.0842, 0.0912, 
+0.0982, 0.0982, 0.0772, 0.0772, 0.0491, 0.0842, 0.0702, 0.1123, 
+0.0772, 0.1263, 0.1404, 0.1474, 0.0632, 0.1333, 0.1193, 0.0842, 
+0.0632, 0.0281, 0.0702, 0.0772, 0.0982, 0.0982, 0.0842, 0.1193, 
+0.1123, 0.1053, 0.0912, 0.0772, 0.0982, 0.1053, 0.1263, 0.0842, 
+0.1053, 0.1193, 0.0702, 0.1053, 0.0702, 0.0702, 0.0772, 0.0842, 
+0.0632, 0.0702, 0.0561, 0.0632, 0.0912, 0.0772, 0.0491, 0.0351, 
+0.0632, 0.0632, 0.0842, 0.0702, 0.0842, 0.0351, 0.0982, 0.0561, 
+0.0632, 0.0842, 0.0561, 0.1333, 0.1193, 0.0842, 0.0702, 0.0632, 
+0.0491, 0.0702, 0.0491, 0.0211, 0.0632, 0.0561, 0.0211, 0.1053, 
+0.1053, 0.0702, 0.0912, 0.1053, 0.0842, 0.1123, 0.0211, 0.0211, 
+0.0491, 0.0561, 0.0702, 0.0702, 0.0842, 0.0491, 0.0772, 0.0702, 
+0.0982, 0.0702, 0.0561, 0.0561, 0.0772, 0.0702, 0.0491, 0.0421, 
+0.0351, 0.0632, 0.0351, 0.0421, 0.0982, 0.0421, 0.0561, 0.1193, 
+0.0772, 0.0351, 0.0351, 0.0211, 0.0281, 0.0561, 0.0632, 0.0561, 
+0.0421, 0.0912, 0.0912, 0.0772, 0.0281, 0.0421, 0.0491, 0.0772, 
+0.014, 0.0772, 0.0491, 0.0772, 0.0632, 0.0772, 0.0632, 0.0702, 
+0.0281, 0.0351, 0.0702, 0.0702, 0.0351, 0.0211, 0.0421, 0.0491, 
+0.0772, 0.0632, 0.0421, 0.0772, 0.0912, 0.0281, 0.0772, 0.0912, 
+0.0561, 0.1053, 0.0702, 0.0982, 0.0912, 0.0211, 0.0632, 0.1123, 
+0.1333, 0.0912, 0.0632, 0.0702, 0.0842, 0.0842, 0.0561, 0.0491, 
+0.0632, 0.0912, 0.0632, 0.0842, 0.1404, 0.2035, 0.0912, 0.1123, 
+0.0982, 0.0561, 0.0842, 0.1123, 0.1123, 0.1123, 0.1474, 0.1754, 
+0.1404, 0.1544, 0.1825, 0.1825, 0.1684, 0.0982, 0.1614, 0.1333, 
+0.0842, 0.1404, 0.1263, 0.1404, 0.1754, 0.1684, 0.1895, 0.2035, 
+0.1053, 0.0982, 0.1263, 0.1614, 0.1263, 0.1825, 0.1263, 0.1754, 
+0.1754, 0.0702, 0.1123, 0.1053, 0.0982, 0.0632, 0.1474, 0.1193, 
+0.1193, 0.0772, 0.0281, 0.0561, 0.0351, 0.0982, 0.0561, 0.0632, 
+0.0772, 0.1123, 0.1053, 0.0561, 0.0702, 0.0912, 0.0912, 0.1123, 
+0.0912, 0.1193, 0.0982, 0.1193, 0.0702, 0.1053, 0.0561, 0.0912, 
+0.0561, 0.0842, 0.0351, 0.0632, 0.0702, 0.0632, 0.0491, 0.0842, 
+0.0982, 0.0632, 0.0702, 0.0491, 0.0912, 0.0351, 0.0912, 0.0842, 
+0.1123, 0.0561, 0.0632, 0.0491, 0.0491, 0.014, 0.0351, 0.0351, 
+0.0211, 0.0211, 0.0351, 0.0281, 0.0561, 0.0491, 0.0491, 0.0351, 
+0.0421, 0.0561, 0.014, 0.0491, 0.0561, 0.0561, 0.0281, 0.0421, 
+0.0281, 0.007, 0.0421, 0.0421, 0.007, 0.0281, 0.007, 0.0281, 
+0.0351, 0.0561, 0.007, 0.0491, 0.0281, 0.0351, 0.0491, 0.007, 
+0.0421, 0.007, 0.007, 0.0211, 0.014, 0.014, 0.0211, 0.014, 0, 
+0.0421, 0.014, 0.014, 0.0211, 0.0211, 0.0211, 0.0281, 0.0421, 
+0.0281, 0.014, 0.0211, 0, 0.0351, 0.0211, 0, 0.014, 0.014, 0, 
+0, 0, 0.007, 0.0211, 0, 0, 0.014, 0, 0.014, 0.007, 0.014, 0.007, 
+0, 0, 0.014, 0.014, 0, 0.007, 0.007, 0, 0, 0.007, 0, 0.007, 0, 
+0.007, 0.014, 0, 0, 0.007, 0.007, 0, 0.007, 0.007, 0.007, 0, 
+0, 0.007, 0, 0.007, 0, 0.007, 0, 0.014, 0.007, 0, 0.007, 0.007, 
+0.007, 0.007, 0.007, 0, 0.007, 0.007, 0, 0, 0.007, 0, 0.007, 
+0.007, 0, 0, 0, 0.007, 0, 0.007, 0.007, 0.007, 0, 0.007, 0.007, 
+0.007, 0, 0, 0.007, 0, 0.007, 0, 0, 0, 0.007, 0.007, 0.007, 0.007, 
+0.007, 0.007, 0, 0, 0, 0, 0.007, 0, 0, 0, 0.007, 0.007, 0.014, 
+0, 0.007, 0.007, 0.007, 0, 0, 0, 0.007, 0, 0.007, 0, 0, 0.014, 
+0, 0)), class = "data.frame", row.names = c(NA, -744L))
+
+instrument <- "GBP_JPY"
+timestamp <- .POSIXct(1638316800)
+currentprice <- 150.64
+
+layers <- list(
+  ggplot2::layer(geom = ggplot2::GeomCol, mapping = ggplot2::aes(x = .data$price, y = .data$long),
+          stat = ggplot2::StatIdentity, position = ggplot2::PositionIdentity,
+          params = list(na.rm = FALSE, colour = "#1aa1a6", fill = "#1aa1a6"),
+          inherit.aes = TRUE, check.aes = FALSE, check.param = FALSE),
+  ggplot2::layer(geom = ggplot2::GeomCol, mapping = ggplot2::aes(x = .data$price, y = -.data$short),
+          stat = ggplot2::StatIdentity, position = ggplot2::PositionIdentity,
+          params = list(na.rm = FALSE, colour = "#586e75", fill = "#586e75"),
+          inherit.aes = TRUE, check.aes = FALSE, check.param = FALSE),
+  ggplot2::layer(geom = ggplot2::GeomVline, data = NULL, mapping = ggplot2::aes(xintercept = currentprice),
+          stat = ggplot2::StatIdentity, position = ggplot2::PositionIdentity,
+          params = list(na.rm = FALSE, colour = "#db4525", alpha = 0.5),
+          inherit.aes = FALSE, check.aes = FALSE, check.param = FALSE),
+  ggplot2::scale_x_continuous(breaks = function(x) pretty.default(x, n = 40L)),
+  ggplot2::scale_y_continuous(),
+  ggplot2::labs(x = "Price", y = "% short / % long",
+                title = paste0("OANDA Position Book: ", instrument, " at ",
+                        format.POSIXct(timestamp), " / Current Price: ", currentprice)),
+  ggplot2::coord_flip(),
+  ichimoku:::theme_ichimoku_light()
+)
+
+print(ggplot2::ggplot(data = df) + layers)
+
+```
+
 Please note that this feature has been implemented by OANDA only for certain major currency pairs and should be considered experimental.
 
 Note also that for the order book, only the interquartile range of order levels is charted as some orders are placed very far from the market price. The returned dataframe contains the full order book nevertheless.
@@ -276,7 +569,7 @@ oanda_instruments()
 print(ichimoku:::.oanda_instruments)
 ```
 
-Note: the above table is saved as internal package data and used as a fallback if the API call fails. In such a case, a warning is issued once per session as subsequent calls will return the cached list.
+Note: the above table is saved as internal package data and used as a fallback if the instruments API call fails. In such a case, a warning is issued once per session as subsequent calls will return the cached list.
 
 ## Caching Implementation
 
@@ -296,6 +589,6 @@ Calling `oanda_switch()` will also clear all cached variables.
 
 OANDA fxTrade API developer website: <https://developer.oanda.com/>.
 
-Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.2.5, <https://CRAN.R-project.org/package=ichimoku>.
+Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.3.0, <https://CRAN.R-project.org/package=ichimoku>.
 
 ---

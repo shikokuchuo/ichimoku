@@ -112,7 +112,7 @@ Sasaki, H. 佐々木 英信 (1996), *一目均衡表の研究 [ichimoku kinkouhy
 
 'OANDA' and 'fxTrade' are trademarks owned by OANDA Corporation, an entity unaffiliated with the ichimoku package.
 
-Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.2.99, <https://CRAN.R-project.org/package=ichimoku>.
+Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.3.0, <https://CRAN.R-project.org/package=ichimoku>.
 
 --
 

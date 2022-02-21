@@ -259,9 +259,6 @@ getPrices <- function(instrument, granularity, count, from, to, price, server,
 #' @details This function connects to the OANDA fxTrade Streaming API. Use the
 #'     'Esc' key to stop the stream and return the session data.
 #'
-#'     All returned times are in UTC. 'b' and 'a' used in column headings are
-#'     abbreviations to denote 'bid' and 'ask' respectively.
-#'
 #'     Note: only messages of type 'PRICE' are processed. Messages of type
 #'     'HEARTBEAT' consisting of only a timestamp are discarded.
 #'
@@ -314,6 +311,15 @@ oanda_stream <- function(instrument, display = 7L, limit, server, apikey) {
 
   data <- NULL
   on.exit(expr = {
+    xlen <- dim(data)[1L]
+    bids <- unlist(.subset2(data, "bids"))
+    ncol <- length(bids) / xlen
+    data[["bids"]] <- matrix(as.numeric(bids), nrow = xlen, ncol = ncol, byrow = TRUE,
+                             dimnames = list(NULL, names(bids)[1:ncol]))
+    asks <- unlist(.subset2(data, "asks"))
+    ncol <- length(asks) / xlen
+    data[["asks"]] <- matrix(as.numeric(asks), nrow = xlen, ncol = ncol, byrow = TRUE,
+                             dimnames = list(NULL, names(asks)[1:ncol]))
     data[["closeoutBid"]] <- as.numeric(.subset2(data, "closeoutBid"))
     data[["closeoutAsk"]] <- as.numeric(.subset2(data, "closeoutAsk"))
     return(invisible(data))

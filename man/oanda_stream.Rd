@@ -42,9 +42,6 @@ Stream live price and liquidity data for major currencies, metals,
 This function connects to the OANDA fxTrade Streaming API. Use the
     'Esc' key to stop the stream and return the session data.
 
-    All returned times are in UTC. 'b' and 'a' used in column headings are
-    abbreviations to denote 'bid' and 'ask' respectively.
-
     Note: only messages of type 'PRICE' are processed. Messages of type
     'HEARTBEAT' consisting of only a timestamp are discarded.
 }
