@@ -118,15 +118,16 @@ oanda <- function(instrument,
       output <- missing(quietly) || !isTRUE(quietly)
       list <- vector(mode = "list", length = requests)
       for (i in seq_len(requests)) {
-        if (output) cat("\rPerforming request [", rep(".", i), rep(" ", requests - i), "]", sep = "")
+        if (output) cat("\rPerforming request [", rep(".", i), rep(" ", requests - i), "]",
+                        file = stdout(), sep = "")
         list[[i]] <- getPrices(instrument = instrument, granularity = granularity,
                                from = strftime(bounds[i], format = "%Y-%m-%dT%H:%M:%S"),
                                to = strftime(bounds[i + 1L], format = "%Y-%m-%dT%H:%M:%S"),
                                price = price, server = server, apikey = apikey)
       }
-      if (output) cat("\nMerging data partitions... ")
+      if (output) cat("\nMerging data partitions... ", file = stdout())
       df <- do.call(df_merge, list)
-      if (output) cat("complete")
+      if (output) cat("complete\n", file = stdout())
       }
 
     } else {
@@ -338,7 +339,7 @@ oanda_stream <- function(instrument, display = 7L, limit, server, apikey) {
     }
     end <- dim(data)[1L]
     start <- max(1L, end - display + 1L)
-    cat("\014")
+    cat("\014", file = stdout())
     message("Streaming data... Press 'Esc' to return")
     print.data.frame(data[start:end, ])
   })
@@ -544,8 +545,8 @@ oanda_studio <- function(instrument = "USD_JPY",
       mc <- match.call()
       mc[["new.process"]] <- NULL
       cmd <- switch(.subset2(.Platform, "OS.type"),
-                    unix = paste0(R.home("bin"), "/Rscript"),
-                    windows = paste0(R.home("bin"), "/Rscript.exe"))
+                    unix = file.path(R.home("bin"), "Rscript"),
+                    windows = file.path(R.home("bin"), "Rscript.exe"))
       return(system2(command = cmd, args = c("-e", shQuote(paste0("ichimoku::", deparse(mc)))),
                      stdout = NULL, stderr = NULL, wait = FALSE))
     }
@@ -881,7 +882,7 @@ oanda_view <- function(market = c("allfx", "bonds", "commodities", "fx", "metals
   xlen <- length(sel)
   data <- vector(mode = "list", length = xlen)
   for (i in seq_len(xlen)) {
-    cat("\rRetrieving ", market, " [", rep(".", i), rep(" ", xlen - i), "]", sep = "")
+    cat("\rRetrieving ", market, " [", rep(".", i), rep(" ", xlen - i), "]", file = stdout(), sep = "")
     data[[i]] <- getPrices(instrument = sel[i], granularity = "D", count = 1, price = price,
                            server = server, apikey = apikey, .validate = FALSE)
   }
@@ -902,7 +903,7 @@ oanda_view <- function(market = c("allfx", "bonds", "commodities", "fx", "metals
          timestamp = time)
   )
 
-  cat("\n", format.POSIXct(time), " / ", price, "\n", sep = "")
+  cat("\n", format.POSIXct(time), " / ", price, "\n", file = stdout(), sep = "")
   print(df)
 
 }
@@ -942,7 +943,7 @@ oanda_quote <- function(instrument, price = c("M", "B", "A"), server, apikey) {
   pctchg <- round(100 * (data[["c"]] / data[["o"]] - 1), digits = 4L)
   cat(instrument, format.POSIXct(.Call(ichimoku_psxct, data[["t"]])),
       "open:", data[["o"]], " high:", data[["h"]], " low:", data[["l"]],
-      " last:\u001b[7m", data[["c"]], "\u001b[27m %chg:", pctchg, price)
+      " last:\u001b[7m", data[["c"]], "\u001b[27m %chg:", pctchg, price, file = stdout())
 
 }
 

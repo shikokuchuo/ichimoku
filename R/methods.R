@@ -95,13 +95,13 @@ str.ichimoku <- function (object, ...) {
   if (is.null(dims)) {
     xlen <- length(object)
     dates <- format.POSIXct(index.ichimoku(object, c(1L, xlen)))
-    cat("ichimoku object with no dimensions\nVector <numeric> w/ length:", xlen)
+    cat("ichimoku object with no dimensions\nVector <numeric> w/ length:", xlen, file = stdout())
   } else {
     dates <- format.POSIXct(index.ichimoku(object, c(1L, dims[1L])))
     cat("ichimoku object [", dates[1L], " / ", dates[2L], "] (",
         dims[1L], ", ", dims[2L], ")", if (hasStrat(object)) " w/ strat",
-        "\n <double> $", sep = "")
-    cat(attr(object, "dimnames")[[2L]], sep = " $")
+        "\n <double> $", file = stdout(), sep = "")
+    cat(attr(object, "dimnames")[[2L]], file = stdout(), sep = " $")
   }
   cat("\n index: <POSIXct>", dates[1L], "...", dates[2L],
       "\n attributes:\n  periods:", attr(object, "periods"),
@@ -115,9 +115,10 @@ str.ichimoku <- function (object, ...) {
       } else {
         paste0(periodicity, " secs")
       },
-      "\n  ticker:", attr(object, "ticker"), "\n")
+      "\n  ticker:", attr(object, "ticker"), "\n", file = stdout())
   if (hasStrat(object)) cat("  strat: [strategy: ", attr(object, "strat")["Strategy", ][[1L]],
-                            " w/ direction: ", attr(object, "strat")["Direction", ][[1L]], "... ]\n", sep = "")
+                            " w/ direction: ", attr(object, "strat")["Direction", ][[1L]], "... ]\n",
+                            file = stdout(), sep = "")
 
 }
 
@@ -156,22 +157,23 @@ summary.ichimoku <- function(object, strat = TRUE, ...) {
   if (hasStrat(object) && (missing(strat) || isTRUE(strat))) {
     summary <- NULL
     tryCatch(attr(object, "strat")["Strategy", ],
-             error = function(e) cat(summary <<- "ichimoku object with invalid strategy"))
+             error = function(e) cat(summary <<- "ichimoku object with invalid strategy"), file = stdout())
     if (is.null(summary)) attr(object, "strat") else invisible(summary)
 
   } else {
     (!is.integer(periods <- attr(object, "periods")) || length(periods) != 3L ||
        !is.numeric(periodicity <- attr(object, "periodicity")) || length(periodicity) != 1L) && {
-         cat(summary <- "ichimoku object with invalid attributes")
+         cat(summary <- "ichimoku object with invalid attributes", file = stdout())
       return(invisible(summary))
        }
     dims <- attr(object, "dim")
     if (is.null(dims)) {
-      cat(summary <- "ichimoku object with no dimensions", "\n")
+      cat(summary <- "ichimoku object with no dimensions", "\n", file = stdout())
     } else if (dims[2L] < 12L) {
-      cat(summary <- "incomplete ichimoku object (partial or subset)", "\n")
+      cat(summary <- "incomplete ichimoku object (partial or subset)", "\n", file = stdout())
     } else {
-      cat(summary <- paste0("ichimoku object with dimensions (", dims[1L], ", ", dims[2L], ")"), "\n")
+      cat(summary <- paste0("ichimoku object with dimensions (", dims[1L], ", ",
+                            dims[2L], ")"), "\n", file = stdout())
       if (dims[1L] != 0L) {
         core <- coredata.ichimoku(object)
         end <- sum(!is.na(core[, "close"]))
@@ -181,7 +183,8 @@ summary.ichimoku <- function(object, strat = TRUE, ...) {
         cat("\n            Max: ", dates[2L], " [", core[high, "high"],
             "]\nStart: ", dates[1L], " [", core[1L, "open"],
             "]   End: ", dates[4L], " [", core[end, "close"],
-            "]\n            Min: ", dates[3L], " [", core[low, "low"], "]\n", sep = "")
+            "]\n            Min: ", dates[3L], " [", core[low, "low"], "]\n",
+            file = stdout(), sep = "")
       }
     }
 
@@ -195,7 +198,7 @@ summary.ichimoku <- function(object, strat = TRUE, ...) {
         } else {
           paste0(periodicity, " secs")
         },
-        "\nTicker:", attr(object, "ticker"))
+        "\nTicker:", attr(object, "ticker"), "\n", file = stdout())
 
     invisible(summary)
 

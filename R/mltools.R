@@ -414,7 +414,7 @@ relative <- function(x, order = FALSE, signif = 0.2, quietly) {
                          periodicity = attr(x, "periodicity"),
                          ticker = attr(x, "ticker"))
 
-  if (missing(quietly) || !isTRUE(quietly)) cat("Latest:", time, "| n:", xlen, "\n")
+  if (missing(quietly) || !isTRUE(quietly)) cat("Latest:", time, "| n:", xlen, "\n", file = stdout())
   df
 
 }
