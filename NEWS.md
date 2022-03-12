@@ -1,4 +1,4 @@
-# ichimoku 1.3.0.1 (under development)
+# ichimoku 1.3.0.2 (under development)
 
 # ichimoku 1.3.0
 
