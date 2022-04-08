@@ -220,7 +220,7 @@ mlgrid <- function(x,
   }
   dir <- match.arg(dir)
   type <- match.arg(type)
-  format <- match.arg(format)
+  format <- match.arg2(format, c("dataframe", "matrix"))
   core <- coredata.ichimoku(x)
   xlen <- dim(core)[1L]
   p2 <- attr(x, "periods")[2L]
@@ -273,25 +273,24 @@ mlgrid <- function(x,
     if (y != "none") grid <- cbind(idx, grid)
   }
 
-  switch(
-    format,
-    dataframe = `attributes<-`(matrix_df(grid),
-                               list(names = attr(grid, "dimnames")[[2L]],
-                                    class = "data.frame",
-                                    row.names = attr(grid, "dimnames")[[1L]],
-                                    y = y,
-                                    k = k,
-                                    direction = dir,
-                                    type = type,
-                                    ticker = attr(x, "ticker"))),
-    matrix = `attributes<-`(grid,
-                            list(dim = attr(grid, "dim"),
-                                 dimnames = attr(grid, "dimnames"),
-                                 y = y,
-                                 k = k,
-                                 direction = dir,
-                                 type = type,
-                                 ticker = attr(x, "ticker")))
+  switch(format,
+         `attributes<-`(matrix_df(grid),
+                        list(names = attr(grid, "dimnames")[[2L]],
+                             class = "data.frame",
+                             row.names = attr(grid, "dimnames")[[1L]],
+                             y = y,
+                             k = k,
+                             direction = dir,
+                             type = type,
+                             ticker = attr(x, "ticker"))),
+         `attributes<-`(grid,
+                        list(dim = attr(grid, "dim"),
+                             dimnames = attr(grid, "dimnames"),
+                             y = y,
+                             k = k,
+                             direction = dir,
+                             type = type,
+                             ticker = attr(x, "ticker")))
   )
 
 }

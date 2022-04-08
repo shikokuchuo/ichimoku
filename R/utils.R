@@ -352,3 +352,25 @@ more <- function(n) {
 #'
 is.ichimoku <- function(x) inherits(x, "ichimoku")
 
+#' match.arg Replacement
+#'
+#' Internal version of match.arg used to return an integer value for integer
+#'     switch statements.
+#'
+#' @param choice function parameter to match.
+#' @param choices character vector listing the candidates to match to.
+#'
+#' @return Integer position of 'choice' in 'choices' if matched, else 0L.
+#'
+#' @noRd
+#'
+match.arg2 <- function(choice, choices) {
+
+  identical(choice, choices) && return(1L)
+  index <- pmatch(choice[1L], choices, nomatch = 0L, duplicates.ok = TRUE)
+  index || stop(sprintf("'%s' should be one of %s",
+                        deparse(substitute(choice)), paste(choices, collapse = ", ")))
+  index
+
+}
+

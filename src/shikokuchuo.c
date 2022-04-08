@@ -371,8 +371,7 @@ SEXP _missingarg(void) {
 
 /* imports from the package 'xts' */
 SEXP _naomit(SEXP x) {
-  static SEXP(*fun)(SEXP) = NULL;
-  fun = (SEXP(*)(SEXP)) R_GetCCallable("xts", "na_omit_xts");
+  DL_FUNC fun = R_GetCCallable("xts", "na_omit_xts");
   return fun(x);
 }
 
