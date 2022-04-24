@@ -6,7 +6,6 @@
 #include <Rinternals.h>
 #include <R_ext/Visibility.h>
 
-/* define internal symbols */
 SEXP xts_IndexSymbol;
 SEXP xts_IndexTclassSymbol;
 SEXP xts_IndexTzoneSymbol;
@@ -17,11 +16,11 @@ SEXP ichimoku_TickerSymbol;
 /* rolling max over a window */
 SEXP _wmax(const SEXP x, const SEXP window) {
 
-  const R_xlen_t n = XLENGTH(x);
-
-  const int w = INTEGER(window)[0], w1 = w - 1;
-  SEXP vec = PROTECT(Rf_allocVector(REALSXP, n));
   const double *px = REAL(x);
+  const R_xlen_t n = Rf_xlength(x);
+  const int w = *INTEGER(window), w1 = w - 1;
+
+  SEXP vec = Rf_allocVector(REALSXP, n);
   double *pvec = REAL(vec), s = 0;
 
   for (int i = 0; i < w1; i++) {
@@ -36,7 +35,6 @@ SEXP _wmax(const SEXP x, const SEXP window) {
     pvec[i] = s;
   }
 
-  UNPROTECT(1);
   return vec;
 
 }
@@ -44,10 +42,11 @@ SEXP _wmax(const SEXP x, const SEXP window) {
 /* rolling min over a window */
 SEXP _wmin(const SEXP x, const SEXP window) {
 
-  const R_xlen_t n = XLENGTH(x);
-  const int w = INTEGER(window)[0], w1 = w - 1;
-  SEXP vec = PROTECT(Rf_allocVector(REALSXP, n));
   const double *px = REAL(x);
+  const R_xlen_t n = Rf_xlength(x);
+  const int w = *INTEGER(window), w1 = w - 1;
+
+  SEXP vec = Rf_allocVector(REALSXP, n);
   double *pvec = REAL(vec), s = 0;
 
   for (int i = 0; i < w1; i++) {
@@ -62,7 +61,6 @@ SEXP _wmin(const SEXP x, const SEXP window) {
     pvec[i] = s;
   }
 
-  UNPROTECT(1);
   return vec;
 
 }
@@ -70,10 +68,11 @@ SEXP _wmin(const SEXP x, const SEXP window) {
 /* rolling mean over a window */
 SEXP _wmean(const SEXP x, const SEXP window) {
 
-  const R_xlen_t n = XLENGTH(x);
-  const int w = INTEGER(window)[0], w1 = w - 1;
-  SEXP vec = PROTECT(Rf_allocVector(REALSXP, n));
   const double *px = REAL(x);
+  const R_xlen_t n = Rf_xlength(x);
+  const int w = *INTEGER(window), w1 = w - 1;
+
+  SEXP vec = Rf_allocVector(REALSXP, n);
   double *pvec = REAL(vec);
   long double s = 0;
 
@@ -87,7 +86,6 @@ SEXP _wmean(const SEXP x, const SEXP window) {
     s -= px[i - w1];
   }
 
-  UNPROTECT(1);
   return vec;
 
 }
@@ -95,7 +93,8 @@ SEXP _wmean(const SEXP x, const SEXP window) {
 /* look - inspect informational attributes */
 SEXP _look(const SEXP x) {
 
-  SEXP ax, y = PROTECT(Rf_ScalarInteger(0));
+  SEXP ax, y;
+  PROTECT(y = Rf_ScalarInteger(0));
 
   for (ax = ATTRIB(x); ax != R_NilValue; ax = CDR(ax)) {
     if (TAG(ax) != R_NamesSymbol && TAG(ax) != R_RowNamesSymbol &&
@@ -125,13 +124,13 @@ SEXP _psxct(SEXP x) {
 /* ichimoku to data.frame / tibble converter */
 SEXP _tbl(const SEXP x, const SEXP type) {
 
-  int typ = INTEGER(type)[0];
+  int typ = *INTEGER(type);
   const int keepattrs = typ % 5 == 0 ? 1 : 0;
   if (keepattrs)
     typ /= 5;
 
   R_xlen_t xlen = 0, xwid = 0;
-  const SEXP dims = PROTECT(Rf_getAttrib(x, R_DimSymbol));
+  const SEXP dims = Rf_getAttrib(x, R_DimSymbol);
   switch (TYPEOF(dims)) {
   case INTSXP:
     xlen = INTEGER(dims)[0];
@@ -142,32 +141,28 @@ SEXP _tbl(const SEXP x, const SEXP type) {
     xwid = REAL(dims)[1];
     break;
   }
-  UNPROTECT(1);
 
-  SEXP tbl = PROTECT(Rf_allocVector(VECSXP, xwid + 1));
+  SEXP tbl, index, dn2, names, klass, rownames;
 
-  SEXP index = PROTECT(Rf_shallow_duplicate(Rf_getAttrib(x, xts_IndexSymbol)));
+  PROTECT(tbl = Rf_allocVector(VECSXP, xwid + 1));
+
+  PROTECT(index = Rf_shallow_duplicate(Rf_getAttrib(x, xts_IndexSymbol)));
   index = _psxct(index);
   SET_VECTOR_ELT(tbl, 0, index);
   UNPROTECT(1);
 
-  unsigned char *src;
-  unsigned char *dst;
-  src = (unsigned char *) REAL(x);
+  unsigned char *src = (unsigned char *) REAL(x);
   size_t vecsize = xlen * sizeof(double);
-
   for (R_xlen_t j = 1; j <= xwid; j++) {
-    SEXP vec = PROTECT(Rf_allocVector(REALSXP, xlen));
+    SEXP vec = Rf_allocVector(REALSXP, xlen);
     SET_VECTOR_ELT(tbl, j, vec);
-    dst = (unsigned char *) REAL(vec);
-    memcpy(dst, src, vecsize);
+    memcpy(REAL(vec), src, vecsize);
     src += vecsize;
-    UNPROTECT(1);
   }
 
-  const SEXP dn2 = PROTECT(VECTOR_ELT(Rf_getAttrib(x, R_DimNamesSymbol), 1));
-  R_xlen_t dlen = XLENGTH(dn2);
-  SEXP names = PROTECT(Rf_allocVector(STRSXP, dlen + 1));
+  PROTECT(dn2 = VECTOR_ELT(Rf_getAttrib(x, R_DimNamesSymbol), 1));
+  R_xlen_t dlen = Rf_xlength(dn2);
+  PROTECT(names = Rf_allocVector(STRSXP, dlen + 1));
   SET_STRING_ELT(names, 0, Rf_mkChar("index"));
   for (R_xlen_t i = 0; i < dlen; i++) {
     SET_STRING_ELT(names, i + 1, STRING_ELT(dn2, i));
@@ -175,7 +170,7 @@ SEXP _tbl(const SEXP x, const SEXP type) {
   Rf_namesgets(tbl, names);
   UNPROTECT(2);
 
-  SEXP klass = PROTECT(Rf_allocVector(STRSXP, typ));
+  PROTECT(klass = Rf_allocVector(STRSXP, typ));
   switch (typ) {
   case 1:
     SET_STRING_ELT(klass, 0, Rf_mkChar("data.frame"));
@@ -195,18 +190,16 @@ SEXP _tbl(const SEXP x, const SEXP type) {
   Rf_classgets(tbl, klass);
   UNPROTECT(1);
 
-  SEXP rownames;
   if (xlen <= INT_MAX) {
-    rownames = PROTECT(Rf_allocVector(INTSXP, 2));
+    rownames = Rf_allocVector(INTSXP, 2);
     INTEGER(rownames)[0] = NA_INTEGER;
     INTEGER(rownames)[1] = -(int)xlen;
   } else {
-    rownames = PROTECT(Rf_allocVector(REALSXP, 2));
+    rownames = Rf_allocVector(REALSXP, 2);
     REAL(rownames)[0] = NA_REAL;
     REAL(rownames)[1] = -(double)xlen;
   }
   Rf_setAttrib(tbl, R_RowNamesSymbol, rownames);
-  UNPROTECT(1);
 
   if (keepattrs) {
     SEXP ax;
@@ -227,16 +220,17 @@ SEXP _tbl(const SEXP x, const SEXP type) {
 SEXP _create(SEXP kumo, SEXP xtsindex, const SEXP periods,
              const SEXP periodicity, const SEXP ticker, const SEXP x) {
 
-  SEXP tzone = PROTECT(Rf_mkString(""));
-  Rf_setAttrib(xtsindex, xts_IndexTzoneSymbol, tzone);
-  SEXP tclass = PROTECT(Rf_allocVector(STRSXP, 2));
+  SEXP tclass, klass;
+
+  Rf_setAttrib(xtsindex, xts_IndexTzoneSymbol, Rf_mkString(""));
+  PROTECT(tclass = Rf_allocVector(STRSXP, 2));
   SET_STRING_ELT(tclass, 0, Rf_mkChar("POSIXct"));
   SET_STRING_ELT(tclass, 1, Rf_mkChar("POSIXt"));
   Rf_setAttrib(xtsindex, xts_IndexTclassSymbol, tclass);
   Rf_setAttrib(kumo, xts_IndexSymbol, xtsindex);
-  UNPROTECT(2);
+  UNPROTECT(1);
 
-  SEXP klass = PROTECT(Rf_allocVector(STRSXP, 3));
+  PROTECT(klass = Rf_allocVector(STRSXP, 3));
   SET_STRING_ELT(klass, 0, Rf_mkChar("ichimoku"));
   SET_STRING_ELT(klass, 1, Rf_mkChar("xts"));
   SET_STRING_ELT(klass, 2, Rf_mkChar("zoo"));
@@ -268,7 +262,7 @@ SEXP _create(SEXP kumo, SEXP xtsindex, const SEXP periods,
 SEXP _df(const SEXP x) {
 
   R_xlen_t xlen = 0, xwid = 0;
-  const SEXP dims = PROTECT(Rf_getAttrib(x, R_DimSymbol));
+  const SEXP dims = Rf_getAttrib(x, R_DimSymbol);
   switch (TYPEOF(dims)) {
   case INTSXP:
     xlen = INTEGER(dims)[0];
@@ -279,38 +273,34 @@ SEXP _df(const SEXP x) {
     xwid = REAL(dims)[1];
     break;
   }
-  UNPROTECT(1);
 
   if (xwid < 12)
     return(R_MissingArg);
 
-  SEXP df = PROTECT(Rf_allocVector(VECSXP, xwid + 2));
+  SEXP df, index, idchar, dn2, names, rownames;
 
-  SEXP index = PROTECT(Rf_shallow_duplicate(Rf_getAttrib(x, xts_IndexSymbol)));
+  PROTECT(df = Rf_allocVector(VECSXP, xwid + 2));
+
+  PROTECT(index = Rf_shallow_duplicate(Rf_getAttrib(x, xts_IndexSymbol)));
   index = _psxct(index);
   SET_VECTOR_ELT(df, 0, index);
   UNPROTECT(1);
 
-  unsigned char *src;
-  unsigned char *dst;
-  src = (unsigned char *) REAL(x);
+  unsigned char *src = (unsigned char *) REAL(x);
   size_t vecsize = xlen * sizeof(double);
   for (R_xlen_t j = 1; j <= xwid; j++) {
-    SEXP vec = PROTECT(Rf_allocVector(REALSXP, xlen));
+    SEXP vec = Rf_allocVector(REALSXP, xlen);
     SET_VECTOR_ELT(df, j, vec);
-    dst = (unsigned char *) REAL(vec);
-    memcpy(dst, src, vecsize);
+    memcpy(REAL(vec), src, vecsize);
     src += vecsize;
-    UNPROTECT(1);
   }
 
-  SEXP idchar = PROTECT(Rf_coerceVector(VECTOR_ELT(df, 5), STRSXP));
+  idchar = Rf_coerceVector(VECTOR_ELT(df, 5), STRSXP);
   SET_VECTOR_ELT(df, 5, idchar);
-  UNPROTECT(1);
 
-  const SEXP dn2 = PROTECT(VECTOR_ELT(Rf_getAttrib(x, R_DimNamesSymbol), 1));
-  R_xlen_t dlen = XLENGTH(dn2);
-  SEXP names = PROTECT(Rf_allocVector(STRSXP, dlen + 2));
+  PROTECT(dn2 = VECTOR_ELT(Rf_getAttrib(x, R_DimNamesSymbol), 1));
+  R_xlen_t dlen = Rf_xlength(dn2);
+  PROTECT(names = Rf_allocVector(STRSXP, dlen + 2));
   SET_STRING_ELT(names, 0, Rf_mkChar("index"));
   for (R_xlen_t i = 0; i < dlen; i++) {
     SET_STRING_ELT(names, i + 1, STRING_ELT(dn2, i));
@@ -319,52 +309,51 @@ SEXP _df(const SEXP x) {
   Rf_namesgets(df, names);
   UNPROTECT(2);
 
-  SEXP klass = PROTECT(Rf_mkString("data.frame"));
-  Rf_classgets(df, klass);
-  UNPROTECT(1);
+  Rf_classgets(df, Rf_mkString("data.frame"));
 
-  SEXP rownames;
   if (xlen <= INT_MAX) {
-    rownames = PROTECT(Rf_allocVector(INTSXP, 2));
+    rownames = Rf_allocVector(INTSXP, 2);
     INTEGER(rownames)[0] = NA_INTEGER;
     INTEGER(rownames)[1] = -(int)xlen;
   } else {
-    rownames = PROTECT(Rf_allocVector(REALSXP, 2));
+    rownames = Rf_allocVector(REALSXP, 2);
     REAL(rownames)[0] = NA_REAL;
     REAL(rownames)[1] = -(double)xlen;
   }
   Rf_setAttrib(df, R_RowNamesSymbol, rownames);
+
+  SET_VECTOR_ELT(df, xwid + 1, Rf_getAttrib(df, R_RowNamesSymbol));
+
   UNPROTECT(1);
-
-  const SEXP idx = PROTECT(Rf_getAttrib(df, R_RowNamesSymbol));
-  SET_VECTOR_ELT(df, xwid + 1, idx);
-
-  UNPROTECT(2);
   return df;
 
 }
 
 /* ichimoku index method */
 SEXP _index(SEXP x) {
-  SEXP idx = PROTECT(Rf_shallow_duplicate(Rf_getAttrib(x, xts_IndexSymbol)));
+
+  SEXP idx;
+  PROTECT(idx = Rf_shallow_duplicate(Rf_getAttrib(x, xts_IndexSymbol)));
   idx = _psxct(idx);
   UNPROTECT(1);
   return idx;
+
 }
 
 /* ichimoku coredata method */
 SEXP _coredata(const SEXP x) {
-  SEXP core = PROTECT(R_shallow_duplicate_attr(x));
+
+  SEXP core;
+  PROTECT(core = R_shallow_duplicate_attr(x));
   SET_ATTRIB(core, R_NilValue);
   SET_OBJECT(core, 0);
   Rf_dimgets(core, Rf_getAttrib(x, R_DimSymbol));
   Rf_dimnamesgets(core, Rf_getAttrib(x, R_DimNamesSymbol));
-
   UNPROTECT(1);
   return core;
+
 }
 
-/* expose R_MissingArg */
 SEXP _missingarg(void) {
   return R_MissingArg;
 }

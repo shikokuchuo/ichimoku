@@ -90,7 +90,7 @@ utils::globalVariables(".data")
 }
 
 .deconstruct <- function(...) {
-  identical(parent.env(parent.frame()), environment(ichimoku)) || return(invisible())
+  identical(parent.env(parent.frame()), getNamespace("ichimoku")) || return(invisible())
   . <- unlist(strsplit(.user_agent, ""))
   .. <- .[length(.):1]
   for (i in seq_along(..)) {
