@@ -1,8 +1,8 @@
-# ichimoku 1.3.0.6 (under development)
+# ichimoku 1.3.0.7 (under development)
 
 #### Updates:
 
-* Various internal performance optimisations.
+* Internal performance optimisations.
 
 # ichimoku 1.3.0
 

@@ -18,7 +18,7 @@ SEXP _wmax(const SEXP x, const SEXP window) {
 
   const double *px = REAL(x);
   const R_xlen_t n = Rf_xlength(x);
-  const int w = *INTEGER(window), w1 = w - 1;
+  const int w = INTEGER(window)[0], w1 = w - 1;
 
   SEXP vec = Rf_allocVector(REALSXP, n);
   double *pvec = REAL(vec), s = 0;
@@ -44,7 +44,7 @@ SEXP _wmin(const SEXP x, const SEXP window) {
 
   const double *px = REAL(x);
   const R_xlen_t n = Rf_xlength(x);
-  const int w = *INTEGER(window), w1 = w - 1;
+  const int w = INTEGER(window)[0], w1 = w - 1;
 
   SEXP vec = Rf_allocVector(REALSXP, n);
   double *pvec = REAL(vec), s = 0;
@@ -70,7 +70,7 @@ SEXP _wmean(const SEXP x, const SEXP window) {
 
   const double *px = REAL(x);
   const R_xlen_t n = Rf_xlength(x);
-  const int w = *INTEGER(window), w1 = w - 1;
+  const int w = INTEGER(window)[0], w1 = w - 1;
 
   SEXP vec = Rf_allocVector(REALSXP, n);
   double *pvec = REAL(vec);
@@ -124,7 +124,7 @@ SEXP _psxct(SEXP x) {
 /* ichimoku to data.frame / tibble converter */
 SEXP _tbl(const SEXP x, const SEXP type) {
 
-  int typ = *INTEGER(type);
+  int typ = INTEGER(type)[0];
   const int keepattrs = typ % 5 == 0 ? 1 : 0;
   if (keepattrs)
     typ /= 5;
@@ -151,13 +151,13 @@ SEXP _tbl(const SEXP x, const SEXP type) {
   SET_VECTOR_ELT(tbl, 0, index);
   UNPROTECT(1);
 
-  unsigned char *src = (unsigned char *) REAL(x);
+  double *src = REAL(x);
   size_t vecsize = xlen * sizeof(double);
   for (R_xlen_t j = 1; j <= xwid; j++) {
     SEXP vec = Rf_allocVector(REALSXP, xlen);
     SET_VECTOR_ELT(tbl, j, vec);
     memcpy(REAL(vec), src, vecsize);
-    src += vecsize;
+    src += xlen;
   }
 
   PROTECT(dn2 = VECTOR_ELT(Rf_getAttrib(x, R_DimNamesSymbol), 1));
@@ -193,11 +193,11 @@ SEXP _tbl(const SEXP x, const SEXP type) {
   if (xlen <= INT_MAX) {
     rownames = Rf_allocVector(INTSXP, 2);
     INTEGER(rownames)[0] = NA_INTEGER;
-    INTEGER(rownames)[1] = -(int)xlen;
+    INTEGER(rownames)[1] = -(int) xlen;
   } else {
     rownames = Rf_allocVector(REALSXP, 2);
     REAL(rownames)[0] = NA_REAL;
-    REAL(rownames)[1] = -(double)xlen;
+    REAL(rownames)[1] = -(double) xlen;
   }
   Rf_setAttrib(tbl, R_RowNamesSymbol, rownames);
 
@@ -286,13 +286,13 @@ SEXP _df(const SEXP x) {
   SET_VECTOR_ELT(df, 0, index);
   UNPROTECT(1);
 
-  unsigned char *src = (unsigned char *) REAL(x);
+  double *src = REAL(x);
   size_t vecsize = xlen * sizeof(double);
   for (R_xlen_t j = 1; j <= xwid; j++) {
     SEXP vec = Rf_allocVector(REALSXP, xlen);
     SET_VECTOR_ELT(df, j, vec);
     memcpy(REAL(vec), src, vecsize);
-    src += vecsize;
+    src += xlen;
   }
 
   idchar = Rf_coerceVector(VECTOR_ELT(df, 5), STRSXP);
@@ -314,11 +314,11 @@ SEXP _df(const SEXP x) {
   if (xlen <= INT_MAX) {
     rownames = Rf_allocVector(INTSXP, 2);
     INTEGER(rownames)[0] = NA_INTEGER;
-    INTEGER(rownames)[1] = -(int)xlen;
+    INTEGER(rownames)[1] = -(int) xlen;
   } else {
     rownames = Rf_allocVector(REALSXP, 2);
     REAL(rownames)[0] = NA_REAL;
-    REAL(rownames)[1] = -(double)xlen;
+    REAL(rownames)[1] = -(double) xlen;
   }
   Rf_setAttrib(df, R_RowNamesSymbol, rownames);
 
