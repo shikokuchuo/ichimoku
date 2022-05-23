@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.0.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.1</span>
       </span>
     </div>
 
@@ -218,8 +218,7 @@
 <code class="sourceCode R"><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">cloud</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #949494;"># ichimoku object: use more() to display more rows, look() to inspect</span></span>
-<span class="co"><span style="color: #949494;">#&gt; #   attributes</span></span>
+<span class="co">#&gt; <span style="color: #949494;"># ichimoku object: more() to display more rows, look() to inspect attributes</span></span>
 <span class="co">#&gt;    index                open  high   low close    cd tenkan kijun senkouA</span>
 <span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
 <span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 2020-01-02 <span style="color: #949494;">00:00:00</span> 123   123.1 122.5 122.7    -<span style="color: #BB0000;">1</span>   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
@@ -272,8 +271,7 @@
 <code class="sourceCode R"><span class="va">kumo</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span>, keep.data <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">kumo</span><span class="op">[</span>, <span class="st">"volume"</span><span class="op">]</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #949494;"># ichimoku object: use more() to display more rows, look() to inspect</span></span>
-<span class="co"><span style="color: #949494;">#&gt; #   attributes</span></span>
+<span class="co">#&gt; <span style="color: #949494;"># ichimoku object: more() to display more rows, look() to inspect attributes</span></span>
 <span class="co">#&gt;    index               volume</span>
 <span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
 <span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 2020-01-02 <span style="color: #949494;">00:00:00</span>   <span style="text-decoration: underline;">1</span>875</span>
@@ -371,6 +369,9 @@
 <li>
 <code>...</code> additional arguments passed along to the print method for ‘ggplot’ objects when <code>type = 'none'</code>.</li>
 </ul>
+<p><code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> also permits a user-defined <code>theme</code>, in which case a vector of 12 colour values (hex codes or names) should be supplied. Each colour value corresponds to a different element of the chart. As an example, the ‘mono’ theme can be specified as:</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#d9d9d9"</span>, <span class="st">"#d7d7d7"</span>, <span class="st">"#d1d1d1"</span>, <span class="st">"#737373"</span>, <span class="st">"#1f1f1f"</span>, <span class="st">"#b8b8b8"</span>, <span class="st">"#1a1a1a"</span>, <span class="st">"#1a1a1a"</span>, <span class="st">"#1a1a1a"</span>, <span class="st">"#ffffff"</span>, <span class="st">"#333333"</span>, <span class="st">"#1a1a1a"</span><span class="op">)</span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="oscillators">Oscillators<a class="anchor" aria-label="anchor" href="#oscillators"></a>
@@ -380,13 +381,13 @@
 <p>An <strong>R-type oscillator</strong> is based on the formula for Relative Strength Index (RSI). This is a single line indicator with a look-back window of the ichimoku object’s medium cloud period (default 26).</p>
 <p>The R-type line is calculated as 100 - 100 / (1 + [26] period mean open to close gain / the absolute value of the [26] period mean open to close loss).</p>
 <p>Note that this corresponds to the usual RSI oscillator definition, although not identical as gains/losses are calculated with reference to each period’s open rather than the previous close. Note also that the R-type oscillator is calculated consistently and does not employ a roll-forward mechanism based on previous oscillator values like the RSI.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># To plot an R-type oscillator:</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">cloud</span>, type <span class="op">=</span> <span class="st">"r"</span><span class="op">)</span></code></pre></div>
 <p>An <strong>S-type oscillator</strong> is based on the formula for the stochastic indicator. This is a 2-line indicator with fast and slow lines with look-back windows corresponding to the fast and medium cloud periods respectively (default 9 and 26). The fast line is quicker to react to price changes and the slow line can be used for confirmation / divergence.</p>
 <p>The fast S-type line is calculated as 100 times the ratio of the closing price minus the [9] period low to the [9] period high minus the [9] period low. The slow S-type line is calculated as 100 times the ratio of the closing price minus the [26] period low to the [26] period high minus the [26] period low.</p>
 <p>Note the difference to the usual stochastic oscillator definition where the slow line is a 3-period moving average of the fast line.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">cloud</span>, window <span class="op">=</span> <span class="st">"2020-04-01/2020-12-01"</span>, theme <span class="op">=</span> <span class="st">"solarized"</span>, type <span class="op">=</span> <span class="st">"s"</span><span class="op">)</span></code></pre></div>
 <p><img src="reference_files/figure-html/plots-1.png" width="672"></p>
 </div>
@@ -396,7 +397,7 @@
 <p>Additional data preserved within the ichimoku object, for example volume data, can be plotted as a sub-plot by specifying the ‘custom’ argument.</p>
 <p>The character string supplied to ‘custom’ is a regular expression pattern that is matched to the column name and hence does not need to match exactly, nor is case considered.</p>
 <p>To view a custom sub-plot, type must be specified as either ‘bar’ or ‘line’ as the type setting takes precedence (with a default of ‘none’).</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">kumo</span>, window <span class="op">=</span> <span class="st">"2020-04/2020-11"</span>, theme <span class="op">=</span> <span class="st">"mono"</span>, type <span class="op">=</span> <span class="st">"bar"</span>, custom <span class="op">=</span> <span class="st">"volume"</span><span class="op">)</span></code></pre></div>
 <p><img src="reference_files/figure-html/plotbar-1.png" width="672"></p>
 </div>
@@ -410,7 +411,7 @@
 </h4>
 <p>Interactive plots require the ‘shiny’ package to be installed.</p>
 <p>To produce an interactive plot, use ichimoku’s <code><a href="../reference/iplot.html">iplot()</a></code> function, which launches an R Shiny app.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># For an interactive plot:</span>
 <span class="fu"><a href="../reference/iplot.html">iplot</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span></code></pre></div>
 <p>Further arguments are optional as full customisation of the chart can be done interactively in-app, including selecting the time window, theme, chart type, sub-plot etc.</p>
@@ -442,7 +443,7 @@
 <h4 id="writing">Writing<a class="anchor" aria-label="anchor" href="#writing"></a>
 </h4>
 <p><code><a href="../reference/archive.html">archive()</a></code> for write operations will take 2 arguments: the object to be written, and the file path/name of the file to be stored. If the second argument is left empty, a system dialog will be opened allowing the file save location to be set interactively. A confirmation is printed to the console that the file has been written.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Write object to file:</span>
 <span class="fu"><a href="../reference/archive.html">archive</a></span><span class="op">(</span><span class="va">object</span>, <span class="st">"path/filename"</span><span class="op">)</span>
 <span class="co"># Leave second argument empty to choose file save location from a system dialog:</span>
@@ -452,7 +453,7 @@
 <h4 id="reading">Reading<a class="anchor" aria-label="anchor" href="#reading"></a>
 </h4>
 <p><code><a href="../reference/archive.html">archive()</a></code> for read operations takes a single argument: the file path/name of the file to be read. Alternatively, if no arguments are specified, a system dialog will be opened allowing a file to be chosen interactively. The return value of the function can be assigned to an object. A confirmation is printed to the console once the file has been read.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Read from file to object:</span>
 <span class="va">object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/archive.html">archive</a></span><span class="op">(</span><span class="st">"path/filename"</span><span class="op">)</span>
 <span class="co"># Choose a file from an interactive system dialog:</span>
@@ -584,7 +585,7 @@
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
 <p>Sasaki, H. 佐々木 英信 (1996), <em>一目均衡表の研究 [ichimoku kinkouhyou no kenkyuu]</em>. Tokyo, Japan: Toushi Radar.</p>
-<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.3.0, <a href="https://CRAN.R-project.org/package=ichimoku" class="external-link uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
+<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.3.1, <a href="https://CRAN.R-project.org/package=ichimoku" class="external-link uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
 <hr>
 </div>
   </div>
