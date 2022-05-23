@@ -30,8 +30,9 @@ will be used.}
 
 \item{subtitle}{(optional) specify a subtitle to display under the chart title.}
 
-\item{theme}{[default 'original'] with alternative choices of 'conceptual',
-'dark', 'fresh', 'mono', or 'solarized'.}
+\item{theme}{[default 'original'] with further choices of 'conceptual',
+'dark', 'fresh', 'mono', or 'solarized'. Alternatively, supply a vector
+of 12 colour values (hex codes or names) as a user-defined theme.}
 
 \item{strat}{[default TRUE] if the ichimoku object contains a strategy, the
 periods for which the strategy results in a position will be shaded, and

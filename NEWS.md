@@ -1,8 +1,12 @@
-# ichimoku 1.3.0.7 (under development)
+# ichimoku 1.3.1
+
+#### New features:
+
+* The `theme` argument of `plot()` and `oanda_chart()` now accepts a user-defined vector of 12 colour values (as hex values or R colour names).
 
 #### Updates:
 
-* Internal performance optimisations.
+* Minor UI tweaks and internal performance optimisations.
 
 # ichimoku 1.3.0
 

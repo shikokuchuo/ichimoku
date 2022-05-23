@@ -12,8 +12,9 @@
 #'     chart heading. If not set, the ticker saved within the ichimoku object
 #'     will be used.
 #' @param subtitle (optional) specify a subtitle to display under the chart title.
-#' @param theme [default 'original'] with alternative choices of 'conceptual',
-#'     'dark', 'fresh', 'mono', or 'solarized'.
+#' @param theme [default 'original'] with further choices of 'conceptual',
+#'     'dark', 'fresh', 'mono', or 'solarized'. Alternatively, supply a vector
+#'     of 12 colour values (hex codes or names) as a user-defined theme.
 #' @param strat [default TRUE] if the ichimoku object contains a strategy, the
 #'     periods for which the strategy results in a position will be shaded, and
 #'     the strategy printed as the chart subtitle (if not otherwise specified).
@@ -102,7 +103,7 @@ autoplot.ichimoku <- function(object,
                               custom,
                               ...) {
 
-  theme <- match.arg(theme)
+  if (length(theme) != 12L) theme <- match.arg(theme)
   type <- match.arg(type)
   object <- create_data(object = object, window = window, type = type)
   plot_ichimoku(object = object, ticker = ticker, subtitle = subtitle, theme = theme,
@@ -164,7 +165,14 @@ plot_ichimoku <- function(object, ticker, subtitle, theme, strat, type, custom, 
 
   data <- .Call(ichimoku_df, object)
   missing(data) && stop("attempt to plot incomplete (partial or subset) ichimoku object", call. = FALSE)
-  pal <- .ichimoku_themes[[theme]]
+  if (length(theme) != 12L) {
+    pal <- .ichimoku_themes[[theme]]
+  } else if (is.atomic(theme)) {
+    pal <- theme
+    theme <- ""
+  } else {
+    stop("user-defined 'theme' should be supplied as an atomic vector", call. = FALSE)
+  }
   showstrat <- hasStrat(object) && isTRUE(strat)
   if (missing(ticker)) ticker <- attr(object, "ticker")
   if (missing(subtitle)) {
@@ -172,7 +180,7 @@ plot_ichimoku <- function(object, ticker, subtitle, theme, strat, type, custom, 
   }
 
   if (type == "line" || type == "bar") {
-    if(missing(custom)) {
+    if (missing(custom)) {
       warning("For type = 'bar' or 'line': required argument 'custom' not specified", call. = FALSE)
       type <- "none"
     } else {

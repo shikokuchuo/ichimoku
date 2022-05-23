@@ -343,7 +343,7 @@ oanda_stream <- function(instrument, display = 7L, limit, server, apikey) {
     end <- dim(data)[1L]
     start <- max(1L, end - display + 1L)
     cat("\f", file = stdout())
-    message("Streaming data... Press 'Esc' to return")
+    message("Streaming data... 'Esc' or 'Ctrl+c' to return")
     print.data.frame(data[start:end, ])
   })
 
@@ -420,7 +420,7 @@ oanda_chart <- function(instrument,
   instrument <- sub("-", "_", toupper(force(instrument)), fixed = TRUE)
   granularity <- match.arg(granularity)
   price <- match.arg(price)
-  theme <- match.arg(theme)
+  if (length(theme) != 12L) theme <- match.arg(theme)
   type <- match.arg(type)
   server <- if (missing(server)) do_$getServer() else match.arg(server, c("practice", "live"))
   if (missing(apikey)) apikey <- do_$getKey(server = server)
@@ -460,7 +460,7 @@ oanda_chart <- function(instrument,
                     price = price, server = server, apikey = apikey, .validate = TRUE)
   xlen <- dim(data)[1L]
 
-  message("Chart updating every ", refresh, " secs in graphical device... Press 'Esc' to return")
+  message("Chart updating every ", refresh, " secs in graphical device... 'Esc' or 'Ctrl+c' to return")
   on.exit(expr = return(invisible(pdata)))
   if (!missing(limit) && is.numeric(limit)) setTimeLimit(elapsed = limit, transient = TRUE)
   repeat {
@@ -495,6 +495,8 @@ oanda_chart <- function(instrument,
 #' @param count [default 300] the number of periods to return, from 100 to 800.
 #'     Note that fewer periods are actually shown on the chart to ensure a full
 #'     cloud is always displayed.
+#' @param theme [default 'original'] with alternative choices of 'conceptual',
+#'     'dark', 'fresh', 'mono', or 'solarized'.
 #' @param new.process [default FALSE] if TRUE, will start the shiny session in a
 #'     new R process, unblocking the current process and allowing continued use
 #'     of the R console.

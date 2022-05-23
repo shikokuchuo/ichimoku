@@ -8,6 +8,8 @@
 #'     directly from the chart.
 #'
 #' @param x an object of class 'ichimoku'.
+#' @param theme [default 'original'] with alternative choices of 'conceptual',
+#'     'dark', 'fresh', 'mono', or 'solarized'.
 #' @inheritParams plot.ichimoku
 #' @param ... additional parameters passed along to the 'options' argument of
 #'     \code{shiny::shinyApp()}.

@@ -60,7 +60,7 @@ print.ichimoku <- function(x, plot = TRUE, ...) {
 #'
 tbl_sum.ichimoku_tbl <- function(x, ...) {
 
-  c("ichimoku object" = "use more() to display more rows, look() to inspect attributes")
+  c("ichimoku object" = "more() to display more rows, look() to inspect attributes")
 
 }
 
