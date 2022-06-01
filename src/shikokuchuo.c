@@ -1,4 +1,20 @@
-/* ichimoku - Functions Utilising R's C API --------------------------------- */
+// Copyright (C) 2021-2022 Hibiki AI Limited <info@hibiki-ai.com>
+//
+// This file is part of ichimoku.
+//
+// ichimoku is free software: you can redistribute it and/or modify it under the
+// terms of the GNU General Public License as published by the Free Software
+// Foundation, either version 3 of the License, or (at your option) any later
+// version.
+//
+// ichimoku is distributed in the hope that it will be useful, but WITHOUT ANY
+// WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+// A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License along with
+// ichimoku. If not, see <https://www.gnu.org/licenses/>.
+
+// ichimoku - Functions Utilising R's C API ------------------------------------
 
 #define R_NO_REMAP
 #define STRICT_R_HEADERS
@@ -13,7 +29,7 @@ SEXP ichimoku_PeriodsSymbol;
 SEXP ichimoku_PeriodicitySymbol;
 SEXP ichimoku_TickerSymbol;
 
-/* rolling max over a window */
+// rolling max over a window
 SEXP _wmax(const SEXP x, const SEXP window) {
 
   const double *px = REAL(x);
@@ -39,7 +55,7 @@ SEXP _wmax(const SEXP x, const SEXP window) {
 
 }
 
-/* rolling min over a window */
+// rolling min over a window
 SEXP _wmin(const SEXP x, const SEXP window) {
 
   const double *px = REAL(x);
@@ -65,7 +81,7 @@ SEXP _wmin(const SEXP x, const SEXP window) {
 
 }
 
-/* rolling mean over a window */
+// rolling mean over a window
 SEXP _wmean(const SEXP x, const SEXP window) {
 
   const double *px = REAL(x);
@@ -90,7 +106,7 @@ SEXP _wmean(const SEXP x, const SEXP window) {
 
 }
 
-/* look - inspect informational attributes */
+// look - inspect informational attributes
 SEXP _look(const SEXP x) {
 
   SEXP ax, y;
@@ -108,7 +124,7 @@ SEXP _look(const SEXP x) {
 
 }
 
-/* class object as POSIXct (in-place) */
+// class object as POSIXct (in-place)
 SEXP _psxct(SEXP x) {
 
   SEXP posix = PROTECT(Rf_allocVector(STRSXP, 2));
@@ -121,7 +137,7 @@ SEXP _psxct(SEXP x) {
 
 }
 
-/* ichimoku to data.frame / tibble converter */
+// ichimoku to data.frame / tibble converter
 SEXP _tbl(const SEXP x, const SEXP type) {
 
   int typ = INTEGER(type)[0];
@@ -216,7 +232,7 @@ SEXP _tbl(const SEXP x, const SEXP type) {
 
 }
 
-/* internal function used by ichimoku() */
+// internal function used by ichimoku()
 SEXP _create(SEXP kumo, SEXP xtsindex, const SEXP periods,
              const SEXP periodicity, const SEXP ticker, const SEXP x) {
 
@@ -258,7 +274,7 @@ SEXP _create(SEXP kumo, SEXP xtsindex, const SEXP periods,
 
 }
 
-/* special ichimoku to data.frame converter for plots */
+// special ichimoku to data.frame converter for plots
 SEXP _df(const SEXP x) {
 
   R_xlen_t xlen = 0, xwid = 0;
@@ -329,7 +345,7 @@ SEXP _df(const SEXP x) {
 
 }
 
-/* ichimoku index method */
+// ichimoku index method
 SEXP _index(SEXP x) {
 
   SEXP idx;
@@ -340,7 +356,7 @@ SEXP _index(SEXP x) {
 
 }
 
-/* ichimoku coredata method */
+// ichimoku coredata method
 SEXP _coredata(const SEXP x) {
 
   SEXP core;
@@ -358,12 +374,13 @@ SEXP _missingarg(void) {
   return R_MissingArg;
 }
 
-/* imports from the package 'xts' */
+// imports from the package 'xts'
 SEXP _naomit(SEXP x) {
   DL_FUNC fun = R_GetCCallable("xts", "na_omit_xts");
   return fun(x);
 }
 
+// package level registrations
 static void RegisterSymbols(void) {
   xts_IndexSymbol = Rf_install("index");
   xts_IndexTclassSymbol = Rf_install("tclass");

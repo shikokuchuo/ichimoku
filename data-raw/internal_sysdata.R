@@ -1,4 +1,20 @@
-## code to prepare internal sysdata
+# Copyright (C) 2021-2022 Hibiki AI Limited <info@hibiki-ai.com>
+#
+# This file is part of ichimoku.
+#
+# ichimoku is free software: you can redistribute it and/or modify it under the
+# terms of the GNU General Public License as published by the Free Software
+# Foundation, either version 3 of the License, or (at your option) any later
+# version.
+#
+# ichimoku is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along with
+# ichimoku. If not, see <https://www.gnu.org/licenses/>.
+
+# Ichimoku - code to prepare internal sysdata ----------------------------------
 
 .ichimoku_themes <- list(
   original = c("#ffc6cb", "#c3dede", "#e0a9e0", "#db4525", "#1aa1a6", "#a4d1eb",

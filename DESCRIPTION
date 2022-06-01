@@ -1,7 +1,7 @@
 Package: ichimoku
 Type: Package
 Title: Visualization and Tools for Ichimoku Kinko Hyo Strategies
-Version: 1.3.1
+Version: 1.3.1.9000
 Description: An implementation of 'Ichimoku Kinko Hyo', also commonly known as
     'cloud charts'. Static and interactive visualizations with tools for
     creating, backtesting and development of quantitative 'ichimoku' strategies.
@@ -14,11 +14,14 @@ Description: An implementation of 'Ichimoku Kinko Hyo', also commonly known as
     live streaming price data for major currencies, metals, commodities,
     government bonds and stock indices.
 Authors@R: 
-    person(given = "Charlie",
-           family = "Gao",
-           role = c("aut", "cre"),
-           email = "charlie.gao@shikokuchuo.net",
-           comment = c(ORCID = "0000-0002-0750-061X"))
+    c(person(given = "Charlie",
+             family = "Gao",
+             role = c("aut", "cre"),
+             email = "charlie.gao@shikokuchuo.net",
+             comment = c(ORCID = "0000-0002-0750-061X")),
+      person(given = "Hibiki AI Limited",
+             email = "info@hibiki-ai.com",
+             role = "cph"))
 BugReports: https://github.com/shikokuchuo/ichimoku/issues
 License: GPL (>= 3)
 URL: https://shikokuchuo.net/ichimoku/, https://github.com/shikokuchuo/ichimoku/
