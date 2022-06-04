@@ -177,3 +177,9 @@ Hyo Strategies*. R package version 1.3.1,
 
 Listed CRAN Finance Task View:
 <https://CRAN.R-project.org/view=Finance>.
+
+–
+
+Please note that this project is released with a [Contributor Code of
+Conduct](https://shikokuchuo.net/ichimoku/CODE_OF_CONDUCT.html). By
+participating in this project you agree to abide by its terms.
