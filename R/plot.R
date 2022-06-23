@@ -28,8 +28,8 @@
 #'     chart heading. If not set, the ticker saved within the ichimoku object
 #'     will be used.
 #' @param subtitle (optional) specify a subtitle to display under the chart title.
-#' @param theme [default 'original'] with further choices of 'conceptual',
-#'     'dark', 'fresh', 'mono', or 'solarized'. Alternatively, supply a vector
+#' @param theme [default 'classic'] with further choices of 'dark', 'mono',
+#'     'noguchi', 'okabe-ito' or 'solarized'. Alternatively, supply a vector
 #'     of 12 colour values (hex codes or names) as a user-defined theme.
 #' @param strat [default TRUE] if the ichimoku object contains a strategy, the
 #'     periods for which the strategy results in a position will be shaded, and
@@ -59,12 +59,12 @@
 #' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 #' plot(cloud)
 #' plot(cloud, window = "2020-05-01/2020-12-01", theme = "dark")
-#' plot(cloud, window = "2020-05/", ticker = "TKR Co.", theme = "conceptual", type = "s")
+#' plot(cloud, window = "2020-05/", ticker = "TKR Co.", theme = "noguchi", type = "s")
 #' plot(cloud, window = "/2020-11-02", subtitle = "Sample Price Data", theme = "mono", type = "r")
 #'
 #' kumo <- ichimoku(sample_ohlc_data, ticker = "TKR", keep.data = TRUE)
 #' plot(kumo, window = "2020-05/", theme = "solarized", type = "bar", custom = "volume")
-#' plot(kumo, window = "2020-05/", theme = "fresh", type = "line", custom = "volume")
+#' plot(kumo, window = "2020-05/", theme = "okabe-ito", type = "line", custom = "volume")
 #'
 #' @method plot ichimoku
 #' @export
@@ -73,7 +73,7 @@ plot.ichimoku <- function(x,
                           window,
                           ticker,
                           subtitle,
-                          theme = c("original", "conceptual", "dark", "fresh", "mono", "solarized"),
+                          theme = c("classic", "dark", "mono", "noguchi", "okabe-ito", "solarized"),
                           strat = TRUE,
                           type = c("none", "r", "s", "bar", "line"),
                           custom,
@@ -113,7 +113,7 @@ autoplot.ichimoku <- function(object,
                               window,
                               ticker,
                               subtitle,
-                              theme = c("original", "conceptual", "dark", "fresh", "mono", "solarized"),
+                              theme = c("classic", "dark", "mono", "noguchi", "okabe-ito", "solarized"),
                               strat = TRUE,
                               type = c("none", "r", "s", "bar", "line"),
                               custom,

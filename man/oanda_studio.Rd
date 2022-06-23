@@ -11,7 +11,7 @@ oanda_studio(
   refresh = 5,
   count = 300,
   price = c("M", "B", "A"),
-  theme = c("original", "conceptual", "dark", "fresh", "mono", "solarized"),
+  theme = c("classic", "dark", "mono", "noguchi", "okabe-ito", "solarized"),
   type = c("none", "r", "s"),
   server,
   apikey,

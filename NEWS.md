@@ -1,4 +1,11 @@
-# ichimoku 1.3.1.9000 (development)
+# ichimoku 1.3.2
+
+#### Updates:
+
+* Theme re-organisation with the following changes:
+  + default 'original' theme renamed 'classic'
+  + 'fresh' replaced with 'okabe-ito' theme (using colours from this colourblind-friendly palette)
+  + 'conceptual' theme renamed 'noguchi' (palette inspired by the works of Isamu Noguchi)
 
 # ichimoku 1.3.1
 
