@@ -21,7 +21,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.2</span>
       </span>
     </div>
 
@@ -101,33 +101,50 @@
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>an ichimoku object.</p></dd>
+
+
 <dt>y</dt>
 <dd><p>[default 'logret'] choose target variable 'logret' (log returns),
 'ret' (discrete returns), or 'none'.</p></dd>
+
+
 <dt>k</dt>
 <dd><p>[default 1L] number of periods time horizon over which to calculate
 target variable 'y'.</p></dd>
+
+
 <dt>dir</dt>
 <dd><p>[default 'long'] trade direction, either 'long' or 'short'.</p></dd>
+
+
 <dt>type</dt>
 <dd><p>[default 'boolean'] choose 'boolean', 'numeric' or 'z-score'.
 'boolean' creates a grid of dummy variables for ichimoku indicator
 conditions of the form 1 if c1 &gt; c2, 0 otherwise. 'numeric' creates a
 grid of the numeric difference c1 - c2. 'z-score' standardises the numeric
 grid by the mean and standard deviation of each feature.</p></dd>
+
+
 <dt>format</dt>
 <dd><p>[default 'dataframe'] select either 'dataframe' or 'matrix' for
 the format of returned object.</p></dd>
+
+
 <dt>unique</dt>
 <dd><p>[default TRUE] to return only unique combinations of c1 and c2.
 Set to FALSE to return both c1 &gt; c2 and c2 &gt; c1.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A data.frame or matrix in a 'tidy' format with one observation per
+    
+
+<p>A data.frame or matrix in a 'tidy' format with one observation per
     row and one feature per column with the target 'y' as the first column
-    (unless set to 'none').
-    The 'y' and 'k' parameters, trade direction and grid type are set as
+    (unless set to 'none').</p>
+
+
+<p>The 'y' and 'k' parameters, trade direction and grid type are set as
     attributes. To view these, use <code><a href="look.html">look</a></code> on the returned object.</p>
     </div>
     <div id="details">
@@ -223,7 +240,7 @@ Set to FALSE to return both c1 &gt; c2 and c2 &gt; c1.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer></div>

@@ -19,7 +19,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.2</span>
       </span>
     </div>
 
@@ -92,26 +92,37 @@
 delimited by '_' or '-' (e.g. "USD_JPY" or "usd-jpy"). Use the
 <code><a href="oanda_instruments.html">oanda_instruments</a></code> function to return a list of all valid
 instruments.</p></dd>
+
+
 <dt>display</dt>
 <dd><p>[default 7L] integer rows of data to display in the console
 at any one time.</p></dd>
+
+
 <dt>limit</dt>
 <dd><p>(optional) specify a time in seconds by which to limit the
 streaming session. The session will end with data returned automatically
 after the specified time has elapsed.</p></dd>
+
+
 <dt>server</dt>
 <dd><p>(optional) specify the "practice" or "live" server according to
 the account type held. If not specified, will default to "practice", unless
 this has been changed by <code><a href="oanda_switch.html">oanda_switch</a></code>.</p></dd>
+
+
 <dt>apikey</dt>
 <dd><p>(optional) string containing the OANDA fxTrade API key (personal
 access token), or function that returns this string. Does not need to be
 specified if already stored by oanda_set_key(). Can also be entered
 interactively if not specified.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Returned invisibly, a dataframe containing the data for the streaming
+    
+
+<p>Returned invisibly, a dataframe containing the data for the streaming
     session on function exit. The latest rows of the dataframe are printed to
     the console, as governed by the 'display' argument.</p>
     </div>
@@ -170,7 +181,7 @@ interactively if not specified.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer></div>

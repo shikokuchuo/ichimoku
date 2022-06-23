@@ -20,7 +20,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.2</span>
       </span>
     </div>
 
@@ -101,42 +101,61 @@
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>an object of class 'ichimoku'.</p></dd>
+
+
 <dt>ticker</dt>
 <dd><p>(optional) specify a ticker (or other text) to include in the
 chart heading. If not set, the ticker saved within the ichimoku object
 will be used.</p></dd>
+
+
 <dt>subtitle</dt>
 <dd><p>(optional) specify a subtitle to display under the chart title.</p></dd>
+
+
 <dt>theme</dt>
 <dd><p>[default 'original'] with alternative choices of 'conceptual',
 'dark', 'fresh', 'mono', or 'solarized'.</p></dd>
+
+
 <dt>strat</dt>
 <dd><p>[default TRUE] if the ichimoku object contains a strategy, the
 periods for which the strategy results in a position will be shaded, and
 the strategy printed as the chart subtitle (if not otherwise specified).
 Set to FALSE to turn off this behaviour.</p></dd>
+
+
 <dt>type</dt>
 <dd><p>[default 'none'] type of sub-plot to display beneath the ichimoku
 cloud chart, with a choice of 'none', 'r' or 's' for the corresponding
 oscillator type, and 'bar' or 'line' for custom plots.</p></dd>
+
+
 <dt>custom</dt>
 <dd><p>(optional) character string (containing a regular expression)
 matching the column name of the variable to be displayed as sub-plot.
 Specify <code>type = 'bar'</code> or <code>type = 'line'</code>, otherwise other type
 settings will take precedence.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>additional parameters passed along to the 'options' argument of
 <code><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shiny::shinyApp()</a></code>.</p></dd>
+
+
 <dt>launch.browser</dt>
 <dd><p>[default TRUE] If TRUE, the system's default web browser
 will be launched automatically after the app is started. The value of this
 argument can also be a function to call with the application's URL. To use
 the default Shiny viewer in RStudio, please specify
 <code>getOption("shiny.launch.browser")</code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A Shiny app object with class 'shiny.appobj'. With default arguments,
+    
+
+<p>A Shiny app object with class 'shiny.appobj'. With default arguments,
     the Shiny app is launched in the default browser.</p>
     </div>
     <div id="details">
@@ -171,7 +190,7 @@ the default Shiny viewer in RStudio, please specify
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer></div>

@@ -19,7 +19,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.2</span>
       </span>
     </div>
 
@@ -89,21 +89,32 @@
     <h2>Arguments</h2>
     <dl><dt>old</dt>
 <dd><p>data.frame object containing existing data.</p></dd>
+
+
 <dt>new</dt>
 <dd><p>data.frame object containing new data.</p></dd>
+
+
 <dt>key</dt>
 <dd><p>[default 'time'] column name used as key, provided as a character
 string.</p></dd>
+
+
 <dt>keep.attr</dt>
 <dd><p>[default 'timestamp'] name of an attribute in 'new' to
 retain, if present, provided as a character string.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A data.frame of the existing data appended with the new data. If the
+    
+
+<p>A data.frame of the existing data appended with the new data. If the
     data in 'new' contains data with the same value for the key column as 'old',
-    the data in 'new' will overwrite the data in 'old'.
-    If the attribute specified by 'keep.attr' is present in 'new', this is
+    the data in 'new' will overwrite the data in 'old'.</p>
+
+
+<p>If the attribute specified by 'keep.attr' is present in 'new', this is
     retained. All other non-required attributes are dropped.</p>
     </div>
     <div id="details">
@@ -161,7 +172,7 @@ retain, if present, provided as a character string.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer></div>

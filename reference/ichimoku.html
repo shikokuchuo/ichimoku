@@ -21,7 +21,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.2</span>
       </span>
     </div>
 
@@ -109,24 +109,35 @@
     <dl><dt>x</dt>
 <dd><p>a data.frame or other compatible object, which includes xts,
 data.table, tibble, and matrix.</p></dd>
+
+
 <dt>ticker</dt>
 <dd><p>(optional) specify a ticker to identify the instrument,
 otherwise this is set to the name of the input object.</p></dd>
+
+
 <dt>periods</dt>
 <dd><p>[default c(9L, 26L, 52L)] a vector defining the length of
 periods used for the cloud. This parameter shoud not normally be modified
 as using other values would be invalid in the context of traditional
 ichimoku analysis.</p></dd>
+
+
 <dt>keep.data</dt>
 <dd><p>(optional) set to TRUE to retain additional data present
 in the input object as additional columns and/or attributes.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>additional arguments, for instance 'holidays', passed along to
 <code><a href="tradingDays.html">tradingDays</a></code> for calculating the future cloud on daily data.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>An ichimoku object with S3 classes of 'ichimoku', 'xts' and 'zoo'.</p>
+    
+
+<p>An ichimoku object with S3 classes of 'ichimoku', 'xts' and 'zoo'.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -256,7 +267,7 @@ in the input object as additional columns and/or attributes.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer></div>

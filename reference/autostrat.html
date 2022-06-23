@@ -20,7 +20,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.2</span>
       </span>
     </div>
 
@@ -91,25 +91,38 @@
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>an ichimoku object.</p></dd>
+
+
 <dt>n</dt>
 <dd><p>[default 8] select top 'n' number of strategies to return.</p></dd>
+
+
 <dt>dir</dt>
 <dd><p>[default 'long'] trade direction, either 'long' or 'short'.</p></dd>
+
+
 <dt>level</dt>
 <dd><p>[default 1] to return simple strategies. For complex strategies,
 set level to 2 to return combined strategies of the form 's1 &amp; s2' or
 level to 3 to return asymmetric strategies of the form 's1 x s2'.</p></dd>
+
+
 <dt>quietly</dt>
 <dd><p>(optional) if set to TRUE, will suppress printing of additional
 output to the console and return quietly.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Returned invisibly, a list of 'n' ichimoku objects containing
+    
+
+<p>Returned invisibly, a list of 'n' ichimoku objects containing
     strategies, with attributes 'logret' (a vector of cumulative log returns
     for all strategies) and 'summary' (a matrix of summaries for the top 'n'
-    strategies).
-    In addition, the strategy summaries are printed to the console.</p>
+    strategies).</p>
+
+
+<p>In addition, the strategy summaries are printed to the console.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -284,7 +297,7 @@ output to the console and return quietly.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer></div>

@@ -20,7 +20,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.2</span>
       </span>
     </div>
 
@@ -91,7 +91,7 @@
   refresh <span class="op">=</span> <span class="fl">5</span>,
   count <span class="op">=</span> <span class="fl">300</span>,
   price <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"M"</span>, <span class="st">"B"</span>, <span class="st">"A"</span><span class="op">)</span>,
-  theme <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"original"</span>, <span class="st">"conceptual"</span>, <span class="st">"dark"</span>, <span class="st">"fresh"</span>, <span class="st">"mono"</span>, <span class="st">"solarized"</span><span class="op">)</span>,
+  theme <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"classic"</span>, <span class="st">"dark"</span>, <span class="st">"mono"</span>, <span class="st">"noguchi"</span>, <span class="st">"okabe-ito"</span>, <span class="st">"solarized"</span><span class="op">)</span>,
   type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"none"</span>, <span class="st">"r"</span>, <span class="st">"s"</span><span class="op">)</span>,
   <span class="va">server</span>,
   <span class="va">apikey</span>,
@@ -108,59 +108,86 @@
 <dd><p>[default 'USD_JPY'] string containing the base currency and
 quote currency delimited by a '_'. Use the <code><a href="oanda_instruments.html">oanda_instruments</a></code>
 function to return a list of all valid instruments.</p></dd>
+
+
 <dt>granularity</dt>
 <dd><p>[default "D"] the granularity of the price data to fetch,
 one of "M", "W", "D", "H12", "H8", "H6", "H4", "H3", "H2", "H1", "M30",
 "M15", "M10", "M5", "M4", "M2", "M1", "S30", "S15", "S10", "S5".</p></dd>
+
+
 <dt>refresh</dt>
 <dd><p>[default 5] data refresh interval in seconds, with a minimum
 of 1.</p></dd>
+
+
 <dt>count</dt>
 <dd><p>[default 300] the number of periods to return, from 100 to 800.
 Note that fewer periods are actually shown on the chart to ensure a full
 cloud is always displayed.</p></dd>
+
+
 <dt>price</dt>
 <dd><p>[default "M"] pricing component, one of "M" (midpoint), "B" (bid)
 or "A" (ask).</p></dd>
+
+
 <dt>theme</dt>
 <dd><p>[default 'original'] with alternative choices of 'conceptual',
 'dark', 'fresh', 'mono', or 'solarized'.</p></dd>
+
+
 <dt>type</dt>
 <dd><p>[default 'none'] type of sub-plot to display beneath the ichimoku
 cloud chart, with a choice of 'none', 'r' or 's' for the corresponding
 oscillator type.</p></dd>
+
+
 <dt>server</dt>
 <dd><p>(optional) specify the "practice" or "live" server according to
 the account type held. If not specified, will default to "practice", unless
 this has been changed by <code><a href="oanda_switch.html">oanda_switch</a></code>.</p></dd>
+
+
 <dt>apikey</dt>
 <dd><p>(optional) string containing the OANDA fxTrade API key (personal
 access token), or function that returns this string. Does not need to be
 specified if already stored by oanda_set_key(). Can also be entered
 interactively if not specified.</p></dd>
+
+
 <dt>new.process</dt>
 <dd><p>[default FALSE] if TRUE, will start the shiny session in a
 new R process, unblocking the current process and allowing continued use
 of the R console.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>additional arguments passed along to <code><a href="ichimoku.html">ichimoku</a></code> for
 calculating the ichimoku cloud, <code><a href="autoplot.ichimoku.html">autoplot</a></code> to set chart
 parameters, or the 'options' argument of <code><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shiny::shinyApp()</a></code>.</p></dd>
+
+
 <dt>launch.browser</dt>
 <dd><p>[default TRUE] If TRUE, the system's default web browser
 will be launched automatically after the app is started. The value of this
 argument can also be a function to call with the application's URL. To use
 the default Shiny viewer in RStudio, please specify
 <code>getOption("shiny.launch.browser")</code>.</p></dd>
+
+
 <dt>periods</dt>
 <dd><p>[default c(9L, 26L, 52L)] a vector defining the length of
 periods used for the cloud. This parameter shoud not normally be modified
 as using other values would be invalid in the context of traditional
 ichimoku analysis.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A Shiny app object with class 'shiny.appobj'. With default arguments,
+    
+
+<p>A Shiny app object with class 'shiny.appobj'. With default arguments,
     the Shiny app is launched in the default browser.</p>
     </div>
     <div id="details">
@@ -201,7 +228,7 @@ ichimoku analysis.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer></div>

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.2</span>
       </span>
     </div>
 
@@ -84,7 +84,7 @@
   <span class="va">window</span>,
   <span class="va">ticker</span>,
   <span class="va">subtitle</span>,
-  theme <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"original"</span>, <span class="st">"conceptual"</span>, <span class="st">"dark"</span>, <span class="st">"fresh"</span>, <span class="st">"mono"</span>, <span class="st">"solarized"</span><span class="op">)</span>,
+  theme <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"classic"</span>, <span class="st">"dark"</span>, <span class="st">"mono"</span>, <span class="st">"noguchi"</span>, <span class="st">"okabe-ito"</span>, <span class="st">"solarized"</span><span class="op">)</span>,
   strat <span class="op">=</span> <span class="cn">TRUE</span>,
   type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"none"</span>, <span class="st">"r"</span>, <span class="st">"s"</span>, <span class="st">"bar"</span>, <span class="st">"line"</span><span class="op">)</span>,
   <span class="va">custom</span>,
@@ -96,40 +96,59 @@
     <h2>Arguments</h2>
     <dl><dt>object</dt>
 <dd><p>an object of class 'ichimoku'.</p></dd>
+
+
 <dt>window</dt>
 <dd><p>(optional) a date-time window to subset the plot, in ISO-8601
 compatible range strings of the format used for 'xts' objects, for example
 "2020-02-15/2020-08-15" or "2020-02-15/", "/2020-08" or "2020-07".</p></dd>
+
+
 <dt>ticker</dt>
 <dd><p>(optional) specify a ticker (or other text) to include in the
 chart heading. If not set, the ticker saved within the ichimoku object
 will be used.</p></dd>
+
+
 <dt>subtitle</dt>
 <dd><p>(optional) specify a subtitle to display under the chart title.</p></dd>
+
+
 <dt>theme</dt>
-<dd><p>[default 'original'] with further choices of 'conceptual',
-'dark', 'fresh', 'mono', or 'solarized'. Alternatively, supply a vector
+<dd><p>[default 'classic'] with further choices of 'dark', 'mono',
+'noguchi', 'okabe-ito' or 'solarized'. Alternatively, supply a vector
 of 12 colour values (hex codes or names) as a user-defined theme.</p></dd>
+
+
 <dt>strat</dt>
 <dd><p>[default TRUE] if the ichimoku object contains a strategy, the
 periods for which the strategy results in a position will be shaded, and
 the strategy printed as the chart subtitle (if not otherwise specified).
 Set to FALSE to turn off this behaviour.</p></dd>
+
+
 <dt>type</dt>
 <dd><p>[default 'none'] type of sub-plot to display beneath the ichimoku
 cloud chart, with a choice of 'none', 'r' or 's' for the corresponding
 oscillator type, and 'bar' or 'line' for custom plots.</p></dd>
+
+
 <dt>custom</dt>
 <dd><p>(optional) character string (containing a regular expression)
 matching the column name of the variable to be displayed as sub-plot.
 Specify <code>type = 'bar'</code> or <code>type = 'line'</code>, otherwise other type
 settings will take precedence.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>other arguments not used by this method.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A ggplot2 object with S3 classes 'gg' and 'ggplot'.</p>
+    
+
+<p>A ggplot2 object with S3 classes 'gg' and 'ggplot'.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -150,7 +169,7 @@ settings will take precedence.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer></div>

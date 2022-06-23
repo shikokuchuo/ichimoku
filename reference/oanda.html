@@ -18,7 +18,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.2</span>
       </span>
     </div>
 
@@ -101,43 +101,62 @@
 delimited by '_' or '-' (e.g. "USD_JPY" or "usd-jpy"). Use the
 <code><a href="oanda_instruments.html">oanda_instruments</a></code> function to return a list of all valid
 instruments.</p></dd>
+
+
 <dt>granularity</dt>
 <dd><p>[default "D"] the granularity of the price data to fetch,
 one of "M", "W", "D", "H12", "H8", "H6", "H4", "H3", "H2", "H1", "M30",
 "M15", "M10", "M5", "M4", "M2", "M1", "S30", "S15", "S10", "S5".</p></dd>
+
+
 <dt>count</dt>
 <dd><p>(optional) the number of periods to return. The API supports a
 maximum of 5000 for each individual request, and defaults to 500 if not
 specified. If both 'from' and 'to' are specified, 'count' is ignored, as
 the time range combined with 'granularity' will determine the number of
 periods to return.</p></dd>
+
+
 <dt>from</dt>
 <dd><p>(optional) the start of the time range for which to fetch price
 data, in a format convertible to POSIXct by <code><a href="https://rdrr.io/r/base/as.POSIXlt.html" class="external-link">as.POSIXct()</a></code>, for
 example "2020-02-01".</p></dd>
+
+
 <dt>to</dt>
 <dd><p>(optional) the end of the time range for which to fetch price data,
 in a format convertible to POSIXct by <code><a href="https://rdrr.io/r/base/as.POSIXlt.html" class="external-link">as.POSIXct()</a></code>, for example
 "2020-06-30".</p></dd>
+
+
 <dt>price</dt>
 <dd><p>[default "M"] pricing component, one of "M" (midpoint), "B" (bid)
 or "A" (ask).</p></dd>
+
+
 <dt>server</dt>
 <dd><p>(optional) specify the "practice" or "live" server according to
 the account type held. If not specified, will default to "practice", unless
 this has been changed by <code><a href="oanda_switch.html">oanda_switch</a></code>.</p></dd>
+
+
 <dt>apikey</dt>
 <dd><p>(optional) string containing the OANDA fxTrade API key (personal
 access token), or function that returns this string. Does not need to be
 specified if already stored by oanda_set_key(). Can also be entered
 interactively if not specified.</p></dd>
+
+
 <dt>quietly</dt>
 <dd><p>(optional) if set to TRUE, will suppress printing of auxiliary
 output to the console and return quietly.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A data.frame containing the price data requested.</p>
+    
+
+<p>A data.frame containing the price data requested.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -186,7 +205,7 @@ output to the console and return quietly.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer></div>
