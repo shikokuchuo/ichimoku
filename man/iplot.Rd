@@ -8,7 +8,7 @@ iplot(
   x,
   ticker,
   subtitle,
-  theme = c("original", "conceptual", "dark", "fresh", "mono", "solarized"),
+  theme = c("classic", "dark", "mono", "noguchi", "okabe-ito", "solarized"),
   strat = TRUE,
   type = c("none", "r", "s", "bar", "line"),
   custom,
@@ -25,8 +25,8 @@ will be used.}
 
 \item{subtitle}{(optional) specify a subtitle to display under the chart title.}
 
-\item{theme}{[default 'original'] with alternative choices of 'conceptual',
-'dark', 'fresh', 'mono', or 'solarized'.}
+\item{theme}{[default 'classic'] with further choices of 'dark', 'mono',
+'noguchi', 'okabe-ito' or 'solarized'.}
 
 \item{strat}{[default TRUE] if the ichimoku object contains a strategy, the
 periods for which the strategy results in a position will be shaded, and

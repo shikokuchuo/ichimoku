@@ -24,8 +24,8 @@
 #'     directly from the chart.
 #'
 #' @param x an object of class 'ichimoku'.
-#' @param theme [default 'original'] with alternative choices of 'conceptual',
-#'     'dark', 'fresh', 'mono', or 'solarized'.
+#' @param theme [default 'classic'] with further choices of 'dark', 'mono',
+#'     'noguchi', 'okabe-ito' or 'solarized'.
 #' @inheritParams plot.ichimoku
 #' @param ... additional parameters passed along to the 'options' argument of
 #'     \code{shiny::shinyApp()}.
@@ -58,7 +58,7 @@
 iplot <- function(x,
                   ticker,
                   subtitle,
-                  theme = c("original", "conceptual", "dark", "fresh", "mono", "solarized"),
+                  theme = c("classic", "dark", "mono", "noguchi", "okabe-ito", "solarized"),
                   strat = TRUE,
                   type = c("none", "r", "s", "bar", "line"),
                   custom,
@@ -102,7 +102,7 @@ iplot <- function(x,
       shiny::fluidRow(
         shiny::column(width = 2,
                       shiny::selectInput("theme", label = "Theme",
-                                         choices = c("original", "conceptual", "dark", "fresh", "mono", "solarized"),
+                                         choices = c("classic", "dark", "mono", "noguchi", "okabe-ito", "solarized"),
                                          selected = theme, selectize = FALSE)),
         shiny::column(width = 2,
                       shiny::selectInput("type", label = "Type",
