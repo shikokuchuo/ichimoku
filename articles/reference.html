@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.2.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.3</span>
       </span>
     </div>
 
@@ -150,36 +150,36 @@
 <h2 id="a-typical-workflow">A Typical Workflow<a class="anchor" aria-label="anchor" href="#a-typical-workflow"></a>
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shikokuchuo.net/ichimoku/">ichimoku</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shikokuchuo.net/ichimoku/">ichimoku</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="data">Data<a class="anchor" aria-label="anchor" href="#data"></a>
 </h3>
 <p>ichimoku works with data frames and tabular data. The <code><a href="../reference/ichimoku.html">ichimoku()</a></code> function handles as input xts, data.frame, data.table, tibble, matrix, and other data.frame compatible objects.</p>
 <p>ichimoku incorporates an interface with the OANDA fxTrade API to return data for major currencies, metals, commodities, government bonds and stock indices. Please refer to the <a href="xoanda.html">OANDA vignette</a>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># ichimoku can create clouds directly from OANDA data, for example:</span>
-<span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="fu"><a href="../reference/oanda.html">oanda</a></span><span class="op">(</span><span class="st">"USD_JPY"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># ichimoku can create clouds directly from OANDA data, for example:</span></span>
+<span><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="fu"><a href="../reference/oanda.html">oanda</a></span><span class="op">(</span><span class="st">"USD_JPY"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>ichimoku has been designed to be fully pipeable and interfaces well with other R packages that return financial data. An example is shown below.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Using R 4.1's new pipe operator:</span>
-<span class="fu">quantmod</span><span class="fu">::</span><span class="fu">getSymbols</span><span class="op">(</span><span class="st">"C"</span><span class="op">)</span> |&gt; <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co"># Or equally using the 'magrittr' pipe:</span>
-<span class="fu">quantmod</span><span class="fu">::</span><span class="fu">getSymbols</span><span class="op">(</span><span class="st">"C"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Using R 4.1's new pipe operator:</span></span>
+<span><span class="fu">quantmod</span><span class="fu">::</span><span class="fu">getSymbols</span><span class="op">(</span><span class="st">"C"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co"># Or equally using the 'magrittr' pipe:</span></span>
+<span><span class="fu">quantmod</span><span class="fu">::</span><span class="fu">getSymbols</span><span class="op">(</span><span class="st">"C"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="input-data-requirements">Input data requirements<a class="anchor" aria-label="anchor" href="#input-data-requirements"></a>
 </h4>
 <p>The requirement on the input data is minimal: a series of prices indexed by valid timestamps.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Sample OHLC price data is assigned to data frame 'TKR':</span>
-<span class="va">TKR</span> <span class="op">&lt;-</span> <span class="va">sample_ohlc_data</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">TKR</span><span class="op">)</span>
-<span class="co">#&gt;         time  open  high   low close volume</span>
-<span class="co">#&gt; 1 2020-01-02 123.0 123.1 122.5 122.7   1875</span>
-<span class="co">#&gt; 2 2020-01-03 122.7 122.8 122.6 122.8   1479</span>
-<span class="co">#&gt; 3 2020-01-06 122.8 123.4 122.4 123.3   1792</span>
-<span class="co">#&gt; 4 2020-01-07 123.3 124.3 123.3 124.1   1977</span>
-<span class="co">#&gt; 5 2020-01-08 124.1 124.8 124.0 124.8   2239</span>
-<span class="co">#&gt; 6 2020-01-09 124.8 125.4 124.5 125.3   1842</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Sample OHLC price data is assigned to data frame 'TKR':</span></span>
+<span><span class="va">TKR</span> <span class="op">&lt;-</span> <span class="va">sample_ohlc_data</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">TKR</span><span class="op">)</span></span>
+<span><span class="co">#&gt;         time  open  high   low close volume</span></span>
+<span><span class="co">#&gt; 1 2020-01-02 123.0 123.1 122.5 122.7   1875</span></span>
+<span><span class="co">#&gt; 2 2020-01-03 122.7 122.8 122.6 122.8   1479</span></span>
+<span><span class="co">#&gt; 3 2020-01-06 122.8 123.4 122.4 123.3   1792</span></span>
+<span><span class="co">#&gt; 4 2020-01-07 123.3 124.3 123.3 124.1   1977</span></span>
+<span><span class="co">#&gt; 5 2020-01-08 124.1 124.8 124.0 124.8   2239</span></span>
+<span><span class="co">#&gt; 6 2020-01-09 124.8 125.4 124.5 125.3   1842</span></span></code></pre></div>
 <p><strong>Date-time index</strong></p>
 <ul>
 <li><p>Should be POSIXct or in a format convertible to POSIXct</p></li>
@@ -215,47 +215,47 @@
 <code>keep.data</code> set to TRUE to retain additional data present in the input object as additional columns and/or attributes. Note: only columns of numeric type or type coercible to numeric are preserved, otherwise NAs are introduced.</li>
 </ul>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">cloud</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #949494;"># ichimoku object: more() to display more rows, look() to inspect attributes</span></span>
-<span class="co">#&gt;    index                open  high   low close    cd tenkan kijun senkouA</span>
-<span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 2020-01-02 <span style="color: #949494;">00:00:00</span> 123   123.1 122.5 122.7    -<span style="color: #BB0000;">1</span>   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 2020-01-03 <span style="color: #949494;">00:00:00</span> 122.7 122.8 122.6 122.8     1   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 2020-01-06 <span style="color: #949494;">00:00:00</span> 122.8 123.4 122.4 123.3     1   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 2020-01-07 <span style="color: #949494;">00:00:00</span> 123.3 124.3 123.3 124.1     1   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 2020-01-08 <span style="color: #949494;">00:00:00</span> 124.1 124.8 124   124.8     1   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 2020-01-09 <span style="color: #949494;">00:00:00</span> 124.8 125.4 124.5 125.3     1   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 2020-01-10 <span style="color: #949494;">00:00:00</span> 125.3 125.3 124.8 125.2    -<span style="color: #BB0000;">1</span>   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 2020-01-13 <span style="color: #949494;">00:00:00</span> 125.2 125.3 125.1 125.2     0   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 2020-01-14 <span style="color: #949494;">00:00:00</span> 125.2 125.2 124.3 124.4    -<span style="color: #BB0000;">1</span>  123.9    <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 2020-01-15 <span style="color: #949494;">00:00:00</span> 124.4 124.5 123.7 123.9    -<span style="color: #BB0000;">1</span>  123.9    <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
-<span class="co">#&gt; <span style="color: #949494;"># … with 271 more rows, and 4 more variables: senkouB &lt;dbl&gt;, chikou &lt;dbl&gt;,</span></span>
-<span class="co">#&gt; <span style="color: #949494;">#   cloudT &lt;dbl&gt;, cloudB &lt;dbl&gt;</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">cloud</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ichimoku object: more() to display more rows, look() to inspect attributes</span></span></span>
+<span><span class="co">#&gt;    index                open  high   low close    cd tenkan kijun senkouA</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 2020-01-02 <span style="color: #949494;">00:00:00</span> 123   123.1 122.5 122.7    -<span style="color: #BB0000;">1</span>   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 2020-01-03 <span style="color: #949494;">00:00:00</span> 122.7 122.8 122.6 122.8     1   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 2020-01-06 <span style="color: #949494;">00:00:00</span> 122.8 123.4 122.4 123.3     1   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 2020-01-07 <span style="color: #949494;">00:00:00</span> 123.3 124.3 123.3 124.1     1   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 2020-01-08 <span style="color: #949494;">00:00:00</span> 124.1 124.8 124   124.8     1   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 2020-01-09 <span style="color: #949494;">00:00:00</span> 124.8 125.4 124.5 125.3     1   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 2020-01-10 <span style="color: #949494;">00:00:00</span> 125.3 125.3 124.8 125.2    -<span style="color: #BB0000;">1</span>   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 2020-01-13 <span style="color: #949494;">00:00:00</span> 125.2 125.3 125.1 125.2     0   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 2020-01-14 <span style="color: #949494;">00:00:00</span> 125.2 125.2 124.3 124.4    -<span style="color: #BB0000;">1</span>  123.9    <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 2020-01-15 <span style="color: #949494;">00:00:00</span> 124.4 124.5 123.7 123.9    -<span style="color: #BB0000;">1</span>  123.9    <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 271 more rows, and 4 more variables: senkouB &lt;dbl&gt;, chikou &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   cloudT &lt;dbl&gt;, cloudB &lt;dbl&gt;</span></span></span></code></pre></div>
 <p>The returned output is designed to fit the screen; call <code><a href="../reference/more.html">more()</a></code> to display up to 100 more rows. Note that above, print is called setting ‘plot = FALSE’ to only return the data to the console. The default print method for ichimoku objects also plots the cloud chart to the graphical device.</p>
 <p>Use <code><a href="https://rdrr.io/r/utils/str.html" class="external-link">str()</a></code> for a compact display of the object structure:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span>
-<span class="co">#&gt; ichimoku object [2020-01-02 / 2021-02-01] (281, 12)</span>
-<span class="co">#&gt;  &lt;double&gt; $open $high $low $close $cd $tenkan $kijun $senkouA $senkouB $chikou $cloudT $cloudB</span>
-<span class="co">#&gt;  index: &lt;POSIXct&gt; 2020-01-02 ... 2021-02-01 </span>
-<span class="co">#&gt;  attributes:</span>
-<span class="co">#&gt;   periods: 9 26 52 </span>
-<span class="co">#&gt;   periodicity: 1 days </span>
-<span class="co">#&gt;   ticker: TKR</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ichimoku object [2020-01-02 / 2021-02-01] (281, 12)</span></span>
+<span><span class="co">#&gt;  &lt;double&gt; $open $high $low $close $cd $tenkan $kijun $senkouA $senkouB $chikou $cloudT $cloudB</span></span>
+<span><span class="co">#&gt;  index: &lt;POSIXct&gt; 2020-01-02 ... 2021-02-01 </span></span>
+<span><span class="co">#&gt;  attributes:</span></span>
+<span><span class="co">#&gt;   periods: 9 26 52 </span></span>
+<span><span class="co">#&gt;   periodicity: 1 days </span></span>
+<span><span class="co">#&gt;   ticker: TKR</span></span></code></pre></div>
 <p>The summary method using <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> will also provide a brief description of the data:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span>
-<span class="co">#&gt; ichimoku object with dimensions (281, 12) </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;             Max: 2020-07-13 23:00:00 [139.7]</span>
-<span class="co">#&gt; Start: 2020-01-02 00:00:00 [123]   End: 2020-12-24 00:00:00 [136]</span>
-<span class="co">#&gt;             Min: 2020-05-12 23:00:00 [119.1]</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Cloud periods: 9 26 52 </span>
-<span class="co">#&gt; Periodicity: 1 days </span>
-<span class="co">#&gt; Ticker: TKR</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ichimoku object with dimensions (281, 12) </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;             Max: 2020-07-13 23:00:00 [139.7]</span></span>
+<span><span class="co">#&gt; Start: 2020-01-02 00:00:00 [123]   End: 2020-12-24 00:00:00 [136]</span></span>
+<span><span class="co">#&gt;             Min: 2020-05-12 23:00:00 [119.1]</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Cloud periods: 9 26 52 </span></span>
+<span><span class="co">#&gt; Periodicity: 1 days </span></span>
+<span><span class="co">#&gt; Ticker: TKR</span></span></code></pre></div>
 <p>As an ichimoku object inherits the ‘xts’ and ‘zoo’ classes, all existing methods for these classes should work seamlessly. Please refer to the section <a href="#working-with-ichimoku-objects">Working with ichimoku objects</a>.</p>
 <div class="section level4">
 <h4 id="ichimoku-ichimoku">ichimoku.ichimoku()<a class="anchor" aria-label="anchor" href="#ichimoku-ichimoku"></a>
@@ -268,23 +268,23 @@
 </h4>
 <p>The input object may contain additional data not required for ichimoku analysis, such as volume etc. To retain such data in the ichimoku object, specify <code>keep.data = TRUE</code> when calling <code><a href="../reference/ichimoku.html">ichimoku()</a></code>.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">kumo</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span>, keep.data <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">kumo</span><span class="op">[</span>, <span class="st">"volume"</span><span class="op">]</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #949494;"># ichimoku object: more() to display more rows, look() to inspect attributes</span></span>
-<span class="co">#&gt;    index               volume</span>
-<span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 2020-01-02 <span style="color: #949494;">00:00:00</span>   <span style="text-decoration: underline;">1</span>875</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 2020-01-03 <span style="color: #949494;">00:00:00</span>   <span style="text-decoration: underline;">1</span>479</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 2020-01-06 <span style="color: #949494;">00:00:00</span>   <span style="text-decoration: underline;">1</span>792</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 2020-01-07 <span style="color: #949494;">00:00:00</span>   <span style="text-decoration: underline;">1</span>977</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 2020-01-08 <span style="color: #949494;">00:00:00</span>   <span style="text-decoration: underline;">2</span>239</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 2020-01-09 <span style="color: #949494;">00:00:00</span>   <span style="text-decoration: underline;">1</span>842</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 2020-01-10 <span style="color: #949494;">00:00:00</span>   <span style="text-decoration: underline;">2</span>548</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 2020-01-13 <span style="color: #949494;">00:00:00</span>   <span style="text-decoration: underline;">2</span>946</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 2020-01-14 <span style="color: #949494;">00:00:00</span>   <span style="text-decoration: underline;">2</span>796</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 2020-01-15 <span style="color: #949494;">00:00:00</span>   <span style="text-decoration: underline;">2</span>879</span>
-<span class="co">#&gt; <span style="color: #949494;"># … with 271 more rows</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">kumo</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span>, keep.data <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">kumo</span><span class="op">[</span>, <span class="st">"volume"</span><span class="op">]</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ichimoku object: more() to display more rows, look() to inspect attributes</span></span></span>
+<span><span class="co">#&gt;    index               volume</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 2020-01-02 <span style="color: #949494;">00:00:00</span>   <span style="text-decoration: underline;">1</span>875</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 2020-01-03 <span style="color: #949494;">00:00:00</span>   <span style="text-decoration: underline;">1</span>479</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 2020-01-06 <span style="color: #949494;">00:00:00</span>   <span style="text-decoration: underline;">1</span>792</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 2020-01-07 <span style="color: #949494;">00:00:00</span>   <span style="text-decoration: underline;">1</span>977</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 2020-01-08 <span style="color: #949494;">00:00:00</span>   <span style="text-decoration: underline;">2</span>239</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 2020-01-09 <span style="color: #949494;">00:00:00</span>   <span style="text-decoration: underline;">1</span>842</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 2020-01-10 <span style="color: #949494;">00:00:00</span>   <span style="text-decoration: underline;">2</span>548</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 2020-01-13 <span style="color: #949494;">00:00:00</span>   <span style="text-decoration: underline;">2</span>946</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 2020-01-14 <span style="color: #949494;">00:00:00</span>   <span style="text-decoration: underline;">2</span>796</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 2020-01-15 <span style="color: #949494;">00:00:00</span>   <span style="text-decoration: underline;">2</span>879</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 271 more rows</span></span></span></code></pre></div>
 <p>This consolidates all relevant data into a single object. The additional data can now also be plotted as a sub-plot beneath the main ichimoku cloud chart (see <a href="#custom-sub-plots">custom sub-plots</a>).</p>
 <p>Note: only numeric data or data coercible to numeric type is preserved in this way, and other types will introduce NAs. This is as the core data of an ichimoku object is a numeric matrix that does not support multiple data types. Custom attributes set on the input object (such as a timestamp or data source) are also preserved.</p>
 </div>
@@ -295,15 +295,15 @@
 <p>To define other dates as non-trading days, a vector of custom holidays may be supplied via a ‘holidays’ argument to <code><a href="../reference/ichimoku.html">ichimoku()</a></code> which is then passed on to the <code><a href="../reference/tradingDays.html">tradingDays()</a></code> function.</p>
 <p>If the relevant market trades continuously on a 24/7 basis, specify ‘holidays = NULL’. This will bypass the logic of <code><a href="../reference/tradingDays.html">tradingDays()</a></code> and return all dates when calculating the future cloud.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Holidays can be specified directly via a vector of dates:</span>
-<span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span>, holidays <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2020-01-13"</span>, <span class="st">"2020-02-11"</span>, <span class="st">"2020-02-24"</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co"># Or via a functions that returns a vector of dates (e.g. from the 'timeDate' package):</span>
-<span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span>, holidays <span class="op">=</span> <span class="fu">timeDate</span><span class="fu">::</span><span class="fu">holidayLONDON</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span>, holidays <span class="op">=</span> <span class="fu">timeDate</span><span class="fu">::</span><span class="fu">holidayNYSE</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co"># For a market that trades 24/7:</span>
-<span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span>, holidays <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Holidays can be specified directly via a vector of dates:</span></span>
+<span><span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span>, holidays <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2020-01-13"</span>, <span class="st">"2020-02-11"</span>, <span class="st">"2020-02-24"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Or via a functions that returns a vector of dates (e.g. from the 'timeDate' package):</span></span>
+<span><span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span>, holidays <span class="op">=</span> <span class="fu">timeDate</span><span class="fu">::</span><span class="fu">holidayLONDON</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span>, holidays <span class="op">=</span> <span class="fu">timeDate</span><span class="fu">::</span><span class="fu">holidayNYSE</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># For a market that trades 24/7:</span></span>
+<span><span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span>, holidays <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="working-with-ichimoku-objects">Working with ichimoku objects<a class="anchor" aria-label="anchor" href="#working-with-ichimoku-objects"></a>
@@ -321,14 +321,14 @@
 </ul>
 <p>The below shows how to re-create an ichimoku object from its components:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">index</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/index.ichimoku.html">index</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span>
-<span class="va">core</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/coredata.ichimoku.html">coredata</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span>
-
-<span class="va">cloud2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">index</span>, <span class="va">core</span><span class="op">)</span>, ticker <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">cloud</span>, <span class="st">"ticker"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Warning: Converted numeric values in column 'index' as POSIX times - please</span>
-<span class="co">#&gt; check validity</span>
-<span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="va">cloud</span>, <span class="va">cloud2</span><span class="op">)</span>
-<span class="co">#&gt; [1] TRUE</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">index</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/index.ichimoku.html">index</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span></span>
+<span><span class="va">core</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/coredata.ichimoku.html">coredata</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">cloud2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">index</span>, <span class="va">core</span><span class="op">)</span>, ticker <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">cloud</span>, <span class="st">"ticker"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Converted numeric values in column 'index' as POSIX times - please</span></span>
+<span><span class="co">#&gt; check validity</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="va">cloud</span>, <span class="va">cloud2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
 <p>Note specifically that ichimoku needs to be called twice - first to convert the matrix resulting from the <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind()</a></code> operation, and then again to recalculate using the OHLC data contained within the object as the original data would have contained NAs. The ticker name should also be set explicitly as in the example.</p>
 <p>A warning is issued about checking the validity of POSIX times, which in this case is safe to ignore as the POSIXct values in ‘index’ were simply coerced to numeric during the <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind()</a></code> operation and are valid.</p>
 <p>For additional functionality, the ‘xts’ package may be loaded to access a wide range of methods available for ‘xts’ objects, for example changing the periodicity of the data.</p>
@@ -345,7 +345,7 @@
 <p>Call <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> on an ichimoku object to visualize the cloud chart.</p>
 <p>The example below demonstrates some of the arguments that can be supplied to customise the plot.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">cloud</span>, window <span class="op">=</span> <span class="st">"2020-05/"</span>, ticker <span class="op">=</span> <span class="st">"SYM (JSE)"</span>, subtitle <span class="op">=</span> <span class="st">"Sample Data Series"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">cloud</span>, window <span class="op">=</span> <span class="st">"2020-05/"</span>, ticker <span class="op">=</span> <span class="st">"SYM (JSE)"</span>, subtitle <span class="op">=</span> <span class="st">"Sample Data Series"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference_files/figure-html/plot2-1.png" width="672"></p>
 <p>The following arguments for customisation are shared across <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> and <code><a href="../reference/iplot.html">iplot()</a></code>:</p>
 <ul>
@@ -371,7 +371,7 @@
 </ul>
 <p><code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> also permits a user-defined <code>theme</code>, in which case a vector of 12 colour values (hex codes or names) should be supplied. Each colour value corresponds to a different element of the chart. As an example, the ‘mono’ theme can be specified as:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#d9d9d9"</span>, <span class="st">"#d7d7d7"</span>, <span class="st">"#d1d1d1"</span>, <span class="st">"#737373"</span>, <span class="st">"#1f1f1f"</span>, <span class="st">"#b8b8b8"</span>, <span class="st">"#1a1a1a"</span>, <span class="st">"#1a1a1a"</span>, <span class="st">"#1a1a1a"</span>, <span class="st">"#ffffff"</span>, <span class="st">"#333333"</span>, <span class="st">"#1a1a1a"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#d9d9d9"</span>, <span class="st">"#d7d7d7"</span>, <span class="st">"#d1d1d1"</span>, <span class="st">"#737373"</span>, <span class="st">"#1f1f1f"</span>, <span class="st">"#b8b8b8"</span>, <span class="st">"#1a1a1a"</span>, <span class="st">"#1a1a1a"</span>, <span class="st">"#1a1a1a"</span>, <span class="st">"#ffffff"</span>, <span class="st">"#333333"</span>, <span class="st">"#1a1a1a"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="oscillators">Oscillators<a class="anchor" aria-label="anchor" href="#oscillators"></a>
@@ -382,13 +382,13 @@
 <p>The R-type line is calculated as 100 - 100 / (1 + [26] period mean open to close gain / the absolute value of the [26] period mean open to close loss).</p>
 <p>Note that this corresponds to the usual RSI oscillator definition, although not identical as gains/losses are calculated with reference to each period’s open rather than the previous close. Note also that the R-type oscillator is calculated consistently and does not employ a roll-forward mechanism based on previous oscillator values like the RSI.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># To plot an R-type oscillator:</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">cloud</span>, type <span class="op">=</span> <span class="st">"r"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># To plot an R-type oscillator:</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">cloud</span>, type <span class="op">=</span> <span class="st">"r"</span><span class="op">)</span></span></code></pre></div>
 <p>An <strong>S-type oscillator</strong> is based on the formula for the stochastic indicator. This is a 2-line indicator with fast and slow lines with look-back windows corresponding to the fast and medium cloud periods respectively (default 9 and 26). The fast line is quicker to react to price changes and the slow line can be used for confirmation / divergence.</p>
 <p>The fast S-type line is calculated as 100 times the ratio of the closing price minus the [9] period low to the [9] period high minus the [9] period low. The slow S-type line is calculated as 100 times the ratio of the closing price minus the [26] period low to the [26] period high minus the [26] period low.</p>
 <p>Note the difference to the usual stochastic oscillator definition where the slow line is a 3-period moving average of the fast line.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">cloud</span>, window <span class="op">=</span> <span class="st">"2020-04-01/2020-12-01"</span>, theme <span class="op">=</span> <span class="st">"solarized"</span>, type <span class="op">=</span> <span class="st">"s"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">cloud</span>, window <span class="op">=</span> <span class="st">"2020-04-01/2020-12-01"</span>, theme <span class="op">=</span> <span class="st">"solarized"</span>, type <span class="op">=</span> <span class="st">"s"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference_files/figure-html/plots-1.png" width="672"></p>
 </div>
 <div class="section level4">
@@ -398,7 +398,7 @@
 <p>The character string supplied to ‘custom’ is a regular expression pattern that is matched to the column name and hence does not need to match exactly, nor is case considered.</p>
 <p>To view a custom sub-plot, type must be specified as either ‘bar’ or ‘line’ as the type setting takes precedence (with a default of ‘none’).</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">kumo</span>, window <span class="op">=</span> <span class="st">"2020-04/2020-11"</span>, theme <span class="op">=</span> <span class="st">"mono"</span>, type <span class="op">=</span> <span class="st">"bar"</span>, custom <span class="op">=</span> <span class="st">"volume"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">kumo</span>, window <span class="op">=</span> <span class="st">"2020-04/2020-11"</span>, theme <span class="op">=</span> <span class="st">"mono"</span>, type <span class="op">=</span> <span class="st">"bar"</span>, custom <span class="op">=</span> <span class="st">"volume"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference_files/figure-html/plotbar-1.png" width="672"></p>
 </div>
 <div class="section level4">
@@ -412,8 +412,8 @@
 <p>Interactive plots require the ‘shiny’ package to be installed.</p>
 <p>To produce an interactive plot, use ichimoku’s <code><a href="../reference/iplot.html">iplot()</a></code> function, which launches an R Shiny app.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># For an interactive plot:</span>
-<span class="fu"><a href="../reference/iplot.html">iplot</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># For an interactive plot:</span></span>
+<span><span class="fu"><a href="../reference/iplot.html">iplot</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span></span></code></pre></div>
 <p>Further arguments are optional as full customisation of the chart can be done interactively in-app, including selecting the time window, theme, chart type, sub-plot etc.</p>
 <p>The cursor infotip provides intuitive access to the data:</p>
 <ul>
@@ -444,20 +444,20 @@
 </h4>
 <p><code><a href="../reference/archive.html">archive()</a></code> for write operations will take 2 arguments: the object to be written, and the file path/name of the file to be stored. If the second argument is left empty, a system dialog will be opened allowing the file save location to be set interactively. A confirmation is printed to the console that the file has been written.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Write object to file:</span>
-<span class="fu"><a href="../reference/archive.html">archive</a></span><span class="op">(</span><span class="va">object</span>, <span class="st">"path/filename"</span><span class="op">)</span>
-<span class="co"># Leave second argument empty to choose file save location from a system dialog:</span>
-<span class="fu"><a href="../reference/archive.html">archive</a></span><span class="op">(</span><span class="va">object</span>, <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Write object to file:</span></span>
+<span><span class="fu"><a href="../reference/archive.html">archive</a></span><span class="op">(</span><span class="va">object</span>, <span class="st">"path/filename"</span><span class="op">)</span></span>
+<span><span class="co"># Leave second argument empty to choose file save location from a system dialog:</span></span>
+<span><span class="fu"><a href="../reference/archive.html">archive</a></span><span class="op">(</span><span class="va">object</span>, <span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="reading">Reading<a class="anchor" aria-label="anchor" href="#reading"></a>
 </h4>
 <p><code><a href="../reference/archive.html">archive()</a></code> for read operations takes a single argument: the file path/name of the file to be read. Alternatively, if no arguments are specified, a system dialog will be opened allowing a file to be chosen interactively. The return value of the function can be assigned to an object. A confirmation is printed to the console once the file has been read.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Read from file to object:</span>
-<span class="va">object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/archive.html">archive</a></span><span class="op">(</span><span class="st">"path/filename"</span><span class="op">)</span>
-<span class="co"># Choose a file from an interactive system dialog:</span>
-<span class="va">object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/archive.html">archive</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Read from file to object:</span></span>
+<span><span class="va">object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/archive.html">archive</a></span><span class="op">(</span><span class="st">"path/filename"</span><span class="op">)</span></span>
+<span><span class="co"># Choose a file from an interactive system dialog:</span></span>
+<span><span class="va">object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/archive.html">archive</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="data-integrity-verification">Data Integrity Verification<a class="anchor" aria-label="anchor" href="#data-integrity-verification"></a>
@@ -585,7 +585,7 @@
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
 <p>Sasaki, H. 佐々木 英信 (1996), <em>一目均衡表の研究 [ichimoku kinkouhyou no kenkyuu]</em>. Tokyo, Japan: Toushi Radar.</p>
-<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.3.2, <a href="https://CRAN.R-project.org/package=ichimoku" class="external-link uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
+<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.3.3, <a href="https://CRAN.R-project.org/package=ichimoku" class="external-link uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
 <hr>
 </div>
   </div>
@@ -607,7 +607,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer>

@@ -51,7 +51,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.2.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.3</span>
       </span>
     </div>
 
@@ -122,43 +122,43 @@
 </h2>
 <p>Install the released version of ichimoku from CRAN:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"ichimoku"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"ichimoku"</span><span class="op">)</span></span></code></pre></div>
 <p>Or the latest development version from rOpenSci R-universe:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"ichimoku"</span>, repos <span class="op">=</span> <span class="st">"https://shikokuchuo.r-universe.dev"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"ichimoku"</span>, repos <span class="op">=</span> <span class="st">"https://shikokuchuo.r-universe.dev"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shikokuchuo.net/ichimoku/">ichimoku</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shikokuchuo.net/ichimoku/">ichimoku</a></span><span class="op">)</span></span></code></pre></div>
 <p>Simply <code><a href="reference/ichimoku.html">ichimoku()</a></code> and <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code>:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">sample_ohlc_data</span>, ticker <span class="op">=</span> <span class="st">"TKR"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">cloud</span>, window <span class="op">=</span> <span class="st">"2020-05/"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">sample_ohlc_data</span>, ticker <span class="op">=</span> <span class="st">"TKR"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">cloud</span>, window <span class="op">=</span> <span class="st">"2020-05/"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-ichimoku-1.png" alt="ichimoku kinko hyo"><!-- alt="ichimoku kinko hyo" --></p>
 <p><code><a href="reference/autostrat.html">autostrat()</a></code> to automatically evaluate and rank top-performing strategies:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/autostrat.html">autostrat</a></span><span class="op">(</span><span class="va">cloud</span>, n <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
-<span class="co">#&gt;                        [,1]               [,2]              [,3]             </span>
-<span class="co">#&gt; Strategy               "senkouB &gt; tenkan" "cloudB &gt; tenkan" "senkouB &gt; kijun"</span>
-<span class="co">#&gt; ---------------------  "----------"       "----------"      "----------"     </span>
-<span class="co">#&gt; Strategy cuml return % 17.49              16.08             14.1             </span>
-<span class="co">#&gt; Per period mean ret %  0.0906             0.0838            0.0741           </span>
-<span class="co">#&gt; Periods in market      63                 51                64               </span>
-<span class="co">#&gt; Total trades           3                  3                 3                </span>
-<span class="co">#&gt; Average trade length   21                 17                21.33            </span>
-<span class="co">#&gt; Trade success %        100                100               100              </span>
-<span class="co">#&gt; Worst trade ret %      3.64               3.16              3.49             </span>
-<span class="co">#&gt; ---------------------  "----------"       "----------"      "----------"     </span>
-<span class="co">#&gt; Benchmark cuml ret %   5.53               5.53              5.53             </span>
-<span class="co">#&gt; Per period mean ret %  0.0302             0.0302            0.0302           </span>
-<span class="co">#&gt; Periods in market      178                178               178              </span>
-<span class="co">#&gt; ---------------------  "----------"       "----------"      "----------"     </span>
-<span class="co">#&gt; Direction              "long"             "long"            "long"           </span>
-<span class="co">#&gt; Start                  2020-04-20         2020-04-20        2020-04-20       </span>
-<span class="co">#&gt; End                    2020-12-23         2020-12-23        2020-12-23       </span>
-<span class="co">#&gt; Ticker                 "TKR"              "TKR"             "TKR"</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/autostrat.html">autostrat</a></span><span class="op">(</span><span class="va">cloud</span>, n <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="co">#&gt;                        [,1]               [,2]              [,3]             </span></span>
+<span><span class="co">#&gt; Strategy               "senkouB &gt; tenkan" "cloudB &gt; tenkan" "senkouB &gt; kijun"</span></span>
+<span><span class="co">#&gt; ---------------------  "----------"       "----------"      "----------"     </span></span>
+<span><span class="co">#&gt; Strategy cuml return % 17.49              16.08             14.1             </span></span>
+<span><span class="co">#&gt; Per period mean ret %  0.0906             0.0838            0.0741           </span></span>
+<span><span class="co">#&gt; Periods in market      63                 51                64               </span></span>
+<span><span class="co">#&gt; Total trades           3                  3                 3                </span></span>
+<span><span class="co">#&gt; Average trade length   21                 17                21.33            </span></span>
+<span><span class="co">#&gt; Trade success %        100                100               100              </span></span>
+<span><span class="co">#&gt; Worst trade ret %      3.64               3.16              3.49             </span></span>
+<span><span class="co">#&gt; ---------------------  "----------"       "----------"      "----------"     </span></span>
+<span><span class="co">#&gt; Benchmark cuml ret %   5.53               5.53              5.53             </span></span>
+<span><span class="co">#&gt; Per period mean ret %  0.0302             0.0302            0.0302           </span></span>
+<span><span class="co">#&gt; Periods in market      178                178               178              </span></span>
+<span><span class="co">#&gt; ---------------------  "----------"       "----------"      "----------"     </span></span>
+<span><span class="co">#&gt; Direction              "long"             "long"            "long"           </span></span>
+<span><span class="co">#&gt; Start                  2020-04-20         2020-04-20        2020-04-20       </span></span>
+<span><span class="co">#&gt; End                    2020-12-23         2020-12-23        2020-12-23       </span></span>
+<span><span class="co">#&gt; Ticker                 "TKR"              "TKR"             "TKR"</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="principal-ichimoku-functions">Principal ichimoku functions<a class="anchor" aria-label="anchor" href="#principal-ichimoku-functions"></a>
@@ -209,7 +209,7 @@
 </h2>
 <p>Sasaki, H. 佐々木 英信 (1996), <em>一目均衡表の研究 [ichimoku kinkouhyou no kenkyuu]</em>. Tokyo, Japan: Toushi Radar.</p>
 <p>‘OANDA’ and ‘fxTrade’ are trademarks owned by OANDA Corporation, an entity unaffiliated with the ichimoku package.</p>
-<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.3.2, <a href="https://CRAN.R-project.org/package=ichimoku" class="external-link uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
+<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.3.3, <a href="https://CRAN.R-project.org/package=ichimoku" class="external-link uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
 <p>–</p>
 <p>◈ ichimoku R package: <a href="https://shikokuchuo.net/ichimoku/" class="uri">https://shikokuchuo.net/ichimoku/</a>.</p>
 <p>Listed CRAN Finance Task View: <a href="https://CRAN.R-project.org/view=Finance" class="external-link uri">https://CRAN.R-project.org/view=Finance</a>.</p>
@@ -280,7 +280,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer>

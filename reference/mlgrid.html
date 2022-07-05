@@ -21,7 +21,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.2.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.3</span>
       </span>
     </div>
 
@@ -86,15 +86,15 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">mlgrid</span><span class="op">(</span>
-  <span class="va">x</span>,
-  y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"logret"</span>, <span class="st">"ret"</span>, <span class="st">"none"</span><span class="op">)</span>,
-  k <span class="op">=</span> <span class="fl">1L</span>,
-  dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"long"</span>, <span class="st">"short"</span><span class="op">)</span>,
-  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"boolean"</span>, <span class="st">"numeric"</span>, <span class="st">"z-score"</span><span class="op">)</span>,
-  format <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"dataframe"</span>, <span class="st">"matrix"</span><span class="op">)</span>,
-  unique <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">mlgrid</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"logret"</span>, <span class="st">"ret"</span>, <span class="st">"none"</span><span class="op">)</span>,</span>
+<span>  k <span class="op">=</span> <span class="fl">1L</span>,</span>
+<span>  dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"long"</span>, <span class="st">"short"</span><span class="op">)</span>,</span>
+<span>  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"boolean"</span>, <span class="st">"numeric"</span>, <span class="st">"z-score"</span><span class="op">)</span>,</span>
+<span>  format <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"dataframe"</span>, <span class="st">"matrix"</span><span class="op">)</span>,</span>
+<span>  unique <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -178,9 +178,9 @@ Set to FALSE to return both c1 &gt; c2 and c2 &gt; c1.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">sample_ohlc_data</span>, ticker <span class="op">=</span> <span class="st">"TKR"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">grid</span> <span class="op">&lt;-</span> <span class="fu">mlgrid</span><span class="op">(</span><span class="va">cloud</span>, y <span class="op">=</span> <span class="st">"ret"</span>, k <span class="op">=</span> <span class="fl">2</span>, dir <span class="op">=</span> <span class="st">"short"</span>, type <span class="op">=</span> <span class="st">"z-score"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">grid</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">sample_ohlc_data</span>, ticker <span class="op">=</span> <span class="st">"TKR"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">grid</span> <span class="op">&lt;-</span> <span class="fu">mlgrid</span><span class="op">(</span><span class="va">cloud</span>, y <span class="op">=</span> <span class="st">"ret"</span>, k <span class="op">=</span> <span class="fl">2</span>, dir <span class="op">=</span> <span class="st">"short"</span>, type <span class="op">=</span> <span class="st">"z-score"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">grid</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 'data.frame':	152 obs. of  38 variables:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ y              : num  -0.00645 0.00242 -0.00321 -0.00242 -0.0016 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ chikou_close   : num  -1.086 -0.79 -0.79 -0.856 -0.757 ...</span>
@@ -225,7 +225,7 @@ Set to FALSE to return both c1 &gt; c2 and c2 &gt; c1.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  - attr(*, "direction")= chr "short"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  - attr(*, "type")= chr "z-score"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  - attr(*, "ticker")= chr "TKR"</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -240,7 +240,7 @@ Set to FALSE to return both c1 &gt; c2 and c2 &gt; c1.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

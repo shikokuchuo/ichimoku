@@ -20,7 +20,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.2.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.3</span>
       </span>
     </div>
 
@@ -84,7 +84,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">autostrat</span><span class="op">(</span><span class="va">x</span>, n <span class="op">=</span> <span class="fl">8</span>, dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"long"</span>, <span class="st">"short"</span><span class="op">)</span>, level <span class="op">=</span> <span class="fl">1</span>, <span class="va">quietly</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">autostrat</span><span class="op">(</span><span class="va">x</span>, n <span class="op">=</span> <span class="fl">8</span>, dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"long"</span>, <span class="st">"short"</span><span class="op">)</span>, level <span class="op">=</span> <span class="fl">1</span>, <span class="va">quietly</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -144,10 +144,10 @@ output to the console and return quietly.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">sample_ohlc_data</span>, ticker <span class="op">=</span> <span class="st">"TKR"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">stratlist</span> <span class="op">&lt;-</span> <span class="fu">autostrat</span><span class="op">(</span><span class="va">cloud</span>, n <span class="op">=</span> <span class="fl">3</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="look.html">look</a></span><span class="op">(</span><span class="va">stratlist</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">sample_ohlc_data</span>, ticker <span class="op">=</span> <span class="st">"TKR"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">stratlist</span> <span class="op">&lt;-</span> <span class="fu">autostrat</span><span class="op">(</span><span class="va">cloud</span>, n <span class="op">=</span> <span class="fl">3</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="look.html">look</a></span><span class="op">(</span><span class="va">stratlist</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $logret</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  senkouB_tenkan   cloudB_tenkan   senkouB_kijun    cloudB_kijun      low_tenkan </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     0.144869048     0.132721126     0.124552623     0.124476092     0.119988595 </span>
@@ -220,8 +220,8 @@ output to the console and return quietly.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> End                    2020-12-23         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Ticker                 "TKR"              </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="va">strat</span> <span class="op">&lt;-</span> <span class="va">stratlist</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">strat</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">strat</span> <span class="op">&lt;-</span> <span class="va">stratlist</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">strat</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                        [,1]               </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Strategy               "cloudB &gt; tenkan"  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------  "----------"       </span>
@@ -241,8 +241,8 @@ output to the console and return quietly.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Start                  2020-04-19 23:00:00</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> End                    2020-12-23         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Ticker                 "TKR"              </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">autostrat</span><span class="op">(</span><span class="va">cloud</span>, n <span class="op">=</span> <span class="fl">1</span>, dir <span class="op">=</span> <span class="st">"short"</span>, level <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">autostrat</span><span class="op">(</span><span class="va">cloud</span>, n <span class="op">=</span> <span class="fl">1</span>, dir <span class="op">=</span> <span class="st">"short"</span>, level <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                        [,1]                               </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Strategy               "close &gt; chikou &amp; tenkan &gt; senkouB"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------  "----------"                       </span>
@@ -262,7 +262,7 @@ output to the console and return quietly.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Start                  2020-04-19 23:00:00                </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> End                    2020-12-23                         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Ticker                 "TKR"                              </span>
-<span class="r-in"><span class="fu">autostrat</span><span class="op">(</span><span class="va">cloud</span>, n <span class="op">=</span> <span class="fl">1</span>, dir <span class="op">=</span> <span class="st">"long"</span>, level <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">autostrat</span><span class="op">(</span><span class="va">cloud</span>, n <span class="op">=</span> <span class="fl">1</span>, dir <span class="op">=</span> <span class="st">"long"</span>, level <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                        [,1]                             </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Strategy               "senkouB &gt; senkouA x kijun &gt; low"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------  "----------"                     </span>
@@ -282,7 +282,7 @@ output to the console and return quietly.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Start                  2020-04-19 23:00:00              </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> End                    2020-12-23                       </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Ticker                 "TKR"                            </span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -297,7 +297,7 @@ output to the console and return quietly.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

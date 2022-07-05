@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.2.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.3</span>
       </span>
     </div>
 
@@ -138,10 +138,10 @@
 </h2>
 <p>If you are using an access token for a live (real money) account, you will want to call <code><a href="../reference/oanda_switch.html">oanda_switch()</a></code> at the beginning of each session; this switches the default server from the practice server to the live server. Settings will only persist until the end of the session.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shikokuchuo.net/ichimoku/">ichimoku</a></span><span class="op">)</span>
-
-<span class="fu"><a href="../reference/oanda_switch.html">oanda_switch</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Default OANDA server switched to 'live'</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shikokuchuo.net/ichimoku/">ichimoku</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/oanda_switch.html">oanda_switch</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Default OANDA server switched to 'live'</span></span></code></pre></div>
 <p>Note: this package only contains functions for retrieving available instruments and price data. It does not contain code to implement any trading capability whatsoever. Please be aware however, that a personal access token can be used (outside of this package) for all operations on your account including placing orders and trades, and appropriate precautions should be taken when using your live account token.</p>
 </div>
 <div class="section level2">
@@ -178,11 +178,11 @@
 </ul>
 <p>Note: if both <code>from</code> and <code>to</code> are specified and the request would result in over 5000 periods being returned, the function prompts the user to confirm if multiple requests should be submitted. Unless the user response is “n” or “no”, the data will proceed to be downloaded in batches and merged together into a single dataframe. The function is safe for use in non-interactive settings as in such cases the download will proceed automatically without prompting.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/oanda.html">oanda</a></span><span class="op">(</span><span class="st">"USD_JPY"</span>, count <span class="op">=</span> <span class="fl">3</span>, from <span class="op">=</span> <span class="st">"2010-11-01"</span>, price <span class="op">=</span> <span class="st">"B"</span><span class="op">)</span>
-<span class="co">#&gt;                  time   open   high    low  close volume complete</span>
-<span class="co">#&gt; 1 2010-11-01 21:00:00 80.275 81.504 80.225 80.501  22291     TRUE</span>
-<span class="co">#&gt; 2 2010-11-02 21:00:00 80.504 80.956 80.460 80.617  13795     TRUE</span>
-<span class="co">#&gt; 3 2010-11-03 21:00:00 80.632 81.585 80.594 81.069  22204     TRUE</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/oanda.html">oanda</a></span><span class="op">(</span><span class="st">"USD_JPY"</span>, count <span class="op">=</span> <span class="fl">3</span>, from <span class="op">=</span> <span class="st">"2010-11-01"</span>, price <span class="op">=</span> <span class="st">"B"</span><span class="op">)</span></span>
+<span><span class="co">#&gt;                  time   open   high    low  close volume complete</span></span>
+<span><span class="co">#&gt; 1 2010-11-01 21:00:00 80.275 81.504 80.225 80.501  22291     TRUE</span></span>
+<span><span class="co">#&gt; 2 2010-11-02 21:00:00 80.504 80.956 80.460 80.617  13795     TRUE</span></span>
+<span><span class="co">#&gt; 3 2010-11-03 21:00:00 80.632 81.585 80.594 81.069  22204     TRUE</span></span></code></pre></div>
 <p>The returned object is a dataframe with the following columns: ‘time’, ‘open’, ‘high’, ‘low’, ‘close’, ‘volume’ and ‘complete’.</p>
 <ul>
 <li><p><strong>volume</strong> should be used with caution as this reflects the trading volume registered by OANDA and may not be reflective of the broader market</p></li>
@@ -212,14 +212,14 @@
 </ul>
 <p>The arguments ‘from’ and ‘to’ are excluded as they are not relevant in this context.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># For a live Palladium price chart:</span>
-<span class="fu"><a href="../reference/oanda_chart.html">oanda_chart</a></span><span class="op">(</span><span class="st">"XPD_USD"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># For a live Palladium price chart:</span></span>
+<span><span class="fu"><a href="../reference/oanda_chart.html">oanda_chart</a></span><span class="op">(</span><span class="st">"XPD_USD"</span><span class="op">)</span></span></code></pre></div>
 <p>In RStudio, please switch to the plots plane to view the chart if not already in focus.</p>
 <p>Note that the periods displayed on the chart will be fewer than the ‘count’ specified - using default cloud periods, the first 77 datapoints will be excluded. This is by design to ensure a full cloud is displayed (i.e. there are no missing values for any cloud lines at the start of the data). Please take this into account when setting the ‘count’ parameter.</p>
 <p>On exit from the function, the ichimoku object underlying the chart will be returned (invisibly). This allows the data to be saved simply by assigning to an object.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># To access the data, simply assign the return value to an object:</span>
-<span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/oanda_chart.html">oanda_chart</a></span><span class="op">(</span><span class="st">"XPD_USD"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># To access the data, simply assign the return value to an object:</span></span>
+<span><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/oanda_chart.html">oanda_chart</a></span><span class="op">(</span><span class="st">"XPD_USD"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="oanda_studio">
@@ -228,7 +228,7 @@
 <p>Create an interactive R Shiny session for working with real-time Ichimoku cloud charts. Provides a live analysis environment where parameters may be set interactively as required. The cursor infotip provides ready access to the data directly from the chart.</p>
 <p>As all parameters can be set interactively in-app, <code><a href="../reference/oanda_studio.html">oanda_studio()</a></code> may be called without specifying any arguments. Otherwise, parameters may be set beforehand in the same way as <code><a href="../reference/oanda_chart.html">oanda_chart()</a></code>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/oanda_studio.html">oanda_studio</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/oanda_studio.html">oanda_studio</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="oanda-studio.jpg"></p>
 <p>The following additional parameters can be used to customise the behaviour of the Shiny environment:</p>
 <ul>
@@ -248,11 +248,11 @@
 <p>This button uses <code><a href="../reference/archive.html">archive()</a></code> to save the ichimoku object to disk. The filename will be of the form: <code>instrument_granularity_price.rda</code>, e.g. <code>SUGAR_USD_D_A.rda</code>. If confirmed, the file is saved to the browser’s default download location. Note that files with the same name are not overwritten but instead the filename is made unique.</p>
 <p>To read back the file, use <code><a href="../reference/archive.html">archive()</a></code>:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Supply the quoted file path / name, for example:</span>
-<span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/archive.html">archive</a></span><span class="op">(</span><span class="st">"~/Downloads/SUGAR_USD_D_A.rda"</span><span class="op">)</span>
-
-<span class="co"># Or alternatively, choose the saved file interactively using a system dialog:</span>
-<span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/archive.html">archive</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Supply the quoted file path / name, for example:</span></span>
+<span><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/archive.html">archive</a></span><span class="op">(</span><span class="st">"~/Downloads/SUGAR_USD_D_A.rda"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Or alternatively, choose the saved file interactively using a system dialog:</span></span>
+<span><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/archive.html">archive</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level3">
@@ -271,25 +271,25 @@
 </ul>
 <p>The ‘server’ and ‘apikey’ arguments are also available if required.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Streaming session will end with data automatically returned after 600 secs (10 mins):</span>
-<span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/oanda_stream.html">oanda_stream</a></span><span class="op">(</span><span class="st">"UK10YB_GBP"</span>, limit <span class="op">=</span> <span class="fl">600</span><span class="op">)</span>
-<span class="co">#&gt; Streaming data... Press 'Esc' to return</span>
-<span class="co">#&gt;    type                time           bids           asks closeoutBid closeoutAsk    status tradeable</span>
-<span class="co">#&gt; 1 PRICE 2022-02-21 12:31:20 121.712, 10000 121.742, 10000     121.712     121.742 tradeable      TRUE</span>
-<span class="co">#&gt; 2 PRICE 2022-02-21 12:31:37 121.722, 10000 121.752, 10000     121.722     121.752 tradeable      TRUE</span>
-<span class="co">#&gt; 3 PRICE 2022-02-21 12:31:52 121.712, 10000 121.742, 10000     121.712     121.742 tradeable      TRUE</span>
-<span class="co">#&gt; 4 PRICE 2022-02-21 12:32:12 121.722, 10000 121.752, 10000     121.722     121.752 tradeable      TRUE</span>
-<span class="co">#&gt; 5 PRICE 2022-02-21 12:32:15 121.712, 10000 121.742, 10000     121.712     121.742 tradeable      TRUE</span>
-<span class="co">#&gt; 6 PRICE 2022-02-21 12:32:27 121.722, 10000 121.752, 10000     121.722     121.752 tradeable      TRUE</span>
-<span class="co">#&gt; 7 PRICE 2022-02-21 12:33:24 121.712, 10000 121.742, 10000     121.712     121.742 tradeable      TRUE</span>
-<span class="co">#&gt;   instrument</span>
-<span class="co">#&gt; 1 UK10YB_GBP</span>
-<span class="co">#&gt; 2 UK10YB_GBP</span>
-<span class="co">#&gt; 3 UK10YB_GBP</span>
-<span class="co">#&gt; 4 UK10YB_GBP</span>
-<span class="co">#&gt; 5 UK10YB_GBP</span>
-<span class="co">#&gt; 6 UK10YB_GBP</span>
-<span class="co">#&gt; 7 UK10YB_GBP</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Streaming session will end with data automatically returned after 600 secs (10 mins):</span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/oanda_stream.html">oanda_stream</a></span><span class="op">(</span><span class="st">"UK10YB_GBP"</span>, limit <span class="op">=</span> <span class="fl">600</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Streaming data... Press 'Esc' to return</span></span>
+<span><span class="co">#&gt;    type                time           bids           asks closeoutBid closeoutAsk    status tradeable</span></span>
+<span><span class="co">#&gt; 1 PRICE 2022-02-21 12:31:20 121.712, 10000 121.742, 10000     121.712     121.742 tradeable      TRUE</span></span>
+<span><span class="co">#&gt; 2 PRICE 2022-02-21 12:31:37 121.722, 10000 121.752, 10000     121.722     121.752 tradeable      TRUE</span></span>
+<span><span class="co">#&gt; 3 PRICE 2022-02-21 12:31:52 121.712, 10000 121.742, 10000     121.712     121.742 tradeable      TRUE</span></span>
+<span><span class="co">#&gt; 4 PRICE 2022-02-21 12:32:12 121.722, 10000 121.752, 10000     121.722     121.752 tradeable      TRUE</span></span>
+<span><span class="co">#&gt; 5 PRICE 2022-02-21 12:32:15 121.712, 10000 121.742, 10000     121.712     121.742 tradeable      TRUE</span></span>
+<span><span class="co">#&gt; 6 PRICE 2022-02-21 12:32:27 121.722, 10000 121.752, 10000     121.722     121.752 tradeable      TRUE</span></span>
+<span><span class="co">#&gt; 7 PRICE 2022-02-21 12:33:24 121.712, 10000 121.742, 10000     121.712     121.742 tradeable      TRUE</span></span>
+<span><span class="co">#&gt;   instrument</span></span>
+<span><span class="co">#&gt; 1 UK10YB_GBP</span></span>
+<span><span class="co">#&gt; 2 UK10YB_GBP</span></span>
+<span><span class="co">#&gt; 3 UK10YB_GBP</span></span>
+<span><span class="co">#&gt; 4 UK10YB_GBP</span></span>
+<span><span class="co">#&gt; 5 UK10YB_GBP</span></span>
+<span><span class="co">#&gt; 6 UK10YB_GBP</span></span>
+<span><span class="co">#&gt; 7 UK10YB_GBP</span></span></code></pre></div>
 <p>Use the ‘Esc’ key to stop the stream and return the session data. Assign the return value to an object if you wish to retain the data.</p>
 <p>Note: only messages of type ‘PRICE’ are processed. Messages of type ‘HEARTBEAT’ consisting of only a timestamp are discarded.</p>
 <p>The following should be noted from the streaming API documentation:</p>
@@ -309,8 +309,8 @@
 <p>A convenience function that outputs to the console the latest one-line price quote for an instrument.</p>
 <p>The output format is as follows: instrument, timestamp, daily open, high, low and last prices, daily percentage change (from the open), and the pricing component (M for mid, B for bid, A for ask).</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/oanda_quote.html">oanda_quote</a></span><span class="op">(</span><span class="st">"USD_JPY"</span><span class="op">)</span>
-<span class="co">#&gt; USD_JPY 2021-10-05 16:29:44 open: 110.931  high: 111.564  low: 110.871  last: 111.398  %chg: 0.421 M</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/oanda_quote.html">oanda_quote</a></span><span class="op">(</span><span class="st">"USD_JPY"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; USD_JPY 2021-10-05 16:29:44 open: 110.931  high: 111.564  low: 110.871  last: 111.398  %chg: 0.421 M</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="oanda_view">
@@ -343,7 +343,7 @@
 <p>‘instrument’ is a required argument. The latest order/position book is retrieved unless the optional argument ‘time’ is used to specify a time for which to retrieve the order/position book.</p>
 <p>The data is returned as a dataframe, with parameters saved as attributes which can be viewed with <code><a href="../reference/look.html">look()</a></code>. A chart showing the percentage long and short orders/positions at each price level is output to the graphical device.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/oanda_positions.html">oanda_positions</a></span><span class="op">(</span><span class="st">"GBP_JPY"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/oanda_positions.html">oanda_positions</a></span><span class="op">(</span><span class="st">"GBP_JPY"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="xoanda_files/figure-html/oandaposchart-1.png" width="672"></p>
 <p>Please note that this feature has been implemented by OANDA only for certain major currency pairs and should be considered experimental.</p>
 <p>Note also that for the order book, only the interquartile range of order levels is charted as some orders are placed very far from the market price. The returned dataframe contains the full order book nevertheless.</p>
@@ -355,134 +355,134 @@
 <p>The list of financial instruments available for your account may be retrieved by <code><a href="../reference/oanda_instruments.html">oanda_instruments()</a></code>. The available instruments are also automatically populated as an input in <code><a href="../reference/oanda_studio.html">oanda_studio()</a></code>.</p>
 <p>The list below serves as a reference only and may differ from those actually available for your account type and/or country/region.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/oanda_instruments.html">oanda_instruments</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">#&gt;           name     displayName     type</span>
-<span class="co">#&gt; 1    AU200_AUD   Australia 200      CFD</span>
-<span class="co">#&gt; 2      AUD_CAD         AUD/CAD CURRENCY</span>
-<span class="co">#&gt; 3      AUD_CHF         AUD/CHF CURRENCY</span>
-<span class="co">#&gt; 4      AUD_HKD         AUD/HKD CURRENCY</span>
-<span class="co">#&gt; 5      AUD_JPY         AUD/JPY CURRENCY</span>
-<span class="co">#&gt; 6      AUD_NZD         AUD/NZD CURRENCY</span>
-<span class="co">#&gt; 7      AUD_SGD         AUD/SGD CURRENCY</span>
-<span class="co">#&gt; 8      AUD_USD         AUD/USD CURRENCY</span>
-<span class="co">#&gt; 9      BCO_USD Brent Crude Oil      CFD</span>
-<span class="co">#&gt; 10     CAD_CHF         CAD/CHF CURRENCY</span>
-<span class="co">#&gt; 11     CAD_HKD         CAD/HKD CURRENCY</span>
-<span class="co">#&gt; 12     CAD_JPY         CAD/JPY CURRENCY</span>
-<span class="co">#&gt; 13     CAD_SGD         CAD/SGD CURRENCY</span>
-<span class="co">#&gt; 14    CH20_CHF  Switzerland 20      CFD</span>
-<span class="co">#&gt; 15     CHF_HKD         CHF/HKD CURRENCY</span>
-<span class="co">#&gt; 16     CHF_JPY         CHF/JPY CURRENCY</span>
-<span class="co">#&gt; 17     CHF_ZAR         CHF/ZAR CURRENCY</span>
-<span class="co">#&gt; 18  CHINAH_HKD  China H Shares      CFD</span>
-<span class="co">#&gt; 19    CN50_USD       China A50      CFD</span>
-<span class="co">#&gt; 20    CORN_USD            Corn      CFD</span>
-<span class="co">#&gt; 21  DE10YB_EUR            Bund      CFD</span>
-<span class="co">#&gt; 22    DE30_EUR      Germany 30      CFD</span>
-<span class="co">#&gt; 23   ESPIX_EUR        Spain 35      CFD</span>
-<span class="co">#&gt; 24    EU50_EUR       Europe 50      CFD</span>
-<span class="co">#&gt; 25     EUR_AUD         EUR/AUD CURRENCY</span>
-<span class="co">#&gt; 26     EUR_CAD         EUR/CAD CURRENCY</span>
-<span class="co">#&gt; 27     EUR_CHF         EUR/CHF CURRENCY</span>
-<span class="co">#&gt; 28     EUR_CZK         EUR/CZK CURRENCY</span>
-<span class="co">#&gt; 29     EUR_DKK         EUR/DKK CURRENCY</span>
-<span class="co">#&gt; 30     EUR_GBP         EUR/GBP CURRENCY</span>
-<span class="co">#&gt; 31     EUR_HKD         EUR/HKD CURRENCY</span>
-<span class="co">#&gt; 32     EUR_HUF         EUR/HUF CURRENCY</span>
-<span class="co">#&gt; 33     EUR_JPY         EUR/JPY CURRENCY</span>
-<span class="co">#&gt; 34     EUR_NOK         EUR/NOK CURRENCY</span>
-<span class="co">#&gt; 35     EUR_NZD         EUR/NZD CURRENCY</span>
-<span class="co">#&gt; 36     EUR_PLN         EUR/PLN CURRENCY</span>
-<span class="co">#&gt; 37     EUR_SEK         EUR/SEK CURRENCY</span>
-<span class="co">#&gt; 38     EUR_SGD         EUR/SGD CURRENCY</span>
-<span class="co">#&gt; 39     EUR_TRY         EUR/TRY CURRENCY</span>
-<span class="co">#&gt; 40     EUR_USD         EUR/USD CURRENCY</span>
-<span class="co">#&gt; 41     EUR_ZAR         EUR/ZAR CURRENCY</span>
-<span class="co">#&gt; 42    FR40_EUR       France 40      CFD</span>
-<span class="co">#&gt; 43     GBP_AUD         GBP/AUD CURRENCY</span>
-<span class="co">#&gt; 44     GBP_CAD         GBP/CAD CURRENCY</span>
-<span class="co">#&gt; 45     GBP_CHF         GBP/CHF CURRENCY</span>
-<span class="co">#&gt; 46     GBP_HKD         GBP/HKD CURRENCY</span>
-<span class="co">#&gt; 47     GBP_JPY         GBP/JPY CURRENCY</span>
-<span class="co">#&gt; 48     GBP_NZD         GBP/NZD CURRENCY</span>
-<span class="co">#&gt; 49     GBP_PLN         GBP/PLN CURRENCY</span>
-<span class="co">#&gt; 50     GBP_SGD         GBP/SGD CURRENCY</span>
-<span class="co">#&gt; 51     GBP_USD         GBP/USD CURRENCY</span>
-<span class="co">#&gt; 52     GBP_ZAR         GBP/ZAR CURRENCY</span>
-<span class="co">#&gt; 53    HK33_HKD    Hong Kong 33      CFD</span>
-<span class="co">#&gt; 54     HKD_JPY         HKD/JPY CURRENCY</span>
-<span class="co">#&gt; 55    IN50_USD        India 50      CFD</span>
-<span class="co">#&gt; 56   JP225_USD       Japan 225      CFD</span>
-<span class="co">#&gt; 57  JP225Y_JPY Japan 225 (JPY)      CFD</span>
-<span class="co">#&gt; 58  NAS100_USD      US Nas 100      CFD</span>
-<span class="co">#&gt; 59  NATGAS_USD     Natural Gas      CFD</span>
-<span class="co">#&gt; 60    NL25_EUR  Netherlands 25      CFD</span>
-<span class="co">#&gt; 61     NZD_CAD         NZD/CAD CURRENCY</span>
-<span class="co">#&gt; 62     NZD_CHF         NZD/CHF CURRENCY</span>
-<span class="co">#&gt; 63     NZD_HKD         NZD/HKD CURRENCY</span>
-<span class="co">#&gt; 64     NZD_JPY         NZD/JPY CURRENCY</span>
-<span class="co">#&gt; 65     NZD_SGD         NZD/SGD CURRENCY</span>
-<span class="co">#&gt; 66     NZD_USD         NZD/USD CURRENCY</span>
-<span class="co">#&gt; 67    SG30_SGD    Singapore 30      CFD</span>
-<span class="co">#&gt; 68     SGD_CHF         SGD/CHF CURRENCY</span>
-<span class="co">#&gt; 69     SGD_JPY         SGD/JPY CURRENCY</span>
-<span class="co">#&gt; 70   SOYBN_USD        Soybeans      CFD</span>
-<span class="co">#&gt; 71  SPX500_USD      US SPX 500      CFD</span>
-<span class="co">#&gt; 72   SUGAR_USD           Sugar      CFD</span>
-<span class="co">#&gt; 73     TRY_JPY         TRY/JPY CURRENCY</span>
-<span class="co">#&gt; 74    TWIX_USD    Taiwan Index      CFD</span>
-<span class="co">#&gt; 75   UK100_GBP          UK 100      CFD</span>
-<span class="co">#&gt; 76  UK10YB_GBP     UK 10Y Gilt      CFD</span>
-<span class="co">#&gt; 77  US2000_USD    US Russ 2000      CFD</span>
-<span class="co">#&gt; 78    US30_USD   US Wall St 30      CFD</span>
-<span class="co">#&gt; 79  USB02Y_USD    US 2Y T-Note      CFD</span>
-<span class="co">#&gt; 80  USB05Y_USD    US 5Y T-Note      CFD</span>
-<span class="co">#&gt; 81  USB10Y_USD   US 10Y T-Note      CFD</span>
-<span class="co">#&gt; 82  USB30Y_USD       US T-Bond      CFD</span>
-<span class="co">#&gt; 83     USD_CAD         USD/CAD CURRENCY</span>
-<span class="co">#&gt; 84     USD_CHF         USD/CHF CURRENCY</span>
-<span class="co">#&gt; 85     USD_CNH         USD/CNH CURRENCY</span>
-<span class="co">#&gt; 86     USD_CZK         USD/CZK CURRENCY</span>
-<span class="co">#&gt; 87     USD_DKK         USD/DKK CURRENCY</span>
-<span class="co">#&gt; 88     USD_HKD         USD/HKD CURRENCY</span>
-<span class="co">#&gt; 89     USD_HUF         USD/HUF CURRENCY</span>
-<span class="co">#&gt; 90     USD_INR         USD/INR CURRENCY</span>
-<span class="co">#&gt; 91     USD_JPY         USD/JPY CURRENCY</span>
-<span class="co">#&gt; 92     USD_MXN         USD/MXN CURRENCY</span>
-<span class="co">#&gt; 93     USD_NOK         USD/NOK CURRENCY</span>
-<span class="co">#&gt; 94     USD_PLN         USD/PLN CURRENCY</span>
-<span class="co">#&gt; 95     USD_SEK         USD/SEK CURRENCY</span>
-<span class="co">#&gt; 96     USD_SGD         USD/SGD CURRENCY</span>
-<span class="co">#&gt; 97     USD_THB         USD/THB CURRENCY</span>
-<span class="co">#&gt; 98     USD_TRY         USD/TRY CURRENCY</span>
-<span class="co">#&gt; 99     USD_ZAR         USD/ZAR CURRENCY</span>
-<span class="co">#&gt; 100  WHEAT_USD           Wheat      CFD</span>
-<span class="co">#&gt; 101  WTICO_USD  West Texas Oil      CFD</span>
-<span class="co">#&gt; 102    XAG_AUD      Silver/AUD    METAL</span>
-<span class="co">#&gt; 103    XAG_CAD      Silver/CAD    METAL</span>
-<span class="co">#&gt; 104    XAG_CHF      Silver/CHF    METAL</span>
-<span class="co">#&gt; 105    XAG_EUR      Silver/EUR    METAL</span>
-<span class="co">#&gt; 106    XAG_GBP      Silver/GBP    METAL</span>
-<span class="co">#&gt; 107    XAG_HKD      Silver/HKD    METAL</span>
-<span class="co">#&gt; 108    XAG_JPY      Silver/JPY    METAL</span>
-<span class="co">#&gt; 109    XAG_NZD      Silver/NZD    METAL</span>
-<span class="co">#&gt; 110    XAG_SGD      Silver/SGD    METAL</span>
-<span class="co">#&gt; 111    XAG_USD          Silver    METAL</span>
-<span class="co">#&gt; 112    XAU_AUD        Gold/AUD    METAL</span>
-<span class="co">#&gt; 113    XAU_CAD        Gold/CAD    METAL</span>
-<span class="co">#&gt; 114    XAU_CHF        Gold/CHF    METAL</span>
-<span class="co">#&gt; 115    XAU_EUR        Gold/EUR    METAL</span>
-<span class="co">#&gt; 116    XAU_GBP        Gold/GBP    METAL</span>
-<span class="co">#&gt; 117    XAU_HKD        Gold/HKD    METAL</span>
-<span class="co">#&gt; 118    XAU_JPY        Gold/JPY    METAL</span>
-<span class="co">#&gt; 119    XAU_NZD        Gold/NZD    METAL</span>
-<span class="co">#&gt; 120    XAU_SGD        Gold/SGD    METAL</span>
-<span class="co">#&gt; 121    XAU_USD            Gold    METAL</span>
-<span class="co">#&gt; 122    XAU_XAG     Gold/Silver    METAL</span>
-<span class="co">#&gt; 123    XCU_USD          Copper      CFD</span>
-<span class="co">#&gt; 124    XPD_USD       Palladium      CFD</span>
-<span class="co">#&gt; 125    XPT_USD        Platinum      CFD</span>
-<span class="co">#&gt; 126    ZAR_JPY         ZAR/JPY CURRENCY</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/oanda_instruments.html">oanda_instruments</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt;           name     displayName     type</span></span>
+<span><span class="co">#&gt; 1    AU200_AUD   Australia 200      CFD</span></span>
+<span><span class="co">#&gt; 2      AUD_CAD         AUD/CAD CURRENCY</span></span>
+<span><span class="co">#&gt; 3      AUD_CHF         AUD/CHF CURRENCY</span></span>
+<span><span class="co">#&gt; 4      AUD_HKD         AUD/HKD CURRENCY</span></span>
+<span><span class="co">#&gt; 5      AUD_JPY         AUD/JPY CURRENCY</span></span>
+<span><span class="co">#&gt; 6      AUD_NZD         AUD/NZD CURRENCY</span></span>
+<span><span class="co">#&gt; 7      AUD_SGD         AUD/SGD CURRENCY</span></span>
+<span><span class="co">#&gt; 8      AUD_USD         AUD/USD CURRENCY</span></span>
+<span><span class="co">#&gt; 9      BCO_USD Brent Crude Oil      CFD</span></span>
+<span><span class="co">#&gt; 10     CAD_CHF         CAD/CHF CURRENCY</span></span>
+<span><span class="co">#&gt; 11     CAD_HKD         CAD/HKD CURRENCY</span></span>
+<span><span class="co">#&gt; 12     CAD_JPY         CAD/JPY CURRENCY</span></span>
+<span><span class="co">#&gt; 13     CAD_SGD         CAD/SGD CURRENCY</span></span>
+<span><span class="co">#&gt; 14    CH20_CHF  Switzerland 20      CFD</span></span>
+<span><span class="co">#&gt; 15     CHF_HKD         CHF/HKD CURRENCY</span></span>
+<span><span class="co">#&gt; 16     CHF_JPY         CHF/JPY CURRENCY</span></span>
+<span><span class="co">#&gt; 17     CHF_ZAR         CHF/ZAR CURRENCY</span></span>
+<span><span class="co">#&gt; 18  CHINAH_HKD  China H Shares      CFD</span></span>
+<span><span class="co">#&gt; 19    CN50_USD       China A50      CFD</span></span>
+<span><span class="co">#&gt; 20    CORN_USD            Corn      CFD</span></span>
+<span><span class="co">#&gt; 21  DE10YB_EUR            Bund      CFD</span></span>
+<span><span class="co">#&gt; 22    DE30_EUR      Germany 30      CFD</span></span>
+<span><span class="co">#&gt; 23   ESPIX_EUR        Spain 35      CFD</span></span>
+<span><span class="co">#&gt; 24    EU50_EUR       Europe 50      CFD</span></span>
+<span><span class="co">#&gt; 25     EUR_AUD         EUR/AUD CURRENCY</span></span>
+<span><span class="co">#&gt; 26     EUR_CAD         EUR/CAD CURRENCY</span></span>
+<span><span class="co">#&gt; 27     EUR_CHF         EUR/CHF CURRENCY</span></span>
+<span><span class="co">#&gt; 28     EUR_CZK         EUR/CZK CURRENCY</span></span>
+<span><span class="co">#&gt; 29     EUR_DKK         EUR/DKK CURRENCY</span></span>
+<span><span class="co">#&gt; 30     EUR_GBP         EUR/GBP CURRENCY</span></span>
+<span><span class="co">#&gt; 31     EUR_HKD         EUR/HKD CURRENCY</span></span>
+<span><span class="co">#&gt; 32     EUR_HUF         EUR/HUF CURRENCY</span></span>
+<span><span class="co">#&gt; 33     EUR_JPY         EUR/JPY CURRENCY</span></span>
+<span><span class="co">#&gt; 34     EUR_NOK         EUR/NOK CURRENCY</span></span>
+<span><span class="co">#&gt; 35     EUR_NZD         EUR/NZD CURRENCY</span></span>
+<span><span class="co">#&gt; 36     EUR_PLN         EUR/PLN CURRENCY</span></span>
+<span><span class="co">#&gt; 37     EUR_SEK         EUR/SEK CURRENCY</span></span>
+<span><span class="co">#&gt; 38     EUR_SGD         EUR/SGD CURRENCY</span></span>
+<span><span class="co">#&gt; 39     EUR_TRY         EUR/TRY CURRENCY</span></span>
+<span><span class="co">#&gt; 40     EUR_USD         EUR/USD CURRENCY</span></span>
+<span><span class="co">#&gt; 41     EUR_ZAR         EUR/ZAR CURRENCY</span></span>
+<span><span class="co">#&gt; 42    FR40_EUR       France 40      CFD</span></span>
+<span><span class="co">#&gt; 43     GBP_AUD         GBP/AUD CURRENCY</span></span>
+<span><span class="co">#&gt; 44     GBP_CAD         GBP/CAD CURRENCY</span></span>
+<span><span class="co">#&gt; 45     GBP_CHF         GBP/CHF CURRENCY</span></span>
+<span><span class="co">#&gt; 46     GBP_HKD         GBP/HKD CURRENCY</span></span>
+<span><span class="co">#&gt; 47     GBP_JPY         GBP/JPY CURRENCY</span></span>
+<span><span class="co">#&gt; 48     GBP_NZD         GBP/NZD CURRENCY</span></span>
+<span><span class="co">#&gt; 49     GBP_PLN         GBP/PLN CURRENCY</span></span>
+<span><span class="co">#&gt; 50     GBP_SGD         GBP/SGD CURRENCY</span></span>
+<span><span class="co">#&gt; 51     GBP_USD         GBP/USD CURRENCY</span></span>
+<span><span class="co">#&gt; 52     GBP_ZAR         GBP/ZAR CURRENCY</span></span>
+<span><span class="co">#&gt; 53    HK33_HKD    Hong Kong 33      CFD</span></span>
+<span><span class="co">#&gt; 54     HKD_JPY         HKD/JPY CURRENCY</span></span>
+<span><span class="co">#&gt; 55    IN50_USD        India 50      CFD</span></span>
+<span><span class="co">#&gt; 56   JP225_USD       Japan 225      CFD</span></span>
+<span><span class="co">#&gt; 57  JP225Y_JPY Japan 225 (JPY)      CFD</span></span>
+<span><span class="co">#&gt; 58  NAS100_USD      US Nas 100      CFD</span></span>
+<span><span class="co">#&gt; 59  NATGAS_USD     Natural Gas      CFD</span></span>
+<span><span class="co">#&gt; 60    NL25_EUR  Netherlands 25      CFD</span></span>
+<span><span class="co">#&gt; 61     NZD_CAD         NZD/CAD CURRENCY</span></span>
+<span><span class="co">#&gt; 62     NZD_CHF         NZD/CHF CURRENCY</span></span>
+<span><span class="co">#&gt; 63     NZD_HKD         NZD/HKD CURRENCY</span></span>
+<span><span class="co">#&gt; 64     NZD_JPY         NZD/JPY CURRENCY</span></span>
+<span><span class="co">#&gt; 65     NZD_SGD         NZD/SGD CURRENCY</span></span>
+<span><span class="co">#&gt; 66     NZD_USD         NZD/USD CURRENCY</span></span>
+<span><span class="co">#&gt; 67    SG30_SGD    Singapore 30      CFD</span></span>
+<span><span class="co">#&gt; 68     SGD_CHF         SGD/CHF CURRENCY</span></span>
+<span><span class="co">#&gt; 69     SGD_JPY         SGD/JPY CURRENCY</span></span>
+<span><span class="co">#&gt; 70   SOYBN_USD        Soybeans      CFD</span></span>
+<span><span class="co">#&gt; 71  SPX500_USD      US SPX 500      CFD</span></span>
+<span><span class="co">#&gt; 72   SUGAR_USD           Sugar      CFD</span></span>
+<span><span class="co">#&gt; 73     TRY_JPY         TRY/JPY CURRENCY</span></span>
+<span><span class="co">#&gt; 74    TWIX_USD    Taiwan Index      CFD</span></span>
+<span><span class="co">#&gt; 75   UK100_GBP          UK 100      CFD</span></span>
+<span><span class="co">#&gt; 76  UK10YB_GBP     UK 10Y Gilt      CFD</span></span>
+<span><span class="co">#&gt; 77  US2000_USD    US Russ 2000      CFD</span></span>
+<span><span class="co">#&gt; 78    US30_USD   US Wall St 30      CFD</span></span>
+<span><span class="co">#&gt; 79  USB02Y_USD    US 2Y T-Note      CFD</span></span>
+<span><span class="co">#&gt; 80  USB05Y_USD    US 5Y T-Note      CFD</span></span>
+<span><span class="co">#&gt; 81  USB10Y_USD   US 10Y T-Note      CFD</span></span>
+<span><span class="co">#&gt; 82  USB30Y_USD       US T-Bond      CFD</span></span>
+<span><span class="co">#&gt; 83     USD_CAD         USD/CAD CURRENCY</span></span>
+<span><span class="co">#&gt; 84     USD_CHF         USD/CHF CURRENCY</span></span>
+<span><span class="co">#&gt; 85     USD_CNH         USD/CNH CURRENCY</span></span>
+<span><span class="co">#&gt; 86     USD_CZK         USD/CZK CURRENCY</span></span>
+<span><span class="co">#&gt; 87     USD_DKK         USD/DKK CURRENCY</span></span>
+<span><span class="co">#&gt; 88     USD_HKD         USD/HKD CURRENCY</span></span>
+<span><span class="co">#&gt; 89     USD_HUF         USD/HUF CURRENCY</span></span>
+<span><span class="co">#&gt; 90     USD_INR         USD/INR CURRENCY</span></span>
+<span><span class="co">#&gt; 91     USD_JPY         USD/JPY CURRENCY</span></span>
+<span><span class="co">#&gt; 92     USD_MXN         USD/MXN CURRENCY</span></span>
+<span><span class="co">#&gt; 93     USD_NOK         USD/NOK CURRENCY</span></span>
+<span><span class="co">#&gt; 94     USD_PLN         USD/PLN CURRENCY</span></span>
+<span><span class="co">#&gt; 95     USD_SEK         USD/SEK CURRENCY</span></span>
+<span><span class="co">#&gt; 96     USD_SGD         USD/SGD CURRENCY</span></span>
+<span><span class="co">#&gt; 97     USD_THB         USD/THB CURRENCY</span></span>
+<span><span class="co">#&gt; 98     USD_TRY         USD/TRY CURRENCY</span></span>
+<span><span class="co">#&gt; 99     USD_ZAR         USD/ZAR CURRENCY</span></span>
+<span><span class="co">#&gt; 100  WHEAT_USD           Wheat      CFD</span></span>
+<span><span class="co">#&gt; 101  WTICO_USD  West Texas Oil      CFD</span></span>
+<span><span class="co">#&gt; 102    XAG_AUD      Silver/AUD    METAL</span></span>
+<span><span class="co">#&gt; 103    XAG_CAD      Silver/CAD    METAL</span></span>
+<span><span class="co">#&gt; 104    XAG_CHF      Silver/CHF    METAL</span></span>
+<span><span class="co">#&gt; 105    XAG_EUR      Silver/EUR    METAL</span></span>
+<span><span class="co">#&gt; 106    XAG_GBP      Silver/GBP    METAL</span></span>
+<span><span class="co">#&gt; 107    XAG_HKD      Silver/HKD    METAL</span></span>
+<span><span class="co">#&gt; 108    XAG_JPY      Silver/JPY    METAL</span></span>
+<span><span class="co">#&gt; 109    XAG_NZD      Silver/NZD    METAL</span></span>
+<span><span class="co">#&gt; 110    XAG_SGD      Silver/SGD    METAL</span></span>
+<span><span class="co">#&gt; 111    XAG_USD          Silver    METAL</span></span>
+<span><span class="co">#&gt; 112    XAU_AUD        Gold/AUD    METAL</span></span>
+<span><span class="co">#&gt; 113    XAU_CAD        Gold/CAD    METAL</span></span>
+<span><span class="co">#&gt; 114    XAU_CHF        Gold/CHF    METAL</span></span>
+<span><span class="co">#&gt; 115    XAU_EUR        Gold/EUR    METAL</span></span>
+<span><span class="co">#&gt; 116    XAU_GBP        Gold/GBP    METAL</span></span>
+<span><span class="co">#&gt; 117    XAU_HKD        Gold/HKD    METAL</span></span>
+<span><span class="co">#&gt; 118    XAU_JPY        Gold/JPY    METAL</span></span>
+<span><span class="co">#&gt; 119    XAU_NZD        Gold/NZD    METAL</span></span>
+<span><span class="co">#&gt; 120    XAU_SGD        Gold/SGD    METAL</span></span>
+<span><span class="co">#&gt; 121    XAU_USD            Gold    METAL</span></span>
+<span><span class="co">#&gt; 122    XAU_XAG     Gold/Silver    METAL</span></span>
+<span><span class="co">#&gt; 123    XCU_USD          Copper      CFD</span></span>
+<span><span class="co">#&gt; 124    XPD_USD       Palladium      CFD</span></span>
+<span><span class="co">#&gt; 125    XPT_USD        Platinum      CFD</span></span>
+<span><span class="co">#&gt; 126    ZAR_JPY         ZAR/JPY CURRENCY</span></span></code></pre>
 <p>Note: the above table is saved as internal package data and used as a fallback if the instruments API call fails. In such a case, a warning is issued once per session as subsequent calls will return the cached list.</p>
 </div>
 <div class="section level2">
@@ -502,7 +502,7 @@
 </h2>
 <p>‘OANDA’ and ‘fxTrade’ are trademarks owned by OANDA Corporation, an entity unaffiliated with the ichimoku package, its authors or copyright holders.</p>
 <p>OANDA fxTrade API developer website: <a href="https://developer.oanda.com/" class="external-link uri">https://developer.oanda.com/</a>.</p>
-<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.3.2, <a href="https://CRAN.R-project.org/package=ichimoku" class="external-link uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
+<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.3.3, <a href="https://CRAN.R-project.org/package=ichimoku" class="external-link uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
 <hr>
 </div>
   </div>
@@ -524,7 +524,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer>

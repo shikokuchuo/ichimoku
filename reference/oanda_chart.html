@@ -19,7 +19,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.2.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.3</span>
       </span>
     </div>
 
@@ -82,21 +82,21 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">oanda_chart</span><span class="op">(</span>
-  <span class="va">instrument</span>,
-  granularity <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"D"</span>, <span class="st">"W"</span>, <span class="st">"M"</span>, <span class="st">"H12"</span>, <span class="st">"H8"</span>, <span class="st">"H6"</span>, <span class="st">"H4"</span>, <span class="st">"H3"</span>, <span class="st">"H2"</span>, <span class="st">"H1"</span>, <span class="st">"M30"</span>,
-    <span class="st">"M15"</span>, <span class="st">"M10"</span>, <span class="st">"M5"</span>, <span class="st">"M4"</span>, <span class="st">"M2"</span>, <span class="st">"M1"</span>, <span class="st">"S30"</span>, <span class="st">"S15"</span>, <span class="st">"S10"</span>, <span class="st">"S5"</span><span class="op">)</span>,
-  refresh <span class="op">=</span> <span class="fl">5</span>,
-  count <span class="op">=</span> <span class="fl">250</span>,
-  price <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"M"</span>, <span class="st">"B"</span>, <span class="st">"A"</span><span class="op">)</span>,
-  theme <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"classic"</span>, <span class="st">"dark"</span>, <span class="st">"mono"</span>, <span class="st">"noguchi"</span>, <span class="st">"okabe-ito"</span>, <span class="st">"solarized"</span><span class="op">)</span>,
-  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"none"</span>, <span class="st">"r"</span>, <span class="st">"s"</span><span class="op">)</span>,
-  <span class="va">limit</span>,
-  <span class="va">server</span>,
-  <span class="va">apikey</span>,
-  <span class="va">...</span>,
-  periods <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">9L</span>, <span class="fl">26L</span>, <span class="fl">52L</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">oanda_chart</span><span class="op">(</span></span>
+<span>  <span class="va">instrument</span>,</span>
+<span>  granularity <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"D"</span>, <span class="st">"W"</span>, <span class="st">"M"</span>, <span class="st">"H12"</span>, <span class="st">"H8"</span>, <span class="st">"H6"</span>, <span class="st">"H4"</span>, <span class="st">"H3"</span>, <span class="st">"H2"</span>, <span class="st">"H1"</span>, <span class="st">"M30"</span>,</span>
+<span>    <span class="st">"M15"</span>, <span class="st">"M10"</span>, <span class="st">"M5"</span>, <span class="st">"M4"</span>, <span class="st">"M2"</span>, <span class="st">"M1"</span>, <span class="st">"S30"</span>, <span class="st">"S15"</span>, <span class="st">"S10"</span>, <span class="st">"S5"</span><span class="op">)</span>,</span>
+<span>  refresh <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>  count <span class="op">=</span> <span class="fl">250</span>,</span>
+<span>  price <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"M"</span>, <span class="st">"B"</span>, <span class="st">"A"</span><span class="op">)</span>,</span>
+<span>  theme <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"classic"</span>, <span class="st">"dark"</span>, <span class="st">"mono"</span>, <span class="st">"noguchi"</span>, <span class="st">"okabe-ito"</span>, <span class="st">"solarized"</span><span class="op">)</span>,</span>
+<span>  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"none"</span>, <span class="st">"r"</span>, <span class="st">"s"</span><span class="op">)</span>,</span>
+<span>  <span class="va">limit</span>,</span>
+<span>  <span class="va">server</span>,</span>
+<span>  <span class="va">apikey</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  periods <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">9L</span>, <span class="fl">26L</span>, <span class="fl">52L</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -200,15 +200,15 @@ ichimoku analysis.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="co"># OANDA fxTrade API key required to run these examples</span></span>
-<span class="r-in"><span class="fu">oanda_chart</span><span class="op">(</span><span class="st">"USD_JPY"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">oanda_chart</span><span class="op">(</span><span class="st">"EUR_JPY"</span>, granularity <span class="op">=</span> <span class="st">"H1"</span>, refresh <span class="op">=</span> <span class="fl">3</span>, count <span class="op">=</span> <span class="fl">300</span>, price <span class="op">=</span> <span class="st">"B"</span>, theme <span class="op">=</span> <span class="st">"mono"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Save data underlying chart at time of function exit</span></span>
-<span class="r-in"><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu">oanda_chart</span><span class="op">(</span><span class="st">"USD_JPY"</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co"># OANDA fxTrade API key required to run these examples</span></span></span>
+<span class="r-in"><span><span class="fu">oanda_chart</span><span class="op">(</span><span class="st">"USD_JPY"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">oanda_chart</span><span class="op">(</span><span class="st">"EUR_JPY"</span>, granularity <span class="op">=</span> <span class="st">"H1"</span>, refresh <span class="op">=</span> <span class="fl">3</span>, count <span class="op">=</span> <span class="fl">300</span>, price <span class="op">=</span> <span class="st">"B"</span>, theme <span class="op">=</span> <span class="st">"mono"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Save data underlying chart at time of function exit</span></span></span>
+<span class="r-in"><span><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu">oanda_chart</span><span class="op">(</span><span class="st">"USD_JPY"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -223,7 +223,7 @@ ichimoku analysis.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

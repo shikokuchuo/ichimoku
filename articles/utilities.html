@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.2.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.3</span>
       </span>
     </div>
 
@@ -112,7 +112,7 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shikokuchuo.net/ichimoku/">ichimoku</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shikokuchuo.net/ichimoku/">ichimoku</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
@@ -136,16 +136,16 @@
 <code>...</code> other arguments not used by this function.</li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">dates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html" class="external-link">as.POSIXct</a></span><span class="op">(</span><span class="st">"2020-01-01"</span><span class="op">)</span>, by <span class="op">=</span> <span class="st">"1 day"</span>, length.out <span class="op">=</span> <span class="fl">7</span><span class="op">)</span>
-<span class="va">dates</span>
-<span class="co">#&gt; [1] "2020-01-01 UTC" "2020-01-02 UTC" "2020-01-03 UTC" "2020-01-04 UTC"</span>
-<span class="co">#&gt; [5] "2020-01-05 UTC" "2020-01-06 UTC" "2020-01-07 UTC"</span>
-<span class="fu"><a href="../reference/tradingDays.html">tradingDays</a></span><span class="op">(</span><span class="va">dates</span><span class="op">)</span>
-<span class="co">#&gt; [1] FALSE  TRUE  TRUE FALSE FALSE  TRUE  TRUE</span>
-<span class="fu"><a href="../reference/tradingDays.html">tradingDays</a></span><span class="op">(</span><span class="va">dates</span>, holidays <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2020-01-02"</span>, <span class="st">"2020-01-03"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1]  TRUE FALSE FALSE FALSE FALSE  TRUE  TRUE</span>
-<span class="fu"><a href="../reference/tradingDays.html">tradingDays</a></span><span class="op">(</span><span class="va">dates</span>, holidays <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
-<span class="co">#&gt; [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">dates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html" class="external-link">as.POSIXct</a></span><span class="op">(</span><span class="st">"2020-01-01"</span><span class="op">)</span>, by <span class="op">=</span> <span class="st">"1 day"</span>, length.out <span class="op">=</span> <span class="fl">7</span><span class="op">)</span></span>
+<span><span class="va">dates</span></span>
+<span><span class="co">#&gt; [1] "2020-01-01 UTC" "2020-01-02 UTC" "2020-01-03 UTC" "2020-01-04 UTC"</span></span>
+<span><span class="co">#&gt; [5] "2020-01-05 UTC" "2020-01-06 UTC" "2020-01-07 UTC"</span></span>
+<span><span class="fu"><a href="../reference/tradingDays.html">tradingDays</a></span><span class="op">(</span><span class="va">dates</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] FALSE  TRUE  TRUE FALSE FALSE  TRUE  TRUE</span></span>
+<span><span class="fu"><a href="../reference/tradingDays.html">tradingDays</a></span><span class="op">(</span><span class="va">dates</span>, holidays <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2020-01-02"</span>, <span class="st">"2020-01-03"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1]  TRUE FALSE FALSE FALSE FALSE  TRUE  TRUE</span></span>
+<span><span class="fu"><a href="../reference/tradingDays.html">tradingDays</a></span><span class="op">(</span><span class="va">dates</span>, holidays <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="look">look()<a class="anchor" aria-label="anchor" href="#look"></a>
@@ -155,65 +155,65 @@
 <p>For objects created by the ichimoku package, a list of attributes specific to that data type is returned.</p>
 <p>For other objects, a list of attributes that are non-standard for matrix / data.frame / xts objects is returned, or else invisible NULL if none are present.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">sample_ohlc_data</span>, ticker <span class="op">=</span> <span class="st">"TKR"</span><span class="op">)</span>
-<span class="fu"><a href="../reference/look.html">look</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span>
-<span class="co">#&gt; $periods</span>
-<span class="co">#&gt; [1]  9 26 52</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $periodicity</span>
-<span class="co">#&gt; [1] 86400</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $ticker</span>
-<span class="co">#&gt; [1] "TKR"</span>
-
-<span class="va">strat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/strat.html">strat</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span>
-<span class="fu"><a href="../reference/look.html">look</a></span><span class="op">(</span><span class="va">strat</span><span class="op">)</span>
-<span class="co">#&gt; $periods</span>
-<span class="co">#&gt; [1]  9 26 52</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $periodicity</span>
-<span class="co">#&gt; [1] 86400</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $ticker</span>
-<span class="co">#&gt; [1] "TKR"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $strat</span>
-<span class="co">#&gt;                        [,1]            </span>
-<span class="co">#&gt; Strategy               "close &gt; tenkan"</span>
-<span class="co">#&gt; ---------------------  "----------"    </span>
-<span class="co">#&gt; Strategy cuml return % 8.57            </span>
-<span class="co">#&gt; Per period mean ret %  0.0334          </span>
-<span class="co">#&gt; Periods in market      138             </span>
-<span class="co">#&gt; Total trades           20              </span>
-<span class="co">#&gt; Average trade length   6.9             </span>
-<span class="co">#&gt; Trade success %        35              </span>
-<span class="co">#&gt; Worst trade ret %      -2.54           </span>
-<span class="co">#&gt; ---------------------  "----------"    </span>
-<span class="co">#&gt; Benchmark cuml ret %   9               </span>
-<span class="co">#&gt; Per period mean ret %  0.035           </span>
-<span class="co">#&gt; Periods in market      246             </span>
-<span class="co">#&gt; ---------------------  "----------"    </span>
-<span class="co">#&gt; Direction              "long"          </span>
-<span class="co">#&gt; Start                  2020-01-15      </span>
-<span class="co">#&gt; End                    2020-12-23      </span>
-<span class="co">#&gt; Ticker                 "TKR"</span>
-
-<span class="va">grid</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mlgrid.html">mlgrid</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span>
-<span class="fu"><a href="../reference/look.html">look</a></span><span class="op">(</span><span class="va">grid</span><span class="op">)</span>
-<span class="co">#&gt; $y</span>
-<span class="co">#&gt; [1] "logret"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $k</span>
-<span class="co">#&gt; [1] 1</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $direction</span>
-<span class="co">#&gt; [1] "long"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $type</span>
-<span class="co">#&gt; [1] "boolean"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $ticker</span>
-<span class="co">#&gt; [1] "TKR"</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">sample_ohlc_data</span>, ticker <span class="op">=</span> <span class="st">"TKR"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/look.html">look</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $periods</span></span>
+<span><span class="co">#&gt; [1]  9 26 52</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $periodicity</span></span>
+<span><span class="co">#&gt; [1] 86400</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $ticker</span></span>
+<span><span class="co">#&gt; [1] "TKR"</span></span>
+<span></span>
+<span><span class="va">strat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/strat.html">strat</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/look.html">look</a></span><span class="op">(</span><span class="va">strat</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $periods</span></span>
+<span><span class="co">#&gt; [1]  9 26 52</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $periodicity</span></span>
+<span><span class="co">#&gt; [1] 86400</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $ticker</span></span>
+<span><span class="co">#&gt; [1] "TKR"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $strat</span></span>
+<span><span class="co">#&gt;                        [,1]            </span></span>
+<span><span class="co">#&gt; Strategy               "close &gt; tenkan"</span></span>
+<span><span class="co">#&gt; ---------------------  "----------"    </span></span>
+<span><span class="co">#&gt; Strategy cuml return % 8.57            </span></span>
+<span><span class="co">#&gt; Per period mean ret %  0.0334          </span></span>
+<span><span class="co">#&gt; Periods in market      138             </span></span>
+<span><span class="co">#&gt; Total trades           20              </span></span>
+<span><span class="co">#&gt; Average trade length   6.9             </span></span>
+<span><span class="co">#&gt; Trade success %        35              </span></span>
+<span><span class="co">#&gt; Worst trade ret %      -2.54           </span></span>
+<span><span class="co">#&gt; ---------------------  "----------"    </span></span>
+<span><span class="co">#&gt; Benchmark cuml ret %   9               </span></span>
+<span><span class="co">#&gt; Per period mean ret %  0.035           </span></span>
+<span><span class="co">#&gt; Periods in market      246             </span></span>
+<span><span class="co">#&gt; ---------------------  "----------"    </span></span>
+<span><span class="co">#&gt; Direction              "long"          </span></span>
+<span><span class="co">#&gt; Start                  2020-01-15      </span></span>
+<span><span class="co">#&gt; End                    2020-12-23      </span></span>
+<span><span class="co">#&gt; Ticker                 "TKR"</span></span>
+<span></span>
+<span><span class="va">grid</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mlgrid.html">mlgrid</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/look.html">look</a></span><span class="op">(</span><span class="va">grid</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $y</span></span>
+<span><span class="co">#&gt; [1] "logret"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $k</span></span>
+<span><span class="co">#&gt; [1] 1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $direction</span></span>
+<span><span class="co">#&gt; [1] "long"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $type</span></span>
+<span><span class="co">#&gt; [1] "boolean"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $ticker</span></span>
+<span><span class="co">#&gt; [1] "TKR"</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -232,44 +232,44 @@
 <code>keep.attrs</code> (optional) if set to TRUE, will preserve any custom attributes set on the original object.</li>
 </ul>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">sample_ohlc_data</span><span class="op">)</span>
-<span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/xts_df.html">xts_df</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>
-<span class="co">#&gt; 'data.frame':    281 obs. of  13 variables:</span>
-<span class="co">#&gt;  $ index  : POSIXct, format: "2020-01-02 00:00:00" "2020-01-03 00:00:00" ...</span>
-<span class="co">#&gt;  $ open   : num  123 123 123 123 124 ...</span>
-<span class="co">#&gt;  $ high   : num  123 123 123 124 125 ...</span>
-<span class="co">#&gt;  $ low    : num  122 123 122 123 124 ...</span>
-<span class="co">#&gt;  $ close  : num  123 123 123 124 125 ...</span>
-<span class="co">#&gt;  $ cd     : num  -1 1 1 1 1 1 -1 0 -1 -1 ...</span>
-<span class="co">#&gt;  $ tenkan : num  NA NA NA NA NA ...</span>
-<span class="co">#&gt;  $ kijun  : num  NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;  $ senkouA: num  NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;  $ senkouB: num  NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;  $ chikou : num  123 123 123 124 124 ...</span>
-<span class="co">#&gt;  $ cloudT : num  NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;  $ cloudB : num  NA NA NA NA NA NA NA NA NA NA ...</span>
-
-<span class="co"># Preserving custom attributes:</span>
-<span class="va">df2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/xts_df.html">xts_df</a></span><span class="op">(</span><span class="va">cloud</span>, keep.attrs <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">df2</span><span class="op">)</span>
-<span class="co">#&gt; 'data.frame':    281 obs. of  13 variables:</span>
-<span class="co">#&gt;  $ index  : POSIXct, format: "2020-01-02 00:00:00" "2020-01-03 00:00:00" ...</span>
-<span class="co">#&gt;  $ open   : num  123 123 123 123 124 ...</span>
-<span class="co">#&gt;  $ high   : num  123 123 123 124 125 ...</span>
-<span class="co">#&gt;  $ low    : num  122 123 122 123 124 ...</span>
-<span class="co">#&gt;  $ close  : num  123 123 123 124 125 ...</span>
-<span class="co">#&gt;  $ cd     : num  -1 1 1 1 1 1 -1 0 -1 -1 ...</span>
-<span class="co">#&gt;  $ tenkan : num  NA NA NA NA NA ...</span>
-<span class="co">#&gt;  $ kijun  : num  NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;  $ senkouA: num  NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;  $ senkouB: num  NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;  $ chikou : num  123 123 123 124 124 ...</span>
-<span class="co">#&gt;  $ cloudT : num  NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;  $ cloudB : num  NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;  - attr(*, "periods")= int [1:3] 9 26 52</span>
-<span class="co">#&gt;  - attr(*, "periodicity")= num 86400</span>
-<span class="co">#&gt;  - attr(*, "ticker")= chr "sample_ohlc_data"</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">sample_ohlc_data</span><span class="op">)</span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/xts_df.html">xts_df</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 'data.frame':    281 obs. of  13 variables:</span></span>
+<span><span class="co">#&gt;  $ index  : POSIXct, format: "2020-01-02 00:00:00" "2020-01-03 00:00:00" ...</span></span>
+<span><span class="co">#&gt;  $ open   : num  123 123 123 123 124 ...</span></span>
+<span><span class="co">#&gt;  $ high   : num  123 123 123 124 125 ...</span></span>
+<span><span class="co">#&gt;  $ low    : num  122 123 122 123 124 ...</span></span>
+<span><span class="co">#&gt;  $ close  : num  123 123 123 124 125 ...</span></span>
+<span><span class="co">#&gt;  $ cd     : num  -1 1 1 1 1 1 -1 0 -1 -1 ...</span></span>
+<span><span class="co">#&gt;  $ tenkan : num  NA NA NA NA NA ...</span></span>
+<span><span class="co">#&gt;  $ kijun  : num  NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">#&gt;  $ senkouA: num  NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">#&gt;  $ senkouB: num  NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">#&gt;  $ chikou : num  123 123 123 124 124 ...</span></span>
+<span><span class="co">#&gt;  $ cloudT : num  NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">#&gt;  $ cloudB : num  NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span></span>
+<span><span class="co"># Preserving custom attributes:</span></span>
+<span><span class="va">df2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/xts_df.html">xts_df</a></span><span class="op">(</span><span class="va">cloud</span>, keep.attrs <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">df2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 'data.frame':    281 obs. of  13 variables:</span></span>
+<span><span class="co">#&gt;  $ index  : POSIXct, format: "2020-01-02 00:00:00" "2020-01-03 00:00:00" ...</span></span>
+<span><span class="co">#&gt;  $ open   : num  123 123 123 123 124 ...</span></span>
+<span><span class="co">#&gt;  $ high   : num  123 123 123 124 125 ...</span></span>
+<span><span class="co">#&gt;  $ low    : num  122 123 122 123 124 ...</span></span>
+<span><span class="co">#&gt;  $ close  : num  123 123 123 124 125 ...</span></span>
+<span><span class="co">#&gt;  $ cd     : num  -1 1 1 1 1 1 -1 0 -1 -1 ...</span></span>
+<span><span class="co">#&gt;  $ tenkan : num  NA NA NA NA NA ...</span></span>
+<span><span class="co">#&gt;  $ kijun  : num  NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">#&gt;  $ senkouA: num  NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">#&gt;  $ senkouB: num  NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">#&gt;  $ chikou : num  123 123 123 124 124 ...</span></span>
+<span><span class="co">#&gt;  $ cloudT : num  NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">#&gt;  $ cloudB : num  NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">#&gt;  - attr(*, "periods")= int [1:3] 9 26 52</span></span>
+<span><span class="co">#&gt;  - attr(*, "periodicity")= num 86400</span></span>
+<span><span class="co">#&gt;  - attr(*, "ticker")= chr "sample_ohlc_data"</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="matrix_df">matrix_df()<a class="anchor" aria-label="anchor" href="#matrix_df"></a>
@@ -283,25 +283,25 @@
 <code>keep.attrs</code> (optional) if set to TRUE, will preserve any custom attributes set on the original object.</li>
 </ul>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">sample_ohlc_data</span><span class="op">)</span>
-<span class="va">mcloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span>
-<span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/matrix_df.html">matrix_df</a></span><span class="op">(</span><span class="va">mcloud</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>
-<span class="co">#&gt; 'data.frame':    281 obs. of  12 variables:</span>
-<span class="co">#&gt;  $ open   : num  123 123 123 123 124 ...</span>
-<span class="co">#&gt;  $ high   : num  123 123 123 124 125 ...</span>
-<span class="co">#&gt;  $ low    : num  122 123 122 123 124 ...</span>
-<span class="co">#&gt;  $ close  : num  123 123 123 124 125 ...</span>
-<span class="co">#&gt;  $ cd     : num  -1 1 1 1 1 1 -1 0 -1 -1 ...</span>
-<span class="co">#&gt;  $ tenkan : num  NA NA NA NA NA ...</span>
-<span class="co">#&gt;  $ kijun  : num  NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;  $ senkouA: num  NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;  $ senkouB: num  NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;  $ chikou : num  123 123 123 124 124 ...</span>
-<span class="co">#&gt;  $ cloudT : num  NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;  $ cloudB : num  NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/row.names.html" class="external-link">row.names</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt;  chr [1:281] "2020-01-02 00:00:00" "2020-01-03 00:00:00" ...</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">sample_ohlc_data</span><span class="op">)</span></span>
+<span><span class="va">mcloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/matrix_df.html">matrix_df</a></span><span class="op">(</span><span class="va">mcloud</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 'data.frame':    281 obs. of  12 variables:</span></span>
+<span><span class="co">#&gt;  $ open   : num  123 123 123 123 124 ...</span></span>
+<span><span class="co">#&gt;  $ high   : num  123 123 123 124 125 ...</span></span>
+<span><span class="co">#&gt;  $ low    : num  122 123 122 123 124 ...</span></span>
+<span><span class="co">#&gt;  $ close  : num  123 123 123 124 125 ...</span></span>
+<span><span class="co">#&gt;  $ cd     : num  -1 1 1 1 1 1 -1 0 -1 -1 ...</span></span>
+<span><span class="co">#&gt;  $ tenkan : num  NA NA NA NA NA ...</span></span>
+<span><span class="co">#&gt;  $ kijun  : num  NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">#&gt;  $ senkouA: num  NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">#&gt;  $ senkouB: num  NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">#&gt;  $ chikou : num  123 123 123 124 124 ...</span></span>
+<span><span class="co">#&gt;  $ cloudT : num  NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">#&gt;  $ cloudB : num  NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/row.names.html" class="external-link">row.names</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  chr [1:281] "2020-01-02 00:00:00" "2020-01-03 00:00:00" ...</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -318,37 +318,37 @@
 </ul>
 <p>Can be used to join price dataframes retrieved by <code><a href="../reference/oanda.html">oanda()</a></code>. The function is designed to join complete historical data. If the data to be merged contains data with incomplete periods, all entries are preserved rather than updated. If incomplete periods are detected within the data, a warning is issued, and the resulting dataframe should be manually inspected in case it contains unwanted duplicates. Use <code><a href="../reference/df_append.html">df_append()</a></code> for updating dataframes with new values.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">data1</span> <span class="op">&lt;-</span> <span class="va">sample_ohlc_data</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span>, <span class="op">]</span>
-<span class="va">data1</span>
-<span class="co">#&gt;         time  open  high   low close volume</span>
-<span class="co">#&gt; 1 2020-01-02 123.0 123.1 122.5 122.7   1875</span>
-<span class="co">#&gt; 2 2020-01-03 122.7 122.8 122.6 122.8   1479</span>
-<span class="co">#&gt; 3 2020-01-06 122.8 123.4 122.4 123.3   1792</span>
-<span class="co">#&gt; 4 2020-01-07 123.3 124.3 123.3 124.1   1977</span>
-<span class="co">#&gt; 5 2020-01-08 124.1 124.8 124.0 124.8   2239</span>
-<span class="co">#&gt; 6 2020-01-09 124.8 125.4 124.5 125.3   1842</span>
-<span class="va">data2</span> <span class="op">&lt;-</span> <span class="va">sample_ohlc_data</span><span class="op">[</span><span class="fl">4</span><span class="op">:</span><span class="fl">10</span>, <span class="op">]</span>
-<span class="va">data2</span>
-<span class="co">#&gt;          time  open  high   low close volume</span>
-<span class="co">#&gt; 4  2020-01-07 123.3 124.3 123.3 124.1   1977</span>
-<span class="co">#&gt; 5  2020-01-08 124.1 124.8 124.0 124.8   2239</span>
-<span class="co">#&gt; 6  2020-01-09 124.8 125.4 124.5 125.3   1842</span>
-<span class="co">#&gt; 7  2020-01-10 125.3 125.3 124.8 125.2   2548</span>
-<span class="co">#&gt; 8  2020-01-13 125.2 125.3 125.1 125.2   2946</span>
-<span class="co">#&gt; 9  2020-01-14 125.2 125.2 124.3 124.4   2796</span>
-<span class="co">#&gt; 10 2020-01-15 124.4 124.5 123.7 123.9   2879</span>
-<span class="fu"><a href="../reference/df_merge.html">df_merge</a></span><span class="op">(</span><span class="va">data1</span>, <span class="va">data2</span><span class="op">)</span>
-<span class="co">#&gt;          time  open  high   low close volume</span>
-<span class="co">#&gt; 1  2020-01-02 123.0 123.1 122.5 122.7   1875</span>
-<span class="co">#&gt; 2  2020-01-03 122.7 122.8 122.6 122.8   1479</span>
-<span class="co">#&gt; 3  2020-01-06 122.8 123.4 122.4 123.3   1792</span>
-<span class="co">#&gt; 4  2020-01-07 123.3 124.3 123.3 124.1   1977</span>
-<span class="co">#&gt; 5  2020-01-08 124.1 124.8 124.0 124.8   2239</span>
-<span class="co">#&gt; 6  2020-01-09 124.8 125.4 124.5 125.3   1842</span>
-<span class="co">#&gt; 7  2020-01-10 125.3 125.3 124.8 125.2   2548</span>
-<span class="co">#&gt; 8  2020-01-13 125.2 125.3 125.1 125.2   2946</span>
-<span class="co">#&gt; 9  2020-01-14 125.2 125.2 124.3 124.4   2796</span>
-<span class="co">#&gt; 10 2020-01-15 124.4 124.5 123.7 123.9   2879</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">data1</span> <span class="op">&lt;-</span> <span class="va">sample_ohlc_data</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span>, <span class="op">]</span></span>
+<span><span class="va">data1</span></span>
+<span><span class="co">#&gt;         time  open  high   low close volume</span></span>
+<span><span class="co">#&gt; 1 2020-01-02 123.0 123.1 122.5 122.7   1875</span></span>
+<span><span class="co">#&gt; 2 2020-01-03 122.7 122.8 122.6 122.8   1479</span></span>
+<span><span class="co">#&gt; 3 2020-01-06 122.8 123.4 122.4 123.3   1792</span></span>
+<span><span class="co">#&gt; 4 2020-01-07 123.3 124.3 123.3 124.1   1977</span></span>
+<span><span class="co">#&gt; 5 2020-01-08 124.1 124.8 124.0 124.8   2239</span></span>
+<span><span class="co">#&gt; 6 2020-01-09 124.8 125.4 124.5 125.3   1842</span></span>
+<span><span class="va">data2</span> <span class="op">&lt;-</span> <span class="va">sample_ohlc_data</span><span class="op">[</span><span class="fl">4</span><span class="op">:</span><span class="fl">10</span>, <span class="op">]</span></span>
+<span><span class="va">data2</span></span>
+<span><span class="co">#&gt;          time  open  high   low close volume</span></span>
+<span><span class="co">#&gt; 4  2020-01-07 123.3 124.3 123.3 124.1   1977</span></span>
+<span><span class="co">#&gt; 5  2020-01-08 124.1 124.8 124.0 124.8   2239</span></span>
+<span><span class="co">#&gt; 6  2020-01-09 124.8 125.4 124.5 125.3   1842</span></span>
+<span><span class="co">#&gt; 7  2020-01-10 125.3 125.3 124.8 125.2   2548</span></span>
+<span><span class="co">#&gt; 8  2020-01-13 125.2 125.3 125.1 125.2   2946</span></span>
+<span><span class="co">#&gt; 9  2020-01-14 125.2 125.2 124.3 124.4   2796</span></span>
+<span><span class="co">#&gt; 10 2020-01-15 124.4 124.5 123.7 123.9   2879</span></span>
+<span><span class="fu"><a href="../reference/df_merge.html">df_merge</a></span><span class="op">(</span><span class="va">data1</span>, <span class="va">data2</span><span class="op">)</span></span>
+<span><span class="co">#&gt;          time  open  high   low close volume</span></span>
+<span><span class="co">#&gt; 1  2020-01-02 123.0 123.1 122.5 122.7   1875</span></span>
+<span><span class="co">#&gt; 2  2020-01-03 122.7 122.8 122.6 122.8   1479</span></span>
+<span><span class="co">#&gt; 3  2020-01-06 122.8 123.4 122.4 123.3   1792</span></span>
+<span><span class="co">#&gt; 4  2020-01-07 123.3 124.3 123.3 124.1   1977</span></span>
+<span><span class="co">#&gt; 5  2020-01-08 124.1 124.8 124.0 124.8   2239</span></span>
+<span><span class="co">#&gt; 6  2020-01-09 124.8 125.4 124.5 125.3   1842</span></span>
+<span><span class="co">#&gt; 7  2020-01-10 125.3 125.3 124.8 125.2   2548</span></span>
+<span><span class="co">#&gt; 8  2020-01-13 125.2 125.3 125.1 125.2   2946</span></span>
+<span><span class="co">#&gt; 9  2020-01-14 125.2 125.2 124.3 124.4   2796</span></span>
+<span><span class="co">#&gt; 10 2020-01-15 124.4 124.5 123.7 123.9   2879</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="df_append">df_append()<a class="anchor" aria-label="anchor" href="#df_append"></a>
@@ -368,42 +368,42 @@
 <p>Can be used to update price dataframes retrieved by <code><a href="../reference/oanda.html">oanda()</a></code>. The function is designed to update existing data with new values as they become available. As opposed to <code><a href="../reference/df_merge.html">df_merge()</a></code>, the data in ‘new’ will overwrite the data in ‘old’ rather than create duplicates.</p>
 <p>If the attribute specified by ‘keep.attr’ is present in ‘new’, for example the ‘timestamp’ in pricing data returned by <code><a href="../reference/oanda.html">oanda()</a></code>, this is retained. If the attribute is not found in ‘new’, the argument has no effect. All other custom attributes are dropped.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">data1</span> <span class="op">&lt;-</span> <span class="va">sample_ohlc_data</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span>, <span class="op">]</span>
-<span class="va">data1</span>
-<span class="co">#&gt;         time  open  high   low close volume</span>
-<span class="co">#&gt; 1 2020-01-02 123.0 123.1 122.5 122.7   1875</span>
-<span class="co">#&gt; 2 2020-01-03 122.7 122.8 122.6 122.8   1479</span>
-<span class="co">#&gt; 3 2020-01-06 122.8 123.4 122.4 123.3   1792</span>
-<span class="co">#&gt; 4 2020-01-07 123.3 124.3 123.3 124.1   1977</span>
-<span class="co">#&gt; 5 2020-01-08 124.1 124.8 124.0 124.8   2239</span>
-<span class="co">#&gt; 6 2020-01-09 124.8 125.4 124.5 125.3   1842</span>
-<span class="co">#&gt; 7 2020-01-10 125.3 125.3 124.8 125.2   2548</span>
-<span class="co">#&gt; 8 2020-01-13 125.2 125.3 125.1 125.2   2946</span>
-<span class="va">data2</span> <span class="op">&lt;-</span> <span class="va">sample_ohlc_data</span><span class="op">[</span><span class="fl">7</span><span class="op">:</span><span class="fl">10</span>, <span class="op">]</span>
-<span class="va">data2</span>
-<span class="co">#&gt;          time  open  high   low close volume</span>
-<span class="co">#&gt; 7  2020-01-10 125.3 125.3 124.8 125.2   2548</span>
-<span class="co">#&gt; 8  2020-01-13 125.2 125.3 125.1 125.2   2946</span>
-<span class="co">#&gt; 9  2020-01-14 125.2 125.2 124.3 124.4   2796</span>
-<span class="co">#&gt; 10 2020-01-15 124.4 124.5 123.7 123.9   2879</span>
-<span class="fu"><a href="../reference/df_append.html">df_append</a></span><span class="op">(</span><span class="va">data1</span>, <span class="va">data2</span><span class="op">)</span>
-<span class="co">#&gt;          time  open  high   low close volume</span>
-<span class="co">#&gt; 1  2020-01-02 123.0 123.1 122.5 122.7   1875</span>
-<span class="co">#&gt; 2  2020-01-03 122.7 122.8 122.6 122.8   1479</span>
-<span class="co">#&gt; 3  2020-01-06 122.8 123.4 122.4 123.3   1792</span>
-<span class="co">#&gt; 4  2020-01-07 123.3 124.3 123.3 124.1   1977</span>
-<span class="co">#&gt; 5  2020-01-08 124.1 124.8 124.0 124.8   2239</span>
-<span class="co">#&gt; 6  2020-01-09 124.8 125.4 124.5 125.3   1842</span>
-<span class="co">#&gt; 7  2020-01-10 125.3 125.3 124.8 125.2   2548</span>
-<span class="co">#&gt; 8  2020-01-13 125.2 125.3 125.1 125.2   2946</span>
-<span class="co">#&gt; 9  2020-01-14 125.2 125.2 124.3 124.4   2796</span>
-<span class="co">#&gt; 10 2020-01-15 124.4 124.5 123.7 123.9   2879</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">data1</span> <span class="op">&lt;-</span> <span class="va">sample_ohlc_data</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span>, <span class="op">]</span></span>
+<span><span class="va">data1</span></span>
+<span><span class="co">#&gt;         time  open  high   low close volume</span></span>
+<span><span class="co">#&gt; 1 2020-01-02 123.0 123.1 122.5 122.7   1875</span></span>
+<span><span class="co">#&gt; 2 2020-01-03 122.7 122.8 122.6 122.8   1479</span></span>
+<span><span class="co">#&gt; 3 2020-01-06 122.8 123.4 122.4 123.3   1792</span></span>
+<span><span class="co">#&gt; 4 2020-01-07 123.3 124.3 123.3 124.1   1977</span></span>
+<span><span class="co">#&gt; 5 2020-01-08 124.1 124.8 124.0 124.8   2239</span></span>
+<span><span class="co">#&gt; 6 2020-01-09 124.8 125.4 124.5 125.3   1842</span></span>
+<span><span class="co">#&gt; 7 2020-01-10 125.3 125.3 124.8 125.2   2548</span></span>
+<span><span class="co">#&gt; 8 2020-01-13 125.2 125.3 125.1 125.2   2946</span></span>
+<span><span class="va">data2</span> <span class="op">&lt;-</span> <span class="va">sample_ohlc_data</span><span class="op">[</span><span class="fl">7</span><span class="op">:</span><span class="fl">10</span>, <span class="op">]</span></span>
+<span><span class="va">data2</span></span>
+<span><span class="co">#&gt;          time  open  high   low close volume</span></span>
+<span><span class="co">#&gt; 7  2020-01-10 125.3 125.3 124.8 125.2   2548</span></span>
+<span><span class="co">#&gt; 8  2020-01-13 125.2 125.3 125.1 125.2   2946</span></span>
+<span><span class="co">#&gt; 9  2020-01-14 125.2 125.2 124.3 124.4   2796</span></span>
+<span><span class="co">#&gt; 10 2020-01-15 124.4 124.5 123.7 123.9   2879</span></span>
+<span><span class="fu"><a href="../reference/df_append.html">df_append</a></span><span class="op">(</span><span class="va">data1</span>, <span class="va">data2</span><span class="op">)</span></span>
+<span><span class="co">#&gt;          time  open  high   low close volume</span></span>
+<span><span class="co">#&gt; 1  2020-01-02 123.0 123.1 122.5 122.7   1875</span></span>
+<span><span class="co">#&gt; 2  2020-01-03 122.7 122.8 122.6 122.8   1479</span></span>
+<span><span class="co">#&gt; 3  2020-01-06 122.8 123.4 122.4 123.3   1792</span></span>
+<span><span class="co">#&gt; 4  2020-01-07 123.3 124.3 123.3 124.1   1977</span></span>
+<span><span class="co">#&gt; 5  2020-01-08 124.1 124.8 124.0 124.8   2239</span></span>
+<span><span class="co">#&gt; 6  2020-01-09 124.8 125.4 124.5 125.3   1842</span></span>
+<span><span class="co">#&gt; 7  2020-01-10 125.3 125.3 124.8 125.2   2548</span></span>
+<span><span class="co">#&gt; 8  2020-01-13 125.2 125.3 125.1 125.2   2946</span></span>
+<span><span class="co">#&gt; 9  2020-01-14 125.2 125.2 124.3 124.4   2796</span></span>
+<span><span class="co">#&gt; 10 2020-01-15 124.4 124.5 123.7 123.9   2879</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.3.2, <a href="https://CRAN.R-project.org/package=ichimoku" class="external-link uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
+<p>Gao, C. (2021), <em>ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies</em>. R package version 1.3.3, <a href="https://CRAN.R-project.org/package=ichimoku" class="external-link uri">https://CRAN.R-project.org/package=ichimoku</a>.</p>
 <hr>
 </div>
   </div>
@@ -425,7 +425,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer>
