@@ -232,7 +232,8 @@
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 2020-01-14 <span style="color: #949494;">00:00:00</span> 125.2 125.2 124.3 124.4    -<span style="color: #BB0000;">1</span>  123.9    <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 2020-01-15 <span style="color: #949494;">00:00:00</span> 124.4 124.5 123.7 123.9    -<span style="color: #BB0000;">1</span>  123.9    <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># … with 271 more rows, and 4 more variables: senkouB &lt;dbl&gt;, chikou &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   cloudT &lt;dbl&gt;, cloudB &lt;dbl&gt;</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;">#   cloudT &lt;dbl&gt;, cloudB &lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</span></span></span></code></pre></div>
 <p>The returned output is designed to fit the screen; call <code><a href="../reference/more.html">more()</a></code> to display up to 100 more rows. Note that above, print is called setting ‘plot = FALSE’ to only return the data to the console. The default print method for ichimoku objects also plots the cloud chart to the graphical device.</p>
 <p>Use <code><a href="https://rdrr.io/r/utils/str.html" class="external-link">str()</a></code> for a compact display of the object structure:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -284,7 +285,8 @@
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 2020-01-13 <span style="color: #949494;">00:00:00</span>   <span style="text-decoration: underline;">2</span>946</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 2020-01-14 <span style="color: #949494;">00:00:00</span>   <span style="text-decoration: underline;">2</span>796</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 2020-01-15 <span style="color: #949494;">00:00:00</span>   <span style="text-decoration: underline;">2</span>879</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 271 more rows</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 271 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ Use `print(n = ...)` to see more rows</span></span></span></code></pre></div>
 <p>This consolidates all relevant data into a single object. The additional data can now also be plotted as a sub-plot beneath the main ichimoku cloud chart (see <a href="#custom-sub-plots">custom sub-plots</a>).</p>
 <p>Note: only numeric data or data coercible to numeric type is preserved in this way, and other types will introduce NAs. This is as the core data of an ichimoku object is a numeric matrix that does not support multiple data types. Custom attributes set on the input object (such as a timestamp or data source) are also preserved.</p>
 </div>
@@ -607,7 +609,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>

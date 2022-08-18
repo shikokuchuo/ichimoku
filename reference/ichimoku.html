@@ -211,6 +211,7 @@ in the input object as additional columns and/or attributes.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2020-01-15 <span style="color: #949494;">00:00:00</span> 124.4 124.5 123.7 123.9    -<span style="color: #BB0000;">1</span>  123.9    <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 271 more rows, and 4 more variables: senkouB &lt;dbl&gt;, chikou &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   cloudT &lt;dbl&gt;, cloudB &lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</span></span>
 <span class="r-plt img"><img src="ichimoku-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">kumo</span> <span class="op">&lt;-</span> <span class="fu">ichimoku</span><span class="op">(</span><span class="va">TKR</span>, ticker <span class="op">=</span> <span class="st">"TKR Co."</span>, periods <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">9</span>, <span class="fl">26</span>, <span class="fl">52</span><span class="op">)</span>, keep.data <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
@@ -250,6 +251,7 @@ in the input object as additional columns and/or attributes.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">20</span> 2020-01-29 <span style="color: #949494;">00:00:00</span> 123.1 123.3 123.1 123.2     1 123.6     <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 261 more rows, and 5 more variables: senkouB &lt;dbl&gt;, chikou &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   cloudT &lt;dbl&gt;, cloudB &lt;dbl&gt;, volume &lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">kumo</span>, theme <span class="op">=</span> <span class="st">"solarized"</span>, type <span class="op">=</span> <span class="st">"bar"</span>, custom <span class="op">=</span> <span class="st">"volume"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="ichimoku-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
@@ -267,7 +269,7 @@ in the input object as additional columns and/or attributes.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>
