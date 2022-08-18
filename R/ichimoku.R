@@ -219,7 +219,8 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
   p2 <- periods[2L]
   p3 <- periods[3L]
   xlen > p2 || stop("dataset must be longer than the medium cloud period '", p2, "'", call. = FALSE)
-  clen <- xlen + p2 - 1L
+  p21 <- p2 - 1L
+  clen <- xlen + p21
 
   cd <- numeric(xlen)
   cd[open < close] <- 1
@@ -234,18 +235,17 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
   periodicity <- min(index[2:4] - `length<-`(index, 3L))
   if (periodicity == 86400) {
     future <- seq.int(from = index[xlen] + periodicity, by = periodicity, length.out = p2 + p2)
-    future <- `length<-`(future[tradingDays(future, ...)], p2 - 1L)
+    future <- `length<-`(future[tradingDays(future, ...)], p21)
   } else {
-    future <- seq.int(from = index[xlen] + periodicity, by = periodicity, length.out = p2 - 1L)
+    future <- seq.int(from = index[xlen] + periodicity, by = periodicity, length.out = p21)
   }
   xtsindex <- c(index, future)
 
   if (missing(keep.data) || !isTRUE(keep.data)) {
     x <- kmatrix <- NULL
   } else {
-    used <- unlist(lapply(c("coli", "colo", "colh", "coll", "colc", "colp"), function(x) {
-      get0(x, envir = parent.frame(2L), inherits = FALSE)
-    }))
+    used <- unlist(lapply(c("coli", "colo", "colh", "coll", "colc", "colp"),
+                          function(x) get0(x, envir = parent.frame(2L), inherits = FALSE)))
     used <- used[!is.na(used)]
     keep <- if (!is.null(used)) cnames[-used]
     kmatrix <- do.call(cbind, lapply(.subset(x, keep),
@@ -259,11 +259,11 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
                 cd = `length<-`(cd, clen),
                 tenkan = `length<-`(tenkan, clen),
                 kijun = `length<-`(kijun, clen),
-                senkouA = c(rep(NA, p2 - 1L), senkouA),
-                senkouB = c(rep(NA, p2 - 1L), senkouB),
+                senkouA = c(rep(NA, p21), senkouA),
+                senkouB = c(rep(NA, p21), senkouB),
                 chikou = `length<-`(close[p2:xlen], clen),
-                cloudT = c(rep(NA, p2 - 1L), cloudT),
-                cloudB = c(rep(NA, p2 - 1L), cloudB),
+                cloudT = c(rep(NA, p21), cloudT),
+                cloudB = c(rep(NA, p21), cloudB),
                 kmatrix)
 
   .Call(ichimoku_create, kumo, xtsindex, periods, periodicity, ticker, x)
@@ -342,7 +342,8 @@ ichimoku.default <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, ..
   p2 <- periods[2L]
   p3 <- periods[3L]
   xlen > p2 || stop("dataset must be longer than the medium cloud period '", p2, "'", call. = FALSE)
-  clen <- xlen + p2 - 1L
+  p21 <- p2 -1L
+  clen <- xlen + p21
 
   index <- unclass(.subset2(x, 1L))
   open <- .subset2(x, 2L)
@@ -362,9 +363,9 @@ ichimoku.default <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, ..
   periodicity <- min(index[2:4] - `length<-`(index, 3L))
   if (periodicity == 86400) {
     future <- seq.int(from = index[xlen] + periodicity, by = periodicity, length.out = p2 + p2)
-    future <- `length<-`(future[tradingDays(future, ...)], p2 - 1L)
+    future <- `length<-`(future[tradingDays(future, ...)], p21)
   } else {
-    future <- seq.int(from = index[xlen] + periodicity, by = periodicity, length.out = p2 - 1L)
+    future <- seq.int(from = index[xlen] + periodicity, by = periodicity, length.out = p21)
   }
   xtsindex <- c(index, future)
   x <- NULL
@@ -376,11 +377,11 @@ ichimoku.default <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, ..
                 cd = `length<-`(cd, clen),
                 tenkan = `length<-`(tenkan, clen),
                 kijun = `length<-`(kijun, clen),
-                senkouA = c(rep(NA, p2 - 1L), senkouA),
-                senkouB = c(rep(NA, p2 - 1L), senkouB),
+                senkouA = c(rep(NA, p21), senkouA),
+                senkouB = c(rep(NA, p21), senkouB),
                 chikou = `length<-`(close[p2:xlen], clen),
-                cloudT = c(rep(NA, p2 - 1L), cloudT),
-                cloudB = c(rep(NA, p2 - 1L), cloudB))
+                cloudT = c(rep(NA, p21), cloudT),
+                cloudB = c(rep(NA, p21), cloudB))
 
   .Call(ichimoku_create, kumo, xtsindex, periods, periodicity, ticker, x)
 

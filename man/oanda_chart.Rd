@@ -6,8 +6,8 @@
 \usage{
 oanda_chart(
   instrument,
-  granularity = c("D", "W", "M", "H12", "H8", "H6", "H4", "H3", "H2", "H1", "M30",
-    "M15", "M10", "M5", "M4", "M2", "M1", "S30", "S15", "S10", "S5"),
+  granularity = c("D", "W", "M", "H12", "H8", "H6", "H4", "H3", "H2", "H1", "M30", "M15",
+    "M10", "M5", "M4", "M2", "M1", "S30", "S15", "S10", "S5"),
   refresh = 5,
   count = 250,
   price = c("M", "B", "A"),

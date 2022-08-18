@@ -190,9 +190,9 @@ getPrices <- function(instrument, granularity, count, from, to, price, server,
                 if (!missing(to) && !is.null(to)) paste0("&to=", to))
   handle <- new_handle()
   handle_setheaders(handle = handle,
-                    "Authorization" = paste0("Bearer ", apikey),
-                    "Accept-Datetime-Format" = "UNIX",
-                    "User-Agent" = .user_agent)
+                    Authorization = paste0("Bearer ", apikey),
+                    `Accept-Datetime-Format` = "UNIX",
+                    `User-Agent` = .user_agent)
   resp <- curl_fetch_memory(url = url, handle = handle)
 
   .subset2(resp, "status_code") == 200L || stop("server code ",
@@ -325,9 +325,9 @@ oanda_stream <- function(instrument, display = 7L, limit, server, apikey) {
                 "/pricing/stream?instruments=", instrument)
   handle <- new_handle()
   handle_setheaders(handle = handle,
-                    "Authorization" = paste0("Bearer ", apikey),
-                    "Accept-Datetime-Format" = "UNIX",
-                    "User-Agent" = .user_agent)
+                    Authorization = paste0("Bearer ", apikey),
+                    `Accept-Datetime-Format` = "UNIX",
+                    `User-Agent` = .user_agent)
 
   data <- NULL
   on.exit(expr = {
@@ -1008,9 +1008,9 @@ oanda_positions <- function(instrument, time, server, apikey) {
                 if (!missing(time)) paste0("?time=", unclass(as.POSIXct(time))))
   handle <- new_handle()
   handle_setheaders(handle = handle,
-                    "Authorization" = paste0("Bearer ", apikey),
-                    "Accept-Datetime-Format" = "UNIX",
-                    "User-Agent" = .user_agent)
+                    Authorization = paste0("Bearer ", apikey),
+                    `Accept-Datetime-Format` = "UNIX",
+                    `User-Agent` = .user_agent)
   resp <- curl_fetch_memory(url = url, handle = handle)
 
   .subset2(resp, "status_code") == 200L || stop("server code ",
@@ -1106,9 +1106,9 @@ oanda_orders <- function(instrument, time, server, apikey) {
                 if (!missing(time)) paste0("?time=", unclass(as.POSIXct(time))))
   handle <- new_handle()
   handle_setheaders(handle = handle,
-                    "Authorization" = paste0("Bearer ", apikey),
-                    "Accept-Datetime-Format" = "UNIX",
-                    "User-Agent" = .user_agent)
+                    Authorization = paste0("Bearer ", apikey),
+                    `Accept-Datetime-Format` = "UNIX",
+                    `User-Agent` = .user_agent)
   resp <- curl_fetch_memory(url = url, handle = handle)
 
   .subset2(resp, "status_code") == 200L || stop("server code ",
