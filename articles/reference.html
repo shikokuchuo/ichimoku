@@ -339,7 +339,7 @@
 <div class="section level3">
 <h3 id="plot">plot()<a class="anchor" aria-label="anchor" href="#plot"></a>
 </h3>
-<p>ichimoku offers the choice of 2 visualization systems: static (default) and interactive (reactive charts using R Shiny).</p>
+<p>ichimoku offers the choice of 2 visualization systems: static (default) and interactive (reactive charts using Shiny).</p>
 <div class="section level4">
 <h4 id="static-plots">1. Static Plots<a class="anchor" aria-label="anchor" href="#static-plots"></a>
 </h4>
@@ -411,8 +411,7 @@
 <div class="section level4">
 <h4 id="interactive-plots">2. Interactive Plots<a class="anchor" aria-label="anchor" href="#interactive-plots"></a>
 </h4>
-<p>Interactive plots require the ‘shiny’ package to be installed.</p>
-<p>To produce an interactive plot, use ichimoku’s <code><a href="../reference/iplot.html">iplot()</a></code> function, which launches an R Shiny app.</p>
+<p>To produce an interactive plot, use ichimoku’s <code><a href="../reference/iplot.html">iplot()</a></code> function, which launches a Shiny app.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># For an interactive plot:</span></span>
 <span><span class="fu"><a href="../reference/iplot.html">iplot</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span></span></code></pre></div>
@@ -572,6 +571,7 @@
 <p>ichimoku currently has the following external package dependencies:</p>
 <ul>
 <li>ggplot2 - for graphics and visualization</li>
+<li>shiny - for interactive and live visualizations</li>
 <li>tibble - for enhanced printing of ichimoku objects</li>
 <li>xts, zoo - for enhanced time series methods</li>
 <li>curl, jsonlite - for interfacing with external APIs</li>
@@ -580,7 +580,6 @@
 <ul>
 <li>keyring - for saving API keys in the system credential store</li>
 <li>openssl - for verifying the data integrity of archived objects</li>
-<li>shiny - for interactive and live visualizations</li>
 </ul>
 </div>
 <div class="section level2">
