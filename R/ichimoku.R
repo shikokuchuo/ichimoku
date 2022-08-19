@@ -209,7 +209,7 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
     }
   }
 
-  if (is.numeric(periods) && length(periods) == 3L && all(periods >= 1)) {
+  if (is.numeric(periods) && length(periods) == 3L && all(periods >= 1L)) {
     periods <- as.integer(periods)
   } else {
     warning("Specified cloud periods invalid - reverting to defaults c(9L, 26L, 52L)", call. = FALSE)
@@ -332,7 +332,7 @@ ichimoku.default <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, ..
   if (missing(ticker)) ticker <- deparse(substitute(x))
   xlen <- dim(x)[1L]
   cnames <- attr(x, "names")
-  if (is.numeric(periods) && length(periods) == 3L && all(periods >= 1)) {
+  if (is.numeric(periods) && length(periods) == 3L && all(periods >= 1L)) {
     periods <- as.integer(periods)
   } else {
     warning("Specified cloud periods invalid - reverting to defaults c(9L, 26L, 52L)", call. = FALSE)

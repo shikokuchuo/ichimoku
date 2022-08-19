@@ -217,7 +217,7 @@ For additional functionality, the 'xts' package may be loaded to access a wide r
 
 ### plot()
 
-ichimoku offers the choice of 2 visualization systems: static (default) and interactive (reactive charts using R Shiny).
+ichimoku offers the choice of 2 visualization systems: static (default) and interactive (reactive charts using Shiny).
 
 #### 1. Static Plots
 
@@ -297,9 +297,7 @@ Internally, ichimoku's `plot()` method is a wrapper for `autoplot()`. To access 
 
 #### 2. Interactive Plots
 
-Interactive plots require the 'shiny' package to be installed.
-
-To produce an interactive plot, use ichimoku's `iplot()` function, which launches an R Shiny app. 
+To produce an interactive plot, use ichimoku's `iplot()` function, which launches a Shiny app. 
 
 ```{r iplot, eval=FALSE}
 # For an interactive plot:
@@ -427,6 +425,7 @@ There may however still be issues with the input data that prevent cloud values 
 ichimoku currently has the following external package dependencies:
 
 - ggplot2 - for graphics and visualization
+- shiny - for interactive and live visualizations
 - tibble - for enhanced printing of ichimoku objects
 - xts, zoo - for enhanced time series methods
 - curl, jsonlite - for interfacing with external APIs
@@ -435,7 +434,6 @@ Optional (enables additional features):
 
 - keyring - for saving API keys in the system credential store
 - openssl - for verifying the data integrity of archived objects
-- shiny - for interactive and live visualizations
 
 ## References
 

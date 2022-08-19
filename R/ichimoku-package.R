@@ -87,6 +87,11 @@
 #'     scale_x_continuous scale_y_continuous Stat StatIdentity theme theme_grey
 #'     %+replace%
 #' @importFrom jsonlite parse_json stream_in
+#' @importFrom shiny checkboxInput column downloadButton downloadHandler HTML
+#'     fillPage fluidPage fluidRow hoverOpts invalidateLater isolate
+#'     numericInput observeEvent plotOutput reactive reactiveVal renderPlot
+#'     renderUI req selectInput shinyApp sliderInput stopApp tags textInput
+#'     uiOutput wellPanel
 #' @importFrom stats na.omit sd
 #' @importFrom tibble as_tibble tbl_sum
 #' @importFrom utils str

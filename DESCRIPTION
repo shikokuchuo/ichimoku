@@ -33,6 +33,7 @@ Imports:
     curl,
     ggplot2,
     jsonlite,
+    shiny,
     tibble,
     xts,
     zoo
@@ -41,7 +42,6 @@ LinkingTo:
 Suggests: 
     keyring,
     openssl,
-    shiny,
     covr,
     knitr,
     rmarkdown,

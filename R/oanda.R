@@ -560,209 +560,203 @@ oanda_studio <- function(instrument = "USD_JPY",
                          launch.browser = TRUE,
                          periods = c(9L, 26L, 52L)) {
 
-  if (requireNamespace("shiny", quietly = TRUE)) {
+  isTRUE(new.process) && {
+    mc <- match.call()
+    mc[["new.process"]] <- NULL
+    cmd <- switch(.subset2(.Platform, "OS.type"),
+                  unix = file.path(R.home("bin"), "Rscript"),
+                  windows = file.path(R.home("bin"), "Rscript.exe"))
+    return(system2(command = cmd, args = c("-e", shQuote(paste0("ichimoku::", deparse(mc)))),
+                   stdout = NULL, stderr = NULL, wait = FALSE))
+  }
+  if (!missing(instrument)) instrument <- sub("-", "_", toupper(force(instrument)), fixed = TRUE)
+  granularity <- match.arg(granularity)
+  price <- match.arg(price)
+  theme <- match.arg(theme)
+  type <- match.arg(type)
+  srvr <- if (missing(server)) do_$getServer() else match.arg(server, c("practice", "live"))
+  if (missing(apikey)) apikey <- do_$getKey(server = srvr)
+  if (!is.numeric(refresh) || refresh < 1) {
+    message("Specified refresh interval invalid - reverting to default of 5 secs")
+    refresh <- 5
+  }
+  if (is.numeric(periods) && length(periods) == 3L && all(periods >= 1)) {
+    periods <- as.integer(periods)
+  } else {
+    warning("Specified cloud periods invalid - reverting to defaults c(9L, 26L, 52L)", call. = FALSE)
+    periods <- c(9L, 26L, 52L)
+  }
+  p2 <- periods[2L]
+  minlen <- p2 + periods[3L]
+  if (!is.numeric(count) || count <= minlen) {
+    message("Specified 'count' invalid - reverting to default of 300")
+    count <- 300
+  }
 
-    isTRUE(new.process) && {
-      mc <- match.call()
-      mc[["new.process"]] <- NULL
-      cmd <- switch(.subset2(.Platform, "OS.type"),
-                    unix = file.path(R.home("bin"), "Rscript"),
-                    windows = file.path(R.home("bin"), "Rscript.exe"))
-      return(system2(command = cmd, args = c("-e", shQuote(paste0("ichimoku::", deparse(mc)))),
-                     stdout = NULL, stderr = NULL, wait = FALSE))
-    }
-    if (!missing(instrument)) instrument <- sub("-", "_", toupper(force(instrument)), fixed = TRUE)
-    granularity <- match.arg(granularity)
-    price <- match.arg(price)
-    theme <- match.arg(theme)
-    type <- match.arg(type)
-    srvr <- if (missing(server)) do_$getServer() else match.arg(server, c("practice", "live"))
-    if (missing(apikey)) apikey <- do_$getKey(server = srvr)
-    if (!is.numeric(refresh) || refresh < 1) {
-      message("Specified refresh interval invalid - reverting to default of 5 secs")
-      refresh <- 5
-    }
-    if (is.numeric(periods) && length(periods) == 3L && all(periods >= 1)) {
-      periods <- as.integer(periods)
-    } else {
-      warning("Specified cloud periods invalid - reverting to defaults c(9L, 26L, 52L)", call. = FALSE)
-      periods <- c(9L, 26L, 52L)
-    }
-    p2 <- periods[2L]
-    minlen <- p2 + periods[3L]
-    if (!is.numeric(count) || count <= minlen) {
-      message("Specified 'count' invalid - reverting to default of 300")
-      count <- 300
-    }
+  ins <- do_$getInstruments(server = srvr, apikey = apikey)
+  dispnamevec <- .subset2(ins, "displayName")
+  namevec <- .subset2(ins, "name")
 
-    ins <- do_$getInstruments(server = srvr, apikey = apikey)
-    dispnamevec <- .subset2(ins, "displayName")
-    namevec <- .subset2(ins, "name")
-
-    ui <- shiny::fluidPage(
-      shiny::tags$head(shiny::tags$style("
+  ui <- fluidPage(
+    tags$head(tags$style("
     #chart {height: calc(100vh - 147px) !important}
     .control-label {font-weight: 400}
   ")),
-      shiny::fillPage(
-        padding = 20,
-        shiny::plotOutput("chart", width = "100%",
-                          hover = shiny::hoverOpts(id = "plot_hover", delay = 100, delayType = "throttle")),
-        shiny::uiOutput("hover_x"), shiny::uiOutput("hover_y"), shiny::uiOutput("infotip")
-      ),
-      shiny::fluidRow(
-        shiny::column(width = 12, shiny::HTML("&nbsp;")
-        )
-      ),
-      shiny::fluidRow(
-        shiny::column(width = 1,
-                      shiny::selectInput("theme", label = "Theme",
-                                         choices = c("classic", "dark", "mono", "noguchi", "okabe-ito", "solarized"),
-                                         selected = theme, selectize = FALSE)),
-        shiny::column(width = 1,
-                      shiny::selectInput("type", label = "Indicator",
-                                         choices = c("none", "r", "s"),
-                                         selected = type, selectize = FALSE)),
-        shiny::column(width = 2,
-                      shiny::selectInput("instrument", label = "Instrument",
-                                         choices = ins$name,
-                                         selected = instrument, selectize = FALSE)),
-        shiny::column(width = 1,
-                      shiny::selectInput("granularity", label = "Granularity",
-                                         choices = c("M", "W", "D",
-                                                     "H12", "H8", "H6", "H4", "H3", "H2", "H1",
-                                                     "M30", "M15", "M10", "M5", "M4", "M2", "M1",
-                                                     "S30", "S15", "S10", "S5"),
-                                         selected = granularity, selectize = FALSE)),
-        shiny::column(width = 1,
-                      shiny::selectInput("price", label = "Price",
-                                         choices = c("M", "B", "A"),
-                                         selected = price, selectize = FALSE)),
-        shiny::column(width = 1,
-                      shiny::numericInput("refresh", label = "Refresh",
-                                          value = refresh, min = 1, max = 86400)),
-        shiny::column(width = 1,
-                      shiny::HTML("<label class='control-label'>Data</label><div class='form-group shiny-input-container'>"),
-                      shiny::downloadButton("savedata", label = "Archive"),
-                      shiny::HTML("</div>")),
-        shiny::column(width = 3,
-                      shiny::sliderInput("count", label = "Data Periods", min = 100,
-                                         max = 800, value = count, width = "100%")),
-        shiny::column(width = 1,
-                      shiny::HTML("<label class='control-label'>Show</label>"),
-                      shiny::checkboxInput("infotip", "Infotip", value = TRUE))
+    fillPage(
+      padding = 20,
+      plotOutput("chart", width = "100%",
+                 hover = hoverOpts(id = "plot_hover", delay = 100, delayType = "throttle")),
+      uiOutput("hover_x"), uiOutput("hover_y"), uiOutput("infotip")
+    ),
+    fluidRow(
+      column(width = 12, HTML("&nbsp;")
       )
+    ),
+    fluidRow(
+      column(width = 1,
+             selectInput("theme", label = "Theme",
+                         choices = c("classic", "dark", "mono", "noguchi", "okabe-ito", "solarized"),
+                         selected = theme, selectize = FALSE)),
+      column(width = 1,
+             selectInput("type", label = "Indicator",
+                         choices = c("none", "r", "s"),
+                         selected = type, selectize = FALSE)),
+      column(width = 2,
+             selectInput("instrument", label = "Instrument",
+                         choices = ins$name,
+                         selected = instrument, selectize = FALSE)),
+      column(width = 1,
+             selectInput("granularity", label = "Granularity",
+                         choices = c("M", "W", "D",
+                                     "H12", "H8", "H6", "H4", "H3", "H2", "H1",
+                                     "M30", "M15", "M10", "M5", "M4", "M2", "M1",
+                                     "S30", "S15", "S10", "S5"),
+                         selected = granularity, selectize = FALSE)),
+      column(width = 1,
+             selectInput("price", label = "Price",
+                         choices = c("M", "B", "A"),
+                         selected = price, selectize = FALSE)),
+      column(width = 1,
+             numericInput("refresh", label = "Refresh",
+                          value = refresh, min = 1, max = 86400)),
+      column(width = 1,
+             HTML("<label class='control-label'>Data</label><div class='form-group shiny-input-container'>"),
+             downloadButton("savedata", label = "Archive"),
+             HTML("</div>")),
+      column(width = 3,
+             sliderInput("count", label = "Data Periods", min = 100,
+                         max = 800, value = count, width = "100%")),
+      column(width = 1,
+             HTML("<label class='control-label'>Show</label>"),
+             checkboxInput("infotip", "Infotip", value = TRUE))
+    )
+  )
+
+  server <- function(input, output, session) {
+
+    idata <- reactive(getPrices(instrument = input$instrument,
+                                granularity = input$granularity,
+                                count = input$count,
+                                price = input$price,
+                                server = srvr,
+                                apikey = apikey,
+                                .validate = TRUE))
+
+    datastore <- reactiveVal(isolate(idata()))
+    left_px <- reactive(input$plot_hover$coords_css$x)
+    top_px <- reactive(input$plot_hover$coords_css$y)
+    posi_x <- reactive(round(input$plot_hover$x, digits = 0))
+
+    periodicity <- reactive(
+      switch(input$granularity,
+             M = 2419200, W = 604800, D = 86400, H12 = 43200, H8 = 28800,
+             H6 = 21600, H4 = 14400, H3 = 10800, H2 = 7200, H1 = 3600,
+             M30 = 1800, M15 = 900, M10 = 600, M5 = 300, M4 = 240,
+             M2 = 120, M1 = 60, S30 = 30, S15 = 15, S10 = 10, S5 = 5)
+    )
+    ctype <- reactive(
+      switch(input$granularity,
+             M = "Monthly", W = "Weekly", D = "Daily", H12 = "12 Hour", H8 = "8 Hour",
+             H6 = "6 Hour", H4 = "4 Hour", H3 = "3 Hour", H2 = "2 Hour",
+             H1 = "1 Hour", M30 = "30 Mins", M15 = "15 Mins", M10 = "10 Mins",
+             M5 = "5 Mins", M4 = "4 Mins", M2 = "1 Mins", M1 = "1 Min",
+             S30 = "30 Secs", S15 = "15 Secs", S10 = "10 Secs", S5 = "5 Secs")
+    )
+    ptype <- reactive(switch(input$price, M = "mid", B = "bid", A = "ask"))
+    dispname <- reactive(dispnamevec[namevec %in% input$instrument])
+
+    newdata <- reactive({
+      req(input$refresh >= 1)
+      invalidateLater(millis = input$refresh * 1000, session = session)
+      getPrices(instrument = input$instrument,
+                granularity = input$granularity,
+                count = ceiling(input$refresh / periodicity()) + 1,
+                price = input$price,
+                server = srvr,
+                apikey = apikey,
+                .validate = TRUE)
+    })
+
+    observeEvent(newdata(), {
+
+      if (unclass(attr(datastore(), "timestamp")) > unclass(attr(idata(), "timestamp"))) {
+        df <- df_append(old = datastore(), new = newdata())
+        dlen <- dim(df)[1L]
+        if (dlen > input$count) df <- df[(dlen - input$count + 1L):dlen, ]
+        datastore(df)
+
+      } else {
+        df <- df_append(old = idata(), new = newdata())
+        dlen <- dim(df)[1L]
+        if (dlen > input$count) df <- df[(dlen - input$count + 1L):dlen, ]
+        datastore(df)
+      }
+
+    })
+
+    data <- reactive(
+      if (unclass(attr(datastore(), "timestamp")) >
+          unclass(attr(idata(), "timestamp"))) datastore() else idata()
+    )
+    xlen <- reactive(dim(data())[1L])
+    pdata <- reactive(
+      create_data(.ichimoku(data(), ticker = input$instrument, periods = periods, ...),
+                  type = input$type)[minlen:(xlen() + p2 - 1L), ]
+    )
+    plen <- reactive(xlen() + p2 - minlen)
+    ticker <- reactive(
+      paste(dispname(), "  |", input$instrument, ptype(), "price [",
+            .subset2(data(), "close")[xlen()], "] at", attr(data(), "timestamp"),
+            "| Chart:", ctype(), "| Cmplt:", .subset2(data(), "complete")[xlen()])
     )
 
-    server <- function(input, output, session) {
+    output$chart <- renderPlot(
+      plot_ichimoku(pdata(), ticker = ticker(), theme = input$theme, type = input$type, ...)
+    )
+    output$hover_x <- renderUI({
+      req(input$plot_hover, posi_x() > 0, posi_x() <= plen())
+      drawGuide(label = index.ichimoku(pdata(), posi_x()), left = left_px() - 17, top = 45)
+    })
+    output$hover_y <- renderUI({
+      req(input$plot_hover)
+      drawGuide(label = signif(input$plot_hover$y, digits = 5), left = 75, top = top_px() + 11)
+    })
+    output$infotip <- renderUI({
+      req(input$infotip, input$plot_hover, posi_x() > 0, posi_x() <= plen())
+      drawInfotip(sidx = index.ichimoku(pdata(), posi_x()),
+                  sdata = coredata.ichimoku(pdata())[posi_x(), ],
+                  left = left_px(), top = top_px(),
+                  type = input$type)
+    })
 
-      idata <- shiny::reactive(getPrices(instrument = input$instrument,
-                                         granularity = input$granularity,
-                                         count = input$count,
-                                         price = input$price,
-                                         server = srvr,
-                                         apikey = apikey,
-                                         .validate = TRUE))
+    output$savedata <- downloadHandler(filename = function() paste0(input$instrument, "_", input$granularity, "_", input$price, ".rda"),
+                                       content = function(file) archive(pdata(), file))
 
-      datastore <- shiny::reactiveVal(shiny::isolate(idata()))
-      left_px <- shiny::reactive(input$plot_hover$coords_css$x)
-      top_px <- shiny::reactive(input$plot_hover$coords_css$y)
-      posi_x <- shiny::reactive(round(input$plot_hover$x, digits = 0))
-
-      periodicity <- shiny::reactive(
-        switch(input$granularity,
-               M = 2419200, W = 604800, D = 86400, H12 = 43200, H8 = 28800,
-               H6 = 21600, H4 = 14400, H3 = 10800, H2 = 7200, H1 = 3600,
-               M30 = 1800, M15 = 900, M10 = 600, M5 = 300, M4 = 240,
-               M2 = 120, M1 = 60, S30 = 30, S15 = 15, S10 = 10, S5 = 5)
-      )
-      ctype <- shiny::reactive(
-        switch(input$granularity,
-               M = "Monthly", W = "Weekly", D = "Daily", H12 = "12 Hour", H8 = "8 Hour",
-               H6 = "6 Hour", H4 = "4 Hour", H3 = "3 Hour", H2 = "2 Hour",
-               H1 = "1 Hour", M30 = "30 Mins", M15 = "15 Mins", M10 = "10 Mins",
-               M5 = "5 Mins", M4 = "4 Mins", M2 = "1 Mins", M1 = "1 Min",
-               S30 = "30 Secs", S15 = "15 Secs", S10 = "10 Secs", S5 = "5 Secs")
-      )
-      ptype <- shiny::reactive(switch(input$price, M = "mid", B = "bid", A = "ask"))
-      dispname <- shiny::reactive(dispnamevec[namevec %in% input$instrument])
-
-      newdata <- shiny::reactive({
-        shiny::req(input$refresh >= 1)
-        shiny::invalidateLater(millis = input$refresh * 1000, session = session)
-        getPrices(instrument = input$instrument,
-                  granularity = input$granularity,
-                  count = ceiling(input$refresh / periodicity()) + 1,
-                  price = input$price,
-                  server = srvr,
-                  apikey = apikey,
-                  .validate = TRUE)
-      })
-
-      shiny::observeEvent(newdata(), {
-
-        if (unclass(attr(datastore(), "timestamp")) > unclass(attr(idata(), "timestamp"))) {
-          df <- df_append(old = datastore(), new = newdata())
-          dlen <- dim(df)[1L]
-          if (dlen > input$count) df <- df[(dlen - input$count + 1L):dlen, ]
-          datastore(df)
-
-        } else {
-          df <- df_append(old = idata(), new = newdata())
-          dlen <- dim(df)[1L]
-          if (dlen > input$count) df <- df[(dlen - input$count + 1L):dlen, ]
-          datastore(df)
-        }
-
-      })
-
-      data <- shiny::reactive({
-        if (unclass(attr(datastore(), "timestamp")) > unclass(attr(idata(), "timestamp"))) {
-          datastore()
-        } else {
-          idata()
-        }
-      })
-      xlen <- shiny::reactive(dim(data())[1L])
-      pdata <- shiny::reactive(
-        create_data(.ichimoku(data(), ticker = input$instrument, periods = periods, ...),
-                    type = input$type)[minlen:(xlen() + p2 - 1L), ])
-      plen <- shiny::reactive(xlen() + p2 - minlen)
-      ticker <- shiny::reactive(paste(dispname(), "  |", input$instrument, ptype(), "price [",
-                                      .subset2(data(), "close")[xlen()], "] at", attr(data(), "timestamp"),
-                                      "| Chart:", ctype(), "| Cmplt:",
-                                      .subset2(data(), "complete")[xlen()]))
-
-      output$chart <- shiny::renderPlot(
-        plot_ichimoku(pdata(), ticker = ticker(), theme = input$theme, type = input$type, ...)
-      )
-      output$hover_x <- shiny::renderUI({
-        shiny::req(input$plot_hover, posi_x() > 0, posi_x() <= plen())
-        drawGuide(label = index.ichimoku(pdata(), posi_x()), left = left_px() - 17, top = 45)
-      })
-      output$hover_y <- shiny::renderUI({
-        shiny::req(input$plot_hover)
-        drawGuide(label = signif(input$plot_hover$y, digits = 5), left = 75, top = top_px() + 11)
-      })
-      output$infotip <- shiny::renderUI({
-        shiny::req(input$infotip, input$plot_hover, posi_x() > 0, posi_x() <= plen())
-        drawInfotip(sidx = index.ichimoku(pdata(), posi_x()),
-                    sdata = coredata.ichimoku(pdata())[posi_x(), ],
-                    left = left_px(), top = top_px(),
-                    type = input$type)
-      })
-
-      output$savedata <- shiny::downloadHandler(filename = function() paste0(input$instrument, "_", input$granularity, "_", input$price, ".rda"),
-                                                content = function(file) archive(pdata(), file))
-
-      session$onSessionEnded(function() shiny::stopApp())
-    }
-
-    shiny::shinyApp(ui = ui, server = server, options = list(launch.browser = launch.browser, ...))
-
-  } else {
-    message("Please install the 'shiny' package to enable oanda_studio()")
+    session$onSessionEnded(function() stopApp())
   }
+
+  shinyApp(ui = ui, server = server, options = list(launch.browser = launch.browser, ...))
+
 }
 
 #' Available OANDA Instruments

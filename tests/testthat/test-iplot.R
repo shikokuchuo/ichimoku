@@ -1,5 +1,4 @@
 test_that("iplot Shiny functions ok", {
-  skip_if_not_installed("shiny")
   cloud <- ichimoku(sample_ohlc_data, ticker = "TKR", periods = c(9, 26, 52))
   strat <- strat(cloud)
   expect_s3_class(iplot(strat, theme = "dark", type = "bar", custom = "ret"), "shiny.appobj")

@@ -41,7 +41,7 @@
                 "EUR_NOK", "EUR_NZD", "EUR_PLN", "EUR_SEK", "EUR_SGD", "EUR_TRY",
                 "EUR_USD", "EUR_ZAR", "FR40_EUR", "GBP_AUD", "GBP_CAD", "GBP_CHF",
                 "GBP_HKD", "GBP_JPY", "GBP_NZD", "GBP_PLN", "GBP_SGD", "GBP_USD",
-                "GBP_ZAR", "HK33_HKD", "HKD_JPY", "IN50_USD", "JP225_USD", "JP225Y_JPY",
+                "GBP_ZAR", "HK33_HKD", "HKD_JPY", "JP225_USD", "JP225Y_JPY",
                 "NAS100_USD", "NATGAS_USD", "NL25_EUR", "NZD_CAD", "NZD_CHF",
                 "NZD_HKD", "NZD_JPY", "NZD_SGD", "NZD_USD", "SG30_SGD", "SGD_CHF",
                 "SGD_JPY", "SOYBN_USD", "SPX500_USD", "SUGAR_USD", "TRY_JPY",
@@ -64,7 +64,7 @@
                        "EUR/HUF", "EUR/JPY", "EUR/NOK", "EUR/NZD", "EUR/PLN", "EUR/SEK",
                        "EUR/SGD", "EUR/TRY", "EUR/USD", "EUR/ZAR", "France 40", "GBP/AUD",
                        "GBP/CAD", "GBP/CHF", "GBP/HKD", "GBP/JPY", "GBP/NZD", "GBP/PLN",
-                       "GBP/SGD", "GBP/USD", "GBP/ZAR", "Hong Kong 33", "HKD/JPY", "India 50",
+                       "GBP/SGD", "GBP/USD", "GBP/ZAR", "Hong Kong 33", "HKD/JPY",
                        "Japan 225", "Japan 225 (JPY)", "US Nas 100", "Natural Gas",
                        "Netherlands 25", "NZD/CAD", "NZD/CHF", "NZD/HKD", "NZD/JPY",
                        "NZD/SGD", "NZD/USD", "Singapore 30", "SGD/CHF", "SGD/JPY", "Soybeans",
@@ -88,7 +88,7 @@
                 "CURRENCY", "CURRENCY", "CURRENCY", "CURRENCY", "CURRENCY", "CURRENCY",
                 "CFD", "CURRENCY", "CURRENCY", "CURRENCY", "CURRENCY", "CURRENCY",
                 "CURRENCY", "CURRENCY", "CURRENCY", "CURRENCY", "CURRENCY", "CFD",
-                "CURRENCY", "CFD", "CFD", "CFD", "CFD", "CFD", "CFD", "CURRENCY",
+                "CURRENCY", "CFD", "CFD", "CFD", "CFD", "CFD", "CURRENCY",
                 "CURRENCY", "CURRENCY", "CURRENCY", "CURRENCY", "CURRENCY", "CFD",
                 "CURRENCY", "CURRENCY", "CFD", "CFD", "CFD", "CURRENCY", "CFD",
                 "CFD", "CFD", "CFD", "CFD", "CFD", "CFD", "CFD", "CFD", "CURRENCY",
@@ -100,7 +100,7 @@
                 "METAL", "METAL", "METAL", "METAL", "METAL", "METAL", "METAL",
                 "CFD", "CFD", "CFD", "CURRENCY")),
   class = "data.frame",
-  row.names = c(NA, -126L)
+  row.names = c(NA, -125L)
 )
 
 .user_agent <- "r-ichimoku/1.3.3"
