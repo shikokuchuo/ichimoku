@@ -589,6 +589,4 @@ Calling `oanda_switch()` will also clear all cached variables.
 
 OANDA fxTrade API developer website: <https://developer.oanda.com/>.
 
-Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.3.3, <https://CRAN.R-project.org/package=ichimoku>.
-
 ---

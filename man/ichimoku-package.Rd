@@ -63,10 +63,6 @@ Sasaki, H. (1996), \emph{ichimoku kinkouhyou no kenkyuu}. Tokyo,
 
     OANDA' and 'fxTrade' are trademarks owned by OANDA Corporation, an entity
     unaffiliated with the ichimoku package, its authors or copyright holders.
-
-    Gao, C. (2021), \emph{ichimoku: Visualization and Tools for Ichimoku
-    Kinko Hyo Strategies}. R package version 1.3.3,
-    \url{https://CRAN.R-project.org/package=ichimoku}.
 }
 \author{
 Charlie Gao \email{charlie.gao@shikokuchuo.net}

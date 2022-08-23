@@ -293,6 +293,4 @@ The 'z-score' (or standard score) is calculated as res / sd(X) and is a centred 
 
 Sasaki, H. 佐々木 英信 (1996), *一目均衡表の研究 [ichimoku kinkouhyou no kenkyuu]*. Tokyo, Japan: Toushi Radar.
 
-Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies*. R package version 1.3.3, <https://CRAN.R-project.org/package=ichimoku>.
-
 ---

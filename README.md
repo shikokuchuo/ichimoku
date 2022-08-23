@@ -167,10 +167,6 @@ no kenkyuu]*. Tokyo, Japan: Toushi Radar.
 ‘OANDA’ and ‘fxTrade’ are trademarks owned by OANDA Corporation, an
 entity unaffiliated with the ichimoku package.
 
-Gao, C. (2021), *ichimoku: Visualization and Tools for Ichimoku Kinko
-Hyo Strategies*. R package version 1.3.3,
-<https://CRAN.R-project.org/package=ichimoku>.
-
 –
 
 ◈ ichimoku R package: <https://shikokuchuo.net/ichimoku/>.
