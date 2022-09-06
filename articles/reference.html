@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.4.9000</span>
       </span>
     </div>
 
@@ -217,24 +217,38 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">cloud</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ichimoku object: more() to display more rows, look() to inspect attributes</span></span></span>
-<span><span class="co">#&gt;    index                open  high   low close    cd tenkan kijun senkouA</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 2020-01-02 <span style="color: #949494;">00:00:00</span> 123   123.1 122.5 122.7    -<span style="color: #BB0000;">1</span>   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 2020-01-03 <span style="color: #949494;">00:00:00</span> 122.7 122.8 122.6 122.8     1   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 2020-01-06 <span style="color: #949494;">00:00:00</span> 122.8 123.4 122.4 123.3     1   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 2020-01-07 <span style="color: #949494;">00:00:00</span> 123.3 124.3 123.3 124.1     1   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 2020-01-08 <span style="color: #949494;">00:00:00</span> 124.1 124.8 124   124.8     1   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 2020-01-09 <span style="color: #949494;">00:00:00</span> 124.8 125.4 124.5 125.3     1   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 2020-01-10 <span style="color: #949494;">00:00:00</span> 125.3 125.3 124.8 125.2    -<span style="color: #BB0000;">1</span>   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 2020-01-13 <span style="color: #949494;">00:00:00</span> 125.2 125.3 125.1 125.2     0   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 2020-01-14 <span style="color: #949494;">00:00:00</span> 125.2 125.2 124.3 124.4    -<span style="color: #BB0000;">1</span>  123.9    <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 2020-01-15 <span style="color: #949494;">00:00:00</span> 124.4 124.5 123.7 123.9    -<span style="color: #BB0000;">1</span>  123.9    <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 271 more rows, and 4 more variables: senkouB &lt;dbl&gt;, chikou &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   cloudT &lt;dbl&gt;, cloudB &lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</span></span></span></code></pre></div>
-<p>The returned output is designed to fit the screen; call <code><a href="../reference/more.html">more()</a></code> to display up to 100 more rows. Note that above, print is called setting ‘plot = FALSE’ to only return the data to the console. The default print method for ichimoku objects also plots the cloud chart to the graphical device.</p>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">cloud</span>, plot <span class="op">=</span> <span class="cn">FALSE</span>, width <span class="op">=</span> <span class="fl">180</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  ichimoku   [ more() to display more rows | look() to inspect attributes ]</span></span>
+<span><span class="co">#&gt;   object</span></span>
+<span><span class="co">#&gt;                      open  high   low close cd tenkan  kijun senkouA senkouB chikou  cloudT  cloudB</span></span>
+<span><span class="co">#&gt; 2020-01-02 00:00:00 123.0 123.1 122.5 122.7 -1     NA     NA      NA      NA  122.8      NA      NA</span></span>
+<span><span class="co">#&gt; 2020-01-03 00:00:00 122.7 122.8 122.6 122.8  1     NA     NA      NA      NA  122.9      NA      NA</span></span>
+<span><span class="co">#&gt; 2020-01-06 00:00:00 122.8 123.4 122.4 123.3  1     NA     NA      NA      NA  123.0      NA      NA</span></span>
+<span><span class="co">#&gt; 2020-01-07 00:00:00 123.3 124.3 123.3 124.1  1     NA     NA      NA      NA  123.9      NA      NA</span></span>
+<span><span class="co">#&gt; 2020-01-08 00:00:00 124.1 124.8 124.0 124.8  1     NA     NA      NA      NA  123.6      NA      NA</span></span>
+<span><span class="co">#&gt; 2020-01-09 00:00:00 124.8 125.4 124.5 125.3  1     NA     NA      NA      NA  122.5      NA      NA</span></span>
+<span><span class="co">#&gt; 2020-01-10 00:00:00 125.3 125.3 124.8 125.2 -1     NA     NA      NA      NA  122.6      NA      NA</span></span>
+<span><span class="co">#&gt; 2020-01-13 00:00:00 125.2 125.3 125.1 125.2  0     NA     NA      NA      NA  123.0      NA      NA</span></span>
+<span><span class="co">#&gt; 2020-01-14 00:00:00 125.2 125.2 124.3 124.4 -1 123.90     NA      NA      NA  123.1      NA      NA</span></span>
+<span><span class="co">#&gt; 2020-01-15 00:00:00 124.4 124.5 123.7 123.9 -1 123.90     NA      NA      NA  122.1      NA      NA</span></span>
+<span><span class="co">#&gt; 2020-01-16 00:00:00 123.9 124.4 123.8 124.2  1 123.90     NA      NA      NA  121.9      NA      NA</span></span>
+<span><span class="co">#&gt; 2020-01-17 00:00:00 124.2 124.3 123.0 123.5 -1 124.20     NA      NA      NA  121.1      NA      NA</span></span>
+<span><span class="co">#&gt; 2020-01-20 00:00:00 123.5 123.8 123.1 123.2 -1 124.20     NA      NA      NA  121.4      NA      NA</span></span>
+<span><span class="co">#&gt; 2020-01-21 00:00:00 123.6 123.6 123.4 123.6  0 124.20     NA      NA      NA  121.5      NA      NA</span></span>
+<span><span class="co">#&gt; 2020-01-22 00:00:00 123.5 124.0 123.3 123.5  0 124.15     NA      NA      NA  121.9      NA      NA</span></span>
+<span><span class="co">#&gt; 2020-01-23 00:00:00 123.5 124.5 123.3 124.3  1 124.15     NA      NA      NA  120.9      NA      NA</span></span>
+<span><span class="co">#&gt; 2020-01-24 00:00:00 124.3 124.4 124.0 124.2 -1 124.10     NA      NA      NA  121.0      NA      NA</span></span>
+<span><span class="co">#&gt; 2020-01-27 00:00:00 124.2 124.2 122.7 123.0 -1 123.60     NA      NA      NA  120.8      NA      NA</span></span>
+<span><span class="co">#&gt; 2020-01-28 00:00:00 123.0 123.6 122.7 123.1  1 123.60     NA      NA      NA  121.2      NA      NA</span></span>
+<span><span class="co">#&gt; 2020-01-29 00:00:00 123.1 123.3 123.1 123.2  1 123.60     NA      NA      NA  121.6      NA      NA</span></span>
+<span><span class="co">#&gt; 2020-01-30 00:00:00 123.2 123.2 122.8 123.1 -1 123.60     NA      NA      NA  121.1      NA      NA</span></span>
+<span><span class="co">#&gt; 2020-01-31 00:00:00 123.1 123.5 123.0 123.2  1 123.60     NA      NA      NA  122.1      NA      NA</span></span>
+<span><span class="co">#&gt; 2020-02-03 00:00:00 123.2 123.3 122.6 123.0 -1 123.55     NA      NA      NA  122.2      NA      NA</span></span>
+<span><span class="co">#&gt; 2020-02-04 00:00:00 123.0 123.1 122.6 122.9 -1 123.55     NA      NA      NA  122.2      NA      NA</span></span>
+<span><span class="co">#&gt; 2020-02-05 00:00:00 122.9 123.2 122.6 122.8 -1 123.50     NA      NA      NA  122.4      NA      NA</span></span>
+<span><span class="co">#&gt; 2020-02-06 00:00:00 122.8 122.9 122.8 122.8  0 123.40 123.90      NA      NA  122.4      NA      NA</span></span>
+<span><span class="co">#&gt;  [ reached getOption("max.print") -- omitted 255 rows ]</span></span></code></pre></div>
+<p>The returned output is designed to fit the screen; call <code><a href="../reference/more.html">more()</a></code> to display more rows or the entire object. Note that above, print is called setting ‘plot = FALSE’ to only return the data to the console. The default print method for ichimoku objects also plots the cloud chart to the graphical device.</p>
 <p>Use <code><a href="https://rdrr.io/r/utils/str.html" class="external-link">str()</a></code> for a compact display of the object structure:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span></span>
@@ -272,21 +286,36 @@
 <code class="sourceCode R"><span><span class="va">kumo</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">TKR</span>, keep.data <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">kumo</span><span class="op">[</span>, <span class="st">"volume"</span><span class="op">]</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ichimoku object: more() to display more rows, look() to inspect attributes</span></span></span>
-<span><span class="co">#&gt;    index               volume</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 2020-01-02 <span style="color: #949494;">00:00:00</span>   <span style="text-decoration: underline;">1</span>875</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 2020-01-03 <span style="color: #949494;">00:00:00</span>   <span style="text-decoration: underline;">1</span>479</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 2020-01-06 <span style="color: #949494;">00:00:00</span>   <span style="text-decoration: underline;">1</span>792</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 2020-01-07 <span style="color: #949494;">00:00:00</span>   <span style="text-decoration: underline;">1</span>977</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 2020-01-08 <span style="color: #949494;">00:00:00</span>   <span style="text-decoration: underline;">2</span>239</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 2020-01-09 <span style="color: #949494;">00:00:00</span>   <span style="text-decoration: underline;">1</span>842</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 2020-01-10 <span style="color: #949494;">00:00:00</span>   <span style="text-decoration: underline;">2</span>548</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 2020-01-13 <span style="color: #949494;">00:00:00</span>   <span style="text-decoration: underline;">2</span>946</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 2020-01-14 <span style="color: #949494;">00:00:00</span>   <span style="text-decoration: underline;">2</span>796</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 2020-01-15 <span style="color: #949494;">00:00:00</span>   <span style="text-decoration: underline;">2</span>879</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 271 more rows</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ Use `print(n = ...)` to see more rows</span></span></span></code></pre></div>
+<span><span class="co">#&gt;  ichimoku   [ more() to display more rows | look() to inspect attributes ]</span></span>
+<span><span class="co">#&gt;   object</span></span>
+<span><span class="co">#&gt;                     volume</span></span>
+<span><span class="co">#&gt; 2020-01-02 00:00:00   1875</span></span>
+<span><span class="co">#&gt; 2020-01-03 00:00:00   1479</span></span>
+<span><span class="co">#&gt; 2020-01-06 00:00:00   1792</span></span>
+<span><span class="co">#&gt; 2020-01-07 00:00:00   1977</span></span>
+<span><span class="co">#&gt; 2020-01-08 00:00:00   2239</span></span>
+<span><span class="co">#&gt; 2020-01-09 00:00:00   1842</span></span>
+<span><span class="co">#&gt; 2020-01-10 00:00:00   2548</span></span>
+<span><span class="co">#&gt; 2020-01-13 00:00:00   2946</span></span>
+<span><span class="co">#&gt; 2020-01-14 00:00:00   2796</span></span>
+<span><span class="co">#&gt; 2020-01-15 00:00:00   2879</span></span>
+<span><span class="co">#&gt; 2020-01-16 00:00:00   2983</span></span>
+<span><span class="co">#&gt; 2020-01-17 00:00:00   4080</span></span>
+<span><span class="co">#&gt; 2020-01-20 00:00:00   3584</span></span>
+<span><span class="co">#&gt; 2020-01-21 00:00:00   2511</span></span>
+<span><span class="co">#&gt; 2020-01-22 00:00:00   2805</span></span>
+<span><span class="co">#&gt; 2020-01-23 00:00:00   2853</span></span>
+<span><span class="co">#&gt; 2020-01-24 00:00:00   2738</span></span>
+<span><span class="co">#&gt; 2020-01-27 00:00:00   1962</span></span>
+<span><span class="co">#&gt; 2020-01-28 00:00:00   2795</span></span>
+<span><span class="co">#&gt; 2020-01-29 00:00:00   2850</span></span>
+<span><span class="co">#&gt; 2020-01-30 00:00:00   2545</span></span>
+<span><span class="co">#&gt; 2020-01-31 00:00:00   2608</span></span>
+<span><span class="co">#&gt; 2020-02-03 00:00:00   2739</span></span>
+<span><span class="co">#&gt; 2020-02-04 00:00:00   3456</span></span>
+<span><span class="co">#&gt; 2020-02-05 00:00:00   4037</span></span>
+<span><span class="co">#&gt; 2020-02-06 00:00:00   4092</span></span>
+<span><span class="co">#&gt;  [ reached getOption("max.print") -- omitted 255 rows ]</span></span></code></pre></div>
 <p>This consolidates all relevant data into a single object. The additional data can now also be plotted as a sub-plot beneath the main ichimoku cloud chart (see <a href="#custom-sub-plots">custom sub-plots</a>).</p>
 <p>Note: only numeric data or data coercible to numeric type is preserved in this way, and other types will introduce NAs. This is as the core data of an ichimoku object is a numeric matrix that does not support multiple data types. Custom attributes set on the input object (such as a timestamp or data source) are also preserved.</p>
 </div>
@@ -314,8 +343,6 @@
 <ul>
 <li>
 <code><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame()</a></code> for converting an ichimoku object to a dataframe. Set the argument <code>keep.attrs = TRUE</code> to retain the attributes of the original ichimoku object</li>
-<li>
-<code><a href="../reference/as_tibble.ichimoku.html">as_tibble()</a></code> for converting an ichimoku object to a ‘tibble’. Set the argument <code>keep.attrs = TRUE</code> to retain the attributes of the original ichimoku object</li>
 <li>
 <code><a href="../reference/index.ichimoku.html">index()</a></code> to extract the index of an ichimoku object as a vector of POSIXct values</li>
 <li>
@@ -463,9 +490,9 @@
 <div class="section level4">
 <h4 id="data-integrity-verification">Data Integrity Verification<a class="anchor" aria-label="anchor" href="#data-integrity-verification"></a>
 </h4>
-<p>Data integrity verification is performed by the cryptographic-grade sha256 hashing algorithm from the ‘openssl’ package. If ‘openssl’ is not available, the archive function still works in all respects but without the authentication capability.</p>
-<p>When an archive is written, the serialised object is hashed and the hash is also stored in the archive. The sha256 hash value is printed to the console as confirmation.</p>
-<p>When an archive is read back, the sha256 hash of the restored object is checked against the hash of the original stored in the archive. If identical, a ‘data verified’ message is printed to the console along with the authenticated sha256 hash.</p>
+<p>Data integrity verification is performed by the MbedTLS cryptographic-grade SHA256 hashing algorithm from the ‘nanonext’ package.</p>
+<p>When an archive is written, the serialised object is hashed and the hash is also stored in the archive. The SHA256 hash value is printed to the console as confirmation.</p>
+<p>When an archive is read back, the SHA256 hash of the restored object is checked against the hash of the original stored in the archive. If identical, a ‘data verified’ message is printed to the console along with the authenticated SHA256 hash.</p>
 </div>
 </div>
 </div>
@@ -572,14 +599,13 @@
 <ul>
 <li>ggplot2 - for graphics and visualization</li>
 <li>shiny - for interactive and live visualizations</li>
-<li>tibble - for enhanced printing of ichimoku objects</li>
 <li>xts, zoo - for enhanced time series methods</li>
-<li>curl, jsonlite - for interfacing with external APIs</li>
+<li>nanonext - for interfacing with external APIs and verifying the data integrity of archived objects</li>
+<li>jsonlite - for parsing data received from external APIs.</li>
 </ul>
 <p>Optional (enables additional features):</p>
 <ul>
 <li>keyring - for saving API keys in the system credential store</li>
-<li>openssl - for verifying the data integrity of archived objects</li>
 </ul>
 </div>
 <div class="section level2">

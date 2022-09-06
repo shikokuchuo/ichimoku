@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.4.9000</span>
       </span>
     </div>
 
@@ -143,32 +143,30 @@
 <p>Note: the indicator condition remains of the form c1 &gt; c2 even for short trades. Hence please take care, for example, when inverting ‘long while close &gt; tenkan’ to ‘short while close &lt; tenkan’, this should actually be formulated as ‘short while tenkan &gt; close’.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">strat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/strat.html">strat</a></span><span class="op">(</span><span class="va">cloud</span>, c1 <span class="op">=</span> <span class="st">"cloudB"</span>, c2 <span class="op">=</span> <span class="st">"kijun"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">strat</span><span class="op">[</span><span class="fl">100</span><span class="op">:</span><span class="fl">105</span>, <span class="op">]</span>, plot <span class="op">=</span> <span class="cn">FALSE</span>, width <span class="op">=</span> <span class="fl">180</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ichimoku object: more() to display more rows, look() to inspect attributes</span></span></span>
-<span><span class="co">#&gt;   index                open  high   low close    cd tenkan  kijun senkouA</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 2020-05-19 <span style="color: #949494;">23:00:00</span> 122.7 122.7 121.8 122.4    -<span style="color: #BB0000;">1</span> 121.05 123.9   125.68</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 2020-05-20 <span style="color: #949494;">23:00:00</span> 122.4 122.6 121.1 121.9    -<span style="color: #BB0000;">1</span> 121.05 123.9   125.68</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 2020-05-21 <span style="color: #949494;">23:00:00</span> 121.9 123.7 121.7 123.3     1 121.4  123.8   125.68</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 2020-05-24 <span style="color: #949494;">23:00:00</span> 123.3 124   123   124       1 121.55 123.8   125.68</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 2020-05-25 <span style="color: #949494;">23:00:00</span> 124.2 124.3 124   124.1    -<span style="color: #BB0000;">1</span> 121.75 123.65  125.98</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 2020-05-26 <span style="color: #949494;">23:00:00</span> 124.1 124.1 123.4 123.9    -<span style="color: #BB0000;">1</span> 122.25 123.65  126.48</span></span>
-<span><span class="co">#&gt;   senkouB chikou cloudT cloudB  cond  posn   txn      logret     slogret</span></span>
-<span><span class="co">#&gt;     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>  124.85  135.1 125.68 124.85     1     1     0 -<span style="color: #BB0000;">0.002</span><span style="color: #BB0000; text-decoration: underline;">448</span><span style="color: #BB0000;">0</span>  -<span style="color: #BB0000;">0.002</span><span style="color: #BB0000; text-decoration: underline;">448</span><span style="color: #BB0000;">0</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>  124.85  135.6 125.68 124.85     1     1     0 -<span style="color: #BB0000;">0.004</span><span style="color: #BB0000; text-decoration: underline;">093</span><span style="color: #BB0000;">3</span>  -<span style="color: #BB0000;">0.004</span><span style="color: #BB0000; text-decoration: underline;">093</span><span style="color: #BB0000;">3</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>  124.85  134.5 125.68 124.85     1     1     0  0.011<span style="text-decoration: underline;">419</span>    0.011<span style="text-decoration: underline;">419</span>  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>  124.85  134.3 125.68 124.85     1     1     0  0.007<span style="text-decoration: underline;">272</span>8   0.007<span style="text-decoration: underline;">272</span>8 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>  124.85  135.9 125.98 124.85     1     1     0 -<span style="color: #BB0000;">0.000</span><span style="color: #BB0000; text-decoration: underline;">805</span><span style="color: #BB0000;">48</span> -<span style="color: #BB0000;">0.000</span><span style="color: #BB0000; text-decoration: underline;">805</span><span style="color: #BB0000;">48</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span>  124.85  135.2 126.48 124.85     1     1     0 -<span style="color: #BB0000;">0.001</span><span style="color: #BB0000; text-decoration: underline;">612</span><span style="color: #BB0000;">9</span>  -<span style="color: #BB0000;">0.001</span><span style="color: #BB0000; text-decoration: underline;">612</span><span style="color: #BB0000;">9</span> </span></span>
-<span><span class="co">#&gt;           ret        sret</span></span>
-<span><span class="co">#&gt;         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> -<span style="color: #BB0000;">0.002</span><span style="color: #BB0000; text-decoration: underline;">445</span><span style="color: #BB0000;">0</span>  -<span style="color: #BB0000;">0.002</span><span style="color: #BB0000; text-decoration: underline;">445</span><span style="color: #BB0000;">0</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> -<span style="color: #BB0000;">0.004</span><span style="color: #BB0000; text-decoration: underline;">085</span><span style="color: #BB0000;">0</span>  -<span style="color: #BB0000;">0.004</span><span style="color: #BB0000; text-decoration: underline;">085</span><span style="color: #BB0000;">0</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>  0.011<span style="text-decoration: underline;">485</span>    0.011<span style="text-decoration: underline;">485</span>  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>  0.007<span style="text-decoration: underline;">299</span>3   0.007<span style="text-decoration: underline;">299</span>3 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> -<span style="color: #BB0000;">0.000</span><span style="color: #BB0000; text-decoration: underline;">805</span><span style="color: #BB0000;">15</span> -<span style="color: #BB0000;">0.000</span><span style="color: #BB0000; text-decoration: underline;">805</span><span style="color: #BB0000;">15</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> -<span style="color: #BB0000;">0.001</span><span style="color: #BB0000; text-decoration: underline;">611</span><span style="color: #BB0000;">6</span>  -<span style="color: #BB0000;">0.001</span><span style="color: #BB0000; text-decoration: underline;">611</span><span style="color: #BB0000;">6</span></span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">strat</span><span class="op">[</span><span class="fl">100</span><span class="op">:</span><span class="fl">105</span>, <span class="op">]</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  ichimoku   [ more() to display more rows | look() to inspect attributes ]</span></span>
+<span><span class="co">#&gt;   object</span></span>
+<span><span class="co">#&gt;                      open  high   low close cd tenkan  kijun senkouA senkouB</span></span>
+<span><span class="co">#&gt; 2020-05-19 23:00:00 122.7 122.7 121.8 122.4 -1 121.05 123.90 125.675  124.85</span></span>
+<span><span class="co">#&gt; 2020-05-20 23:00:00 122.4 122.6 121.1 121.9 -1 121.05 123.90 125.675  124.85</span></span>
+<span><span class="co">#&gt; 2020-05-21 23:00:00 121.9 123.7 121.7 123.3  1 121.40 123.80 125.675  124.85</span></span>
+<span><span class="co">#&gt; 2020-05-24 23:00:00 123.3 124.0 123.0 124.0  1 121.55 123.80 125.675  124.85</span></span>
+<span><span class="co">#&gt; 2020-05-25 23:00:00 124.2 124.3 124.0 124.1 -1 121.75 123.65 125.975  124.85</span></span>
+<span><span class="co">#&gt; 2020-05-26 23:00:00 124.1 124.1 123.4 123.9 -1 122.25 123.65 126.475  124.85</span></span>
+<span><span class="co">#&gt;                     chikou  cloudT cloudB cond posn txn        logret</span></span>
+<span><span class="co">#&gt; 2020-05-19 23:00:00  135.1 125.675 124.85    1    1   0 -0.0024479816</span></span>
+<span><span class="co">#&gt; 2020-05-20 23:00:00  135.6 125.675 124.85    1    1   0 -0.0040933336</span></span>
+<span><span class="co">#&gt; 2020-05-21 23:00:00  134.5 125.675 124.85    1    1   0  0.0114193737</span></span>
+<span><span class="co">#&gt; 2020-05-24 23:00:00  134.3 125.675 124.85    1    1   0  0.0072727593</span></span>
+<span><span class="co">#&gt; 2020-05-25 23:00:00  135.9 125.975 124.85    1    1   0 -0.0008054773</span></span>
+<span><span class="co">#&gt; 2020-05-26 23:00:00  135.2 126.475 124.85    1    1   0 -0.0016129036</span></span>
+<span><span class="co">#&gt;                           slogret          ret         sret</span></span>
+<span><span class="co">#&gt; 2020-05-19 23:00:00 -0.0024479816 -0.002444988 -0.002444988</span></span>
+<span><span class="co">#&gt; 2020-05-20 23:00:00 -0.0040933336 -0.004084967 -0.004084967</span></span>
+<span><span class="co">#&gt; 2020-05-21 23:00:00  0.0114193737  0.011484824  0.011484824</span></span>
+<span><span class="co">#&gt; 2020-05-24 23:00:00  0.0072727593  0.007299270  0.007299270</span></span>
+<span><span class="co">#&gt; 2020-05-25 23:00:00 -0.0008054773 -0.000805153 -0.000805153</span></span>
+<span><span class="co">#&gt; 2020-05-26 23:00:00 -0.0016129036 -0.001611604 -0.001611604</span></span></code></pre></div>
 <p>The use of <code><a href="../reference/strat.html">strat()</a></code> returns an augmented ichimoku object. The printout above of a slice of the object (rows 100 to 105) shows that the following columns are appended:</p>
 <ul>
 <li>

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.4.9000</span>
       </span>
     </div>
 
@@ -73,7 +73,24 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.3.4" id="ichimoku-134">ichimoku 1.3.4<a class="anchor" aria-label="anchor" href="#ichimoku-134"></a></h2>
+<h2 class="page-header" data-toc-text="1.3.4.9000" id="ichimoku-1349000-development">ichimoku 1.3.4.9000 (development)<a class="anchor" aria-label="anchor" href="#ichimoku-1349000-development"></a></h2>
+<div class="section level5">
+<h5 id="new-features-1-3-4-9000">New features:<a class="anchor" aria-label="anchor" href="#new-features-1-3-4-9000"></a></h5>
+<ul><li>New print method for ichimoku objects.</li></ul></div>
+<div class="section level5">
+<h5 id="updates-1-3-4-9000">Updates:<a class="anchor" aria-label="anchor" href="#updates-1-3-4-9000"></a></h5>
+<ul><li>In conjunction with the new print method, <code><a href="../reference/more.html">more()</a></code> now defaults to printing all rows by default unless ‘rows’ is specified.</li>
+<li>SHA-256 authentication in <code><a href="../reference/archive.html">archive()</a></code> is faster after an upgrade to use the ‘MbedTLS’ library via ‘nanonext’.</li>
+<li>
+<code><a href="../reference/archive.html">archive()</a></code> now returns the filename when saving to archive rather than NULL.</li>
+<li>
+<code>as_tibble</code> method for ichimoku objects removed.</li>
+<li>OANDA functions now use ‘nanonext’ to retrieve data instead of ‘curl’.</li>
+<li>‘curl’, ‘tibble’ and ‘openssl’ dependencies retired.</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.3.4" id="ichimoku-134">ichimoku 1.3.4<small>2022-08-23</small><a class="anchor" aria-label="anchor" href="#ichimoku-134"></a></h2>
 <div class="section level5">
 <h5 id="updates-1-3-4">Updates:<a class="anchor" aria-label="anchor" href="#updates-1-3-4"></a></h5>
 <ul><li>Moves ‘shiny’ to ‘imports’ from ‘suggests’.</li>
@@ -134,7 +151,7 @@
 <div class="section level5">
 <h5 id="new-features-1-2-5">New features:<a class="anchor" aria-label="anchor" href="#new-features-1-2-5"></a></h5>
 <ul><li>Enhancement to the printing of ichimoku objects by utilising the ‘tibble’ print method (adds dependency on ‘tibble’ package), paired with <code><a href="../reference/more.html">more()</a></code> for quick printing of further rows.</li>
-<li>Optimised <code><a href="../reference/as_tibble.ichimoku.html">as_tibble()</a></code> method implemented for ichimoku objects.</li>
+<li>Optimised <code>as_tibble()</code> method implemented for ichimoku objects.</li>
 <li>
 <code><a href="../reference/mlgrid.html">mlgrid()</a></code> now appends attributes ‘k’ and ‘type’ to returned objects, and gains the following arguments:<ul><li>
 <code>k</code> to specify the k-period time horizon over which to calculate target variable ‘y’.</li>
