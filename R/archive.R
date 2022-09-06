@@ -190,7 +190,7 @@ readArchive <- function(file) {
 
   object <- x_archive_sha256 <- NULL
   x_archive_names <- load(file)
-  identical(x_archive_names[2L], "x_archive_sha256") && identical(x_archive_names[1L], "object") ||
+  x_archive_names[2L] == "x_archive_sha256" && x_archive_names[1L] == "object" ||
     stop("archive file was not created by archive()", call. = FALSE)
 
   message("Archive read from '", file, "'")

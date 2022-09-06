@@ -1,5 +1,4 @@
 test_that("archive functions ok", {
-  skip_if_not_installed("openssl")
   object <- ichimoku(sample_ohlc_data)
   file <- tempfile()
   expect_message(archive(object = object, file = file), "Archive written")

@@ -104,7 +104,6 @@ utils::globalVariables(".data")
 .onLoad <- function(libname, pkgname) {
   do_ <- do_()
   do_ <<- do_
-  invisible()
 }
 
 .deconstruct <- function(...) {
