@@ -24,8 +24,9 @@
 #' @param x an object of class 'ichimoku'.
 #' @param plot [default TRUE] set to FALSE to prevent automatic plotting of
 #'     the ichimoku cloud chart.
-#' @param ... additional arguments passed along to \code{\link[tibble]{print.tbl}}
-#'     and \code{\link{plot.ichimoku}} functions.
+#' @param rows [default 26L] integer number of rows to print.
+#' @param ... additional arguments passed along to the xts print and
+#'     \code{\link{plot.ichimoku}} methods.
 #'
 #' @return The ichimoku object supplied (invisibly). The data is printed to the
 #'     console. The ichimoku cloud chart is also output to the graphical device
@@ -39,44 +40,18 @@
 #' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 #'
 #' print(cloud)
-#' print(cloud, plot = FALSE, n = 20)
+#' print(cloud, plot = FALSE, rows = 20L)
 #'
 #' @method print ichimoku
 #' @export
 #'
-print.ichimoku <- function(x, plot = TRUE, ...) {
+print.ichimoku <- function(x, plot = TRUE, rows = 26L, ...) {
 
-  dims <- attr(x, "dim")
-  if (is.null(dims) || dims[1L] == 0L) {
-    NextMethod()
-  } else {
-    pillar_sigfig <- getOption("pillar.sigfig")
-    if (is.null(pillar_sigfig) || pillar_sigfig < 5) options(pillar.sigfig = 5)
-    on.exit(expr = options(pillar.sigfig = pillar_sigfig))
-    print(.Call(ichimoku_tbl, x, 4L), ...)
-    if (dims[2L] >= 12L && (missing(plot) || isTRUE(plot))) plot.ichimoku(x, ...)
-  }
+  cat(" ichimoku   [ more() to display more rows | look() to inspect attributes ]\n  object\n", file = stdout())
+  dim2 <- attr(x, "dim")[2L]
+  NextMethod(max = if (length(dim2)) dim2 * rows, ...)
+  if (length(dim2) && dim2 >= 12L && (missing(plot) || isTRUE(plot))) plot.ichimoku(x, ...)
   invisible(x)
-
-}
-
-#' Class ichimoku_tbl tbl-sum Method
-#'
-#' Default tbl-sum method for 'ichimoku_tbl' objects. Used for enhanced printing
-#'     of ichimoku objects.
-#'
-#' @param x an object of class 'ichimoku_tbl'.
-#' @param ... arguments passed to or from other methods.
-#'
-#' @return The character vector to be printed.
-#'
-#' @noRd
-#' @method tbl_sum ichimoku_tbl
-#' @export
-#'
-tbl_sum.ichimoku_tbl <- function(x, ...) {
-
-  c("ichimoku object" = "more() to display more rows, look() to inspect attributes")
 
 }
 
@@ -254,53 +229,9 @@ summary.ichimoku <- function(object, strat = TRUE, ...) {
 as.data.frame.ichimoku <- function(x, row.names, optional, keep.attrs, ...) {
 
   if (missing(keep.attrs) || !isTRUE(keep.attrs)) {
+    .Call(ichimoku_tbl, x, 0L)
+  } else {
     .Call(ichimoku_tbl, x, 1L)
-  } else {
-    .Call(ichimoku_tbl, x, 5L)
-  }
-
-}
-
-#' @name as_tibble
-#' @rdname as_tibble.ichimoku
-#' @export
-NULL
-
-#' Convert ichimoku to tibble
-#'
-#' An optimised 'ichimoku' to 'tibble' constructor.
-#'
-#' @param x an object of class 'ichimoku'.
-#' @param class (optional) as a character vector, subclasses to assign to the
-#'     new object.
-#' @param keep.attrs (optional) if set to TRUE, will preserve any custom
-#'     attributes set on the original object.
-#' @param ... arguments passed to or from other methods.
-#'
-#' @return A 'tibble' with S3 classes of 'tbl_df', 'tbl' and 'data.frame'. The
-#'     ichimoku object index is preserved as the first column with header 'index'.
-#'
-#' @details This function is an S3 method for the generic function
-#'     as_tibble() for class 'ichimoku'. It can be invoked by calling
-#'     as_tibble(x) on an object 'x' of class 'ichimoku'.
-#'
-#' @examples
-#' cloud <- ichimoku(sample_ohlc_data)
-#' tbl <- as_tibble(cloud)
-#' str(tbl)
-#'
-#' tbl2 <- as_tibble(cloud, keep.attrs = TRUE)
-#' str(tbl2)
-#'
-#' @method as_tibble ichimoku
-#' @export
-#'
-as_tibble.ichimoku <- function(x, class, keep.attrs, ...) {
-
-  if (missing(keep.attrs) || !isTRUE(keep.attrs)) {
-    .Call(ichimoku_tbl, x, 3L)
-  } else {
-    .Call(ichimoku_tbl, x, 15L)
   }
 
 }

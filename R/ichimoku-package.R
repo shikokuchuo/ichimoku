@@ -75,7 +75,6 @@
 #'     unaffiliated with the ichimoku package, its authors or copyright holders.
 #'
 #' @useDynLib ichimoku, .registration = TRUE, .fixes = "ichimoku"
-#' @importFrom curl curl curl_fetch_memory handle_setheaders new_handle
 #' @importFrom ggplot2 aes autoplot coord_flip element_blank element_line
 #'     element_rect element_text GeomCol GeomLine GeomRect GeomRibbon
 #'     GeomSegment GeomVline ggplot ggplotGrob ggproto guides labs layer margin
@@ -83,13 +82,13 @@
 #'     scale_x_continuous scale_y_continuous Stat StatIdentity theme theme_grey
 #'     %+replace%
 #' @importFrom jsonlite parse_json stream_in
+#' @importFrom nanonext ncurl sha256
 #' @importFrom shiny checkboxInput column downloadButton downloadHandler HTML
 #'     fillPage fluidPage fluidRow hoverOpts invalidateLater isolate
 #'     numericInput observeEvent plotOutput reactive reactiveVal renderPlot
 #'     renderUI req selectInput shinyApp sliderInput stopApp tags textInput
 #'     uiOutput wellPanel
 #' @importFrom stats na.omit sd
-#' @importFrom tibble as_tibble tbl_sum
 #' @importFrom utils str
 #' @importFrom xts endpoints
 #' @importFrom zoo coredata index
@@ -100,7 +99,7 @@ NULL
 
 utils::globalVariables(".data")
 
-.user_agent <- "r-ichimoku/1.3.4"
+.user_agent <- "r-ichimoku/1.4.0"
 
 .onLoad <- function(libname, pkgname) {
   do_ <- do_()
@@ -121,6 +120,6 @@ utils::globalVariables(".data")
     if (i %in% c(1:3, 11:13)) Sys.sleep(0.03) else Sys.sleep(0.08)
   }
   cat("\n")
-  invisible(.Call(ichimoku_missingarg))
+  invisible(.subset2(alist(. =), "."))
 }
 

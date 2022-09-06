@@ -137,13 +137,10 @@ SEXP _psxct(SEXP x) {
 
 }
 
-// ichimoku to data.frame / tibble converter
+// ichimoku to data.frame converter
 SEXP _tbl(const SEXP x, const SEXP type) {
 
-  int typ = INTEGER(type)[0];
-  const int keepattrs = typ % 5 == 0 ? 1 : 0;
-  if (keepattrs)
-    typ /= 5;
+  const int keepattrs = INTEGER(type)[0];
 
   R_xlen_t xlen = 0, xwid = 0;
   const SEXP dims = Rf_getAttrib(x, R_DimSymbol);
@@ -158,7 +155,7 @@ SEXP _tbl(const SEXP x, const SEXP type) {
     break;
   }
 
-  SEXP tbl, index, dn2, names, klass, rownames;
+  SEXP tbl, index, dn2, names, rownames;
 
   PROTECT(tbl = Rf_allocVector(VECSXP, xwid + 1));
 
@@ -186,25 +183,7 @@ SEXP _tbl(const SEXP x, const SEXP type) {
   Rf_namesgets(tbl, names);
   UNPROTECT(2);
 
-  PROTECT(klass = Rf_allocVector(STRSXP, typ));
-  switch (typ) {
-  case 1:
-    SET_STRING_ELT(klass, 0, Rf_mkChar("data.frame"));
-    break;
-  case 3:
-    SET_STRING_ELT(klass, 0, Rf_mkChar("tbl_df"));
-    SET_STRING_ELT(klass, 1, Rf_mkChar("tbl"));
-    SET_STRING_ELT(klass, 2, Rf_mkChar("data.frame"));
-    break;
-  case 4:
-    SET_STRING_ELT(klass, 0, Rf_mkChar("ichimoku_tbl"));
-    SET_STRING_ELT(klass, 1, Rf_mkChar("tbl_df"));
-    SET_STRING_ELT(klass, 2, Rf_mkChar("tbl"));
-    SET_STRING_ELT(klass, 3, Rf_mkChar("data.frame"));
-    break;
-  }
-  Rf_classgets(tbl, klass);
-  UNPROTECT(1);
+  Rf_classgets(tbl, Rf_mkString("data.frame"));
 
   if (xlen <= INT_MAX) {
     rownames = Rf_allocVector(INTSXP, 2);
@@ -370,10 +349,6 @@ SEXP _coredata(const SEXP x) {
 
 }
 
-SEXP _missingarg(void) {
-  return R_MissingArg;
-}
-
 // imports from the package 'xts'
 SEXP _naomit(SEXP x) {
   DL_FUNC fun = R_GetCCallable("xts", "na_omit_xts");
@@ -396,7 +371,6 @@ static const R_CallMethodDef CallEntries[] = {
   {"_df", (DL_FUNC) &_df, 1},
   {"_index", (DL_FUNC) &_index, 1},
   {"_look", (DL_FUNC) &_look, 1},
-  {"_missingarg", (DL_FUNC) &_missingarg, 0},
   {"_naomit", (DL_FUNC) &_naomit, 1},
   {"_psxct", (DL_FUNC) &_psxct, 1},
   {"_tbl", (DL_FUNC) &_tbl, 2},

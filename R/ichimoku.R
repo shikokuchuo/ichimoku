@@ -104,7 +104,7 @@
 #'
 #' kumo <- ichimoku(TKR, ticker = "TKR Co.", periods = c(9, 26, 52), keep.data = TRUE)
 #' summary(kumo)
-#' print(kumo, plot = FALSE, n = 20)
+#' print(kumo, plot = FALSE, rows = 10)
 #' plot(kumo, theme = "solarized", type = "bar", custom = "volume")
 #'
 #' @rdname ichimoku

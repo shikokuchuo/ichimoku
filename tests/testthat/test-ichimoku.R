@@ -60,7 +60,7 @@ test_that("ichimoku error handling ok", {
 
 test_that("print method ok", {
   expect_output(expect_s3_class(print(cloud), "ichimoku"))
-  expect_output(expect_s3_class(print(cloud, plot = FALSE, n = 20), "ichimoku"))
+  expect_output(expect_s3_class(print(cloud, plot = FALSE, rows = 20), "ichimoku"))
   expect_output(print(cloud[0]))
   expect_output(print(cloud[, 1L, drop = TRUE]))
 })
@@ -91,13 +91,6 @@ test_that("as.data.frame method ok", {
   expect_identical(df, xts_df(cloud))
   expect_identical(dim(df), c(281L, 13L))
   expect_identical(attr(as.data.frame(structure(cloud, special = "set"), keep.attrs = TRUE), "special"), "set")
-})
-
-test_that("as_tibble method ok", {
-  expect_s3_class(tbl <- as_tibble.ichimoku(cloud), "tbl_df")
-  expect_identical(tbl, as_tibble(cloud))
-  expect_identical(dim(tbl), c(281L, 13L))
-  expect_identical(attr(as_tibble(structure(cloud, special = "set"), keep.attrs = TRUE), "special"), "set")
 })
 
 test_that("coredata method ok", {

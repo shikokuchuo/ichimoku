@@ -114,14 +114,11 @@ do_ <- function() {
         url <- switch(server,
                       practice = "https://api-fxpractice.oanda.com/v3/accounts",
                       live = "https://api-fxtrade.oanda.com/v3/accounts")
-        handle <- new_handle()
-        handle_setheaders(handle = handle,
-                          "Authorization" = paste0("Bearer ", apikey),
-                          "User-Agent" = .user_agent)
-        resp <- curl_fetch_memory(url = url, handle = handle)
-        resp$status_code == 200L || stop("server code ", resp$status_code, " - ",
-                                         parse_json(rawToChar(resp$content)), call. = FALSE)
-        account <<- parse_json(rawToChar(resp$content))[["accounts"]][[1L]][["id"]]
+        resp <- ncurl(url, headers = c("Authorization" = paste0("Bearer ", apikey),
+                                       "User-Agent" = .user_agent))
+        parsed <- parse_json(.subset2(resp, "data"))
+        length(.subset2(parsed, "accounts")) || stop(parsed, call. = FALSE)
+        account <<- parsed[["accounts"]][[1L]][["id"]]
       }
       invisible(account)
     },
@@ -132,20 +129,17 @@ do_ <- function() {
         url <- paste0("https://api-fx", switch(server, practice = "practice", live = "trade"),
                       ".oanda.com/v3/accounts/", do_$getAccount(server = server, apikey = apikey),
                       "/instruments")
-        handle <- new_handle()
-        handle_setheaders(handle = handle,
-                          "Authorization" = paste0("Bearer ", apikey),
-                          "User-Agent" = .user_agent)
-        resp <- curl_fetch_memory(url = url, handle = handle)
-        resp$status_code == 200L || {
-          warning("Server code ", resp$status_code, " - ",
-                  parse_json(rawToChar(resp$content)),
+        resp <- ncurl(url, headers = c("Authorization" = paste0("Bearer ", apikey),
+                                       "User-Agent" = .user_agent))
+        parsed <- parse_json(.subset2(resp, "data"))
+        length(.subset2(parsed, "instruments")) || {
+          warning(parsed,
                   "\nInstruments list could not be retrieved - falling back to internal data",
                   "\nCached instruments list will be used for the rest of the session", call. = FALSE)
           instruments <<- .oanda_instruments
           return(instruments)
         }
-        vec <- unlist(parse_json(rawToChar(resp$content))[["instruments"]])
+        vec <- unlist(.subset2(parsed, "instruments"))
         cnames <- attr(vec, "names")
         vec <- unname(vec)
         name <- vec[cnames == "name"]

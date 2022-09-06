@@ -1,3 +1,18 @@
+# ichimoku 1.3.4.9000 (development)
+
+#### New features:
+
+* New print method for ichimoku objects.
+
+#### Updates:
+
+* In conjunction with the new print method, `more()` now defaults to printing all rows by default unless 'rows' is specified.
+* SHA-256 authentication in `archive()` is faster after an upgrade to use the 'MbedTLS' library via 'nanonext'.
+* `archive()` now returns the filename when saving to archive rather than NULL.
+* `as_tibble` method for ichimoku objects removed.
+* OANDA functions now use 'nanonext' to retrieve data instead of 'curl'.
+* 'curl', 'tibble' and 'openssl' dependencies retired.
+
 # ichimoku 1.3.4
 
 #### Updates:

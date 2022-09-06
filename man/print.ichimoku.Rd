@@ -4,7 +4,7 @@
 \alias{print.ichimoku}
 \title{Print Ichimoku Objects}
 \usage{
-\method{print}{ichimoku}(x, plot = TRUE, ...)
+\method{print}{ichimoku}(x, plot = TRUE, rows = 26L, ...)
 }
 \arguments{
 \item{x}{an object of class 'ichimoku'.}
@@ -12,8 +12,10 @@
 \item{plot}{[default TRUE] set to FALSE to prevent automatic plotting of
 the ichimoku cloud chart.}
 
-\item{...}{additional arguments passed along to \code{\link[tibble]{print.tbl}}
-and \code{\link{plot.ichimoku}} functions.}
+\item{rows}{[default 26L] integer number of rows to print.}
+
+\item{...}{additional arguments passed along to the xts print and
+\code{\link{plot.ichimoku}} methods.}
 }
 \value{
 The ichimoku object supplied (invisibly). The data is printed to the
@@ -33,6 +35,6 @@ This function is an S3 method for the generic function print() for
 cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 
 print(cloud)
-print(cloud, plot = FALSE, n = 20)
+print(cloud, plot = FALSE, rows = 20L)
 
 }

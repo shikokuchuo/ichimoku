@@ -56,7 +56,7 @@ Note: the indicator condition remains of the form c1 > c2 even for short trades.
 
 ```{r strat}
 strat <- strat(cloud, c1 = "cloudB", c2 = "kijun")
-print(strat[100:105, ], plot = FALSE, width = 180)
+print(strat[100:105, ], plot = FALSE)
 ```
 
 The use of `strat()` returns an augmented ichimoku object. The printout above of a slice of the object (rows 100 to 105) shows that the following columns are appended:

@@ -130,10 +130,10 @@ Optional arguments:
 ```{r ichimoku}
 cloud <- ichimoku(TKR)
 
-print(cloud, plot = FALSE)
+print(cloud, plot = FALSE, width = 180)
 ```
 
-The returned output is designed to fit the screen; call `more()` to display up to 100 more rows. Note that above, print is called setting 'plot = FALSE' to only return the data to the console. The default print method for ichimoku objects also plots the cloud chart to the graphical device. 
+The returned output is designed to fit the screen; call `more()` to display more rows or the entire object. Note that above, print is called setting 'plot = FALSE' to only return the data to the console. The default print method for ichimoku objects also plots the cloud chart to the graphical device. 
 
 Use `str()` for a compact display of the object structure:
 
@@ -195,7 +195,6 @@ ichimoku(TKR, holidays = NULL)
 The following generic functions have optimised S3 methods for ichimoku objects:
 
 - `as.data.frame()` for converting an ichimoku object to a dataframe. Set the argument `keep.attrs = TRUE` to retain the attributes of the original ichimoku object
-- `as_tibble()` for converting an ichimoku object to a 'tibble'. Set the argument `keep.attrs = TRUE` to retain the attributes of the original ichimoku object
 - `index()` to extract the index of an ichimoku object as a vector of POSIXct values
 - `coredata()` to extract the columns of an ichimoku object as a numeric matrix
 
@@ -350,11 +349,11 @@ object <- archive()
 
 #### Data Integrity Verification
 
-Data integrity verification is performed by the cryptographic-grade sha256 hashing algorithm from the 'openssl' package. If 'openssl' is not available, the archive function still works in all respects but without the authentication capability.
+Data integrity verification is performed by the MbedTLS cryptographic-grade SHA256 hashing algorithm from the 'nanonext' package.
 
-When an archive is written, the serialised object is hashed and the hash is also stored in the archive. The sha256 hash value is printed to the console as confirmation.
+When an archive is written, the serialised object is hashed and the hash is also stored in the archive. The SHA256 hash value is printed to the console as confirmation.
 
-When an archive is read back, the sha256 hash of the restored object is checked against the hash of the original stored in the archive. If identical, a 'data verified' message is printed to the console along with the authenticated sha256 hash.
+When an archive is read back, the SHA256 hash of the restored object is checked against the hash of the original stored in the archive. If identical, a 'data verified' message is printed to the console along with the authenticated SHA256 hash.
 
 ## Supplementary Information
 
@@ -426,14 +425,13 @@ ichimoku currently has the following external package dependencies:
 
 - ggplot2 - for graphics and visualization
 - shiny - for interactive and live visualizations
-- tibble - for enhanced printing of ichimoku objects
 - xts, zoo - for enhanced time series methods
-- curl, jsonlite - for interfacing with external APIs
+- nanonext - for interfacing with external APIs and verifying the data integrity of archived objects
+- jsonlite - for parsing data received from external APIs.
 
 Optional (enables additional features):
 
 - keyring - for saving API keys in the system credential store
-- openssl - for verifying the data integrity of archived objects
 
 ## References
 

@@ -18,7 +18,7 @@ or read from.}
 \value{
 For read operations: the object originally archived.
 
-    For write operations: invisible NULL. 'object' is written to 'file'.
+    For write operations: the filename supplied. 'object' is written to 'file'.
 }
 \description{
 Read and write objects to/from archival storage in the native RData format,
@@ -40,14 +40,14 @@ For read operations: specify only 'file', or alternatively if no
 \section{Data Verification}{
 
 
-    If the 'openssl' package is available, a sha256 hash of the original
-    object is written to the archive. This allows the data integrity of the
-    restored object to be verified when the archive is read back.
+    A SHA256 hash of the original object is written to the archive. This
+    allows the data integrity of the restored object to be verified when the
+    archive is read back.
 
-    For write operations: confirmation of the sha256 hash is displayed if
-    this has been successfully written to file.
+    For write operations: confirmation of the SHA256 hash written to file is
+    displayed.
 
-    For read operations: a 'data verified' message is issued if the sha256
+    For read operations: a 'data verified' message is issued if the SHA256
     hash found within the data file has been authenticated.
 }
 

@@ -29,7 +29,7 @@
 #'
 #' @return For read operations: the object originally archived.
 #'
-#'     For write operations: invisible NULL. 'object' is written to 'file'.
+#'     For write operations: the filename supplied. 'object' is written to 'file'.
 #'
 #' @details For read operations: specify only 'file', or alternatively if no
 #'     arguments are specified, a system dialog will be opened allowing a file
@@ -45,14 +45,14 @@
 #'
 #' @section Data Verification:
 #'
-#'     If the 'openssl' package is available, a sha256 hash of the original
-#'     object is written to the archive. This allows the data integrity of the
-#'     restored object to be verified when the archive is read back.
+#'     A SHA256 hash of the original object is written to the archive. This
+#'     allows the data integrity of the restored object to be verified when the
+#'     archive is read back.
 #'
-#'     For write operations: confirmation of the sha256 hash is displayed if
-#'     this has been successfully written to file.
+#'     For write operations: confirmation of the SHA256 hash written to file is
+#'     displayed.
 #'
-#'     For read operations: a 'data verified' message is issued if the sha256
+#'     For read operations: a 'data verified' message is issued if the SHA256
 #'     hash found within the data file has been authenticated.
 #'
 #' @section Further Details:
@@ -147,7 +147,7 @@ archive <- function(..., object, file) {
 #' @param file the name of the file or a connection where the object is saved to
 #'     or read from.
 #'
-#' @return Invisible NULL. 'object' is written to 'file'.
+#' @return The filename supplied. 'object' is written to 'file'.
 #'
 #' @noRd
 #'
@@ -164,15 +164,10 @@ writeArchive <- function(object, file) {
     }
   }
 
-  x_archive_sha256 <- NA
-  if (requireNamespace("openssl", quietly = TRUE)) {
-    x_archive_sha256 <- openssl::sha256(serialize(object = object, connection = NULL))
-  }
-
+  x_archive_sha256 <- sha256(object)
   save(object, x_archive_sha256, file = file, compress = TRUE)
-  message("Archive written to '", file, "'\nsha256: ", x_archive_sha256,
-          if (is.na(x_archive_sha256[1L])) " ['openssl' package not installed]")
-  invisible()
+  message("Archive written to '", file, "'\nSHA256: ", x_archive_sha256)
+  invisible(file)
 
 }
 
@@ -198,23 +193,18 @@ readArchive <- function(file) {
   identical(x_archive_names[2L], "x_archive_sha256") && identical(x_archive_names[1L], "object") ||
     stop("archive file was not created by archive()", call. = FALSE)
 
+  message("Archive read from '", file, "'")
   if (is.na(x_archive_sha256[1L])) {
-    message("Archive read from '", file, "'\nData unverified: sha256 hash not present")
-
-  } else if (requireNamespace("openssl", quietly = TRUE)) {
-
-    sha256 <- openssl::sha256(serialize(object = object, connection = NULL))
-
-    if (identical(sha256, x_archive_sha256)) {
-      message("Archive read from '", file, "'\nData verified by sha256: ", sha256)
+    # for legacy compatibility with previous implementations of archive
+    message("Data unverified: SHA256 hash not present")
+  } else {
+    sha256 <- sha256(object)
+    if (identical(as.character(sha256), as.character(x_archive_sha256))) {
+      message("Data verified by SHA256: ", sha256)
     } else {
-      message("Archive read from '", file, "'")
-      warning("sha256 of restored object\n", sha256,
+      warning("SHA256 of restored object\n", sha256,
               " does not match the original\n", x_archive_sha256, call. = FALSE)
     }
-  } else {
-    message("Archive read from '", file,
-            "'\n'openssl' package required for authentication of restored objects")
   }
 
   object
