@@ -188,11 +188,11 @@ getPrices <- function(instrument, granularity, count, from, to, price, server,
                 if (!missing(count) && !is.null(count)) paste0("&count=", count),
                 if (!missing(from) && !is.null(from)) paste0("&from=", from),
                 if (!missing(to) && !is.null(to)) paste0("&to=", to))
-  resp <- ncurl(url,
-                headers = c(Authorization = paste0("Bearer ", apikey),
-                            `Accept-Datetime-Format` = "UNIX",
-                            `User-Agent` = .user_agent),
-                request = "date")
+  resp <- ncurl(url, FALSE, TRUE, NULL,
+                c(Authorization = paste0("Bearer ", apikey),
+                  `Accept-Datetime-Format` = "UNIX",
+                  `User-Agent` = .user_agent),
+                NULL, "date", NULL)
   .subset2(resp, "status") == 200L || stop("status code ",
                                            .subset2(resp, "status"), " - ",
                                            parse_json(.subset2(resp, "data")),
