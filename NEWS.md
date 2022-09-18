@@ -1,5 +1,9 @@
 # ichimoku 1.4.0.9000 (development)
 
+#### Updates:
+
+* Internal performance enhancements.
+
 # ichimoku 1.4.0
 
 #### New features:

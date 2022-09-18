@@ -29,6 +29,9 @@ SEXP ichimoku_PeriodsSymbol;
 SEXP ichimoku_PeriodicitySymbol;
 SEXP ichimoku_TickerSymbol;
 
+SEXP ichimoku_klass;
+SEXP ichimoku_tclass;
+
 // rolling max over a window
 SEXP _wmax(const SEXP x, const SEXP window) {
 
@@ -215,22 +218,11 @@ SEXP _tbl(const SEXP x, const SEXP type) {
 SEXP _create(SEXP kumo, SEXP xtsindex, const SEXP periods,
              const SEXP periodicity, const SEXP ticker, const SEXP x) {
 
-  SEXP tclass, klass;
-
   Rf_setAttrib(xtsindex, xts_IndexTzoneSymbol, Rf_mkString(""));
-  PROTECT(tclass = Rf_allocVector(STRSXP, 2));
-  SET_STRING_ELT(tclass, 0, Rf_mkChar("POSIXct"));
-  SET_STRING_ELT(tclass, 1, Rf_mkChar("POSIXt"));
-  Rf_setAttrib(xtsindex, xts_IndexTclassSymbol, tclass);
+  Rf_setAttrib(xtsindex, xts_IndexTclassSymbol, ichimoku_tclass);
   Rf_setAttrib(kumo, xts_IndexSymbol, xtsindex);
-  UNPROTECT(1);
 
-  PROTECT(klass = Rf_allocVector(STRSXP, 3));
-  SET_STRING_ELT(klass, 0, Rf_mkChar("ichimoku"));
-  SET_STRING_ELT(klass, 1, Rf_mkChar("xts"));
-  SET_STRING_ELT(klass, 2, Rf_mkChar("zoo"));
-  Rf_classgets(kumo, klass);
-  UNPROTECT(1);
+  Rf_classgets(kumo, ichimoku_klass);
 
   Rf_setAttrib(kumo, ichimoku_PeriodsSymbol, periods);
   Rf_setAttrib(kumo, ichimoku_PeriodicitySymbol, periodicity);
@@ -365,6 +357,21 @@ static void RegisterSymbols(void) {
   ichimoku_TickerSymbol = Rf_install("ticker");
 }
 
+static void PreserveObjects(void) {
+  R_PreserveObject(ichimoku_klass = Rf_allocVector(STRSXP, 3));
+  SET_STRING_ELT(ichimoku_klass, 0, Rf_mkChar("ichimoku"));
+  SET_STRING_ELT(ichimoku_klass, 1, Rf_mkChar("xts"));
+  SET_STRING_ELT(ichimoku_klass, 2, Rf_mkChar("zoo"));
+  R_PreserveObject(ichimoku_tclass = Rf_allocVector(STRSXP, 2));
+  SET_STRING_ELT(ichimoku_tclass, 0, Rf_mkChar("POSIXct"));
+  SET_STRING_ELT(ichimoku_tclass, 1, Rf_mkChar("POSIXt"));
+}
+
+static void ReleaseObjects(void) {
+  R_ReleaseObject(ichimoku_klass);
+  R_ReleaseObject(ichimoku_tclass);
+}
+
 static const R_CallMethodDef CallEntries[] = {
   {"_coredata", (DL_FUNC) &_coredata, 1},
   {"_create", (DL_FUNC) &_create, 6},
@@ -382,8 +389,13 @@ static const R_CallMethodDef CallEntries[] = {
 
 void attribute_visible R_init_ichimoku(DllInfo* dll) {
   RegisterSymbols();
+  PreserveObjects();
   R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
   R_useDynamicSymbols(dll, FALSE);
   R_forceSymbols(dll, TRUE);
+}
+
+void attribute_visible R_unload_ichimoku(DllInfo *info) {
+  ReleaseObjects();
 }
 
