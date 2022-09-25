@@ -99,7 +99,7 @@ NULL
 
 utils::globalVariables(".data")
 
-.user_agent <- "r-ichimoku/1.4.0"
+.user_agent <- "r-ichimoku/1.4.1"
 
 .onLoad <- function(libname, pkgname) {
   do_ <- do_()
