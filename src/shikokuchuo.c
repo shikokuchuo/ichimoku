@@ -32,6 +32,8 @@ SEXP ichimoku_TickerSymbol;
 SEXP ichimoku_klass;
 SEXP ichimoku_tclass;
 
+typedef SEXP (*linked_fun) (SEXP x);
+
 // rolling max over a window
 SEXP _wmax(const SEXP x, const SEXP window) {
 
@@ -343,7 +345,7 @@ SEXP _coredata(const SEXP x) {
 
 // imports from the package 'xts'
 SEXP _naomit(SEXP x) {
-  DL_FUNC fun = R_GetCCallable("xts", "na_omit_xts");
+  linked_fun fun = (linked_fun) R_GetCCallable("xts", "na_omit_xts");
   return fun(x);
 }
 
