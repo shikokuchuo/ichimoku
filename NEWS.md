@@ -1,9 +1,9 @@
-# ichimoku 1.4.1.9010 (development)
+# ichimoku 1.4.2
 
 #### Updates:
 
-* Internal changes requiring nanonext >= 0.6.0.
 * Implements fix for upcoming R 4.3.0 (thanks @kalibera).
+* Internal changes requiring nanonext >= 0.6.0.
 
 # ichimoku 1.4.1
 
