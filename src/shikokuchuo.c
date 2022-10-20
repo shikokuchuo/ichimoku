@@ -132,12 +132,7 @@ SEXP _look(const SEXP x) {
 // class object as POSIXct (in-place)
 SEXP _psxct(SEXP x) {
 
-  SEXP posix = PROTECT(Rf_allocVector(STRSXP, 2));
-  SET_STRING_ELT(posix, 0, Rf_mkChar("POSIXct"));
-  SET_STRING_ELT(posix, 1, Rf_mkChar("POSIXt"));
-  Rf_classgets(x, posix);
-
-  UNPROTECT(1);
+  Rf_classgets(x, ichimoku_tclass);
   return x;
 
 }
@@ -165,8 +160,7 @@ SEXP _tbl(const SEXP x, const SEXP type) {
   PROTECT(tbl = Rf_allocVector(VECSXP, xwid + 1));
 
   PROTECT(index = Rf_shallow_duplicate(Rf_getAttrib(x, xts_IndexSymbol)));
-  index = _psxct(index);
-  SET_VECTOR_ELT(tbl, 0, index);
+  SET_VECTOR_ELT(tbl, 0, _psxct(index));
   UNPROTECT(1);
 
   double *src = REAL(x);
@@ -271,8 +265,7 @@ SEXP _df(const SEXP x) {
   PROTECT(df = Rf_allocVector(VECSXP, xwid + 2));
 
   PROTECT(index = Rf_shallow_duplicate(Rf_getAttrib(x, xts_IndexSymbol)));
-  index = _psxct(index);
-  SET_VECTOR_ELT(df, 0, index);
+  SET_VECTOR_ELT(df, 0, _psxct(index));
   UNPROTECT(1);
 
   double *src = REAL(x);
