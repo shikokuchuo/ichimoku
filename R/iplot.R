@@ -70,10 +70,10 @@ iplot <- function(x,
   dims[2L] >= 12L || stop("attempt to plot incomplete (partial or subset) ichimoku object", call. = FALSE)
   theme <- match.arg(theme)
   type <- match.arg(type)
-  if (missing(ticker)) ticker <- attr(x, "ticker")
-  if (missing(subtitle)) {
+  if (missing(ticker))
+    ticker <- attr(x, "ticker")
+  if (missing(subtitle))
     subtitle <- if (hasStrat(x) && isTRUE(strat)) paste0("Strategy: ", attr(x, "strat")["Strategy", ][[1L]])
-  }
 
   tformat <- if (attr(x, "periodicity") > 80000) "%F" else "%F %T"
   start <- index.ichimoku(x, 1L)

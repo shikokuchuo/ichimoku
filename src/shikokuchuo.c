@@ -145,7 +145,7 @@ SEXP _psxct(SEXP x) {
 // ichimoku to data.frame converter
 SEXP _tbl(const SEXP x, const SEXP type) {
 
-  const int keepattrs = INTEGER(type)[0];
+  const int keepattrs = LOGICAL(type)[0];
 
   R_xlen_t xlen = 0, xwid = 0;
   const SEXP dims = Rf_getAttrib(x, R_DimSymbol);

@@ -189,6 +189,7 @@ getPrices <- function(instrument, granularity, count, from, to, price, server,
                 if (!missing(from) && !is.null(from)) paste0("&from=", from),
                 if (!missing(to) && !is.null(to)) paste0("&to=", to))
   resp <- ncurl(url,
+                follow = TRUE,
                 headers = c(Authorization = paste0("Bearer ", apikey),
                             `Accept-Datetime-Format` = "UNIX",
                             `User-Agent` = .user_agent),
@@ -996,9 +997,9 @@ oanda_positions <- function(instrument, time, server, apikey) {
   url <- paste0("https://api-fx", switch(server, practice = "practice", live = "trade"),
                 ".oanda.com/v3/instruments/", instrument, "/positionBook",
                 if (!missing(time)) paste0("?time=", unclass(as.POSIXct(time))))
-  resp <- ncurl(url, headers = c(Authorization = paste0("Bearer ", apikey),
-                                 `Accept-Datetime-Format` = "UNIX",
-                                 `User-Agent` = .user_agent))
+  resp <- ncurl(url, follow = TRUE, headers = c(Authorization = paste0("Bearer ", apikey),
+                                                `Accept-Datetime-Format` = "UNIX",
+                                                `User-Agent` = .user_agent))
   .subset2(resp, "status") == 200L || stop("status code ",
                                            .subset2(resp, "status"), " - ",
                                            parse_json(.subset2(resp, "data")),
@@ -1089,9 +1090,9 @@ oanda_orders <- function(instrument, time, server, apikey) {
   url <- paste0("https://api-fx", switch(server, practice = "practice", live = "trade"),
                 ".oanda.com/v3/instruments/", instrument, "/orderBook",
                 if (!missing(time)) paste0("?time=", unclass(as.POSIXct(time))))
-  resp <- ncurl(url, headers = c(Authorization = paste0("Bearer ", apikey),
-                                 `Accept-Datetime-Format` = "UNIX",
-                                 `User-Agent` = .user_agent))
+  resp <- ncurl(url, follow = TRUE, headers = c(Authorization = paste0("Bearer ", apikey),
+                                                `Accept-Datetime-Format` = "UNIX",
+                                                `User-Agent` = .user_agent))
   .subset2(resp, "status") == 200L || stop("status code ",
                                            .subset2(resp, "status"), " - ",
                                            parse_json(.subset2(resp, "data")),

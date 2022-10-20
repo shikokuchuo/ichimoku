@@ -139,12 +139,7 @@ ichimoku.ichimoku <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, .
 ichimoku.xts <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, ...) {
 
   if (missing(ticker)) ticker <- deparse(substitute(x))
-
-  if (!missing(keep.data) && isTRUE(keep.data)) {
-    x <- xts_df(x, keep.attrs = TRUE)
-  } else {
-    x <- xts_df(x)
-  }
+  x <- xts_df(x, keep.attrs = !missing(keep.data) && isTRUE(keep.data))
 
   ichimoku.data.frame(x, ticker = ticker, periods = periods, keep.data = keep.data, ...)
 
@@ -277,12 +272,7 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
 ichimoku.matrix <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, ...) {
 
   if (missing(ticker)) ticker <- deparse(substitute(x))
-
-  if (!missing(keep.data) && isTRUE(keep.data)) {
-    x <- matrix_df(x, keep.attrs = TRUE)
-  } else {
-    x <- matrix_df(x)
-  }
+  x <- matrix_df(x, keep.attrs = !missing(keep.data) && isTRUE(keep.data))
 
   ichimoku.data.frame(x, ticker = ticker, periods = periods, keep.data = keep.data, ...)
 
@@ -298,11 +288,7 @@ ichimoku.default <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, ..
   exists(x) || stop("object '", x, "' not found", call. = FALSE)
   identical(x, object <- get(x)) && stop("cannot create an ichimoku object from a 'character' object", call. = FALSE)
 
-  if (missing(ticker)) {
-    ichimoku(object, ticker = x, periods = periods, keep.data = keep.data, ...)
-  } else {
-    ichimoku(object, ticker = ticker, periods = periods, keep.data = keep.data, ...)
-  }
+  ichimoku(object, ticker = if (missing(ticker)) x else ticker, periods = periods, keep.data = keep.data, ...)
 
 }
 

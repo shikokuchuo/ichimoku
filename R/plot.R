@@ -190,10 +190,10 @@ plot_ichimoku <- function(object, ticker, subtitle, theme, strat, type, custom, 
     stop("user-defined 'theme' should be supplied as an atomic vector", call. = FALSE)
   }
   showstrat <- hasStrat(object) && isTRUE(strat)
-  if (missing(ticker)) ticker <- attr(object, "ticker")
-  if (missing(subtitle)) {
+  if (missing(ticker))
+    ticker <- attr(object, "ticker")
+  if (missing(subtitle))
     subtitle <- if (showstrat) paste0("Strategy: ", attr(object, "strat")["Strategy", ][[1L]])
-  }
 
   if (type == "line" || type == "bar") {
     if (missing(custom)) {

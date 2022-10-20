@@ -228,11 +228,7 @@ summary.ichimoku <- function(object, strat = TRUE, ...) {
 #'
 as.data.frame.ichimoku <- function(x, row.names, optional, keep.attrs, ...) {
 
-  if (missing(keep.attrs) || !isTRUE(keep.attrs)) {
-    .Call(ichimoku_tbl, x, 0L)
-  } else {
-    .Call(ichimoku_tbl, x, 1L)
-  }
+  .Call(ichimoku_tbl, x, !missing(keep.attrs) && isTRUE(keep.attrs))
 
 }
 

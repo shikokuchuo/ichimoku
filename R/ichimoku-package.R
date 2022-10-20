@@ -97,7 +97,7 @@
 #' @name ichimoku-package
 NULL
 
-utils::globalVariables(".data")
+.__global__ <- ".data"
 
 .user_agent <- "r-ichimoku/1.4.2"
 
