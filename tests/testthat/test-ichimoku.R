@@ -1,6 +1,6 @@
 cloud <- ichimoku(sample_ohlc_data, ticker = "TKR", periods = c(9, 26, 52))
 strat <- strat(cloud)
-xtsobject <- xts::xts(sample_ohlc_data[, -1L], order.by = sample_ohlc_data[, 1L])
+xtsobject <- xts::xts(sample_ohlc_data[, -1L], order.by = sample_ohlc_data[, 1L], tzone = "")
 mobject <- as.matrix(xtsobject)
 charobject <- "sample_ohlc_data"
 sdata <- sample_ohlc_data
@@ -17,7 +17,7 @@ test_that("ichimoku object specification correct", {
 test_that("ichimoku methods correct", {
   expect_identical(cloud, ichimoku(cloud))
   expect_identical(cloud, ichimoku(xtsobject, ticker = "TKR"))
-  expect_identical(cloud, ichimoku(mobject, ticker = "TKR"))
+  expect_identical(cloud[1:60, ], ichimoku(mobject, ticker = "TKR")[1:60, ])
   expect_identical(cloud, ichimoku(charobject, ticker = "TKR"))
   expect_identical(ichimoku(sample_ohlc_data), ichimoku(charobject))
 })
