@@ -157,24 +157,28 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
 
   coli <- grep("index|date|time", cnames, ignore.case = TRUE, perl = TRUE)[1L]
   if (is.na(coli)) {
-    index <- tryCatch(unclass(as.POSIXct(attr(x, "row.names"))), error = function(e) {
-      if (is.integer(rnames <- attr(x, "row.names")) && rnames[1L] != 1L) {
-        warning("Converted numeric row names as POSIX times - please check validity", call. = FALSE)
-        rnames
-      } else {
-        stop("valid date-time index not found. Perhaps check column names?", call. = FALSE)
-      }
-    })
+    index <- if (is.integer(rnames <- attr(x, "row.names"))) {
+      rnames[1L] == 1L && stop("valid date-time index not found. Perhaps check column names?",
+                               call. = FALSE)
+      warning("Converted numeric row names as POSIX times - please check validity", call. = FALSE)
+      rnames
+    } else {
+      tryCatch(unclass(as.POSIXct(rnames <- attr(x, "row.names"))),
+               error = function(e) stop("valid date-time index not found. Perhaps check column names?",
+                                        call. = FALSE))
+    }
+
   } else {
-    index <- tryCatch(unclass(as.POSIXct(.subset2(x, coli))), error = function(e) {
-      if (is.numeric(idxcol <- .subset2(x, coli))) {
-        warning("Converted numeric values in column '", cnames[coli],
-                "' as POSIX times - please check validity", call. = FALSE)
-        idxcol
-      } else {
-        stop("column '", cnames[coli], "' is not convertible to a POSIXct date-time format", call. = FALSE)
-      }
-    })
+    index <- if (is.numeric(idxcol <- .subset2(x, coli))) {
+      warning("Converted numeric values in column '", cnames[coli],
+              "' as POSIX times - please check validity", call. = FALSE)
+      idxcol
+    } else {
+      tryCatch(unclass(as.POSIXct(idxcol <- .subset2(x, coli))),
+               error = function(e) stop("column '", cnames[coli],
+                                        "' is not convertible to a POSIXct date-time format",
+                                        call. = FALSE))
+    }
   }
 
   colh <- grep("high", cnames, ignore.case = TRUE, perl = TRUE)[1L]

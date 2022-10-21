@@ -1,5 +1,7 @@
 # ichimoku 1.4.2.9000 (development)
 
+* Fixes to `ichimoku()` validation code for POSIXct handling changes in upcoming R 4.3.0.
+
 # ichimoku 1.4.2
 
 #### Updates:
