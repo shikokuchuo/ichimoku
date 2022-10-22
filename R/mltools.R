@@ -111,7 +111,8 @@ autostrat <- function(x,
   } else {
     lgrid <- grid[, -1L]
     w <- length(lgrid)
-    pairs <- expand.grid(seq_len(w), seq_len(w), KEEP.OUT.ATTRS = FALSE)[-grid_dup(w, omit.id = TRUE), ]
+    pairs <- expand.grid(seq_len(w), seq_len(w),
+                         KEEP.OUT.ATTRS = FALSE)[-grid_dup(w, omit.id = TRUE), ]
     mgrid <- do.call(cbind,
                      mapply(function(a, b) {
                        xlen <- dim(lgrid)[1L]
@@ -429,7 +430,9 @@ relative <- function(x, order = FALSE, signif = 0.2, quietly) {
                          periodicity = attr(x, "periodicity"),
                          ticker = attr(x, "ticker"))
 
-  if (missing(quietly) || !isTRUE(quietly)) cat("Latest:", time, "| n:", xlen, "\n", file = stdout())
+  if (missing(quietly) || !isTRUE(quietly))
+    cat("Latest:", time, "| n:", xlen, "\n", file = stdout())
+
   df
 
 }

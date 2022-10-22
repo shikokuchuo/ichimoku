@@ -39,11 +39,7 @@
 #'
 #' @export
 #'
-oanda_switch <- function() {
-
-  do_$switchServer()
-
-}
+oanda_switch <- function() do_$switchServer()
 
 #' ichimoku Internal Functions
 #'
@@ -59,10 +55,8 @@ do_ <- function() {
   livestore <- keystore <- instruments <- account <- NULL
 
   list(
-    getServer = function() {
-      server_type
-    },
-    switchServer = function() {
+    getServer = function() server_type,
+    switchServer = function()
       switch(server_type,
              practice = {
                server_type <<- "live"
@@ -73,8 +67,7 @@ do_ <- function() {
                server_type <<- "practice"
                livestore <<- keystore <<- instruments <<- account <<- NULL
                message("Default OANDA server switched to 'practice'")
-             })
-    },
+             }),
     getKey = function(server) {
       if (missing(server)) server <- server_type
       switch(server,

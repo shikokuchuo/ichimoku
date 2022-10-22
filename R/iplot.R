@@ -67,13 +67,15 @@ iplot <- function(x,
 
   is.ichimoku(x) || stop("iplot() only works with ichimoku objects", call. = FALSE)
   dims <- attr(x, "dim")
-  dims[2L] >= 12L || stop("attempt to plot incomplete (partial or subset) ichimoku object", call. = FALSE)
+  dims[2L] >= 12L ||
+    stop("attempt to plot incomplete (partial or subset) ichimoku object", call. = FALSE)
   theme <- match.arg(theme)
   type <- match.arg(type)
   if (missing(ticker))
     ticker <- attr(x, "ticker")
   if (missing(subtitle))
-    subtitle <- if (hasStrat(x) && isTRUE(strat)) paste0("Strategy: ", attr(x, "strat")["Strategy", ][[1L]])
+    subtitle <- if (hasStrat(x) && isTRUE(strat))
+      paste0("Strategy: ", attr(x, "strat")["Strategy", ][[1L]])
 
   tformat <- if (attr(x, "periodicity") > 80000) "%F" else "%F %T"
   start <- index.ichimoku(x, 1L)
@@ -152,7 +154,7 @@ iplot <- function(x,
                   type = input$type, custom = input$custom)
     })
 
-    session$onSessionEnded(function() stopApp())
+    session$onSessionEnded(stopApp)
   }
 
   shinyApp(ui = ui, server = server, options = list(launch.browser = launch.browser, ...))

@@ -180,7 +180,8 @@ create_data <- function(object, window, type) {
 plot_ichimoku <- function(object, ticker, subtitle, theme, strat, type, custom, ...) {
 
   data <- .Call(ichimoku_df, object)
-  missing(data) && stop("attempt to plot incomplete (partial or subset) ichimoku object", call. = FALSE)
+  missing(data) &&
+    stop("attempt to plot incomplete (partial or subset) ichimoku object", call. = FALSE)
   if (length(theme) != 12L) {
     pal <- .ichimoku_themes[[theme]]
   } else if (is.atomic(theme)) {

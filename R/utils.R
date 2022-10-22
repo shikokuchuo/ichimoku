@@ -141,7 +141,8 @@ xts_df <- function(x, keep.attrs) {
   `attributes<-`(df, c(list(names = c("index", dn2),
                             class = "data.frame",
                             row.names = .set_row_names(xlen)),
-                       if (!missing(keep.attrs) && isTRUE(keep.attrs)) .Call(ichimoku_look, x)))
+                       if (!missing(keep.attrs) && isTRUE(keep.attrs))
+                         .Call(ichimoku_look, x)))
 }
 
 #' Convert matrix to data.frame
@@ -224,7 +225,8 @@ df_merge <- function(...) {
                                 price = attr(dots[[1L]], "price"),
                                 timestamp = .Call(ichimoku_psxct, max(unlist(lapply(dots, attr, "timestamp")))),
                                 oanda = TRUE))
-    if (FALSE %in% .subset2(merge, "complete")) warning("Incomplete periods in merged dataframe - please check for possible duplicates", call. = FALSE)
+    if (FALSE %in% .subset2(merge, "complete"))
+      warning("Incomplete periods in merged dataframe - please check for possible duplicates", call. = FALSE)
   }
   merge
 }
@@ -342,7 +344,8 @@ look <- function(x) {
 more <- function(rows) {
 
   is.ichimoku(lv <- .Last.value) || return(invisible())
-  print(lv, plot = FALSE, rows = if (missing(rows) || !is.numeric(rows)) attr(lv, "dim")[1L] else rows)
+  print(lv, plot = FALSE,
+        rows = if (missing(rows) || !is.numeric(rows)) attr(lv, "dim")[1L] else rows)
 
 }
 

@@ -181,7 +181,8 @@ strat <- function(x,
   txn <- c(NA, diff(posn))
   txn[posn == 1 & is.na(txn)] <- 1
   if (posn[end] == 1) txn[end + 1L] <- -1
-  sum(txn, na.rm = TRUE) == 0 || stop("Calculation error - please check validity of data", call. = FALSE)
+  sum(txn, na.rm = TRUE) == 0 ||
+    stop("Calculation error - please check validity of data", call. = FALSE)
 
   logret <- c(diff(log(core[, "open"])), NA)
   if (dir == "short") logret <- -logret
@@ -316,7 +317,8 @@ stratcombine <- function(s1, s2) {
   txn <- c(NA, diff(posn))
   txn[posn == 1 & is.na(txn)] <- 1
   if (posn[end] == 1) txn[end + 1L] <- -1
-  sum(txn, na.rm = TRUE) == 0 || stop("Calculation error - please check validity of data", call. = FALSE)
+  sum(txn, na.rm = TRUE) == 0 ||
+    stop("Calculation error - please check validity of data", call. = FALSE)
   slogret <- s1[, "logret"] * posn
 
   s1$cond <- cond
