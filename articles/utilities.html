@@ -116,8 +116,12 @@
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>This vignette is dedicated to the auxiliary functions exported by the ichimoku package.</p>
-<p>Note that these auxiliary functions are programmed for performance and hence stripped of superfluous validation and error-checking code. If they are used outside of their intended scopes then errors may be expected. In particular, input types must match exactly.</p>
+<p>This vignette is dedicated to the auxiliary functions exported by the
+ichimoku package.</p>
+<p>Note that these auxiliary functions are programmed for performance
+and hence stripped of superfluous validation and error-checking code. If
+they are used outside of their intended scopes then errors may be
+expected. In particular, input types must match exactly.</p>
 </div>
 <div class="section level2">
 <h2 id="core-auxiliary-functions">Core Auxiliary Functions<a class="anchor" aria-label="anchor" href="#core-auxiliary-functions"></a>
@@ -125,13 +129,19 @@
 <div class="section level4">
 <h4 id="tradingdays">tradingDays()<a class="anchor" aria-label="anchor" href="#tradingdays"></a>
 </h4>
-<p>Used to subset a vector of dates to trading days. Note: if the argument ‘holidays’ is passed to <code><a href="../reference/ichimoku.html">ichimoku()</a></code>, this is passed through to this function when calculating the dates for the future cloud.</p>
+<p>Used to subset a vector of dates to trading days. Note: if the
+argument ‘holidays’ is passed to <code><a href="../reference/ichimoku.html">ichimoku()</a></code>, this is passed
+through to this function when calculating the dates for the future
+cloud.</p>
 <p>Takes the following arguments:</p>
 <ul>
 <li>
 <code>x</code> a vector of POSIXct dates.</li>
 <li>
-<code>holidays</code> (optional) a vector, or function which outputs a vector, of dates defined as holidays. Set to NULL for a continuously-traded market. If not specified, New Year’s and Christmas day are defined as holidays by default.</li>
+<code>holidays</code> (optional) a vector, or function which outputs
+a vector, of dates defined as holidays. Set to NULL for a
+continuously-traded market. If not specified, New Year’s and Christmas
+day are defined as holidays by default.</li>
 <li>
 <code>...</code> other arguments not used by this function.</li>
 </ul>
@@ -151,9 +161,13 @@
 <h4 id="look">look()<a class="anchor" aria-label="anchor" href="#look"></a>
 </h4>
 <p>Can be used to inspect the informational attributes of R objects.</p>
-<p>Takes an object as an optional argument. Called without an argument, <code>.Last.value</code> will be used instead.</p>
-<p>For objects created by the ichimoku package, a list of attributes specific to that data type is returned.</p>
-<p>For other objects, a list of attributes that are non-standard for matrix / data.frame / xts objects is returned, or else invisible NULL if none are present.</p>
+<p>Takes an object as an optional argument. Called without an argument,
+<code>.Last.value</code> will be used instead.</p>
+<p>For objects created by the ichimoku package, a list of attributes
+specific to that data type is returned.</p>
+<p>For other objects, a list of attributes that are non-standard for
+matrix / data.frame / xts objects is returned, or else invisible NULL if
+none are present.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">sample_ohlc_data</span>, ticker <span class="op">=</span> <span class="st">"TKR"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/look.html">look</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span></span>
@@ -222,14 +236,20 @@
 <div class="section level4">
 <h4 id="xts_df">xts_df()<a class="anchor" aria-label="anchor" href="#xts_df"></a>
 </h4>
-<p>Convert an ‘xts’ object to ‘data.frame’. This function can be an order of magnitude faster than <code><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame()</a></code> for an ‘xts’ object.</p>
-<p>Note that for ichimoku objects, a slightly faster, more specific version has been implemented as the S3 method for <code><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame()</a></code>. Hence using this utility on an ichimoku object is not necessary.</p>
+<p>Convert an ‘xts’ object to ‘data.frame’. This function can be an
+order of magnitude faster than <code><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame()</a></code> for an ‘xts’
+object.</p>
+<p>Note that for ichimoku objects, a slightly faster, more specific
+version has been implemented as the S3 method for
+<code><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame()</a></code>. Hence using this utility on an ichimoku
+object is not necessary.</p>
 <p>Takes the following arguments:</p>
 <ul>
 <li>
 <code>x</code> the ‘xts’ object to convert to ‘data.frame’.</li>
 <li>
-<code>keep.attrs</code> (optional) if set to TRUE, will preserve any custom attributes set on the original object.</li>
+<code>keep.attrs</code> (optional) if set to TRUE, will preserve any
+custom attributes set on the original object.</li>
 </ul>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">sample_ohlc_data</span><span class="op">)</span></span>
@@ -274,13 +294,15 @@
 <div class="section level4">
 <h4 id="matrix_df">matrix_df()<a class="anchor" aria-label="anchor" href="#matrix_df"></a>
 </h4>
-<p>Convert a matrix to ‘data.frame’. This function can be twice as fast as <code><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame()</a></code> for a matrix.</p>
+<p>Convert a matrix to ‘data.frame’. This function can be twice as fast
+as <code><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame()</a></code> for a matrix.</p>
 <p>Takes the following arguments:</p>
 <ul>
 <li>
 <code>x</code> the matrix to convert to ‘data.frame’.</li>
 <li>
-<code>keep.attrs</code> (optional) if set to TRUE, will preserve any custom attributes set on the original object.</li>
+<code>keep.attrs</code> (optional) if set to TRUE, will preserve any
+custom attributes set on the original object.</li>
 </ul>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">sample_ohlc_data</span><span class="op">)</span></span>
@@ -310,13 +332,23 @@
 <div class="section level4">
 <h4 id="df_merge">df_merge()<a class="anchor" aria-label="anchor" href="#df_merge"></a>
 </h4>
-<p>Full join on an arbitrary number of ‘data.frame’ objects passed as arguments, preserving all unique entries. Can be used to combine historical time series data where each observation is indexed by a unique timestamp and all periods are complete.</p>
+<p>Full join on an arbitrary number of ‘data.frame’ objects passed as
+arguments, preserving all unique entries. Can be used to combine
+historical time series data where each observation is indexed by a
+unique timestamp and all periods are complete.</p>
 <p>Takes an arbitrary number of arguments:</p>
 <ul>
 <li>
 <code>...</code> data.frame objects to combine.</li>
 </ul>
-<p>Can be used to join price dataframes retrieved by <code><a href="../reference/oanda.html">oanda()</a></code>. The function is designed to join complete historical data. If the data to be merged contains data with incomplete periods, all entries are preserved rather than updated. If incomplete periods are detected within the data, a warning is issued, and the resulting dataframe should be manually inspected in case it contains unwanted duplicates. Use <code><a href="../reference/df_append.html">df_append()</a></code> for updating dataframes with new values.</p>
+<p>Can be used to join price dataframes retrieved by
+<code><a href="../reference/oanda.html">oanda()</a></code>. The function is designed to join complete
+historical data. If the data to be merged contains data with incomplete
+periods, all entries are preserved rather than updated. If incomplete
+periods are detected within the data, a warning is issued, and the
+resulting dataframe should be manually inspected in case it contains
+unwanted duplicates. Use <code><a href="../reference/df_append.html">df_append()</a></code> for updating
+dataframes with new values.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data1</span> <span class="op">&lt;-</span> <span class="va">sample_ohlc_data</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span>, <span class="op">]</span></span>
 <span><span class="va">data1</span></span>
@@ -353,7 +385,10 @@
 <div class="section level4">
 <h4 id="df_append">df_append()<a class="anchor" aria-label="anchor" href="#df_append"></a>
 </h4>
-<p>Update a ‘data.frame’ object with new data. Can be used to append new updated time series data to an existing dataframe, where each observation is indexed by a unique timestamp/identifier in a key column.</p>
+<p>Update a ‘data.frame’ object with new data. Can be used to append new
+updated time series data to an existing dataframe, where each
+observation is indexed by a unique timestamp/identifier in a key
+column.</p>
 <p>Takes 4 arguments:</p>
 <ul>
 <li>
@@ -361,12 +396,22 @@
 <li>
 <code>new</code> data.frame object containing new data.</li>
 <li>
-<code>key</code> [default ‘time’] column name used as key provided as a character string.</li>
+<code>key</code> [default ‘time’] column name used as key provided
+as a character string.</li>
 <li>
-<code>keep.attr</code> [default ‘timestamp’] name of an attribute in ‘new’ to retain, if present, provided as a character string.</li>
+<code>keep.attr</code> [default ‘timestamp’] name of an attribute in
+‘new’ to retain, if present, provided as a character string.</li>
 </ul>
-<p>Can be used to update price dataframes retrieved by <code><a href="../reference/oanda.html">oanda()</a></code>. The function is designed to update existing data with new values as they become available. As opposed to <code><a href="../reference/df_merge.html">df_merge()</a></code>, the data in ‘new’ will overwrite the data in ‘old’ rather than create duplicates.</p>
-<p>If the attribute specified by ‘keep.attr’ is present in ‘new’, for example the ‘timestamp’ in pricing data returned by <code><a href="../reference/oanda.html">oanda()</a></code>, this is retained. If the attribute is not found in ‘new’, the argument has no effect. All other custom attributes are dropped.</p>
+<p>Can be used to update price dataframes retrieved by
+<code><a href="../reference/oanda.html">oanda()</a></code>. The function is designed to update existing data
+with new values as they become available. As opposed to
+<code><a href="../reference/df_merge.html">df_merge()</a></code>, the data in ‘new’ will overwrite the data in
+‘old’ rather than create duplicates.</p>
+<p>If the attribute specified by ‘keep.attr’ is present in ‘new’, for
+example the ‘timestamp’ in pricing data returned by
+<code><a href="../reference/oanda.html">oanda()</a></code>, this is retained. If the attribute is not found in
+‘new’, the argument has no effect. All other custom attributes are
+dropped.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data1</span> <span class="op">&lt;-</span> <span class="va">sample_ohlc_data</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span>, <span class="op">]</span></span>
 <span><span class="va">data1</span></span>
