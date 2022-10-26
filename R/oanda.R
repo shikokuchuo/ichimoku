@@ -203,8 +203,7 @@ getPrices <- function(instrument, granularity, count = NULL, from = NULL,
   ptype <- switch(price, M = "mid", B = "bid", A = "ask")
 
   !missing(.validate) && .validate == FALSE && {
-    data <- .subset2(.subset2(candles, 1L), ptype)
-    data <- `storage.mode<-`(unlist(data), "double")
+    data <- `storage.mode<-`(unlist(.subset2(candles[[1L]], ptype)), "double")
     return(c(t = unclass(timestamp), data))
   }
 
@@ -234,15 +233,14 @@ getPrices <- function(instrument, granularity, count = NULL, from = NULL,
                         M30 = 1800, M15 = 900, M10 = 600, M5 = 300, M4 = 240,
                         M2 = 120, M1 = 60, S30 = 30, S15 = 15, S10 = 10, S5 = 5)
   time <- .Call(ichimoku_psxct, time + periodicity)
-  ohlc <- unlist(data[, ptype, drop = FALSE])
-  cnames <- names(ohlc)
+  ohlc <- `storage.mode<-`(do.call(rbind, data[, ptype, drop = FALSE]), "double")
 
   df <- `attributes<-`(
     list(time,
-         as.numeric(ohlc[cnames == "o"]),
-         as.numeric(ohlc[cnames == "h"]),
-         as.numeric(ohlc[cnames == "l"]),
-         as.numeric(ohlc[cnames == "c"]),
+         ohlc[, "o"],
+         ohlc[, "h"],
+         ohlc[, "l"],
+         ohlc[, "c"],
          unlist(data[, "volume", drop = FALSE]),
          unlist(data[, "complete", drop = FALSE])),
     list(names = c("time", "open", "high", "low", "close", "volume", "complete"),
