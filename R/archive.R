@@ -95,45 +95,33 @@ archive <- function(..., object, file) {
 
     } else if (dlen == 3L) {
       if (dots[[2L]] == "") {
-        readArchive(
-          file = if (dots[[3L]] == "") {
-            interactive() || stop("Empty arguments for both 'object' and 'file' passed to archive()",
-                                  "\nFor read operations specify 'file' only, write operations both 'object' and 'file'", call. = FALSE)
-            return(.deconstruct(...))
-          } else {
-            ..2
-          }
-        )
+        (dots[[3L]] == "") && {
+          interactive() ||
+            stop("Empty arguments for both 'object' and 'file' passed to archive()\nFor read operations specify 'file' only, write operations both 'object' and 'file'", call. = FALSE)
+          return(.deconstruct(...))
+        }
+        readArchive(file =  ..2)
+
       } else {
         writeArchive(
           object = ..1,
-          file = if (dots[[3L]] == "" && interactive()) {
-            file.choose(new = TRUE)
-          } else {
-            ..2
-          }
+          file = if (dots[[3L]] == "" && interactive()) file.choose(new = TRUE) else ..2
         )
       }
 
     } else {
-      stop(dlen - 1L, " arguments passed to archive() which requires 1 or 2",
-           "\nFor read operations specify 'file' only, write operations both 'object' and 'file'", call. = FALSE)
+      stop(sprintf("%d arguments passed to archive() which requires 1 or 2\nFor read operations specify 'file' only, write operations both 'object' and 'file'", dlen - 1L), call. = FALSE)
     }
 
   } else if (!missing(file)) {
-
-    if (missing(object)) {
-      readArchive(file = file)
-    } else {
-      writeArchive(object = object, file = file)
-    }
+    if (missing(object))
+      readArchive(file = file) else
+        writeArchive(object = object, file = file)
 
   } else {
-    if (interactive()) {
-      writeArchive(object = object, file = file.choose(new = TRUE))
-    } else {
-      stop("in archive(object, file): 'object' specified without 'file'", call. = FALSE)
-    }
+    if (interactive())
+      writeArchive(object = object, file = file.choose(new = TRUE)) else
+        stop("in archive(object, file): 'object' specified without 'file'", call. = FALSE)
   }
 
 }
@@ -153,12 +141,12 @@ archive <- function(..., object, file) {
 #'
 writeArchive <- function(object, file) {
 
-  is.character(file) || stop("in archive(object, file): 'file' must be supplied as a string. ",
-                             "\nDid you omit the surrounding quotes \"\"?", call. = FALSE)
+  is.character(file) ||
+    stop("in archive(object, file): 'file' must be supplied as a string.\nDid you omit the surrounding quotes \"\"?", call. = FALSE)
 
   if (file.exists(file) && interactive()) {
     continue <- readline(prompt = paste0("The file '", file, "' already exists. Overwrite? [y/N] "))
-    if (!continue %in% c("y", "Y", "yes", "YES")) {
+    continue %in% c("y", "Y", "yes", "YES") || {
       message("Request cancelled")
       return(invisible())
     }
@@ -166,7 +154,7 @@ writeArchive <- function(object, file) {
 
   x_archive_sha256 <- sha256(object)
   save(object, x_archive_sha256, file = file, compress = TRUE)
-  message("Archive written to '", file, "'\nSHA256: ", x_archive_sha256)
+  message(sprintf("Archive written to '%s'\nSHA256: %s", file, x_archive_sha256))
   invisible(file)
 
 }
@@ -199,12 +187,9 @@ readArchive <- function(file) {
     message("Data unverified: SHA256 hash not present")
   } else {
     sha256 <- sha256(object)
-    if (identical(sha256, as.character(x_archive_sha256))) {
-      message("Data verified by SHA256: ", sha256)
-    } else {
-      warning("SHA256 of restored object\n", sha256,
-              " does not match the original\n", x_archive_sha256, call. = FALSE)
-    }
+    if (identical(sha256, as.character(x_archive_sha256)))
+      message("Data verified by SHA256: ", sha256) else
+        warning(sprintf("SHA256 of restored object:   %s\ndoes not match the original: %s", sha256, x_archive_sha256), call. = FALSE)
   }
 
   object
