@@ -89,7 +89,7 @@
 #'     renderUI req selectInput shinyApp sliderInput stopApp tags textInput
 #'     uiOutput wellPanel
 #' @importFrom stats na.omit sd
-#' @importFrom utils str
+#' @importFrom utils packageVersion str
 #' @importFrom xts endpoints
 #' @importFrom zoo coredata index
 #'
@@ -99,7 +99,7 @@ NULL
 
 .__global__ <- ".data"
 
-.user_agent <- "r-ichimoku/1.4.2"
+.user_agent <- sprintf("r-ichimoku/%s", as.character(packageVersion("ichimoku")))
 
 .onLoad <- function(libname, pkgname) {
   do_ <- do_()
