@@ -16,6 +16,26 @@
 
 # Ichimoku - code to prepare internal sysdata ----------------------------------
 
+.mlgrid_pairs <- {
+  cols <- c("chikou", "close", "high", "low", "tenkan", "kijun", "senkouA", "senkouB", "cloudT", "cloudB")
+  pairs <- list(character(37L), character(37L))
+  ctr <- 0L
+  for (i in 1:7) {
+    colm <- cols[(i + 1L):10]
+    for (j in seq_along(colm)) {
+      colsi <- cols[i]
+      colmj <- colm[j]
+      if(colsi == "close" && (colmj == "high" || colmj == "low") ||
+         colsi == "high" && colmj == "low") next
+      ctr <- ctr + 1L
+      pairs[[1]][ctr] <- colsi
+      pairs[[2]][ctr] <- colmj
+      if (colsi == "senkouA" && colmj == "senkouB") break
+    }
+  }
+  pairs
+}
+
 .ichimoku_themes <- list(
   classic = c("#ffc6cb", "#c3dede", "#e0a9e0", "#db4525", "#1aa1a6", "#a4d1eb",
                "#00008b", "#00008b", "#00008b", "#ffffff", "#191970", "#00008b"),
@@ -103,5 +123,5 @@
   row.names = c(NA, -125L)
 )
 
-usethis::use_data(.ichimoku_themes, .oanda_instruments, internal = TRUE, overwrite = TRUE)
+usethis::use_data(.mlgrid_pairs, .ichimoku_themes, .oanda_instruments, internal = TRUE, overwrite = TRUE)
 

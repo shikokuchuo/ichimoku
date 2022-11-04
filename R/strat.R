@@ -126,14 +126,14 @@ strat <- function(x,
   offset <- (p2 - 1L) * (c1 == "chikou" || c2 == "chikou")
 
   if (missing(c3) || missing(c4) || (identical(c1, c3) && identical(c2, c4))) {
-    strategy <- paste0(c1, " > ", c2)
+    strategy <- sprintf("%s > %s", c1, c2)
     cond <- c(rep(NA, offset), (core[, c1] > core[, c2])[1:(xlen - offset)])
     posn <- c(NA, cond[1:(end - 1L)], rep(NA, p2))
 
   } else if (type == 2) {
     c3 <- match.arg(c3)
     c4 <- match.arg(c4)
-    strategy <- paste0(c1, " > ", c2, " & ", c3, " > ", c4)
+    strategy <- sprintf("%s > %s & %s > %s", c1, c2, c3, c4)
 
     s1cond <- c(rep(NA, offset), (core[, c1] > core[, c2])[1:(xlen - offset)])
     s1posn <- c(NA, s1cond[1:(end - 1L)], rep(NA, p2))
@@ -146,7 +146,7 @@ strat <- function(x,
   } else if (type == 3) {
     c3 <- match.arg(c3)
     c4 <- match.arg(c4)
-    strategy <- paste0(c1, " > ", c2, " x ", c3, " > ", c4)
+    strategy <- sprintf("%s > %s x %s > %s", c1, c2, c3, c4)
 
     cond <- c(rep(NA, offset), (core[, c1] > core[, c2])[1:(xlen - offset)])
     s1posn <- c(NA, cond[1:(end - 1L)], rep(NA, p2))

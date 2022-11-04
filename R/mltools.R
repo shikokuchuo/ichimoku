@@ -248,22 +248,7 @@ mlgrid <- function(x,
     if (y == "ret") target <- exp(target) - 1
   }
 
-  cols <- c("chikou", "close", "high", "low", "tenkan", "kijun", "senkouA", "senkouB", "cloudT", "cloudB")
-  pairs <- list(character(37L), character(37L))
-  ctr <- 0L
-  for (i in 1:7) {
-    colm <- cols[(i + 1L):10]
-    for (j in seq_along(colm)) {
-      colsi <- cols[i]
-      colmj <- colm[j]
-      if(colsi == "close" && (colmj == "high" || colmj == "low") ||
-         colsi == "high" && colmj == "low") next
-      ctr <- ctr + 1L
-      pairs[[1]][ctr] <- colsi
-      pairs[[2]][ctr] <- colmj
-      if (colsi == "senkouA" && colmj == "senkouB") break
-    }
-  }
+  pairs <- .mlgrid_pairs
   veclist <- writeVectors(x = core, pairs = pairs, p2 = p2, xlen = xlen, type = type)
 
   if (!missing(unique) && !isTRUE(unique)) {
