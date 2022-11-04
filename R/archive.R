@@ -95,7 +95,7 @@ archive <- function(..., object, file) {
 
     } else if (dlen == 3L) {
       if (dots[[2L]] == "") {
-        (dots[[3L]] == "") && {
+        dots[[3L]] == "" && {
           interactive() ||
             stop("Empty arguments for both 'object' and 'file' passed to archive()\nFor read operations specify 'file' only, write operations both 'object' and 'file'", call. = FALSE)
           return(.deconstruct(...))
