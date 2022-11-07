@@ -3,6 +3,7 @@
 #### Updates:
 
 * Fixes to `ichimoku()` validation code for POSIXct handling changes in upcoming R 4.3.0.
+* Required version of 'ggplot2' increased to 3.4.0 due to API changes in the former.
 * Internal performance enhancements.
 
 # ichimoku 1.4.2

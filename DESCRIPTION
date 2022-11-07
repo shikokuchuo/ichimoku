@@ -30,10 +30,10 @@ LazyData: true
 Depends: 
     R (>= 3.2)
 Imports: 
-    ggplot2,
-    jsonlite,
+    ggplot2 (>= 3.4.0),
+    jsonlite (>= 1.6.1),
     nanonext (>= 0.6.0),
-    shiny,
+    shiny (>= 1.4.0),
     xts,
     zoo
 LinkingTo: 
