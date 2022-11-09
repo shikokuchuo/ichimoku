@@ -32,7 +32,7 @@ Depends:
 Imports: 
     ggplot2 (>= 3.4.0),
     jsonlite (>= 1.6.1),
-    nanonext (>= 0.6.0),
+    nanonext (>= 0.7.0),
     shiny (>= 1.4.0),
     xts,
     zoo

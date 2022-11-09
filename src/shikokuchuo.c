@@ -115,7 +115,7 @@ SEXP _wmean(const SEXP x, const SEXP window) {
 SEXP _look(const SEXP x) {
 
   SEXP ax, y;
-  PROTECT(y = Rf_ScalarInteger(0));
+  PROTECT(y = Rf_allocVector(RAWSXP, 0));
 
   for (ax = ATTRIB(x); ax != R_NilValue; ax = CDR(ax)) {
     if (TAG(ax) != R_NamesSymbol && TAG(ax) != R_RowNamesSymbol &&
@@ -159,9 +159,9 @@ SEXP _tbl(const SEXP x, const SEXP type) {
 
   PROTECT(tbl = Rf_allocVector(VECSXP, xwid + 1));
 
-  PROTECT(index = Rf_shallow_duplicate(Rf_getAttrib(x, xts_IndexSymbol)));
-  SET_VECTOR_ELT(tbl, 0, _psxct(index));
-  UNPROTECT(1);
+  index = Rf_shallow_duplicate(Rf_getAttrib(x, xts_IndexSymbol));
+  Rf_classgets(index, ichimoku_tclass);
+  SET_VECTOR_ELT(tbl, 0, index);
 
   double *src = REAL(x);
   size_t vecsize = xlen * sizeof(double);
@@ -264,9 +264,9 @@ SEXP _df(const SEXP x) {
 
   PROTECT(df = Rf_allocVector(VECSXP, xwid + 2));
 
-  PROTECT(index = Rf_shallow_duplicate(Rf_getAttrib(x, xts_IndexSymbol)));
-  SET_VECTOR_ELT(df, 0, _psxct(index));
-  UNPROTECT(1);
+  index = Rf_shallow_duplicate(Rf_getAttrib(x, xts_IndexSymbol));
+  Rf_classgets(index, ichimoku_tclass);
+  SET_VECTOR_ELT(df, 0, index);
 
   double *src = REAL(x);
   size_t vecsize = xlen * sizeof(double);
@@ -314,10 +314,8 @@ SEXP _df(const SEXP x) {
 // ichimoku index method
 SEXP _index(SEXP x) {
 
-  SEXP idx;
-  PROTECT(idx = Rf_shallow_duplicate(Rf_getAttrib(x, xts_IndexSymbol)));
-  idx = _psxct(idx);
-  UNPROTECT(1);
+  SEXP idx = Rf_shallow_duplicate(Rf_getAttrib(x, xts_IndexSymbol));
+  Rf_classgets(idx, ichimoku_tclass);
   return idx;
 
 }

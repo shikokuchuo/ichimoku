@@ -4,6 +4,7 @@
 
 * Fixes to `ichimoku()` validation code for POSIXct handling changes in upcoming R 4.3.0.
 * Required version of 'ggplot2' increased to 3.4.0 due to API changes in the former.
+* Improved stability of OANDA functions requiring nanonext >= 0.7.0.
 * Internal performance enhancements.
 
 # ichimoku 1.4.2
