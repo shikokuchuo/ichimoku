@@ -171,7 +171,7 @@ entity unaffiliated with the ichimoku package.
 ◈ ichimoku R package: <https://shikokuchuo.net/ichimoku/>.
 
 Listed CRAN Finance Task View:
-<https://CRAN.R-project.org/view=Finance>.
+<https://cran.r-project.org/view=Finance>.
 
 –
 

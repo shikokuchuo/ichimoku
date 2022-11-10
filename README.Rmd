@@ -116,7 +116,7 @@ Sasaki, H. 佐々木 英信 (1996), *一目均衡表の研究 [ichimoku kinkouhy
 
 ◈ ichimoku R package: <https://shikokuchuo.net/ichimoku/>.
 
-Listed CRAN Finance Task View: <https://CRAN.R-project.org/view=Finance>.
+Listed CRAN Finance Task View: <https://cran.r-project.org/view=Finance>.
 
 --
 

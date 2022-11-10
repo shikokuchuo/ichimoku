@@ -75,13 +75,13 @@ ichimoku incorporates an interface with the OANDA fxTrade API to return data for
 cloud <- ichimoku(oanda("USD_JPY"))
 ```
 
-ichimoku has been designed to be fully pipeable and interfaces well with other R packages that return financial data. An example is shown below.
+ichimoku has been designed to be fully pipeable and interfaces well with other R packages that return financial data, or indeed the OANDA functions from the package itself:
 
 ```{r pipe, eval = FALSE}
 # Using R 4.1's new pipe operator:
-quantmod::getSymbols("C") |> ichimoku() |> plot()
+oanda("USD_JPY") |> ichimoku() |> plot()
 # Or equally using the 'magrittr' pipe:
-quantmod::getSymbols("C") %>% ichimoku() %>% plot()
+oanda("USD_JPY") %>% ichimoku() %>% plot()
 ```
 
 #### Input data requirements
