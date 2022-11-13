@@ -1,5 +1,9 @@
 # ichimoku 1.4.2.9000 (development)
 
+#### New features:
+
+* Selecting `mlgrid()` type z-score now returns the 'means' and 'sdevs' used to standardise the grid as attributes.
+
 #### Updates:
 
 * Fixes to `ichimoku()` validation code for POSIXct handling changes in upcoming R 4.3.0.

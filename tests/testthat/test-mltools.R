@@ -33,7 +33,7 @@ test_that("relative ok", {
 test_that("look ok", {
   expect_length(expect_type(look(cloud), "pairlist"), 3L)
   expect_length(expect_type(look(stratlist[[1L]]), "pairlist"), 4L)
-  expect_length(expect_type(look(grid), "pairlist"), 5L)
+  expect_length(expect_type(look(grid), "pairlist"), 7L)
   expect_length(expect_type(look(stratlist), "pairlist"), 2L)
   expect_null(expect_invisible(look(sample_ohlc_data)))
   expect_null(expect_invisible(look()))

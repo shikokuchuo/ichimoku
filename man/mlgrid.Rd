@@ -43,7 +43,9 @@ A data.frame or matrix in a 'tidy' format with one observation per
     (unless set to 'none').
 
     The 'y' and 'k' parameters, trade direction and grid type are set as
-    attributes. To view these, use \code{\link{look}} on the returned object.
+    attributes, with 'means' and 'sdevs' also populated for type 'z-score' to
+    return the mean and standard deviation for each column. To view these,
+    use \code{\link{look}} on the returned object.
 }
 \description{
 Create a grid of ichimoku indicator conditions and next period returns. The

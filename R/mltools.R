@@ -185,7 +185,9 @@ autostrat <- function(x,
 #'     (unless set to 'none').
 #'
 #'     The 'y' and 'k' parameters, trade direction and grid type are set as
-#'     attributes. To view these, use \code{\link{look}} on the returned object.
+#'     attributes, with 'means' and 'sdevs' also populated for type 'z-score' to
+#'     return the mean and standard deviation for each column. To view these,
+#'     use \code{\link{look}} on the returned object.
 #'
 #' @details The date-time index corresponds to when the indicator condition is
 #'     met at the close for that period. The return is the k-period return
@@ -273,6 +275,8 @@ mlgrid <- function(x,
     sdevs <- unname(apply(grid, 2, sd))
     grid <- t((t(grid) - means) / sdevs)
     if (y != "none") grid <- cbind(idx, grid)
+  } else {
+    means <- sdevs <- NA
   }
 
   switch(format,
@@ -284,7 +288,9 @@ mlgrid <- function(x,
                              k = k,
                              direction = dir,
                              type = type,
-                             ticker = attr(x, "ticker"))),
+                             ticker = attr(x, "ticker"),
+                             means = means,
+                             sdevs = sdevs)),
          `attributes<-`(grid,
                         list(dim = attr(grid, "dim"),
                              dimnames = attr(grid, "dimnames"),
@@ -292,7 +298,9 @@ mlgrid <- function(x,
                              k = k,
                              direction = dir,
                              type = type,
-                             ticker = attr(x, "ticker")))
+                             ticker = attr(x, "ticker"),
+                             means = means,
+                             sdevs = sdevs))
   )
 
 }
