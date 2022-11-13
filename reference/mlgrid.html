@@ -145,7 +145,9 @@ Set to FALSE to return both c1 &gt; c2 and c2 &gt; c1.</p></dd>
 
 
 <p>The 'y' and 'k' parameters, trade direction and grid type are set as
-    attributes. To view these, use <code><a href="look.html">look</a></code> on the returned object.</p>
+    attributes, with 'means' and 'sdevs' also populated for type 'z-score' to
+    return the mean and standard deviation for each column. To view these,
+    use <code><a href="look.html">look</a></code> on the returned object.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -225,6 +227,8 @@ Set to FALSE to return both c1 &gt; c2 and c2 &gt; c1.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  - attr(*, "direction")= chr "short"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  - attr(*, "type")= chr "z-score"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  - attr(*, "ticker")= chr "TKR"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  - attr(*, "means")= num [1:37] 1.414 0.691 2.222 1.646 2.241 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  - attr(*, "sdevs")= num [1:37] 6.09 6.11 6.15 6.19 6.01 ...</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
