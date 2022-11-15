@@ -107,9 +107,11 @@ do_ <- function() {
         url <- switch(server,
                       practice = "https://api-fxpractice.oanda.com/v3/accounts",
                       live = "https://api-fxtrade.oanda.com/v3/accounts")
-        resp <- ncurl(url, follow = TRUE, headers = c("Authorization" = paste0("Bearer ", apikey),
-                                                      "User-Agent" = .user_agent))
-        parsed <- parse_json(.subset2(resp, "data"))
+        resp <- ncurl(url, convert = FALSE, follow = TRUE,
+                      headers = c("Authorization" = paste0("Bearer ", apikey),
+                                  "User-Agent" = .user_agent))
+        parsed <- fparse(.subset2(resp, "raw"),
+                         max_simplify_lvl = 3L, type_policy = 0L, int64_policy = 0L)
         length(.subset2(parsed, "accounts")) || stop(parsed, call. = FALSE)
         account <<- parsed[["accounts"]][[1L]][["id"]]
       }
@@ -122,9 +124,11 @@ do_ <- function() {
         url <- paste0("https://api-fx", switch(server, practice = "practice", live = "trade"),
                       ".oanda.com/v3/accounts/", do_$getAccount(server = server, apikey = apikey),
                       "/instruments")
-        resp <- ncurl(url, follow = TRUE, headers = c("Authorization" = paste0("Bearer ", apikey),
-                                                      "User-Agent" = .user_agent))
-        parsed <- parse_json(.subset2(resp, "data"))
+        resp <- ncurl(url, convert = FALSE, follow = TRUE,
+                      headers = c("Authorization" = paste0("Bearer ", apikey),
+                                  "User-Agent" = .user_agent))
+        parsed <- fparse(.subset2(resp, "raw"),
+                         max_simplify_lvl = 3L, type_policy = 0L, int64_policy = 0L)
         length(.subset2(parsed, "instruments")) || {
           warning(parsed,
                   "\nInstruments list could not be retrieved - falling back to internal data",

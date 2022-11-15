@@ -189,6 +189,7 @@ getPrices <- function(instrument, granularity, count = NULL, from = NULL,
                 if (!is.null(from)) paste0("&from=", from),
                 if (!is.null(to)) paste0("&to=", to))
   resp <- ncurl(url,
+                convert = FALSE,
                 follow = TRUE,
                 headers = c(Authorization = paste0("Bearer ", apikey),
                             `Accept-Datetime-Format` = "UNIX",
@@ -196,10 +197,12 @@ getPrices <- function(instrument, granularity, count = NULL, from = NULL,
                 response = "date")
   .subset2(resp, "status") == 200L ||
     stop("status code ", .subset2(resp, "status"), " - ",
-         parse_json(.subset2(resp, "data")), call. = FALSE)
+         fparse(.subset2(resp, "raw"), max_simplify_lvl = 3L, type_policy = 0L, int64_policy = 0L),
+         call. = FALSE)
   timestamp <- as.POSIXct.POSIXlt(strptime(.subset2(.subset2(resp, "headers"), "date"),
                                            format = "%a, %d %b %Y %H:%M:%S", tz = "UTC"))
-  candles <- .subset2(parse_json(.subset2(resp, "data")), "candles")
+  candles <- fparse(.subset2(resp, "raw"), query = "/candles",
+                             max_simplify_lvl = 3L, type_policy = 0L, int64_policy = 0L)
   ptype <- switch(price, M = "mid", B = "bid", A = "ask")
 
   !missing(.validate) && .validate == FALSE && {
@@ -347,13 +350,13 @@ oanda_stream <- function(instrument, display = 8L, limit, server, apikey) {
   open(con, "rb")
   on.exit(expr = {
     close(con)
-    return(df)
+    return(invisible(df))
   })
   repeat {
     page <- readLines(con, n = 1L, encoding = "UTF-8")
     if (length(page) == 0L)
       break
-    json <- parse_json(page)
+    json <- fparse(page, max_simplify_lvl = 3L, type_policy = 0L, int64_policy = 0L)
     .subset2(json, "type") == "PRICE" || next
     json[["type"]] <- NULL
     json[["time"]] <- .POSIXct(.subset2(json, "time"))
@@ -1012,13 +1015,15 @@ oanda_positions <- function(instrument, time, server, apikey) {
   url <- paste0("https://api-fx", switch(server, practice = "practice", live = "trade"),
                 ".oanda.com/v3/instruments/", instrument, "/positionBook",
                 if (!missing(time)) paste0("?time=", unclass(as.POSIXct(time))))
-  resp <- ncurl(url, follow = TRUE, headers = c(Authorization = paste0("Bearer ", apikey),
-                                                `Accept-Datetime-Format` = "UNIX",
-                                                `User-Agent` = .user_agent))
+  resp <- ncurl(url, convert = FALSE, follow = TRUE,
+                headers = c(Authorization = paste0("Bearer ", apikey),
+                            `Accept-Datetime-Format` = "UNIX", `User-Agent` = .user_agent))
   .subset2(resp, "status") == 200L ||
     stop("status code ", .subset2(resp, "status"), " - ",
-         parse_json(.subset2(resp, "data")), call. = FALSE)
-  data <- .subset2(parse_json(.subset2(resp, "data")), "positionBook")
+         fparse(.subset2(resp, "raw"),
+                max_simplify_lvl = 3L, type_policy = 0L, int64_policy = 0L), call. = FALSE)
+  data <- fparse(.subset2(resp, "raw"), query = "/positionBook",
+                 max_simplify_lvl = 3L, type_policy = 0L, int64_policy = 0L)
   currentprice <- as.numeric(.subset2(data, "price"))
   timestamp <- .Call(ichimoku_psxct, .subset2(data, "unixTime"))
   bucketwidth <- as.numeric(.subset2(data, "bucketWidth"))
@@ -1104,13 +1109,15 @@ oanda_orders <- function(instrument, time, server, apikey) {
   url <- paste0("https://api-fx", switch(server, practice = "practice", live = "trade"),
                 ".oanda.com/v3/instruments/", instrument, "/orderBook",
                 if (!missing(time)) paste0("?time=", unclass(as.POSIXct(time))))
-  resp <- ncurl(url, follow = TRUE, headers = c(Authorization = paste0("Bearer ", apikey),
-                                                `Accept-Datetime-Format` = "UNIX",
-                                                `User-Agent` = .user_agent))
+  resp <- ncurl(url, convert = FALSE, follow = TRUE,
+                headers = c(Authorization = paste0("Bearer ", apikey),
+                            `Accept-Datetime-Format` = "UNIX", `User-Agent` = .user_agent))
   .subset2(resp, "status") == 200L ||
     stop("status code ", .subset2(resp, "status"), " - ",
-         parse_json(.subset2(resp, "data")), call. = FALSE)
-  data <- .subset2(parse_json(.subset2(resp, "data")), "orderBook")
+         fparse(.subset2(resp, "raw"),
+                max_simplify_lvl = 3L, type_policy = 0L, int64_policy = 0L), call. = FALSE)
+  data <- fparse(.subset2(resp, "raw"), query = "/orderBook",
+                 max_simplify_lvl = 3L, type_policy = 0L, int64_policy = 0L)
   currentprice <- as.numeric(.subset2(data, "price"))
   timestamp <- .Call(ichimoku_psxct, .subset2(data, "unixTime"))
   bucketwidth <- as.numeric(.subset2(data, "bucketWidth"))

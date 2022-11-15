@@ -427,7 +427,7 @@ ichimoku currently has the following external package dependencies:
 - shiny - for interactive and live visualizations
 - xts, zoo - for enhanced time series methods
 - nanonext - for interfacing with external APIs and verifying the data integrity of archived objects
-- jsonlite - for parsing data received from external APIs.
+- RcppSimdJson - for parsing data received from external APIs
 
 Optional (enables additional features):
 
