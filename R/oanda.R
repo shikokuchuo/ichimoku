@@ -327,8 +327,11 @@ oanda_stream <- function(instrument, display = 8L, limit, server, apikey) {
                `Accept-Datetime-Format` = "UNIX",
                `User-Agent` = .user_agent)
 
-  data <- NULL
+  firstrun <- TRUE
+  con <- gzcon(url(url, headers = headers))
+  open(con, "rb")
   on.exit(expr = {
+    close(con)
     xlen <- dim(data)[1L]
     bids <- unlist(.subset2(data, "bids"))
     ncol <- length(bids) / xlen
@@ -345,30 +348,22 @@ oanda_stream <- function(instrument, display = 8L, limit, server, apikey) {
 
   if (!missing(limit) && is.numeric(limit)) setTimeLimit(elapsed = limit, transient = TRUE)
 
-  con <- gzcon(url(url, headers = headers))
-  df <- NULL
-  open(con, "rb")
-  on.exit(expr = {
-    close(con)
-    return(invisible(df))
-  })
-  repeat {
-    page <- readLines(con, n = 1L, encoding = "UTF-8")
-    if (length(page) == 0L)
-      break
+  while (length(page <- readLines(con, n = 1L, encoding = "UTF-8"))) {
+
     json <- fparse(page, max_simplify_lvl = 3L, type_policy = 0L, int64_policy = 0L)
     .subset2(json, "type") == "PRICE" || next
     json[["type"]] <- NULL
     json[["time"]] <- .POSIXct(.subset2(json, "time"))
     cat("\f", file = stdout())
     message("Streaming data... 'Esc' or 'Ctrl+c' to return")
-    if (length(df)) {
-      df <- df_append(df, json)
-      end <- dim(df)[1L]
-      start <- max(1L, end - display + 1L)
-      print.data.frame(df[start:end, ])
+    if (firstrun) {
+      data <- json
+      firstrun <- FALSE
     } else {
-      df <- json
+      data <- df_append(data, json)
+      end <- dim(data)[1L]
+      start <- max(1L, end - display + 1L)
+      print.data.frame(data[start:end, ])
     }
 
   }
