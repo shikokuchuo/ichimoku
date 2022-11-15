@@ -172,7 +172,7 @@ Connect to the OANDA fxTrade streaming API and stream a list of prices generated
 The arguments are as follows:
 
 - `instrument` the instrument to stream data for
-- `display` [default 7L] specify an integer to customise the number of rows to display in the console at any one time
+- `display` [default 8L] specify an integer to customise the number of rows to display in the console at any one time
 - `limit` (optional) specify a time in seconds by which to limit the streaming session. The session will end with data returned automatically after the specified time has elapsed
 
 The 'server' and 'apikey' arguments are also available if required.
@@ -181,22 +181,15 @@ The 'server' and 'apikey' arguments are also available if required.
 # Streaming session will end with data automatically returned after 600 secs (10 mins):
 data <- oanda_stream("UK10YB_GBP", limit = 600)
 #> Streaming data... Press 'Esc' to return
-#>    type                time           bids           asks closeoutBid closeoutAsk    status tradeable
-#> 1 PRICE 2022-02-21 12:31:20 121.712, 10000 121.742, 10000     121.712     121.742 tradeable      TRUE
-#> 2 PRICE 2022-02-21 12:31:37 121.722, 10000 121.752, 10000     121.722     121.752 tradeable      TRUE
-#> 3 PRICE 2022-02-21 12:31:52 121.712, 10000 121.742, 10000     121.712     121.742 tradeable      TRUE
-#> 4 PRICE 2022-02-21 12:32:12 121.722, 10000 121.752, 10000     121.722     121.752 tradeable      TRUE
-#> 5 PRICE 2022-02-21 12:32:15 121.712, 10000 121.742, 10000     121.712     121.742 tradeable      TRUE
-#> 6 PRICE 2022-02-21 12:32:27 121.722, 10000 121.752, 10000     121.722     121.752 tradeable      TRUE
-#> 7 PRICE 2022-02-21 12:33:24 121.712, 10000 121.742, 10000     121.712     121.742 tradeable      TRUE
-#>   instrument
-#> 1 UK10YB_GBP
-#> 2 UK10YB_GBP
-#> 3 UK10YB_GBP
-#> 4 UK10YB_GBP
-#> 5 UK10YB_GBP
-#> 6 UK10YB_GBP
-#> 7 UK10YB_GBP
+#>                   time           bids           asks closeoutBid closeoutAsk    status tradeable instrument
+#> 1  2022-11-15 11:04:00 105.049, 10000 105.079, 10000     105.049     105.079 tradeable      TRUE UK10YB_GBP
+#> 2  2022-11-15 11:04:01 105.039, 10000 105.079, 10000     105.039     105.079 tradeable      TRUE UK10YB_GBP
+#> 3  2022-11-15 11:04:01 105.049, 10000 105.079, 10000     105.049     105.079 tradeable      TRUE UK10YB_GBP
+#> 4  2022-11-15 11:04:04 105.059, 10000 105.089, 10000     105.059     105.089 tradeable      TRUE UK10YB_GBP
+#> 5  2022-11-15 11:04:10 105.059, 10000 105.089, 10000     105.059     105.089 tradeable      TRUE UK10YB_GBP
+#> 6  2022-11-15 11:04:11 105.059, 10000 105.089, 10000     105.059     105.089 tradeable      TRUE UK10YB_GBP
+#> 7  2022-11-15 11:04:15 105.049, 10000 105.089, 10000     105.049     105.089 tradeable      TRUE UK10YB_GBP
+#> 8  2022-11-15 11:04:15 105.049, 10000 105.079, 10000     105.049     105.079 tradeable      TRUE UK10YB_GBP
 ```
 
 Use the 'Esc' key to stop the stream and return the session data. Assign the return value to an object if you wish to retain the data.

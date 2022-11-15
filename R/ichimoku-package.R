@@ -81,7 +81,7 @@
 #'     PositionIdentity rel scale_color_manual scale_fill_manual
 #'     scale_x_continuous scale_y_continuous Stat StatIdentity theme theme_grey
 #'     %+replace%
-#' @importFrom jsonlite parse_json stream_in
+#' @importFrom jsonlite parse_json
 #' @importFrom nanonext ncurl sha256
 #' @importFrom shiny checkboxInput column downloadButton downloadHandler HTML
 #'     fillPage fluidPage fluidRow hoverOpts invalidateLater isolate

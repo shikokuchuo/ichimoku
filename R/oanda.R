@@ -263,7 +263,7 @@ getPrices <- function(instrument, granularity, count = NULL, from = NULL,
 #'     Streaming API.
 #'
 #' @inheritParams oanda
-#' @param display [default 7L] integer rows of data to display in the console
+#' @param display [default 8L] integer rows of data to display in the console
 #'     at any one time.
 #' @param limit (optional) specify a time in seconds by which to limit the
 #'     streaming session. The session will end with data returned automatically
@@ -305,16 +305,16 @@ getPrices <- function(instrument, granularity, count = NULL, from = NULL,
 #' @examples
 #' \dontrun{
 #' # OANDA fxTrade API key required to run this example
-#' data <- oanda_stream("USD_JPY", display = 7L)
+#' data <- oanda_stream("USD_JPY", display = 8L)
 #' }
 #'
 #' @export
 #'
-oanda_stream <- function(instrument, display = 7L, limit, server, apikey) {
+oanda_stream <- function(instrument, display = 8L, limit, server, apikey) {
 
   if (missing(instrument) && interactive()) instrument <- readline("Enter instrument:")
   instrument <- sub("-", "_", toupper(force(instrument)), fixed = TRUE)
-  if (!missing(display) && !is.numeric(display) || display < 1L) display <- 7L
+  if (!missing(display) && !is.numeric(display) || display < 1L) display <- 8L
   server <- if (missing(server)) do_$getServer() else match.arg(server, c("practice", "live"))
   if (missing(apikey)) apikey <- do_$getKey(server = server)
   url <- paste0("https://stream-fx", switch(server, practice = "practice", live = "trade"),
@@ -343,20 +343,32 @@ oanda_stream <- function(instrument, display = 7L, limit, server, apikey) {
   if (!missing(limit) && is.numeric(limit)) setTimeLimit(elapsed = limit, transient = TRUE)
 
   con <- gzcon(url(url, headers = headers))
-  stream_in(con = con, pagesize = 1L, verbose = FALSE, handler = function(x) {
-    .subset2(x, "type") == "PRICE" || return()
-    x[["time"]] <- .POSIXct(as.numeric(.subset2(x, "time")))
-    if (is.null(data)) {
-      data <<- x
-    } else {
-      data <<- df_append(old = data, new = x)
-    }
-    end <- dim(data)[1L]
-    start <- max(1L, end - display + 1L)
+  df <- NULL
+  open(con, "rb")
+  on.exit(expr = {
+    close(con)
+    return(df)
+  })
+  repeat {
+    page <- readLines(con, n = 1L, encoding = "UTF-8")
+    if (length(page) == 0L)
+      break
+    json <- parse_json(page)
+    .subset2(json, "type") == "PRICE" || next
+    json[["type"]] <- NULL
+    json[["time"]] <- .POSIXct(.subset2(json, "time"))
     cat("\f", file = stdout())
     message("Streaming data... 'Esc' or 'Ctrl+c' to return")
-    print.data.frame(data[start:end, ])
-  })
+    if (length(df)) {
+      df <- df_append(df, json)
+      end <- dim(df)[1L]
+      start <- max(1L, end - display + 1L)
+      print.data.frame(df[start:end, ])
+    } else {
+      df <- json
+    }
+
+  }
 
 }
 

@@ -4,7 +4,7 @@
 \alias{oanda_stream}
 \title{OANDA Streaming Data}
 \usage{
-oanda_stream(instrument, display = 7L, limit, server, apikey)
+oanda_stream(instrument, display = 8L, limit, server, apikey)
 }
 \arguments{
 \item{instrument}{string containing the base currency and quote currency
@@ -12,7 +12,7 @@ delimited by '_' or '-' (e.g. "USD_JPY" or "usd-jpy"). Use the
 \code{\link{oanda_instruments}} function to return a list of all valid
 instruments.}
 
-\item{display}{[default 7L] integer rows of data to display in the console
+\item{display}{[default 8L] integer rows of data to display in the console
 at any one time.}
 
 \item{limit}{(optional) specify a time in seconds by which to limit the
@@ -75,7 +75,7 @@ This function connects to the OANDA fxTrade Streaming API. Use the
 \examples{
 \dontrun{
 # OANDA fxTrade API key required to run this example
-data <- oanda_stream("USD_JPY", display = 7L)
+data <- oanda_stream("USD_JPY", display = 8L)
 }
 
 }
