@@ -48,9 +48,9 @@
 print.ichimoku <- function(x, plot = TRUE, rows = 26L, ...) {
 
   cat(" ichimoku   [ more() to display more rows | look() to inspect attributes ]\n  object\n", file = stdout())
-  dim2 <- attr(x, "dim")[2L]
-  NextMethod(max = if (length(dim2)) dim2 * rows, ...)
-  if (length(dim2) && dim2 >= 12L && (missing(plot) || isTRUE(plot))) plot.ichimoku(x, ...)
+  dim <- attr(x, "dim")
+  NextMethod(max = if (length(dim)) dim[2L] * rows, ...)
+  if ((missing(plot) || isTRUE(plot)) && length(dim) && dim[1L] > 1L && dim[2L] >= 12L) plot.ichimoku(x, ...)
   invisible(x)
 
 }

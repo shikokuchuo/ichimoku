@@ -8,6 +8,7 @@
 
 * Improved performance and reliability of `oanda_stream()`. Returned dataframe no longer contains the column 'type', which was always 'PRICE'.
 * Fixes to `ichimoku()` validation code for POSIXct handling changes in upcoming R 4.3.0.
+* No longer attempts to plot a single row (subset) ichimoku object.
 * Required version of 'ggplot2' increased to 3.4.0 due to API changes in the former.
 * Improved stability of OANDA functions requiring nanonext >= 0.7.0.
 * Switch from 'jsonlite' to 'RcppSimdJson' for JSON parsing.
