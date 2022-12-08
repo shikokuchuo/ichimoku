@@ -93,7 +93,8 @@
 <span>  dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"long"</span>, <span class="st">"short"</span><span class="op">)</span>,</span>
 <span>  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"boolean"</span>, <span class="st">"numeric"</span>, <span class="st">"z-score"</span><span class="op">)</span>,</span>
 <span>  format <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"dataframe"</span>, <span class="st">"matrix"</span><span class="op">)</span>,</span>
-<span>  unique <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  unique <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  func <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -133,6 +134,14 @@ the format of returned object.</p></dd>
 <dt>unique</dt>
 <dd><p>[default TRUE] to return only unique combinations of c1 and c2.
 Set to FALSE to return both c1 &gt; c2 and c2 &gt; c1.</p></dd>
+
+
+<dt>func</dt>
+<dd><p>[default list()] (for advanced use only) a named list of
+functions which take 2 arguments: 'core' and 'xlen', the coredata matrix
+of the ichimoku object and the number of observations, respectively. Each
+function must return a vector of length 'xlen', and these are included in
+the grid.</p></dd>
 
 </dl></div>
     <div id="value">
