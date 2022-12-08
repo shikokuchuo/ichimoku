@@ -1,8 +1,8 @@
 # ichimoku 1.4.2.9000 (development)
 
 #### New features:
-
-* Selecting `mlgrid()` type z-score now returns the 'means' and 'sdevs' used to standardise the grid as attributes.
+ 
+* `mlgrid()` gains the argument 'func' for supplying a named list of functions for custom calculations (for advanced use). Also, when choosing type z-score, now returns the 'means' and 'sdevs' used to standardise the grid as attributes.
 
 #### Updates:
 

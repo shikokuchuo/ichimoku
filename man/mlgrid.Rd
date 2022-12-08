@@ -11,7 +11,8 @@ mlgrid(
   dir = c("long", "short"),
   type = c("boolean", "numeric", "z-score"),
   format = c("dataframe", "matrix"),
-  unique = TRUE
+  unique = TRUE,
+  func = list()
 )
 }
 \arguments{
@@ -36,6 +37,12 @@ the format of returned object.}
 
 \item{unique}{[default TRUE] to return only unique combinations of c1 and c2.
 Set to FALSE to return both c1 > c2 and c2 > c1.}
+
+\item{func}{[default list()] (for advanced use only) a named list of
+functions which take 2 arguments: 'core' and 'xlen', the coredata matrix
+of the ichimoku object and the number of observations, respectively. Each
+function must return a vector of length 'xlen', and these are included in
+the grid.}
 }
 \value{
 A data.frame or matrix in a 'tidy' format with one observation per
