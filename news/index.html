@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.4.2.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.4.3</span>
       </span>
     </div>
 
@@ -73,18 +73,18 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.4.2.9000" id="ichimoku-1429000-development">ichimoku 1.4.2.9000 (development)<a class="anchor" aria-label="anchor" href="#ichimoku-1429000-development"></a></h2>
+<h2 class="page-header" data-toc-text="1.4.3" id="ichimoku-143">ichimoku 1.4.3<small>2022-12-08</small><a class="anchor" aria-label="anchor" href="#ichimoku-143"></a></h2>
 <div class="section level5">
-<h5 id="new-features-1-4-2-9000">New features:<a class="anchor" aria-label="anchor" href="#new-features-1-4-2-9000"></a></h5>
+<h5 id="new-features-1-4-3">New features:<a class="anchor" aria-label="anchor" href="#new-features-1-4-3"></a></h5>
 <ul><li>
 <code><a href="../reference/mlgrid.html">mlgrid()</a></code> gains the argument ‘func’ for supplying a named list of functions for custom calculations (for advanced use). Also, when choosing type z-score, now returns the ‘means’ and ‘sdevs’ used to standardise the grid as attributes.</li>
 </ul></div>
 <div class="section level5">
-<h5 id="updates-1-4-2-9000">Updates:<a class="anchor" aria-label="anchor" href="#updates-1-4-2-9000"></a></h5>
+<h5 id="updates-1-4-3">Updates:<a class="anchor" aria-label="anchor" href="#updates-1-4-3"></a></h5>
 <ul><li>Improved performance and reliability of <code><a href="../reference/oanda_stream.html">oanda_stream()</a></code>. Returned dataframe no longer contains the column ‘type’, which was always ‘PRICE’.</li>
 <li>Fixes to <code><a href="../reference/ichimoku.html">ichimoku()</a></code> validation code for POSIXct handling changes in upcoming R 4.3.0.</li>
 <li>No longer attempts to plot a single row (subset) ichimoku object.</li>
-<li>Required version of ‘ggplot2’ increased to 3.4.0 due to API changes in the former.</li>
+<li>API changes in ‘ggplot2’ require version &gt;= 3.4.0; R version requirement consequently raised to 3.3.</li>
 <li>Improved stability of OANDA functions requiring nanonext &gt;= 0.7.0.</li>
 <li>Switch from ‘jsonlite’ to ‘RcppSimdJson’ for JSON parsing.</li>
 <li>Internal performance enhancements.</li>
