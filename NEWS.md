@@ -1,3 +1,9 @@
+# ichimoku 1.4.3.9000 (development)
+
+#### Updates:
+
+* `oanda_instruments()` retries once if encountering a non-sucess server status code. This eliminates a potential error incurred when calling an OANDA function for the first time in a session.
+
 # ichimoku 1.4.3
 
 #### New features:

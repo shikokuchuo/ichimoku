@@ -110,10 +110,6 @@ do_ <- function() {
         resp <- ncurl(url, convert = FALSE, follow = TRUE,
                       headers = c("Authorization" = paste0("Bearer ", apikey),
                                   "User-Agent" = .user_agent))
-        .subset2(resp, "status") == 200L ||
-          stop("status code ", .subset2(resp, "status"), " - ",
-               fparse(.subset2(resp, "raw"), max_simplify_lvl = 3L, type_policy = 0L, int64_policy = 0L),
-               call. = FALSE)
         parsed <- fparse(.subset2(resp, "raw"),
                          max_simplify_lvl = 3L, type_policy = 0L, int64_policy = 0L)
         length(.subset2(parsed, "accounts")) || stop(parsed, call. = FALSE)
@@ -131,10 +127,11 @@ do_ <- function() {
         resp <- ncurl(url, convert = FALSE, follow = TRUE,
                       headers = c("Authorization" = paste0("Bearer ", apikey),
                                   "User-Agent" = .user_agent))
-        .subset2(resp, "status") == 200L ||
-          stop("status code ", .subset2(resp, "status"), " - ",
-               fparse(.subset2(resp, "raw"), max_simplify_lvl = 3L, type_policy = 0L, int64_policy = 0L),
-               call. = FALSE)
+        if (.subset2(resp, "status") != 200L) {
+          resp <- ncurl(url, convert = FALSE, follow = TRUE,
+                        headers = c("Authorization" = paste0("Bearer ", apikey),
+                                    "User-Agent" = .user_agent))
+        }
         parsed <- fparse(.subset2(resp, "raw"),
                          max_simplify_lvl = 3L, type_policy = 0L, int64_policy = 0L)
         length(.subset2(parsed, "instruments")) || {
