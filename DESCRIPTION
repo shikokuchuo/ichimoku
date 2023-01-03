@@ -32,15 +32,14 @@ Depends:
 Imports: 
     ggplot2 (>= 3.4.0),
     nanonext (>= 0.7.0),
-    shiny (>= 1.4.0),
     RcppSimdJson,
+    shiny (>= 1.4.0),
     xts,
     zoo
 LinkingTo: 
     xts
 Suggests: 
     keyring,
-    covr,
     knitr,
     rmarkdown,
     testthat (>= 3.0.0)

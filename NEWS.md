@@ -3,6 +3,7 @@
 #### Updates:
 
 * `oanda_instruments()` retries once if encountering a non-sucess server status code (eliminating a potential error when calling an OANDA function for the first time in a session).
+* Updates internal OANDA instruments list.
 * Internal performance enhancements.
 
 # ichimoku 1.4.3

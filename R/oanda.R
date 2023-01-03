@@ -1,4 +1,4 @@
-# Copyright (C) 2021-2022 Hibiki AI Limited <info@hibiki-ai.com>
+# Copyright (C) 2021-2023 Hibiki AI Limited <info@hibiki-ai.com>
 #
 # This file is part of ichimoku.
 #
@@ -894,7 +894,7 @@ oanda_view <- function(market = c("allfx", "bonds", "commodities", "fx", "metals
   sel <- switch(market,
                 fx = {
                   vec <- .subset2(ins, "name")[.subset2(ins, "type") == "CURRENCY"]
-                  vec[-grep("CNH|CZK|DKK|HKD|HUF|INR|MXN|NOK|PLN|SGD|SEK|THB|TRY|ZAR", vec, perl = TRUE)]
+                  vec[-grep("CNH|CZK|DKK|HKD|HUF|MXN|NOK|PLN|SGD|SEK|THB|TRY|ZAR", vec, perl = TRUE)]
                 },
                 allfx = .subset2(ins, "name")[.subset2(ins, "type") == "CURRENCY"],
                 stocks = .subset2(ins, "name")[grep("20|25|30|33|35|40|50|100|200|225|Shares|Index", .subset2(ins, "displayName"), perl = TRUE)],
