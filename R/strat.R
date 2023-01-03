@@ -1,4 +1,4 @@
-# Copyright (C) 2021-2022 Hibiki AI Limited <info@hibiki-ai.com>
+# Copyright (C) 2021-2023 Hibiki AI Limited <info@hibiki-ai.com>
 #
 # This file is part of ichimoku.
 #
@@ -150,14 +150,14 @@ strat <- function(x,
 
     cond <- c(rep(NA, offset), (core[, c1] > core[, c2])[1:(xlen - offset)])
     s1posn <- c(NA, cond[1:(end - 1L)], rep(NA, p2))
-    s1txn <- c(NA, diff(s1posn))
+    s1txn <- c(NA, s1posn[-1L] - s1posn[-xlen])
     s1txn[s1posn == 1 & is.na(s1txn)] <- 1
     if (s1posn[end] == 1) s1txn[end + 1L] <- -1
 
     offset2 <- (p2 - 1L) * (c3 == "chikou" || c4 == "chikou")
     s2cond <- c(rep(NA, offset2), (core[, c3] > core[, c4])[1:(xlen - offset2)])
     s2posn <- c(NA, s2cond[1:(end - 1L)], rep(NA, p2))
-    s2txn <- c(NA, diff(s2posn))
+    s2txn <- c(NA, s2posn[-1L] - s2posn[-xlen])
     s2txn[s2posn == 1 & is.na(s2txn)] <- 1
     if (s2posn[end] == 1) s2txn[end + 1L] <- -1
 
@@ -178,13 +178,13 @@ strat <- function(x,
 
   }
 
-  txn <- c(NA, diff(posn))
+  txn <- c(NA, posn[-1L] - posn[-xlen])
   txn[posn == 1 & is.na(txn)] <- 1
   if (posn[end] == 1) txn[end + 1L] <- -1
   sum(txn, na.rm = TRUE) == 0 ||
     stop("Calculation error - please check validity of data", call. = FALSE)
 
-  logret <- c(diff(log(core[, "open"])), NA)
+  logret <- c(log(core[-1L, "open"]) - log(core[-xlen, "open"]), NA)
   if (dir == "short") logret <- -logret
   logret[is.na(posn)] <- NA
   slogret <- logret * posn
