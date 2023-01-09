@@ -1,4 +1,4 @@
-# Copyright (C) 2021-2022 Hibiki AI Limited <info@hibiki-ai.com>
+# Copyright (C) 2021-2023 Hibiki AI Limited <info@hibiki-ai.com>
 #
 # This file is part of ichimoku.
 #
@@ -261,23 +261,20 @@ NULL
 #' @method coredata ichimoku
 #' @export
 #'
-coredata.ichimoku <- function(x, fmt, ...) {
-
-  if (missing(fmt)) {
-    .Call(ichimoku_coredata, x)
-  } else if (is.null(attr(x, "dim"))) {
-    `attributes<-`(
-      x,
-      list(names = if (is.character(fmt)) format.POSIXct(index.ichimoku(x), format = fmt) else format.POSIXct(index.ichimoku(x))))
-  } else {
-    `attributes<-`(
-      x,
-      list(dim = attr(x, "dim"),
-           dimnames = list(if (is.character(fmt)) format.POSIXct(index.ichimoku(x), format = fmt) else format.POSIXct(index.ichimoku(x)),
-                           attr(x, "dimnames")[[2L]])))
-  }
-
-}
+coredata.ichimoku <- function(x, fmt, ...)
+  if (missing(fmt))
+    .Call(ichimoku_coredata, x) else if (is.null(attr(x, "dim")))
+      `attributes<-`(
+        x,
+        list(names = if (is.character(fmt)) format.POSIXct(index.ichimoku(x), format = fmt) else
+          format.POSIXct(index.ichimoku(x)))
+      ) else
+        `attributes<-`(
+          x,
+          list(dim = attr(x, "dim"),
+               dimnames = list(if (is.character(fmt)) format.POSIXct(index.ichimoku(x), format = fmt) else
+                 format.POSIXct(index.ichimoku(x)), attr(x, "dimnames")[[2L]]))
+        )
 
 #' @name index
 #' @rdname index.ichimoku
@@ -312,13 +309,8 @@ NULL
 #' @method index ichimoku
 #' @export
 #'
-index.ichimoku <- function(x, subset, ...) {
-
-  if (missing(subset)) {
-    .Call(ichimoku_index, x)
-  } else {
-    `class<-`(.subset(attr(x, "index"), subset), c("POSIXct", "POSIXt"))
-  }
-
-}
+index.ichimoku <- function(x, subset, ...)
+  if (missing(subset))
+    .Call(ichimoku_index, x) else
+      .Call(ichimoku_psxct, .subset(attr(x, "index"), subset))
 
