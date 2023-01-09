@@ -1,4 +1,4 @@
-# Copyright (C) 2021-2022 Hibiki AI Limited <info@hibiki-ai.com>
+# Copyright (C) 2021-2023 Hibiki AI Limited <info@hibiki-ai.com>
 #
 # This file is part of ichimoku.
 #
@@ -356,7 +356,6 @@ ichimoku.default <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, ..
     future <- seq.int(from = index[xlen] + periodicity, by = periodicity, length.out = p21)
   }
   xtsindex <- c(index, future)
-  x <- NULL
 
   kumo <- cbind(open = `length<-`(open, clen),
                 high = `length<-`(high, clen),
@@ -371,7 +370,7 @@ ichimoku.default <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, ..
                 cloudT = c(rep(NA, p21), cloudT),
                 cloudB = c(rep(NA, p21), cloudB))
 
-  .Call(ichimoku_create, kumo, xtsindex, periods, periodicity, ticker, x)
+  .Call(ichimoku_create, kumo, xtsindex, periods, periodicity, ticker, NULL)
 
 }
 

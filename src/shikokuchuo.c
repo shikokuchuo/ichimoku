@@ -1,4 +1,4 @@
-// Copyright (C) 2021-2022 Hibiki AI Limited <info@hibiki-ai.com>
+// Copyright (C) 2021-2023 Hibiki AI Limited <info@hibiki-ai.com>
 //
 // This file is part of ichimoku.
 //
@@ -31,6 +31,7 @@ SEXP ichimoku_TickerSymbol;
 
 SEXP ichimoku_klass;
 SEXP ichimoku_tclass;
+SEXP ichimoku_tzone;
 
 typedef SEXP (*linked_fun) (SEXP x);
 
@@ -214,7 +215,7 @@ SEXP _tbl(const SEXP x, const SEXP type) {
 SEXP _create(SEXP kumo, SEXP xtsindex, const SEXP periods,
              const SEXP periodicity, const SEXP ticker, const SEXP x) {
 
-  Rf_setAttrib(xtsindex, xts_IndexTzoneSymbol, Rf_mkString(""));
+  Rf_setAttrib(xtsindex, xts_IndexTzoneSymbol, ichimoku_tzone);
   Rf_setAttrib(xtsindex, xts_IndexTclassSymbol, ichimoku_tclass);
   Rf_setAttrib(kumo, xts_IndexSymbol, xtsindex);
 
@@ -358,11 +359,13 @@ static void PreserveObjects(void) {
   R_PreserveObject(ichimoku_tclass = Rf_allocVector(STRSXP, 2));
   SET_STRING_ELT(ichimoku_tclass, 0, Rf_mkChar("POSIXct"));
   SET_STRING_ELT(ichimoku_tclass, 1, Rf_mkChar("POSIXt"));
+  R_PreserveObject(ichimoku_tzone = Rf_mkString(""));
 }
 
 static void ReleaseObjects(void) {
-  R_ReleaseObject(ichimoku_klass);
+  R_ReleaseObject(ichimoku_tzone);
   R_ReleaseObject(ichimoku_tclass);
+  R_ReleaseObject(ichimoku_klass);
 }
 
 static const R_CallMethodDef CallEntries[] = {
