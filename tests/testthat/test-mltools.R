@@ -2,7 +2,7 @@ cloud <- ichimoku(sample_ohlc_data)
 grid <- mlgrid(cloud, y = "none", type = "numeric")
 grid2 <- mlgrid(cloud, y = "logret", type = "boolean", dir = "short", unique = FALSE)
 grid3 <- mlgrid(cloud, y = "ret", k = 3, type = "z-score", format = "matrix",
-                func = list(close = function(core, xlen) core[1:xlen, "close"]))
+                expr = list(close = quote(core[, "close"])))
 stratlist <- autostrat(cloud, n = 2, dir = "short", quietly = TRUE)
 
 test_that("autostrat ok", {

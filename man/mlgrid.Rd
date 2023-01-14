@@ -12,7 +12,7 @@ mlgrid(
   type = c("boolean", "numeric", "z-score"),
   format = c("dataframe", "matrix"),
   unique = TRUE,
-  func = list()
+  expr = list()
 )
 }
 \arguments{
@@ -38,11 +38,12 @@ the format of returned object.}
 \item{unique}{[default TRUE] to return only unique combinations of c1 and c2.
 Set to FALSE to return both c1 > c2 and c2 > c1.}
 
-\item{func}{[default list()] (for advanced use only) a named list of
-functions which take 2 arguments: 'core' and 'xlen', the coredata matrix
-of the ichimoku object and the number of observations, respectively. Each
-function must return a vector of length 'xlen', and these are included in
-the grid.}
+\item{expr}{[default list()] (for advanced use only) a named list of
+quoted language objects or expressions, which are evaluated internally
+within the function, referencing intermediate objects such as:
+'core', the coredata matrix of the ichimoku object, 'xlen' the number of
+observations, or any of the function parameters etc. Each evaluated
+expression must return a vector of length 'xlen' for inclusion in the grid.}
 }
 \value{
 A data.frame or matrix in a 'tidy' format with one observation per
@@ -85,6 +86,9 @@ The date-time index corresponds to when the indicator condition is
 cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 grid <- mlgrid(cloud, y = "ret", k = 2, dir = "short", type = "z-score")
 str(grid)
+
+custom <- mlgrid(cloud, type = "numeric", expr = list(cd = quote(core[, "cd"])))
+str(custom)
 
 }
 \seealso{

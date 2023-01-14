@@ -2,6 +2,7 @@
 
 #### Updates:
 
+* `mlgrid()` argument 'func' becomes 'expr' and takes a named list of quoted language objects or expressions rather than functions for more versatility in custom calculations (for advanced use).
 * Internal performance enhancements.
 
 # ichimoku 1.4.4

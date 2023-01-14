@@ -1,4 +1,4 @@
-# Copyright (C) 2021-2022 Hibiki AI Limited <info@hibiki-ai.com>
+# Copyright (C) 2021-2023 Hibiki AI Limited <info@hibiki-ai.com>
 #
 # This file is part of ichimoku.
 #
@@ -179,11 +179,12 @@ autostrat <- function(x,
 #'     the format of returned object.
 #' @param unique [default TRUE] to return only unique combinations of c1 and c2.
 #'     Set to FALSE to return both c1 > c2 and c2 > c1.
-#' @param func [default list()] (for advanced use only) a named list of
-#'     functions which take 2 arguments: 'core' and 'xlen', the coredata matrix
-#'     of the ichimoku object and the number of observations, respectively. Each
-#'     function must return a vector of length 'xlen', and these are included in
-#'     the grid.
+#' @param expr [default list()] (for advanced use only) a named list of
+#'     quoted language objects or expressions, which are evaluated internally
+#'     within the function, referencing intermediate objects such as:
+#'     'core', the coredata matrix of the ichimoku object, 'xlen' the number of
+#'     observations, or any of the function parameters etc. Each evaluated
+#'     expression must return a vector of length 'xlen' for inclusion in the grid.
 #'
 #' @return A data.frame or matrix in a 'tidy' format with one observation per
 #'     row and one feature per column with the target 'y' as the first column
@@ -222,6 +223,9 @@ autostrat <- function(x,
 #' grid <- mlgrid(cloud, y = "ret", k = 2, dir = "short", type = "z-score")
 #' str(grid)
 #'
+#' custom <- mlgrid(cloud, type = "numeric", expr = list(cd = quote(core[, "cd"])))
+#' str(custom)
+#'
 #' @export
 #'
 mlgrid <- function(x,
@@ -231,7 +235,7 @@ mlgrid <- function(x,
                    type = c("boolean", "numeric", "z-score"),
                    format = c("dataframe", "matrix"),
                    unique = TRUE,
-                   func = list()) {
+                   expr = list()) {
 
   is.ichimoku(x) || stop("mlgrid() only works on ichimoku objects", call. = FALSE)
   y <- match.arg(y)
@@ -259,16 +263,19 @@ mlgrid <- function(x,
   pairs <- .mlgrid_pairs
   veclist <- writeVectors(x = core, pairs = pairs, p2 = p2, xlen = xlen, type = type)
 
-  if (length(func)) {
-    for (i in seq_along(func))
-      func[[i]] <- func[[i]](core, xlen)
-    veclist <- c(func, veclist)
-  }
-
   if (!missing(unique) && !isTRUE(unique)) {
     pairs <- list(pairs[[2L]], pairs[[1L]])
     veclistf <- writeVectors(x = core, pairs = pairs, p2 = p2, xlen = xlen, type = type)
     veclist <- c(veclist, veclistf)
+  }
+
+  if (length(expr)) {
+    for (i in seq_along(expr)) {
+      expr[[i]] <- eval(expr[[i]])
+      length(expr[[i]]) == xlen ||
+        stop(sprintf("expr %d produced output of incorrect length", i), call. = FALSE)
+    }
+    veclist <- c(veclist, expr)
   }
 
   veclist <- switch(y, none = veclist, c(list(y = target), veclist))
