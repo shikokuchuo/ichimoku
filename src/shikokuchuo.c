@@ -32,8 +32,11 @@ SEXP ichimoku_TickerSymbol;
 SEXP ichimoku_klass;
 SEXP ichimoku_tclass;
 SEXP ichimoku_tzone;
+SEXP ichimoku_int_zero;
+SEXP ichimoku_int_three;
 
-typedef SEXP (*linked_fun) (SEXP x);
+typedef SEXP (*c_fun) (SEXP);
+typedef SEXP (*rcpp_fun) (SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 
 // rolling max over a window
 SEXP _wmax(const SEXP x, const SEXP window) {
@@ -335,9 +338,15 @@ SEXP _coredata(const SEXP x) {
 
 }
 
+// imports from the package 'RcppSimdJson'
+SEXP _deserialize_json(SEXP json, SEXP query) {
+  rcpp_fun fun = (rcpp_fun) R_GetCCallable("RcppSimdJson", "_RcppSimdJson_.deserialize_json");
+  return fun(json, query, R_NilValue, R_NilValue, R_NilValue, Rf_ScalarLogical(0), R_NilValue, Rf_ScalarLogical(0), R_NilValue, ichimoku_int_three, ichimoku_int_zero, ichimoku_int_zero);
+}
+
 // imports from the package 'xts'
 SEXP _naomit(SEXP x) {
-  linked_fun fun = (linked_fun) R_GetCCallable("xts", "na_omit_xts");
+  c_fun fun = (c_fun) R_GetCCallable("xts", "na_omit_xts");
   return fun(x);
 }
 
@@ -360,9 +369,13 @@ static void PreserveObjects(void) {
   SET_STRING_ELT(ichimoku_tclass, 0, Rf_mkChar("POSIXct"));
   SET_STRING_ELT(ichimoku_tclass, 1, Rf_mkChar("POSIXt"));
   R_PreserveObject(ichimoku_tzone = Rf_mkString(""));
+  R_PreserveObject(ichimoku_int_zero = Rf_ScalarInteger(0));
+  R_PreserveObject(ichimoku_int_three = Rf_ScalarInteger(3));
 }
 
 static void ReleaseObjects(void) {
+  R_ReleaseObject(ichimoku_int_three);
+  R_ReleaseObject(ichimoku_int_zero);
   R_ReleaseObject(ichimoku_tzone);
   R_ReleaseObject(ichimoku_tclass);
   R_ReleaseObject(ichimoku_klass);
@@ -380,6 +393,7 @@ static const R_CallMethodDef CallEntries[] = {
   {"_wmax", (DL_FUNC) &_wmax, 2},
   {"_wmean", (DL_FUNC) &_wmean, 2},
   {"_wmin", (DL_FUNC) &_wmin, 2},
+  {"_deserialize_json", (DL_FUNC) &_deserialize_json, 2},
   {NULL, NULL, 0}
 };
 

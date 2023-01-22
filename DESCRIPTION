@@ -32,11 +32,12 @@ Depends:
 Imports: 
     ggplot2 (>= 3.4.0),
     nanonext (>= 0.7.0),
-    RcppSimdJson,
+    RcppSimdJson (>= 0.1.9),
     shiny (>= 1.4.0),
     xts,
     zoo
 LinkingTo: 
+    RcppSimdJson,
     xts
 Suggests: 
     keyring,
