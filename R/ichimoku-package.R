@@ -102,8 +102,7 @@ NULL
   do_ <<- do_
 }
 
-deserialize_json <- function(x, query = NULL)
-  .Call(ichimoku_deserialize_json, x, query)
+deserialize_json <- RcppSimdJson:::.deserialize_json
 
 .deconstruct <- function(...) {
   identical(parent.env(parent.frame()), getNamespace("ichimoku")) || return(invisible())

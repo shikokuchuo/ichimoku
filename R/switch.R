@@ -110,7 +110,7 @@ do_ <- function() {
         resp <- ncurl(url, convert = FALSE, follow = TRUE,
                       headers = c("Authorization" = paste0("Bearer ", apikey),
                                   "User-Agent" = .user_agent))
-        parsed <- deserialize_json(.subset2(resp, "raw"))
+        parsed <- deserialize_json(.subset2(resp, "raw"), simplify_to = 3L)
         length(.subset2(parsed, "accounts")) || stop(parsed, call. = FALSE)
         account <<- parsed[["accounts"]][[1L]][["id"]]
       }
@@ -131,7 +131,7 @@ do_ <- function() {
                         headers = c("Authorization" = paste0("Bearer ", apikey),
                                     "User-Agent" = .user_agent))
         }
-        parsed <- deserialize_json(.subset2(resp, "raw"))
+        parsed <- deserialize_json(.subset2(resp, "raw"), simplify_to = 3L)
         length(.subset2(parsed, "instruments")) || {
           warning(parsed,
                   "\nInstruments list could not be retrieved - falling back to internal data",

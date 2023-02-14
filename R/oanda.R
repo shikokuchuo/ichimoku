@@ -197,10 +197,10 @@ getPrices <- function(instrument, granularity, count = NULL, from = NULL,
                 response = "date")
   .subset2(resp, "status") == 200L ||
     stop("status code ", .subset2(resp, "status"), " - ",
-         deserialize_json(.subset2(resp, "raw")), call. = FALSE)
+         deserialize_json(.subset2(resp, "raw"), simplify_to = 3L), call. = FALSE)
   timestamp <- as.POSIXct.POSIXlt(strptime(.subset2(.subset2(resp, "headers"), "date"),
                                            format = "%a, %d %b %Y %H:%M:%S", tz = "UTC"))
-  candles <- deserialize_json(.subset2(resp, "raw"), query = "/candles")
+  candles <- deserialize_json(.subset2(resp, "raw"), query = "/candles", simplify_to = 3L)
   ptype <- switch(price, M = "mid", B = "bid", A = "ask")
 
   !missing(.validate) && .validate == FALSE && {
@@ -348,7 +348,7 @@ oanda_stream <- function(instrument, display = 8L, limit, server, apikey) {
 
   while (length(page <- readLines(con, n = 1L, encoding = "UTF-8"))) {
 
-    json <- deserialize_json(page)
+    json <- deserialize_json(page, simplify_to = 3L)
     .subset2(json, "type") == "PRICE" || next
     json[["type"]] <- NULL
     json[["time"]] <- .POSIXct(.subset2(json, "time"))
@@ -1013,8 +1013,8 @@ oanda_positions <- function(instrument, time, server, apikey) {
                             `Accept-Datetime-Format` = "UNIX", `User-Agent` = .user_agent))
   .subset2(resp, "status") == 200L ||
     stop("status code ", .subset2(resp, "status"), " - ",
-         deserialize_json(.subset2(resp, "raw")), call. = FALSE)
-  data <- deserialize_json(.subset2(resp, "raw"), query = "/positionBook")
+         deserialize_json(.subset2(resp, "raw"), simplify_to = 3L), call. = FALSE)
+  data <- deserialize_json(.subset2(resp, "raw"), query = "/positionBook", simplify_to = 3L)
   currentprice <- as.numeric(.subset2(data, "price"))
   timestamp <- .Call(ichimoku_psxct, .subset2(data, "unixTime"))
   bucketwidth <- as.numeric(.subset2(data, "bucketWidth"))
@@ -1105,8 +1105,8 @@ oanda_orders <- function(instrument, time, server, apikey) {
                             `Accept-Datetime-Format` = "UNIX", `User-Agent` = .user_agent))
   .subset2(resp, "status") == 200L ||
     stop("status code ", .subset2(resp, "status"), " - ",
-         deserialize_json(.subset2(resp, "raw")), call. = FALSE)
-  data <- deserialize_json(.subset2(resp, "raw"), query = "/orderBook")
+         deserialize_json(.subset2(resp, "raw"), simplify_to = 3L), call. = FALSE)
+  data <- deserialize_json(.subset2(resp, "raw"), query = "/orderBook", simplify_to = 3L)
   currentprice <- as.numeric(.subset2(data, "price"))
   timestamp <- .Call(ichimoku_psxct, .subset2(data, "unixTime"))
   bucketwidth <- as.numeric(.subset2(data, "bucketWidth"))
