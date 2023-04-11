@@ -311,9 +311,10 @@ df_append <- function(old, new, key = "time", keep.attr = "timestamp") {
 #' @export
 #'
 look <- function(x) {
-  if (missing(x)) x <- .Last.value
-  lk <- .Call(ichimoku_look, x)
+
+  lk <- .Call(ichimoku_look, if (missing(x)) .Last.value else x)
   if (length(lk)) lk else invisible()
+
 }
 
 #' Print More Rows of Ichimoku Objects
