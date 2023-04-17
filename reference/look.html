@@ -109,14 +109,14 @@ will be used instead.</p></dd>
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">sample_ohlc_data</span>, ticker <span class="op">=</span> <span class="st">"TKR"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">look</span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $periods</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1]  9 26 52</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ticker</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "TKR"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $periodicity</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 86400</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ticker</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "TKR"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $periods</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1]  9 26 52</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">stratlist</span> <span class="op">&lt;-</span> <span class="fu"><a href="autostrat.html">autostrat</a></span><span class="op">(</span><span class="va">cloud</span>, n <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
@@ -159,38 +159,6 @@ will be used instead.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> End                    2020-12-23         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Ticker                 "TKR"              </span>
 <span class="r-in"><span><span class="fu">look</span><span class="op">(</span><span class="va">stratlist</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $logret</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  senkouB_tenkan   cloudB_tenkan   senkouB_kijun    cloudB_kijun      low_tenkan </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     0.144869048     0.132721126     0.124552623     0.124476092     0.119988595 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    cloudB_close     high_tenkan      cloudB_low   senkouB_close    cloudT_kijun </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     0.117048881     0.112062056     0.110900734     0.110699399     0.103153955 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   senkouA_kijun     senkouB_low   cloudT_tenkan     cloudT_high       low_kijun </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     0.103077424     0.101480718     0.093961798     0.088759707     0.088503030 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    senkouB_high  chikou_senkouA      high_kijun  senkouA_tenkan    close_tenkan </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     0.086708526     0.084344426     0.083373239     0.081813876     0.079948752 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   tenkan_chikou    senkouA_high     cloudB_high     senkouA_low   senkouA_close </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     0.078961923     0.076693196     0.074642015     0.073761187     0.073712567 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     close_kijun   chikou_cloudT    cloudT_close    kijun_chikou      cloudT_low </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     0.071380845     0.069192621     0.067363085     0.066288776     0.064341171 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   chikou_cloudB    chikou_close    kijun_tenkan      chikou_low  chikou_senkouB </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     0.064291073     0.062225816     0.055091789     0.053536566     0.049139267 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> senkouA_senkouB  senkouB_chikou     chikou_high      low_chikou     high_chikou </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     0.048655509     0.045949698     0.042730532     0.041552399     0.034326207 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    close_chikou   cloudB_chikou      low_cloudT    tenkan_kijun    chikou_kijun </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     0.032863149     0.030797893     0.030747795     0.030128362     0.028800189 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   cloudT_chikou    close_cloudT     kijun_close senkouB_senkouA    tenkan_close </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     0.025896344     0.024713830     0.023708120     0.023618778     0.023402736 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   close_senkouA     low_senkouA     high_cloudB    high_senkouA  tenkan_senkouA </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     0.021376398     0.021327779     0.020446951     0.018395770     0.013275089 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  senkouA_chikou   chikou_tenkan    high_senkouB       kijun_low     high_cloudT </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     0.010744539     0.010161327     0.008380439     0.006585935     0.006329258 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   tenkan_cloudT      kijun_high     low_senkouB     tenkan_high   kijun_senkouA </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     0.001127167    -0.003436078    -0.006391752    -0.007150571    -0.007988459 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    kijun_cloudT      low_cloudB      tenkan_low   close_senkouB    close_cloudB </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    -0.008064990    -0.015811768    -0.015890560    -0.018622484    -0.021959916 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   tenkan_cloudB    kijun_cloudB   kijun_senkouB  tenkan_senkouB </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    -0.037632160    -0.040858512    -0.040935043    -0.049780083 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $summary</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                        [,1]                [,2]               </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Strategy               "senkouB &gt; tenkan"  "cloudB &gt; tenkan"  </span>
@@ -231,18 +199,41 @@ will be used instead.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> End                    2020-12-23         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Ticker                 "TKR"              </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $logret</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  senkouB_tenkan   cloudB_tenkan   senkouB_kijun    cloudB_kijun      low_tenkan </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     0.144869048     0.132721126     0.124552623     0.124476092     0.119988595 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    cloudB_close     high_tenkan      cloudB_low   senkouB_close    cloudT_kijun </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     0.117048881     0.112062056     0.110900734     0.110699399     0.103153955 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   senkouA_kijun     senkouB_low   cloudT_tenkan     cloudT_high       low_kijun </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     0.103077424     0.101480718     0.093961798     0.088759707     0.088503030 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    senkouB_high  chikou_senkouA      high_kijun  senkouA_tenkan    close_tenkan </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     0.086708526     0.084344426     0.083373239     0.081813876     0.079948752 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   tenkan_chikou    senkouA_high     cloudB_high     senkouA_low   senkouA_close </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     0.078961923     0.076693196     0.074642015     0.073761187     0.073712567 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     close_kijun   chikou_cloudT    cloudT_close    kijun_chikou      cloudT_low </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     0.071380845     0.069192621     0.067363085     0.066288776     0.064341171 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   chikou_cloudB    chikou_close    kijun_tenkan      chikou_low  chikou_senkouB </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     0.064291073     0.062225816     0.055091789     0.053536566     0.049139267 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> senkouA_senkouB  senkouB_chikou     chikou_high      low_chikou     high_chikou </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     0.048655509     0.045949698     0.042730532     0.041552399     0.034326207 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    close_chikou   cloudB_chikou      low_cloudT    tenkan_kijun    chikou_kijun </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     0.032863149     0.030797893     0.030747795     0.030128362     0.028800189 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   cloudT_chikou    close_cloudT     kijun_close senkouB_senkouA    tenkan_close </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     0.025896344     0.024713830     0.023708120     0.023618778     0.023402736 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   close_senkouA     low_senkouA     high_cloudB    high_senkouA  tenkan_senkouA </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     0.021376398     0.021327779     0.020446951     0.018395770     0.013275089 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  senkouA_chikou   chikou_tenkan    high_senkouB       kijun_low     high_cloudT </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     0.010744539     0.010161327     0.008380439     0.006585935     0.006329258 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   tenkan_cloudT      kijun_high     low_senkouB     tenkan_high   kijun_senkouA </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     0.001127167    -0.003436078    -0.006391752    -0.007150571    -0.007988459 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    kijun_cloudT      low_cloudB      tenkan_low   close_senkouB    close_cloudB </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    -0.008064990    -0.015811768    -0.015890560    -0.018622484    -0.021959916 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   tenkan_cloudB    kijun_cloudB   kijun_senkouB  tenkan_senkouB </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    -0.037632160    -0.040858512    -0.040935043    -0.049780083 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">strat</span> <span class="op">&lt;-</span> <span class="va">stratlist</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span></span>
 <span class="r-in"><span><span class="fu">look</span><span class="op">(</span><span class="va">strat</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $periods</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1]  9 26 52</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $periodicity</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 86400</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ticker</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "TKR"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $strat</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                        [,1]               </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Strategy               "senkouB &gt; tenkan" </span>
@@ -264,29 +255,38 @@ will be used instead.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> End                    2020-12-23         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Ticker                 "TKR"              </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ticker</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "TKR"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $periodicity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 86400</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $periods</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1]  9 26 52</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">grid</span> <span class="op">&lt;-</span> <span class="fu"><a href="mlgrid.html">mlgrid</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">look</span><span class="op">(</span><span class="va">grid</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $y</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "logret"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $k</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $direction</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "long"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $type</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "boolean"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ticker</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "TKR"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $sdevs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $means</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $sdevs</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ticker</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "TKR"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $type</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "boolean"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $direction</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "long"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $k</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "logret"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
