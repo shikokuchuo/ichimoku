@@ -116,17 +116,20 @@ SEXP _wmean(const SEXP x, const SEXP window) {
 SEXP _look(const SEXP x) {
 
   SEXP ax, y;
-  PROTECT(y = Rf_allocVector(RAWSXP, 0));
+  PROTECT_INDEX pxi;
+  PROTECT_WITH_INDEX(y = R_NilValue, &pxi);
 
   for (ax = ATTRIB(x); ax != R_NilValue; ax = CDR(ax)) {
     if (TAG(ax) != R_NamesSymbol && TAG(ax) != R_RowNamesSymbol &&
         TAG(ax) != R_DimSymbol && TAG(ax) != R_DimNamesSymbol &&
-        TAG(ax) != R_ClassSymbol && TAG(ax) != xts_IndexSymbol)
-      Rf_setAttrib(y, TAG(ax), CAR(ax));
+        TAG(ax) != R_ClassSymbol && TAG(ax) != xts_IndexSymbol) {
+      REPROTECT(y = Rf_cons(CAR(ax), y), pxi);
+      SET_TAG(y, TAG(ax));
+    }
   }
 
   UNPROTECT(1);
-  return ATTRIB(y);
+  return y;
 
 }
 
