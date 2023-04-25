@@ -80,7 +80,7 @@ print.ichimoku <- function(x, plot = TRUE, rows = 26L, ...) {
 #' @method str ichimoku
 #' @export
 #'
-str.ichimoku <- function (object, ...) {
+str.ichimoku <- function(object, ...) {
 
   dims <- attr(object, "dim")
   if (is.null(dims)) {
@@ -313,4 +313,3 @@ index.ichimoku <- function(x, subset, ...)
   if (missing(subset))
     .Call(ichimoku_index, x) else
       .Call(ichimoku_psxct, .subset(attr(x, "index"), subset))
-

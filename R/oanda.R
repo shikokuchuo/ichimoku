@@ -1152,4 +1152,3 @@ oanda_orders <- function(instrument, time, server, apikey) {
   invisible(df)
 
 }
-

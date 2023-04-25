@@ -319,7 +319,6 @@ ichimoku.default <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, ..
 
   if (missing(ticker)) ticker <- deparse(substitute(x))
   xlen <- dim(x)[1L]
-  cnames <- attr(x, "names")
   if (is.numeric(periods) && length(periods) == 3L && all(periods >= 1L)) {
     periods <- as.integer(periods)
   } else {
@@ -373,4 +372,3 @@ ichimoku.default <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, ..
   .Call(ichimoku_create, kumo, xtsindex, periods, periodicity, ticker, NULL)
 
 }
-

@@ -1,4 +1,4 @@
-# Copyright (C) 2021-2022 Hibiki AI Limited <info@hibiki-ai.com>
+# Copyright (C) 2021-2023 Hibiki AI Limited <info@hibiki-ai.com>
 #
 # This file is part of ichimoku.
 #
@@ -302,7 +302,7 @@ plot_ichimoku <- function(object, ticker, subtitle, theme, strat, type, custom, 
 #'
 breaks_ichimoku <- function(object) {
 
-  xlen = attr(object, "dim")[1L]
+  xlen <- attr(object, "dim")[1L]
   if (attr(object, "periodicity") > 80000) {
     len <- length(endpoints(object, on = "months"))
     if (len < 100L) {
@@ -405,7 +405,7 @@ StatIndicator <- ggproto(
   "StatIndicator", Stat,
   compute_group = function(data, scales) {
     ext <- .subset2(data, "ext")
-    data$y = min(ext) + 0.2 * (max(ext) - min(ext)) * (.subset2(data, "y") - 1)
+    data$y <- min(ext) + 0.2 * (max(ext) - min(ext)) * (.subset2(data, "y") - 1)
     data
   },
   required_aes = c("x", "y", "ext")
@@ -425,7 +425,7 @@ StatLine <- ggproto(
     y <- .subset2(data, "y")
     ynorm <- (y - min(y)) / (max(y) - min(y))
     ext <- .subset2(data, "ext")
-    data$y = min(ext) + 0.2 * (max(ext) - min(ext)) * (ynorm - 1)
+    data$y <- min(ext) + 0.2 * (max(ext) - min(ext)) * (ynorm - 1)
     data
   },
   required_aes = c("x", "y", "ext")
@@ -449,10 +449,9 @@ StatBar <- ggproto(
     ext <- .subset2(data, "ext")
     extmin <- min(ext[!is.na(ext)])
     extmax <- max(ext[!is.na(ext)])
-    data$ymax = extmin + 0.2 * (extmax - extmin) * (ynorm - 1)
-    data$ymin = rep(extmin - 0.2 * (extmax - extmin), length(y))
+    data$ymax <- extmin + 0.2 * (extmax - extmin) * (ynorm - 1)
+    data$ymin <- rep(extmin - 0.2 * (extmax - extmin), length(y))
     data
   },
   required_aes = c("xmin", "xmax", "ymin", "ymax", "ext")
 )
-

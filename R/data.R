@@ -49,7 +49,7 @@
     for (j in seq_along(colm)) {
       colsi <- cols[i]
       colmj <- colm[j]
-      if(colsi == "close" && (colmj == "high" || colmj == "low") ||
+      if (colsi == "close" && (colmj == "high" || colmj == "low") ||
          colsi == "high" && colmj == "low") next
       ctr <- ctr + 1L
       pairs[[1]][ctr] <- colsi
@@ -146,4 +146,3 @@
   class = "data.frame",
   row.names = c(NA, -124L)
 )
-

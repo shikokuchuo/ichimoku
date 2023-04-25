@@ -9,14 +9,15 @@
 An implementation of 'Ichimoku Kinko Hyo', also commonly known as 'cloud
     charts'. Static and interactive visualizations with tools for creating,
     backtesting and development of quantitative 'ichimoku' strategies. As
-    described in Sasaki (1996, ISBN:4925152009), the technique is a refinement
-    on candlestick charting, originating from Japan and now in widespread use
-    in technical analysis worldwide. Translating as 'one-glance equilibrium
-    chart', it allows the price action and market structure of financial
-    securities to be determined 'at-a-glance'. Incorporates an interface with
-    the OANDA fxTrade API \url{https://developer.oanda.com/} for retrieving
-    historical and live streaming price data for major currencies, metals,
-    commodities, government bonds and stock indices.
+    described in Sasaki (1996, ISBN:4925152009), the technique is a
+    refinement on candlestick charting, originating from Japan and now in
+    widespread use in technical analysis worldwide. Translating as
+    'one-glance equilibrium chart', it allows the price action and market
+    structure of financial securities to be determined 'at-a-glance'.
+    Incorporates an interface with the OANDA fxTrade API
+    \url{https://developer.oanda.com/} for retrieving historical and live
+    streaming price data for major currencies, metals, commodities,
+    government bonds and stock indices.
 }
 \section{Principal ichimoku functions}{
 

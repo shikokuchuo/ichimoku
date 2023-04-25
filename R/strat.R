@@ -356,4 +356,3 @@ stratcombine <- function(s1, s2) {
 #' @export
 #'
 hasStrat <- function(x) !is.null(attr(x, "strat"))
-

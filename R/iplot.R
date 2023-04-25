@@ -230,4 +230,3 @@ drawInfotip <- function(sidx, sdata, left, top, type, custom = NULL) {
                 "</div>"))
   )
 }
-

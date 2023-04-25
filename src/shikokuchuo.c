@@ -397,4 +397,3 @@ void attribute_visible R_init_ichimoku(DllInfo* dll) {
 void attribute_visible R_unload_ichimoku(DllInfo *info) {
   ReleaseObjects();
 }
-
