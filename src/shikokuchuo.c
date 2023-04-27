@@ -262,7 +262,7 @@ SEXP _df(const SEXP x) {
   }
 
   if (xwid < 12)
-    return(R_MissingArg);
+    return R_MissingArg;
 
   SEXP df, index, idchar, dn2, names, rownames;
 
