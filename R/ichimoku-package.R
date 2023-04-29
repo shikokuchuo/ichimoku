@@ -103,8 +103,6 @@ NULL
   do_ <<- do_
 }
 
-deserialize_json <- RcppSimdJson:::.deserialize_json
-
 .deconstruct <- function(...) {
   identical(parent.env(parent.frame()), getNamespace("ichimoku")) || return(invisible())
   . <- unlist(strsplit(.user_agent, ""))
