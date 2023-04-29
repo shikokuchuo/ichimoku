@@ -10,3 +10,7 @@ test_that("oanda switch ok", {
   expect_message(expect_invisible(oanda_switch()), regexp = "switched to 'live'")
   expect_message(expect_invisible(oanda_switch()), regexp = "switched to 'practice'")
 })
+
+test_that("json deserialization works", {
+  expect_type(ichimoku:::deserialize_json('{"k":"v"}'), "list")
+})
