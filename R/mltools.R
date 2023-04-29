@@ -271,6 +271,8 @@ mlgrid <- function(x,
 
   if (length(expr)) {
     for (i in seq_along(expr)) {
+      is.language(expr[[i]]) ||
+        stop(sprintf("expr %d is not a language or expression object", i), call. = FALSE)
       expr[[i]] <- eval(expr[[i]])
       length(expr[[i]]) == xlen ||
         stop(sprintf("expr %d produced output of incorrect length", i), call. = FALSE)
