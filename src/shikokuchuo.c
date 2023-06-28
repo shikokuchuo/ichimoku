@@ -29,6 +29,7 @@ SEXP ichimoku_PeriodsSymbol;
 SEXP ichimoku_PeriodicitySymbol;
 SEXP ichimoku_TickerSymbol;
 
+SEXP ichimoku_dfclass;
 SEXP ichimoku_klass;
 SEXP ichimoku_tclass;
 SEXP ichimoku_tzone;
@@ -189,7 +190,7 @@ SEXP _tbl(const SEXP x, const SEXP type) {
   Rf_namesgets(tbl, names);
   UNPROTECT(2);
 
-  Rf_classgets(tbl, Rf_mkString("data.frame"));
+  Rf_classgets(tbl, ichimoku_dfclass);
 
   if (xlen <= INT_MAX) {
     rownames = Rf_allocVector(INTSXP, 2);
@@ -298,7 +299,7 @@ SEXP _df(const SEXP x) {
   Rf_namesgets(df, names);
   UNPROTECT(2);
 
-  Rf_classgets(df, Rf_mkString("data.frame"));
+  Rf_classgets(df, ichimoku_dfclass);
 
   if (xlen <= INT_MAX) {
     rownames = Rf_allocVector(INTSXP, 2);
@@ -364,6 +365,7 @@ static void RegisterSymbols(void) {
 }
 
 static void PreserveObjects(void) {
+  R_PreserveObject(ichimoku_dfclass = Rf_mkString("data.frame"));
   R_PreserveObject(ichimoku_klass = Rf_allocVector(STRSXP, 3));
   SET_STRING_ELT(ichimoku_klass, 0, Rf_mkChar("ichimoku"));
   SET_STRING_ELT(ichimoku_klass, 1, Rf_mkChar("xts"));
@@ -382,6 +384,7 @@ static void ReleaseObjects(void) {
   R_ReleaseObject(ichimoku_tzone);
   R_ReleaseObject(ichimoku_tclass);
   R_ReleaseObject(ichimoku_klass);
+  R_ReleaseObject(ichimoku_dfclass);
 }
 
 static const R_CallMethodDef CallEntries[] = {
