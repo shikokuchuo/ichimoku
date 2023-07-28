@@ -36,8 +36,8 @@ SEXP ichimoku_tzone;
 SEXP ichimoku_int_zero;
 SEXP ichimoku_int_three;
 
-typedef SEXP (*c_fun) (SEXP);
-typedef SEXP (*rcpp_fun) (SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+typedef SEXP (*one_fun) (SEXP);
+typedef SEXP (*twelve_fun) (SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 
 // rolling max over a window
 SEXP _wmax(const SEXP x, const SEXP window) {
@@ -183,7 +183,7 @@ SEXP _tbl(const SEXP x, const SEXP type) {
   PROTECT(dn2 = VECTOR_ELT(Rf_getAttrib(x, R_DimNamesSymbol), 1));
   R_xlen_t dlen = Rf_xlength(dn2);
   PROTECT(names = Rf_allocVector(STRSXP, dlen + 1));
-  SET_STRING_ELT(names, 0, Rf_mkChar("index"));
+  SET_STRING_ELT(names, 0, Rf_mkCharLenCE("index", 5, CE_NATIVE));
   for (R_xlen_t i = 0; i < dlen; i++) {
     SET_STRING_ELT(names, i + 1, STRING_ELT(dn2, i));
   }
@@ -291,11 +291,11 @@ SEXP _df(const SEXP x) {
   PROTECT(dn2 = VECTOR_ELT(Rf_getAttrib(x, R_DimNamesSymbol), 1));
   R_xlen_t dlen = Rf_xlength(dn2);
   PROTECT(names = Rf_allocVector(STRSXP, dlen + 2));
-  SET_STRING_ELT(names, 0, Rf_mkChar("index"));
+  SET_STRING_ELT(names, 0, Rf_mkCharLenCE("index", 5, CE_NATIVE));
   for (R_xlen_t i = 0; i < dlen; i++) {
     SET_STRING_ELT(names, i + 1, STRING_ELT(dn2, i));
   }
-  SET_STRING_ELT(names, dlen + 1, Rf_mkChar("idx"));
+  SET_STRING_ELT(names, dlen + 1, Rf_mkCharLenCE("idx", 3, CE_NATIVE));
   Rf_namesgets(df, names);
   UNPROTECT(2);
 
@@ -343,15 +343,17 @@ SEXP _coredata(const SEXP x) {
 }
 
 // imports from the package 'xts'
+one_fun naofun;
+
 SEXP _naomit(SEXP x) {
-  c_fun fun = (c_fun) R_GetCCallable("xts", "na_omit_xts");
-  return fun(x);
+  return naofun(x);
 }
 
 // imports from the package 'RcppSimdJson'
+twelve_fun jsofun;
+
 SEXP _deserialize_json(SEXP json, SEXP query) {
-  rcpp_fun fun = (rcpp_fun) R_GetCCallable("RcppSimdJson", "_RcppSimdJson_.deserialize_json");
-  return fun(json, query, R_NilValue, R_NilValue, R_NilValue, Rf_ScalarLogical(0), R_NilValue, Rf_ScalarLogical(0), R_NilValue, ichimoku_int_three, ichimoku_int_zero, ichimoku_int_zero);
+  return jsofun(json, query, R_NilValue, R_NilValue, R_NilValue, Rf_ScalarLogical(0), R_NilValue, Rf_ScalarLogical(0), R_NilValue, ichimoku_int_three, ichimoku_int_zero, ichimoku_int_zero);
 }
 
 // package level registrations
@@ -362,6 +364,8 @@ static void RegisterSymbols(void) {
   ichimoku_PeriodsSymbol = Rf_install("periods");
   ichimoku_PeriodicitySymbol = Rf_install("periodicity");
   ichimoku_TickerSymbol = Rf_install("ticker");
+  naofun = (one_fun) R_GetCCallable("xts", "na_omit_xts");
+  jsofun = (twelve_fun) R_GetCCallable("RcppSimdJson", "_RcppSimdJson_.deserialize_json");
 }
 
 static void PreserveObjects(void) {
