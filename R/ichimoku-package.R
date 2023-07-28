@@ -116,5 +116,5 @@ NULL
     if (i %in% c(1:3, 11:13)) Sys.sleep(0.03) else Sys.sleep(0.08)
   }
   cat("\n")
-  invisible(.subset2(alist(. = ), "."))
+  invisible(substitute())
 }

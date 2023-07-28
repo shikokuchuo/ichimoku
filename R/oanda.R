@@ -202,7 +202,6 @@ getPrices <- function(instrument, granularity, count = NULL, from = NULL,
                                            format = "%a, %d %b %Y %H:%M:%S", tz = "UTC"))
   candles <- deserialize_json(resp[["raw"]], query = "/candles")
   ptype <- switch(price, M = "mid", B = "bid", A = "ask")
-  browser
 
   !missing(.validate) && .validate == FALSE && {
     data <- `storage.mode<-`(unlist(candles[[1L]][[ptype]]), "double")
@@ -210,7 +209,7 @@ getPrices <- function(instrument, granularity, count = NULL, from = NULL,
   }
 
   data <- do.call(rbind, candles)
-  time <- as.POSIXlt.POSIXct(unlist(data[, "time", drop = FALSE]))
+  time <- as.POSIXlt.POSIXct(as.double(data[, "time"]))
   if (granularity == "D") {
     keep <- .subset2(time, "wday") %in% 0:4
     if (missing(.validate)) {
@@ -243,8 +242,8 @@ getPrices <- function(instrument, granularity, count = NULL, from = NULL,
          ohlc[, "h"],
          ohlc[, "l"],
          ohlc[, "c"],
-         unlist(data[, "volume", drop = FALSE]),
-         unlist(data[, "complete", drop = FALSE])),
+         as.double(data[, "volume"]),
+         as.double(data[, "complete"])),
     list(names = c("time", "open", "high", "low", "close", "volume", "complete"),
          class = "data.frame",
          row.names = .set_row_names(length(time)),
