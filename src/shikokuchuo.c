@@ -32,7 +32,6 @@ SEXP ichimoku_TickerSymbol;
 SEXP ichimoku_dfclass;
 SEXP ichimoku_klass;
 SEXP ichimoku_tclass;
-SEXP ichimoku_tzone;
 SEXP ichimoku_int_zero;
 SEXP ichimoku_int_three;
 
@@ -222,7 +221,7 @@ SEXP _tbl(const SEXP x, const SEXP type) {
 SEXP _create(SEXP kumo, SEXP xtsindex, const SEXP periods,
              const SEXP periodicity, const SEXP ticker, const SEXP x) {
 
-  Rf_setAttrib(xtsindex, xts_IndexTzoneSymbol, ichimoku_tzone);
+  Rf_setAttrib(xtsindex, xts_IndexTzoneSymbol, R_BlankScalarString);
   Rf_setAttrib(xtsindex, xts_IndexTclassSymbol, ichimoku_tclass);
   Rf_setAttrib(kumo, xts_IndexSymbol, xtsindex);
 
@@ -377,7 +376,6 @@ static void PreserveObjects(void) {
   R_PreserveObject(ichimoku_tclass = Rf_allocVector(STRSXP, 2));
   SET_STRING_ELT(ichimoku_tclass, 0, Rf_mkChar("POSIXct"));
   SET_STRING_ELT(ichimoku_tclass, 1, Rf_mkChar("POSIXt"));
-  R_PreserveObject(ichimoku_tzone = Rf_mkString(""));
   R_PreserveObject(ichimoku_int_zero = Rf_ScalarInteger(0));
   R_PreserveObject(ichimoku_int_three = Rf_ScalarInteger(3));
 }
@@ -385,7 +383,6 @@ static void PreserveObjects(void) {
 static void ReleaseObjects(void) {
   R_ReleaseObject(ichimoku_int_three);
   R_ReleaseObject(ichimoku_int_zero);
-  R_ReleaseObject(ichimoku_tzone);
   R_ReleaseObject(ichimoku_tclass);
   R_ReleaseObject(ichimoku_klass);
   R_ReleaseObject(ichimoku_dfclass);
