@@ -38,6 +38,9 @@ SEXP ichimoku_int_three;
 typedef SEXP (*one_fun) (SEXP);
 typedef SEXP (*twelve_fun) (SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 
+one_fun naofun;
+twelve_fun jsofun;
+
 // rolling max over a window
 SEXP _wmax(const SEXP x, const SEXP window) {
 
@@ -342,15 +345,11 @@ SEXP _coredata(const SEXP x) {
 }
 
 // imports from the package 'xts'
-one_fun naofun;
-
 SEXP _naomit(SEXP x) {
   return naofun(x);
 }
 
 // imports from the package 'RcppSimdJson'
-twelve_fun jsofun;
-
 SEXP _deserialize_json(SEXP json, SEXP query) {
   return jsofun(json, query, R_NilValue, R_NilValue, R_NilValue, Rf_ScalarLogical(0), R_NilValue, Rf_ScalarLogical(0), R_NilValue, ichimoku_int_three, ichimoku_int_zero, ichimoku_int_zero);
 }
