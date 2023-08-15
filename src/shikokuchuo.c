@@ -184,13 +184,13 @@ SEXP _tbl(const SEXP x, const SEXP type) {
 
   PROTECT(dn2 = VECTOR_ELT(Rf_getAttrib(x, R_DimNamesSymbol), 1));
   R_xlen_t dlen = Rf_xlength(dn2);
-  PROTECT(names = Rf_allocVector(STRSXP, dlen + 1));
-  SET_STRING_ELT(names, 0, Rf_mkCharLenCE("index", 5, CE_NATIVE));
+  names = Rf_allocVector(STRSXP, dlen + 1);
+  Rf_namesgets(tbl, names);
+  SET_STRING_ELT(names, 0, Rf_mkChar("index"));
   for (R_xlen_t i = 0; i < dlen; i++) {
     SET_STRING_ELT(names, i + 1, STRING_ELT(dn2, i));
   }
-  Rf_namesgets(tbl, names);
-  UNPROTECT(2);
+  UNPROTECT(1);
 
   Rf_classgets(tbl, ichimoku_dfclass);
 
@@ -292,14 +292,14 @@ SEXP _df(const SEXP x) {
 
   PROTECT(dn2 = VECTOR_ELT(Rf_getAttrib(x, R_DimNamesSymbol), 1));
   R_xlen_t dlen = Rf_xlength(dn2);
-  PROTECT(names = Rf_allocVector(STRSXP, dlen + 2));
-  SET_STRING_ELT(names, 0, Rf_mkCharLenCE("index", 5, CE_NATIVE));
+  names = Rf_allocVector(STRSXP, dlen + 2);
+  Rf_namesgets(df, names);
+  SET_STRING_ELT(names, 0, Rf_mkChar("index"));
   for (R_xlen_t i = 0; i < dlen; i++) {
     SET_STRING_ELT(names, i + 1, STRING_ELT(dn2, i));
   }
-  SET_STRING_ELT(names, dlen + 1, Rf_mkCharLenCE("idx", 3, CE_NATIVE));
-  Rf_namesgets(df, names);
-  UNPROTECT(2);
+  SET_STRING_ELT(names, dlen + 1, Rf_mkChar("idx"));
+  UNPROTECT(1);
 
   Rf_classgets(df, ichimoku_dfclass);
 
