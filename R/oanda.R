@@ -189,7 +189,7 @@ getPrices <- function(instrument, granularity, count = NULL, from = NULL,
                 if (!is.null(from)) paste0("&from=", from),
                 if (!is.null(to)) paste0("&to=", to))
   resp <- ncurl(url,
-                convert = FALSE,
+                convert = TRUE,
                 follow = TRUE,
                 headers = c(Authorization = paste0("Bearer ", apikey),
                             `Accept-Datetime-Format` = "UNIX",
@@ -197,7 +197,7 @@ getPrices <- function(instrument, granularity, count = NULL, from = NULL,
                 response = "date")
   resp[["status"]] == 200L ||
     stop("status code ", resp[["status"]], " - ",
-         deserialize_json(resp[["raw"]]), call. = FALSE)
+         deserialize_json(resp[["data"]]), call. = FALSE)
   timestamp <- as.POSIXct.POSIXlt(strptime(resp[["headers"]][["date"]],
                                            format = "%a, %d %b %Y %H:%M:%S", tz = "UTC"))
   candles <- deserialize_json(resp[["raw"]], query = "/candles")
@@ -1008,13 +1008,13 @@ oanda_positions <- function(instrument, time, server, apikey) {
   url <- paste0("https://api-fx", switch(server, practice = "practice", live = "trade"),
                 ".oanda.com/v3/instruments/", instrument, "/positionBook",
                 if (!missing(time)) paste0("?time=", unclass(as.POSIXct(time))))
-  resp <- ncurl(url, convert = FALSE, follow = TRUE,
+  resp <- ncurl(url, convert = TRUE, follow = TRUE,
                 headers = c(Authorization = paste0("Bearer ", apikey),
                             `Accept-Datetime-Format` = "UNIX", `User-Agent` = .user_agent))
   resp[["status"]] == 200L ||
     stop("status code ", resp[["status"]], " - ",
-         deserialize_json(resp[["raw"]]), call. = FALSE)
-  data <- deserialize_json(resp[["raw"]], query = "/positionBook")
+         deserialize_json(resp[["data"]]), call. = FALSE)
+  data <- deserialize_json(resp[["data"]], query = "/positionBook")
   currentprice <- as.numeric(data[["price"]])
   timestamp <- .Call(ichimoku_psxct, data[["unixTime"]])
   bucketwidth <- as.numeric(data[["bucketWidth"]])
@@ -1100,13 +1100,13 @@ oanda_orders <- function(instrument, time, server, apikey) {
   url <- paste0("https://api-fx", switch(server, practice = "practice", live = "trade"),
                 ".oanda.com/v3/instruments/", instrument, "/orderBook",
                 if (!missing(time)) paste0("?time=", unclass(as.POSIXct(time))))
-  resp <- ncurl(url, convert = FALSE, follow = TRUE,
+  resp <- ncurl(url, convert = TRUE, follow = TRUE,
                 headers = c(Authorization = paste0("Bearer ", apikey),
                             `Accept-Datetime-Format` = "UNIX", `User-Agent` = .user_agent))
   resp[["status"]] == 200L ||
     stop("status code ", resp[["status"]], " - ",
-         deserialize_json(resp[["raw"]]), call. = FALSE)
-  data <- deserialize_json(resp[["raw"]], query = "/orderBook")
+         deserialize_json(resp[["data"]]), call. = FALSE)
+  data <- deserialize_json(resp[["data"]], query = "/orderBook")
   currentprice <- as.numeric(data[["price"]])
   timestamp <- .Call(ichimoku_psxct, data[["unixTime"]])
   bucketwidth <- as.numeric(data[["bucketWidth"]])

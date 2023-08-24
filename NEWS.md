@@ -2,6 +2,7 @@
 
 #### Updates:
 
+* Ensures compatibility with upcoming {nanonext} releases.
 * Internal performance enhancements.
 
 # ichimoku 1.4.7
