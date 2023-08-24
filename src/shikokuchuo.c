@@ -344,6 +344,11 @@ SEXP _coredata(const SEXP x) {
 
 }
 
+// is.ichimoku
+SEXP _isichimoku(const SEXP x) {
+  return Rf_ScalarLogical(Rf_inherits(x, "ichimoku"));
+}
+
 // imports from the package 'xts'
 SEXP _naomit(SEXP x) {
   return naofun(x);
@@ -393,6 +398,7 @@ static const R_CallMethodDef CallEntries[] = {
   {"_df", (DL_FUNC) &_df, 1},
   {"_deserialize_json", (DL_FUNC) &_deserialize_json, 2},
   {"_index", (DL_FUNC) &_index, 1},
+  {"_isichimoku", (DL_FUNC) &_isichimoku, 1},
   {"_look", (DL_FUNC) &_look, 1},
   {"_naomit", (DL_FUNC) &_naomit, 1},
   {"_psxct", (DL_FUNC) &_psxct, 1},

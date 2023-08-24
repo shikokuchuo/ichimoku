@@ -8,7 +8,7 @@ stratlist <- autostrat(cloud, n = 2, dir = "short", quietly = TRUE)
 test_that("autostrat ok", {
   expect_output(expect_length(expect_type(expect_invisible(autostrat(cloud, n = 2, level = 2)), "list"), 2L))
   expect_silent(expect_type(autostrat(cloud, n = 1, dir = "short", level = 3, quietly = TRUE), "list"))
-  expect_output(expect_warning(autostrat(cloud, n = 1, level = "a"), regexp = "'level' invalid"))
+  expect_output(expect_warning(autostrat(cloud, n = 1, level = "a"), regexp = "'level' should be"))
   expect_error(autostrat(sample_ohlc_data), regexp = "ichimoku object")
 })
 

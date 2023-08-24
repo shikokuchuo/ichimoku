@@ -364,7 +364,7 @@ more <- function(rows) {
 #'
 #' @export
 #'
-is.ichimoku <- function(x) inherits(x, "ichimoku")
+is.ichimoku <- function(x) .Call(ichimoku_isichimoku, x)
 
 #' match.arg Replacement
 #'

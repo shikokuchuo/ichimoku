@@ -151,7 +151,7 @@ ichimoku.xts <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, ...) {
 #'
 ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, ...) {
 
-  if (missing(ticker)) ticker <- deparse(substitute(x))
+  if (missing(ticker)) ticker <- deparse(substitute(x), width.cutoff = 500L, backtick = FALSE, control = NULL, nlines = 1L)
   xlen <- dim(x)[1L]
   cnames <- attr(x, "names")
 
@@ -273,7 +273,7 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
 #'
 ichimoku.matrix <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, ...) {
 
-  if (missing(ticker)) ticker <- deparse(substitute(x))
+  if (missing(ticker)) ticker <- deparse(substitute(x), width.cutoff = 500L, backtick = FALSE, control = NULL, nlines = 1L)
   x <- matrix_df(x, keep.attrs = !missing(keep.data) && isTRUE(keep.data))
 
   ichimoku.data.frame(x, ticker = ticker, periods = periods, keep.data = keep.data, ...)
@@ -317,7 +317,7 @@ ichimoku.default <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, ..
 #'
 .ichimoku <- function(x, ticker, periods = c(9L, 26L, 52L), ...) {
 
-  if (missing(ticker)) ticker <- deparse(substitute(x))
+  if (missing(ticker)) ticker <- deparse(substitute(x), width.cutoff = 500L, backtick = FALSE, control = NULL, nlines = 1L)
   xlen <- dim(x)[1L]
   if (is.numeric(periods) && length(periods) == 3L && all(periods >= 1L)) {
     periods <- as.integer(periods)

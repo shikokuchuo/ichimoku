@@ -187,7 +187,7 @@ readArchive <- function(file) {
     message("Data unverified: SHA256 hash not present")
   } else {
     sha256 <- sha256(object)
-    if (identical(sha256, as.character(x_archive_sha256)))
+    if (identical(sha256, x_archive_sha256))
       message("Data verified by SHA256: ", sha256) else
         warning(sprintf("SHA256 of restored object:   %s\ndoes not match the original: %s", sha256, x_archive_sha256), call. = FALSE)
   }
