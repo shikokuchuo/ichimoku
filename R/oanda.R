@@ -200,7 +200,7 @@ getPrices <- function(instrument, granularity, count = NULL, from = NULL,
          deserialize_json(resp[["data"]]), call. = FALSE)
   timestamp <- as.POSIXct.POSIXlt(strptime(resp[["headers"]][["date"]],
                                            format = "%a, %d %b %Y %H:%M:%S", tz = "UTC"))
-  candles <- deserialize_json(resp[["raw"]], query = "/candles")
+  candles <- deserialize_json(resp[["data"]], query = "/candles")
   ptype <- switch(price, M = "mid", B = "bid", A = "ask")
 
   !missing(.validate) && .validate == FALSE && {
