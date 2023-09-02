@@ -1,3 +1,7 @@
+# ichimoku 1.4.8.9000 (development)
+
+* Requires nanonext >= 0.10.0.
+
 # ichimoku 1.4.8
 
 #### Updates:
