@@ -1,6 +1,7 @@
-# ichimoku 1.4.8.9000 (development)
+# ichimoku 1.4.9
 
-* Requires nanonext >= 0.10.0.
+* Internal performance enhancements.
+* Requires nanonext >= 0.10.0 and R >= 3.5.
 
 # ichimoku 1.4.8
 
