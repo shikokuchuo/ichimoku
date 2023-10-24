@@ -66,30 +66,30 @@ Calling an ichimoku object automatically invokes its print method,
 
     Index:
     \itemize{
-        \item{\code{index(object)}:} {date-time index [POSIXct]}
+        \item \code{index(object)}: date-time index [POSIXct]
      }
     Columns [numeric]:
     \itemize{
-        \item{\code{object$open}:} {opening price}
-        \item{\code{$high}:} {high price}
-        \item{\code{$low}:} {low price}
-        \item{\code{$close}:} {closing price}
-        \item{\code{$cd}:} {candle direction (-1 = down, 0 = flat, 1 = up)}
-        \item{\code{$tenkan}:} {Tenkan-sen}
-        \item{\code{$kijun}:} {Kijun-sen}
-        \item{\code{$senkouA}:} {Senkou span A}
-        \item{\code{$senkouB}:} {Senkou span B}
-        \item{\code{$chikou}:} {Chikou span}
-        \item{\code{$cloudT}:} {cloud Top (max of senkouA, senkouB)}
-        \item{\code{$cloudB}:} {cloud Base (min of senkouA, senkouB)}
+        \item \code{object$open}: opening price
+        \item \code{$high}: high price
+        \item \code{$low}: low price
+        \item \code{$close}: closing price
+        \item \code{$cd}: candle direction (-1 = down, 0 = flat, 1 = up)
+        \item \code{$tenkan}: Tenkan-sen
+        \item \code{$kijun}: Kijun-sen
+        \item \code{$senkouA}: Senkou span A
+        \item \code{$senkouB}: Senkou span B
+        \item \code{$chikou}: Chikou span
+        \item \code{$cloudT}: cloud Top (max of senkouA, senkouB)
+        \item \code{$cloudB}: cloud Base (min of senkouA, senkouB)
      }
     Attributes:
     \itemize{
-        \item{\code{attributes(object)$periods}:} { parameters used to
-        calculate the cloud [integer vector of length 3]}
-        \item{\code{$periodicity}:} { periodicity of the
-        data in seconds [numeric]}
-        \item{\code{$ticker}:} { instrument identifier [character]}
+        \item \code{attributes(object)$periods}: parameters used to calculate
+        the cloud [integer vector of length 3]
+        \item \code{$periodicity}: periodicity of the data in seconds
+        [numeric]
+        \item \code{$ticker}: instrument identifier [character]
      }
 }
 

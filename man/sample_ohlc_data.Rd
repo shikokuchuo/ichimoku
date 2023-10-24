@@ -7,12 +7,12 @@
 \format{
 A data frame with 256 observations of 6 variables:
 \itemize{
-  \item{time}{ - timestamp of observation [POSIXct]}
-  \item{open}{ - opening price [numeric]}
-  \item{low}{ - low price [numeric]}
-  \item{high}{ - high price [numeric]}
-  \item{close}{ - closing price [numeric]}
-  \item{volume}{ - volume [integer]}
+  \item time - timestamp of observation [POSIXct]
+  \item open - opening price [numeric]
+  \item low - low price [numeric]
+  \item high - high price [numeric]
+  \item close - closing price [numeric]
+  \item volume - volume [integer]
 }
 }
 \source{

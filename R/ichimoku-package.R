@@ -32,38 +32,38 @@
 #' @section Principal ichimoku functions:
 #' Data & Visualization
 #' \itemize{
-#'     \item{\code{\link{ichimoku}}} {to create an ichimoku object from price
-#'     data.}
-#'     \item{\code{\link{plot.ichimoku}} / \code{\link{iplot}}} {to plot
-#'     (interactive) cloud charts from ichimoku objects.}
-#'     \item{\code{\link{archive}}} {for reading/writing objects to/from archive
-#'     files with data verification.}
-#'     \item{\code{\link{oanda}}} {to retrieve price data from the OANDA fxTrade
-#'     API.}
+#'     \item \code{\link{ichimoku}} to create an ichimoku object from price
+#'     data.
+#'     \item \code{\link{plot.ichimoku}} / \code{\link{iplot}} to plot
+#'     (interactive) cloud charts from ichimoku objects.
+#'     \item \code{\link{archive}} for reading/writing objects to/from archive
+#'     files with data verification.
+#'     \item \code{\link{oanda}} to retrieve price data from the OANDA fxTrade
+#'     API.
 #' }
 #' Strategies & ML
 #' \itemize{
-#'     \item{\code{\link{strat}}} {to augment an ichimoku object with a strategy,
-#'     including combined and asymmetric strategies.}
-#'     \item{\code{\link{autostrat}}} {to automatically evaluate and rank
-#'     top-performing strategies.}
-#'     \item{\code{\link{mlgrid}}} {to generate a numeric representation of the
-#'     ichimoku cloud chart.}
-#'     \item{\code{\link{relative}}} {to produce a statistical summary of the
-#'     latest ichimoku numeric representation relative to historical values.}
+#'     \item \code{\link{strat}} to augment an ichimoku object with a strategy,
+#'     including combined and asymmetric strategies.
+#'     \item \code{\link{autostrat}} to automatically evaluate and rank
+#'     top-performing strategies.
+#'     \item \code{\link{mlgrid}} to generate a numeric representation of the
+#'     ichimoku cloud chart.
+#'     \item \code{\link{relative}} to produce a statistical summary of the
+#'     latest ichimoku numeric representation relative to historical values.
 #' }
 #' Real-time
 #' \itemize{
-#'     \item{\code{\link{oanda_chart}}} {to plot real-time ichimoku cloud charts
-#'     using OANDA data.}
-#'     \item{\code{\link{oanda_studio}}} {a complete live analysis environment
-#'     using OANDA data implemented in R Shiny.}
-#'     \item{\code{\link{oanda_stream}} / \code{\link{oanda_quote}}} {to obtain
-#'     the latest live data stream / quote from the OANDA fxTrade API.}
-#'     \item{\code{\link{oanda_view}}} {for a market overview showing the
-#'     relative performance of constituents.}
-#'     \item{\code{\link{oanda_orders}} / \code{\link{oanda_positions}}} {to
-#'     retrieve the aggregate OANDA fxTrade order / position book.}
+#'     \item \code{\link{oanda_chart}} to plot real-time ichimoku cloud charts
+#'     using OANDA data.
+#'     \item \code{\link{oanda_studio}} a complete live analysis environment
+#'     using OANDA data implemented in R Shiny.
+#'     \item \code{\link{oanda_stream}} / \code{\link{oanda_quote}} to obtain
+#'     the latest live data stream / quote from the OANDA fxTrade API.
+#'     \item \code{\link{oanda_view}} for a market overview showing the
+#'     relative performance of constituents.
+#'     \item \code{\link{oanda_orders}} / \code{\link{oanda_positions}} to
+#'     retrieve the aggregate OANDA fxTrade order / position book.
 #' }
 #'
 #' @encoding UTF-8

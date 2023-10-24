@@ -285,18 +285,18 @@ getPrices <- function(instrument, granularity, count = NULL, from = NULL,
 #'     Summarised from the streaming API documentation:
 #'
 #'     \itemize{
-#'     \item{Pricing stream does not include every single price created for the
-#'     Account}
-#'     \item{At most 4 prices are sent per second (every 250 milliseconds) for
-#'     each instrument}
-#'     \item{If more than one price is created during the 250 millisecond window,
-#'     only the price in effect at the end of the window is sent}
-#'     \item{This means that during periods of rapid price movement, not every
-#'     price is sent}
-#'     \item{Pricing windows for different connections to the stream are not all
-#'     aligned in the same way (e.g. to the top of the second)}
-#'     \item{This means that during periods of rapid price movement, different
-#'     prices may be observed depending on the alignment for the connection}
+#'     \item Pricing stream does not include every single price created for the
+#'     Account
+#'     \item At most 4 prices are sent per second (every 250 milliseconds) for
+#'     each instrument
+#'     \item If more than one price is created during the 250 millisecond window,
+#'     only the price in effect at the end of the window is sent
+#'     \item This means that during periods of rapid price movement, not every
+#'     price is sent
+#'     \item Pricing windows for different connections to the stream are not all
+#'     aligned in the same way (e.g. to the top of the second)
+#'     \item This means that during periods of rapid price movement, different
+#'     prices may be observed depending on the alignment for the connection
 #'     }
 #'
 #' @section Further Details:

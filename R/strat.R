@@ -52,19 +52,19 @@
 #'
 #'     Columns [numeric]:
 #'     \itemize{
-#'         \item{\code{$cond}:} {a boolean vector if the indicator condition is met}
-#'         \item{\code{$posn}:} {a boolean vector indicating if a position is held}
-#'         \item{\code{$txn}:} {a vector representing the transactions to implement
-#'         the position (1 = enter position, -1 = exit position)}
-#'         \item{\code{$logret}:} {a vector of log returns}
-#'         \item{\code{$slogret}:} {a vector of log returns for the strategy}
-#'         \item{\code{$ret}:} {a vector of discrete returns}
-#'         \item{\code{$sret}:} {a vector of of discrete returns for the strategy}
+#'         \item \code{$cond}: a boolean vector if the indicator condition is met
+#'         \item \code{$posn}: a boolean vector indicating if a position is held
+#'         \item \code{$txn}: a vector representing the transactions to implement
+#'         the position (1 = enter position, -1 = exit position)
+#'         \item \code{$logret}: a vector of log returns
+#'         \item \code{$slogret}: a vector of log returns for the strategy
+#'         \item \code{$ret}: a vector of discrete returns
+#'         \item \code{$sret}: a vector of of discrete returns for the strategy
 #'      }
 #'
 #'     Attributes:
 #'     \itemize{
-#'         \item{\code{$strat}:} {the strategy summary [matrix]}
+#'         \item \code{$strat}: the strategy summary [matrix]
 #'      }
 #'
 #'     The strategy summary may be accessed by the \code{summary()} method for
@@ -75,14 +75,14 @@
 #'     denotes the strategy 'c3 > c4'.
 #'
 #'     \itemize{
-#'         \item{Combined strategy 's1 & s2':} {indicator conditions in 's1' and
+#'         \item Combined strategy 's1 & s2': indicator conditions in 's1' and
 #'         's2' have to be met simulateneously for a position to be taken. The
-#'         column \code{$cond} will show when both conditions are met.}
-#'         \item{Asymmetric strategy 's1 x s2':} {indicator condition in 's1' has
-#'         to be met to enter a position, and indicator condition in 's2' to exit
-#'         a position. These rules are applied recursively over the length of the
-#'         data. The column \code{$cond} will show when the indicator condition
-#'         is met in 's1'}
+#'         column \code{$cond} will show when both conditions are met
+#'         \item Asymmetric strategy 's1 x s2': indicator condition in 's1' has
+#'         to be met to enter a position, and indicator condition in 's2' to
+#'         exit a position. These rules are applied recursively over the length
+#'         of the data. The column \code{$cond} will show when the indicator
+#'         condition is met in 's1'
 #'      }
 #'
 #' @section Further Details:
