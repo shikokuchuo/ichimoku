@@ -7,7 +7,8 @@
 
 [![CRAN
 Status](https://www.r-pkg.org/badges/version/ichimoku?color=00008b)](https://CRAN.R-project.org/package=ichimoku)
-[![r-universe](https://shikokuchuo.r-universe.dev/badges/ichimoku?color=a4d1eb)](https://shikokuchuo.r-universe.dev/)
+[![ichimoku status
+badge](https://shikokuchuo.r-universe.dev/badges/ichimoku?color=a4d1eb)](https://shikokuchuo.r-universe.dev/ichimoku)
 [![R-CMD-check](https://github.com/shikokuchuo/ichimoku/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/shikokuchuo/ichimoku/actions/workflows/R-CMD-check.yaml)
 [![codecov](https://codecov.io/gh/shikokuchuo/ichimoku/branch/main/graph/badge.svg)](https://app.codecov.io/gh/shikokuchuo/ichimoku)
 [![DOI](https://zenodo.org/badge/367928545.svg)](https://zenodo.org/badge/latestdoi/367928545)
