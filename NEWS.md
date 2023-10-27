@@ -1,5 +1,7 @@
 # ichimoku 1.4.9.9000 (development)
 
+* Improved handling for OANDA API errors.
+
 # ichimoku 1.4.9
 
 * Internal performance enhancements.

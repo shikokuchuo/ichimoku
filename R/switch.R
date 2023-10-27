@@ -121,6 +121,9 @@ do_ <- function() {
         resp <- ncurl(url, convert = FALSE, follow = TRUE,
                       headers = c("Authorization" = paste0("Bearer ", apikey),
                                   "User-Agent" = .user_agent))
+        resp[["status"]] == 200L ||
+          stop("status code ", resp[["status"]], " - ",
+               deserialize_json(resp[["data"]]), call. = FALSE)
         parsed <- deserialize_json(resp[["data"]])
         length(parsed[["accounts"]]) || stop(parsed, call. = FALSE)
         account <<- parsed[["accounts"]][[1L]][["id"]]
@@ -137,11 +140,9 @@ do_ <- function() {
         resp <- ncurl(url, convert = FALSE, follow = TRUE,
                       headers = c("Authorization" = paste0("Bearer ", apikey),
                                   "User-Agent" = .user_agent))
-        if (resp[["status"]] != 200L) {
-          resp <- ncurl(url, convert = FALSE, follow = TRUE,
-                        headers = c("Authorization" = paste0("Bearer ", apikey),
-                                    "User-Agent" = .user_agent))
-        }
+        resp[["status"]] == 200L ||
+          stop("status code ", resp[["status"]], " - ",
+               deserialize_json(resp[["data"]]), call. = FALSE)
         parsed <- deserialize_json(resp[["data"]])
         length(parsed[["instruments"]]) || {
           warning(parsed,
