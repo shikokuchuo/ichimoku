@@ -162,7 +162,7 @@ The input object may contain additional data not required for ichimoku analysis,
 ```{r ichimokupreserve}
 kumo <- ichimoku(TKR, keep.data = TRUE)
 
-print(kumo[, "volume"], plot = FALSE)
+kumo[, "volume"]
 ```
 
 This consolidates all relevant data into a single object. The additional data can now also be plotted as a sub-plot beneath the main ichimoku cloud chart (see [custom sub-plots](#custom-sub-plots)).
