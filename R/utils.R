@@ -310,10 +310,11 @@ df_append <- function(old, new, key = "time", keep.attr = "timestamp") {
 #'
 #' @export
 #'
-look <- function(x) {
+look <- function(x = .Last.value) {
 
-  lk <- .Call(ichimoku_look, if (missing(x)) .Last.value else x)
-  if (length(lk)) lk else invisible()
+  lk <- .Call(ichimoku_look, x)
+  is.null(lk) && return(invisible())
+  lk
 
 }
 

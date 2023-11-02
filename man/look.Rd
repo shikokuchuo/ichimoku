@@ -4,7 +4,7 @@
 \alias{look}
 \title{Look at Informational Attributes}
 \usage{
-look(x)
+look(x = .Last.value)
 }
 \arguments{
 \item{x}{an object (optional). If 'x' is not supplied, \code{\link{.Last.value}}
