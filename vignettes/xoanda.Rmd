@@ -44,7 +44,7 @@ Separate keys can be set for practice and live accounts; please choose the corre
 
 If an access token is revoked and re-generated, please remember to set the API key again through the `oanda_set_key()` function.
 
-As an alternative, the package looks for an environment variable "OANDA_API_KEY". If present, this will be taken to be the OANDA API key, irrespective of type of account, and in precedence to keys stored using 'keyring'.
+As an alternative, the package looks for an environment variable `OANDA_API_KEY`. If present, this will be taken to be the OANDA API key, irrespective of type of account, and in precedence to keys stored using 'keyring'.
 
 ## Using a Live Account
 

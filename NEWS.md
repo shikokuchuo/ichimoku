@@ -1,6 +1,6 @@
-# ichimoku 1.4.10.9000 (development)
+# ichimoku 1.4.11
 
-* Allows using the environment variable 'OANDA_API_KEY' as an alternative to storing using the 'keyring' package.
+* Allows using the environment variable 'OANDA_API_KEY' as an alternative to the 'keyring' package.
 * Arguments 'keep.data' and 'keep.attrs' across the package now have an explicit default value of FALSE (no resultant change in behaviour).
 * Internal performance enhancements.
 * Requires nanonext >= 0.11.0.

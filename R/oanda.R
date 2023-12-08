@@ -277,8 +277,9 @@ getPrices <- function(instrument, granularity, count = NULL, from = NULL,
 #'     session on function exit. The latest rows of the dataframe are printed to
 #'     the console, as governed by the 'display' argument.
 #'
-#' @details This function connects to the OANDA fxTrade Streaming API. Use the
-#'     'Esc' key to stop the stream and return the session data.
+#' @details This function connects to the OANDA fxTrade Streaming API. Send an
+#'     interrupt using the 'Esc' key or 'Ctrl+c' to stop the stream and return
+#'     the session data.
 #'
 #'     Note: only messages of type 'PRICE' are processed. Messages of type
 #'     'HEARTBEAT' consisting of only a timestamp are discarded.
