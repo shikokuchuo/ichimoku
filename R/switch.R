@@ -72,26 +72,27 @@ do_ <- function() {
       switch(server_type,
              practice = {
                server_type <<- "live"
-               livestore <<- keystore <<- instruments <<- account <<- NULL
+               livestore <<- keystore <<- ""
+               instruments <<- account <<- NULL
                message("Default OANDA server switched to 'live'")
              },
              live = {
                server_type <<- "practice"
-               livestore <<- keystore <<- instruments <<- account <<- NULL
+               livestore <<- keystore <<- ""
+               instruments <<- account <<- NULL
                message("Default OANDA server switched to 'practice'")
              }),
-    getKey = function(server) {
-      if (missing(server)) server <- server_type
+    getKey = function(server = server_type) {
       switch(server,
              practice = {
                if (!nzchar(keystore)) {
                  if (requireNamespace("keyring", quietly = TRUE)) {
                    apikey <- tryCatch(keyring::key_get(service = "OANDA_API_KEY"), error = function(e) {
                      message("No API key found for 'practice' account type\nPlease use oanda_set_key() to store your API key for automatic retrieval")
-                     if (interactive()) readline("Please enter OANDA API key: ")
+                     if (interactive()) readline("Please enter OANDA API key: ") else ""
                    })
                  } else {
-                   apikey <- if (interactive()) readline("Please enter OANDA API key: ")
+                   apikey <- if (interactive()) readline("Please enter OANDA API key: ") else ""
                  }
                  keystore <<- apikey
                }
@@ -102,10 +103,10 @@ do_ <- function() {
                  if (requireNamespace("keyring", quietly = TRUE)) {
                    apikey <- tryCatch(keyring::key_get(service = "OANDA_LIVE_KEY"), error = function(e) {
                      message("No API key found for 'live' account type\nPlease use oanda_set_key() to store your API key for automatic retrieval")
-                     if (interactive()) readline("Please enter OANDA API key: ")
+                     if (interactive()) readline("Please enter OANDA API key: ") else ""
                    })
                  } else {
-                   apikey <- if (interactive()) readline("Please enter OANDA API key: ")
+                   apikey <- if (interactive()) readline("Please enter OANDA API key: ") else ""
                  }
                  livestore <<- apikey
                }

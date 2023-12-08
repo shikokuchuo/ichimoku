@@ -1,3 +1,7 @@
+# ichimoku 1.4.11.9000 (development)
+
+* Fixes `oanda_switch()`, regression since v1.4.11.
+
 # ichimoku 1.4.11
 
 * Allows using the environment variable 'OANDA_API_KEY' as an alternative to the 'keyring' package.
