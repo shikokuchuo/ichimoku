@@ -26,8 +26,9 @@ this has been changed by \code{\link{oanda_switch}}.}
 
 \item{apikey}{(optional) string containing the OANDA fxTrade API key (personal
 access token), or function that returns this string. Does not need to be
-specified if already stored by oanda_set_key(). Can also be entered
-interactively if not specified.}
+specified if already stored as the environment variable
+\code{OANDA_API_KEY} or by \code{\link{oanda_set_key}}. Can also be
+entered interactively if not specified.}
 }
 \value{
 A data.frame containing the daily open, high, low and last prices,

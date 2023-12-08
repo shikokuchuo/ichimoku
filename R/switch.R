@@ -63,7 +63,8 @@ deserialize_json <- function(x, query = NULL)
 do_ <- function() {
 
   server_type <- "practice"
-  livestore <- keystore <- instruments <- account <- NULL
+  livestore <- keystore <- Sys.getenv("OANDA_API_KEY")
+  instruments <- account <- NULL
 
   list(
     getServer = function() server_type,
@@ -83,7 +84,7 @@ do_ <- function() {
       if (missing(server)) server <- server_type
       switch(server,
              practice = {
-               if (is.null(keystore)) {
+               if (!nzchar(keystore)) {
                  if (requireNamespace("keyring", quietly = TRUE)) {
                    apikey <- tryCatch(keyring::key_get(service = "OANDA_API_KEY"), error = function(e) {
                      message("No API key found for 'practice' account type\nPlease use oanda_set_key() to store your API key for automatic retrieval")
@@ -97,7 +98,7 @@ do_ <- function() {
                invisible(keystore)
              },
              live = {
-               if (is.null(livestore)) {
+               if (!nzchar(livestore)) {
                  if (requireNamespace("keyring", quietly = TRUE)) {
                    apikey <- tryCatch(keyring::key_get(service = "OANDA_LIVE_KEY"), error = function(e) {
                      message("No API key found for 'live' account type\nPlease use oanda_set_key() to store your API key for automatic retrieval")
@@ -122,8 +123,7 @@ do_ <- function() {
                       headers = c("Authorization" = paste0("Bearer ", apikey),
                                   "User-Agent" = .user_agent))
         resp[["status"]] == 200L ||
-          stop("status code ", resp[["status"]], " - ",
-               deserialize_json(resp[["data"]]), call. = FALSE)
+          stop("status code ", resp[["status"]], " - ", deserialize_json(resp[["data"]]), call. = FALSE)
         parsed <- deserialize_json(resp[["data"]])
         length(parsed[["accounts"]]) || stop(parsed, call. = FALSE)
         account <<- parsed[["accounts"]][[1L]][["id"]]
@@ -141,8 +141,7 @@ do_ <- function() {
                       headers = c("Authorization" = paste0("Bearer ", apikey),
                                   "User-Agent" = .user_agent))
         resp[["status"]] == 200L ||
-          stop("status code ", resp[["status"]], " - ",
-               deserialize_json(resp[["data"]]), call. = FALSE)
+          stop("status code ", resp[["status"]], " - ", deserialize_json(resp[["data"]]), call. = FALSE)
         parsed <- deserialize_json(resp[["data"]])
         length(parsed[["instruments"]]) || {
           warning(parsed,

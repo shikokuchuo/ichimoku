@@ -46,8 +46,9 @@
 #'     this has been changed by \code{\link{oanda_switch}}.
 #' @param apikey (optional) string containing the OANDA fxTrade API key (personal
 #'     access token), or function that returns this string. Does not need to be
-#'     specified if already stored by oanda_set_key(). Can also be entered
-#'     interactively if not specified.
+#'     specified if already stored as the environment variable
+#'     \code{OANDA_API_KEY} or by \code{\link{oanda_set_key}}. Can also be
+#'     entered interactively if not specified.
 #' @param quietly (optional) if set to TRUE, will suppress printing of auxiliary
 #'     output to the console and return quietly.
 #'
@@ -199,8 +200,7 @@ getPrices <- function(instrument, granularity, count = NULL, from = NULL,
                             `User-Agent` = .user_agent),
                 response = "date")
   resp[["status"]] == 200L ||
-    stop("status code ", resp[["status"]], " - ",
-         deserialize_json(resp[["data"]]), call. = FALSE)
+    stop("status code ", resp[["status"]], " - ", deserialize_json(resp[["data"]]), call. = FALSE)
   timestamp <- as.POSIXct.POSIXlt(strptime(resp[["headers"]][["date"]],
                                            format = "%a, %d %b %Y %H:%M:%S", tz = "UTC"))
   candles <- deserialize_json(resp[["data"]], query = "/candles")
@@ -798,11 +798,8 @@ oanda_studio <- function(instrument = "USD_JPY",
 #'
 #' @export
 #'
-oanda_instruments <- function(server, apikey) {
-
+oanda_instruments <- function(server, apikey)
   do_$getInstruments(server = server, apikey = apikey)
-
-}
 
 #' Set OANDA fxTrade API Key
 #'
