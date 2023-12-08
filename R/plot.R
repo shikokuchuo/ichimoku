@@ -119,8 +119,8 @@ autoplot.ichimoku <- function(object,
                               custom,
                               ...) {
 
-  if (length(theme) != 12L) theme <- match.arg(theme)
-  type <- match.arg(type)
+  if (length(theme) != 12L) theme <- match.arg(theme, c("classic", "dark", "mono", "noguchi", "okabe-ito", "solarized"))
+  type <- match.arg(type, c("none", "r", "s", "bar", "line"))
   object <- create_data(object = object, window = window, type = type)
   plot_ichimoku(object = object, ticker = ticker, subtitle = subtitle, theme = theme,
                 strat = strat, type = type, custom = custom, ...)

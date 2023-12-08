@@ -1,6 +1,8 @@
 # ichimoku 1.4.10.9000 (development)
 
 * Arguments 'keep.data' and 'keep.attrs' across the package now have an explicit default value of FALSE (no resultant change in behaviour).
+* Internal performance enhancements.
+* Requires nanonext >= 0.11.0 to ensure optimal stability in interactions with the OANDA API.
 
 # ichimoku 1.4.10
 

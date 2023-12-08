@@ -71,7 +71,7 @@ autostrat <- function(x,
                       quietly) {
 
   is.ichimoku(x) || stop("autostrat() only works on ichimoku objects", call. = FALSE)
-  dir <- match.arg(dir)
+  dir <- match.arg(dir, c("long", "short"))
   if (!level %in% 1:3) {
     warning("'level' should be 1, 2 or 3 - reverting to default of 1", call. = FALSE)
     level <- 1
@@ -238,7 +238,7 @@ mlgrid <- function(x,
                    expr = list()) {
 
   is.ichimoku(x) || stop("mlgrid() only works on ichimoku objects", call. = FALSE)
-  y <- match.arg(y)
+  y <- match.arg(y, c("logret", "ret", "none"))
   if (!missing(k)) {
     if (is.numeric(k) && k >= 1L) {
       k <- as.integer(k)
@@ -247,8 +247,8 @@ mlgrid <- function(x,
       k <- 1L
     }
   }
-  dir <- match.arg(dir)
-  type <- match.arg(type)
+  dir <- match.arg(dir, c("long", "short"))
+  type <- match.arg(type, c("boolean", "numeric", "z-score"))
   format <- match.arg2(format, c("dataframe", "matrix"))
   core <- coredata.ichimoku(x)
   xlen <- dim(core)[1L]

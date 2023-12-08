@@ -69,8 +69,8 @@ iplot <- function(x,
   dims <- attr(x, "dim")
   dims[2L] >= 12L ||
     stop("attempt to plot incomplete (partial or subset) ichimoku object", call. = FALSE)
-  theme <- match.arg(theme)
-  type <- match.arg(type)
+  theme <- match.arg(theme, c("classic", "dark", "mono", "noguchi", "okabe-ito", "solarized"))
+  type <- match.arg(type, c("none", "r", "s", "bar", "line"))
   if (missing(ticker))
     ticker <- attr(x, "ticker")
   if (missing(subtitle))

@@ -115,9 +115,11 @@ strat <- function(x,
                   type = 2) {
 
   is.ichimoku(x) || stop("strat() only works on ichimoku objects", call. = FALSE)
-  c1 <- match.arg(c1)
-  c2 <- match.arg(c2)
-  dir <- match.arg(dir)
+  c1 <- match.arg(c1, c("close", "chikou", "open", "high", "low", "tenkan",
+                        "kijun", "senkouA", "senkouB", "cloudT", "cloudB"))
+  c2 <- match.arg(c2, c("tenkan", "kijun", "senkouA", "senkouB", "cloudT",
+                        "cloudB", "chikou", "close", "open", "high", "low"))
+  dir <- match.arg(dir, c("long", "short"))
   p2 <- attr(x, "periods")[2L]
 
   core <- coredata.ichimoku(x)
@@ -131,8 +133,10 @@ strat <- function(x,
     posn <- c(NA, cond[1:(end - 1L)], rep(NA, p2))
 
   } else if (type == 2) {
-    c3 <- match.arg(c3)
-    c4 <- match.arg(c4)
+    c3 <- match.arg(c3, c("close", "chikou", "open", "high", "low", "tenkan",
+                          "kijun", "senkouA", "senkouB", "cloudT", "cloudB"))
+    c4 <- match.arg(c4, c("tenkan", "kijun", "senkouA", "senkouB", "cloudT",
+                          "cloudB", "chikou", "close", "open", "high", "low"))
     strategy <- sprintf("%s > %s & %s > %s", c1, c2, c3, c4)
 
     s1cond <- c(rep(NA, offset), (core[, c1] > core[, c2])[1:(xlen - offset)])
@@ -144,8 +148,10 @@ strat <- function(x,
     posn <- s1posn * s2posn
 
   } else if (type == 3) {
-    c3 <- match.arg(c3)
-    c4 <- match.arg(c4)
+    c3 <- match.arg(c3, c("close", "chikou", "open", "high", "low", "tenkan",
+                          "kijun", "senkouA", "senkouB", "cloudT", "cloudB"))
+    c4 <- match.arg(c4, c("tenkan", "kijun", "senkouA", "senkouB", "cloudT",
+                          "cloudB", "chikou", "close", "open", "high", "low"))
     strategy <- sprintf("%s > %s x %s > %s", c1, c2, c3, c4)
 
     cond <- c(rep(NA, offset), (core[, c1] > core[, c2])[1:(xlen - offset)])
