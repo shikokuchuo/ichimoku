@@ -103,7 +103,7 @@ grid_dup <- function(n, omit.id) {
 #' An optimised 'xts' to 'data.frame' constructor.
 #'
 #' @param x an 'xts' object.
-#' @param keep.attrs (optional) if set to TRUE, will preserve any custom
+#' @param keep.attrs [default FALSE] if set to TRUE, will preserve any custom
 #'     attributes set on the original object.
 #'
 #' @return A 'data.frame' object. The 'xts' index is preserved as the first
@@ -123,7 +123,7 @@ grid_dup <- function(n, omit.id) {
 #'
 #' @export
 #'
-xts_df <- function(x, keep.attrs) {
+xts_df <- function(x, keep.attrs = FALSE) {
   core <- coredata(x)
   dn2 <- dimnames(core)[[2L]]
   xlen <- dim(core)[1L]
@@ -139,7 +139,7 @@ xts_df <- function(x, keep.attrs) {
   `attributes<-`(df, c(list(names = c("index", dn2),
                             class = "data.frame",
                             row.names = .set_row_names(xlen)),
-                       if (!missing(keep.attrs) && isTRUE(keep.attrs))
+                       if (isTRUE(keep.attrs))
                          .Call(ichimoku_look, x)))
 }
 
@@ -148,7 +148,7 @@ xts_df <- function(x, keep.attrs) {
 #' An optimised 'matrix' to 'data.frame' constructor.
 #'
 #' @param x a matrix.
-#' @param keep.attrs (optional) if set to TRUE, will preserve any custom
+#' @param keep.attrs [default FALSE] if set to TRUE, will preserve any custom
 #'     attributes set on the original object.
 #'
 #' @return A 'data.frame' object. If the matrix has row names, these are
@@ -167,8 +167,8 @@ xts_df <- function(x, keep.attrs) {
 #'
 #' @export
 #'
-matrix_df <- function(x, keep.attrs) {
-  lk <- if (!missing(keep.attrs) && isTRUE(keep.attrs)) .Call(ichimoku_look, x)
+matrix_df <- function(x, keep.attrs = FALSE) {
+  lk <- if (isTRUE(keep.attrs)) .Call(ichimoku_look, x)
   dn <- dimnames(x)
   xlen <- dim(x)[1L]
   len <- dim(x)[2L]

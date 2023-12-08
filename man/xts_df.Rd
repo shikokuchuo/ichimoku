@@ -4,12 +4,12 @@
 \alias{xts_df}
 \title{Convert xts to data.frame}
 \usage{
-xts_df(x, keep.attrs)
+xts_df(x, keep.attrs = FALSE)
 }
 \arguments{
 \item{x}{an 'xts' object.}
 
-\item{keep.attrs}{(optional) if set to TRUE, will preserve any custom
+\item{keep.attrs}{[default FALSE] if set to TRUE, will preserve any custom
 attributes set on the original object.}
 }
 \value{

@@ -205,7 +205,7 @@ summary.ichimoku <- function(object, strat = TRUE, ...) {
 #' @param x an object of class 'ichimoku'.
 #' @param row.names not used.
 #' @param optional not used.
-#' @param keep.attrs (optional) if set to TRUE, will preserve any custom
+#' @param keep.attrs [default FALSE] if set to TRUE, will preserve any custom
 #'     attributes set on the original object.
 #' @param ... arguments passed to or from other methods.
 #'
@@ -227,8 +227,8 @@ summary.ichimoku <- function(object, strat = TRUE, ...) {
 #' @method as.data.frame ichimoku
 #' @export
 #'
-as.data.frame.ichimoku <- function(x, row.names, optional, keep.attrs, ...)
-  .Call(ichimoku_tbl, x, !missing(keep.attrs) && isTRUE(keep.attrs))
+as.data.frame.ichimoku <- function(x, row.names, optional, keep.attrs = FALSE, ...)
+  .Call(ichimoku_tbl, x, isTRUE(keep.attrs))
 
 #' @name coredata
 #' @rdname coredata.ichimoku

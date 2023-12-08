@@ -9,17 +9,17 @@
 \alias{ichimoku.default}
 \title{ichimoku}
 \usage{
-ichimoku(x, ticker, periods = c(9L, 26L, 52L), keep.data, ...)
+ichimoku(x, ticker, periods = c(9L, 26L, 52L), keep.data = FALSE, ...)
 
-\method{ichimoku}{ichimoku}(x, ticker, periods = c(9L, 26L, 52L), keep.data, ...)
+\method{ichimoku}{ichimoku}(x, ticker, periods = c(9L, 26L, 52L), keep.data = FALSE, ...)
 
-\method{ichimoku}{xts}(x, ticker, periods = c(9L, 26L, 52L), keep.data, ...)
+\method{ichimoku}{xts}(x, ticker, periods = c(9L, 26L, 52L), keep.data = FALSE, ...)
 
-\method{ichimoku}{data.frame}(x, ticker, periods = c(9L, 26L, 52L), keep.data, ...)
+\method{ichimoku}{data.frame}(x, ticker, periods = c(9L, 26L, 52L), keep.data = FALSE, ...)
 
-\method{ichimoku}{matrix}(x, ticker, periods = c(9L, 26L, 52L), keep.data, ...)
+\method{ichimoku}{matrix}(x, ticker, periods = c(9L, 26L, 52L), keep.data = FALSE, ...)
 
-\method{ichimoku}{default}(x, ticker, periods = c(9L, 26L, 52L), keep.data, ...)
+\method{ichimoku}{default}(x, ticker, periods = c(9L, 26L, 52L), keep.data = FALSE, ...)
 }
 \arguments{
 \item{x}{a data.frame or other compatible object, which includes xts,
@@ -33,8 +33,8 @@ periods used for the cloud. This parameter shoud not normally be modified
 as using other values would be invalid in the context of traditional
 ichimoku analysis.}
 
-\item{keep.data}{(optional) set to TRUE to retain additional data present
-in the input object as additional columns and/or attributes.}
+\item{keep.data}{[default FALSE] set to TRUE to retain additional data
+present in the input object as additional columns and/or attributes.}
 
 \item{...}{additional arguments, for instance 'holidays', passed along to
 \code{\link{tradingDays}} for calculating the future cloud on daily data.}

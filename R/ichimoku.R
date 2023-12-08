@@ -32,8 +32,8 @@
 #'     periods used for the cloud. This parameter shoud not normally be modified
 #'     as using other values would be invalid in the context of traditional
 #'     ichimoku analysis.
-#' @param keep.data (optional) set to TRUE to retain additional data present
-#'     in the input object as additional columns and/or attributes.
+#' @param keep.data [default FALSE] set to TRUE to retain additional data
+#'     present in the input object as additional columns and/or attributes.
 #' @param ... additional arguments, for instance 'holidays', passed along to
 #'     \code{\link{tradingDays}} for calculating the future cloud on daily data.
 
@@ -110,18 +110,18 @@
 #' @rdname ichimoku
 #' @export
 #'
-ichimoku <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, ...) UseMethod("ichimoku")
+ichimoku <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data = FALSE, ...) UseMethod("ichimoku")
 
 #' @rdname ichimoku
 #' @method ichimoku ichimoku
 #' @export
 #'
-ichimoku.ichimoku <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, ...) {
+ichimoku.ichimoku <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data = FALSE, ...) {
 
   if (missing(ticker)) ticker <- attr(x, "ticker")
   x <- x[!is.na(coredata.ichimoku(x)[, "close"]), ]
 
-  if (!missing(keep.data) && isTRUE(keep.data)) {
+  if (isTRUE(keep.data)) {
     x$cd <- x$tenkan <- x$kijun <- x$senkouA <- x$senkouB <- x$chikou <- x$cloudT <- x$cloudB <- NULL
     x <- as.data.frame.ichimoku(x, keep.attrs = TRUE)
   } else {
@@ -136,10 +136,10 @@ ichimoku.ichimoku <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, .
 #' @method ichimoku xts
 #' @export
 #'
-ichimoku.xts <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, ...) {
+ichimoku.xts <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data = FALSE, ...) {
 
   if (missing(ticker)) ticker <- deparse(substitute(x))
-  x <- xts_df(x, keep.attrs = !missing(keep.data) && isTRUE(keep.data))
+  x <- xts_df(x, keep.attrs = isTRUE(keep.data))
 
   ichimoku.data.frame(x, ticker = ticker, periods = periods, keep.data = keep.data, ...)
 
@@ -149,7 +149,7 @@ ichimoku.xts <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, ...) {
 #' @method ichimoku data.frame
 #' @export
 #'
-ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, ...) {
+ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data = FALSE, ...) {
 
   if (missing(ticker)) ticker <- deparse(substitute(x), width.cutoff = 500L, backtick = FALSE, control = NULL, nlines = 1L)
   xlen <- dim(x)[1L]
@@ -238,15 +238,15 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
   }
   xtsindex <- c(index, future)
 
-  if (missing(keep.data) || !isTRUE(keep.data)) {
-    x <- kmatrix <- NULL
-  } else {
+  if (isTRUE(keep.data)) {
     used <- unlist(lapply(c("coli", "colo", "colh", "coll", "colc", "colp"),
                           function(x) get0(x, envir = parent.frame(2L), inherits = FALSE)))
     used <- used[!is.na(used)]
     keep <- if (!is.null(used)) cnames[-used]
     kmatrix <- do.call(cbind, lapply(.subset(x, keep),
                                      function(x) `length<-`(as.numeric(x), clen)))
+  } else {
+    x <- kmatrix <- NULL
   }
 
   kumo <- cbind(open = `length<-`(open, clen),
@@ -271,10 +271,10 @@ ichimoku.data.frame <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data,
 #' @method ichimoku matrix
 #' @export
 #'
-ichimoku.matrix <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, ...) {
+ichimoku.matrix <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data = FALSE, ...) {
 
   if (missing(ticker)) ticker <- deparse(substitute(x), width.cutoff = 500L, backtick = FALSE, control = NULL, nlines = 1L)
-  x <- matrix_df(x, keep.attrs = !missing(keep.data) && isTRUE(keep.data))
+  x <- matrix_df(x, keep.attrs = isTRUE(keep.data))
 
   ichimoku.data.frame(x, ticker = ticker, periods = periods, keep.data = keep.data, ...)
 
@@ -284,7 +284,7 @@ ichimoku.matrix <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, ...
 #' @method ichimoku default
 #' @export
 #'
-ichimoku.default <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data, ...) {
+ichimoku.default <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data = FALSE, ...) {
 
   is.character(x) || stop("cannot create an ichimoku object from a '", class(x)[1L], "' object", call. = FALSE)
   exists(x) || stop("object '", x, "' not found", call. = FALSE)

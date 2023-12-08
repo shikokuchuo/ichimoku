@@ -4,7 +4,7 @@
 \alias{as.data.frame.ichimoku}
 \title{Convert ichimoku to data.frame}
 \usage{
-\method{as.data.frame}{ichimoku}(x, row.names, optional, keep.attrs, ...)
+\method{as.data.frame}{ichimoku}(x, row.names, optional, keep.attrs = FALSE, ...)
 }
 \arguments{
 \item{x}{an object of class 'ichimoku'.}
@@ -13,7 +13,7 @@
 
 \item{optional}{not used.}
 
-\item{keep.attrs}{(optional) if set to TRUE, will preserve any custom
+\item{keep.attrs}{[default FALSE] if set to TRUE, will preserve any custom
 attributes set on the original object.}
 
 \item{...}{arguments passed to or from other methods.}
