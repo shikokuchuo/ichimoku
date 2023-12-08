@@ -30,7 +30,7 @@ Depends:
     R (>= 3.5)
 Imports: 
     ggplot2 (>= 3.4.0),
-    nanonext (>= 0.10.0),
+    nanonext (>= 0.11.0),
     RcppSimdJson (>= 0.1.9),
     shiny (>= 1.4.0),
     xts,
