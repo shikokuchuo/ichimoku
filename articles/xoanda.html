@@ -157,6 +157,10 @@ choose the correct account type when prompted.</p>
 <p>If an access token is revoked and re-generated, please remember to
 set the API key again through the <code><a href="../reference/oanda_set_key.html">oanda_set_key()</a></code>
 function.</p>
+<p>As an alternative, the package looks for an environment variable
+“OANDA_API_KEY”. If present, this will be taken to be the OANDA API key,
+irrespective of type of account, and in precedence to keys stored using
+‘keyring’.</p>
 </div>
 <div class="section level2">
 <h2 id="using-a-live-account">Using a Live Account<a class="anchor" aria-label="anchor" href="#using-a-live-account"></a>
@@ -229,15 +233,16 @@ fetch price data, for example “2020-06-30”</li>
 <code>server</code> (optional) Specify the “practice” or “live”
 server according to the account type held with OANDA. If not specified,
 will default to “practice”, unless this has been changed by
-<code><a href="../reference/oanda_switch.html">oanda_switch()</a></code>.</li>
+<code><a href="../reference/oanda_switch.html">oanda_switch()</a></code>
+</li>
 <li>
 <code>apikey</code> (optional) string containing the OANDA fxTrade
 API key (personal access token). Does not need to be specified if
-already stored by <code><a href="../reference/oanda_set_key.html">oanda_set_key()</a></code>. This argument is
-designed for specifying a function that returns such a string rather
-than the string itself, which could be potentially unsecure. This allows
-other packages that provide secure storage of secrets to be used if
-preferred over ‘keyring’</li>
+already stored as the environment variable ‘OANDA_API_KEY’ or by
+<code><a href="../reference/oanda_set_key.html">oanda_set_key()</a></code>. This argument is designed for specifying a
+function that returns such a string rather than the string itself, which
+could be potentially unsecure. This allows other packages that provide
+secure storage of secrets to be used if preferred over ‘keyring’</li>
 <li>
 <code>quietly</code> if set to TRUE, will suppress printing of
 output to the console and return quietly</li>
