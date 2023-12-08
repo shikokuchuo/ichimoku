@@ -310,13 +310,7 @@ df_append <- function(old, new, key = "time", keep.attr = "timestamp") {
 #'
 #' @export
 #'
-look <- function(x = .Last.value) {
-
-  lk <- .Call(ichimoku_look, x)
-  is.null(lk) && return(invisible())
-  lk
-
-}
+look <- function(x = .Last.value) if (length(lk <- .Call(ichimoku_look, x))) lk
 
 #' Print More Rows of Ichimoku Objects
 #'
@@ -339,13 +333,10 @@ look <- function(x = .Last.value) {
 #'
 #' @export
 #'
-more <- function(rows) {
-
-  is.ichimoku(lv <- .Last.value) || return(invisible())
-  print(lv, plot = FALSE,
-        rows = if (missing(rows) || !is.numeric(rows)) attr(lv, "dim")[1L] else rows)
-
-}
+more <- function(rows)
+  if (is.ichimoku(lv <- .Last.value))
+    print(lv, plot = FALSE,
+          rows = if (missing(rows) || !is.numeric(rows)) attr(lv, "dim")[1L] else rows)
 
 #' is.ichimoku
 #'
