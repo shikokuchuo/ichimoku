@@ -39,7 +39,7 @@
 #'
 #' @export
 #'
-oanda_switch <- function() do_$switchServer()
+oanda_switch <- function() do_[["switchServer"]]()
 
 #' Deserialize JSON
 #'
@@ -116,7 +116,7 @@ do_ <- function() {
     getAccount = function(server, apikey) {
       if (is.null(account)) {
         server <- if (missing(server)) server_type else match.arg(server, c("practice", "live"))
-        if (missing(apikey)) apikey <- do_$getKey(server = server)
+        if (missing(apikey)) apikey <- do_[["getKey"]](server = server)
         url <- switch(server,
                       practice = "https://api-fxpractice.oanda.com/v3/accounts",
                       live = "https://api-fxtrade.oanda.com/v3/accounts")
@@ -134,7 +134,7 @@ do_ <- function() {
     getInstruments = function(server, apikey) {
       if (is.null(instruments)) {
         server <- if (missing(server)) server_type else match.arg(server, c("practice", "live"))
-        if (missing(apikey)) apikey <- do_$getKey(server = server)
+        if (missing(apikey)) apikey <- do_[["getKey"]](server = server)
         url <- paste0("https://api-fx", switch(server, practice = "practice", live = "trade"),
                       ".oanda.com/v3/accounts/", do_$getAccount(server = server, apikey = apikey),
                       "/instruments")

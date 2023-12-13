@@ -892,10 +892,10 @@ oanda_view <- function(market = c("allfx", "bonds", "commodities", "fx", "metals
     market <- readline("Enter market [a]llfx [b]onds [c]ommodities [f]x [m]etals [s]tocks: ")
   market <- match.arg(market)
   price <- match.arg(price)
-  server <- if (missing(server)) do_$getServer() else match.arg(server, c("practice", "live"))
-  if (missing(apikey)) apikey <- do_$getKey(server = server)
+  server <- if (missing(server)) do_[["getServer"]]() else match.arg(server, c("practice", "live"))
+  if (missing(apikey)) apikey <- do_[["getKey"]](server = server)
 
-  ins <- do_$getInstruments(server = server, apikey = apikey)
+  ins <- do_[["getInstruments"]](server = server, apikey = apikey)
   sel <- switch(market,
                 fx = {
                   vec <- .subset2(ins, "name")[.subset2(ins, "type") == "CURRENCY"]
@@ -966,14 +966,14 @@ oanda_quote <- function(instrument, price = c("M", "B", "A"), server, apikey) {
   if (missing(instrument) && interactive()) instrument <- readline("Enter instrument:")
   instrument <- sub("-", "_", toupper(force(instrument)), fixed = TRUE)
   price <- match.arg(price)
-  server <- if (missing(server)) do_$getServer() else match.arg(server, c("practice", "live"))
-  if (missing(apikey)) apikey <- do_$getKey(server = server)
+  server <- if (missing(server)) do_[["getServer"]]() else match.arg(server, c("practice", "live"))
+  if (missing(apikey)) apikey <- do_[["getKey"]](server = server)
   data <- getPrices(instrument = instrument, granularity = "D", count = 1, price = price,
                     server = server, apikey = apikey, .validate = FALSE)
-  pctchg <- round(100 * (data[["c"]] / data[["o"]] - 1), digits = 4L)
-  cat(instrument, format.POSIXct(.Call(ichimoku_psxct, data[["t"]])),
-      "open:", data[["o"]], " high:", data[["h"]], " low:", data[["l"]],
-      " last:\u001b[7m", data[["c"]], "\u001b[27m %chg:", pctchg, price, file = stdout())
+  pctchg <- 100 * (data[["c"]] / data[["o"]] - 1)
+  cat(sprintf("%s %s open: %.6g high: %.6g low: %.6g last:\u001b[7m %.6g \u001b[27m %%chg: %.4f %s",
+              instrument, format.POSIXct(.Call(ichimoku_psxct, data[["t"]])),
+              data[["o"]], data[["h"]], data[["l"]], data[["c"]], pctchg, price), file = stdout())
 
 }
 
@@ -1009,8 +1009,8 @@ oanda_positions <- function(instrument, time, server, apikey) {
 
   if (missing(instrument) && interactive()) instrument <- readline("Enter instrument:")
   instrument <- sub("-", "_", toupper(force(instrument)), fixed = TRUE)
-  server <- if (missing(server)) do_$getServer() else match.arg(server, c("practice", "live"))
-  if (missing(apikey)) apikey <- do_$getKey(server = server)
+  server <- if (missing(server)) do_[["getServer"]]() else match.arg(server, c("practice", "live"))
+  if (missing(apikey)) apikey <- do_[["getKey"]](server = server)
 
   url <- paste0("https://api-fx", switch(server, practice = "practice", live = "trade"),
                 ".oanda.com/v3/instruments/", instrument, "/positionBook",
@@ -1101,8 +1101,8 @@ oanda_orders <- function(instrument, time, server, apikey) {
 
   if (missing(instrument) && interactive()) instrument <- readline("Enter instrument:")
   instrument <- sub("-", "_", toupper(force(instrument)), fixed = TRUE)
-  server <- if (missing(server)) do_$getServer() else match.arg(server, c("practice", "live"))
-  if (missing(apikey)) apikey <- do_$getKey(server = server)
+  server <- if (missing(server)) do_[["getServer"]]() else match.arg(server, c("practice", "live"))
+  if (missing(apikey)) apikey <- do_[["getKey"]](server = server)
 
   url <- paste0("https://api-fx", switch(server, practice = "practice", live = "trade"),
                 ".oanda.com/v3/instruments/", instrument, "/orderBook",

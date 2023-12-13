@@ -145,9 +145,8 @@ create_data <- function(object, window, type) {
     cd <- core[, "cd"]
     close <- core[, "close"]
     open <- core[, "open"]
-    object$osc_typ_slw <- 1 - 1 /
-      (1 + .Call(ichimoku_wmean, (cd == 1) * (close - open), p2) /
-         .Call(ichimoku_wmean, (cd == -1) * (open - close), p2))
+    object$osc_typ_slw <- 1 - 1 / (1 + .Call(ichimoku_wmean, (cd == 1) * (close - open), p2) /
+                                     .Call(ichimoku_wmean, (cd == -1) * (open - close), p2))
 
   } else if (type == "s") {
     core <- coredata.ichimoku(object)

@@ -1,6 +1,7 @@
 # ichimoku 1.4.11.9000 (development)
 
 * Fixes `oanda_switch()`, regression since v1.4.11.
+* Internal performance enhancements.
 
 # ichimoku 1.4.11
 
