@@ -77,8 +77,8 @@ as using other values would be invalid in the context of traditional
 ichimoku analysis.}
 }
 \value{
-A Shiny app object with class 'shiny.appobj'. With default arguments,
-    the Shiny app is launched in the default browser.
+Invisible NULL, or a 'mirai' if 'new.process' is specified as TRUE.
+    With default arguments, a Shiny app is launched in the default browser.
 }
 \description{
 Interactive and fully-customisable R Shiny environment providing real-time
@@ -89,8 +89,6 @@ Interactive and fully-customisable R Shiny environment providing real-time
 \details{
 This function polls the OANDA fxTrade API for the latest prices and
     updates a customisable reactive Shiny app at each refresh interval.
-
-    This function has a dependency on the 'shiny' package.
 }
 \section{Further Details}{
 

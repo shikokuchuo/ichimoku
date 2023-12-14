@@ -38,10 +38,8 @@
 #' @return A Shiny app object with class 'shiny.appobj'. With default arguments,
 #'     the Shiny app is launched in the default browser.
 #'
-#' @details This function has a dependency on the 'shiny' package.
-#'
-#'     For further details please refer to the reference vignette by calling:
-#'     \code{vignette("reference", package = "ichimoku")}
+#' @details For further details please refer to the reference vignette by
+#'     calling: \code{vignette("reference", package = "ichimoku")}
 #'
 #' @examples
 #' if (interactive()) {

@@ -533,13 +533,11 @@ oanda_chart <- function(instrument,
 #'     calculating the ichimoku cloud, \code{\link{autoplot}} to set chart
 #'     parameters, or the 'options' argument of \code{shiny::shinyApp()}.
 #'
-#' @return A Shiny app object with class 'shiny.appobj'. With default arguments,
-#'     the Shiny app is launched in the default browser.
+#' @return Invisible NULL, or a 'mirai' if 'new.process' is specified as TRUE.
+#'     With default arguments, a Shiny app is launched in the default browser.
 #'
 #' @details This function polls the OANDA fxTrade API for the latest prices and
 #'     updates a customisable reactive Shiny app at each refresh interval.
-#'
-#'     This function has a dependency on the 'shiny' package.
 #'
 #' @section Further Details:
 #'     Please refer to the OANDA fxTrade API vignette by calling:
