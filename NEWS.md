@@ -1,22 +1,33 @@
 # ichimoku 1.4.11.9000 (development)
 
+#### Updates:
+
 * Uses 'mirai' to run `oanda_studio(new.process = TRUE)`
-* Fixes `oanda_switch()`, regression since v1.4.11.
+* Fixes `oanda_switch()` after a regression in 1.4.11.
 * Updates internal OANDA instruments list.
 * Internal performance enhancements.
 
 # ichimoku 1.4.11
 
+#### New features:
+ 
 * Allows using the environment variable 'OANDA_API_KEY' as an alternative to the 'keyring' package.
+
+#### Updates:
+
 * Arguments 'keep.data' and 'keep.attrs' across the package now have an explicit default value of FALSE (no resultant change in behaviour).
 * Internal performance enhancements.
 * Requires nanonext >= 0.11.0.
 
 # ichimoku 1.4.10
 
+#### Updates:
+
 * Improves handling of OANDA API errors.
 
 # ichimoku 1.4.9
+
+#### Updates:
 
 * Internal performance enhancements.
 * Requires nanonext >= 0.10.0 and R >= 3.5.

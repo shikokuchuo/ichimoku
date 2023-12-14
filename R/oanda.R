@@ -186,12 +186,13 @@ oanda <- function(instrument,
 getPrices <- function(instrument, granularity, count = NULL, from = NULL,
                       to = NULL, price, server, apikey, .validate) {
 
-  url <- paste0("https://api-fx", switch(server, practice = "practice", live = "trade"),
-                ".oanda.com/v3/instruments/", instrument, "/candles?granularity=",
-                granularity, "&price=", price,
-                if (length(count)) strcat("&count=", as.character(count)),
-                if (length(from)) strcat("&from=", as.character(from)),
-                if (length(to)) strcat("&to=", as.character(to)))
+  url <- sprintf(
+    "https://api-fx%s.oanda.com/v3/instruments/%s/candles?granularity=%s&price=%s%s%s%s",
+    switch(server, practice = "practice", live = "trade"), instrument, granularity, price,
+    if (length(count)) strcat("&count=", as.character(count)) else "",
+    if (length(from)) strcat("&from=", as.character(from)) else "",
+    if (length(to)) strcat("&to=", as.character(to)) else ""
+  )
   resp <- ncurl(url,
                 convert = FALSE,
                 follow = TRUE,
@@ -759,7 +760,7 @@ oanda_studio <- function(instrument = "USD_JPY",
                   type = input$type)
     })
 
-    output$savedata <- downloadHandler(filename = function() paste0(input$instrument, "_", input$granularity, "_", input$price, ".rda"),
+    output$savedata <- downloadHandler(filename = function() sprintf("%s_%s_%s.rda", input$instrument, input$granularity, input$price),
                                        content = function(file) archive(pdata(), file))
 
     session$onSessionEnded(stopApp)
@@ -1007,9 +1008,9 @@ oanda_positions <- function(instrument, time, server, apikey) {
   server <- if (missing(server)) do_[["getServer"]]() else match.arg(server, c("practice", "live"))
   if (missing(apikey)) apikey <- do_[["getKey"]](server = server)
 
-  url <- paste0("https://api-fx", switch(server, practice = "practice", live = "trade"),
-                ".oanda.com/v3/instruments/", instrument, "/positionBook",
-                if (!missing(time)) paste0("?time=", unclass(as.POSIXct(time))))
+  url <- sprintf("https://api-fx%s.oanda.com/v3/instruments/%s/positionBook%s",
+                 switch(server, practice = "practice", live = "trade"), instrument,
+                 if (missing(time)) "" else sprintf("?time=%.f", unclass(as.POSIXct(time))))
   resp <- ncurl(url, convert = FALSE, follow = TRUE,
                 headers = c(Authorization = strcat("Bearer ", apikey),
                             `Accept-Datetime-Format` = "UNIX", `User-Agent` = .user_agent))
@@ -1099,9 +1100,9 @@ oanda_orders <- function(instrument, time, server, apikey) {
   server <- if (missing(server)) do_[["getServer"]]() else match.arg(server, c("practice", "live"))
   if (missing(apikey)) apikey <- do_[["getKey"]](server = server)
 
-  url <- paste0("https://api-fx", switch(server, practice = "practice", live = "trade"),
-                ".oanda.com/v3/instruments/", instrument, "/orderBook",
-                if (!missing(time)) paste0("?time=", unclass(as.POSIXct(time))))
+  url <- sprintf("https://api-fx%s.oanda.com/v3/instruments/%s/orderBook%s",
+                 switch(server, practice = "practice", live = "trade"), instrument,
+                 if (missing(time)) "" else sprintf("?time=%.f", unclass(as.POSIXct(time))))
   resp <- ncurl(url, convert = FALSE, follow = TRUE,
                 headers = c(Authorization = strcat("Bearer ", apikey),
                             `Accept-Datetime-Format` = "UNIX", `User-Agent` = .user_agent))

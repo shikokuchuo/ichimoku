@@ -124,7 +124,7 @@ iplot <- function(x,
 
   server <- function(input, output, session) {
 
-    window <- reactive(paste0(input$dates[1L], "/", input$dates[2L]))
+    window <- reactive(sprintf("%s/%s", input$dates[1L], input$dates[2L]))
     left_px <- reactive(input$plot_hover$coords_css$x)
     top_px <- reactive(input$plot_hover$coords_css$y)
     posi_x <- reactive(round(input$plot_hover$x, digits = 0))
