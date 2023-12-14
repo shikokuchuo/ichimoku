@@ -576,11 +576,7 @@ oanda_studio <- function(instrument = "USD_JPY",
   isTRUE(new.process) && {
     mc <- match.call()
     mc[["new.process"]] <- NULL
-    cmd <- switch(.subset2(.Platform, "OS.type"),
-                  unix = file.path(R.home("bin"), "Rscript"),
-                  windows = file.path(R.home("bin"), "Rscript.exe"))
-    return(system2(command = cmd, args = c("-e", shQuote(paste0("ichimoku::", deparse(mc)))),
-                   stdout = NULL, stderr = NULL, wait = FALSE))
+    return(invisible(mirai(mc, oanda_studio = oanda_studio)))
   }
   if (!missing(instrument)) instrument <- sub("-", "_", toupper(force(instrument)), fixed = TRUE)
   granularity <- match.arg(granularity, c("D", "W", "M",
@@ -771,7 +767,8 @@ oanda_studio <- function(instrument = "USD_JPY",
     session$onSessionEnded(stopApp)
   }
 
-  shinyApp(ui = ui, server = server, options = list(launch.browser = launch.browser, ...))
+  app <- shinyApp(ui = ui, server = server, options = list(launch.browser = launch.browser, ...))
+  runApp(app)
 
 }
 

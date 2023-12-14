@@ -426,6 +426,7 @@ ichimoku currently has the following external package dependencies:
 - ggplot2 - for graphics and visualization
 - shiny - for interactive and live visualizations
 - xts, zoo - for enhanced time series methods
+- mirai - for running applications in background processes
 - nanonext - for interfacing with external APIs and verifying the data integrity of archived objects
 - RcppSimdJson - for parsing data received from external APIs
 

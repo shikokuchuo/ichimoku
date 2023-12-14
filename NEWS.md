@@ -1,5 +1,6 @@
 # ichimoku 1.4.11.9000 (development)
 
+* Uses 'mirai' to run `oanda_studio(new.process = TRUE)`
 * Fixes `oanda_switch()`, regression since v1.4.11.
 * Internal performance enhancements.
 
