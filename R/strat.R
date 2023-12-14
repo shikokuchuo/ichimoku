@@ -313,7 +313,7 @@ stratcombine <- function(s1, s2) {
   strat2 <- attr(s2, "strat")["Strategy", ][[1L]]
   identical(strat1, strat2) && return(s1)
 
-  strategy <- paste0(strat1, " & ", strat2)
+  strategy <- sprintf("%s & %s", strat1, strat2)
   p2 <- attr(s1, "periods")[2L]
   xlen <- dim(core1)[1L]
   end <- xlen - p2

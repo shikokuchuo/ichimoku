@@ -189,13 +189,13 @@ getPrices <- function(instrument, granularity, count = NULL, from = NULL,
   url <- paste0("https://api-fx", switch(server, practice = "practice", live = "trade"),
                 ".oanda.com/v3/instruments/", instrument, "/candles?granularity=",
                 granularity, "&price=", price,
-                if (!is.null(count)) paste0("&count=", count),
-                if (!is.null(from)) paste0("&from=", from),
-                if (!is.null(to)) paste0("&to=", to))
+                if (length(count)) strcat("&count=", as.character(count)),
+                if (length(from)) strcat("&from=", as.character(from)),
+                if (length(to)) strcat("&to=", as.character(to)))
   resp <- ncurl(url,
                 convert = FALSE,
                 follow = TRUE,
-                headers = c(Authorization = paste0("Bearer ", apikey),
+                headers = c(Authorization = strcat("Bearer ", apikey),
                             `Accept-Datetime-Format` = "UNIX",
                             `User-Agent` = .user_agent),
                 response = "date")
@@ -325,7 +325,7 @@ oanda_stream <- function(instrument, display = 8L, limit, server, apikey) {
   url <- paste0("https://stream-fx", switch(server, practice = "practice", live = "trade"),
                 ".oanda.com/v3/accounts/", do_$getAccount(server = server, apikey = apikey),
                 "/pricing/stream?instruments=", instrument)
-  headers <- c(Authorization = paste0("Bearer ", apikey),
+  headers <- c(Authorization = strcat("Bearer ", apikey),
                `Accept-Datetime-Format` = "UNIX",
                `User-Agent` = .user_agent)
 
@@ -1011,7 +1011,7 @@ oanda_positions <- function(instrument, time, server, apikey) {
                 ".oanda.com/v3/instruments/", instrument, "/positionBook",
                 if (!missing(time)) paste0("?time=", unclass(as.POSIXct(time))))
   resp <- ncurl(url, convert = FALSE, follow = TRUE,
-                headers = c(Authorization = paste0("Bearer ", apikey),
+                headers = c(Authorization = strcat("Bearer ", apikey),
                             `Accept-Datetime-Format` = "UNIX", `User-Agent` = .user_agent))
   resp[["status"]] == 200L ||
     stop("status code ", resp[["status"]], " - ",
@@ -1103,7 +1103,7 @@ oanda_orders <- function(instrument, time, server, apikey) {
                 ".oanda.com/v3/instruments/", instrument, "/orderBook",
                 if (!missing(time)) paste0("?time=", unclass(as.POSIXct(time))))
   resp <- ncurl(url, convert = FALSE, follow = TRUE,
-                headers = c(Authorization = paste0("Bearer ", apikey),
+                headers = c(Authorization = strcat("Bearer ", apikey),
                             `Accept-Datetime-Format` = "UNIX", `User-Agent` = .user_agent))
   resp[["status"]] == 200L ||
     stop("status code ", resp[["status"]], " - ",

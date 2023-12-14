@@ -145,7 +145,7 @@ writeArchive <- function(object, file) {
     stop("in archive(object, file): 'file' must be supplied as a string.\nDid you omit the surrounding quotes \"\"?", call. = FALSE)
 
   if (file.exists(file) && interactive()) {
-    continue <- readline(prompt = paste0("The file '", file, "' already exists. Overwrite? [y/N] "))
+    continue <- readline(prompt = sprintf("The file '%s' already exists. Overwrite? [y/N] ", file))
     continue %in% c("y", "Y", "yes", "YES") || {
       message("Request cancelled")
       return(invisible())

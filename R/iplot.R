@@ -218,11 +218,10 @@ drawInfotip <- function(sidx, sdata, left, top, type, custom = NULL) {
                 "<br />Chikou: ", signif(sdata[["chikou"]], digits = 5),
                 switch(
                   type,
-                  r = paste0("<br />R-indicator: ", signif(100 * sdata[["osc_typ_slw"]], digits = 3)),
-                  s = paste0("<br />S-fast: ", signif(100 * sdata[["osc_typ_fst"]], digits = 3),
-                             "<br />S-slow: ", signif(100 * sdata[["osc_typ_slw"]], digits = 3)),
+                  r = sprintf("<br />R-indicator: %.3g", 100 * sdata[["osc_typ_slw"]]),
+                  s = sprintf("<br />S-fast: %.3g<br />S-slow: %.3g", 100 * sdata[["osc_typ_fst"]], 100 * sdata[["osc_typ_slw"]]),
                   line = ,
-                  bar = paste0("<br />", custom, " : ", signif(sdata[[custom]], digits = 5)),
+                  bar = sprintf("<br />%s: %.5g", custom, sdata[[custom]]),
                   NULL
                 ),
                 "</div>"))
