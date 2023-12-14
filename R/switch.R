@@ -135,9 +135,9 @@ do_ <- function() {
       if (is.null(instruments)) {
         server <- if (missing(server)) server_type else match.arg(server, c("practice", "live"))
         if (missing(apikey)) apikey <- do_[["getKey"]](server = server)
-        url <- paste0("https://api-fx", switch(server, practice = "practice", live = "trade"),
-                      ".oanda.com/v3/accounts/", do_$getAccount(server = server, apikey = apikey),
-                      "/instruments")
+        url <- sprintf("https://api-fx%s.oanda.com/v3/accounts/%s/instruments",
+                       switch(server, practice = "practice", live = "trade"),
+                       do_$getAccount(server = server, apikey = apikey))
         resp <- ncurl(url, convert = FALSE, follow = TRUE,
                       headers = c("Authorization" = strcat("Bearer ", apikey),
                                   "User-Agent" = .user_agent))

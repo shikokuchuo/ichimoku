@@ -348,7 +348,7 @@ writeVectors <- function(x, pairs, p2, xlen, type) {
            boolean = as.integer(c(rep(NA, offset), (x[, c1] > x[, c2])[1:(xlen - offset)])),
            c(rep(NA, offset), (x[, c1] - x[, c2])[1:(xlen - offset)]))
   }, c1 = pairs[[1L]], c2 = pairs[[2L]], SIMPLIFY = FALSE, USE.NAMES = FALSE),
-  do.call(c, mapply(function(c1, c2) paste0(c1, "_", c2),
+  do.call(c, mapply(function(c1, c2) sprintf("%s_%s", c1, c2),
                     c1 = pairs[[1L]], c2 = pairs[[2L]], SIMPLIFY = FALSE, USE.NAMES = FALSE)))
 
 }

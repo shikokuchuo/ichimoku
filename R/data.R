@@ -89,7 +89,7 @@
                 "NAS100_USD", "NATGAS_USD", "NL25_EUR", "NZD_CAD", "NZD_CHF",
                 "NZD_HKD", "NZD_JPY", "NZD_SGD", "NZD_USD", "SG30_SGD", "SGD_CHF",
                 "SGD_JPY", "SOYBN_USD", "SPX500_USD", "SUGAR_USD", "TRY_JPY",
-                "TWIX_USD", "UK100_GBP", "UK10YB_GBP", "US2000_USD", "US30_USD",
+                "UK100_GBP", "UK10YB_GBP", "US2000_USD", "US30_USD",
                 "USB02Y_USD", "USB05Y_USD", "USB10Y_USD", "USB30Y_USD", "USD_CAD",
                 "USD_CHF", "USD_CNH", "USD_CZK", "USD_DKK", "USD_HKD", "USD_HUF",
                 "USD_JPY", "USD_MXN", "USD_NOK", "USD_PLN", "USD_SEK",
@@ -112,7 +112,7 @@
                        "Japan 225", "Japan 225 (JPY)", "US Nas 100", "Natural Gas",
                        "Netherlands 25", "NZD/CAD", "NZD/CHF", "NZD/HKD", "NZD/JPY",
                        "NZD/SGD", "NZD/USD", "Singapore 30", "SGD/CHF", "SGD/JPY", "Soybeans",
-                       "US SPX 500", "Sugar", "TRY/JPY", "Taiwan Index", "UK 100", "UK 10Y Gilt",
+                       "US SPX 500", "Sugar", "TRY/JPY", "UK 100", "UK 10Y Gilt",
                        "US Russ 2000", "US Wall St 30", "US 2Y T-Note", "US 5Y T-Note",
                        "US 10Y T-Note", "US T-Bond", "USD/CAD", "USD/CHF", "USD/CNH",
                        "USD/CZK", "USD/DKK", "USD/HKD", "USD/HUF", "USD/JPY",
@@ -134,7 +134,7 @@
                 "CURRENCY", "CURRENCY", "CURRENCY", "CURRENCY", "CURRENCY", "CFD",
                 "CURRENCY", "CFD", "CFD", "CFD", "CFD", "CFD", "CURRENCY",
                 "CURRENCY", "CURRENCY", "CURRENCY", "CURRENCY", "CURRENCY", "CFD",
-                "CURRENCY", "CURRENCY", "CFD", "CFD", "CFD", "CURRENCY", "CFD",
+                "CURRENCY", "CURRENCY", "CFD", "CFD", "CFD", "CURRENCY",
                 "CFD", "CFD", "CFD", "CFD", "CFD", "CFD", "CFD", "CFD",
                 "CURRENCY", "CURRENCY", "CURRENCY", "CURRENCY", "CURRENCY", "CURRENCY",
                 "CURRENCY", "CURRENCY", "CURRENCY", "CURRENCY", "CURRENCY", "CURRENCY",
@@ -144,5 +144,5 @@
                 "METAL", "METAL", "METAL", "METAL", "METAL", "METAL", "METAL",
                 "CFD", "CFD", "CFD", "CURRENCY")),
   class = "data.frame",
-  row.names = c(NA, -124L)
+  row.names = c(NA, -123L)
 )

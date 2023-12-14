@@ -164,8 +164,7 @@ summary.ichimoku <- function(object, strat = TRUE, ...) {
     } else if (dims[2L] < 12L) {
       cat(summary <- "incomplete ichimoku object (partial or subset)", "\n", file = stdout())
     } else {
-      cat(summary <- paste0("ichimoku object with dimensions (", dims[1L], ", ",
-                            dims[2L], ")"), "\n", file = stdout())
+      cat(summary <- sprintf("ichimoku object with dimensions (%d, %d)", dims[1L], dims[2L]), "\n", file = stdout())
       if (dims[1L] != 0L) {
         core <- coredata.ichimoku(object)
         end <- sum(!is.na(core[, "close"]))

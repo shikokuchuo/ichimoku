@@ -165,8 +165,8 @@ iplot <- function(x,
 #'     Shiny plots.
 #'
 #' @param label a function returning the character string to be shown.
-#' @param left the horizontal position of the guide in pixels.
-#' @param top the vertical position of the guide in pixels.
+#' @param left integer horizontal position of the guide in pixels.
+#' @param top integer vertical position of the guide in pixels.
 #'
 #' @return An object of class 'shiny.tag' comprising the HTML to be rendered.
 #'
@@ -174,8 +174,8 @@ iplot <- function(x,
 #'
 drawGuide <- function(label, left, top) {
   wellPanel(
-    style = paste0("position: absolute; z-index: 100; background-color: rgba(245, 245, 245, 0.85); left: ",
-                   left, "px; top: ", top, "px; font-size: 0.8em; padding: 0;"),
+    style = sprintf("position: absolute; z-index: 100; background-color: rgba(245, 245, 245, 0.85);
+                    left: %dpx; top: %dpx; font-size: 0.8em; padding: 0;", left, top),
     HTML(as.character(label))
   )
 }
@@ -187,8 +187,8 @@ drawGuide <- function(label, left, top) {
 #'
 #' @param sidx the selected index value.
 #' @param sdata the selected coredata row.
-#' @param left the horizontal cursor position in pixels.
-#' @param top the vertical cursor position in pixels.
+#' @param left integer horizontal cursor position in pixels.
+#' @param top integer vertical cursor position in pixels.
 #' @param type the type of subplot.
 #' @param custom the column name of custom subplot (if applicable).
 #'
@@ -197,33 +197,30 @@ drawGuide <- function(label, left, top) {
 #' @noRd
 #'
 drawInfotip <- function(sidx, sdata, left, top, type, custom = NULL) {
+  cd <- sdata[["cd"]]
   wellPanel(
-    style = paste0("position: absolute; z-index: 100; background-color: rgba(245, 245, 245, 0.8); left: ",
-                   left + 60, "px; top: ", top + 45, "px; font-size: 0.8em; padding: 1px 5px 5px 5px;"),
-    HTML(paste0("<div style='margin: 0; padding: 0; font-weight: bold'>",
-                if (isTRUE(sdata[["cd"]] == 1)) "&#9651;<br />" else if (isTRUE(sdata[["cd"]] == -1)) "&#9660;<br />" else "&#8212;<br />",
-                format.POSIXct(sidx),
-                "</div><div style='text-align: center; margin: 2px 0 0 0; padding: 0'>H: ",
-                signif(sdata[["high"]], digits = 5),
-                "</div><div style='margin: 0; padding: 0'>O: ",
-                signif(sdata[["open"]], digits = 5),
-                "&nbsp;&nbsp;C: ", signif(sdata[["close"]], digits = 5),
-                "</div><div style='text-align: center; margin: 0; padding: 0'>L: ",
-                signif(sdata[["low"]], digits = 5),
-                "</div><div style='margin: 2px 0 0 0; padding: 0'>Tenkan: ",
-                signif(sdata[["tenkan"]], digits = 5),
-                "<br />Kijun: ", signif(sdata[["kijun"]], digits = 5),
-                "<br />Senkou A: ", signif(sdata[["senkouA"]], digits = 5),
-                "<br />Senkou B: ", signif(sdata[["senkouB"]], digits = 5),
-                "<br />Chikou: ", signif(sdata[["chikou"]], digits = 5),
-                switch(
-                  type,
-                  r = sprintf("<br />R-indicator: %.3g", 100 * sdata[["osc_typ_slw"]]),
-                  s = sprintf("<br />S-fast: %.3g<br />S-slow: %.3g", 100 * sdata[["osc_typ_fst"]], 100 * sdata[["osc_typ_slw"]]),
-                  line = ,
-                  bar = sprintf("<br />%s: %.5g", custom, sdata[[custom]]),
-                  NULL
-                ),
-                "</div>"))
+    style = sprintf("position: absolute; z-index: 100; background-color: rgba(245, 245, 245, 0.8);
+                    left: %dpx; top: %dpx; font-size: 0.8em; padding: 1px 5px 5px 5px;",
+                    left + 60, top + 45),
+    HTML(
+      sprintf(
+        "<div style='margin: 0; padding: 0; font-weight: bold'>%s<br/>%s</div>
+        <div style='text-align: center; margin: 2px 0 0 0; padding: 0'>H: %.5g</div>
+        <div style='margin: 0; padding: 0'>O: %.5g&nbsp;&nbsp;C: %.5g</div>
+        <div style='text-align: center; margin: 0; padding: 0'>L: %.5g</div>
+        <div style='margin: 2px 0 0 0; padding: 0'>Tenkan: %.5g<br />Kijun: %.5g<br />Senkou A: %.5g<br />Senkou B: %.5g<br />Chikou: %.5g%s</div>",
+        if (is.na(cd) || cd == 0) "&#8212;" else if (cd == 1) "&#9651;" else if (cd == -1) "&#9660;",
+        format.POSIXct(sidx), sdata[["high"]], sdata[["open"]], sdata[["close"]], sdata[["low"]],
+        sdata[["tenkan"]], sdata[["kijun"]], sdata[["senkouA"]], sdata[["senkouB"]], sdata[["chikou"]],
+        switch(
+          type,
+          r = sprintf("<br />R-indicator: %.3g", 100 * sdata[["osc_typ_slw"]]),
+          s = sprintf("<br />S-fast: %.3g<br />S-slow: %.3g", 100 * sdata[["osc_typ_fst"]], 100 * sdata[["osc_typ_slw"]]),
+          line = ,
+          bar = sprintf("<br />%s: %.5g", custom, sdata[[custom]]),
+          ""
+        )
+      )
+    )
   )
 }
