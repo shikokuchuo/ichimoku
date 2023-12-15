@@ -217,7 +217,7 @@ drawInfotip <- function(sidx, sdata, left, top, type, custom = NULL) {
           r = sprintf("<br />R-indicator: %.3g", 100 * sdata[["osc_typ_slw"]]),
           s = sprintf("<br />S-fast: %.3g<br />S-slow: %.3g", 100 * sdata[["osc_typ_fst"]], 100 * sdata[["osc_typ_slw"]]),
           line = ,
-          bar = sprintf("<br />%s: %.5g", custom, sdata[[custom]]),
+          bar = sprintf("<br />%s: %s", custom, as.character(signif(sdata[[custom]], digits = 5))),
           ""
         )
       )

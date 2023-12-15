@@ -1,4 +1,4 @@
-# ichimoku 1.4.11.9000 (development)
+# ichimoku 1.4.12
 
 #### Updates:
 
