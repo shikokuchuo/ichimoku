@@ -967,7 +967,7 @@ oanda_quote <- function(instrument, price = c("M", "B", "A"), server, apikey) {
   data <- getPrices(instrument = instrument, granularity = "D", count = 1, price = price,
                     server = server, apikey = apikey, .validate = FALSE)
   pctchg <- 100 * (data[["c"]] / data[["o"]] - 1)
-  cat(sprintf("%s %s open: %.6g high: %.6g low: %.6g last:\u001b[7m %.6g \u001b[27m %%chg: %.4f %s",
+  cat(sprintf("%s %s open: %.6g high: %.6g low: %.6g last:\u001b[7m %.6g \u001b[27m %%chg: %.4f %s\n",
               instrument, format.POSIXct(.Call(ichimoku_psxct, data[["t"]])),
               data[["o"]], data[["h"]], data[["l"]], data[["c"]], pctchg, price), file = stdout())
 

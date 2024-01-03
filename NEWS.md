@@ -1,3 +1,9 @@
+# ichimoku 1.4.12.9000 (development)
+
+#### Updates:
+
+* `oanda_quote()` now correctly writes a new line after each quote.
+
 # ichimoku 1.4.12
 
 #### Updates:
