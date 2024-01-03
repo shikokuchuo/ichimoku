@@ -1,4 +1,4 @@
-# Copyright (C) 2021-2023 Hibiki AI Limited <info@hibiki-ai.com>
+# Copyright (C) 2021-2024 Hibiki AI Limited <info@hibiki-ai.com>
 #
 # This file is part of ichimoku.
 #
@@ -38,7 +38,7 @@
 
 .__global__ <- ".data"
 
-.user_agent <- sprintf("r-ichimoku/%s", as.character(packageVersion("ichimoku")))
+.user_agent <- strcat("r-ichimoku/", as.character(packageVersion("ichimoku")))
 
 .mlgrid_pairs <- {
   cols <- c("chikou", "close", "high", "low", "tenkan", "kijun", "senkouA", "senkouB", "cloudT", "cloudB")
