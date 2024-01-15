@@ -138,11 +138,13 @@ do_ <- function() {
         url <- sprintf("https://api-fx%s.oanda.com/v3/accounts/%s/instruments",
                        switch(server, practice = "practice", live = "trade"),
                        do_$getAccount(server = server, apikey = apikey))
-        resp <- ncurl(url, convert = FALSE, follow = TRUE,
-                      headers = c("Authorization" = strcat("Bearer ", apikey),
-                                  "User-Agent" = .user_agent))
-        resp[["status"]] == 200L ||
-          stop("status code ", resp[["status"]], " - ", deserialize_json(resp[["data"]]), call. = FALSE)
+        for (i in seq_len(2L)) {
+          resp <- ncurl(url, convert = FALSE, follow = TRUE,
+                        headers = c("Authorization" = strcat("Bearer ", apikey),
+                                    "User-Agent" = .user_agent))
+          resp[["status"]] == 200L && break
+          i == 2L && stop("status code ", resp[["status"]], " - ", deserialize_json(resp[["data"]]), call. = FALSE)
+        }
         parsed <- deserialize_json(resp[["data"]])
         length(parsed[["instruments"]]) || {
           warning(parsed,
