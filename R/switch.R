@@ -143,10 +143,9 @@ do_ <- function() {
                         headers = c("Authorization" = strcat("Bearer ", apikey),
                                     "User-Agent" = .user_agent))
           resp[["status"]] == 200L && break
-          i == 2L && stop("status code ", resp[["status"]], " - ", deserialize_json(resp[["data"]]), call. = FALSE)
         }
         parsed <- deserialize_json(resp[["data"]])
-        length(parsed[["instruments"]]) || {
+        is.list(parsed) && length(parsed[["instruments"]]) || {
           warning(parsed,
                   "\nInstruments list could not be retrieved - falling back to internal data",
                   "\nCached instruments list will be used for the rest of the session", call. = FALSE)
