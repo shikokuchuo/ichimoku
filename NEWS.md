@@ -3,6 +3,8 @@
 #### Updates:
 
 * `oanda_quote()` now correctly writes a new line after each quote.
+* Internal performance enhancements.
+* Requires nanonext >= 0.12.0 and mirai >= 0.12.0.
 
 # ichimoku 1.4.12
 

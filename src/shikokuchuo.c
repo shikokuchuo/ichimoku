@@ -1,4 +1,4 @@
-// Copyright (C) 2021-2023 Hibiki AI Limited <info@hibiki-ai.com>
+// Copyright (C) 2021-2024 Hibiki AI Limited <info@hibiki-ai.com>
 //
 // This file is part of ichimoku.
 //
@@ -34,6 +34,7 @@ SEXP ichimoku_klass;
 SEXP ichimoku_tclass;
 SEXP ichimoku_int_zero;
 SEXP ichimoku_int_three;
+SEXP ichimoku_false;
 
 typedef SEXP (*one_fun) (SEXP);
 typedef SEXP (*twelve_fun) (SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
@@ -42,7 +43,7 @@ one_fun naofun;
 twelve_fun jsofun;
 
 // rolling max over a window
-SEXP _wmax(const SEXP x, const SEXP window) {
+SEXP _wmax(SEXP x, SEXP window) {
 
   const double *px = REAL(x);
   const R_xlen_t n = XLENGTH(x);
@@ -68,7 +69,7 @@ SEXP _wmax(const SEXP x, const SEXP window) {
 }
 
 // rolling min over a window
-SEXP _wmin(const SEXP x, const SEXP window) {
+SEXP _wmin(SEXP x, SEXP window) {
 
   const double *px = REAL(x);
   const R_xlen_t n = XLENGTH(x);
@@ -94,7 +95,7 @@ SEXP _wmin(const SEXP x, const SEXP window) {
 }
 
 // rolling mean over a window
-SEXP _wmean(const SEXP x, const SEXP window) {
+SEXP _wmean(SEXP x, SEXP window) {
 
   const double *px = REAL(x);
   const R_xlen_t n = XLENGTH(x);
@@ -119,7 +120,7 @@ SEXP _wmean(const SEXP x, const SEXP window) {
 }
 
 // look - inspect informational attributes
-SEXP _look(const SEXP x) {
+SEXP _look(SEXP x) {
 
   SEXP ax, y;
   PROTECT_INDEX pxi;
@@ -148,7 +149,7 @@ SEXP _psxct(SEXP x) {
 }
 
 // ichimoku to data.frame converter
-SEXP _tbl(const SEXP x, const SEXP type) {
+SEXP _tbl(SEXP x, SEXP type) {
 
   const int keepattrs = LOGICAL(type)[0];
 
@@ -221,8 +222,8 @@ SEXP _tbl(const SEXP x, const SEXP type) {
 }
 
 // internal function used by ichimoku()
-SEXP _create(SEXP kumo, SEXP xtsindex, const SEXP periods,
-             const SEXP periodicity, const SEXP ticker, const SEXP x) {
+SEXP _create(SEXP kumo, SEXP xtsindex, SEXP periods, SEXP periodicity,
+             SEXP ticker, SEXP x) {
 
   Rf_setAttrib(xtsindex, xts_IndexTzoneSymbol, R_BlankScalarString);
   Rf_setAttrib(xtsindex, xts_IndexTclassSymbol, ichimoku_tclass);
@@ -252,7 +253,7 @@ SEXP _create(SEXP kumo, SEXP xtsindex, const SEXP periods,
 }
 
 // special ichimoku to data.frame converter for plots
-SEXP _df(const SEXP x) {
+SEXP _df(SEXP x) {
 
   R_xlen_t xlen = 0, xwid = 0;
   const SEXP dims = Rf_getAttrib(x, R_DimSymbol);
@@ -331,7 +332,7 @@ SEXP _index(SEXP x) {
 }
 
 // ichimoku coredata method
-SEXP _coredata(const SEXP x) {
+SEXP _coredata(SEXP x) {
 
   SEXP core;
   PROTECT(core = R_shallow_duplicate_attr(x));
@@ -345,7 +346,7 @@ SEXP _coredata(const SEXP x) {
 }
 
 // is.ichimoku
-SEXP _isichimoku(const SEXP x) {
+SEXP _isichimoku(SEXP x) {
   return Rf_ScalarLogical(Rf_inherits(x, "ichimoku"));
 }
 
@@ -356,7 +357,7 @@ SEXP _naomit(SEXP x) {
 
 // imports from the package 'RcppSimdJson'
 SEXP _deserialize_json(SEXP json, SEXP query) {
-  return jsofun(json, query, R_NilValue, R_NilValue, R_NilValue, Rf_ScalarLogical(0), R_NilValue, Rf_ScalarLogical(0), R_NilValue, ichimoku_int_three, ichimoku_int_zero, ichimoku_int_zero);
+  return jsofun(json, query, R_NilValue, R_NilValue, R_NilValue, ichimoku_false, R_NilValue, ichimoku_false, R_NilValue, ichimoku_int_three, ichimoku_int_zero, ichimoku_int_zero);
 }
 
 // package level registrations
@@ -382,9 +383,11 @@ static void PreserveObjects(void) {
   SET_STRING_ELT(ichimoku_tclass, 1, Rf_mkChar("POSIXt"));
   R_PreserveObject(ichimoku_int_zero = Rf_ScalarInteger(0));
   R_PreserveObject(ichimoku_int_three = Rf_ScalarInteger(3));
+  R_PreserveObject(ichimoku_false = Rf_ScalarLogical(0));
 }
 
 static void ReleaseObjects(void) {
+  R_ReleaseObject(ichimoku_false);
   R_ReleaseObject(ichimoku_int_three);
   R_ReleaseObject(ichimoku_int_zero);
   R_ReleaseObject(ichimoku_tclass);

@@ -104,7 +104,7 @@ oanda <- function(instrument,
                                           "H12", "H8", "H6", "H4", "H3", "H2", "H1",
                                           "M30", "M15", "M10", "M5", "M4", "M2", "M1",
                                           "S30", "S15", "S10", "S5"))
-  price <- match.arg(price, c("M", "B", "A"))
+  price <- switch(price[1L], M = "M", B = "B", A = "A", stop("'price' should be one of 'M', 'B', 'A'"))
   server <- if (missing(server)) do_$getServer() else match.arg(server, c("practice", "live"))
   if (missing(apikey)) apikey <- do_$getKey(server = server)
 
@@ -205,7 +205,7 @@ getPrices <- function(instrument, granularity, count = NULL, from = NULL,
   timestamp <- as.POSIXct.POSIXlt(strptime(resp[["headers"]][["date"]],
                                            format = "%a, %d %b %Y %H:%M:%S", tz = "UTC"))
   candles <- deserialize_json(resp[["data"]], query = "/candles")
-  ptype <- switch(price, M = "mid", B = "bid", A = "ask")
+  ptype <- switch(price[1L], M = "mid", B = "bid", A = "ask")
 
   !missing(.validate) && .validate == FALSE && {
     data <- `storage.mode<-`(unlist(candles[[1L]][[ptype]]), "double")
@@ -446,7 +446,7 @@ oanda_chart <- function(instrument,
                                           "H12", "H8", "H6", "H4", "H3", "H2", "H1",
                                           "M30", "M15", "M10", "M5", "M4", "M2", "M1",
                                           "S30", "S15", "S10", "S5"))
-  price <- match.arg(price, c("M", "B", "A"))
+  price <- switch(price[1L], M = "M", B = "B", A = "A", stop("'price' should be one of 'M', 'B', 'A'"))
   if (length(theme) != 12L) theme <- match.arg(theme, c("classic", "dark", "mono", "noguchi", "okabe-ito", "solarized"))
   type <- match.arg(type, c("none", "r", "s"))
   server <- if (missing(server)) do_$getServer() else match.arg(server, c("practice", "live"))
@@ -481,7 +481,7 @@ oanda_chart <- function(instrument,
                   M15 = "15 Mins", M10 = "10 Mins", M5 = "5 Mins", M4 = "4 Mins",
                   M2 = "1 Mins", M1 = "1 Min", S30 = "30 Secs", S15 = "15 Secs",
                   S10 = "10 Secs", S5 = "5 Secs")
-  ptype <- switch(price, M = "mid", B = "bid", A = "ask")
+  ptype <- switch(price[1L], M = "mid", B = "bid", A = "ask")
 
   data <- getPrices(instrument = instrument, granularity = granularity, count = count,
                     price = price, server = server, apikey = apikey, .validate = TRUE)
@@ -582,7 +582,7 @@ oanda_studio <- function(instrument = "USD_JPY",
                                           "H12", "H8", "H6", "H4", "H3", "H2", "H1",
                                           "M30", "M15", "M10", "M5", "M4", "M2", "M1",
                                           "S30", "S15", "S10", "S5"))
-  price <- match.arg(price, c("M", "B", "A"))
+  price <- switch(price[1L], M = "M", B = "B", A = "A", stop("'price' should be one of 'M', 'B', 'A'"))
   theme <- match.arg(theme, c("classic", "dark", "mono", "noguchi", "okabe-ito", "solarized"))
   type <- match.arg(type, c("none", "r", "s"))
   srvr <- if (missing(server)) do_$getServer() else match.arg(server, c("practice", "live"))
@@ -886,8 +886,8 @@ oanda_view <- function(market = c("allfx", "bonds", "commodities", "fx", "metals
 
   if (missing(market) && interactive())
     market <- readline("Enter market [a]llfx [b]onds [c]ommodities [f]x [m]etals [s]tocks: ")
-  market <- match.arg(market)
-  price <- match.arg(price)
+  market <- match.arg(market, c("allfx", "bonds", "commodities", "fx", "metals", "stocks"))
+  price <- switch(price[1L], M = "M", B = "B", A = "A", stop("'price' should be one of 'M', 'B', 'A'"))
   server <- if (missing(server)) do_[["getServer"]]() else match.arg(server, c("practice", "live"))
   if (missing(apikey)) apikey <- do_[["getKey"]](server = server)
 
@@ -961,7 +961,7 @@ oanda_quote <- function(instrument, price = c("M", "B", "A"), server, apikey) {
 
   if (missing(instrument) && interactive()) instrument <- readline("Enter instrument:")
   instrument <- sub("-", "_", toupper(force(instrument)), fixed = TRUE)
-  price <- match.arg(price)
+  price <- switch(price[1L], M = "M", B = "B", A = "A", stop("'price' should be one of 'M', 'B', 'A'"))
   server <- if (missing(server)) do_[["getServer"]]() else match.arg(server, c("practice", "live"))
   if (missing(apikey)) apikey <- do_[["getKey"]](server = server)
   data <- getPrices(instrument = instrument, granularity = "D", count = 1, price = price,

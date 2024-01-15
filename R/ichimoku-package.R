@@ -1,4 +1,4 @@
-# Copyright (C) 2021-2023 Hibiki AI Limited <info@hibiki-ai.com>
+# Copyright (C) 2021-2024 Hibiki AI Limited <info@hibiki-ai.com>
 #
 # This file is part of ichimoku.
 #
@@ -105,7 +105,7 @@ NULL
 }
 
 .deconstruct <- function(...) {
-  identical(parent.env(parent.frame()), getNamespace("ichimoku")) || return(invisible())
+  identical(parent.env(parent.frame()), .getNamespace("ichimoku")) || return(invisible())
   . <- unlist(strsplit(.user_agent, ""))
   .. <- rev(.)
   for (i in seq_along(..)) {
