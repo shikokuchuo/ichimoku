@@ -96,9 +96,7 @@
 #' @importFrom xts endpoints
 #' @importFrom zoo coredata index
 #'
-#' @docType package
-#' @name ichimoku-package
-NULL
+"_PACKAGE"
 
 .onLoad <- function(libname, pkgname) {
   do_ <- do_()

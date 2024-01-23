@@ -65,6 +65,15 @@ Sasaki, H. (1996), \emph{ichimoku kinkouhyou no kenkyuu}. Tokyo,
     OANDA' and 'fxTrade' are trademarks owned by OANDA Corporation, an entity
     unaffiliated with the ichimoku package, its authors or copyright holders.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://shikokuchuo.net/ichimoku/}
+  \item \url{https://github.com/shikokuchuo/ichimoku/}
+  \item Report bugs at \url{https://github.com/shikokuchuo/ichimoku/issues}
+}
+
+}
 \author{
 Charlie Gao \email{charlie.gao@shikokuchuo.net}
     (\href{https://orcid.org/0000-0002-0750-061X}{ORCID})
