@@ -349,11 +349,11 @@ object <- archive()
 
 #### Data Integrity Verification
 
-Data integrity verification is performed by the MbedTLS cryptographic-grade SHA256 hashing algorithm from the 'nanonext' package.
+Data integrity verification is performed by the SHA3-256 cryptographic hash algorithm from the 'secretbase' package.
 
-When an archive is written, the serialised object is hashed and the hash is also stored in the archive. The SHA256 hash value is printed to the console as confirmation.
+When an archive is written, the serialised object is hashed and the hash is also stored in the archive. The SHA3-256 hash value is printed to the console as confirmation.
 
-When an archive is read back, the SHA256 hash of the restored object is checked against the hash of the original stored in the archive. If identical, a 'data verified' message is printed to the console along with the authenticated SHA256 hash.
+When an archive is read back, the SHA3-256 hash of the restored object is checked against the hash of the original stored in the archive. If identical, a 'data verified' message is printed to the console along with the authenticated SHA3-256 hash.
 
 ## Supplementary Information
 
@@ -427,7 +427,8 @@ ichimoku currently has the following external package dependencies:
 - shiny - for interactive and live visualizations
 - xts, zoo - for enhanced time series methods
 - mirai - for running applications in background processes
-- nanonext - for interfacing with external APIs and verifying the data integrity of archived objects
+- nanonext - for interfacing with external APIs
+- secretbase - for verifying the data integrity of archived objects
 - RcppSimdJson - for parsing data received from external APIs
 
 Optional (enables additional features):

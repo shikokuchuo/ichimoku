@@ -40,12 +40,12 @@ For read operations: specify only 'file', or alternatively if no
 \section{Data Verification}{
 
 
-    A SHA256 hash of the original object is written to the archive. This
+    A SHA3-256 hash of the original object is written to the archive. This
     allows the data integrity of the restored object to be verified when the
     archive is read back.
 
-    For write operations: confirmation of the SHA256 hash written to file is
-    displayed.
+    For write operations: confirmation of the SHA3-256 hash written to file
+    is displayed.
 
     For read operations: a 'data verified' message is issued if the SHA256
     hash found within the data file has been authenticated.

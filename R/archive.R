@@ -1,4 +1,4 @@
-# Copyright (C) 2021-2023 Hibiki AI Limited <info@hibiki-ai.com>
+# Copyright (C) 2021-2024 Hibiki AI Limited <info@hibiki-ai.com>
 #
 # This file is part of ichimoku.
 #
@@ -45,12 +45,12 @@
 #'
 #' @section Data Verification:
 #'
-#'     A SHA256 hash of the original object is written to the archive. This
+#'     A SHA3-256 hash of the original object is written to the archive. This
 #'     allows the data integrity of the restored object to be verified when the
 #'     archive is read back.
 #'
-#'     For write operations: confirmation of the SHA256 hash written to file is
-#'     displayed.
+#'     For write operations: confirmation of the SHA3-256 hash written to file
+#'     is displayed.
 #'
 #'     For read operations: a 'data verified' message is issued if the SHA256
 #'     hash found within the data file has been authenticated.
@@ -128,7 +128,7 @@ archive <- function(..., object, file) {
 
 #' Write Objects to Archive
 #'
-#' Internal function used to write objects, along with their sha256 hash value,
+#' Internal function used to write objects, along with their SHA3-256 hash value,
 #'     to archive files in the native RData format.
 #'
 #' @param object an object.
@@ -152,9 +152,9 @@ writeArchive <- function(object, file) {
     }
   }
 
-  x_archive_sha256 <- sha256(object)
-  save(object, x_archive_sha256, file = file, compress = TRUE)
-  message(sprintf("Archive written to '%s'\nSHA256: %s", file, x_archive_sha256))
+  x_archive_secure_hash <- sha3(object)
+  save(object, x_archive_secure_hash, file = file, compress = TRUE)
+  message(sprintf("Archive written to '%s'\nSHA3-256: %s", file, x_archive_secure_hash))
   invisible(file)
 
 }
@@ -162,7 +162,7 @@ writeArchive <- function(object, file) {
 #' Read Objects from Archive
 #'
 #' Internal function used to read objects from native RData files with stored
-#'     sha256 hash values.
+#'     SHA3-256 hash values.
 #'
 #' @param file the name of the file or a connection where the object is saved to
 #'     or read from.
@@ -176,21 +176,16 @@ readArchive <- function(file) {
   is.character(file) ||
     stop("in archive(file): 'file' must be supplied as a string.\nDid you omit the surrounding quotes \"\"?", call. = FALSE)
 
-  object <- x_archive_sha256 <- NULL
+  object <- x_archive_secure_hash <- NULL
   x_archive_names <- load(file)
-  x_archive_names[2L] == "x_archive_sha256" && x_archive_names[1L] == "object" ||
+  x_archive_names[2L] == "x_archive_secure_hash" && x_archive_names[1L] == "object" ||
     stop("archive file was not created by archive()", call. = FALSE)
 
   message("Archive read from '", file, "'")
-  if (is.na(x_archive_sha256[1L])) {
-    # for legacy compatibility with previous implementations of archive
-    message("Data unverified: SHA256 hash not present")
-  } else {
-    sha256 <- sha256(object)
-    if (identical(sha256, x_archive_sha256))
-      message("Data verified by SHA256: ", sha256) else
-        warning(sprintf("SHA256 of restored object:   %s\ndoes not match the original: %s", sha256, x_archive_sha256), call. = FALSE)
-  }
+  sha256 <- sha3(object)
+  if (identical(sha256, x_archive_secure_hash))
+    message("Data verified by SHA3-256: ", sha256) else
+      warning(sprintf("SHA3-256 of restored object:   %s\ndoes not match the original: %s", sha256, x_archive_secure_hash), call. = FALSE)
 
   object
 

@@ -1,3 +1,14 @@
+# ichimoku 1.4.13.9000 (development)
+
+#### New features:
+
+* `archive()` updated to use the fast and memory-efficient implementation of SHA3-256 from {secretbase} for data verification.
+  + Note: archive files created using earlier package versions can no longer be verified using `archive()` but may nevertheless be loaded using `readRDS()`.
+ 
+#### Updates:
+
+* Requires secretbase.
+
 # ichimoku 1.4.13
 
 #### Updates:

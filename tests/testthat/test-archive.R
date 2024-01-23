@@ -17,14 +17,9 @@ test_that("archive functions ok", {
   save(sample_ohlc_data, file = file)
   expect_error(archive(file), "was not created")
   unlink(file)
+  x_archive_secure_hash <- "010101010101"
   file <- tempfile()
-  x_archive_sha256 <- NA
-  save(object, x_archive_sha256, file = file)
-  expect_message(restored <- archive(file), "unverified")
-  unlink(file)
-  x_archive_sha256 <- "010101010101"
-  file <- tempfile()
-  save(object, x_archive_sha256, file = file)
+  save(object, x_archive_secure_hash, file = file)
   expect_warning(expect_message(restored <- archive(file), "Archive read"), "does not match the original")
   unlink(file)
 })
