@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.4.13</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.4.13.9000</span>
       </span>
     </div>
 
@@ -730,16 +730,15 @@ file has been read.</p>
 <div class="section level4">
 <h4 id="data-integrity-verification">Data Integrity Verification<a class="anchor" aria-label="anchor" href="#data-integrity-verification"></a>
 </h4>
-<p>Data integrity verification is performed by the MbedTLS
-cryptographic-grade SHA256 hashing algorithm from the ‘nanonext’
-package.</p>
+<p>Data integrity verification is performed by the SHA3-256
+cryptographic hash algorithm from the ‘secretbase’ package.</p>
 <p>When an archive is written, the serialised object is hashed and the
-hash is also stored in the archive. The SHA256 hash value is printed to
-the console as confirmation.</p>
-<p>When an archive is read back, the SHA256 hash of the restored object
-is checked against the hash of the original stored in the archive. If
-identical, a ‘data verified’ message is printed to the console along
-with the authenticated SHA256 hash.</p>
+hash is also stored in the archive. The SHA3-256 hash value is printed
+to the console as confirmation.</p>
+<p>When an archive is read back, the SHA3-256 hash of the restored
+object is checked against the hash of the original stored in the
+archive. If identical, a ‘data verified’ message is printed to the
+console along with the authenticated SHA3-256 hash.</p>
 </div>
 </div>
 </div>
@@ -895,8 +894,9 @@ dependencies:</p>
 <li>shiny - for interactive and live visualizations</li>
 <li>xts, zoo - for enhanced time series methods</li>
 <li>mirai - for running applications in background processes</li>
-<li>nanonext - for interfacing with external APIs and verifying the data
-integrity of archived objects</li>
+<li>nanonext - for interfacing with external APIs</li>
+<li>secretbase - for verifying the data integrity of archived
+objects</li>
 <li>RcppSimdJson - for parsing data received from external APIs</li>
 </ul>
 <p>Optional (enables additional features):</p>
