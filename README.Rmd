@@ -29,16 +29,16 @@ An implementation of 'Ichimoku Kinko Hyo', also commonly known as 'cloud charts'
 
 ## Installation
 
-Releases are made on rOpenSci R-universe, and also CRAN:
+Install the latest version from the R-releases R-universe, or CRAN:
 
 ``` r
-install.packages("ichimoku", repos = c("shikokuchuo.r-universe.dev", "cloud.r-project.org"))
+install.packages("ichimoku", repos = "https://r-releases.r-universe.dev")
 ```
 
-Install the latest development version from Github:
+Or the development build from the author's R-universe:
 
 ``` r
-remotes::install_github("shikokuchuo/ichimoku")
+install.packages("ichimoku", repos = "https://shikokuchuo.r-universe.dev")
 ```
 
 ## Example
