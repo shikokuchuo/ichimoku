@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ichimoku</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.0.9000</span>
       </span>
     </div>
 
@@ -475,21 +475,21 @@ followed by the dataframe showing similar data to
 <code><a href="../reference/oanda_quote.html">oanda_quote()</a></code> for all instruments in the selected market.
 The data is ordered by the daily percentage change, from the most
 positive to the most negative.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">oanda_view</span>()</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>Enter market [a]llfx [b]onds [c]ommodities [f]x [m]etals [s]tocks<span class="sc">:</span> c</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Retrieving commodities [..........]</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2021-12-11 01:58:21 / M</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                  open      high        low       last    %chg</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; NATGAS_USD    3.76200    3.9260    3.72400    3.85200  2.3923</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; BCO_USD      74.52600   76.2310   74.32600   75.88000  1.8168</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; WTICO_USD    70.91200   72.5540   70.55400   72.19000  1.8022</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; WHEAT_USD     7.67200    7.7710    7.57100    7.72700  0.7169</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; XPT_USD     930.20200  939.6000  924.29400  936.43800  0.6704</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; SOYBN_USD    12.63500   12.7580   12.58800   12.67800  0.3403</span></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; SUGAR_USD     0.19274    0.1948    0.19176    0.19334  0.3113</span></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; CORN_USD      5.89800    5.9410    5.86800    5.90200  0.0678</span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; XCU_USD       4.30292    4.3479    4.26536    4.28361 -0.4488</span></span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; XPD_USD    1805.14800 1815.1260 1729.61100 1752.81200 -2.8993</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">oanda_view</span>()</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>Enter market [a]llfx [b]onds [c]ommodities [f]x [m]etals [s]tocks<span class="sc">:</span> c</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="co">#&gt; Retrieving commodities [..........]</span></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a><span class="co">#&gt; 2021-12-11 01:58:21 / M</span></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a><span class="co">#&gt;                  open      high        low       last    %chg</span></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a><span class="co">#&gt; NATGAS_USD    3.76200    3.9260    3.72400    3.85200  2.3923</span></span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a><span class="co">#&gt; BCO_USD      74.52600   76.2310   74.32600   75.88000  1.8168</span></span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a><span class="co">#&gt; WTICO_USD    70.91200   72.5540   70.55400   72.19000  1.8022</span></span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a><span class="co">#&gt; WHEAT_USD     7.67200    7.7710    7.57100    7.72700  0.7169</span></span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="co">#&gt; XPT_USD     930.20200  939.6000  924.29400  936.43800  0.6704</span></span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a><span class="co">#&gt; SOYBN_USD    12.63500   12.7580   12.58800   12.67800  0.3403</span></span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a><span class="co">#&gt; SUGAR_USD     0.19274    0.1948    0.19176    0.19334  0.3113</span></span>
+<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a><span class="co">#&gt; CORN_USD      5.89800    5.9410    5.86800    5.90200  0.0678</span></span>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a><span class="co">#&gt; XCU_USD       4.30292    4.3479    4.26536    4.28361 -0.4488</span></span>
+<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a><span class="co">#&gt; XPD_USD    1805.14800 1815.1260 1729.61100 1752.81200 -2.8993</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="oanda_orders-oanda_positions">
