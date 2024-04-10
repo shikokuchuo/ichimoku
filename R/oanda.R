@@ -612,6 +612,7 @@ oanda_studio <- function(instrument = "USD_JPY",
     tags$head(tags$style("
     #chart {height: calc(100vh - 147px) !important}
     .control-label {font-weight: 400}
+    .recalculating {opacity: 1.0}
   ")),
     fillPage(
       padding = 20,

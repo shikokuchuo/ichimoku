@@ -31,13 +31,13 @@ government bonds and stock indices.
 
 ## Installation
 
-Install the released version of ichimoku from CRAN:
+Install the latest release of ichimoku from CRAN:
 
 ``` r
 install.packages("ichimoku")
 ```
 
-Or the latest development version from rOpenSci R-universe:
+Or the development version from R-universe:
 
 ``` r
 install.packages("ichimoku", repos = "https://shikokuchuo.r-universe.dev")
