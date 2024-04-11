@@ -1,3 +1,5 @@
+# ichimoku 1.5.1.9000 (development)
+
 # ichimoku 1.5.1
 
 * Fixes `oanda_studio()` so that the live chart no longer greys out when updating (with recent Shiny versions).
