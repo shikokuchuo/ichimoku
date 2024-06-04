@@ -121,7 +121,7 @@ do_ <- function() {
                       practice = "https://api-fxpractice.oanda.com/v3/accounts",
                       live = "https://api-fxtrade.oanda.com/v3/accounts")
         resp <- ncurl(url, convert = FALSE, follow = TRUE,
-                      headers = c("Authorization" = strcat("Bearer ", apikey),
+                      headers = c("Authorization" = sprintf("Bearer %s", apikey),
                                   "User-Agent" = .user_agent))
         resp[["status"]] == 200L ||
           stop("status code ", resp[["status"]], " - ", deserialize_json(resp[["data"]]), call. = FALSE)
@@ -140,7 +140,7 @@ do_ <- function() {
                        do_$getAccount(server = server, apikey = apikey))
         for (i in seq_len(2L)) {
           resp <- ncurl(url, convert = FALSE, follow = TRUE,
-                        headers = c("Authorization" = strcat("Bearer ", apikey),
+                        headers = c("Authorization" = sprintf("Bearer %s", apikey),
                                     "User-Agent" = .user_agent))
           resp[["status"]] == 200L && break
         }

@@ -45,11 +45,11 @@
 #'
 #' @section Data Verification:
 #'
-#'     A SHA3-256 hash of the original object is written to the archive. This
+#'     A SHA256 hash of the original object is written to the archive. This
 #'     allows the data integrity of the restored object to be verified when the
 #'     archive is read back.
 #'
-#'     For write operations: confirmation of the SHA3-256 hash written to file
+#'     For write operations: confirmation of the SHA256 hash written to file
 #'     is displayed.
 #'
 #'     For read operations: a 'data verified' message is issued if the SHA256
@@ -130,7 +130,7 @@ archive <- function(..., object, file) {
 
 #' Write Objects to Archive
 #'
-#' Internal function used to write objects, along with their SHA3-256 hash value,
+#' Internal function used to write objects, along with their SHA-256 hash value,
 #'     to archive files in the native RData format.
 #'
 #' @param object an object.
@@ -154,9 +154,9 @@ writeArchive <- function(object, file) {
     }
   }
 
-  x_archive_secure_hash <- sha3(object)
+  x_archive_secure_hash <- sha256(object)
   save(object, x_archive_secure_hash, file = file, compress = TRUE)
-  message(sprintf("Archive written to '%s'\nSHA3-256: %s", file, x_archive_secure_hash))
+  message(sprintf("Archive written to '%s'\nSHA256: %s", file, x_archive_secure_hash))
   invisible(file)
 
 }
@@ -164,7 +164,7 @@ writeArchive <- function(object, file) {
 #' Read Objects from Archive
 #'
 #' Internal function used to read objects from native RData files with stored
-#'     SHA3-256 hash values.
+#'     SHA256 hash values.
 #'
 #' @param file the name of the file or a connection where the object is saved to
 #'     or read from.
@@ -184,10 +184,10 @@ readArchive <- function(file) {
     stop("archive file was not created by archive()", call. = FALSE)
 
   message("Archive read from '", file, "'")
-  sha256 <- sha3(object)
+  sha256 <- sha256(object)
   if (identical(sha256, x_archive_secure_hash))
-    message("Data verified by SHA3-256: ", sha256) else
-      warning(sprintf("SHA3-256 of restored object:   %s\ndoes not match the original: %s", sha256, x_archive_secure_hash), call. = FALSE)
+    message("Data verified by SHA256: ", sha256) else
+      warning(sprintf("SHA256 of restored object:   %s\ndoes not match the original: %s", sha256, x_archive_secure_hash), call. = FALSE)
 
   object
 

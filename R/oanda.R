@@ -189,14 +189,14 @@ getPrices <- function(instrument, granularity, count = NULL, from = NULL,
   url <- sprintf(
     "https://api-fx%s.oanda.com/v3/instruments/%s/candles?granularity=%s&price=%s%s%s%s",
     switch(server, practice = "practice", live = "trade"), instrument, granularity, price,
-    if (length(count)) strcat("&count=", as.character(count)) else "",
-    if (length(from)) strcat("&from=", as.character(from)) else "",
-    if (length(to)) strcat("&to=", as.character(to)) else ""
+    if (length(count)) sprintf("&count=%s", as.character(count)) else "",
+    if (length(from)) sprintf("&from=%s", as.character(from)) else "",
+    if (length(to)) sprintf("&to=%s", as.character(to)) else ""
   )
   resp <- ncurl(url,
                 convert = FALSE,
                 follow = TRUE,
-                headers = c(Authorization = strcat("Bearer ", apikey),
+                headers = c(Authorization = sprintf("Bearer %s", apikey),
                             `Accept-Datetime-Format` = "UNIX",
                             `User-Agent` = .user_agent),
                 response = "date")
@@ -326,7 +326,7 @@ oanda_stream <- function(instrument, display = 8L, limit, server, apikey) {
   url <- paste0("https://stream-fx", switch(server, practice = "practice", live = "trade"),
                 ".oanda.com/v3/accounts/", do_$getAccount(server = server, apikey = apikey),
                 "/pricing/stream?instruments=", instrument)
-  headers <- c(Authorization = strcat("Bearer ", apikey),
+  headers <- c(Authorization = sprintf("Bearer %s", apikey),
                `Accept-Datetime-Format` = "UNIX",
                `User-Agent` = .user_agent)
 
@@ -1013,7 +1013,7 @@ oanda_positions <- function(instrument, time, server, apikey) {
                  switch(server, practice = "practice", live = "trade"), instrument,
                  if (missing(time)) "" else sprintf("?time=%.f", unclass(as.POSIXct(time))))
   resp <- ncurl(url, convert = FALSE, follow = TRUE,
-                headers = c(Authorization = strcat("Bearer ", apikey),
+                headers = c(Authorization = sprintf("Bearer %s", apikey),
                             `Accept-Datetime-Format` = "UNIX", `User-Agent` = .user_agent))
   resp[["status"]] == 200L ||
     stop("status code ", resp[["status"]], " - ",
@@ -1105,7 +1105,7 @@ oanda_orders <- function(instrument, time, server, apikey) {
                  switch(server, practice = "practice", live = "trade"), instrument,
                  if (missing(time)) "" else sprintf("?time=%.f", unclass(as.POSIXct(time))))
   resp <- ncurl(url, convert = FALSE, follow = TRUE,
-                headers = c(Authorization = strcat("Bearer ", apikey),
+                headers = c(Authorization = sprintf("Bearer %s", apikey),
                             `Accept-Datetime-Format` = "UNIX", `User-Agent` = .user_agent))
   resp[["status"]] == 200L ||
     stop("status code ", resp[["status"]], " - ",

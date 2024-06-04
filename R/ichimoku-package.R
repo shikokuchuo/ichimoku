@@ -83,8 +83,8 @@
 #'     scale_x_continuous scale_y_continuous Stat StatIdentity theme theme_grey
 #'     %+replace%
 #' @importFrom mirai mirai
-#' @importFrom nanonext ncurl strcat
-#' @importFrom secretbase sha3
+#' @importFrom nanonext ncurl
+#' @importFrom secretbase sha256
 #' @importFrom RcppSimdJson is_valid_json
 #' @importFrom shiny checkboxInput column downloadButton downloadHandler HTML
 #'     fillPage fluidPage fluidRow hoverOpts invalidateLater isolate

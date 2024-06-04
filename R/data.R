@@ -38,7 +38,7 @@
 
 .__global__ <- ".data"
 
-.user_agent <- strcat("r-ichimoku/", as.character(packageVersion("ichimoku")))
+.user_agent <- sprintf("r-ichimoku/%s", as.character(packageVersion("ichimoku")))
 
 .mlgrid_pairs <- {
   cols <- c("chikou", "close", "high", "low", "tenkan", "kijun", "senkouA", "senkouB", "cloudT", "cloudB")
