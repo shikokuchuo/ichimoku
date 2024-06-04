@@ -179,7 +179,7 @@ SEXP _tbl(SEXP x, SEXP type) {
   for (R_xlen_t j = 1; j <= xwid; j++) {
     SEXP vec = Rf_allocVector(REALSXP, xlen);
     SET_VECTOR_ELT(tbl, j, vec);
-    memcpy(STDVEC_DATAPTR(vec), src, vecsize);
+    memcpy(DATAPTR(vec), src, vecsize);
     src += xlen;
   }
 
@@ -284,7 +284,7 @@ SEXP _df(SEXP x) {
   for (R_xlen_t j = 1; j <= xwid; j++) {
     SEXP vec = Rf_allocVector(REALSXP, xlen);
     SET_VECTOR_ELT(df, j, vec);
-    memcpy(STDVEC_DATAPTR(vec), src, vecsize);
+    memcpy(DATAPTR(vec), src, vecsize);
     src += xlen;
   }
 
