@@ -136,12 +136,15 @@ day are defined as holidays by default.</li>
 <code class="sourceCode R"><span><span class="va">dates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html" class="external-link">as.POSIXct</a></span><span class="op">(</span><span class="st">"2020-01-01"</span><span class="op">)</span>, by <span class="op">=</span> <span class="st">"1 day"</span>, length.out <span class="op">=</span> <span class="fl">7</span><span class="op">)</span></span>
 <span><span class="va">dates</span></span>
 <span><span class="co">#&gt; [1] "2020-01-01 UTC" "2020-01-02 UTC" "2020-01-03 UTC" "2020-01-04 UTC"</span></span>
-<span><span class="co">#&gt; [5] "2020-01-05 UTC" "2020-01-06 UTC" "2020-01-07 UTC"</span></span>
-<span><span class="fu"><a href="../reference/tradingDays.html">tradingDays</a></span><span class="op">(</span><span class="va">dates</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] FALSE  TRUE  TRUE FALSE FALSE  TRUE  TRUE</span></span>
-<span><span class="fu"><a href="../reference/tradingDays.html">tradingDays</a></span><span class="op">(</span><span class="va">dates</span>, holidays <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2020-01-02"</span>, <span class="st">"2020-01-03"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1]  TRUE FALSE FALSE FALSE FALSE  TRUE  TRUE</span></span>
-<span><span class="fu"><a href="../reference/tradingDays.html">tradingDays</a></span><span class="op">(</span><span class="va">dates</span>, holidays <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [5] "2020-01-05 UTC" "2020-01-06 UTC" "2020-01-07 UTC"</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/tradingDays.html">tradingDays</a></span><span class="op">(</span><span class="va">dates</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] FALSE  TRUE  TRUE FALSE FALSE  TRUE  TRUE</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/tradingDays.html">tradingDays</a></span><span class="op">(</span><span class="va">dates</span>, holidays <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2020-01-02"</span>, <span class="st">"2020-01-03"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1]  TRUE FALSE FALSE FALSE FALSE  TRUE  TRUE</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/tradingDays.html">tradingDays</a></span><span class="op">(</span><span class="va">dates</span>, holidays <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE</span></span></code></pre></div>
 </div>
 <div class="section level4">
@@ -155,7 +158,7 @@ specific to that data type is returned.</p>
 <p>For other objects, a list of attributes that are non-standard for
 matrix / data.frame / xts objects is returned, or else invisible NULL if
 none are present.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">sample_ohlc_data</span>, ticker <span class="op">=</span> <span class="st">"TKR"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/look.html">look</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $ticker</span></span>
@@ -165,8 +168,9 @@ none are present.</p>
 <span><span class="co">#&gt; [1] 86400</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $periods</span></span>
-<span><span class="co">#&gt; [1]  9 26 52</span></span>
-<span></span>
+<span><span class="co">#&gt; [1]  9 26 52</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="va">strat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/strat.html">strat</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/look.html">look</a></span><span class="op">(</span><span class="va">strat</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $strat</span></span>
@@ -197,8 +201,9 @@ none are present.</p>
 <span><span class="co">#&gt; [1] 86400</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $periods</span></span>
-<span><span class="co">#&gt; [1]  9 26 52</span></span>
-<span></span>
+<span><span class="co">#&gt; [1]  9 26 52</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="va">grid</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mlgrid.html">mlgrid</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/look.html">look</a></span><span class="op">(</span><span class="va">grid</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $sdevs</span></span>
@@ -244,7 +249,7 @@ object is not necessary.</p>
 <code>keep.attrs</code> (optional) if set to TRUE, will preserve any
 custom attributes set on the original object.</li>
 </ul>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">sample_ohlc_data</span><span class="op">)</span></span>
 <span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/xts_df.html">xts_df</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
@@ -261,8 +266,9 @@ custom attributes set on the original object.</li>
 <span><span class="co">#&gt;  $ senkouB: num  NA NA NA NA NA NA NA NA NA NA ...</span></span>
 <span><span class="co">#&gt;  $ chikou : num  123 123 123 124 124 ...</span></span>
 <span><span class="co">#&gt;  $ cloudT : num  NA NA NA NA NA NA NA NA NA NA ...</span></span>
-<span><span class="co">#&gt;  $ cloudB : num  NA NA NA NA NA NA NA NA NA NA ...</span></span>
-<span></span>
+<span><span class="co">#&gt;  $ cloudB : num  NA NA NA NA NA NA NA NA NA NA ...</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="co"># Preserving custom attributes:</span></span>
 <span><span class="va">df2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/xts_df.html">xts_df</a></span><span class="op">(</span><span class="va">cloud</span>, keep.attrs <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">df2</span><span class="op">)</span></span>
@@ -297,7 +303,7 @@ as <code><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-lin
 <code>keep.attrs</code> (optional) if set to TRUE, will preserve any
 custom attributes set on the original object.</li>
 </ul>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">sample_ohlc_data</span><span class="op">)</span></span>
 <span><span class="va">mcloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span></span>
 <span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/matrix_df.html">matrix_df</a></span><span class="op">(</span><span class="va">mcloud</span><span class="op">)</span></span>
@@ -314,8 +320,9 @@ custom attributes set on the original object.</li>
 <span><span class="co">#&gt;  $ senkouB: num  NA NA NA NA NA NA NA NA NA NA ...</span></span>
 <span><span class="co">#&gt;  $ chikou : num  123 123 123 124 124 ...</span></span>
 <span><span class="co">#&gt;  $ cloudT : num  NA NA NA NA NA NA NA NA NA NA ...</span></span>
-<span><span class="co">#&gt;  $ cloudB : num  NA NA NA NA NA NA NA NA NA NA ...</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/row.names.html" class="external-link">row.names</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  $ cloudB : num  NA NA NA NA NA NA NA NA NA NA ...</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/row.names.html" class="external-link">row.names</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  chr [1:281] "2020-01-02" "2020-01-03" "2020-01-06" "2020-01-07" ...</span></span></code></pre></div>
 </div>
 </div>
@@ -342,7 +349,7 @@ periods are detected within the data, a warning is issued, and the
 resulting dataframe should be manually inspected in case it contains
 unwanted duplicates. Use <code><a href="../reference/df_append.html">df_append()</a></code> for updating
 dataframes with new values.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data1</span> <span class="op">&lt;-</span> <span class="va">sample_ohlc_data</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span>, <span class="op">]</span></span>
 <span><span class="va">data1</span></span>
 <span><span class="co">#&gt;         time  open  high   low close volume</span></span>
@@ -351,8 +358,9 @@ dataframes with new values.</p>
 <span><span class="co">#&gt; 3 2020-01-06 122.8 123.4 122.4 123.3   1792</span></span>
 <span><span class="co">#&gt; 4 2020-01-07 123.3 124.3 123.3 124.1   1977</span></span>
 <span><span class="co">#&gt; 5 2020-01-08 124.1 124.8 124.0 124.8   2239</span></span>
-<span><span class="co">#&gt; 6 2020-01-09 124.8 125.4 124.5 125.3   1842</span></span>
-<span><span class="va">data2</span> <span class="op">&lt;-</span> <span class="va">sample_ohlc_data</span><span class="op">[</span><span class="fl">4</span><span class="op">:</span><span class="fl">10</span>, <span class="op">]</span></span>
+<span><span class="co">#&gt; 6 2020-01-09 124.8 125.4 124.5 125.3   1842</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">data2</span> <span class="op">&lt;-</span> <span class="va">sample_ohlc_data</span><span class="op">[</span><span class="fl">4</span><span class="op">:</span><span class="fl">10</span>, <span class="op">]</span></span>
 <span><span class="va">data2</span></span>
 <span><span class="co">#&gt;          time  open  high   low close volume</span></span>
 <span><span class="co">#&gt; 4  2020-01-07 123.3 124.3 123.3 124.1   1977</span></span>
@@ -361,8 +369,9 @@ dataframes with new values.</p>
 <span><span class="co">#&gt; 7  2020-01-10 125.3 125.3 124.8 125.2   2548</span></span>
 <span><span class="co">#&gt; 8  2020-01-13 125.2 125.3 125.1 125.2   2946</span></span>
 <span><span class="co">#&gt; 9  2020-01-14 125.2 125.2 124.3 124.4   2796</span></span>
-<span><span class="co">#&gt; 10 2020-01-15 124.4 124.5 123.7 123.9   2879</span></span>
-<span><span class="fu"><a href="../reference/df_merge.html">df_merge</a></span><span class="op">(</span><span class="va">data1</span>, <span class="va">data2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 10 2020-01-15 124.4 124.5 123.7 123.9   2879</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/df_merge.html">df_merge</a></span><span class="op">(</span><span class="va">data1</span>, <span class="va">data2</span><span class="op">)</span></span>
 <span><span class="co">#&gt;          time  open  high   low close volume</span></span>
 <span><span class="co">#&gt; 1  2020-01-02 123.0 123.1 122.5 122.7   1875</span></span>
 <span><span class="co">#&gt; 2  2020-01-03 122.7 122.8 122.6 122.8   1479</span></span>
@@ -405,7 +414,7 @@ example the ‘timestamp’ in pricing data returned by
 <code><a href="../reference/oanda.html">oanda()</a></code>, this is retained. If the attribute is not found in
 ‘new’, the argument has no effect. All other custom attributes are
 dropped.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data1</span> <span class="op">&lt;-</span> <span class="va">sample_ohlc_data</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span>, <span class="op">]</span></span>
 <span><span class="va">data1</span></span>
 <span><span class="co">#&gt;         time  open  high   low close volume</span></span>
@@ -416,15 +425,17 @@ dropped.</p>
 <span><span class="co">#&gt; 5 2020-01-08 124.1 124.8 124.0 124.8   2239</span></span>
 <span><span class="co">#&gt; 6 2020-01-09 124.8 125.4 124.5 125.3   1842</span></span>
 <span><span class="co">#&gt; 7 2020-01-10 125.3 125.3 124.8 125.2   2548</span></span>
-<span><span class="co">#&gt; 8 2020-01-13 125.2 125.3 125.1 125.2   2946</span></span>
-<span><span class="va">data2</span> <span class="op">&lt;-</span> <span class="va">sample_ohlc_data</span><span class="op">[</span><span class="fl">7</span><span class="op">:</span><span class="fl">10</span>, <span class="op">]</span></span>
+<span><span class="co">#&gt; 8 2020-01-13 125.2 125.3 125.1 125.2   2946</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">data2</span> <span class="op">&lt;-</span> <span class="va">sample_ohlc_data</span><span class="op">[</span><span class="fl">7</span><span class="op">:</span><span class="fl">10</span>, <span class="op">]</span></span>
 <span><span class="va">data2</span></span>
 <span><span class="co">#&gt;          time  open  high   low close volume</span></span>
 <span><span class="co">#&gt; 7  2020-01-10 125.3 125.3 124.8 125.2   2548</span></span>
 <span><span class="co">#&gt; 8  2020-01-13 125.2 125.3 125.1 125.2   2946</span></span>
 <span><span class="co">#&gt; 9  2020-01-14 125.2 125.2 124.3 124.4   2796</span></span>
-<span><span class="co">#&gt; 10 2020-01-15 124.4 124.5 123.7 123.9   2879</span></span>
-<span><span class="fu"><a href="../reference/df_append.html">df_append</a></span><span class="op">(</span><span class="va">data1</span>, <span class="va">data2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 10 2020-01-15 124.4 124.5 123.7 123.9   2879</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/df_append.html">df_append</a></span><span class="op">(</span><span class="va">data1</span>, <span class="va">data2</span><span class="op">)</span></span>
 <span><span class="co">#&gt;          time  open  high   low close volume</span></span>
 <span><span class="co">#&gt; 1  2020-01-02 123.0 123.1 122.5 122.7   1875</span></span>
 <span><span class="co">#&gt; 2  2020-01-03 122.7 122.8 122.6 122.8   1479</span></span>

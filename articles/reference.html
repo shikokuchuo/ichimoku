@@ -479,8 +479,9 @@ components:</p>
 <span></span>
 <span><span class="va">cloud2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="fu"><a href="../reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">index</span>, <span class="va">core</span><span class="op">)</span>, ticker <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">cloud</span>, <span class="st">"ticker"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: Converted numeric values in column 'index' as POSIX times - please</span></span>
-<span><span class="co">#&gt; check validity</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="va">cloud</span>, <span class="va">cloud2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; check validity</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="va">cloud</span>, <span class="va">cloud2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
 <p>Note specifically that ichimoku needs to be called twice - first to
 convert the matrix resulting from the <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind()</a></code> operation,
@@ -511,7 +512,7 @@ resolution.</p>
 chart.</p>
 <p>The example below demonstrates some of the arguments that can be
 supplied to customise the plot.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">cloud</span>, window <span class="op">=</span> <span class="st">"2020-05/"</span>, ticker <span class="op">=</span> <span class="st">"SYM (JSE)"</span>, subtitle <span class="op">=</span> <span class="st">"Sample Data Series"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference_files/figure-html/plot2-1.png" width="672"></p>
 <p>The following arguments for customisation are shared across
@@ -563,7 +564,7 @@ method for ‘ggplot’ objects when <code>type = 'none'</code>.</li>
 in which case a vector of 12 colour values (hex codes or names) should
 be supplied. Each colour value corresponds to a different element of the
 chart. As an example, the ‘mono’ theme can be specified as:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#d9d9d9"</span>, <span class="st">"#d7d7d7"</span>, <span class="st">"#d1d1d1"</span>, <span class="st">"#737373"</span>, <span class="st">"#1f1f1f"</span>, <span class="st">"#b8b8b8"</span>, <span class="st">"#1a1a1a"</span>, <span class="st">"#1a1a1a"</span>, <span class="st">"#1a1a1a"</span>, <span class="st">"#ffffff"</span>, <span class="st">"#333333"</span>, <span class="st">"#1a1a1a"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
@@ -587,7 +588,7 @@ each period’s open rather than the previous close. Note also that the
 R-type oscillator is calculated consistently and does not employ a
 roll-forward mechanism based on previous oscillator values like the
 RSI.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># To plot an R-type oscillator:</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">cloud</span>, type <span class="op">=</span> <span class="st">"r"</span><span class="op">)</span></span></code></pre></div>
 <p>An <strong>S-type oscillator</strong> is based on the formula for the
@@ -603,7 +604,7 @@ ratio of the closing price minus the [26] period low to the [26] period
 high minus the [26] period low.</p>
 <p>Note the difference to the usual stochastic oscillator definition
 where the slow line is a 3-period moving average of the fast line.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">cloud</span>, window <span class="op">=</span> <span class="st">"2020-04-01/2020-12-01"</span>, theme <span class="op">=</span> <span class="st">"solarized"</span>, type <span class="op">=</span> <span class="st">"s"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference_files/figure-html/plots-1.png" width="672"></p>
 </div>
@@ -619,7 +620,7 @@ match exactly, nor is case considered.</p>
 <p>To view a custom sub-plot, type must be specified as either ‘bar’ or
 ‘line’ as the type setting takes precedence (with a default of
 ‘none’).</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">kumo</span>, window <span class="op">=</span> <span class="st">"2020-04/2020-11"</span>, theme <span class="op">=</span> <span class="st">"mono"</span>, type <span class="op">=</span> <span class="st">"bar"</span>, custom <span class="op">=</span> <span class="st">"volume"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference_files/figure-html/plotbar-1.png" width="672"></p>
 </div>
@@ -636,7 +637,7 @@ original ichimoku object (invisibly).</p>
 </h4>
 <p>To produce an interactive plot, use ichimoku’s <code><a href="../reference/iplot.html">iplot()</a></code>
 function, which launches a Shiny app.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># For an interactive plot:</span></span>
 <span><span class="fu"><a href="../reference/iplot.html">iplot</a></span><span class="op">(</span><span class="va">cloud</span><span class="op">)</span></span></code></pre></div>
 <p>Further arguments are optional as full customisation of the chart can
@@ -692,7 +693,7 @@ stored. If the second argument is left empty, a system dialog will be
 opened allowing the file save location to be set interactively. A
 confirmation is printed to the console that the file has been
 written.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Write object to file:</span></span>
 <span><span class="fu"><a href="../reference/archive.html">archive</a></span><span class="op">(</span><span class="va">object</span>, <span class="st">"path/filename"</span><span class="op">)</span></span>
 <span><span class="co"># Leave second argument empty to choose file save location from a system dialog:</span></span>
@@ -707,7 +708,7 @@ arguments are specified, a system dialog will be opened allowing a file
 to be chosen interactively. The return value of the function can be
 assigned to an object. A confirmation is printed to the console once the
 file has been read.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Read from file to object:</span></span>
 <span><span class="va">object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/archive.html">archive</a></span><span class="op">(</span><span class="st">"path/filename"</span><span class="op">)</span></span>
 <span><span class="co"># Choose a file from an interactive system dialog:</span></span>
@@ -716,15 +717,15 @@ file has been read.</p>
 <div class="section level4">
 <h4 id="data-integrity-verification">Data Integrity Verification<a class="anchor" aria-label="anchor" href="#data-integrity-verification"></a>
 </h4>
-<p>Data integrity verification is performed by the SHA3-256
-cryptographic hash algorithm from the ‘secretbase’ package.</p>
+<p>Data integrity verification is performed by the SHA256 cryptographic
+hash algorithm from the ‘secretbase’ package.</p>
 <p>When an archive is written, the serialised object is hashed and the
-hash is also stored in the archive. The SHA3-256 hash value is printed
-to the console as confirmation.</p>
-<p>When an archive is read back, the SHA3-256 hash of the restored
-object is checked against the hash of the original stored in the
-archive. If identical, a ‘data verified’ message is printed to the
-console along with the authenticated SHA3-256 hash.</p>
+hash is also stored in the archive. The SHA256 hash value is printed to
+the console as confirmation.</p>
+<p>When an archive is read back, the SHA256 hash of the restored object
+is checked against the hash of the original stored in the archive. If
+identical, a ‘data verified’ message is printed to the console along
+with the authenticated SHA256 hash.</p>
 </div>
 </div>
 </div>

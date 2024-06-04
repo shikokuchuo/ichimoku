@@ -115,10 +115,10 @@ or read from.</p></dd>
     
 
 
-<p>A SHA3-256 hash of the original object is written to the archive. This
+<p>A SHA256 hash of the original object is written to the archive. This
     allows the data integrity of the restored object to be verified when the
     archive is read back.</p>
-<p>For write operations: confirmation of the SHA3-256 hash written to file
+<p>For write operations: confirmation of the SHA256 hash written to file
     is displayed.</p>
 <p>For read operations: a 'data verified' message is issued if the SHA256
     hash found within the data file has been authenticated.</p>
@@ -137,12 +137,12 @@ or read from.</p></dd>
 <span class="r-in"><span><span class="va">file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">archive</span><span class="op">(</span><span class="va">cloud</span>, <span class="va">file</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Archive written to '/tmp/Rtmp8rjLXL/file185f2ef77658'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> SHA3-256: 470af20d577025feadd9a17e6d1c0f6cd48e015554f8364ccaa0b1753609d64e</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Archive written to '/tmp/Rtmpe4reJH/file17fe1b845145'</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> SHA256: f04ccb6b8869372733acb7ad07d468624e58b1b8ee9d6a715ab13e698fd1373b</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">restored</span> <span class="op">&lt;-</span> <span class="fu">archive</span><span class="op">(</span><span class="va">file</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Archive read from '/tmp/Rtmp8rjLXL/file185f2ef77658'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Data verified by SHA3-256: 470af20d577025feadd9a17e6d1c0f6cd48e015554f8364ccaa0b1753609d64e</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Archive read from '/tmp/Rtmpe4reJH/file17fe1b845145'</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Data verified by SHA256: f04ccb6b8869372733acb7ad07d468624e58b1b8ee9d6a715ab13e698fd1373b</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink</a></span><span class="op">(</span><span class="va">file</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
