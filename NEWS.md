@@ -1,8 +1,8 @@
-# ichimoku 1.5.1.9000 (development)
+# ichimoku 1.5.2
 
 #### Updates:
 
-* `archive()` moves back to SHA256 again (using the updated implementation in {secretbase}).
+* `archive()` reverts to using SHA256.
 
 # ichimoku 1.5.1
 
