@@ -23,6 +23,7 @@
 #include <R_ext/Visibility.h>
 
 #define ICHIMOKU_DATAPTR(x) (void *) DATAPTR_RO(x)
+#define ICHIMOKU_VECTOR(x) ((const SEXP *) DATAPTR_RO(x))
 
 SEXP xts_IndexSymbol;
 SEXP xts_IndexTclassSymbol;
@@ -290,10 +291,10 @@ SEXP _df(SEXP x) {
     src += xlen;
   }
 
-  idchar = Rf_coerceVector(VECTOR_ELT(df, 5), STRSXP);
+  idchar = Rf_coerceVector(ICHIMOKU_VECTOR(df)[5], STRSXP);
   SET_VECTOR_ELT(df, 5, idchar);
 
-  PROTECT(dn2 = VECTOR_ELT(Rf_getAttrib(x, R_DimNamesSymbol), 1));
+  PROTECT(dn2 = ICHIMOKU_VECTOR(Rf_getAttrib(x, R_DimNamesSymbol))[1]);
   R_xlen_t dlen = XLENGTH(dn2);
   names = Rf_allocVector(STRSXP, dlen + 2);
   Rf_namesgets(df, names);
