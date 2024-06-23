@@ -7,9 +7,10 @@
 
 [![CRAN
 Status](https://www.r-pkg.org/badges/version/ichimoku?color=00008b)](https://CRAN.R-project.org/package=ichimoku)
+[![R-multiverse
+status](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fcommunity.r-multiverse.org%2Fapi%2Fpackages%2Fichimoku&query=%24.Version&label=r-multiverse)](https://community.r-multiverse.org/ichimoku)
 [![ichimoku status
 badge](https://shikokuchuo.r-universe.dev/badges/ichimoku?color=a4d1eb)](https://shikokuchuo.r-universe.dev/ichimoku)
-[![diffify](https://diffify.com/diffify-badge.svg)](https://diffify.com/R/ichimoku)
 [![R-CMD-check](https://github.com/shikokuchuo/ichimoku/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/shikokuchuo/ichimoku/actions/workflows/R-CMD-check.yaml)
 [![codecov](https://codecov.io/gh/shikokuchuo/ichimoku/graph/badge.svg)](https://app.codecov.io/gh/shikokuchuo/ichimoku)
 [![DOI](https://zenodo.org/badge/367928545.svg)](https://zenodo.org/badge/latestdoi/367928545)
@@ -30,21 +31,7 @@ Incorporates an interface with the OANDA fxTrade API
 streaming price data for major currencies, metals, commodities,
 government bonds and stock indices.
 
-## Installation
-
-Install the latest release of ichimoku from CRAN:
-
-``` r
-install.packages("ichimoku")
-```
-
-Or the development version from R-universe:
-
-``` r
-install.packages("ichimoku", repos = "https://shikokuchuo.r-universe.dev")
-```
-
-## Example
+## Quick Start
 
 ``` r
 library(ichimoku)
@@ -159,6 +146,20 @@ Functions](https://shikokuchuo.net/ichimoku/articles/utilities.html)
 
 { 4 } [The OANDA fxTrade
 API](https://shikokuchuo.net/ichimoku/articles/xoanda.html)
+
+## Installation
+
+Install the latest release from CRAN or R-multiverse:
+
+``` r
+install.packages("ichimoku")
+```
+
+The current development version is available from R-universe:
+
+``` r
+install.packages("ichimoku", repos = "https://shikokuchuo.r-universe.dev")
+```
 
 ## References
 
