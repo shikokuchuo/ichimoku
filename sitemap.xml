@@ -1,159 +1,55 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/404.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/CODE_OF_CONDUCT.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/articles/reference.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/articles/strategies.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/articles/utilities.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/articles/xoanda.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/index.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/archive.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/as.data.frame.ichimoku.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/autoplot.ichimoku.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/autostrat.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/coredata.ichimoku.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/df_append.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/df_merge.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/dot-ichimoku.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/grid_dup.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/hasStrat.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/ichimoku-package.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/ichimoku.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/index.ichimoku.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/iplot.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/is.ichimoku.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/look.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/matrix_df.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/mlgrid.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/more.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/oanda.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/oanda_chart.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/oanda_instruments.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/oanda_orders.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/oanda_positions.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/oanda_quote.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/oanda_set_key.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/oanda_stream.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/oanda_studio.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/oanda_switch.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/oanda_view.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/plot.ichimoku.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/print.ichimoku.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/relative.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/sample_ohlc_data.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/str.ichimoku.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/strat.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/stratcombine.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/summary.ichimoku.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/tradingDays.html</loc>
-  </url>
-  <url>
-    <loc>https://shikokuchuo.net/ichimoku/reference/xts_df.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://shikokuchuo.net/ichimoku/404.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/CODE_OF_CONDUCT.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/LICENSE.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/articles/index.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/articles/reference.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/articles/strategies.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/articles/utilities.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/articles/xoanda.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/authors.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/index.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/news/index.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/reference/archive.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/reference/as.data.frame.ichimoku.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/reference/autoplot.ichimoku.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/reference/autostrat.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/reference/coredata.ichimoku.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/reference/df_append.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/reference/df_merge.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/reference/dot-ichimoku.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/reference/grid_dup.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/reference/hasStrat.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/reference/ichimoku-package.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/reference/ichimoku.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/reference/index.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/reference/index.ichimoku.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/reference/iplot.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/reference/is.ichimoku.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/reference/look.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/reference/matrix_df.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/reference/mlgrid.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/reference/more.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/reference/oanda.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/reference/oanda_chart.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/reference/oanda_instruments.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/reference/oanda_orders.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/reference/oanda_positions.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/reference/oanda_quote.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/reference/oanda_set_key.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/reference/oanda_stream.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/reference/oanda_studio.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/reference/oanda_switch.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/reference/oanda_view.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/reference/plot.ichimoku.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/reference/print.ichimoku.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/reference/relative.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/reference/sample_ohlc_data.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/reference/str.ichimoku.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/reference/strat.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/reference/stratcombine.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/reference/summary.ichimoku.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/reference/tradingDays.html</loc></url>
+<url><loc>https://shikokuchuo.net/ichimoku/reference/xts_df.html</loc></url>
 </urlset>
+
