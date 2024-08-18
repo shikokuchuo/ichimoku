@@ -1,5 +1,9 @@
 # ichimoku 1.5.3.9000 (development)
 
+#### Updates:
+
+* Internal performance enhancements.
+
 # ichimoku 1.5.3
 
 #### Updates:

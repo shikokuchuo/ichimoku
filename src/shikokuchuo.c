@@ -338,9 +338,9 @@ SEXP _index(SEXP x) {
 SEXP _coredata(SEXP x) {
 
   SEXP core;
-  PROTECT(core = R_shallow_duplicate_attr(x));
-  SET_ATTRIB(core, R_NilValue);
-  SET_OBJECT(core, 0);
+  R_xlen_t xlen = XLENGTH(x);
+  PROTECT(core = Rf_allocVector(TYPEOF(x), xlen));
+  memcpy(ICHIMOKU_DATAPTR(core), DATAPTR_RO(x), xlen * sizeof(double));
   Rf_dimgets(core, Rf_getAttrib(x, R_DimSymbol));
   Rf_dimnamesgets(core, Rf_getAttrib(x, R_DimNamesSymbol));
   UNPROTECT(1);
