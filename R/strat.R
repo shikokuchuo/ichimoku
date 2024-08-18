@@ -165,7 +165,7 @@ strat <- function(x,
     s2posn <- c(NA, s2cond[1:(end - 1L)], rep(NA, p2))
     s2txn <- c(NA, s2posn[-1L] - s2posn[-xlen])
     s2txn[s2posn == 1 & is.na(s2txn)] <- 1
-    if (s2posn[end] == 1) s2txn[end + 1L] <- -1
+    if (s2posn[end] == 0) s2txn[end + 1L] <- 1
 
     s1entry <- which(s1txn == 1)
     s2exit <- which(s2txn == 1)
