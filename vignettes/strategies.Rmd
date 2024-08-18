@@ -112,6 +112,7 @@ See [strategy summary specification](#strategy-summary-specification) for detail
 ### 4. Visualize by calling `plot()` or `iplot()`.
 
 ```{r plot}
+#| fig.alt: strategy-augmented ichimoku cloud plot using dark theme
 plot(strat, theme = "dark")
 ```
 

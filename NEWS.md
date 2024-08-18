@@ -2,6 +2,7 @@
 
 #### Updates:
 
+* Fixes cases of asymmetric (type 3) strategies not generating entry signals if the exit condition not yet been met (thanks @bbac63 #9).
 * Internal performance enhancements.
 
 # ichimoku 1.5.3

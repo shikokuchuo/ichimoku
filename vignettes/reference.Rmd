@@ -227,6 +227,7 @@ Call `plot()` on an ichimoku object to visualize the cloud chart.
 The example below demonstrates some of the arguments that can be supplied to customise the plot.
 
 ```{r plot2}
+#| fig.alt: ichimoku cloud plot of sample data series
 plot(cloud, window = "2020-05/", ticker = "SYM (JSE)", subtitle = "Sample Data Series")
 ```
 
@@ -275,6 +276,7 @@ The fast S-type line is calculated as 100 times the ratio of the closing price m
 Note the difference to the usual stochastic oscillator definition where the slow line is a 3-period moving average of the fast line.
 
 ```{r plots}
+#| fig.alt: ichimoku cloud plot using solarized theme, with windowed data and an S-type oscillator sub-plot
 plot(cloud, window = "2020-04-01/2020-12-01", theme = "solarized", type = "s")
 ```
 
@@ -287,6 +289,7 @@ The character string supplied to 'custom' is a regular expression pattern that i
 To view a custom sub-plot, type must be specified as either 'bar' or 'line' as the type setting takes precedence (with a default of 'none').
 
 ```{r plotbar}
+#| fig.alt: ichimoku cloud plot using mono theme and with a bar-type sub-plot
 plot(kumo, window = "2020-04/2020-11", theme = "mono", type = "bar", custom = "volume")
 ```
 
