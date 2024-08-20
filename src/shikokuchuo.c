@@ -389,6 +389,7 @@ static void PreserveObjects(void) {
   R_PreserveObject(ichimoku_false = Rf_ScalarLogical(0));
 }
 
+// # nocov start
 static void ReleaseObjects(void) {
   R_ReleaseObject(ichimoku_false);
   R_ReleaseObject(ichimoku_int_three);
@@ -397,6 +398,7 @@ static void ReleaseObjects(void) {
   R_ReleaseObject(ichimoku_klass);
   R_ReleaseObject(ichimoku_dfclass);
 }
+// # nocov end
 
 static const R_CallMethodDef CallEntries[] = {
   {"_coredata", (DL_FUNC) &_coredata, 1},
@@ -423,6 +425,8 @@ void attribute_visible R_init_ichimoku(DllInfo* dll) {
   R_forceSymbols(dll, TRUE);
 }
 
+// # nocov start
 void attribute_visible R_unload_ichimoku(DllInfo *info) {
   ReleaseObjects();
 }
+// # nocov end
