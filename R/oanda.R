@@ -16,6 +16,9 @@
 
 # Ichimoku - OANDA fxTrade API Interface ---------------------------------------
 
+# nocov start
+# tested manually as access token required
+
 #' OANDA Price Data
 #'
 #' Retrieve price data for major currencies, metals, commodities, government
@@ -1156,3 +1159,5 @@ oanda_orders <- function(instrument, time, server, apikey) {
   invisible(df)
 
 }
+
+# nocov end

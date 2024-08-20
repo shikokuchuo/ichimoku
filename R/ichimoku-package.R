@@ -98,6 +98,9 @@
 #'
 "_PACKAGE"
 
+# nocov start
+# tested implicitly
+
 .onLoad <- function(libname, pkgname) {
   do_ <- do_()
   do_ <<- do_
@@ -118,3 +121,5 @@
   cat("\n")
   invisible(quote(expr=))
 }
+
+# nocov end
