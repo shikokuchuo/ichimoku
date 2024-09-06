@@ -8,3 +8,5 @@
 ^docs$
 ^pkgdown$
 ^codecov\.yml$
+^compile_commands\.json$
+^\.cache$

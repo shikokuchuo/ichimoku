@@ -16,8 +16,12 @@
 
 // ichimoku - Functions Utilising R's C API ------------------------------------
 
+#ifndef R_NO_REMAP
 #define R_NO_REMAP
+#endif
+#ifndef STRICT_R_HEADERS
 #define STRICT_R_HEADERS
+#endif
 #include <R.h>
 #include <Rinternals.h>
 #include <R_ext/Visibility.h>
