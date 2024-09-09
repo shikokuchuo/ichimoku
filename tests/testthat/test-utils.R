@@ -41,9 +41,3 @@ test_that("df_append ok", {
   attr(new, "special") <- "test"
   expect_identical(attr(df_append(old, new, keep.attr = "special"), "special"), attr(new, "special"))
 })
-
-test_that("internal window functions ok", {
-  expect_identical(.Call(ichimoku_wmin, as.numeric(1:6), 3L), c(NA, NA, 1, 2, 3, 4))
-  expect_identical(.Call(ichimoku_wmax, as.numeric(1:6), 3L), c(NA, NA, 3, 4, 5, 6))
-  expect_identical(.Call(ichimoku_wmean, as.numeric(1:6), 3L), c(NA, NA, 2, 3, 4, 5))
-})

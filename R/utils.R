@@ -139,8 +139,7 @@ xts_df <- function(x, keep.attrs = FALSE) {
   `attributes<-`(df, c(list(names = c("index", dn2),
                             class = "data.frame",
                             row.names = .set_row_names(xlen)),
-                       if (isTRUE(keep.attrs))
-                         .Call(ichimoku_look, x)))
+                       if (isTRUE(keep.attrs)) look(x)))
 }
 
 #' Convert matrix to data.frame
@@ -168,7 +167,7 @@ xts_df <- function(x, keep.attrs = FALSE) {
 #' @export
 #'
 matrix_df <- function(x, keep.attrs = FALSE) {
-  lk <- if (isTRUE(keep.attrs)) .Call(ichimoku_look, x)
+  lk <- if (isTRUE(keep.attrs)) look(x)
   dn <- dimnames(x)
   xlen <- dim(x)[1L]
   len <- dim(x)[2L]
@@ -280,10 +279,10 @@ df_append <- function(old, new, key = "time", keep.attr = "timestamp") {
 #' @param x an object (optional). If 'x' is not supplied, \code{\link{.Last.value}}
 #'     will be used instead.
 #'
-#' @return For objects created by the ichimoku package, a pairlist of attributes
+#' @return For objects created by the ichimoku package, a list of attributes
 #'     specific to that data type.
 #'
-#'     For other objects, a pairlist of non-standard attributes for matrix /
+#'     For other objects, a list of non-standard attributes for matrix /
 #'     data.frame / xts classes, or else invisible NULL if none are present.
 #'
 #' @details Note: autostrat list attributes may be accessed directly using
@@ -310,7 +309,11 @@ df_append <- function(old, new, key = "time", keep.attr = "timestamp") {
 #'
 #' @export
 #'
-look <- function(x = .Last.value) if (length(lk <- .Call(ichimoku_look, x))) lk
+look <- function(x = .Last.value) {
+  attr <- attributes(.Call(ichimoku_look, x))
+  is.null(attr) && return(invisible())
+  attr
+}
 
 #' Print More Rows of Ichimoku Objects
 #'

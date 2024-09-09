@@ -66,11 +66,6 @@ test_that("print method ok", {
   expect_output(print(cloud[, 1L, drop = TRUE]))
 })
 
-test_that("more ok", {
-  expect_null(expect_invisible(more()))
-  expect_null(expect_invisible(more(20)))
-})
-
 test_that("str method ok", {
   expect_output(expect_null(expect_invisible(str(cloud))), "(281, 12)")
   expect_output(str(cloud[0]), "(0, 12)")
@@ -119,4 +114,10 @@ test_that(".ichimoku ok", {
   expect_identical(.ichimoku(sample_ohlc_data, ticker = "TKR"), cloud)
   expect_identical(attr(.ichimoku(sample_ohlc_data), "ticker"), "sample_ohlc_data")
   expect_warning(.ichimoku(sample_ohlc_data, periods = c(9L, 26L, -52L)), regexp = "cloud periods invalid")
+})
+
+test_that("internal window functions ok", {
+  expect_identical(.Call(ichimoku_wmin, as.numeric(1:6), 3L), c(NA, NA, 1, 2, 3, 4))
+  expect_identical(.Call(ichimoku_wmax, as.numeric(1:6), 3L), c(NA, NA, 3, 4, 5, 6))
+  expect_identical(.Call(ichimoku_wmean, as.numeric(1:6), 3L), c(NA, NA, 2, 3, 4, 5))
 })

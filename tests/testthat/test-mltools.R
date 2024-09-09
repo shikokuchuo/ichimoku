@@ -28,16 +28,21 @@ test_that("mlgrid ok", {
 test_that("relative ok", {
   expect_output(expect_s3_class(rel <- relative(cloud), "data.frame"))
   expect_identical(dim(rel), c(37L, 8L))
-  expect_length(expect_type(look(rel), "pairlist"), 4L)
+  expect_length(expect_type(look(rel), "list"), 4L)
   expect_silent(relative(cloud, order = TRUE, signif = 0.4, quietly = TRUE))
   expect_error(relative(sample_ohlc_data), regexp = "ichimoku object")
 })
 
 test_that("look ok", {
-  expect_length(expect_type(look(cloud), "pairlist"), 3L)
-  expect_length(expect_type(look(stratlist[[1L]]), "pairlist"), 4L)
-  expect_length(expect_type(look(grid), "pairlist"), 7L)
-  expect_length(expect_type(look(stratlist), "pairlist"), 2L)
+  expect_length(expect_type(look(cloud), "list"), 3L)
+  expect_length(expect_type(look(stratlist[[1L]]), "list"), 4L)
+  expect_length(expect_type(look(grid), "list"), 7L)
+  expect_length(expect_type(look(stratlist), "list"), 2L)
   expect_null(expect_invisible(look(sample_ohlc_data)))
   expect_null(expect_invisible(look()))
+})
+
+test_that("more ok", {
+  expect_null(expect_invisible(more()))
+  expect_null(expect_invisible(more(20)))
 })

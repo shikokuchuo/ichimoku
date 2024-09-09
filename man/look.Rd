@@ -11,10 +11,10 @@ look(x = .Last.value)
 will be used instead.}
 }
 \value{
-For objects created by the ichimoku package, a pairlist of attributes
+For objects created by the ichimoku package, a list of attributes
     specific to that data type.
 
-    For other objects, a pairlist of non-standard attributes for matrix /
+    For other objects, a list of non-standard attributes for matrix /
     data.frame / xts classes, or else invisible NULL if none are present.
 }
 \description{

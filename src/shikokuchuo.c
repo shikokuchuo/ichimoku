@@ -129,20 +129,14 @@ SEXP _wmean(SEXP x, SEXP window) {
 // look - inspect informational attributes
 SEXP _look(SEXP x) {
 
-  SEXP ax, y;
-  PROTECT_INDEX pxi;
-  PROTECT_WITH_INDEX(y = R_NilValue, &pxi);
-
-  for (ax = ATTRIB(x); ax != R_NilValue; ax = CDR(ax)) {
-    if (TAG(ax) != R_NamesSymbol && TAG(ax) != R_RowNamesSymbol &&
-        TAG(ax) != R_DimSymbol && TAG(ax) != R_DimNamesSymbol &&
-        TAG(ax) != R_ClassSymbol && TAG(ax) != xts_IndexSymbol) {
-      REPROTECT(y = Rf_cons(CAR(ax), y), pxi);
-      SET_TAG(y, TAG(ax));
-    }
-  }
-
+  SEXP y;
+  PROTECT(y = Rf_ScalarInteger(0));
+  Rf_copyMostAttrib(x, y);
+  Rf_classgets(y, R_NilValue);
+  Rf_setAttrib(y, R_RowNamesSymbol, R_NilValue);
+  Rf_setAttrib(y, xts_IndexSymbol, R_NilValue);
   UNPROTECT(1);
+
   return y;
 
 }
