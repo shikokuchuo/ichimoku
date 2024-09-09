@@ -171,6 +171,9 @@ SEXP _tbl(SEXP x, SEXP type) {
 
   PROTECT(tbl = Rf_allocVector(VECSXP, xwid + 1));
 
+  if (keepattrs)
+    Rf_copyMostAttrib(x, tbl);
+
   index = Rf_shallow_duplicate(Rf_getAttrib(x, xts_IndexSymbol));
   Rf_classgets(index, ichimoku_tclass);
   SET_VECTOR_ELT(tbl, 0, index);
@@ -207,16 +210,6 @@ SEXP _tbl(SEXP x, SEXP type) {
   }
   Rf_setAttrib(tbl, R_RowNamesSymbol, rownames);
 
-  if (keepattrs) {
-    SEXP ax;
-    for (ax = ATTRIB(x); ax != R_NilValue; ax = CDR(ax)) {
-      if (TAG(ax) != R_NamesSymbol && TAG(ax) != R_RowNamesSymbol &&
-          TAG(ax) != R_DimSymbol && TAG(ax) != R_DimNamesSymbol &&
-          TAG(ax) != R_ClassSymbol && TAG(ax) != xts_IndexSymbol)
-        Rf_setAttrib(tbl, TAG(ax), CAR(ax));
-    }
-  }
-
   UNPROTECT(1);
   return tbl;
 
@@ -225,6 +218,11 @@ SEXP _tbl(SEXP x, SEXP type) {
 // internal function used by ichimoku()
 SEXP _create(SEXP kumo, SEXP xtsindex, SEXP periods, SEXP periodicity,
              SEXP ticker, SEXP x) {
+
+  if (x != R_NilValue) {
+    Rf_copyMostAttrib(x, kumo);
+    Rf_setAttrib(kumo, R_RowNamesSymbol, R_NilValue);
+  }
 
   Rf_setAttrib(xtsindex, xts_IndexTzoneSymbol, R_BlankScalarString);
   Rf_setAttrib(xtsindex, xts_IndexTclassSymbol, ichimoku_tclass);
@@ -235,19 +233,6 @@ SEXP _create(SEXP kumo, SEXP xtsindex, SEXP periods, SEXP periodicity,
   Rf_setAttrib(kumo, ichimoku_PeriodsSymbol, periods);
   Rf_setAttrib(kumo, ichimoku_PeriodicitySymbol, periodicity);
   Rf_setAttrib(kumo, ichimoku_TickerSymbol, ticker);
-
-  if (x != R_NilValue) {
-    SEXP ax;
-    for (ax = ATTRIB(x); ax != R_NilValue; ax = CDR(ax)) {
-      if (TAG(ax) != R_NamesSymbol && TAG(ax) != R_RowNamesSymbol &&
-          TAG(ax) != R_DimSymbol && TAG(ax) != R_DimNamesSymbol &&
-          TAG(ax) != R_ClassSymbol && TAG(ax) != xts_IndexSymbol &&
-          TAG(ax) != ichimoku_PeriodsSymbol &&
-          TAG(ax) != ichimoku_PeriodicitySymbol &&
-          TAG(ax) != ichimoku_TickerSymbol)
-        Rf_setAttrib(kumo, TAG(ax), CAR(ax));
-    }
-  }
 
   return kumo;
 
