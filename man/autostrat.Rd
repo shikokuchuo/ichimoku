@@ -21,10 +21,10 @@ level to 3 to return asymmetric strategies of the form 's1 x s2'.}
 output to the console and return quietly.}
 }
 \value{
-Returned invisibly, a list of 'n' ichimoku objects containing
-    strategies, with attributes 'logret' (a vector of cumulative log returns
-    for all strategies) and 'summary' (a matrix of summaries for the top 'n'
-    strategies).
+Returned invisibly, a list of \sQuote{n} ichimoku objects containing
+    strategies, with attributes \sQuote{logret} (a vector of cumulative log
+    returns for all strategies) and \sQuote{summary} (a matrix of summaries
+    for the top \sQuote{n} strategies).
 
     In addition, the strategy summaries are printed to the console.
 }
@@ -37,7 +37,7 @@ Generate a list of the top performing ichimoku cloud strategies based on
 \details{
 Ichimoku objects for each strategy are returned as a list. The
     cumulative log returns for all strategies as well as the summaries for
-    the top 'n' strategies are saved as attributes to the list. This
+    the top \sQuote{n} strategies are saved as attributes to the list. This
     information may be retrieved by using \code{\link{look}} on the returned
     list.
 

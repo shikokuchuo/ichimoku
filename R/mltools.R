@@ -31,16 +31,16 @@
 #' @param quietly (optional) if set to TRUE, will suppress printing of additional
 #'     output to the console and return quietly.
 #'
-#' @return Returned invisibly, a list of 'n' ichimoku objects containing
-#'     strategies, with attributes 'logret' (a vector of cumulative log returns
-#'     for all strategies) and 'summary' (a matrix of summaries for the top 'n'
-#'     strategies).
+#' @return Returned invisibly, a list of \sQuote{n} ichimoku objects containing
+#'     strategies, with attributes \sQuote{logret} (a vector of cumulative log
+#'     returns for all strategies) and \sQuote{summary} (a matrix of summaries
+#'     for the top \sQuote{n} strategies).
 #'
 #'     In addition, the strategy summaries are printed to the console.
 #'
 #' @details Ichimoku objects for each strategy are returned as a list. The
 #'     cumulative log returns for all strategies as well as the summaries for
-#'     the top 'n' strategies are saved as attributes to the list. This
+#'     the top \sQuote{n} strategies are saved as attributes to the list. This
 #'     information may be retrieved by using \code{\link{look}} on the returned
 #'     list.
 #'
@@ -173,8 +173,8 @@ autostrat <- function(x,
 #' @param type [default 'boolean'] choose 'boolean', 'numeric' or 'z-score'.
 #'     'boolean' creates a grid of dummy variables for ichimoku indicator
 #'     conditions of the form 1 if c1 > c2, 0 otherwise. 'numeric' creates a
-#'     grid of the numeric difference c1 - c2. 'z-score' standardises the numeric
-#'     grid by the mean and standard deviation of each feature.
+#'     grid of the numeric difference c1 - c2. 'z-score' standardises the
+#'     numeric grid by the mean and standard deviation of each feature.
 #' @param format [default 'dataframe'] select either 'dataframe' or 'matrix' for
 #'     the format of returned object.
 #' @param unique [default TRUE] to return only unique combinations of c1 and c2.
@@ -184,16 +184,18 @@ autostrat <- function(x,
 #'     within the function, referencing intermediate objects such as:
 #'     'core', the coredata matrix of the ichimoku object, 'xlen' the number of
 #'     observations, or any of the function parameters etc. Each evaluated
-#'     expression must return a vector of length 'xlen' for inclusion in the grid.
+#'     expression must return a vector of length 'xlen' for inclusion in the
+#'     grid.
 #'
-#' @return A data.frame or matrix in a 'tidy' format with one observation per
-#'     row and one feature per column with the target 'y' as the first column
-#'     (unless set to 'none').
+#' @return A data.frame or matrix in a tidy format with one observation per
+#'     row and one feature per column with the target \sQuote{y} as the first
+#'     column (unless set to \sQuote{none}).
 #'
-#'     The 'y' and 'k' parameters, trade direction and grid type are set as
-#'     attributes, with 'means' and 'sdevs' also populated for type 'z-score' to
-#'     return the mean and standard deviation for each column. To view these,
-#'     use \code{\link{look}} on the returned object.
+#'     The \sQuote{y} and \sQuote{k} parameters, trade direction and grid type
+#'     are set as attributes, with \sQuote{means} and \sQuote{sdevs} also
+#'     populated for type \sQuote{z-score} to return the mean and standard
+#'     deviation for each column. To view these, use \code{\link{look}} on the
+#'     returned object.
 #'
 #' @details The date-time index corresponds to when the indicator condition is
 #'     met at the close for that period. The return is the k-period return
@@ -201,7 +203,7 @@ autostrat <- function(x,
 #'     the next opening price.
 #'
 #'     Only valid combinations are included. This excludes any combination
-#'     involving 'open' as it is in effect a lagged indicator and not
+#'     involving \sQuote{open} as it is in effect a lagged indicator and not
 #'     contemporaneous. The following trivial or highly-collinear pairs are also
 #'     excluded: (high, close), (low, close), (low, high), (cloudTop, Senkou A),
 #'     (cloudBase, senkou A), (cloudTop, senkouB), (cloudBase, senkouB),

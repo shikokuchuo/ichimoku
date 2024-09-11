@@ -15,18 +15,18 @@ dates defined as holidays. Set to NULL for a continuously-traded market.}
 \item{...}{other arguments not used by this function.}
 }
 \value{
-A vector of logical values: TRUE if the corresponding element of 'x'
-    is a weekday and not a holiday, FALSE otherwise.
+A vector of logical values: TRUE if the corresponding element of
+    \sQuote{x} is a weekday and not a holiday, FALSE otherwise.
 
-    Or, if the parameter 'holidays' is set to NULL, a vector of TRUE values
-    of the same length as 'x'.
+    Or, if the parameter \sQuote{holidays} is set to NULL, a vector of TRUE
+    values of the same length as \sQuote{x}.
 }
 \description{
 Used by \code{\link{ichimoku}} to subset a vector of dates to trading days.
 }
 \details{
 New Year's Day (01-01) and Christmas Day (12-25) are defined as
-    holidays by default if 'holidays' is not specified.
+    holidays by default if \sQuote{holidays} is not specified.
 }
 \examples{
 dates <- seq(from = as.POSIXct("2020-01-01"), by = "1 day", length.out = 7)

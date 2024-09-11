@@ -17,16 +17,17 @@ iplot(
 )
 }
 \arguments{
-\item{x}{an object of class 'ichimoku'.}
+\item{x}{an object of class \sQuote{ichimoku}.}
 
 \item{ticker}{(optional) specify a ticker (or other text) to include in the
 chart heading. If not set, the ticker saved within the ichimoku object
 will be used.}
 
-\item{subtitle}{(optional) specify a subtitle to display under the chart title.}
+\item{subtitle}{(optional) specify a subtitle to display under the chart
+title.}
 
-\item{theme}{[default 'classic'] with further choices of 'dark', 'mono',
-'noguchi', 'okabe-ito' or 'solarized'.}
+\item{theme}{[default 'classic'] with further choices of \sQuote{dark},
+\sQuote{mono}, \sQuote{noguchi}, \sQuote{okabe-ito} or \sQuote{solarized}.}
 
 \item{strat}{[default TRUE] if the ichimoku object contains a strategy, the
 periods for which the strategy results in a position will be shaded, and
@@ -42,18 +43,18 @@ matching the column name of the variable to be displayed as sub-plot.
 Specify \code{type = 'bar'} or \code{type = 'line'}, otherwise other type
 settings will take precedence.}
 
-\item{...}{additional parameters passed along to the 'options' argument of
-\code{shiny::shinyApp()}.}
+\item{...}{additional parameters passed along to the \sQuote{options}
+argument of \code{shiny::shinyApp()}.}
 
-\item{launch.browser}{[default TRUE] If TRUE, the system's default web browser
-will be launched automatically after the app is started. The value of this
-argument can also be a function to call with the application's URL. To use
-the default Shiny viewer in RStudio, please specify
-\code{getOption("shiny.launch.browser")}.}
+\item{launch.browser}{[default TRUE] If TRUE, the system's default web
+browser will be launched automatically after the app is started. The
+value of this argument can also be a function to call with the
+application's URL. To use the default Shiny viewer in RStudio, please
+specify \code{getOption("shiny.launch.browser")}.}
 }
 \value{
-A Shiny app object with class 'shiny.appobj'. With default arguments,
-    the Shiny app is launched in the default browser.
+A Shiny app object with class \sQuote{shiny.appobj}. With default
+    arguments, the Shiny app is launched in the default browser.
 }
 \description{
 Plot Ichimoku Kinko Hyo cloud charts from ichimoku objects in R Shiny,

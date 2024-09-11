@@ -17,21 +17,23 @@
 )
 }
 \arguments{
-\item{x}{an object of class 'ichimoku'.}
+\item{x}{an object of class \sQuote{ichimoku}.}
 
 \item{window}{(optional) a date-time window to subset the plot, in ISO-8601
-compatible range strings of the format used for 'xts' objects, for example
-"2020-02-15/2020-08-15" or "2020-02-15/", "/2020-08" or "2020-07".}
+compatible range strings of the format used for \sQuote{xts} objects, for
+example "2020-02-15/2020-08-15" or "2020-02-15/", "/2020-08" or "2020-07".}
 
 \item{ticker}{(optional) specify a ticker (or other text) to include in the
 chart heading. If not set, the ticker saved within the ichimoku object
 will be used.}
 
-\item{subtitle}{(optional) specify a subtitle to display under the chart title.}
+\item{subtitle}{(optional) specify a subtitle to display under the chart
+title.}
 
-\item{theme}{[default 'classic'] with further choices of 'dark', 'mono',
-'noguchi', 'okabe-ito' or 'solarized'. Alternatively, supply a vector
-of 12 colour values (hex codes or names) as a user-defined theme.}
+\item{theme}{[default 'classic'] with further choices of \sQuote{dark},
+\sQuote{mono}, \sQuote{noguchi}, \sQuote{okabe-ito} or \sQuote{solarized}.
+Alternatively, supply a vector of 12 colour values (hex codes or names)
+as a user-defined theme.}
 
 \item{strat}{[default TRUE] if the ichimoku object contains a strategy, the
 periods for which the strategy results in a position will be shaded, and
@@ -47,8 +49,8 @@ matching the column name of the variable to be displayed as sub-plot.
 Specify \code{type = 'bar'} or \code{type = 'line'}, otherwise other type
 settings will take precedence.}
 
-\item{...}{additional arguments passed along to the print method for 'ggplot'
-objects.}
+\item{...}{additional arguments passed along to the print method for
+\sQuote{ggplot} objects.}
 }
 \value{
 The ichimoku object supplied (invisibly). The requested plot is output
@@ -59,8 +61,8 @@ Plot Ichimoku Kinko Hyo cloud charts from ichimoku objects.
 }
 \details{
 This function is an S3 method for the generic function plot() for
-    class 'ichimoku'. It can be invoked by calling plot(x) on an object 'x'
-    of class 'ichimoku'.
+    class \sQuote{ichimoku}. It can be invoked by calling plot(x) on an
+    object \sQuote{x} of class \sQuote{ichimoku}.
 
     For further details please refer to the reference vignette by calling:
     \code{vignette("reference", package = "ichimoku")}

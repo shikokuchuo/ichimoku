@@ -7,8 +7,8 @@
 look(x = .Last.value)
 }
 \arguments{
-\item{x}{an object (optional). If 'x' is not supplied, \code{\link{.Last.value}}
-will be used instead.}
+\item{x}{an object (optional). If \sQuote{x} is not supplied,
+\code{\link{.Last.value}} will be used instead.}
 }
 \value{
 For objects created by the ichimoku package, a list of attributes

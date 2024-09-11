@@ -8,26 +8,27 @@
 \method{coredata}{ichimoku}(x, fmt, ...)
 }
 \arguments{
-\item{x}{an object of class 'ichimoku'.}
+\item{x}{an object of class \sQuote{ichimoku}.}
 
 \item{fmt}{(optional) set to TRUE to retain the index as row names of the
-returned matrix, or a character string passed on to the 'format' argument
-of \code{format.POSIXct()} to format these values in a specific way.}
+returned matrix, or a character string passed on to the \sQuote{format}
+argument of \code{format.POSIXct()} to format these values in a specific
+way.}
 
 \item{...}{arguments passed to or from other methods.}
 }
 \value{
 A numeric matrix containing the ichimoku object data, stripped of the
-    index unless 'fmt' is specified in which case the index will be retained
-    as character values in the matrix row names.
+    index unless \sQuote{fmt} is specified in which case the index will be
+    retained as character values in the matrix row names.
 }
 \description{
 Method for extracting the core data matrix of ichimoku objects.
 }
 \details{
 This function is an S3 method for the generic function coredata()
-    for class 'ichimoku'. It can be invoked by calling coredata(x) on an
-    object 'x' of class 'ichimoku'.
+    for class \sQuote{ichimoku}. It can be invoked by calling coredata(x) on
+    an object \sQuote{x} of class \sQuote{ichimoku}.
 }
 \examples{
 cloud <- ichimoku(sample_ohlc_data)

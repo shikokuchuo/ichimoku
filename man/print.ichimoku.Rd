@@ -7,7 +7,7 @@
 \method{print}{ichimoku}(x, plot = TRUE, rows = 26L, ...)
 }
 \arguments{
-\item{x}{an object of class 'ichimoku'.}
+\item{x}{an object of class \sQuote{ichimoku}.}
 
 \item{plot}{[default TRUE] set to FALSE to prevent automatic plotting of
 the ichimoku cloud chart.}
@@ -28,8 +28,8 @@ Default print method for ichimoku objects to enable automatic plotting of the
 }
 \details{
 This function is an S3 method for the generic function print() for
-    class 'ichimoku'. It can be invoked by calling print(x) on an object 'x'
-    of class 'ichimoku'.
+    class \sQuote{ichimoku}. It can be invoked by calling print(x) on an
+    object \sQuote{x} of class \sQuote{ichimoku}.
 }
 \examples{
 cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")

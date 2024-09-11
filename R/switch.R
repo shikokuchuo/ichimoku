@@ -18,8 +18,9 @@
 
 #' Switch Default OANDA Server
 #'
-#' Switch the default OANDA fxTrade server from 'practice' to 'live' or vice versa.
-#'     Settings persist for the current session only.
+#' Switch the default OANDA fxTrade server from \sQuote{practice} to
+#'     \sQuote{live} or vice versa. Settings persist for the current session
+#'     only.
 #'
 #' @return Invisible NULL. A message informs the resulting default server setting.
 #'

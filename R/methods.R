@@ -21,7 +21,7 @@
 #' Default print method for ichimoku objects to enable automatic plotting of the
 #'     ichimoku cloud chart.
 #'
-#' @param x an object of class 'ichimoku'.
+#' @param x an object of class \sQuote{ichimoku}.
 #' @param plot [default TRUE] set to FALSE to prevent automatic plotting of
 #'     the ichimoku cloud chart.
 #' @param rows [default 26L] integer number of rows to print.
@@ -33,8 +33,8 @@
 #'     depending on the parameters set.
 #'
 #' @details This function is an S3 method for the generic function print() for
-#'     class 'ichimoku'. It can be invoked by calling print(x) on an object 'x'
-#'     of class 'ichimoku'.
+#'     class \sQuote{ichimoku}. It can be invoked by calling print(x) on an
+#'     object \sQuote{x} of class \sQuote{ichimoku}.
 #'
 #' @examples
 #' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
@@ -59,15 +59,15 @@ print.ichimoku <- function(x, plot = TRUE, rows = 26L, ...) {
 #'
 #' Compactly display the internal structure of ichimoku objects.
 #'
-#' @param object an object of class 'ichimoku'.
+#' @param object an object of class \sQuote{ichimoku}.
 #' @param ... arguments passed to or from other methods.
 #'
 #' @return Invisible NULL. A compact display of the structure of the object is
 #'     output to the console.
 #'
-#' @details This function is an S3 method for the generic function str()
-#'     for class 'ichimoku'. It can be invoked by calling str(x) on an
-#'     object 'x' of class 'ichimoku'.
+#' @details This function is an S3 method for the generic function str() for
+#'     class \sQuote{ichimoku}. It can be invoked by calling str(x) on an object
+#'     \sQuote{x} of class \sQuote{ichimoku}.
 #'
 #' @examples
 #' cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
@@ -118,18 +118,19 @@ str.ichimoku <- function(object, ...) {
 #'
 #' Display summary information for an ichimoku object or its strategy.
 #'
-#' @param object an object of class 'ichimoku'.
+#' @param object an object of class \sQuote{ichimoku}.
 #' @param strat [default TRUE] to show the strategy summary if present. Set to
 #'     FALSE to show the object summary instead.
 #' @param ... arguments passed to or from other methods.
 #'
-#' @return A matrix containing the strategy summary, if present and 'strat' is
-#'     set to TRUE, otherwise a character vector containing an abbreviated object
-#'     summary (the full object summary is output to the console).
+#' @return A matrix containing the strategy summary, if present and
+#'     \sQuote{strat} is set to TRUE, otherwise a character vector containing an
+#'     abbreviated object summary (the full object summary is output to the
+#'     console).
 #'
 #' @details This function is an S3 method for the generic function summary() for
-#'     class 'ichimoku'. It can be invoked by calling summary(x) on an object 'x'
-#'     of class 'ichimoku'.
+#'     class \sQuote{ichimoku}. It can be invoked by calling summary(x) on an
+#'     object \sQuote{x} of class \sQuote{ichimoku}.
 #'
 #'     Performs basic validation for an ichimoku object and will inform if an
 #'     ichimoku object contains invalid information.
@@ -201,19 +202,19 @@ summary.ichimoku <- function(object, strat = TRUE, ...) {
 #'
 #' An optimised 'ichimoku' to 'data.frame' constructor.
 #'
-#' @param x an object of class 'ichimoku'.
+#' @param x an object of class \sQuote{ichimoku}.
 #' @param row.names not used.
 #' @param optional not used.
 #' @param keep.attrs [default FALSE] if set to TRUE, will preserve any custom
 #'     attributes set on the original object.
 #' @param ... arguments passed to or from other methods.
 #'
-#' @return A 'data.frame' object. The ichimoku object index is preserved as the
-#'     first column with header 'index'.
+#' @return A \sQuote{data.frame} object. The ichimoku object index is preserved
+#'     as the first column with header \sQuote{index}.
 #'
 #' @details This function is an S3 method for the generic function
-#'     as.data.frame() for class 'ichimoku'. It can be invoked by calling
-#'     as.data.frame(x) on an object 'x' of class 'ichimoku'.
+#'     as.data.frame() for class \sQuote{ichimoku}. It can be invoked by calling
+#'     as.data.frame(x) on an object \sQuote{x} of class \sQuote{ichimoku}.
 #'
 #' @examples
 #' cloud <- ichimoku(sample_ohlc_data)
@@ -238,19 +239,20 @@ NULL
 #'
 #' Method for extracting the core data matrix of ichimoku objects.
 #'
-#' @param x an object of class 'ichimoku'.
+#' @param x an object of class \sQuote{ichimoku}.
 #' @param fmt (optional) set to TRUE to retain the index as row names of the
-#'     returned matrix, or a character string passed on to the 'format' argument
-#'     of \code{format.POSIXct()} to format these values in a specific way.
+#'     returned matrix, or a character string passed on to the \sQuote{format}
+#'     argument of \code{format.POSIXct()} to format these values in a specific
+#'     way.
 #' @param ... arguments passed to or from other methods.
 #'
 #' @return A numeric matrix containing the ichimoku object data, stripped of the
-#'     index unless 'fmt' is specified in which case the index will be retained
-#'     as character values in the matrix row names.
+#'     index unless \sQuote{fmt} is specified in which case the index will be
+#'     retained as character values in the matrix row names.
 #'
 #' @details This function is an S3 method for the generic function coredata()
-#'     for class 'ichimoku'. It can be invoked by calling coredata(x) on an
-#'     object 'x' of class 'ichimoku'.
+#'     for class \sQuote{ichimoku}. It can be invoked by calling coredata(x) on
+#'     an object \sQuote{x} of class \sQuote{ichimoku}.
 #'
 #' @examples
 #' cloud <- ichimoku(sample_ohlc_data)
@@ -284,20 +286,21 @@ NULL
 #'
 #' Method for extracting the date-time index of ichimoku objects.
 #'
-#' @param x an object of class 'ichimoku'.
-#' @param subset an integer or logical value or vector by which to subset the index.
+#' @param x an object of class \sQuote{ichimoku}.
+#' @param subset an integer or logical value or vector by which to subset the
+#'     index.
 #' @param ... arguments passed to or from other methods.
 #'
 #' @return The date-time index of the ichimoku object as a vector of POSIXct
 #'     values.
 #'
-#' @details This function is an S3 method for the generic function index()
-#'     for class 'ichimoku'. It can be invoked by calling index(x) on an
-#'     object 'x' of class 'ichimoku'.
+#' @details This function is an S3 method for the generic function index() for
+#'     class \sQuote{ichimoku}. It can be invoked by calling index(x) on an
+#'     object \sQuote{x} of class \sQuote{ichimoku}.
 #'
-#'     Subsetting by specifying the 'subset' parameter subsets using the
+#'     Subsetting by specifying the \sQuote{subset} parameter subsets using the
 #'     numerical values underlying the POSIXct times and results in a faster
-#'     operation than usual subset operators such as '['.
+#'     operation than usual subset operators such as \sQuote{\[}.
 #'
 #' @examples
 #' cloud <- ichimoku(sample_ohlc_data)

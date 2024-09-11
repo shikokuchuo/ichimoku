@@ -7,7 +7,7 @@
 \method{summary}{ichimoku}(object, strat = TRUE, ...)
 }
 \arguments{
-\item{object}{an object of class 'ichimoku'.}
+\item{object}{an object of class \sQuote{ichimoku}.}
 
 \item{strat}{[default TRUE] to show the strategy summary if present. Set to
 FALSE to show the object summary instead.}
@@ -15,17 +15,18 @@ FALSE to show the object summary instead.}
 \item{...}{arguments passed to or from other methods.}
 }
 \value{
-A matrix containing the strategy summary, if present and 'strat' is
-    set to TRUE, otherwise a character vector containing an abbreviated object
-    summary (the full object summary is output to the console).
+A matrix containing the strategy summary, if present and
+    \sQuote{strat} is set to TRUE, otherwise a character vector containing an
+    abbreviated object summary (the full object summary is output to the
+    console).
 }
 \description{
 Display summary information for an ichimoku object or its strategy.
 }
 \details{
 This function is an S3 method for the generic function summary() for
-    class 'ichimoku'. It can be invoked by calling summary(x) on an object 'x'
-    of class 'ichimoku'.
+    class \sQuote{ichimoku}. It can be invoked by calling summary(x) on an
+    object \sQuote{x} of class \sQuote{ichimoku}.
 
     Performs basic validation for an ichimoku object and will inform if an
     ichimoku object contains invalid information.

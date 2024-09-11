@@ -23,20 +23,20 @@
 #'     environment. Intuitive cursor infotip provides ready access to the data
 #'     directly from the chart.
 #'
-#' @param x an object of class 'ichimoku'.
-#' @param theme [default 'classic'] with further choices of 'dark', 'mono',
-#'     'noguchi', 'okabe-ito' or 'solarized'.
+#' @param x an object of class \sQuote{ichimoku}.
+#' @param theme [default 'classic'] with further choices of \sQuote{dark},
+#'     \sQuote{mono}, \sQuote{noguchi}, \sQuote{okabe-ito} or \sQuote{solarized}.
 #' @inheritParams plot.ichimoku
-#' @param ... additional parameters passed along to the 'options' argument of
-#'     \code{shiny::shinyApp()}.
-#' @param launch.browser [default TRUE] If TRUE, the system's default web browser
-#'     will be launched automatically after the app is started. The value of this
-#'     argument can also be a function to call with the application's URL. To use
-#'     the default Shiny viewer in RStudio, please specify
-#'     \code{getOption("shiny.launch.browser")}.
+#' @param ... additional parameters passed along to the \sQuote{options}
+#'     argument of \code{shiny::shinyApp()}.
+#' @param launch.browser [default TRUE] If TRUE, the system's default web
+#'     browser will be launched automatically after the app is started. The
+#'     value of this argument can also be a function to call with the
+#'     application's URL. To use the default Shiny viewer in RStudio, please
+#'     specify \code{getOption("shiny.launch.browser")}.
 #'
-#' @return A Shiny app object with class 'shiny.appobj'. With default arguments,
-#'     the Shiny app is launched in the default browser.
+#' @return A Shiny app object with class \sQuote{shiny.appobj}. With default
+#'     arguments, the Shiny app is launched in the default browser.
 #'
 #' @details For further details please refer to the reference vignette by
 #'     calling: \code{vignette("reference", package = "ichimoku")}

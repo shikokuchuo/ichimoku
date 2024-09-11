@@ -14,16 +14,18 @@ df_append(old, new, key = "time", keep.attr = "timestamp")
 \item{key}{[default 'time'] column name used as key, provided as a character
 string.}
 
-\item{keep.attr}{[default 'timestamp'] name of an attribute in 'new' to
-retain, if present, provided as a character string.}
+\item{keep.attr}{[default 'timestamp'] name of an attribute in \sQuote{new}
+to retain, if present, provided as a character string.}
 }
 \value{
 A data.frame of the existing data appended with the new data. If the
-    data in 'new' contains data with the same value for the key column as 'old',
-    the data in 'new' will overwrite the data in 'old'.
+    data in \sQuote{new} contains data with the same value for the key column
+    as \sQuote{old}, the data in \sQuote{new} will overwrite the data in
+    \sQuote{old}.
 
-    If the attribute specified by 'keep.attr' is present in 'new', this is
-    retained. All other non-required attributes are dropped.
+    If the attribute specified by \sQuote{keep.attr} is present in
+    \sQuote{new}, this is retained. All other non-required attributes are
+    dropped.
 }
 \description{
 Update a 'data.frame' object with new data. Can be used to append new updated
@@ -31,10 +33,11 @@ Update a 'data.frame' object with new data. Can be used to append new updated
     indexed by a unique timestamp/identifier in a key column.
 }
 \details{
-Can be used to update price dataframes retrieved by \code{\link{oanda}}.
-    The function is designed to update existing data with new values as they
-    become available. As opposed to \code{\link{df_merge}}, the data in 'new'
-    will overwrite the data in 'old' rather than create duplicates.
+Can be used to update price dataframes retrieved by
+    \code{\link{oanda}}. The function is designed to update existing data
+    with new values as they become available. As opposed to
+    \code{\link{df_merge}}, the data in \sQuote{new} will overwrite the data
+    in \sQuote{old} rather than create duplicates.
 }
 \examples{
 data1 <- sample_ohlc_data[1:8, ]

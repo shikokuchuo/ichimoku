@@ -40,9 +40,10 @@ chart to ensure a full cloud is always displayed.}
 \item{price}{[default "M"] pricing component, one of "M" (midpoint), "B" (bid)
 or "A" (ask).}
 
-\item{theme}{[default 'classic'] with further choices of 'dark', 'mono',
-'noguchi', 'okabe-ito' or 'solarized'. Alternatively, supply a vector
-of 12 colour values (hex codes or names) as a user-defined theme.}
+\item{theme}{[default 'classic'] with further choices of \sQuote{dark},
+\sQuote{mono}, \sQuote{noguchi}, \sQuote{okabe-ito} or \sQuote{solarized}.
+Alternatively, supply a vector of 12 colour values (hex codes or names)
+as a user-defined theme.}
 
 \item{type}{[default 'none'] type of sub-plot to display beneath the ichimoku
 cloud chart, with a choice of 'none', 'r' or 's' for the corresponding

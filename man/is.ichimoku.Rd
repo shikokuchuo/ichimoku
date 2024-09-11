@@ -10,7 +10,8 @@ is.ichimoku(x)
 \item{x}{an object.}
 }
 \value{
-A logical value of TRUE if 'x' is of class 'ichimoku', otherwise FALSE.
+A logical value of TRUE if \sQuote{x} is of class \sQuote{ichimoku},
+    FALSE otherwise.
 }
 \description{
 A function for checking if an object is an ichimoku object.

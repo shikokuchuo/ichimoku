@@ -22,11 +22,11 @@ Full join on an arbitrary number of 'data.frame' objects passed as arguments,
 \details{
 Can be used to join price dataframes retrieved by \code{\link{oanda}}.
     The function is designed to join complete historical data. If the data to
-    be merged contains data with incomplete periods, all entries are preserved
-    rather than updated. If incomplete periods are detected within the data,
-    a warning is issued, and the resulting dataframe should be manually checked
-    in case it contains unwanted duplicates. Use \code{\link{df_append}} for
-    updating dataframes with new values.
+    be merged contains data with incomplete periods, all entries are
+    preserved rather than updated. If incomplete periods are detected within
+    the data, a warning is issued, and the resulting dataframe should be
+    manually checked in case it contains unwanted duplicates. Use
+    \code{\link{df_append}} for updating dataframes with new values.
 }
 \examples{
 data1 <- sample_ohlc_data[1:6, ]

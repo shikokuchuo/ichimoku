@@ -13,7 +13,7 @@ matrix_df(x, keep.attrs = FALSE)
 attributes set on the original object.}
 }
 \value{
-A 'data.frame' object. If the matrix has row names, these are
+A \sQuote{data.frame} object. If the matrix has row names, these are
     retained by the dataframe.
 }
 \description{

@@ -29,8 +29,8 @@ target variable 'y'.}
 \item{type}{[default 'boolean'] choose 'boolean', 'numeric' or 'z-score'.
 'boolean' creates a grid of dummy variables for ichimoku indicator
 conditions of the form 1 if c1 > c2, 0 otherwise. 'numeric' creates a
-grid of the numeric difference c1 - c2. 'z-score' standardises the numeric
-grid by the mean and standard deviation of each feature.}
+grid of the numeric difference c1 - c2. 'z-score' standardises the
+numeric grid by the mean and standard deviation of each feature.}
 
 \item{format}{[default 'dataframe'] select either 'dataframe' or 'matrix' for
 the format of returned object.}
@@ -43,17 +43,19 @@ quoted language objects or expressions, which are evaluated internally
 within the function, referencing intermediate objects such as:
 'core', the coredata matrix of the ichimoku object, 'xlen' the number of
 observations, or any of the function parameters etc. Each evaluated
-expression must return a vector of length 'xlen' for inclusion in the grid.}
+expression must return a vector of length 'xlen' for inclusion in the
+grid.}
 }
 \value{
-A data.frame or matrix in a 'tidy' format with one observation per
-    row and one feature per column with the target 'y' as the first column
-    (unless set to 'none').
+A data.frame or matrix in a tidy format with one observation per
+    row and one feature per column with the target \sQuote{y} as the first
+    column (unless set to \sQuote{none}).
 
-    The 'y' and 'k' parameters, trade direction and grid type are set as
-    attributes, with 'means' and 'sdevs' also populated for type 'z-score' to
-    return the mean and standard deviation for each column. To view these,
-    use \code{\link{look}} on the returned object.
+    The \sQuote{y} and \sQuote{k} parameters, trade direction and grid type
+    are set as attributes, with \sQuote{means} and \sQuote{sdevs} also
+    populated for type \sQuote{z-score} to return the mean and standard
+    deviation for each column. To view these, use \code{\link{look}} on the
+    returned object.
 }
 \description{
 Create a grid of ichimoku indicator conditions and next period returns. The
@@ -69,7 +71,7 @@ The date-time index corresponds to when the indicator condition is
     the next opening price.
 
     Only valid combinations are included. This excludes any combination
-    involving 'open' as it is in effect a lagged indicator and not
+    involving \sQuote{open} as it is in effect a lagged indicator and not
     contemporaneous. The following trivial or highly-collinear pairs are also
     excluded: (high, close), (low, close), (low, high), (cloudTop, Senkou A),
     (cloudBase, senkou A), (cloudTop, senkouB), (cloudBase, senkouB),

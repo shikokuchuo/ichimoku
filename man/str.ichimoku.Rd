@@ -7,7 +7,7 @@
 \method{str}{ichimoku}(object, ...)
 }
 \arguments{
-\item{object}{an object of class 'ichimoku'.}
+\item{object}{an object of class \sQuote{ichimoku}.}
 
 \item{...}{arguments passed to or from other methods.}
 }
@@ -19,9 +19,9 @@ Invisible NULL. A compact display of the structure of the object is
 Compactly display the internal structure of ichimoku objects.
 }
 \details{
-This function is an S3 method for the generic function str()
-    for class 'ichimoku'. It can be invoked by calling str(x) on an
-    object 'x' of class 'ichimoku'.
+This function is an S3 method for the generic function str() for
+    class \sQuote{ichimoku}. It can be invoked by calling str(x) on an object
+    \sQuote{x} of class \sQuote{ichimoku}.
 }
 \examples{
 cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")

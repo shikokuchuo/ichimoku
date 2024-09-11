@@ -7,14 +7,14 @@
 xts_df(x, keep.attrs = FALSE)
 }
 \arguments{
-\item{x}{an 'xts' object.}
+\item{x}{an \sQuote{xts} object.}
 
 \item{keep.attrs}{[default FALSE] if set to TRUE, will preserve any custom
 attributes set on the original object.}
 }
 \value{
-A 'data.frame' object. The 'xts' index is preserved as the first
-    column with header 'index'.
+A \sQuote{data.frame} object. The \sQuote{xts} index is preserved as
+    the first column with header \sQuote{index}.
 }
 \description{
 An optimised 'xts' to 'data.frame' constructor.

@@ -25,14 +25,14 @@
 #'     dates defined as holidays. Set to NULL for a continuously-traded market.
 #' @param ... other arguments not used by this function.
 #'
-#' @return A vector of logical values: TRUE if the corresponding element of 'x'
-#'     is a weekday and not a holiday, FALSE otherwise.
+#' @return A vector of logical values: TRUE if the corresponding element of
+#'     \sQuote{x} is a weekday and not a holiday, FALSE otherwise.
 #'
-#'     Or, if the parameter 'holidays' is set to NULL, a vector of TRUE values
-#'     of the same length as 'x'.
+#'     Or, if the parameter \sQuote{holidays} is set to NULL, a vector of TRUE
+#'     values of the same length as \sQuote{x}.
 #'
 #' @details New Year's Day (01-01) and Christmas Day (12-25) are defined as
-#'     holidays by default if 'holidays' is not specified.
+#'     holidays by default if \sQuote{holidays} is not specified.
 #'
 #' @examples
 #' dates <- seq(from = as.POSIXct("2020-01-01"), by = "1 day", length.out = 7)
@@ -67,9 +67,9 @@ tradingDays <- function(x, holidays, ...) {
 
 #' Duplicates of expand.grid for 2 Variables
 #'
-#' Create a vector of element positions of duplicates in the output of expand.grid
-#'     on 2 identical vectors. An efficient method of creating combinations for
-#'     2 variables.
+#' Create a vector of element positions of duplicates in the output of
+#'     expand.grid on 2 identical vectors. An efficient method of creating
+#'     combinations for 2 variables.
 #'
 #' @param n the length of vector passed to \code{expand.grid()}.
 #' @param omit.id (optional) set to TRUE to also select the elements where the 2
@@ -102,12 +102,12 @@ grid_dup <- function(n, omit.id) {
 #'
 #' An optimised 'xts' to 'data.frame' constructor.
 #'
-#' @param x an 'xts' object.
+#' @param x an \sQuote{xts} object.
 #' @param keep.attrs [default FALSE] if set to TRUE, will preserve any custom
 #'     attributes set on the original object.
 #'
-#' @return A 'data.frame' object. The 'xts' index is preserved as the first
-#'     column with header 'index'.
+#' @return A \sQuote{data.frame} object. The \sQuote{xts} index is preserved as
+#'     the first column with header \sQuote{index}.
 #'
 #' @details The optimised data.frame constructors are used internally within
 #'     the package and made available as utilities. Please note that no data
@@ -133,9 +133,8 @@ xts_df <- function(x, keep.attrs = FALSE) {
   attributes(core) <- NULL
   df <- vector(mode = "list", length = len + 1L)
   df[[1L]] <- index(x)
-  for (i in seq_len(len)) {
+  for (i in seq_len(len))
     df[[i + 1L]] <- core[start[i]:end[i]]
-  }
   `attributes<-`(df, c(list(names = c("index", dn2),
                             class = "data.frame",
                             row.names = .set_row_names(xlen)),
@@ -150,7 +149,7 @@ xts_df <- function(x, keep.attrs = FALSE) {
 #' @param keep.attrs [default FALSE] if set to TRUE, will preserve any custom
 #'     attributes set on the original object.
 #'
-#' @return A 'data.frame' object. If the matrix has row names, these are
+#' @return A \sQuote{data.frame} object. If the matrix has row names, these are
 #'     retained by the dataframe.
 #'
 #' @details The optimised data.frame constructors are used internally within
@@ -197,11 +196,11 @@ matrix_df <- function(x, keep.attrs = FALSE) {
 #'
 #' @details Can be used to join price dataframes retrieved by \code{\link{oanda}}.
 #'     The function is designed to join complete historical data. If the data to
-#'     be merged contains data with incomplete periods, all entries are preserved
-#'     rather than updated. If incomplete periods are detected within the data,
-#'     a warning is issued, and the resulting dataframe should be manually checked
-#'     in case it contains unwanted duplicates. Use \code{\link{df_append}} for
-#'     updating dataframes with new values.
+#'     be merged contains data with incomplete periods, all entries are
+#'     preserved rather than updated. If incomplete periods are detected within
+#'     the data, a warning is issued, and the resulting dataframe should be
+#'     manually checked in case it contains unwanted duplicates. Use
+#'     \code{\link{df_append}} for updating dataframes with new values.
 #'
 #' @examples
 #' data1 <- sample_ohlc_data[1:6, ]
@@ -237,20 +236,23 @@ df_merge <- function(...) {
 #' @param new data.frame object containing new data.
 #' @param key [default 'time'] column name used as key, provided as a character
 #'     string.
-#' @param keep.attr [default 'timestamp'] name of an attribute in 'new' to
-#'     retain, if present, provided as a character string.
+#' @param keep.attr [default 'timestamp'] name of an attribute in \sQuote{new}
+#'     to retain, if present, provided as a character string.
 #'
 #' @return A data.frame of the existing data appended with the new data. If the
-#'     data in 'new' contains data with the same value for the key column as 'old',
-#'     the data in 'new' will overwrite the data in 'old'.
+#'     data in \sQuote{new} contains data with the same value for the key column
+#'     as \sQuote{old}, the data in \sQuote{new} will overwrite the data in
+#'     \sQuote{old}.
 #'
-#'     If the attribute specified by 'keep.attr' is present in 'new', this is
-#'     retained. All other non-required attributes are dropped.
+#'     If the attribute specified by \sQuote{keep.attr} is present in
+#'     \sQuote{new}, this is retained. All other non-required attributes are
+#'     dropped.
 #'
-#' @details Can be used to update price dataframes retrieved by \code{\link{oanda}}.
-#'     The function is designed to update existing data with new values as they
-#'     become available. As opposed to \code{\link{df_merge}}, the data in 'new'
-#'     will overwrite the data in 'old' rather than create duplicates.
+#' @details Can be used to update price dataframes retrieved by
+#'     \code{\link{oanda}}. The function is designed to update existing data
+#'     with new values as they become available. As opposed to
+#'     \code{\link{df_merge}}, the data in \sQuote{new} will overwrite the data
+#'     in \sQuote{old} rather than create duplicates.
 #'
 #' @examples
 #' data1 <- sample_ohlc_data[1:8, ]
@@ -276,8 +278,8 @@ df_append <- function(old, new, key = "time", keep.attr = "timestamp") {
 #'
 #' Inspect the informational attributes of objects.
 #'
-#' @param x an object (optional). If 'x' is not supplied, \code{\link{.Last.value}}
-#'     will be used instead.
+#' @param x an object (optional). If \sQuote{x} is not supplied,
+#'     \code{\link{.Last.value}} will be used instead.
 #'
 #' @return For objects created by the ichimoku package, a list of attributes
 #'     specific to that data type.
@@ -347,7 +349,8 @@ more <- function(rows)
 #'
 #' @param x an object.
 #'
-#' @return A logical value of TRUE if 'x' is of class 'ichimoku', otherwise FALSE.
+#' @return A logical value of TRUE if \sQuote{x} is of class \sQuote{ichimoku},
+#'     FALSE otherwise.
 #'
 #' @examples
 #' cloud <- ichimoku(sample_ohlc_data)
@@ -369,7 +372,8 @@ is.ichimoku <- function(x) .Call(ichimoku_isichimoku, x)
 #' @param choice function parameter to match.
 #' @param choices character vector listing the candidates to match to.
 #'
-#' @return Integer position of 'choice' in 'choices' if matched, else 0L.
+#' @return Integer position of \sQuote{choice} in \sQuote{choices} if matched,
+#'     else 0L.
 #'
 #' @noRd
 #'

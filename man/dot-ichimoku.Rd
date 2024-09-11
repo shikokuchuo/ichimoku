@@ -18,11 +18,13 @@ periods used for the cloud. This parameter shoud not normally be modified
 as using other values would be invalid in the context of traditional
 ichimoku analysis.}
 
-\item{...}{additional arguments, for instance 'holidays', passed along to
-\code{\link{tradingDays}} for calculating the future cloud on daily data.}
+\item{...}{additional arguments, for instance \sQuote{holidays}, passed along
+to \code{\link{tradingDays}} for calculating the future cloud on daily
+data.}
 }
 \value{
-An ichimoku object with S3 classes of 'ichimoku', 'xts' and 'zoo'.
+An ichimoku object with S3 classes of \sQuote{ichimoku}, \sQuote{xts}
+    and \sQuote{zoo}.
 }
 \description{
 Create an ichimoku object containing values for all components of the
@@ -34,6 +36,6 @@ Create an ichimoku object containing values for all components of the
 \details{
 A faster version of \code{\link{ichimoku}} which can be used when
     the data is a dataframe in the prescribed format. Does not support the
-    argument 'keep.data'.
+    argument \sQuote{keep.data}.
 }
 \keyword{internal}

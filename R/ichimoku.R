@@ -34,11 +34,12 @@
 #'     ichimoku analysis.
 #' @param keep.data [default FALSE] set to TRUE to retain additional data
 #'     present in the input object as additional columns and/or attributes.
-#' @param ... additional arguments, for instance 'holidays', passed along to
-#'     \code{\link{tradingDays}} for calculating the future cloud on daily data.
-
+#' @param ... additional arguments, for instance \sQuote{holidays}, passed along
+#'     to \code{\link{tradingDays}} for calculating the future cloud on daily
+#'     data.
 #'
-#' @return An ichimoku object with S3 classes of 'ichimoku', 'xts' and 'zoo'.
+#' @return An ichimoku object with S3 classes of \sQuote{ichimoku}, \sQuote{xts}
+#'     and \sQuote{zoo}.
 #'
 #' @details Calling an ichimoku object automatically invokes its print method,
 #'     which by default produces a printout of the data to the console as well
@@ -308,9 +309,10 @@ ichimoku.default <- function(x, ticker, periods = c(9L, 26L, 52L), keep.data = F
 #'
 #' @details A faster version of \code{\link{ichimoku}} which can be used when
 #'     the data is a dataframe in the prescribed format. Does not support the
-#'     argument 'keep.data'.
+#'     argument \sQuote{keep.data}.
 #'
-#' @return An ichimoku object with S3 classes of 'ichimoku', 'xts' and 'zoo'.
+#' @return An ichimoku object with S3 classes of \sQuote{ichimoku}, \sQuote{xts}
+#'     and \sQuote{zoo}.
 #'
 #' @keywords internal
 #' @export

@@ -10,8 +10,9 @@ oanda_switch()
 Invisible NULL. A message informs the resulting default server setting.
 }
 \description{
-Switch the default OANDA fxTrade server from 'practice' to 'live' or vice versa.
-    Settings persist for the current session only.
+Switch the default OANDA fxTrade server from \sQuote{practice} to
+    \sQuote{live} or vice versa. Settings persist for the current session
+    only.
 }
 \details{
 The default server at the start of a new session is the practice server.

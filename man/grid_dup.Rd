@@ -18,9 +18,9 @@ duplicates with 'omit.id' set to TRUE would be the equivalent of
 A numeric vector.
 }
 \description{
-Create a vector of element positions of duplicates in the output of expand.grid
-    on 2 identical vectors. An efficient method of creating combinations for
-    2 variables.
+Create a vector of element positions of duplicates in the output of
+    expand.grid on 2 identical vectors. An efficient method of creating
+    combinations for 2 variables.
 }
 \examples{
 n <- 3

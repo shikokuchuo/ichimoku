@@ -7,7 +7,7 @@
 \method{as.data.frame}{ichimoku}(x, row.names, optional, keep.attrs = FALSE, ...)
 }
 \arguments{
-\item{x}{an object of class 'ichimoku'.}
+\item{x}{an object of class \sQuote{ichimoku}.}
 
 \item{row.names}{not used.}
 
@@ -19,16 +19,16 @@ attributes set on the original object.}
 \item{...}{arguments passed to or from other methods.}
 }
 \value{
-A 'data.frame' object. The ichimoku object index is preserved as the
-    first column with header 'index'.
+A \sQuote{data.frame} object. The ichimoku object index is preserved
+    as the first column with header \sQuote{index}.
 }
 \description{
 An optimised 'ichimoku' to 'data.frame' constructor.
 }
 \details{
 This function is an S3 method for the generic function
-    as.data.frame() for class 'ichimoku'. It can be invoked by calling
-    as.data.frame(x) on an object 'x' of class 'ichimoku'.
+    as.data.frame() for class \sQuote{ichimoku}. It can be invoked by calling
+    as.data.frame(x) on an object \sQuote{x} of class \sQuote{ichimoku}.
 }
 \examples{
 cloud <- ichimoku(sample_ohlc_data)
