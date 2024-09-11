@@ -43,11 +43,8 @@ SEXP ichimoku_int_zero;
 SEXP ichimoku_int_three;
 SEXP ichimoku_false;
 
-typedef SEXP (*one_fun) (SEXP);
-typedef SEXP (*twelve_fun) (SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
-
-one_fun naofun;
-twelve_fun jsofun;
+SEXP (*naofun)(SEXP);
+SEXP (*jsofun)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 
 // rolling max over a window
 SEXP _wmax(SEXP x, SEXP window) {
@@ -354,8 +351,8 @@ static void RegisterSymbols(void) {
   ichimoku_PeriodsSymbol = Rf_install("periods");
   ichimoku_PeriodicitySymbol = Rf_install("periodicity");
   ichimoku_TickerSymbol = Rf_install("ticker");
-  naofun = (one_fun) R_GetCCallable("xts", "na_omit_xts");
-  jsofun = (twelve_fun) R_GetCCallable("RcppSimdJson", "_RcppSimdJson_.deserialize_json");
+  naofun = (SEXP (*)(SEXP)) R_GetCCallable("xts", "na_omit_xts");
+  jsofun = (SEXP (*)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP)) R_GetCCallable("RcppSimdJson", "_RcppSimdJson_.deserialize_json");
 }
 
 static void PreserveObjects(void) {
