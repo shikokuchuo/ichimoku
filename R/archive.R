@@ -154,7 +154,7 @@ writeArchive <- function(object, file) {
     }
   }
 
-  x_archive_secure_hash <- sha256(object)
+  x_archive_secure_hash <- secretbase::sha256(object)
   save(object, x_archive_secure_hash, file = file, compress = TRUE)
   message(sprintf("Archive written to '%s'\nSHA256: %s", file, x_archive_secure_hash))
   invisible(file)
@@ -184,7 +184,7 @@ readArchive <- function(file) {
     stop("archive file was not created by archive()", call. = FALSE)
 
   message("Archive read from '", file, "'")
-  sha256 <- sha256(object)
+  sha256 <- secretbase::sha256(object)
   if (identical(sha256, x_archive_secure_hash))
     message("Data verified by SHA256: ", sha256) else
       warning(sprintf("SHA256 of restored object:   %s\ndoes not match the original: %s", sha256, x_archive_secure_hash), call. = FALSE)

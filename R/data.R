@@ -38,27 +38,29 @@
 
 .__global__ <- ".data"
 
-.user_agent <- sprintf("r-ichimoku/%s", as.character(packageVersion("ichimoku")))
+.user_agent <- sprintf("r-ichimoku/%s", format(packageVersion("ichimoku")))
 
-.mlgrid_pairs <- {
-  cols <- c("chikou", "close", "high", "low", "tenkan", "kijun", "senkouA", "senkouB", "cloudT", "cloudB")
-  pairs <- list(character(37L), character(37L))
-  ctr <- 0L
-  for (i in 1:7) {
-    colm <- cols[(i + 1L):10]
-    for (j in seq_along(colm)) {
-      colsi <- cols[i]
-      colmj <- colm[j]
-      if (colsi == "close" && (colmj == "high" || colmj == "low") ||
-         colsi == "high" && colmj == "low") next
-      ctr <- ctr + 1L
-      pairs[[1]][ctr] <- colsi
-      pairs[[2]][ctr] <- colmj
-      if (colsi == "senkouA" && colmj == "senkouB") break
+.mlgrid_pairs <- local(
+  {
+    cols <- c("chikou", "close", "high", "low", "tenkan", "kijun", "senkouA", "senkouB", "cloudT", "cloudB")
+    pairs <- list(character(37L), character(37L))
+    ctr <- 0L
+    for (i in 1:7) {
+      colm <- cols[(i + 1L):10]
+      for (j in seq_along(colm)) {
+        colsi <- cols[i]
+        colmj <- colm[j]
+        if (colsi == "close" && (colmj == "high" || colmj == "low") ||
+            colsi == "high" && colmj == "low") next
+        ctr <- ctr + 1L
+        pairs[[1]][ctr] <- colsi
+        pairs[[2]][ctr] <- colmj
+        if (colsi == "senkouA" && colmj == "senkouB") break
+      }
     }
+    pairs
   }
-  pairs
-}
+)
 
 .ichimoku_themes <- list(
   classic = c("#ffc6cb", "#c3dede", "#e0a9e0", "#db4525", "#1aa1a6", "#a4d1eb",

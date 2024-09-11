@@ -37,9 +37,6 @@ Imports:
     shiny (>= 1.4.0),
     xts,
     zoo
-LinkingTo: 
-    RcppSimdJson,
-    xts
 Suggests: 
     keyring,
     knitr,
