@@ -79,24 +79,27 @@ string.</p></dd>
 
 
 <dt id="arg-keep-attr">keep.attr<a class="anchor" aria-label="anchor" href="#arg-keep-attr"></a></dt>
-<dd><p>[default 'timestamp'] name of an attribute in 'new' to
-retain, if present, provided as a character string.</p></dd>
+<dd><p>[default 'timestamp'] name of an attribute in ‘new’
+to retain, if present, provided as a character string.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A data.frame of the existing data appended with the new data. If the
-    data in 'new' contains data with the same value for the key column as 'old',
-    the data in 'new' will overwrite the data in 'old'.</p>
-<p>If the attribute specified by 'keep.attr' is present in 'new', this is
-    retained. All other non-required attributes are dropped.</p>
+    data in ‘new’ contains data with the same value for the key column
+    as ‘old’, the data in ‘new’ will overwrite the data in
+    ‘old’.</p>
+<p>If the attribute specified by ‘keep.attr’ is present in
+    ‘new’, this is retained. All other non-required attributes are
+    dropped.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Can be used to update price dataframes retrieved by <code><a href="oanda.html">oanda</a></code>.
-    The function is designed to update existing data with new values as they
-    become available. As opposed to <code><a href="df_merge.html">df_merge</a></code>, the data in 'new'
-    will overwrite the data in 'old' rather than create duplicates.</p>
+    <p>Can be used to update price dataframes retrieved by
+    <code><a href="oanda.html">oanda</a></code>. The function is designed to update existing data
+    with new values as they become available. As opposed to
+    <code><a href="df_merge.html">df_merge</a></code>, the data in ‘new’ will overwrite the data
+    in ‘old’ rather than create duplicates.</p>
     </div>
 
     <div class="section level2">
