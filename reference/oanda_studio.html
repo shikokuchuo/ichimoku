@@ -73,6 +73,7 @@
 <span>  <span class="va">server</span>,</span>
 <span>  <span class="va">apikey</span>,</span>
 <span>  new.process <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  multi.session <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span>,</span>
 <span>  launch.browser <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  periods <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">9L</span>, <span class="fl">26L</span>, <span class="fl">52L</span><span class="op">)</span></span>
@@ -140,6 +141,13 @@ entered interactively if not specified.</p></dd>
 <dd><p>[default FALSE] if TRUE, will start the shiny session in a
 new R process, unblocking the current process and allowing continued use
 of the R console.</p></dd>
+
+
+<dt id="arg-multi-session">multi.session<a class="anchor" aria-label="anchor" href="#arg-multi-session"></a></dt>
+<dd><p>[default FALSE] if TRUE, does not automatically close
+the Shiny app when an individual session (web browser page) disconnects.
+Use with caution in conjunction with ‘new.process’ as the Shiny
+app continues to run in the background process.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
