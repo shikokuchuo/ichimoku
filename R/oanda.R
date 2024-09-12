@@ -584,7 +584,8 @@ oanda_studio <- function(instrument = "USD_JPY",
   isTRUE(new.process) && {
     mc <- match.call()
     mc[["new.process"]] <- NULL
-    return(invisible(mirai::mirai(mc, oanda_studio = oanda_studio)))
+    mc[[1]] <- quote(ichimoku::oanda_studio)
+    return(invisible(mirai::mirai(mc)))
   }
   if (!missing(instrument)) instrument <- sub("-", "_", toupper(force(instrument)), fixed = TRUE)
   granularity <- match.arg(granularity, c("D", "W", "M",
