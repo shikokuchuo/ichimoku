@@ -41,16 +41,16 @@ example "2020-02-01".}
 in a format convertible to POSIXct by \code{as.POSIXct()}, for example
 "2020-06-30".}
 
-\item{price}{[default "M"] pricing component, one of "M" (midpoint), "B" (bid)
-or "A" (ask).}
+\item{price}{[default "M"] pricing component, one of "M" (midpoint), "B"
+(bid) or "A" (ask).}
 
 \item{server}{(optional) specify the "practice" or "live" server according to
-the account type held. If not specified, will default to "practice", unless
-this has been changed by \code{\link{oanda_switch}}.}
+the account type held. If not specified, will default to "practice",
+unless this has been changed by \code{\link{oanda_switch}}.}
 
-\item{apikey}{(optional) string containing the OANDA fxTrade API key (personal
-access token), or function that returns this string. Does not need to be
-specified if already stored as the environment variable
+\item{apikey}{(optional) string containing the OANDA fxTrade API key
+(personal access token), or function that returns this string. Does not
+need to be specified if already stored as the environment variable
 \code{OANDA_API_KEY} or by \code{\link{oanda_set_key}}. Can also be
 entered interactively if not specified.}
 
@@ -67,12 +67,13 @@ Retrieve price data for major currencies, metals, commodities, government
 \details{
 This function queries the OANDA fxTrade API.
 
-    Requires an fxTrade account with OANDA \url{https://www.oanda.com/forex-trading/}.
-    If you do not already hold a live account, you may register for an OANDA
-    fxTrade practice / demo account. There is a link on your OANDA fxTrade
-    account profile page 'Manage API Access' (My Account -> My Services ->
-    Manage API Access). From there, a personal access token to use with the
-    OANDA API can be generated, as well as revoked.
+    Requires an fxTrade account with OANDA
+    \url{https://www.oanda.com/forex-trading/}. If you do not already hold a
+    live account, you may register for an OANDA fxTrade practice / demo
+    account. There is a link on your OANDA fxTrade account profile page
+    'Manage API Access' (My Account -> My Services -> Manage API Access).
+    From there, a personal access token to use with the OANDA API can be
+    generated, as well as revoked.
 
     The \code{\link{oanda_set_key}} function can be used to save the API key
     in the system credential store so that it is automatically recognised in

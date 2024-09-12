@@ -29,11 +29,12 @@ strat(
 
 \item{c4}{(optional) column name specified as a string.}
 
-\item{dir}{[default 'long'] trade direction, either 'long' or 'short'.}
+\item{dir}{[default 'long'] trade direction, either \sQuote{long} or
+\sQuote{short}.}
 
-\item{type}{[default 2] if 'c3' and 'c4' are specified, type 2 will create the
-combined strategy 'c1 > c2 & c3 > c4' whilst type 3 will create the
-asymmetric strategy 'c1 > c2 x c3 > c4'.}
+\item{type}{[default 2] if \sQuote{c3} and \sQuote{c4} are specified, type 2
+will create the combined strategy \sQuote{c1 > c2 & c3 > c4} whilst type
+3 will create the asymmetric strategy \sQuote{c1 > c2 x c3 > c4}.}
 }
 \value{
 An ichimoku object augmented with the strategy.
@@ -47,9 +48,9 @@ Create ichimoku cloud strategies using the indicator condition 'long / short
 }
 \details{
 The following assumption applies to all strategies: confirmation of
-    whether a condition is satisfied is received at the 'close' of a particular
-    period, and a transaction is initiated at the immediately following 'open'.
-    All transactions occur at the 'open'.
+    whether a condition is satisfied is received at the \sQuote{close} of a
+    particular period, and a transaction is initiated at the immediately
+    following \sQuote{open}. All transactions occur at the \sQuote{open}.
 
     By default, the periods in which the strategy results in a position is
     shaded on the ichimoku cloud chart and the strategy is printed as the

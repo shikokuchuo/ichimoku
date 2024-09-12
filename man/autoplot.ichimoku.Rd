@@ -18,7 +18,7 @@
 )
 }
 \arguments{
-\item{object}{an object of class 'ichimoku'.}
+\item{object}{an object of class \sQuote{ichimoku}.}
 
 \item{window}{(optional) a date-time window to subset the plot, in ISO-8601
 compatible range strings of the format used for \sQuote{xts} objects, for
@@ -42,8 +42,9 @@ the strategy printed as the chart subtitle (if not otherwise specified).
 Set to FALSE to turn off this behaviour.}
 
 \item{type}{[default 'none'] type of sub-plot to display beneath the ichimoku
-cloud chart, with a choice of 'none', 'r' or 's' for the corresponding
-oscillator type, and 'bar' or 'line' for custom plots.}
+cloud chart, with a choice of \sQuote{none}, \sQuote{r} or \sQuote{s} for
+the corresponding oscillator type, and \sQuote{bar} or \sQuote{line} for
+custom plots.}
 
 \item{custom}{(optional) character string (containing a regular expression)
 matching the column name of the variable to be displayed as sub-plot.
@@ -53,14 +54,14 @@ settings will take precedence.}
 \item{...}{other arguments not used by this method.}
 }
 \value{
-A ggplot2 object with S3 classes 'gg' and 'ggplot'.
+A ggplot2 object with S3 classes \sQuote{gg} and \sQuote{ggplot}.
 }
 \description{
 Plot Ichimoku Kinko Hyo cloud charts from ichimoku objects.
 }
 \details{
 This function is an S3 method for the generic function autoplot()
-    for class 'ichimoku'. It can be invoked by calling autoplot(x) on an
-    object 'x' of class 'ichimoku'.
+    for class \sQuote{ichimoku}. It can be invoked by calling autoplot(x) on
+    an object \sQuote{x} of class \sQuote{ichimoku}.
 }
 \keyword{internal}

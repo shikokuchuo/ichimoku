@@ -11,7 +11,8 @@ autostrat(x, n = 8, dir = c("long", "short"), level = 1, quietly)
 
 \item{n}{[default 8] select top 'n' number of strategies to return.}
 
-\item{dir}{[default 'long'] trade direction, either 'long' or 'short'.}
+\item{dir}{[default 'long'] trade direction, either \sQuote{long} or
+\sQuote{short}.}
 
 \item{level}{[default 1] to return simple strategies. For complex strategies,
 set level to 2 to return combined strategies of the form 's1 & s2' or

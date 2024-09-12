@@ -12,16 +12,16 @@ delimited by '_' or '-' (e.g. "USD_JPY" or "usd-jpy"). Use the
 \code{\link{oanda_instruments}} function to return a list of all valid
 instruments.}
 
-\item{price}{[default "M"] pricing component, one of "M" (midpoint), "B" (bid)
-or "A" (ask).}
+\item{price}{[default "M"] pricing component, one of "M" (midpoint), "B"
+(bid) or "A" (ask).}
 
 \item{server}{(optional) specify the "practice" or "live" server according to
-the account type held. If not specified, will default to "practice", unless
-this has been changed by \code{\link{oanda_switch}}.}
+the account type held. If not specified, will default to "practice",
+unless this has been changed by \code{\link{oanda_switch}}.}
 
-\item{apikey}{(optional) string containing the OANDA fxTrade API key (personal
-access token), or function that returns this string. Does not need to be
-specified if already stored as the environment variable
+\item{apikey}{(optional) string containing the OANDA fxTrade API key
+(personal access token), or function that returns this string. Does not
+need to be specified if already stored as the environment variable
 \code{OANDA_API_KEY} or by \code{\link{oanda_set_key}}. Can also be
 entered interactively if not specified.}
 }

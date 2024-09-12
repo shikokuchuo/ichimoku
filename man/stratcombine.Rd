@@ -19,11 +19,12 @@ Create custom strategies from combining existing strategies contained in
     ichimoku objects 's1' and 's2' to form 's1 & s2'.
 }
 \details{
-The combined strategy 's1 & s2' means indicator conditions in 's1'
-    and 's2' have to be met simulateneously for a trade position to be taken.
+The combined strategy \sQuote{s1 & s2} means indicator conditions in
+    \sQuote{s1} and \sQuote{s2} have to be met simulateneously for a trade
+    position to be taken.
 
     The boolean values showing whether these conditions are met are stored in
-    the 'cond' column.
+    the \sQuote{cond} column.
 
     The strategy summary may be accessed by the \code{summary()} method for
     ichimoku objects or via \code{\link{look}}.

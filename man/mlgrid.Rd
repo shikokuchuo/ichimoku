@@ -24,7 +24,8 @@ mlgrid(
 \item{k}{[default 1L] number of periods time horizon over which to calculate
 target variable 'y'.}
 
-\item{dir}{[default 'long'] trade direction, either 'long' or 'short'.}
+\item{dir}{[default 'long'] trade direction, either \sQuote{long} or
+\sQuote{short}.}
 
 \item{type}{[default 'boolean'] choose 'boolean', 'numeric' or 'z-score'.
 'boolean' creates a grid of dummy variables for ichimoku indicator

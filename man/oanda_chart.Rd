@@ -37,8 +37,8 @@ of 1.}
 a maximum of 5000. Note that fewer periods are actually shown on the
 chart to ensure a full cloud is always displayed.}
 
-\item{price}{[default "M"] pricing component, one of "M" (midpoint), "B" (bid)
-or "A" (ask).}
+\item{price}{[default "M"] pricing component, one of "M" (midpoint), "B"
+(bid) or "A" (ask).}
 
 \item{theme}{[default 'classic'] with further choices of \sQuote{dark},
 \sQuote{mono}, \sQuote{noguchi}, \sQuote{okabe-ito} or \sQuote{solarized}.
@@ -54,12 +54,12 @@ session. The session will end with data returned automatically after the
 specified time has elapsed.}
 
 \item{server}{(optional) specify the "practice" or "live" server according to
-the account type held. If not specified, will default to "practice", unless
-this has been changed by \code{\link{oanda_switch}}.}
+the account type held. If not specified, will default to "practice",
+unless this has been changed by \code{\link{oanda_switch}}.}
 
-\item{apikey}{(optional) string containing the OANDA fxTrade API key (personal
-access token), or function that returns this string. Does not need to be
-specified if already stored as the environment variable
+\item{apikey}{(optional) string containing the OANDA fxTrade API key
+(personal access token), or function that returns this string. Does not
+need to be specified if already stored as the environment variable
 \code{OANDA_API_KEY} or by \code{\link{oanda_set_key}}. Can also be
 entered interactively if not specified.}
 
@@ -85,7 +85,7 @@ Plot real-time Ichimoku Kinko Hyo cloud charts for major currencies, metals,
 \details{
 This function polls the OANDA fxTrade API for the latest live prices
     and updates the plot in the graphical device at each refresh interval.
-    Use the 'Esc' key to stop updating.
+    Use 'ctrl+c' or 'Esc' to interrupt and stop updating.
 
     To access the underlying data, assign the function to an object, for
     example: \code{cloud <- oanda_chart("USD_JPY")}.

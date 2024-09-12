@@ -38,8 +38,9 @@
 #'     the strategy printed as the chart subtitle (if not otherwise specified).
 #'     Set to FALSE to turn off this behaviour.
 #' @param type [default 'none'] type of sub-plot to display beneath the ichimoku
-#'     cloud chart, with a choice of 'none', 'r' or 's' for the corresponding
-#'     oscillator type, and 'bar' or 'line' for custom plots.
+#'     cloud chart, with a choice of \sQuote{none}, \sQuote{r} or \sQuote{s} for
+#'     the corresponding oscillator type, and \sQuote{bar} or \sQuote{line} for
+#'     custom plots.
 #' @param custom (optional) character string (containing a regular expression)
 #'     matching the column name of the variable to be displayed as sub-plot.
 #'     Specify \code{type = 'bar'} or \code{type = 'line'}, otherwise other type
@@ -97,14 +98,14 @@ NULL
 #' Plot Ichimoku Kinko Hyo cloud charts from ichimoku objects.
 #'
 #' @inheritParams plot.ichimoku
-#' @param object an object of class 'ichimoku'.
+#' @param object an object of class \sQuote{ichimoku}.
 #' @param ... other arguments not used by this method.
 #'
-#' @return A ggplot2 object with S3 classes 'gg' and 'ggplot'.
+#' @return A ggplot2 object with S3 classes \sQuote{gg} and \sQuote{ggplot}.
 #'
 #' @details This function is an S3 method for the generic function autoplot()
-#'     for class 'ichimoku'. It can be invoked by calling autoplot(x) on an
-#'     object 'x' of class 'ichimoku'.
+#'     for class \sQuote{ichimoku}. It can be invoked by calling autoplot(x) on
+#'     an object \sQuote{x} of class \sQuote{ichimoku}.
 #'
 #' @rdname autoplot.ichimoku
 #' @method autoplot ichimoku
@@ -174,7 +175,7 @@ create_data <- function(object, window, type) {
 #'
 #' @inheritParams plot.ichimoku
 #'
-#' @return A ggplot2 object with S3 classes 'gg' and 'ggplot'.
+#' @return A ggplot2 object with S3 classes \sQuote{gg} and \sQuote{ggplot}.
 #'
 #' @noRd
 #'
@@ -376,9 +377,10 @@ theme_ichimoku_light <- function() {
 
 #' Ichimoku Dark Theme for ggplot2
 #'
-#' Internal function used by ichimoku to create the default dark theme for ggplot2.
+#' Internal function used by ichimoku to create the default dark theme for
+#'     ggplot2.
 #'
-#' @return A list with classes 'theme' and 'gg'.
+#' @return A list with classes \sQuote{theme} and \sQuote{gg}.
 #'
 #' @noRd
 #'
@@ -398,7 +400,7 @@ theme_ichimoku_dark <- function() {
 #'
 #' A Stat for plotting indicators in ggplot2.
 #'
-#' @return A ggplot2 'Stat' (an environment).
+#' @return A ggplot2 \sQuote{Stat} (an environment).
 #'
 #' @noRd
 #'
@@ -416,7 +418,7 @@ StatIndicator <- ggproto(
 #'
 #' A Stat for plotting 'line' type subplots in ggplot2.
 #'
-#' @return A ggplot2 'Stat' (an environment).
+#' @return A ggplot2 \sQuote{Stat} (an environment).
 #'
 #' @noRd
 #'
@@ -436,7 +438,7 @@ StatLine <- ggproto(
 #'
 #' A Stat for plotting 'bar' type subplots in ggplot2.
 #'
-#' @return A ggplot2 'Stat' (an environment).
+#' @return A ggplot2 \sQuote{Stat} (an environment).
 #'
 #' @noRd
 #'

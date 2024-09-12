@@ -29,17 +29,18 @@
 #' @param c2 [default 'tenkan'] column name specified as a string.
 #' @param c3 (optional) column name specified as a string.
 #' @param c4 (optional) column name specified as a string.
-#' @param dir [default 'long'] trade direction, either 'long' or 'short'.
-#' @param type [default 2] if 'c3' and 'c4' are specified, type 2 will create the
-#'     combined strategy 'c1 > c2 & c3 > c4' whilst type 3 will create the
-#'     asymmetric strategy 'c1 > c2 x c3 > c4'.
+#' @param dir [default 'long'] trade direction, either \sQuote{long} or
+#'     \sQuote{short}.
+#' @param type [default 2] if \sQuote{c3} and \sQuote{c4} are specified, type 2
+#'     will create the combined strategy \sQuote{c1 > c2 & c3 > c4} whilst type
+#'     3 will create the asymmetric strategy \sQuote{c1 > c2 x c3 > c4}.
 #'
 #' @return An ichimoku object augmented with the strategy.
 #'
 #' @details The following assumption applies to all strategies: confirmation of
-#'     whether a condition is satisfied is received at the 'close' of a particular
-#'     period, and a transaction is initiated at the immediately following 'open'.
-#'     All transactions occur at the 'open'.
+#'     whether a condition is satisfied is received at the \sQuote{close} of a
+#'     particular period, and a transaction is initiated at the immediately
+#'     following \sQuote{open}. All transactions occur at the \sQuote{open}.
 #'
 #'     By default, the periods in which the strategy results in a position is
 #'     shaded on the ichimoku cloud chart and the strategy is printed as the
@@ -275,11 +276,12 @@ writeStrat <- function(x, strategy, dir) {
 #'
 #' @return An ichimoku object augmented with the combined strategy.
 #'
-#' @details The combined strategy 's1 & s2' means indicator conditions in 's1'
-#'     and 's2' have to be met simulateneously for a trade position to be taken.
+#' @details The combined strategy \sQuote{s1 & s2} means indicator conditions in
+#'     \sQuote{s1} and \sQuote{s2} have to be met simulateneously for a trade
+#'     position to be taken.
 #'
 #'     The boolean values showing whether these conditions are met are stored in
-#'     the 'cond' column.
+#'     the \sQuote{cond} column.
 #'
 #'     The strategy summary may be accessed by the \code{summary()} method for
 #'     ichimoku objects or via \code{\link{look}}.

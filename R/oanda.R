@@ -42,14 +42,14 @@
 #' @param to (optional) the end of the time range for which to fetch price data,
 #'     in a format convertible to POSIXct by \code{as.POSIXct()}, for example
 #'     "2020-06-30".
-#' @param price [default "M"] pricing component, one of "M" (midpoint), "B" (bid)
-#'     or "A" (ask).
+#' @param price [default "M"] pricing component, one of "M" (midpoint), "B"
+#'     (bid) or "A" (ask).
 #' @param server (optional) specify the "practice" or "live" server according to
-#'     the account type held. If not specified, will default to "practice", unless
-#'     this has been changed by \code{\link{oanda_switch}}.
-#' @param apikey (optional) string containing the OANDA fxTrade API key (personal
-#'     access token), or function that returns this string. Does not need to be
-#'     specified if already stored as the environment variable
+#'     the account type held. If not specified, will default to "practice",
+#'     unless this has been changed by \code{\link{oanda_switch}}.
+#' @param apikey (optional) string containing the OANDA fxTrade API key
+#'     (personal access token), or function that returns this string. Does not
+#'     need to be specified if already stored as the environment variable
 #'     \code{OANDA_API_KEY} or by \code{\link{oanda_set_key}}. Can also be
 #'     entered interactively if not specified.
 #' @param quietly (optional) if set to TRUE, will suppress printing of auxiliary
@@ -59,12 +59,13 @@
 #'
 #' @details This function queries the OANDA fxTrade API.
 #'
-#'     Requires an fxTrade account with OANDA \url{https://www.oanda.com/forex-trading/}.
-#'     If you do not already hold a live account, you may register for an OANDA
-#'     fxTrade practice / demo account. There is a link on your OANDA fxTrade
-#'     account profile page 'Manage API Access' (My Account -> My Services ->
-#'     Manage API Access). From there, a personal access token to use with the
-#'     OANDA API can be generated, as well as revoked.
+#'     Requires an fxTrade account with OANDA
+#'     \url{https://www.oanda.com/forex-trading/}. If you do not already hold a
+#'     live account, you may register for an OANDA fxTrade practice / demo
+#'     account. There is a link on your OANDA fxTrade account profile page
+#'     'Manage API Access' (My Account -> My Services -> Manage API Access).
+#'     From there, a personal access token to use with the OANDA API can be
+#'     generated, as well as revoked.
 #'
 #'     The \code{\link{oanda_set_key}} function can be used to save the API key
 #'     in the system credential store so that it is automatically recognised in
@@ -406,7 +407,7 @@ oanda_stream <- function(instrument, display = 8L, limit, server, apikey) {
 #'
 #' @details This function polls the OANDA fxTrade API for the latest live prices
 #'     and updates the plot in the graphical device at each refresh interval.
-#'     Use the 'Esc' key to stop updating.
+#'     Use 'ctrl+c' or 'Esc' to interrupt and stop updating.
 #'
 #'     To access the underlying data, assign the function to an object, for
 #'     example: \code{cloud <- oanda_chart("USD_JPY")}.
@@ -490,7 +491,7 @@ oanda_chart <- function(instrument,
                     price = price, server = server, apikey = apikey, .validate = TRUE)
   xlen <- dim(data)[1L]
 
-  message("Chart updating every ", refresh, " secs in graphical device... 'Esc' or 'Ctrl+c' to return")
+  message("Chart updating every ", refresh, " secs in graphical device... 'Ctrl+c' or 'Esc' to return")
   on.exit(expr = return(invisible(pdata)))
   if (!missing(limit) && is.numeric(limit))
     setTimeLimit(elapsed = limit, transient = TRUE)

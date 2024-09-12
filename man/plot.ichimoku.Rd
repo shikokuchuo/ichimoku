@@ -41,8 +41,9 @@ the strategy printed as the chart subtitle (if not otherwise specified).
 Set to FALSE to turn off this behaviour.}
 
 \item{type}{[default 'none'] type of sub-plot to display beneath the ichimoku
-cloud chart, with a choice of 'none', 'r' or 's' for the corresponding
-oscillator type, and 'bar' or 'line' for custom plots.}
+cloud chart, with a choice of \sQuote{none}, \sQuote{r} or \sQuote{s} for
+the corresponding oscillator type, and \sQuote{bar} or \sQuote{line} for
+custom plots.}
 
 \item{custom}{(optional) character string (containing a regular expression)
 matching the column name of the variable to be displayed as sub-plot.
