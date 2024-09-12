@@ -4,6 +4,10 @@
 
 * `oanda_studio()` adds option 'multi.session' to facilitate multiple sessions to be used with the Shiny app (for example more than one browser page).
 
+#### Updates:
+
+* Optimizes package load efficiency with `mirai` and `RcppSimdJson` only loaded the first time they are used.
+
 # ichimoku 1.5.4
 
 #### Updates:

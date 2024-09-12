@@ -340,6 +340,14 @@ SEXP _naomit(SEXP x) {
 
 // imports from the package 'RcppSimdJson'
 SEXP _deserialize_json(SEXP json, SEXP query) {
+  if (jsofun == NULL) {
+    SEXP str, call;
+    PROTECT(str = Rf_mkString("RcppSimdJson"));
+    PROTECT(call = Rf_lang2(Rf_install("loadNamespace"), str));
+    Rf_eval(call, R_BaseEnv);
+    UNPROTECT(2);
+    jsofun = (SEXP (*)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP)) R_GetCCallable("RcppSimdJson", "_RcppSimdJson_.deserialize_json");
+  }
   return jsofun(json, query, R_NilValue, R_NilValue, R_NilValue, ichimoku_false, R_NilValue, ichimoku_false, R_NilValue, ichimoku_int_three, ichimoku_int_zero, ichimoku_int_zero);
 }
 
@@ -352,7 +360,7 @@ static void RegisterSymbols(void) {
   ichimoku_PeriodicitySymbol = Rf_install("periodicity");
   ichimoku_TickerSymbol = Rf_install("ticker");
   naofun = (SEXP (*)(SEXP)) R_GetCCallable("xts", "na_omit_xts");
-  jsofun = (SEXP (*)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP)) R_GetCCallable("RcppSimdJson", "_RcppSimdJson_.deserialize_json");
+  jsofun = NULL;
 }
 
 static void PreserveObjects(void) {

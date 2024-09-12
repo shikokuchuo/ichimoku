@@ -83,7 +83,6 @@
 #'     scale_x_continuous scale_y_continuous Stat StatIdentity theme theme_grey
 #'     %+replace%
 #' @importFrom nanonext ncurl
-#' @importFrom RcppSimdJson is_valid_json
 #' @importFrom shiny checkboxInput column downloadButton downloadHandler HTML
 #'     fillPage fluidPage fluidRow hoverOpts invalidateLater isolate
 #'     numericInput observeEvent plotOutput reactive reactiveVal renderPlot
@@ -117,6 +116,7 @@
     if (i %in% c(1:3, 11:13)) Sys.sleep(0.03) else Sys.sleep(0.08)
   }
   cat("\n")
+  RcppSimdJson::is_valid_json("")
   invisible(quote(expr=))
 }
 
