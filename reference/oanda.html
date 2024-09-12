@@ -107,20 +107,20 @@ in a format convertible to POSIXct by <code><a href="https://rdrr.io/r/base/as.P
 
 
 <dt id="arg-price">price<a class="anchor" aria-label="anchor" href="#arg-price"></a></dt>
-<dd><p>[default "M"] pricing component, one of "M" (midpoint), "B" (bid)
-or "A" (ask).</p></dd>
+<dd><p>[default "M"] pricing component, one of "M" (midpoint), "B"
+(bid) or "A" (ask).</p></dd>
 
 
 <dt id="arg-server">server<a class="anchor" aria-label="anchor" href="#arg-server"></a></dt>
 <dd><p>(optional) specify the "practice" or "live" server according to
-the account type held. If not specified, will default to "practice", unless
-this has been changed by <code><a href="oanda_switch.html">oanda_switch</a></code>.</p></dd>
+the account type held. If not specified, will default to "practice",
+unless this has been changed by <code><a href="oanda_switch.html">oanda_switch</a></code>.</p></dd>
 
 
 <dt id="arg-apikey">apikey<a class="anchor" aria-label="anchor" href="#arg-apikey"></a></dt>
-<dd><p>(optional) string containing the OANDA fxTrade API key (personal
-access token), or function that returns this string. Does not need to be
-specified if already stored as the environment variable
+<dd><p>(optional) string containing the OANDA fxTrade API key
+(personal access token), or function that returns this string. Does not
+need to be specified if already stored as the environment variable
 <code>OANDA_API_KEY</code> or by <code><a href="oanda_set_key.html">oanda_set_key</a></code>. Can also be
 entered interactively if not specified.</p></dd>
 
@@ -137,12 +137,13 @@ output to the console and return quietly.</p></dd>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>This function queries the OANDA fxTrade API.</p>
-<p>Requires an fxTrade account with OANDA <a href="https://www.oanda.com/forex-trading/" class="external-link">https://www.oanda.com/forex-trading/</a>.
-    If you do not already hold a live account, you may register for an OANDA
-    fxTrade practice / demo account. There is a link on your OANDA fxTrade
-    account profile page 'Manage API Access' (My Account -&gt; My Services -&gt;
-    Manage API Access). From there, a personal access token to use with the
-    OANDA API can be generated, as well as revoked.</p>
+<p>Requires an fxTrade account with OANDA
+    <a href="https://www.oanda.com/forex-trading/" class="external-link">https://www.oanda.com/forex-trading/</a>. If you do not already hold a
+    live account, you may register for an OANDA fxTrade practice / demo
+    account. There is a link on your OANDA fxTrade account profile page
+    'Manage API Access' (My Account -&gt; My Services -&gt; Manage API Access).
+    From there, a personal access token to use with the OANDA API can be
+    generated, as well as revoked.</p>
 <p>The <code><a href="oanda_set_key.html">oanda_set_key</a></code> function can be used to save the API key
     in the system credential store so that it is automatically recognised in
     future (requires the 'keyring' package to be installed).</p>

@@ -104,8 +104,8 @@ chart to ensure a full cloud is always displayed.</p></dd>
 
 
 <dt id="arg-price">price<a class="anchor" aria-label="anchor" href="#arg-price"></a></dt>
-<dd><p>[default "M"] pricing component, one of "M" (midpoint), "B" (bid)
-or "A" (ask).</p></dd>
+<dd><p>[default "M"] pricing component, one of "M" (midpoint), "B"
+(bid) or "A" (ask).</p></dd>
 
 
 <dt id="arg-theme">theme<a class="anchor" aria-label="anchor" href="#arg-theme"></a></dt>
@@ -129,14 +129,14 @@ specified time has elapsed.</p></dd>
 
 <dt id="arg-server">server<a class="anchor" aria-label="anchor" href="#arg-server"></a></dt>
 <dd><p>(optional) specify the "practice" or "live" server according to
-the account type held. If not specified, will default to "practice", unless
-this has been changed by <code><a href="oanda_switch.html">oanda_switch</a></code>.</p></dd>
+the account type held. If not specified, will default to "practice",
+unless this has been changed by <code><a href="oanda_switch.html">oanda_switch</a></code>.</p></dd>
 
 
 <dt id="arg-apikey">apikey<a class="anchor" aria-label="anchor" href="#arg-apikey"></a></dt>
-<dd><p>(optional) string containing the OANDA fxTrade API key (personal
-access token), or function that returns this string. Does not need to be
-specified if already stored as the environment variable
+<dd><p>(optional) string containing the OANDA fxTrade API key
+(personal access token), or function that returns this string. Does not
+need to be specified if already stored as the environment variable
 <code>OANDA_API_KEY</code> or by <code><a href="oanda_set_key.html">oanda_set_key</a></code>. Can also be
 entered interactively if not specified.</p></dd>
 
@@ -164,7 +164,7 @@ ichimoku analysis.</p></dd>
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>This function polls the OANDA fxTrade API for the latest live prices
     and updates the plot in the graphical device at each refresh interval.
-    Use the 'Esc' key to stop updating.</p>
+    Use 'ctrl+c' or 'Esc' to interrupt and stop updating.</p>
 <p>To access the underlying data, assign the function to an object, for
     example: <code>cloud &lt;- oanda_chart("USD_JPY")</code>.</p>
     </div>
