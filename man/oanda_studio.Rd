@@ -16,6 +16,7 @@ oanda_studio(
   server,
   apikey,
   new.process = FALSE,
+  multi.session = FALSE,
   ...,
   launch.browser = TRUE,
   periods = c(9L, 26L, 52L)
@@ -60,6 +61,11 @@ entered interactively if not specified.}
 \item{new.process}{[default FALSE] if TRUE, will start the shiny session in a
 new R process, unblocking the current process and allowing continued use
 of the R console.}
+
+\item{multi.session}{[default FALSE] if TRUE, does not automatically close
+the Shiny app when an individual session (web browser page) disconnects.
+Use with caution in conjunction with \sQuote{new.process} as the Shiny
+app continues to run in the background process.}
 
 \item{...}{additional arguments passed along to \code{\link{ichimoku}} for
 calculating the ichimoku cloud, \code{\link{autoplot}} to set chart

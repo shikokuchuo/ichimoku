@@ -1,8 +1,8 @@
 # ichimoku 1.5.4.9000 (development)
 
-#### Updates:
+#### New features:
 
-* Internal performance enhancements.
+* `oanda_studio()` adds option 'multi.session' to facilitate multiple sessions to be used with the Shiny app (for example more than one browser page).
 
 # ichimoku 1.5.4
 

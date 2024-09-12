@@ -534,6 +534,10 @@ oanda_chart <- function(instrument,
 #' @param new.process [default FALSE] if TRUE, will start the shiny session in a
 #'     new R process, unblocking the current process and allowing continued use
 #'     of the R console.
+#' @param multi.session [default FALSE] if TRUE, does not automatically close
+#'     the Shiny app when an individual session (web browser page) disconnects.
+#'     Use with caution in conjunction with \sQuote{new.process} as the Shiny
+#'     app continues to run in the background process.
 #' @param ... additional arguments passed along to \code{\link{ichimoku}} for
 #'     calculating the ichimoku cloud, \code{\link{autoplot}} to set chart
 #'     parameters, or the 'options' argument of \code{shiny::shinyApp()}.
@@ -572,6 +576,7 @@ oanda_studio <- function(instrument = "USD_JPY",
                          server,
                          apikey,
                          new.process = FALSE,
+                         multi.session = FALSE,
                          ...,
                          launch.browser = TRUE,
                          periods = c(9L, 26L, 52L)) {
@@ -768,7 +773,8 @@ oanda_studio <- function(instrument = "USD_JPY",
     output$savedata <- downloadHandler(filename = function() sprintf("%s_%s_%s.rda", input$instrument, input$granularity, input$price),
                                        content = function(file) archive(pdata(), file))
 
-    session$onSessionEnded(stopApp)
+    if (!multi.session) session$onSessionEnded(stopApp)
+
   }
 
   app <- shinyApp(ui = ui, server = server, options = list(launch.browser = launch.browser, ...))
