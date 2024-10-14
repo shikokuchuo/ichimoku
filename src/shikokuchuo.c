@@ -43,8 +43,8 @@ SEXP ichimoku_int_zero;
 SEXP ichimoku_int_three;
 SEXP ichimoku_false;
 
-SEXP (*naofun)(SEXP);
-SEXP (*jsofun)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+SEXP (*naofun)(SEXP) = NULL;
+SEXP (*jsofun)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP) = NULL;
 
 // rolling max over a window
 SEXP _wmax(SEXP x, SEXP window) {
@@ -359,8 +359,6 @@ static void RegisterSymbols(void) {
   ichimoku_PeriodsSymbol = Rf_install("periods");
   ichimoku_PeriodicitySymbol = Rf_install("periodicity");
   ichimoku_TickerSymbol = Rf_install("ticker");
-  naofun = (SEXP (*)(SEXP)) R_GetCCallable("xts", "na_omit_xts");
-  jsofun = NULL;
 }
 
 static void PreserveObjects(void) {
@@ -408,6 +406,7 @@ static const R_CallMethodDef CallEntries[] = {
 void attribute_visible R_init_ichimoku(DllInfo* dll) {
   RegisterSymbols();
   PreserveObjects();
+  naofun = (SEXP (*)(SEXP)) R_GetCCallable("xts", "na_omit_xts");
   R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
   R_useDynamicSymbols(dll, FALSE);
   R_forceSymbols(dll, TRUE);
