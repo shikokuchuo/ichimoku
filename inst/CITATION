@@ -1,6 +1,6 @@
 bibentry(bibtype = "Manual",
          title = "ichimoku: Visualization and Tools for Ichimoku Kinko Hyo Strategies",
          author = person("Charlie", "Gao"),
-         year = 2024,
+         year = 2025,
          note = sprintf("R package version %s", meta$Version),
          url = "https://doi.org/10.5281/zenodo.7879346")
