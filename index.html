@@ -84,17 +84,24 @@
 <p>Visualization and Tools for Ichimoku Kinko Hyo Strategies</p>
 <p>An implementation of ‘Ichimoku Kinko Hyo’, also commonly known as ‘cloud charts’. Static and interactive visualizations with tools for creating, backtesting and development of quantitative ‘ichimoku’ strategies. As described in Sasaki (1996, <a href="ISBN:4925152009" class="uri">ISBN:4925152009</a>), the technique is a refinement on candlestick charting, originating from Japan and now in widespread use in technical analysis worldwide. Translating as ‘one-glance equilibrium chart’, it allows the price action and market structure of financial securities to be determined ‘at-a-glance’. Incorporates an interface with the OANDA fxTrade API <a href="https://developer.oanda.com/" class="external-link uri">https://developer.oanda.com/</a> for retrieving historical and live streaming price data for major currencies, metals, commodities, government bonds and stock indices.</p>
 <div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<p>Install ichimoku from CRAN:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"ichimoku"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
 <h2 id="quick-start">Quick Start<a class="anchor" aria-label="anchor" href="#quick-start"></a>
 </h2>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shikokuchuo.net/ichimoku/">ichimoku</a></span><span class="op">)</span></span></code></pre></div>
 <p>Simply <code><a href="reference/ichimoku.html">ichimoku()</a></code> and <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code>:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cloud</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ichimoku.html">ichimoku</a></span><span class="op">(</span><span class="va">sample_ohlc_data</span>, ticker <span class="op">=</span> <span class="st">"TKR"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">cloud</span>, window <span class="op">=</span> <span class="st">"2020-05/"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-ichimoku-1.png" alt="ichimoku kinko hyo"><!-- alt="ichimoku kinko hyo" --></p>
 <p><code><a href="reference/autostrat.html">autostrat()</a></code> to automatically evaluate and rank top-performing strategies:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/autostrat.html">autostrat</a></span><span class="op">(</span><span class="va">cloud</span>, n <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                        [,1]               [,2]              [,3]             </span></span>
 <span><span class="co">#&gt; Strategy               "senkouB &gt; tenkan" "cloudB &gt; tenkan" "senkouB &gt; kijun"</span></span>
@@ -161,16 +168,6 @@
 <p>{ 4 } <a href="https://shikokuchuo.net/ichimoku/articles/xoanda.html">The OANDA fxTrade API</a></p>
 </div>
 <div class="section level2">
-<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
-</h2>
-<p>Install the latest release from CRAN or R-multiverse:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"ichimoku"</span><span class="op">)</span></span></code></pre></div>
-<p>The current development version is available from R-universe:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"ichimoku"</span>, repos <span class="op">=</span> <span class="st">"https://shikokuchuo.r-universe.dev"</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level2">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
 <p>Sasaki, H. 佐々木 英信 (1996), <em>一目均衡表の研究 [ichimoku kinkouhyou no kenkyuu]</em>. Tokyo, Japan: Toushi Radar.</p>
@@ -225,8 +222,7 @@
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://CRAN.R-project.org/package=ichimoku" class="external-link"><img src="https://www.r-pkg.org/badges/version/ichimoku?color=00008b" alt="CRAN Status"></a></li>
-<li><a href="https://community.r-multiverse.org/ichimoku" class="external-link"><img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fcommunity.r-multiverse.org%2Fapi%2Fpackages%2Fichimoku&amp;query=%24.Version&amp;label=r-multiverse" alt="R-multiverse status"></a></li>
-<li><a href="https://shikokuchuo.r-universe.dev/ichimoku" class="external-link"><img src="https://shikokuchuo.r-universe.dev/badges/ichimoku?color=a4d1eb" alt="ichimoku status badge"></a></li>
+<li><a href="https://shikokuchuo.r-universe.dev/ichimoku" class="external-link"><img src="https://shikokuchuo.r-universe.dev/badges/ichimoku" alt="ichimoku status badge"></a></li>
 <li><a href="https://github.com/shikokuchuo/ichimoku/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/shikokuchuo/ichimoku/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
 <li><a href="https://app.codecov.io/gh/shikokuchuo/ichimoku" class="external-link"><img src="https://codecov.io/gh/shikokuchuo/ichimoku/graph/badge.svg" alt="codecov"></a></li>
 <li><a href="https://zenodo.org/badge/latestdoi/367928545" class="external-link"><img src="https://zenodo.org/badge/367928545.svg" alt="DOI"></a></li>
