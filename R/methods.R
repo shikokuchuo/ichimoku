@@ -1,4 +1,4 @@
-# Copyright (C) 2021-2023 Hibiki AI Limited <info@hibiki-ai.com>
+# Copyright (C) 2021-2025 Hibiki AI Limited <info@hibiki-ai.com>
 #
 # This file is part of ichimoku.
 #
@@ -85,10 +85,10 @@ str.ichimoku <- function(object, ...) {
   dims <- attr(object, "dim")
   if (is.null(dims)) {
     xlen <- length(object)
-    dates <- format.POSIXct(index.ichimoku(object, c(1L, xlen)))
+    dates <- format_POSIXct(index.ichimoku(object, c(1L, xlen)))
     cat("ichimoku object with no dimensions\nVector <numeric> w/ length:", xlen, file = stdout())
   } else {
-    dates <- format.POSIXct(index.ichimoku(object, c(1L, dims[1L])))
+    dates <- format_POSIXct(index.ichimoku(object, c(1L, dims[1L])))
     cat("ichimoku object [", dates[1L], " / ", dates[2L], "] (",
         dims[1L], ", ", dims[2L], ")", if (hasStrat(object)) " w/ strat",
         "\n <double> $", file = stdout(), sep = "")
@@ -171,7 +171,7 @@ summary.ichimoku <- function(object, strat = TRUE, ...) {
         end <- sum(!is.na(core[, "close"]))
         high <- which.max(core[1:end, "high"])
         low <- which.min(core[1:end, "low"])
-        dates <- format.POSIXct(index.ichimoku(object, c(1L, high, low, end)))
+        dates <- format_POSIXct(index.ichimoku(object, c(1L, high, low, end)))
         cat("\n            Max: ", dates[2L], " [", core[high, "high"],
             "]\nStart: ", dates[1L], " [", core[1L, "open"],
             "]   End: ", dates[4L], " [", core[end, "close"],
@@ -262,20 +262,23 @@ NULL
 #' @method coredata ichimoku
 #' @export
 #'
-coredata.ichimoku <- function(x, fmt, ...)
-  if (missing(fmt))
-    .Call(ichimoku_coredata, x) else if (is.null(attr(x, "dim")))
-      `attributes<-`(
-        x,
-        list(names = if (is.character(fmt)) format.POSIXct(index.ichimoku(x), format = fmt) else
-          format.POSIXct(index.ichimoku(x)))
-      ) else
-        `attributes<-`(
-          x,
-          list(dim = attr(x, "dim"),
-               dimnames = list(if (is.character(fmt)) format.POSIXct(index.ichimoku(x), format = fmt) else
-                 format.POSIXct(index.ichimoku(x)), attr(x, "dimnames")[[2L]]))
-        )
+coredata.ichimoku <- function(x, fmt, ...) {
+  missing(fmt) && return(.Call(ichimoku_coredata, x))
+  if (is.null(attr(x, "dim"))) {
+    `attributes<-`(
+      x,
+      list(names = if (is.character(fmt)) format.POSIXct(index.ichimoku(x), format = fmt) else
+        format_POSIXct(index.ichimoku(x)))
+    )
+  } else {
+    `attributes<-`(
+      x,
+      list(dim = attr(x, "dim"),
+           dimnames = list(if (is.character(fmt)) format.POSIXct(index.ichimoku(x), format = fmt) else
+             format_POSIXct(index.ichimoku(x)), attr(x, "dimnames")[[2L]]))
+    )
+  }
+}
 
 #' @name index
 #' @rdname index.ichimoku
@@ -311,7 +314,7 @@ NULL
 #' @method index ichimoku
 #' @export
 #'
-index.ichimoku <- function(x, subset, ...)
-  if (missing(subset))
-    .Call(ichimoku_index, x) else
-      .Call(ichimoku_psxct, .subset(attr(x, "index"), subset))
+index.ichimoku <- function(x, subset, ...) {
+  missing(subset) && return(.Call(ichimoku_index, x))
+  .Call(ichimoku_psxct, .subset(attr(x, "index"), subset))
+}

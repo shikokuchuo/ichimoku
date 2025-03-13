@@ -1,4 +1,4 @@
-# Copyright (C) 2021-2023 Hibiki AI Limited <info@hibiki-ai.com>
+# Copyright (C) 2021-2025 Hibiki AI Limited <info@hibiki-ai.com>
 #
 # This file is part of ichimoku.
 #
@@ -78,7 +78,7 @@ iplot <- function(x,
   tformat <- if (attr(x, "periodicity") > 80000) "%F" else "%F %T"
   start <- index.ichimoku(x, 1L)
   end <- index.ichimoku(x, dims[1L])
-  xadj <- if (nchar(format.POSIXct(start)) > 10) -17 else 5
+  xadj <- if (nchar(format_POSIXct(start)) > 10) -17 else 5
 
   ui <- fluidPage(
     tags$head(tags$style("
@@ -210,7 +210,7 @@ drawInfotip <- function(sidx, sdata, left, top, type, custom = NULL) {
         <div style='text-align: center; margin: 0; padding: 0'>L: %.5g</div>
         <div style='margin: 2px 0 0 0; padding: 0'>Tenkan: %.5g<br />Kijun: %.5g<br />Senkou A: %.5g<br />Senkou B: %.5g<br />Chikou: %.5g%s</div>",
         if (is.na(cd) || cd == 0) "&#8212;" else if (cd == 1) "&#9651;" else if (cd == -1) "&#9660;",
-        format.POSIXct(sidx), sdata[["high"]], sdata[["open"]], sdata[["close"]], sdata[["low"]],
+        format_POSIXct(sidx), sdata[["high"]], sdata[["open"]], sdata[["close"]], sdata[["low"]],
         sdata[["tenkan"]], sdata[["kijun"]], sdata[["senkouA"]], sdata[["senkouB"]], sdata[["chikou"]],
         switch(
           type,

@@ -1,4 +1,4 @@
-# Copyright (C) 2021-2023 Hibiki AI Limited <info@hibiki-ai.com>
+# Copyright (C) 2021-2025 Hibiki AI Limited <info@hibiki-ai.com>
 #
 # This file is part of ichimoku.
 #
@@ -284,7 +284,7 @@ mlgrid <- function(x,
 
   veclist <- switch(y, none = veclist, c(list(y = target), veclist))
   grid <- do.call(cbind, veclist)
-  dimnames(grid)[[1L]] <- format.POSIXct(index.ichimoku(x))
+  dimnames(grid)[[1L]] <- format_POSIXct(index.ichimoku(x))
   grid <- .Call(ichimoku_naomit, grid)
 
   if (type == "z-score") {

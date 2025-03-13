@@ -1,4 +1,4 @@
-# Copyright (C) 2021-2023 Hibiki AI Limited <info@hibiki-ai.com>
+# Copyright (C) 2021-2025 Hibiki AI Limited <info@hibiki-ai.com>
 #
 # This file is part of ichimoku.
 #
@@ -363,6 +363,23 @@ more <- function(rows)
 #' @export
 #'
 is.ichimoku <- function(x) .Call(ichimoku_isichimoku, x)
+
+#' Format POSIXct
+#'
+#' Converts a POSIXct double timestamp into a character string much faster
+#' than \code{\link{format.POSIXct}}.
+#'
+#' @param x an object of class \sQuote{POSIXct}.
+#'
+#' @return A character string
+#'
+#' @examples
+#' format_POSIXct(Sys.time())
+#'
+#' @export
+#'
+format_POSIXct <- function(x)
+  format.POSIXlt(as.POSIXlt.POSIXct(x, tz = "UTC"), "%Y-%m-%d %H:%M:%S")
 
 #' match.arg Replacement
 #'

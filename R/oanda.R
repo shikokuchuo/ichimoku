@@ -1,4 +1,4 @@
-# Copyright (C) 2021-2024 Hibiki AI Limited <info@hibiki-ai.com>
+# Copyright (C) 2021-2025 Hibiki AI Limited <info@hibiki-ai.com>
 #
 # This file is part of ichimoku.
 #
@@ -941,7 +941,7 @@ oanda_view <- function(market = c("allfx", "bonds", "commodities", "fx", "metals
          timestamp = time)
   )
 
-  cat("\n", format.POSIXct(time), " / ", price, "\n", file = stdout(), sep = "")
+  cat("\n", format_POSIXct(time), " / ", price, "\n", file = stdout(), sep = "")
   print(df)
 
 }
@@ -980,7 +980,7 @@ oanda_quote <- function(instrument, price = c("M", "B", "A"), server, apikey) {
                     server = server, apikey = apikey, .validate = FALSE)
   pctchg <- 100 * (data[["c"]] / data[["o"]] - 1)
   cat(sprintf("%s %s open: %.6g high: %.6g low: %.6g last:\u001b[7m %.6g \u001b[27m %%chg: %.4f %s\n",
-              instrument, format.POSIXct(.Call(ichimoku_psxct, data[["t"]])),
+              instrument, format_POSIXct(.Call(ichimoku_psxct, data[["t"]])),
               data[["o"]], data[["h"]], data[["l"]], data[["c"]], pctchg, price), file = stdout())
 
 }
@@ -1063,7 +1063,7 @@ oanda_positions <- function(instrument, time, server, apikey) {
     scale_y_continuous(),
     labs(x = "Price", y = "% short / % long",
          title = paste0("OANDA Position Book: ", instrument, " at ",
-                        format.POSIXct(timestamp), " / Current Price: ", currentprice)),
+                        format_POSIXct(timestamp), " / Current Price: ", currentprice)),
     coord_flip(),
     theme_ichimoku_light()
   )
@@ -1158,7 +1158,7 @@ oanda_orders <- function(instrument, time, server, apikey) {
     scale_y_continuous(),
     labs(x = "Price", y = "% short / % long",
          title = paste0("OANDA Order Book: ", instrument, " at ",
-                        format.POSIXct(timestamp), " / Current Price: ", currentprice)),
+                        format_POSIXct(timestamp), " / Current Price: ", currentprice)),
     coord_flip(),
     theme_ichimoku_light()
   )

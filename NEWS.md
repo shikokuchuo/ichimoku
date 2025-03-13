@@ -1,5 +1,9 @@
 # ichimoku 1.5.5.9000 (development)
 
+#### New features:
+
+* `format_POSIXct()` is a much faster equivalent of the base R `format.POSIXct()`, used internally and exported as a utility.
+
 # ichimoku 1.5.5
 
 #### New features:

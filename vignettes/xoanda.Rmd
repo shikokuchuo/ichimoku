@@ -538,7 +538,7 @@ layers <- list(
   ggplot2::scale_y_continuous(),
   ggplot2::labs(x = "Price", y = "% short / % long",
                 title = paste0("OANDA Position Book: ", instrument, " at ",
-                        format.POSIXct(timestamp), " / Current Price: ", currentprice)),
+                        format_POSIXct(timestamp), " / Current Price: ", currentprice)),
   ggplot2::coord_flip(),
   ichimoku:::theme_ichimoku_light()
 )
