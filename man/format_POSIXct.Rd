@@ -14,9 +14,12 @@ A character string
 }
 \description{
 Converts a POSIXct double timestamp into a character string much faster
-than \code{\link{format.POSIXct}}.
+than \code{\link{format.POSIXct}}, with the same output as the method
+default.
 }
 \examples{
-format_POSIXct(Sys.time())
+time <- Sys.time()
+format(time)
+format_POSIXct(time)
 
 }
