@@ -150,4 +150,16 @@ data2
 df_append(data1, data2)
 ```
 
+## Timestamp Utilities
+
+#### format_POSIXct()
+
+Formats a double POSIXct timestamp in the same way as the default `fomat.POSIXct()`, without any additional customization options. This provides a much faster implementation.
+
+```{r formatposixct}
+time <- Sys.time()
+format(time)
+format_POSIXct(time)
+```
+
 ---
