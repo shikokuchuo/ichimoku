@@ -66,9 +66,6 @@
 #'     retrieve the aggregate OANDA fxTrade order / position book.
 #' }
 #'
-#' @encoding UTF-8
-#' @author Charlie Gao \email{charlie.gao@@shikokuchuo.net}
-#'     (\href{https://orcid.org/0000-0002-0750-061X}{ORCID})
 #' @references Sasaki, H. (1996), \emph{ichimoku kinkouhyou no kenkyuu}. Tokyo,
 #'     Japan: Toushi Radar.
 #'
