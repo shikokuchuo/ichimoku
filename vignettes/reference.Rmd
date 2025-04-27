@@ -9,7 +9,8 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r}
+#| include: false
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -60,7 +61,8 @@ However, there is no reason for the technique not to evolve, and to reflect chan
 Finally, the use originated with daily candlesticks, and the most valid interpretation remains for daily data. However, it is equally used today for both shorter, e.g. 4-hour or hourly, and longer, e.g. weekly or monthly, charts.
 
 ## A Typical Workflow
-```{r setup}
+```{r}
+#| label: setup
 library(ichimoku)
 ```
 
@@ -70,14 +72,18 @@ ichimoku works with data frames and tabular data. The `ichimoku()` function hand
 
 ichimoku incorporates an interface with the OANDA fxTrade API to return data for major currencies, metals, commodities, government bonds and stock indices. Please refer to the [OANDA vignette](xoanda.html).
 
-```{r oandadatanotrun, eval = FALSE}
+```{r}
+#| label: oandadatanotrun
+#| eval: false
 # ichimoku can create clouds directly from OANDA data, for example:
 cloud <- ichimoku(oanda("USD_JPY"))
 ```
 
 ichimoku has been designed to be fully pipeable and interfaces well with other R packages that return financial data, or indeed the OANDA functions from the package itself:
 
-```{r pipe, eval = FALSE}
+```{r}
+#| label: pipe
+#| eval: false
 # Using R 4.1's new pipe operator:
 oanda("USD_JPY") |> ichimoku() |> plot()
 # Or equally using the 'magrittr' pipe:
@@ -88,7 +94,8 @@ oanda("USD_JPY") %>% ichimoku() %>% plot()
 
 The requirement on the input data is minimal: a series of prices indexed by valid timestamps. 
 
-```{r viewdata}
+```{r}
+#| label: viewdata
 # Sample OHLC price data is assigned to data frame 'TKR':
 TKR <- sample_ohlc_data
 head(TKR)
@@ -127,7 +134,8 @@ Optional arguments:
 - `...` additional arguments, for instance 'holidays', passed along to `tradingDays()` for calculating the future cloud on daily data
 - `keep.data` set to TRUE to retain additional data present in the input object as additional columns and/or attributes. Note: only columns of numeric type or type coercible to numeric are preserved, otherwise NAs are introduced.
 
-```{r ichimoku}
+```{r}
+#| label: ichimoku
 cloud <- ichimoku(TKR)
 
 print(cloud, plot = FALSE, width = 180)
@@ -137,13 +145,15 @@ The returned output is designed to fit the screen; call `more()` to display more
 
 Use `str()` for a compact display of the object structure:
 
-```{r ichimokustr}
+```{r}
+#| label: ichimokustr
 str(cloud)
 ```
 
 The summary method using `summary()` will also provide a brief description of the data:
 
-```{r ichimokusummary}
+```{r}
+#| label: ichimokusummary
 summary(cloud)
 ```
 
@@ -159,7 +169,8 @@ Calling `ichimoku()` on an ichimoku object containing a strategy will return the
 
 The input object may contain additional data not required for ichimoku analysis, such as volume etc. To retain such data in the ichimoku object, specify `keep.data = TRUE` when calling `ichimoku()`.
 
-```{r ichimokupreserve}
+```{r}
+#| label: ichimokupreserve
 kumo <- ichimoku(TKR, keep.data = TRUE)
 
 kumo[, "volume"]
@@ -177,7 +188,9 @@ To define other dates as non-trading days, a vector of custom holidays may be su
 
 If the relevant market trades continuously on a 24/7 basis, specify 'holidays = NULL'. This will bypass the logic of `tradingDays()` and return all dates when calculating the future cloud.
 
-```{r holidays, eval = FALSE}
+```{r}
+#| label: holidays
+#| eval: false
 # Holidays can be specified directly via a vector of dates:
 ichimoku(TKR, holidays = c("2020-01-13", "2020-02-11", "2020-02-24"))
 
@@ -200,7 +213,8 @@ The following generic functions have optimised S3 methods for ichimoku objects:
 
 The below shows how to re-create an ichimoku object from its components:
 
-```{r bind}
+```{r}
+#| label: bind
 index <- index(cloud)
 core <- coredata(cloud)
 
@@ -226,7 +240,8 @@ Call `plot()` on an ichimoku object to visualize the cloud chart.
 
 The example below demonstrates some of the arguments that can be supplied to customise the plot.
 
-```{r plot2}
+```{r}
+#| label: plot2
 #| fig.alt: ichimoku cloud plot of sample data series
 plot(cloud, window = "2020-05/", ticker = "SYM (JSE)", subtitle = "Sample Data Series")
 ```
@@ -247,7 +262,9 @@ The following arguments for customisation are shared across `plot()` and `iplot(
 
 `plot()` also permits a user-defined `theme`, in which case a vector of 12 colour values (hex codes or names) should be supplied. Each colour value corresponds to a different element of the chart. As an example, the 'mono' theme can be specified as:
 
-```{r usertheme, eval=FALSE}
+```{r}
+#| label: usertheme
+#| eval: false
 c("#d9d9d9", "#d7d7d7", "#d1d1d1", "#737373", "#1f1f1f", "#b8b8b8", "#1a1a1a", "#1a1a1a", "#1a1a1a", "#ffffff", "#333333", "#1a1a1a")
 ```
 
@@ -264,7 +281,9 @@ The R-type line is calculated as 100 - 100 / (1 + [26] period mean open to close
 
 Note that this corresponds to the usual RSI oscillator definition, although not identical as gains/losses are calculated with reference to each period's open rather than the previous close. Note also that the R-type oscillator is calculated consistently and does not employ a roll-forward mechanism based on previous oscillator values like the RSI.
 
-```{r plotr, eval=FALSE}
+```{r}
+#| label: plotr
+#| eval: false
 # To plot an R-type oscillator:
 plot(cloud, type = "r")
 ```
@@ -275,7 +294,8 @@ The fast S-type line is calculated as 100 times the ratio of the closing price m
 
 Note the difference to the usual stochastic oscillator definition where the slow line is a 3-period moving average of the fast line.
 
-```{r plots}
+```{r}
+#| label: plots
 #| fig.alt: ichimoku cloud plot using solarized theme, with windowed data and an S-type oscillator sub-plot
 plot(cloud, window = "2020-04-01/2020-12-01", theme = "solarized", type = "s")
 ```
@@ -288,7 +308,8 @@ The character string supplied to 'custom' is a regular expression pattern that i
 
 To view a custom sub-plot, type must be specified as either 'bar' or 'line' as the type setting takes precedence (with a default of 'none').
 
-```{r plotbar}
+```{r}
+#| label: plotbar
 #| fig.alt: ichimoku cloud plot using mono theme and with a bar-type sub-plot
 plot(kumo, window = "2020-04/2020-11", theme = "mono", type = "bar", custom = "volume")
 ```
@@ -301,7 +322,9 @@ Internally, ichimoku's `plot()` method is a wrapper for `autoplot()`. To access 
 
 To produce an interactive plot, use ichimoku's `iplot()` function, which launches a Shiny app. 
 
-```{r iplot, eval=FALSE}
+```{r}
+#| label: iplot
+#| eval: false
 # For an interactive plot:
 iplot(cloud)
 ```
@@ -332,7 +355,9 @@ Archive files created by this function are stored in the native RData format for
 
 `archive()` for write operations will take 2 arguments: the object to be written, and the file path/name of the file to be stored. If the second argument is left empty, a system dialog will be opened allowing the file save location to be set interactively. A confirmation is printed to the console that the file has been written.
 
-```{r archivew, eval=FALSE}
+```{r}
+#| label: archivew
+#| eval: false
 # Write object to file:
 archive(object, "path/filename")
 # Leave second argument empty to choose file save location from a system dialog:
@@ -343,7 +368,9 @@ archive(object, )
 
 `archive()` for read operations takes a single argument: the file path/name of the file to be read. Alternatively, if no arguments are specified, a system dialog will be opened allowing a file to be chosen interactively. The return value of the function can be assigned to an object. A confirmation is printed to the console once the file has been read.
 
-```{r archiver, eval=FALSE}
+```{r}
+#| label: archiver
+#| eval: false
 # Read from file to object:
 object <- archive("path/filename")
 # Choose a file from an interactive system dialog:

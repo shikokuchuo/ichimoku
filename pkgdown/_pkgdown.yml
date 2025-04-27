@@ -18,3 +18,5 @@ reference:
 - contents:
   - ichimoku-package
   - matches("^[a-zA-Z]*")
+development:
+  mode: auto

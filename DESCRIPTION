@@ -1,31 +1,28 @@
-Package: ichimoku
 Type: Package
+Package: ichimoku
 Title: Visualization and Tools for Ichimoku Kinko Hyo Strategies
 Version: 1.5.6.9000
-Description: An implementation of 'Ichimoku Kinko Hyo', also commonly known as
-    'cloud charts'. Static and interactive visualizations with tools for
-    creating, backtesting and development of quantitative 'ichimoku' strategies.
-    As described in Sasaki (1996, ISBN:4925152009), the technique is a refinement
-    on candlestick charting, originating from Japan and now in widespread use in
-    technical analysis worldwide. Translating as 'one-glance equilibrium chart',
-    it allows the price action and market structure of financial securities to
-    be determined 'at-a-glance'. Incorporates an interface with the OANDA
-    fxTrade API <https://developer.oanda.com/> for retrieving historical and
-    live streaming price data for major currencies, metals, commodities,
-    government bonds and stock indices.
-Authors@R: 
-    c(person(given = "Charlie",
-             family = "Gao",
-             role = c("aut", "cre"),
-             email = "charlie.gao@shikokuchuo.net",
-             comment = c(ORCID = "0000-0002-0750-061X")),
-      person(given = "Hibiki AI Limited",
-             role = "cph"))
-BugReports: https://github.com/shikokuchuo/ichimoku/issues
+Authors@R: c(
+    person("Charlie", "Gao", , "charlie.gao@shikokuchuo.net", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-0750-061X")),
+    person("Hibiki AI Limited", role = "cph")
+  )
+Description: An implementation of 'Ichimoku Kinko Hyo', also commonly
+    known as 'cloud charts'. Static and interactive visualizations with
+    tools for creating, backtesting and development of quantitative
+    'ichimoku' strategies.  As described in Sasaki (1996,
+    ISBN:4925152009), the technique is a refinement on candlestick
+    charting, originating from Japan and now in widespread use in
+    technical analysis worldwide. Translating as 'one-glance equilibrium
+    chart', it allows the price action and market structure of financial
+    securities to be determined 'at-a-glance'. Incorporates an interface
+    with the OANDA fxTrade API <https://developer.oanda.com/> for
+    retrieving historical and live streaming price data for major
+    currencies, metals, commodities, government bonds and stock indices.
 License: GPL (>= 3)
-URL: https://shikokuchuo.net/ichimoku/, https://github.com/shikokuchuo/ichimoku/
-Encoding: UTF-8
-LazyData: true
+URL: https://shikokuchuo.net/ichimoku/,
+    https://github.com/shikokuchuo/ichimoku/
+BugReports: https://github.com/shikokuchuo/ichimoku/issues
 Depends: 
     R (>= 3.5)
 Imports: 
@@ -42,7 +39,10 @@ Suggests:
     knitr,
     rmarkdown,
     testthat (>= 3.0.0)
-VignetteBuilder: knitr
-RoxygenNote: 7.3.2
-Config/testthat/edition: 3
+VignetteBuilder: 
+    knitr
 Config/build/compilation-database: true
+Config/testthat/edition: 3
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.3.2.9000

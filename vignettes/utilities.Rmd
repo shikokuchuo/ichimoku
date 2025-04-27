@@ -9,7 +9,8 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r}
+#| include: false
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -17,7 +18,8 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+```{r}
+#| label: setup
 library(ichimoku)
 ```
 ## Introduction
@@ -38,7 +40,8 @@ Takes the following arguments:
 - `holidays` (optional) a vector, or function which outputs a vector, of dates defined as holidays. Set to NULL for a continuously-traded market. If not specified, New Year's and Christmas day are defined as holidays by default.
 - `...` other arguments not used by this function.
 
-```{r tradingDays}
+```{r}
+#| label: tradingDays
 dates <- seq(from = as.POSIXct("2020-01-01"), by = "1 day", length.out = 7)
 dates
 tradingDays(dates)
@@ -56,7 +59,8 @@ For objects created by the ichimoku package, a list of attributes specific to th
 
 For other objects, a list of attributes that are non-standard for matrix / data.frame / xts objects is returned, or else invisible NULL if none are present.
 
-```{r look}
+```{r}
+#| label: look
 cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 look(cloud)
 
@@ -80,7 +84,8 @@ Takes the following arguments:
 - `x`  the 'xts' object to convert to 'data.frame'.
 - `keep.attrs` (optional) if set to TRUE, will preserve any custom attributes set on the original object.
 
-```{r xtsdf}
+```{r}
+#| label: xtsdf
 cloud <- ichimoku(sample_ohlc_data)
 df <- xts_df(cloud)
 str(df)
@@ -99,7 +104,8 @@ Takes the following arguments:
 - `x`  the matrix to convert to 'data.frame'.
 - `keep.attrs` (optional) if set to TRUE, will preserve any custom attributes set on the original object.
 
-```{r matrixdf}
+```{r}
+#| label: matrixdf
 cloud <- ichimoku(sample_ohlc_data)
 mcloud <- as.matrix(cloud)
 df <- matrix_df(mcloud)
@@ -119,7 +125,8 @@ Takes an arbitrary number of arguments:
 
 Can be used to join price dataframes retrieved by `oanda()`. The function is designed to join complete historical data. If the data to be merged contains data with incomplete periods, all entries are preserved rather than updated. If incomplete periods are detected within the data, a warning is issued, and the resulting dataframe should be manually inspected in case it contains unwanted duplicates. Use `df_append()` for updating dataframes with new values.
 
-```{r dfmerge}
+```{r}
+#| label: dfmerge
 data1 <- sample_ohlc_data[1:6, ]
 data1
 data2 <- sample_ohlc_data[4:10, ]
@@ -142,7 +149,8 @@ Can be used to update price dataframes retrieved by `oanda()`. The function is d
 
 If the attribute specified by 'keep.attr' is present in 'new', for example the 'timestamp' in pricing data returned by `oanda()`, this is retained. If the attribute is not found in 'new', the argument has no effect. All other custom attributes are dropped.
 
-```{r dfappend}
+```{r}
+#| label: dfappend
 data1 <- sample_ohlc_data[1:8, ]
 data1
 data2 <- sample_ohlc_data[7:10, ]
@@ -156,7 +164,8 @@ df_append(data1, data2)
 
 Formats a double POSIXct timestamp in the same way as the default `fomat.POSIXct()`, without any additional customization options. This provides a much faster implementation.
 
-```{r formatposixct}
+```{r}
+#| label: formatposixct
 time <- Sys.time()
 format(time)
 format_POSIXct(time)

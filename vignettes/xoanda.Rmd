@@ -9,7 +9,8 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r}
+#| include: false
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -50,7 +51,8 @@ As an alternative, the package looks for an environment variable `OANDA_API_KEY`
 
 If you are using an access token for a live (real money) account, you will want to call `oanda_switch()` at the beginning of each session; this switches the default server from the practice server to the live server. Settings will only persist until the end of the session.
 
-```{r oandaswitch}
+```{r}
+#| label: oandaswitch
 library(ichimoku)
 
 oanda_switch()
@@ -84,7 +86,9 @@ The arguments to the function are phrased identically to that of the API itself 
 
 Note: if both `from` and `to` are specified and the request would result in over 5000 periods being returned, the function prompts the user to confirm if multiple requests should be submitted. Unless the user response is "n" or "no", the data will proceed to be downloaded in batches and merged together into a single dataframe. The function is safe for use in non-interactive settings as in such cases the download will proceed automatically without prompting.
 
-```{r oanda, eval=FALSE}
+```{r}
+#| label: oanda
+#| eval: false
 oanda("USD_JPY", count = 3, from = "2010-11-01", price = "B")
 #>                  time   open   high    low  close volume complete
 #> 1 2010-11-01 21:00:00 80.275 81.504 80.225 80.501  22291     TRUE
@@ -118,7 +122,9 @@ The arguments are identical to `oanda()` above with the addition of:
 
 The arguments 'from' and 'to' are excluded as they are not relevant in this context.
 
-```{r oandac, eval=FALSE}
+```{r}
+#| label: oandac
+#| eval: false
 # For a live Palladium price chart:
 oanda_chart("XPD_USD")
 ```
@@ -129,7 +135,9 @@ Note that the periods displayed on the chart will be fewer than the 'count' spec
 
 On exit from the function, the ichimoku object underlying the chart will be returned (invisibly). This allows the data to be saved simply by assigning to an object.
 
-```{r oandacs, eval=FALSE}
+```{r}
+#| label: oandacs
+#| eval: false
 # To access the data, simply assign the return value to an object:
 cloud <- oanda_chart("XPD_USD")
 ```
@@ -140,7 +148,9 @@ Create an interactive R Shiny session for working with real-time Ichimoku cloud 
 
 As all parameters can be set interactively in-app, `oanda_studio()` may be called without specifying any arguments. Otherwise, parameters may be set beforehand in the same way as `oanda_chart()`.
 
-```{r oandas, eval=FALSE}
+```{r}
+#| label: oandas
+#| eval: false
 oanda_studio()
 ```
 ![screenshot of oanda_studio instance showing the data cursor](oanda-studio.jpg)
@@ -159,7 +169,9 @@ This button uses `archive()` to save the ichimoku object to disk. The filename w
 
 To read back the file, use `archive()`:
 
-```{r archive, eval=FALSE}
+```{r}
+#| label: archive
+#| eval: false
 # Supply the quoted file path / name, for example:
 cloud <- archive("~/Downloads/SUGAR_USD_D_A.rda")
 
@@ -179,7 +191,9 @@ The arguments are as follows:
 
 The 'server' and 'apikey' arguments are also available if required.
 
-```{r oandastream, eval=FALSE}
+```{r}
+#| label: oandastream
+#| eval: false
 # Streaming session will end with data automatically returned after 600 secs (10 mins):
 data <- oanda_stream("UK10YB_GBP", limit = 600)
 #> Streaming data... Press 'Esc' to return
@@ -213,7 +227,9 @@ A convenience function that outputs to the console the latest one-line price quo
 
 The output format is as follows: instrument, timestamp, daily open, high, low and last prices, daily percentage change (from the open), and the pricing component (M for mid, B for bid, A for ask).
 
-```{r oandaq, eval = FALSE}
+```{r}
+#| label: oandaq
+#| eval: false
 oanda_quote("USD_JPY")
 #> USD_JPY 2021-10-05 16:29:44 open: 110.931  high: 111.564  low: 110.871  last: 111.398  %chg: 0.421 M
 ```
@@ -226,7 +242,9 @@ The available markets are : 'allfx' for all available currencies, 'bonds' for go
 
 The first retrieved timestamp and the pricing component are printed, followed by the dataframe showing similar data to `oanda_quote()` for all instruments in the selected market. The data is ordered by the daily percentage change, from the most positive to the most negative.
 
-```{r oandav, eval = FALSE}
+```{r}
+#| label: oandav
+#| eval: false
 oanda_view()
 Enter market [a]llfx [b]onds [c]ommodities [f]x [m]etals [s]tocks: c
 #> Retrieving commodities [..........]
@@ -252,11 +270,15 @@ Provides a summary of the aggregate orders/positions held by OANDA fxTrade clien
 
 The data is returned as a dataframe, with parameters saved as attributes which can be viewed with `look()`. A chart showing the percentage long and short orders/positions at each price level is output to the graphical device.
 
-```{r oandapos, eval=FALSE}
+```{r}
+#| label: oandapos
+#| eval: false
 df <- oanda_positions("GBP_JPY")
 ```
 
-```{r oandaposchart, echo=FALSE}
+```{r}
+#| label: oandaposchart
+#| echo: false
 #| fig.alt: sample positions chart for GBPJPY
 df <- structure(list(price = c(124.75, 124.85, 124.9, 124.95, 125.05, 
 125.2, 125.25, 125.3, 125.35, 125.4, 125.5, 125.6, 125.7, 125.85, 
@@ -556,10 +578,14 @@ The list of financial instruments available for your account may be retrieved by
 
 The list below serves as a reference only and may differ from those actually available for your account type and/or country/region.
 
-```{r oandai, eval=FALSE}
+```{r}
+#| label: oandai
+#| eval: false
 oanda_instruments()
 ```
-```{r ins, echo=FALSE}
+```{r}
+#| label: ins
+#| echo: false
 print(ichimoku:::.oanda_instruments)
 ```
 

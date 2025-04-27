@@ -4,7 +4,8 @@ output: github_document
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-```{r, include = FALSE}
+```{r}
+#| include: false
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -19,7 +20,7 @@ knitr::opts_chunk$set(
 [![CRAN Status](https://www.r-pkg.org/badges/version/ichimoku?color=00008b)](https://CRAN.R-project.org/package=ichimoku)
 [![ichimoku status badge](https://shikokuchuo.r-universe.dev/badges/ichimoku)](https://shikokuchuo.r-universe.dev/ichimoku)
 [![R-CMD-check](https://github.com/shikokuchuo/ichimoku/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/shikokuchuo/ichimoku/actions/workflows/R-CMD-check.yaml)
-[![codecov](https://codecov.io/gh/shikokuchuo/ichimoku/graph/badge.svg)](https://app.codecov.io/gh/shikokuchuo/ichimoku)
+[![Codecov test coverage](https://codecov.io/gh/shikokuchuo/ichimoku/graph/badge.svg)](https://app.codecov.io/gh/shikokuchuo/ichimoku)
 [![DOI](https://zenodo.org/badge/367928545.svg)](https://zenodo.org/badge/latestdoi/367928545)
 <!-- badges: end -->
 
@@ -37,13 +38,15 @@ install.packages("ichimoku")
 
 ## Quick Start
 
-```{r load}
+```{r}
+#| label: load
 library(ichimoku)
 ```
 
 Simply `ichimoku()` and `plot()`:
 
-```{r ichimoku}
+```{r}
+#| label: ichimoku
 cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 plot(cloud, window = "2020-05/")
 ```
@@ -51,7 +54,8 @@ plot(cloud, window = "2020-05/")
 
 `autostrat()` to automatically evaluate and rank top-performing strategies:
 
-```{r auto}
+```{r}
+#| label: auto
 autostrat(cloud, n = 3)
 ```
 

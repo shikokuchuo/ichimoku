@@ -9,7 +9,8 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r}
+#| include: false
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -17,7 +18,8 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+```{r}
+#| label: setup
 library(ichimoku)
 ```
 ## Introduction
@@ -40,7 +42,8 @@ Risk warning: past results are not necessarily indicative of future performance,
 
 To create an ichimoku object from the price data.
 
-```{r ichimoku}
+```{r}
+#| label: ichimoku
 # Simulated OHLC pricing data is assigned to data frame 'TKR':
 TKR <- sample_ohlc_data
 cloud <- ichimoku(TKR)
@@ -54,7 +57,8 @@ Here 'c1' and 'c2' are the quoted column names of the ichimoku object representi
 
 Note: the indicator condition remains of the form c1 > c2 even for short trades. Hence please take care, for example, when inverting 'long while close > tenkan' to 'short while close < tenkan', this should actually be formulated as 'short while tenkan > close'.
 
-```{r strat}
+```{r}
+#| label: strat
 strat <- strat(cloud, c1 = "cloudB", c2 = "kijun")
 print(strat[100:105, ], plot = FALSE)
 ```
@@ -95,7 +99,8 @@ If 'type' is set to 3, the strategy will be formulated as an asymmetric strategy
 
 A summary of the strategy is saved as an attribute to the ichimoku object and can be accessed by the `summary()` method for ichimoku objects.
 
-```{r summary}
+```{r}
+#| label: summary
 summary(strat)
 ```
 
@@ -111,7 +116,8 @@ See [strategy summary specification](#strategy-summary-specification) for detail
 
 ### 4. Visualize by calling `plot()` or `iplot()`.
 
-```{r plot}
+```{r}
+#| label: plot
 #| fig.alt: strategy-augmented ichimoku cloud plot using dark theme
 plot(strat, theme = "dark")
 ```
@@ -124,7 +130,8 @@ To view the original chart without the strategy, simply pass the argument `strat
 
 `stratcombine()` can be used to create custom combined strategies from existing strategies contained in ichimoku objects 's1' and 's2' to form 's1 & s2'.
 
-```{r combine}
+```{r}
+#| label: combine
 strat2 <- strat(cloud, "kijun", "tenkan")
 
 newstrat <- stratcombine(strat, strat2)
@@ -141,7 +148,9 @@ The benchmark returns for all periods are saved as 'logret' (log returns) and 'r
 
 As the ichimoku object inherits the 'xts' class, these columns may be fed directly into other econometrics or time series analysis packages such as 'PerformanceAnalytics', as per the example below.
 
-```{r perfana, eval=FALSE}
+```{r}
+#| label: perfana
+#| eval: false
 library(PerformanceAnalytics)
 # To chart performance comparison of strategy vs benchmark, daily returns and drawdowns
 charts.PerformanceSummary(strat[, c("sret", "ret")])
@@ -160,7 +169,8 @@ The analytic capability of R can be leveraged to generate and evaluate all possi
 - `level` [default 1] to return simple strategies. For complex strategies, set `level = 2` to return combined strategies of the form 's1 & s2' or `level = 3` to return asymmetric strategies of the form 's1 x s2'
 - `quietly` if set to TRUE, will suppress printing of additional output to the console and return quietly
 
-```{r autostrat}
+```{r}
+#| label: autostrat
 autostrat(cloud, n = 3)
 ```
 
@@ -180,7 +190,8 @@ Note: as SenkouA, SenkouB, cloudT and cloudB are used in conjunction with other 
 
 Set the argument `level = 2` to `autostrat()` to test all strategies with a combination of up to 2 indicator conditions, i.e. strat() with type = 2.
 
-```{r autostrat2}
+```{r}
+#| label: autostrat2
 autostrat(cloud, n = 3, dir = "short", level = "2")
 ```
 
@@ -188,7 +199,8 @@ Set the argument `level = 3` to `autostrat()` to test all strategies using an as
 
 Note that level 3 autostrat is considered somewhat experimental as the results will tend to have higher sensitivity to the data and in particular the starting conditions.
 
-```{r autostrat3}
+```{r}
+#| label: autostrat3
 autostrat(cloud, n = 3, dir = "long", level = "3")
 ```
 
@@ -206,19 +218,22 @@ The 3 basic types of grid are shown below.
  
 'boolean' produces a '1' or '0' depending on whether the condition c1_c2 (read c1 > c2) is met:
 
-```{r mlgrid}
+```{r}
+#| label: mlgrid
 mlgrid(cloud, y = "logret", dir = "long", type = "boolean", unique = TRUE)[100:105, 1:4]
 ```
 
 'numeric' produces the numeric difference of c1 - c2:
 
-```{r mlgrid2}
+```{r}
+#| label: mlgrid2
 mlgrid(cloud, y = "ret", dir = "short", type = "numeric", unique = FALSE)[100:105, 1:4]
 ```
 
 'z-score' produces the standard score of a 'numeric' type grid:
 
-```{r mlgrid3}
+```{r}
+#| label: mlgrid3
 mlgrid(cloud, y = "ret", dir = "short", type = "z-score", unique = FALSE)[100:105, 1:4]
 ```
 
@@ -240,7 +255,8 @@ Takes the following optional arguments:
 - `signif` [default 0.2] set a significance threshold for which if 'p' is equal or lower, the element will be starred with a '*'. Note: this value may be freely set and the default of 0.2 is arbitrary with no special significance
 - `quietly` if set to TRUE, will suppress printing of additional output to the console and return quietly
 
-```{r relative}
+```{r}
+#| label: relative
 relative(cloud, signif = 0.4)[1:10, ]
 ```
 
