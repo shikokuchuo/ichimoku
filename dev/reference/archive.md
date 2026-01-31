@@ -70,11 +70,11 @@ cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 file <- tempfile()
 
 archive(cloud, file)
-#> Archive written to '/tmp/RtmpdW84iQ/file1d044c58c050'
+#> Archive written to '/tmp/RtmpBYui19/file1c8e5db0eb2a'
 #> SHA256: f04ccb6b8869372733acb7ad07d468624e58b1b8ee9d6a715ab13e698fd1373b
 
 restored <- archive(file)
-#> Archive read from '/tmp/RtmpdW84iQ/file1d044c58c050'
+#> Archive read from '/tmp/RtmpBYui19/file1c8e5db0eb2a'
 #> Data verified by SHA256: f04ccb6b8869372733acb7ad07d468624e58b1b8ee9d6a715ab13e698fd1373b
 
 unlink(file)
