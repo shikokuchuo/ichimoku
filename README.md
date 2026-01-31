@@ -32,10 +32,10 @@ government bonds and stock indices.
 
 ## Installation
 
-Install ichimoku from CRAN:
+Install ichimoku from R-universe:
 
 ``` r
-install.packages("ichimoku")
+install.packages('ichimoku', repos = c('https://shikokuchuo.r-universe.dev', 'https://cloud.r-project.org'))
 ```
 
 ## Quick Start
