@@ -28,7 +28,7 @@ jobs:
           - {os: ubuntu-latest,    r: 'oldrel-1'}
           - {os: ubuntu-22.04,     r: 'oldrel-2'}
           - {os: macOS-latest,     r: 'release'}
-          - {os: macOS-13,         r: 'oldrel-4'}
+          - {os: macOS-15,         r: 'oldrel-4'}
           - {os: windows-latest,   r: 'release'}
           - {os: windows-latest,   r: 'oldrel-3'}
 
