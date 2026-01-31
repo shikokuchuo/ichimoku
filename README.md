@@ -5,10 +5,10 @@
 
 <!-- badges: start -->
 
-[![CRAN
-Status](https://www.r-pkg.org/badges/version/ichimoku?color=00008b)](https://CRAN.R-project.org/package=ichimoku)
 [![ichimoku status
 badge](https://shikokuchuo.r-universe.dev/badges/ichimoku)](https://shikokuchuo.r-universe.dev/ichimoku)
+[![CRAN
+Status](https://www.r-pkg.org/badges/version/ichimoku)](https://CRAN.R-project.org/package=ichimoku)
 [![R-CMD-check](https://github.com/shikokuchuo/ichimoku/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/shikokuchuo/ichimoku/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/shikokuchuo/ichimoku/graph/badge.svg)](https://app.codecov.io/gh/shikokuchuo/ichimoku)
