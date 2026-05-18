@@ -26,9 +26,6 @@
 #include <Rinternals.h>
 #include <R_ext/Visibility.h>
 
-#define ICHIMOKU_DATAPTR(x) (void *) DATAPTR_RO(x)
-#define ICHIMOKU_VECTOR(x) ((const SEXP *) DATAPTR_RO(x))
-
 SEXP xts_IndexSymbol;
 SEXP xts_IndexTclassSymbol;
 SEXP xts_IndexTzoneSymbol;
@@ -179,7 +176,7 @@ SEXP _tbl(SEXP x, SEXP type) {
   for (R_xlen_t j = 1; j <= xwid; j++) {
     SEXP vec = Rf_allocVector(REALSXP, xlen);
     SET_VECTOR_ELT(tbl, j, vec);
-    memcpy(ICHIMOKU_DATAPTR(vec), src, vecsize);
+    memcpy(REAL(vec), src, vecsize);
     src += xlen;
   }
 
@@ -266,14 +263,14 @@ SEXP _df(SEXP x) {
   for (R_xlen_t j = 1; j <= xwid; j++) {
     SEXP vec = Rf_allocVector(REALSXP, xlen);
     SET_VECTOR_ELT(df, j, vec);
-    memcpy(ICHIMOKU_DATAPTR(vec), src, vecsize);
+    memcpy(REAL(vec), src, vecsize);
     src += xlen;
   }
 
-  idchar = Rf_coerceVector(ICHIMOKU_VECTOR(df)[5], STRSXP);
+  idchar = Rf_coerceVector(VECTOR_ELT(df, 5), STRSXP);
   SET_VECTOR_ELT(df, 5, idchar);
 
-  PROTECT(dn2 = ICHIMOKU_VECTOR(Rf_getAttrib(x, R_DimNamesSymbol))[1]);
+  PROTECT(dn2 = VECTOR_ELT(Rf_getAttrib(x, R_DimNamesSymbol), 1));
   R_xlen_t dlen = XLENGTH(dn2);
   names = Rf_allocVector(STRSXP, dlen + 2);
   Rf_namesgets(df, names);
@@ -319,7 +316,7 @@ SEXP _coredata(SEXP x) {
   SEXP core;
   R_xlen_t xlen = XLENGTH(x);
   PROTECT(core = Rf_allocVector(TYPEOF(x), xlen));
-  memcpy(ICHIMOKU_DATAPTR(core), DATAPTR_RO(x), xlen * sizeof(double));
+  memcpy(REAL(core), DATAPTR_RO(x), xlen * sizeof(double));
   Rf_dimgets(core, Rf_getAttrib(x, R_DimSymbol));
   Rf_dimnamesgets(core, Rf_getAttrib(x, R_DimNamesSymbol));
   UNPROTECT(1);
