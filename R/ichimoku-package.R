@@ -75,6 +75,7 @@
 #' @useDynLib ichimoku, .registration = TRUE, .fixes = "ichimoku"
 #' @importFrom ggplot2 aes autoplot coord_flip element_blank element_line element_rect element_text GeomCol GeomLine GeomRect GeomRibbon GeomSegment GeomVline ggplot ggplotGrob ggproto guides labs layer margin PositionIdentity rel scale_color_manual scale_fill_manual scale_x_continuous scale_y_continuous Stat StatIdentity theme theme_grey %+replace%
 #' @importFrom nanonext ncurl
+#' @importFrom secretbase jsondec sha256
 #' @importFrom shiny checkboxInput column downloadButton downloadHandler HTML fillPage fluidPage fluidRow hoverOpts invalidateLater isolate numericInput observeEvent plotOutput reactive reactiveVal renderPlot renderUI req runApp selectInput shinyApp sliderInput stopApp tags textInput uiOutput wellPanel
 #' @importFrom stats na.omit sd
 #' @importFrom utils packageVersion str
@@ -105,7 +106,6 @@
     if (i %in% c(1:3, 11:13)) Sys.sleep(0.03) else Sys.sleep(0.08)
   }
   cat("\n")
-  RcppSimdJson::is_valid_json("")
   invisible(quote(expr = ))
 }
 

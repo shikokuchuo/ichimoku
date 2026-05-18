@@ -36,11 +36,6 @@ SEXP ichimoku_TickerSymbol;
 SEXP ichimoku_dfclass;
 SEXP ichimoku_klass;
 SEXP ichimoku_tclass;
-SEXP ichimoku_int_zero;
-SEXP ichimoku_int_three;
-SEXP ichimoku_false;
-
-SEXP (*jsofun)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP) = NULL;
 
 // rolling max over a window
 SEXP _wmax(SEXP x, SEXP window) {
@@ -329,19 +324,6 @@ SEXP _isichimoku(SEXP x) {
   return Rf_ScalarLogical(Rf_inherits(x, "ichimoku"));
 }
 
-// imports from the package 'RcppSimdJson'
-SEXP _deserialize_json(SEXP json, SEXP query) {
-  if (jsofun == NULL) {
-    SEXP str, call;
-    PROTECT(str = Rf_mkString("RcppSimdJson"));
-    PROTECT(call = Rf_lang2(Rf_install("loadNamespace"), str));
-    Rf_eval(call, R_BaseEnv);
-    UNPROTECT(2);
-    jsofun = (SEXP (*)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP)) R_GetCCallable("RcppSimdJson", "_RcppSimdJson_.deserialize_json");
-  }
-  return jsofun(json, query, R_NilValue, R_NilValue, R_NilValue, ichimoku_false, R_NilValue, ichimoku_false, R_NilValue, ichimoku_int_three, ichimoku_int_zero, ichimoku_int_zero);
-}
-
 // package level registrations
 static void RegisterSymbols(void) {
   xts_IndexSymbol = Rf_install("index");
@@ -361,16 +343,10 @@ static void PreserveObjects(void) {
   R_PreserveObject(ichimoku_tclass = Rf_allocVector(STRSXP, 2));
   SET_STRING_ELT(ichimoku_tclass, 0, Rf_mkChar("POSIXct"));
   SET_STRING_ELT(ichimoku_tclass, 1, Rf_mkChar("POSIXt"));
-  R_PreserveObject(ichimoku_int_zero = Rf_ScalarInteger(0));
-  R_PreserveObject(ichimoku_int_three = Rf_ScalarInteger(3));
-  R_PreserveObject(ichimoku_false = Rf_ScalarLogical(0));
 }
 
 // # nocov start
 static void ReleaseObjects(void) {
-  R_ReleaseObject(ichimoku_false);
-  R_ReleaseObject(ichimoku_int_three);
-  R_ReleaseObject(ichimoku_int_zero);
   R_ReleaseObject(ichimoku_tclass);
   R_ReleaseObject(ichimoku_klass);
   R_ReleaseObject(ichimoku_dfclass);
@@ -381,7 +357,6 @@ static const R_CallMethodDef CallEntries[] = {
   {"_coredata", (DL_FUNC) &_coredata, 1},
   {"_create", (DL_FUNC) &_create, 6},
   {"_df", (DL_FUNC) &_df, 1},
-  {"_deserialize_json", (DL_FUNC) &_deserialize_json, 2},
   {"_index", (DL_FUNC) &_index, 1},
   {"_isichimoku", (DL_FUNC) &_isichimoku, 1},
   {"_look", (DL_FUNC) &_look, 1},

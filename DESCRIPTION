@@ -29,8 +29,7 @@ Imports:
     ggplot2 (>= 3.4.0),
     mirai (>= 1.0.0),
     nanonext (>= 1.0.0),
-    RcppSimdJson (>= 0.1.9),
-    secretbase (>= 1.0.0),
+    secretbase (>= 1.2.0),
     shiny (>= 1.4.0),
     xts,
     zoo
