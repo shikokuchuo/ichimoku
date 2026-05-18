@@ -1,6 +1,7 @@
 # ichimoku: Auxiliary Functions
 
 ``` r
+
 library(ichimoku)
 ```
 
@@ -34,6 +35,7 @@ Takes the following arguments:
 - `...` other arguments not used by this function.
 
 ``` r
+
 dates <- seq(from = as.POSIXct("2020-01-01"), by = "1 day", length.out = 7)
 dates
 #> [1] "2020-01-01 UTC" "2020-01-02 UTC" "2020-01-03 UTC" "2020-01-04 UTC"
@@ -61,6 +63,7 @@ For other objects, a list of attributes that are non-standard for matrix
 are present.
 
 ``` r
+
 cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 look(cloud)
 #> $periods
@@ -149,6 +152,7 @@ Takes the following arguments:
   attributes set on the original object.
 
 ``` r
+
 cloud <- ichimoku(sample_ohlc_data)
 df <- xts_df(cloud)
 str(df)
@@ -202,6 +206,7 @@ Takes the following arguments:
   attributes set on the original object.
 
 ``` r
+
 cloud <- ichimoku(sample_ohlc_data)
 mcloud <- as.matrix(cloud)
 df <- matrix_df(mcloud)
@@ -247,6 +252,7 @@ manually inspected in case it contains unwanted duplicates. Use
 for updating dataframes with new values.
 
 ``` r
+
 data1 <- sample_ohlc_data[1:6, ]
 data1
 #>         time  open  high   low close volume
@@ -310,6 +316,7 @@ this is retained. If the attribute is not found in ‘new’, the argument
 has no effect. All other custom attributes are dropped.
 
 ``` r
+
 data1 <- sample_ohlc_data[1:8, ]
 data1
 #>         time  open  high   low close volume
@@ -351,11 +358,12 @@ Formats a double POSIXct timestamp in the same way as the default
 provides a much faster implementation.
 
 ``` r
+
 time <- Sys.time()
 format(time)
-#> [1] "2026-01-31 23:31:18"
+#> [1] "2026-05-18 11:40:19"
 format_POSIXct(time)
-#> [1] "2026-01-31 23:31:18"
+#> [1] "2026-05-18 11:40:19"
 ```
 
 ------------------------------------------------------------------------

@@ -95,6 +95,11 @@ Useful links:
 **Maintainer**: Charlie Gao <charlie.gao@shikokuchuo.net>
 ([ORCID](https://orcid.org/0000-0002-0750-061X))
 
+Authors:
+
+- Charlie Gao <charlie.gao@shikokuchuo.net>
+  ([ORCID](https://orcid.org/0000-0002-0750-061X))
+
 Other contributors:
 
 - Hibiki AI Limited \[copyright holder\]

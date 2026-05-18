@@ -20,12 +20,14 @@ government bonds and stock indices.
 Install ichimoku from R-universe:
 
 ``` r
+
 install.packages('ichimoku', repos = c('https://shikokuchuo.r-universe.dev', 'https://cloud.r-project.org'))
 ```
 
 ## Quick Start
 
 ``` r
+
 library(ichimoku)
 ```
 
@@ -34,6 +36,7 @@ Simply
 and [`plot()`](https://rdrr.io/r/graphics/plot.default.html):
 
 ``` r
+
 cloud <- ichimoku(sample_ohlc_data, ticker = "TKR")
 plot(cloud, window = "2020-05/")
 ```
@@ -44,6 +47,7 @@ plot(cloud, window = "2020-05/")
 to automatically evaluate and rank top-performing strategies:
 
 ``` r
+
 autostrat(cloud, n = 3)
 #>                        [,1]               [,2]              [,3]             
 #> Strategy               "senkouB > tenkan" "cloudB > tenkan" "senkouB > kijun"

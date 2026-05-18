@@ -69,6 +69,7 @@ the practice server to the live server. Settings will only persist until
 the end of the session.
 
 ``` r
+
 library(ichimoku)
 
 oanda_switch()
@@ -149,6 +150,7 @@ safe for use in non-interactive settings as in such cases the download
 will proceed automatically without prompting.
 
 ``` r
+
 oanda("USD_JPY", count = 3, from = "2010-11-01", price = "B")
 #>                  time   open   high    low  close volume complete
 #> 1 2010-11-01 21:00:00 80.275 81.504 80.225 80.501  22291     TRUE
@@ -214,6 +216,7 @@ The arguments ‘from’ and ‘to’ are excluded as they are not relevant in
 this context.
 
 ``` r
+
 # For a live Palladium price chart:
 oanda_chart("XPD_USD")
 ```
@@ -233,6 +236,7 @@ be returned (invisibly). This allows the data to be saved simply by
 assigning to an object.
 
 ``` r
+
 # To access the data, simply assign the return value to an object:
 cloud <- oanda_chart("XPD_USD")
 ```
@@ -251,6 +255,7 @@ may be set beforehand in the same way as
 [`oanda_chart()`](https://shikokuchuo.net/ichimoku/dev/reference/oanda_chart.md).
 
 ``` r
+
 oanda_studio()
 ```
 
@@ -294,6 +299,7 @@ To read back the file, use
 [`archive()`](https://shikokuchuo.net/ichimoku/dev/reference/archive.md):
 
 ``` r
+
 # Supply the quoted file path / name, for example:
 cloud <- archive("~/Downloads/SUGAR_USD_D_A.rda")
 
@@ -318,6 +324,7 @@ The arguments are as follows:
 The ‘server’ and ‘apikey’ arguments are also available if required.
 
 ``` r
+
 # Streaming session will end with data automatically returned after 600 secs (10 mins):
 data <- oanda_stream("UK10YB_GBP", limit = 600)
 #> Streaming data... Press 'Esc' to return
@@ -363,6 +370,7 @@ high, low and last prices, daily percentage change (from the open), and
 the pricing component (M for mid, B for bid, A for ask).
 
 ``` r
+
 oanda_quote("USD_JPY")
 #> USD_JPY 2021-10-05 16:29:44 open: 110.931  high: 111.564  low: 110.871  last: 111.398  %chg: 0.421 M
 ```
@@ -418,6 +426,7 @@ chart showing the percentage long and short orders/positions at each
 price level is output to the graphical device.
 
 ``` r
+
 df <- oanda_positions("GBP_JPY")
 ```
 
@@ -444,6 +453,7 @@ The list below serves as a reference only and may differ from those
 actually available for your account type and/or country/region.
 
 ``` r
+
 oanda_instruments()
 ```
 

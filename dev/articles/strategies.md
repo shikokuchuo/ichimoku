@@ -1,6 +1,7 @@
 # ichimoku: Beyond Visualization - Quantitative Strategies
 
 ``` r
+
 library(ichimoku)
 ```
 
@@ -43,6 +44,7 @@ comprehensive risk analysis framework.
 To create an ichimoku object from the price data.
 
 ``` r
+
 # Simulated OHLC pricing data is assigned to data frame 'TKR':
 TKR <- sample_ohlc_data
 cloud <- ichimoku(TKR)
@@ -63,6 +65,7 @@ while close \> tenkan’ to ‘short while close \< tenkan’, this should
 actually be formulated as ‘short while tenkan \> close’.
 
 ``` r
+
 strat <- strat(cloud, c1 = "cloudB", c2 = "kijun")
 print(strat[100:105, ], plot = FALSE)
 #>  ichimoku   [ more() to display more rows | look() to inspect attributes ]
@@ -165,6 +168,7 @@ object and can be accessed by the
 objects.
 
 ``` r
+
 summary(strat)
 #>                        [,1]               
 #> Strategy               "cloudB > kijun"   
@@ -208,6 +212,7 @@ for details of the reported measures.
 ### 4. Visualize by calling `plot()` or `iplot()`.
 
 ``` r
+
 plot(strat, theme = "dark")
 ```
 
@@ -231,6 +236,7 @@ strategies contained in ichimoku objects ‘s1’ and ‘s2’ to form ‘s1 &
 s2’.
 
 ``` r
+
 strat2 <- strat(cloud, "kijun", "tenkan")
 
 newstrat <- stratcombine(strat, strat2)
@@ -276,6 +282,7 @@ fed directly into other econometrics or time series analysis packages
 such as ‘PerformanceAnalytics’, as per the example below.
 
 ``` r
+
 library(PerformanceAnalytics)
 # To chart performance comparison of strategy vs benchmark, daily returns and drawdowns
 charts.PerformanceSummary(strat[, c("sret", "ret")])
@@ -302,6 +309,7 @@ The optional arguments it does take are limited to:
   to the console and return quietly
 
 ``` r
+
 autostrat(cloud, n = 3)
 #>                        [,1]                [,2]               
 #> Strategy               "senkouB > tenkan"  "cloudB > tenkan"  
@@ -379,6 +387,7 @@ to test all strategies with a combination of up to 2 indicator
 conditions, i.e. strat() with type = 2.
 
 ``` r
+
 autostrat(cloud, n = 3, dir = "short", level = "2")
 #>                        [,1]                               
 #> Strategy               "close > chikou & tenkan > senkouB"
@@ -449,6 +458,7 @@ results will tend to have higher sensitivity to the data and in
 particular the starting conditions.
 
 ``` r
+
 autostrat(cloud, n = 3, dir = "long", level = "3")
 #>                        [,1]                             
 #> Strategy               "senkouB > senkouA x kijun > low"
@@ -537,6 +547,7 @@ The 3 basic types of grid are shown below.
 (read c1 \> c2) is met:
 
 ``` r
+
 mlgrid(cloud, y = "logret", dir = "long", type = "boolean", unique = TRUE)[100:105, 1:4]
 #>                                 y chikou_close chikou_high chikou_low
 #> 2020-10-07 23:00:00  0.0083050685            1           1          1
@@ -550,6 +561,7 @@ mlgrid(cloud, y = "logret", dir = "long", type = "boolean", unique = TRUE)[100:1
 ‘numeric’ produces the numeric difference of c1 - c2:
 
 ``` r
+
 mlgrid(cloud, y = "ret", dir = "short", type = "numeric", unique = FALSE)[100:105, 1:4]
 #>                                 y chikou_close chikou_high chikou_low
 #> 2020-10-07 23:00:00 -0.0082706767          3.9         3.8        4.4
@@ -563,6 +575,7 @@ mlgrid(cloud, y = "ret", dir = "short", type = "numeric", unique = FALSE)[100:10
 ‘z-score’ produces the standard score of a ‘numeric’ type grid:
 
 ``` r
+
 mlgrid(cloud, y = "ret", dir = "short", type = "z-score", unique = FALSE)[100:105, 1:4]
 #>                                 y chikou_close chikou_high chikou_low
 #> 2020-10-07 23:00:00 -0.0082706767    0.4046813   0.5057896  0.3499295
@@ -615,6 +628,7 @@ Takes the following optional arguments:
   to the console and return quietly
 
 ``` r
+
 relative(cloud, signif = 0.4)[1:10, ]
 #> Latest: 2020-12-24 00:00:00 | n: 155
 #>                mean(X) sd(X) X[n]   res z-score p >= |z| p* E(|res|)|p

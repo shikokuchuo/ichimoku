@@ -93,6 +93,7 @@ monthly, charts.
 ## A Typical Workflow
 
 ``` r
+
 library(ichimoku)
 ```
 
@@ -109,6 +110,7 @@ stock indices. Please refer to the [OANDA
 vignette](https://shikokuchuo.net/ichimoku/dev/articles/xoanda.md).
 
 ``` r
+
 # ichimoku can create clouds directly from OANDA data, for example:
 cloud <- ichimoku(oanda("USD_JPY"))
 ```
@@ -118,6 +120,7 @@ other R packages that return financial data, or indeed the OANDA
 functions from the package itself:
 
 ``` r
+
 # Using R 4.1's new pipe operator:
 oanda("USD_JPY") |> ichimoku() |> plot()
 # Or equally using the 'magrittr' pipe:
@@ -130,6 +133,7 @@ The requirement on the input data is minimal: a series of prices indexed
 by valid timestamps.
 
 ``` r
+
 # Sample OHLC price data is assigned to data frame 'TKR':
 TKR <- sample_ohlc_data
 head(TKR)
@@ -214,6 +218,7 @@ Optional arguments:
   are introduced.
 
 ``` r
+
 cloud <- ichimoku(TKR)
 
 print(cloud, plot = FALSE, width = 180)
@@ -260,6 +265,7 @@ Use [`str()`](https://rdrr.io/r/utils/str.html) for a compact display of
 the object structure:
 
 ``` r
+
 str(cloud)
 #> ichimoku object [2020-01-02 00:00:00 / 2021-02-01 00:00:00] (281, 12)
 #>  <double> $open $high $low $close $cd $tenkan $kijun $senkouA $senkouB $chikou $cloudT $cloudB
@@ -275,6 +281,7 @@ The summary method using
 brief description of the data:
 
 ``` r
+
 summary(cloud)
 #> ichimoku object with dimensions (281, 12) 
 #> 
@@ -315,6 +322,7 @@ object, specify `keep.data = TRUE` when calling
 [`ichimoku()`](https://shikokuchuo.net/ichimoku/dev/reference/ichimoku.md).
 
 ``` r
+
 kumo <- ichimoku(TKR, keep.data = TRUE)
 
 kumo[, "volume"]
@@ -384,6 +392,7 @@ If the relevant market trades continuously on a 24/7 basis, specify
 and return all dates when calculating the future cloud.
 
 ``` r
+
 # Holidays can be specified directly via a vector of dates:
 ichimoku(TKR, holidays = c("2020-01-13", "2020-02-11", "2020-02-24"))
 
@@ -413,6 +422,7 @@ objects:
 The below shows how to re-create an ichimoku object from its components:
 
 ``` r
+
 index <- index(cloud)
 core <- coredata(cloud)
 
@@ -457,6 +467,7 @@ The example below demonstrates some of the arguments that can be
 supplied to customise the plot.
 
 ``` r
+
 plot(cloud, window = "2020-05/", ticker = "SYM (JSE)", subtitle = "Sample Data Series")
 ```
 
@@ -509,6 +520,7 @@ different element of the chart. As an example, the ‘mono’ theme can be
 specified as:
 
 ``` r
+
 c("#d9d9d9", "#d7d7d7", "#d1d1d1", "#737373", "#1f1f1f", "#b8b8b8", "#1a1a1a", "#1a1a1a", "#1a1a1a", "#ffffff", "#333333", "#1a1a1a")
 ```
 
@@ -535,6 +547,7 @@ R-type oscillator is calculated consistently and does not employ a
 roll-forward mechanism based on previous oscillator values like the RSI.
 
 ``` r
+
 # To plot an R-type oscillator:
 plot(cloud, type = "r")
 ```
@@ -556,6 +569,7 @@ Note the difference to the usual stochastic oscillator definition where
 the slow line is a 3-period moving average of the fast line.
 
 ``` r
+
 plot(cloud, window = "2020-04-01/2020-12-01", theme = "solarized", type = "s")
 ```
 
@@ -575,6 +589,7 @@ To view a custom sub-plot, type must be specified as either ‘bar’ or
 ‘line’ as the type setting takes precedence (with a default of ‘none’).
 
 ``` r
+
 plot(kumo, window = "2020-04/2020-11", theme = "mono", type = "bar", custom = "volume")
 ```
 
@@ -599,6 +614,7 @@ To produce an interactive plot, use ichimoku’s
 function, which launches a Shiny app.
 
 ``` r
+
 # For an interactive plot:
 iplot(cloud)
 ```
@@ -654,6 +670,7 @@ location to be set interactively. A confirmation is printed to the
 console that the file has been written.
 
 ``` r
+
 # Write object to file:
 archive(object, "path/filename")
 # Leave second argument empty to choose file save location from a system dialog:
@@ -670,6 +687,7 @@ return value of the function can be assigned to an object. A
 confirmation is printed to the console once the file has been read.
 
 ``` r
+
 # Read from file to object:
 object <- archive("path/filename")
 # Choose a file from an interactive system dialog:
