@@ -171,7 +171,7 @@ SEXP _tbl(SEXP x, SEXP type) {
   for (R_xlen_t j = 1; j <= xwid; j++) {
     SEXP vec = Rf_allocVector(REALSXP, xlen);
     SET_VECTOR_ELT(tbl, j, vec);
-    memcpy(REAL(vec), src, vecsize);
+    if (vecsize) memcpy(REAL(vec), src, vecsize);
     src += xlen;
   }
 
@@ -258,7 +258,7 @@ SEXP _df(SEXP x) {
   for (R_xlen_t j = 1; j <= xwid; j++) {
     SEXP vec = Rf_allocVector(REALSXP, xlen);
     SET_VECTOR_ELT(df, j, vec);
-    memcpy(REAL(vec), src, vecsize);
+    if (vecsize) memcpy(REAL(vec), src, vecsize);
     src += xlen;
   }
 
@@ -311,7 +311,7 @@ SEXP _coredata(SEXP x) {
   SEXP core;
   R_xlen_t xlen = XLENGTH(x);
   PROTECT(core = Rf_allocVector(TYPEOF(x), xlen));
-  memcpy(REAL(core), DATAPTR_RO(x), xlen * sizeof(double));
+  if (xlen) memcpy(REAL(core), DATAPTR_RO(x), xlen * sizeof(double));
   Rf_dimgets(core, Rf_getAttrib(x, R_DimSymbol));
   Rf_dimnamesgets(core, Rf_getAttrib(x, R_DimNamesSymbol));
   UNPROTECT(1);
