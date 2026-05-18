@@ -64,16 +64,15 @@
 #'
 #' @export
 #'
-autostrat <- function(x,
-                      n = 8,
-                      dir = c("long", "short"),
-                      level = 1,
-                      quietly) {
-
-  is.ichimoku(x) || stop("autostrat() only works on ichimoku objects", call. = FALSE)
+autostrat <- function(x, n = 8, dir = c("long", "short"), level = 1, quietly) {
+  is.ichimoku(x) ||
+    stop("autostrat() only works on ichimoku objects", call. = FALSE)
   dir <- match.arg(dir, c("long", "short"))
   if (!level %in% 1:3) {
-    warning("'level' should be 1, 2 or 3 - reverting to default of 1", call. = FALSE)
+    warning(
+      "'level' should be 1, 2 or 3 - reverting to default of 1",
+      call. = FALSE
+    )
     level <- 1
   }
 
@@ -84,77 +83,123 @@ autostrat <- function(x,
     logret <- (cs <- colSums(matrix))[order(cs, decreasing = TRUE)]
     returns <- logret[!logret == 0]
     args <- do.call(rbind, strsplit(names(returns[1:n]), "_", fixed = TRUE))
-    list <- mapply(strat, c1 = args[, 1L], c2 = args[, 2L],
-                   MoreArgs = list(x = x, dir = dir),
-                   SIMPLIFY = FALSE, USE.NAMES = FALSE)
-
+    list <- mapply(
+      strat,
+      c1 = args[, 1L],
+      c2 = args[, 2L],
+      MoreArgs = list(x = x, dir = dir),
+      SIMPLIFY = FALSE,
+      USE.NAMES = FALSE
+    )
   } else if (level == 2) {
     lgrid <- grid[, -1L]
     w <- length(lgrid)
-    pairs <- expand.grid(seq_len(w), seq_len(w), KEEP.OUT.ATTRS = FALSE)[-grid_dup(w), ]
-    mgrid <- do.call(cbind,
-                     mapply(function(a, b) lgrid[, a] * lgrid[, b],
-                            a = pairs[, 1L], b = pairs[, 2L],
-                            SIMPLIFY = FALSE, USE.NAMES = FALSE))
-    dimnames(mgrid)[[2L]] <- do.call(c,
-                                     mapply(function(a, b) paste0(names(lgrid)[a], "&", names(lgrid)[b]),
-                                            a = pairs[, 1L], b = pairs[, 2L],
-                                            SIMPLIFY = FALSE, USE.NAMES = FALSE))
+    pairs <- expand.grid(seq_len(w), seq_len(w), KEEP.OUT.ATTRS = FALSE)[
+      -grid_dup(w),
+    ]
+    mgrid <- do.call(
+      cbind,
+      mapply(
+        function(a, b) lgrid[, a] * lgrid[, b],
+        a = pairs[, 1L],
+        b = pairs[, 2L],
+        SIMPLIFY = FALSE,
+        USE.NAMES = FALSE
+      )
+    )
+    dimnames(mgrid)[[2L]] <- do.call(
+      c,
+      mapply(
+        function(a, b) paste0(names(lgrid)[a], "&", names(lgrid)[b]),
+        a = pairs[, 1L],
+        b = pairs[, 2L],
+        SIMPLIFY = FALSE,
+        USE.NAMES = FALSE
+      )
+    )
     matrix <- grid[, 1L] * mgrid
     logret <- (cs <- colSums(matrix))[order(cs, decreasing = TRUE)]
     returns <- logret[!logret == 0]
     args <- do.call(rbind, strsplit(names(returns[1:n]), "&|_", perl = TRUE))
-    list <- mapply(strat, c1 = args[, 1L], c2 = args[, 2L], c3 = args[, 3L], c4 = args[, 4L],
-                   MoreArgs = list(x = x, dir = dir, type = 2),
-                   SIMPLIFY = FALSE, USE.NAMES = FALSE)
-
+    list <- mapply(
+      strat,
+      c1 = args[, 1L],
+      c2 = args[, 2L],
+      c3 = args[, 3L],
+      c4 = args[, 4L],
+      MoreArgs = list(x = x, dir = dir, type = 2),
+      SIMPLIFY = FALSE,
+      USE.NAMES = FALSE
+    )
   } else {
     lgrid <- grid[, -1L]
     w <- length(lgrid)
-    pairs <- expand.grid(seq_len(w), seq_len(w),
-                         KEEP.OUT.ATTRS = FALSE)[-grid_dup(w, omit.id = TRUE), ]
-    mgrid <- do.call(cbind,
-                     mapply(function(a, b) {
-                       xlen <- dim(lgrid)[1L]
-                       s1posn <- lgrid[, a]
-                       s1txn <- c(if (s1posn[1L] == 1) 1 else 0,
-                                  diff(s1posn)[-1L],
-                                  if (s1posn[xlen] == 1) -1 else 0)
-                       s2posn <- lgrid[, b]
-                       s2txn <- c(0,
-                                  diff(s2posn)[-1L],
-                                  if (s2posn[xlen] == 1) -1 else 0)
-                       s1entry <- which(s1txn == 1)
-                       s2exit <- which(s2txn == 1)
-                       position <- integer(xlen)
-                       while (length(s1entry) > 0 && length(s2exit) > 0) {
-                         position[s1entry[1L]:(s2exit[1L] - 1L)] <- 1L
-                         s1entry <- s1entry[s1entry > s2exit[1L]]
-                         s2exit <- s2exit[s2exit > s1entry[1L]]
-                       }
-                       position
-                     },
-                     a = pairs[, 1L], b = pairs[, 2L],
-                     SIMPLIFY = FALSE, USE.NAMES = FALSE))
-    dimnames(mgrid)[[2L]] <- do.call(c,
-                                     mapply(function(a, b) paste0(names(lgrid)[a], "x", names(lgrid)[b]),
-                                            a = pairs[, 1L], b = pairs[, 2L],
-                                            SIMPLIFY = FALSE, USE.NAMES = FALSE))
+    pairs <- expand.grid(seq_len(w), seq_len(w), KEEP.OUT.ATTRS = FALSE)[
+      -grid_dup(w, omit.id = TRUE),
+    ]
+    mgrid <- do.call(
+      cbind,
+      mapply(
+        function(a, b) {
+          xlen <- dim(lgrid)[1L]
+          s1posn <- lgrid[, a]
+          s1txn <- c(
+            if (s1posn[1L] == 1) 1 else 0,
+            diff(s1posn)[-1L],
+            if (s1posn[xlen] == 1) -1 else 0
+          )
+          s2posn <- lgrid[, b]
+          s2txn <- c(0, diff(s2posn)[-1L], if (s2posn[xlen] == 1) -1 else 0)
+          s1entry <- which(s1txn == 1)
+          s2exit <- which(s2txn == 1)
+          position <- integer(xlen)
+          while (length(s1entry) > 0 && length(s2exit) > 0) {
+            position[s1entry[1L]:(s2exit[1L] - 1L)] <- 1L
+            s1entry <- s1entry[s1entry > s2exit[1L]]
+            s2exit <- s2exit[s2exit > s1entry[1L]]
+          }
+          position
+        },
+        a = pairs[, 1L],
+        b = pairs[, 2L],
+        SIMPLIFY = FALSE,
+        USE.NAMES = FALSE
+      )
+    )
+    dimnames(mgrid)[[2L]] <- do.call(
+      c,
+      mapply(
+        function(a, b) paste0(names(lgrid)[a], "x", names(lgrid)[b]),
+        a = pairs[, 1L],
+        b = pairs[, 2L],
+        SIMPLIFY = FALSE,
+        USE.NAMES = FALSE
+      )
+    )
     matrix <- grid[, 1L] * mgrid
     logret <- (cs <- colSums(matrix))[order(cs, decreasing = TRUE)]
     returns <- logret[!logret == 0]
     args <- do.call(rbind, strsplit(names(returns[1:n]), "x|_", perl = TRUE))
-    list <- mapply(strat, c1 = args[, 1L], c2 = args[, 2L], c3 = args[, 3L], c4 = args[, 4L],
-                   MoreArgs = list(x = x, dir = dir, type = 3),
-                   SIMPLIFY = FALSE, USE.NAMES = FALSE)
-
+    list <- mapply(
+      strat,
+      c1 = args[, 1L],
+      c2 = args[, 2L],
+      c3 = args[, 3L],
+      c4 = args[, 4L],
+      MoreArgs = list(x = x, dir = dir, type = 3),
+      SIMPLIFY = FALSE,
+      USE.NAMES = FALSE
+    )
   }
 
-  attributes(list) <- list(logret = logret,
-                           summary = do.call(cbind, lapply(list, attr, "strat")))
-  if (missing(quietly) || !isTRUE(quietly)) print(attr(list, "summary"))
+  attributes(list) <- list(
+    logret = logret,
+    summary = do.call(cbind, lapply(list, attr, "strat"))
+  )
+  if (missing(quietly) || !isTRUE(quietly)) {
+    print(attr(list, "summary"))
+  }
   invisible(list)
-
 }
 
 #' mlgrid Numeric Representation
@@ -230,22 +275,27 @@ autostrat <- function(x,
 #'
 #' @export
 #'
-mlgrid <- function(x,
-                   y = c("logret", "ret", "none"),
-                   k = 1L,
-                   dir = c("long", "short"),
-                   type = c("boolean", "numeric", "z-score"),
-                   format = c("dataframe", "matrix"),
-                   unique = TRUE,
-                   expr = list()) {
-
-  is.ichimoku(x) || stop("mlgrid() only works on ichimoku objects", call. = FALSE)
+mlgrid <- function(
+  x,
+  y = c("logret", "ret", "none"),
+  k = 1L,
+  dir = c("long", "short"),
+  type = c("boolean", "numeric", "z-score"),
+  format = c("dataframe", "matrix"),
+  unique = TRUE,
+  expr = list()
+) {
+  is.ichimoku(x) ||
+    stop("mlgrid() only works on ichimoku objects", call. = FALSE)
   y <- match.arg(y, c("logret", "ret", "none"))
   if (!missing(k)) {
     if (is.numeric(k) && k >= 1L) {
       k <- as.integer(k)
     } else {
-      warning("Specified value for 'k' invalid - reverting to default of 1L", call. = FALSE)
+      warning(
+        "Specified value for 'k' invalid - reverting to default of 1L",
+        call. = FALSE
+      )
       k <- 1L
     }
   }
@@ -257,27 +307,52 @@ mlgrid <- function(x,
   p2 <- attr(x, "periods")[2L]
 
   if (y != "none") {
-    target <- c((log(core[(k + 1):xlen, "open"]) - log(core[1:(xlen - k), "open"]))[2:(xlen - k)], rep(NA, k + 1L))
-    if (dir == "short") target <- -target
+    target <- c(
+      (log(core[(k + 1):xlen, "open"]) - log(core[1:(xlen - k), "open"]))[
+        2:(xlen - k)
+      ],
+      rep(NA, k + 1L)
+    )
+    if (dir == "short") {
+      target <- -target
+    }
     if (y == "ret") target <- exp(target) - 1
   }
 
   pairs <- .mlgrid_pairs
-  veclist <- writeVectors(x = core, pairs = pairs, p2 = p2, xlen = xlen, type = type)
+  veclist <- writeVectors(
+    x = core,
+    pairs = pairs,
+    p2 = p2,
+    xlen = xlen,
+    type = type
+  )
 
   if (!missing(unique) && !isTRUE(unique)) {
     pairs <- list(pairs[[2L]], pairs[[1L]])
-    veclistf <- writeVectors(x = core, pairs = pairs, p2 = p2, xlen = xlen, type = type)
+    veclistf <- writeVectors(
+      x = core,
+      pairs = pairs,
+      p2 = p2,
+      xlen = xlen,
+      type = type
+    )
     veclist <- c(veclist, veclistf)
   }
 
   if (length(expr)) {
     for (i in seq_along(expr)) {
       is.language(expr[[i]]) ||
-        stop(sprintf("expr %d is not a language or expression object", i), call. = FALSE)
+        stop(
+          sprintf("expr %d is not a language or expression object", i),
+          call. = FALSE
+        )
       expr[[i]] <- eval(expr[[i]])
       length(expr[[i]]) == xlen ||
-        stop(sprintf("expr %d produced output of incorrect length", i), call. = FALSE)
+        stop(
+          sprintf("expr %d produced output of incorrect length", i),
+          call. = FALSE
+        )
     }
     veclist <- c(veclist, expr)
   }
@@ -285,7 +360,8 @@ mlgrid <- function(x,
   veclist <- switch(y, none = veclist, c(list(y = target), veclist))
   grid <- do.call(cbind, veclist)
   dimnames(grid)[[1L]] <- format_POSIXct(index.ichimoku(x))
-  grid <- .Call(ichimoku_naomit, grid)
+  grid <- na.omit(grid)
+  attr(grid, "na.action") <- NULL
 
   if (type == "z-score") {
     if (y != "none") {
@@ -302,30 +378,38 @@ mlgrid <- function(x,
     means <- sdevs <- NA
   }
 
-  switch(format,
-         `attributes<-`(matrix_df(grid),
-                        list(names = attr(grid, "dimnames")[[2L]],
-                             class = "data.frame",
-                             row.names = attr(grid, "dimnames")[[1L]],
-                             y = y,
-                             k = k,
-                             direction = dir,
-                             type = type,
-                             ticker = attr(x, "ticker"),
-                             means = means,
-                             sdevs = sdevs)),
-         `attributes<-`(grid,
-                        list(dim = attr(grid, "dim"),
-                             dimnames = attr(grid, "dimnames"),
-                             y = y,
-                             k = k,
-                             direction = dir,
-                             type = type,
-                             ticker = attr(x, "ticker"),
-                             means = means,
-                             sdevs = sdevs))
+  switch(
+    format,
+    `attributes<-`(
+      matrix_df(grid),
+      list(
+        names = attr(grid, "dimnames")[[2L]],
+        class = "data.frame",
+        row.names = attr(grid, "dimnames")[[1L]],
+        y = y,
+        k = k,
+        direction = dir,
+        type = type,
+        ticker = attr(x, "ticker"),
+        means = means,
+        sdevs = sdevs
+      )
+    ),
+    `attributes<-`(
+      grid,
+      list(
+        dim = attr(grid, "dim"),
+        dimnames = attr(grid, "dimnames"),
+        y = y,
+        k = k,
+        direction = dir,
+        type = type,
+        ticker = attr(x, "ticker"),
+        means = means,
+        sdevs = sdevs
+      )
+    )
   )
-
 }
 
 #' writeVectors
@@ -343,16 +427,35 @@ mlgrid <- function(x,
 #' @noRd
 #'
 writeVectors <- function(x, pairs, p2, xlen, type) {
-
-  `names<-`(mapply(function(c1, c2) {
-    offset <- (p2 - 1L) * (c1 == "chikou" || c2 == "chikou")
-    switch(type,
-           boolean = as.integer(c(rep(NA, offset), (x[, c1] > x[, c2])[1:(xlen - offset)])),
-           c(rep(NA, offset), (x[, c1] - x[, c2])[1:(xlen - offset)]))
-  }, c1 = pairs[[1L]], c2 = pairs[[2L]], SIMPLIFY = FALSE, USE.NAMES = FALSE),
-  do.call(c, mapply(function(c1, c2) sprintf("%s_%s", c1, c2),
-                    c1 = pairs[[1L]], c2 = pairs[[2L]], SIMPLIFY = FALSE, USE.NAMES = FALSE)))
-
+  `names<-`(
+    mapply(
+      function(c1, c2) {
+        offset <- (p2 - 1L) * (c1 == "chikou" || c2 == "chikou")
+        switch(
+          type,
+          boolean = as.integer(c(
+            rep(NA, offset),
+            (x[, c1] > x[, c2])[1:(xlen - offset)]
+          )),
+          c(rep(NA, offset), (x[, c1] - x[, c2])[1:(xlen - offset)])
+        )
+      },
+      c1 = pairs[[1L]],
+      c2 = pairs[[2L]],
+      SIMPLIFY = FALSE,
+      USE.NAMES = FALSE
+    ),
+    do.call(
+      c,
+      mapply(
+        function(c1, c2) sprintf("%s_%s", c1, c2),
+        c1 = pairs[[1L]],
+        c2 = pairs[[2L]],
+        SIMPLIFY = FALSE,
+        USE.NAMES = FALSE
+      )
+    )
+  )
 }
 
 #' Relative Numeric Representation
@@ -405,8 +508,8 @@ writeVectors <- function(x, pairs, p2, xlen, type) {
 #' @export
 #'
 relative <- function(x, order = FALSE, signif = 0.2, quietly) {
-
-  is.ichimoku(x) || stop("relative() only works on ichimoku objects", call. = FALSE)
+  is.ichimoku(x) ||
+    stop("relative() only works on ichimoku objects", call. = FALSE)
   grid <- mlgrid(x, y = "none", type = "numeric")
   xlen <- dim(grid)[1L]
   xwid <- dim(grid)[2L]
@@ -430,25 +533,38 @@ relative <- function(x, order = FALSE, signif = 0.2, quietly) {
   star <- character(xwid)
   star[pval <= signif] <- "*"
 
-  df <- lapply(list(means, sdevs, xn, res, zscore, pval, star, expec),
-               function(x) if (is.numeric(x)) round(x, digits = 2) else x)
+  df <- lapply(
+    list(means, sdevs, xn, res, zscore, pval, star, expec),
+    function(x) if (is.numeric(x)) round(x, digits = 2) else x
+  )
   ordered <- !missing(order) && isTRUE(order)
   if (ordered) {
     reorder <- order(abs(zscore), decreasing = TRUE)
     df <- lapply(df, .subset, reorder)
   }
 
-  attributes(df) <- list(names = c("mean(X)", "sd(X)", "X[n]", "res", "z-score", "p >= |z|", "p*", "E(|res|)|p"),
-                         class = "data.frame",
-                         row.names = if (ordered) cnames[reorder] else cnames,
-                         latest = .POSIXct(as.POSIXct(time)),
-                         periods = attr(x, "periods"),
-                         periodicity = attr(x, "periodicity"),
-                         ticker = attr(x, "ticker"))
+  attributes(df) <- list(
+    names = c(
+      "mean(X)",
+      "sd(X)",
+      "X[n]",
+      "res",
+      "z-score",
+      "p >= |z|",
+      "p*",
+      "E(|res|)|p"
+    ),
+    class = "data.frame",
+    row.names = if (ordered) cnames[reorder] else cnames,
+    latest = .POSIXct(as.POSIXct(time)),
+    periods = attr(x, "periods"),
+    periodicity = attr(x, "periodicity"),
+    ticker = attr(x, "ticker")
+  )
 
-  if (missing(quietly) || !isTRUE(quietly))
+  if (missing(quietly) || !isTRUE(quietly)) {
     cat("Latest:", time, "| n:", xlen, "\n", file = stdout())
+  }
 
   df
-
 }

@@ -76,6 +76,11 @@ Useful links:
 \author{
 \strong{Maintainer}: Charlie Gao \email{charlie.gao@shikokuchuo.net} (\href{https://orcid.org/0000-0002-0750-061X}{ORCID})
 
+Authors:
+\itemize{
+  \item Charlie Gao \email{charlie.gao@shikokuchuo.net} (\href{https://orcid.org/0000-0002-0750-061X}{ORCID})
+}
+
 Other contributors:
 \itemize{
   \item Hibiki AI Limited [copyright holder]

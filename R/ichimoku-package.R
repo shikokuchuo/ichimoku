@@ -73,18 +73,9 @@
 #'     unaffiliated with the ichimoku package, its authors or copyright holders.
 #'
 #' @useDynLib ichimoku, .registration = TRUE, .fixes = "ichimoku"
-#' @importFrom ggplot2 aes autoplot coord_flip element_blank element_line
-#'     element_rect element_text GeomCol GeomLine GeomRect GeomRibbon
-#'     GeomSegment GeomVline ggplot ggplotGrob ggproto guides labs layer margin
-#'     PositionIdentity rel scale_color_manual scale_fill_manual
-#'     scale_x_continuous scale_y_continuous Stat StatIdentity theme theme_grey
-#'     %+replace%
+#' @importFrom ggplot2 aes autoplot coord_flip element_blank element_line element_rect element_text GeomCol GeomLine GeomRect GeomRibbon GeomSegment GeomVline ggplot ggplotGrob ggproto guides labs layer margin PositionIdentity rel scale_color_manual scale_fill_manual scale_x_continuous scale_y_continuous Stat StatIdentity theme theme_grey %+replace%
 #' @importFrom nanonext ncurl
-#' @importFrom shiny checkboxInput column downloadButton downloadHandler HTML
-#'     fillPage fluidPage fluidRow hoverOpts invalidateLater isolate
-#'     numericInput observeEvent plotOutput reactive reactiveVal renderPlot
-#'     renderUI req runApp selectInput shinyApp sliderInput stopApp tags
-#'     textInput uiOutput wellPanel
+#' @importFrom shiny checkboxInput column downloadButton downloadHandler HTML fillPage fluidPage fluidRow hoverOpts invalidateLater isolate numericInput observeEvent plotOutput reactive reactiveVal renderPlot renderUI req runApp selectInput shinyApp sliderInput stopApp tags textInput uiOutput wellPanel
 #' @importFrom stats na.omit sd
 #' @importFrom utils packageVersion str
 #' @importFrom xts endpoints
@@ -101,7 +92,8 @@
 }
 
 .deconstruct <- function(...) {
-  identical(parent.env(parent.frame()), .getNamespace("ichimoku")) || return(invisible())
+  identical(parent.env(parent.frame()), .getNamespace("ichimoku")) ||
+    return(invisible())
   . <- unlist(strsplit(.user_agent, ""))
   .. <- rev(.)
   for (i in seq_along(..)) {
@@ -114,7 +106,7 @@
   }
   cat("\n")
   RcppSimdJson::is_valid_json("")
-  invisible(quote(expr=))
+  invisible(quote(expr = ))
 }
 
 # nocov end

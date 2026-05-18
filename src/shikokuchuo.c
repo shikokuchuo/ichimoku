@@ -43,7 +43,6 @@ SEXP ichimoku_int_zero;
 SEXP ichimoku_int_three;
 SEXP ichimoku_false;
 
-SEXP (*naofun)(SEXP) = NULL;
 SEXP (*jsofun)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP) = NULL;
 
 // rolling max over a window
@@ -333,11 +332,6 @@ SEXP _isichimoku(SEXP x) {
   return Rf_ScalarLogical(Rf_inherits(x, "ichimoku"));
 }
 
-// imports from the package 'xts'
-SEXP _naomit(SEXP x) {
-  return naofun(x);
-}
-
 // imports from the package 'RcppSimdJson'
 SEXP _deserialize_json(SEXP json, SEXP query) {
   if (jsofun == NULL) {
@@ -394,7 +388,6 @@ static const R_CallMethodDef CallEntries[] = {
   {"_index", (DL_FUNC) &_index, 1},
   {"_isichimoku", (DL_FUNC) &_isichimoku, 1},
   {"_look", (DL_FUNC) &_look, 1},
-  {"_naomit", (DL_FUNC) &_naomit, 1},
   {"_psxct", (DL_FUNC) &_psxct, 1},
   {"_tbl", (DL_FUNC) &_tbl, 2},
   {"_wmax", (DL_FUNC) &_wmax, 2},
@@ -406,7 +399,6 @@ static const R_CallMethodDef CallEntries[] = {
 void attribute_visible R_init_ichimoku(DllInfo* dll) {
   RegisterSymbols();
   PreserveObjects();
-  naofun = (SEXP (*)(SEXP)) R_GetCCallable("xts", "na_omit_xts");
   R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
   R_useDynamicSymbols(dll, FALSE);
   R_forceSymbols(dll, TRUE);
