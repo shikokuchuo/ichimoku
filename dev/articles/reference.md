@@ -824,8 +824,8 @@ ichimoku currently has the following external package dependencies:
 - xts, zoo - for enhanced time series methods
 - mirai - for running applications in background processes
 - nanonext - for interfacing with external APIs
-- secretbase - for verifying the data integrity of archived objects
-- RcppSimdJson - for parsing data received from external APIs
+- secretbase - for verifying the data integrity of archived objects and
+  parsing data received from external APIs
 
 Optional (enables additional features):
 
