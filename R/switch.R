@@ -42,17 +42,6 @@
 #'
 oanda_switch <- function() do_[["switchServer"]]()
 
-#' Deserialize JSON
-#'
-#' Deserialize JSON using RcppSimdJson with no simplification of the result.
-#'
-#' @return A list.
-#'
-#' @noRd
-#'
-deserialize_json <- function(x, query = NULL)
-  .Call(ichimoku_deserialize_json, x, query)
-
 #' ichimoku Internal Functions
 #'
 #' Encapsulates package internal functions in a common environment.
@@ -125,8 +114,8 @@ do_ <- function() {
                       headers = c("Authorization" = sprintf("Bearer %s", apikey),
                                   "User-Agent" = .user_agent))
         resp[["status"]] == 200L ||
-          stop("status code ", resp[["status"]], " - ", deserialize_json(resp[["data"]]), call. = FALSE)
-        parsed <- deserialize_json(resp[["data"]])
+          stop("status code ", resp[["status"]], " - ", jsondec(resp[["data"]]), call. = FALSE)
+        parsed <- jsondec(resp[["data"]])
         length(parsed[["accounts"]]) || stop(parsed, call. = FALSE)
         account <<- parsed[["accounts"]][[1L]][["id"]]
       }
@@ -145,7 +134,7 @@ do_ <- function() {
                                     "User-Agent" = .user_agent))
           resp[["status"]] == 200L && break
         }
-        parsed <- deserialize_json(resp[["data"]])
+        parsed <- jsondec(resp[["data"]])
         is.list(parsed) && length(parsed[["instruments"]]) || {
           warning(parsed,
                   "\nInstruments list could not be retrieved - falling back to internal data",
