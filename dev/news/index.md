@@ -2,6 +2,10 @@
 
 ## ichimoku (development version)
 
+## ichimoku 1.5.7
+
+CRAN release: 2026-05-26
+
 - Replaces `RcppSimdJson` with `secretbase` (\>= 1.2.0) for JSON
   parsing.
 
