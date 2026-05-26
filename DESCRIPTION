@@ -1,7 +1,7 @@
 Type: Package
 Package: ichimoku
 Title: Visualization and Tools for Ichimoku Kinko Hyo Strategies
-Version: 1.5.7
+Version: 1.5.7.9000
 Authors@R: c(
     person("Charlie", "Gao", , "charlie.gao@shikokuchuo.net", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-0750-061X")),
