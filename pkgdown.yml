@@ -1,12 +1,12 @@
-pandoc: 3.1.11
-pkgdown: 2.1.1
+pandoc: 3.8.3
+pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
   reference: reference.html
   strategies: strategies.html
   utilities: utilities.html
   xoanda: xoanda.html
-last_built: 2025-04-13T17:42Z
+last_built: 2026-05-26T14:56Z
 urls:
   reference: https://shikokuchuo.net/ichimoku/reference
   article: https://shikokuchuo.net/ichimoku/articles

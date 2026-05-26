@@ -1,0 +1,89 @@
+# Convert ichimoku to data.frame
+
+An optimised 'ichimoku' to 'data.frame' constructor.
+
+## Usage
+
+``` r
+# S3 method for class 'ichimoku'
+as.data.frame(x, row.names, optional, keep.attrs = FALSE, ...)
+```
+
+## Arguments
+
+- x:
+
+  an object of class ‘ichimoku’.
+
+- row.names:
+
+  not used.
+
+- optional:
+
+  not used.
+
+- keep.attrs:
+
+  \[default FALSE\] if set to TRUE, will preserve any custom attributes
+  set on the original object.
+
+- ...:
+
+  arguments passed to or from other methods.
+
+## Value
+
+A ‘data.frame’ object. The ichimoku object index is preserved as the
+first column with header ‘index’.
+
+## Details
+
+This function is an S3 method for the generic function as.data.frame()
+for class ‘ichimoku’. It can be invoked by calling as.data.frame(x) on
+an object ‘x’ of class ‘ichimoku’.
+
+## Examples
+
+``` r
+cloud <- ichimoku(sample_ohlc_data)
+df <- as.data.frame(cloud)
+str(df)
+#> 'data.frame':    281 obs. of  13 variables:
+#>  $ index  : POSIXct, format: "2020-01-02 00:00:00" "2020-01-03 00:00:00" ...
+#>  $ open   : num  123 123 123 123 124 ...
+#>  $ high   : num  123 123 123 124 125 ...
+#>  $ low    : num  122 123 122 123 124 ...
+#>  $ close  : num  123 123 123 124 125 ...
+#>  $ cd     : num  -1 1 1 1 1 1 -1 0 -1 -1 ...
+#>  $ tenkan : num  NA NA NA NA NA ...
+#>  $ kijun  : num  NA NA NA NA NA NA NA NA NA NA ...
+#>  $ senkouA: num  NA NA NA NA NA NA NA NA NA NA ...
+#>  $ senkouB: num  NA NA NA NA NA NA NA NA NA NA ...
+#>  $ chikou : num  123 123 123 124 124 ...
+#>  $ cloudT : num  NA NA NA NA NA NA NA NA NA NA ...
+#>  $ cloudB : num  NA NA NA NA NA NA NA NA NA NA ...
+
+df2 <- as.data.frame(cloud, keep.attrs = TRUE)
+str(df2)
+#> 'data.frame':    281 obs. of  13 variables:
+#>  $ index  : POSIXct, format: "2020-01-02 00:00:00" "2020-01-03 00:00:00" ...
+#>  $ open   : num  123 123 123 123 124 ...
+#>  $ high   : num  123 123 123 124 125 ...
+#>  $ low    : num  122 123 122 123 124 ...
+#>  $ close  : num  123 123 123 124 125 ...
+#>  $ cd     : num  -1 1 1 1 1 1 -1 0 -1 -1 ...
+#>  $ tenkan : num  NA NA NA NA NA ...
+#>  $ kijun  : num  NA NA NA NA NA NA NA NA NA NA ...
+#>  $ senkouA: num  NA NA NA NA NA NA NA NA NA NA ...
+#>  $ senkouB: num  NA NA NA NA NA NA NA NA NA NA ...
+#>  $ chikou : num  123 123 123 124 124 ...
+#>  $ cloudT : num  NA NA NA NA NA NA NA NA NA NA ...
+#>  $ cloudB : num  NA NA NA NA NA NA NA NA NA NA ...
+#>  - attr(*, "index")= num [1:281] 1.58e+09 1.58e+09 1.58e+09 1.58e+09 1.58e+09 ...
+#>   ..- attr(*, "tzone")= chr ""
+#>   ..- attr(*, "tclass")= chr [1:2] "POSIXct" "POSIXt"
+#>  - attr(*, "periods")= int [1:3] 9 26 52
+#>  - attr(*, "periodicity")= num 86400
+#>  - attr(*, "ticker")= chr "sample_ohlc_data"
+```
